@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import React, { useState } from 'react'
 
 //import { useInView } from 'react-intersection-observer';

@@ -1,4 +1,4 @@
-import {uuidv7} from '@kripod/uuidv7'
+import { uuidv7 } from '@kripod/uuidv7'
 import * as React from 'react'
 
 import { ErrorAlert } from '~/components/Alert'
@@ -37,8 +37,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
- id: uuidv7(),
-           username: data?.viewer?.username,
+          id: uuidv7(),
+          username: data?.viewer?.username,
           avatar: data?.viewer?.avatar,
           name: data?.viewer?.name,
           role: data?.viewer?.role,
