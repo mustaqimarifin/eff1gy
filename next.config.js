@@ -1,6 +1,5 @@
 module.exports = {
   swcMinify: true,
-  reactStrictMode: true,
   resolve: {
     fallback: {
       fs: false,

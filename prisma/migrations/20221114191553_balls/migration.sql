@@ -1,9 +1,3 @@
--- CreateExtension
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
--- CreateExtension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
-
 -- CreateEnum
 CREATE TYPE "EmailSubscriptionType" AS ENUM ('HACKER_NEWS');
 
@@ -12,7 +6,7 @@ CREATE TYPE "Role" AS ENUM ('BLOCKED', 'USER', 'ADMIN');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "role" "Role" NOT NULL DEFAULT 'USER',
     "username" VARCHAR(16) NOT NULL,
@@ -30,7 +24,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT NOT NULL,
@@ -46,7 +40,7 @@ CREATE TABLE "Bookmark" (
 
 -- CreateTable
 CREATE TABLE "Question" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
@@ -58,7 +52,7 @@ CREATE TABLE "Question" (
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
@@ -73,7 +67,7 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Audio" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "plays" INTEGER NOT NULL,
@@ -87,7 +81,7 @@ CREATE TABLE "Audio" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "publishedAt" TIMESTAMP(3),
@@ -103,7 +97,7 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "PostEdit" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "text" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -116,7 +110,7 @@ CREATE TABLE "PostEdit" (
 
 -- CreateTable
 CREATE TABLE "Tag" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
@@ -124,7 +118,7 @@ CREATE TABLE "Tag" (
 
 -- CreateTable
 CREATE TABLE "Stack" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
@@ -138,7 +132,7 @@ CREATE TABLE "Stack" (
 
 -- CreateTable
 CREATE TABLE "Reaction" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
     "commentId" TEXT,

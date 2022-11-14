@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import {uuidv7} from '@kripod/uuidv7'
 import * as React from 'react'
 
 import { ErrorAlert } from '~/components/Alert'
@@ -29,7 +29,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
       __typename: 'Mutation',
       addComment: {
         __typename: 'Comment',
-        id: nanoid(12),
+        id: uuidv7(),
         text,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
@@ -37,8 +37,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: nanoid(12),
-          username: data?.viewer?.username,
+ id: uuidv7(),
+           username: data?.viewer?.username,
           avatar: data?.viewer?.avatar,
           name: data?.viewer?.name,
           role: data?.viewer?.role,
