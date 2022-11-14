@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider   = "postgresql"
-  url        = env("SUPABASE__PG_URL")
+  url        = env("SUPABASE_PG_URL")
   extensions = [pgcrypto, uuid_ossp(map: "uuid-ossp", schema: "extensions")]
 }
 
@@ -128,7 +128,7 @@ model PostEdit {
 }
 
 model Tag {
-  id        String     @id
+  id         String    @id @default(dbgenerated("nanoid()"))
   name      String     @unique
   bookmarks Bookmark[]
   stacks    Stack[]

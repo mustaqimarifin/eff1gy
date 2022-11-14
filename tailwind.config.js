@@ -12,6 +12,7 @@ const mono = [
 ]
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -50,6 +51,9 @@ module.exports = {
         },
       },
     },
+  },
+  variants: {
+    typography: ['dark'],
   },
   plugins: [
     require('@tailwindcss/typography'),
