@@ -1,12 +1,12 @@
 module.exports = {
   swcMinify: true,
   reactStrictMode: true,
-  /*   resolve: {
+  resolve: {
     fallback: {
       fs: false,
     },
-  }, */
-  webpack: (config, { isServer }) => {
+  },
+  /*   webpack: (config, { isServer }) => {
     // If client-side, don't polyfill `fs`
     if (!isServer) {
       config.resolve.fallback = {
@@ -15,7 +15,7 @@ module.exports = {
     }
 
     return config
-  },
+  }, */
   images: {
     domains: [
       'pbs.twimg.com',

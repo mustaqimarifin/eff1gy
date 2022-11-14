@@ -90,9 +90,11 @@ export function Dropzone(props: DropzoneProps) {
     multiple: false,
     noClick: true,
     maxSize: 1000 * 1000 * 3, // 3mb
-    accept: {
+    accept: ['image/*'],
+
+    /*     accept: {
       'image/*': ['.jpeg', '.png', '.webp', '.svg', '.gif'],
-    },
+    }, */
   })
 
   return (
