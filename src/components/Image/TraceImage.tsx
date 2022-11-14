@@ -15,10 +15,10 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
         overflow: 'hidden',
       }}
     >
-      <img
+      <Image
         aria-hidden="true"
         src={imgTrace}
-        //onLoadingComplete={() => setLoaded(false)}
+        onLoadingComplete={() => setLoaded(false)}
         style={{
           position: 'absolute',
           top: '0px',
