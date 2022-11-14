@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-
+import { nanoid } from 'nanoid'
 const prisma = new PrismaClient()
 
 // A `main` function so that we can use async/await
@@ -7,18 +7,24 @@ async function main() {
   const tag = await prisma.tag.createMany({
     data: [
       {
+        id: nanoid(12),
         name: 'web',
       },
       {
+        id: nanoid(12),
         name: 'portfolio',
       },
       {
+        id: nanoid(12),
+
         name: 'lol',
       },
       {
+        id: nanoid(12),
         name: 'apps',
       },
       {
+        id: nanoid(12),
         name: 'plugins',
       },
     ],

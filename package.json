@@ -8,7 +8,8 @@
     "lint": "eslint ./src/pages/* ./src/components/* ./src/pages/api/* ./src/graphql/* ./src/lib/* -c .eslintrc.json --fix --ext ts,tsx",
     "generate": "graphql-codegen",
     "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'",
-    "postinstall": "yarn generate && prisma generate"
+    "postinstall": "yarn generate && prisma generate",
+    "prod:db:seed": "dotenv -- sh -c 'SUPABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma db seed'"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -25,6 +26,7 @@
     "@auth0/nextjs-auth0": "^1.9.2",
     "@graphql-tools/schema": "^8.3.1",
     "@headlessui/react": "^1.4.1",
+    "@kripod/uuidv7": "^0.3.4",
     "@prisma/client": "^4.6.1",
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.3.1",
@@ -44,6 +46,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "lru-cache": "^6.0.0",
+    "nanoid": "^4.0.0",
     "next": "^12.0.0",
     "next-seo": "^4.28.1",
     "next-themes": "^0.2.1",
@@ -73,6 +76,7 @@
     "remove-markdown": "^0.5.0",
     "slugify": "^1.6.4",
     "string-replace-to-array": "^2.1.0",
+    "ts-node": "^10.9.1",
     "turndown": "^7.1.1",
     "turndown-plugin-gfm": "^1.0.2",
     "unified": "^10.1.1",
@@ -96,6 +100,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^10.4.2",
     "babel-eslint": "^10.1.0",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "^12.0.8",
     "eslint-config-prettier": "^8.3.0",

@@ -1,6 +1,6 @@
+import { nanoid } from 'nanoid'
 import * as React from 'react'
 
-//import { v4 as uuidv4 } from 'uuid'
 import { ErrorAlert } from '~/components/Alert'
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -29,7 +29,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
       __typename: 'Mutation',
       addComment: {
         __typename: 'Comment',
-        id: '',
+        id: nanoid(12),
         text,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
@@ -37,7 +37,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: data?.viewer?.id,
+          id: nanoid(12),
           username: data?.viewer?.username,
           avatar: data?.viewer?.avatar,
           name: data?.viewer?.name,
