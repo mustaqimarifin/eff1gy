@@ -172,11 +172,15 @@ model Reaction {
   @@index([stackId])
 }
 
+enum EmailSubscriptionType {
+  HACKER_NEWS
+}
+
 model EmailSubscription {
   email String
   type  EmailSubscriptionType
 
-  @@unique([email, type])
+  @@unique(fields: [email, type], name: "emailAndType")
   @@index([email])
 }
 
@@ -184,8 +188,4 @@ enum Role {
   BLOCKED
   USER
   ADMIN
-}
-
-enum EmailSubscriptionType {
-  HACKER_NEWS
 }

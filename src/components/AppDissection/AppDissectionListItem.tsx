@@ -12,7 +12,7 @@ interface Props {
 export const AppDissectionListItem = React.memo<Props>(
   ({ summary, active }) => {
     return (
-      <li>
+      <li key={summary.createdAt}>
         <ListItem
           key={summary.slug}
           href="/app-dissection/[slug]"

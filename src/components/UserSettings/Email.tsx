@@ -25,6 +25,8 @@ export function EmailForm() {
       },
     },
     update(cache) {
+      //@ts-ignore
+
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })
@@ -52,6 +54,8 @@ export function EmailForm() {
       },
     },
     update(cache) {
+      //@ts-ignore
+
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })
@@ -79,6 +83,8 @@ export function EmailForm() {
       },
     },
     update(cache) {
+      //@ts-ignore
+
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })

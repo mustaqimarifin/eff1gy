@@ -31,6 +31,8 @@ export function AddBookmarkForm({ closeModal }) {
     addBookmark({
       variables: { data: { url, tag } },
       update(cache, { data: { addBookmark } }) {
+        // @ts-ignore
+
         const { bookmarks } = cache.readQuery({ query })
         return cache.writeQuery({
           query,

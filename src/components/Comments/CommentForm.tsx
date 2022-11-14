@@ -47,6 +47,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
       },
     },
     update(cache, { data: { addComment } }) {
+      //@ts-ignore
+
       const { comments } = cache.readQuery({
         query: GET_COMMENTS,
         variables: { refId, type },
