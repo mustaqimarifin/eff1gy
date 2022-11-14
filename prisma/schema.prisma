@@ -1,15 +1,16 @@
-datasource db {
-  provider   = "postgresql"
-  url        = env("SUPABASE_URL")
-}
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity", "postgresqlExtensions"]
 }
 
+datasource db {
+  provider   = "postgresql"
+  url        = env("SUPABASE_URL")
+  extensions = [pgcrypto, uuid_ossp(map: "uuid-ossp", schema: "extensions")]
+}
+
 model User {
-  id           String     @id @default(uuid()) 
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt    DateTime   @default(now())
   role         Role       @default(USER)
   username     String     @unique @db.VarChar(16)
@@ -22,27 +23,21 @@ model User {
   name         String?
   nickname     String?
   comments     Comment[]
+  posts        Post[]
   questions    Question[]
   reactions    Reaction[]
-  posts        Post[]
   stacks       Stack[]
 }
 
-enum Role {
-  BLOCKED
-  USER
-  ADMIN
-}
-
 model Bookmark {
-  id            String     @id @default(uuid()) 
+  id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  url           String     @unique 
+  url           String     @unique
   host          String?
-  title         String?    
-  image         String?    
-  description   String?    
+  title         String?
+  image         String?
+  description   String?
   twitterHandle String?
   faviconUrl    String?
   comments      Comment[]
@@ -53,138 +48,144 @@ model Bookmark {
 }
 
 model Question {
-  id          String     @id @default(uuid()) 
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  title       String
+  description String?
+  userId      String     @db.Uuid
   author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title       String     
-  description String?    
-  userId      String
   comments    Comment[]
   reactions   Reaction[]
 }
 
 model Comment {
-  id         String     @id @default(uuid()) 
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  text       String     
+  text       String
+  userId     String     @db.Uuid
+  bookmarkId String?    @db.Uuid
+  questionId String?    @db.Uuid
+  postId     String?    @db.Uuid
+  stackId    String?    @db.Uuid
+  bookmark   Bookmark?  @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  post       Post?      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question   Question?  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack      Stack?     @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  author     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   audio      Audio?
   reactions  Reaction[]
-  author     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
-  bookmark   Bookmark?  @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  question   Question?  @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  post       Post?      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  stack      Stack?     @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  bookmarkId String?
-  questionId String?
-  postId     String?
-  stackId    String?
 
   @@index([bookmarkId])
-  @@index([questionId])
   @@index([postId])
+  @@index([questionId])
   @@index([stackId])
 }
 
 model Audio {
-  id            String   @id @default(uuid()) 
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
   waveform      Json
   url           String
   transcription String
+  commentId     String   @unique @db.Uuid
   comment       Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  commentId     String   @unique
 }
 
 model Post {
-  id           String     @id @default(uuid()) 
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   publishedAt  DateTime?
-  author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   slug         String     @unique
-  title        String     
-  text         String    
-  excerpt      String     
+  title        String
+  text         String
+  excerpt      String
   featureImage String?
+  userId       String     @db.Uuid
+  author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments     Comment[]
-  reactions    Reaction[]
   history      PostEdit[]
-  userId       String
+  reactions    Reaction[]
 
   @@index([publishedAt])
 }
 
 model PostEdit {
-  id           String   @id @default(uuid()) 
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt    DateTime @default(now())
-  text         String   
-  title        String   
-  excerpt      String   
+  text         String
+  title        String
+  excerpt      String
   featureImage String?
+  postId       String?  @db.Uuid
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId       String?
 
   @@index([postId])
 }
 
 model Tag {
-  id        String     @id @default(uuid()) 
+  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name      String     @unique
-  stacks    Stack[]
   bookmarks Bookmark[]
+  stacks    Stack[]
 }
 
 model Stack {
-  id          String     @id @default(uuid()) 
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String
   slug        String?    @unique
-  description String     
+  description String
   image       String
   url         String
-  tags        Tag[]
   comments    Comment[]
   reactions   Reaction[]
+  tags        Tag[]
   users       User[]
 }
 
 model Reaction {
-  id         String    @id @default(uuid()) 
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt  DateTime  @default(now())
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
+  userId     String    @db.Uuid
+  commentId  String?   @db.Uuid
+  bookmarkId String?   @db.Uuid
+  questionId String?   @db.Uuid
+  postId     String?   @db.Uuid
+  stackId    String?   @db.Uuid
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   comment    Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  commentId  String?
-  bookmarkId String?
-  questionId String?
-  postId     String?
-  stackId    String?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([commentId])
   @@index([bookmarkId])
-  @@index([questionId])
+  @@index([commentId])
   @@index([postId])
+  @@index([questionId])
   @@index([stackId])
-}
-
-enum EmailSubscriptionType {
-  HACKER_NEWS
 }
 
 model EmailSubscription {
   email String
   type  EmailSubscriptionType
 
-  @@unique(fields: [email, type], name: "emailAndType")
+  @@unique([email, type])
   @@index([email])
+}
+
+enum Role {
+  BLOCKED
+  USER
+  ADMIN
+}
+
+enum EmailSubscriptionType {
+  HACKER_NEWS
 }

@@ -69,7 +69,7 @@ export function WritingSubscriptionForm({ defaultValue = '' }) {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.getrevue.co/profile/brian_lovin"
+            href="https://www.getrevue.co/profile/mustaqim_arifin"
             className="text-primary"
           >
             Revue

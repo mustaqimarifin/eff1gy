@@ -94,22 +94,22 @@ const workHistory = [
 
 const speakingData = [
   {
-    href: 'https://maze.co/podcast/#brian-lovin',
+    href: 'https://maze.co/podcast/#mustaqim-arifin',
     title: 'The Optimal Path Podcast',
     date: "Jan '22",
   },
   {
-    href: 'https://uibreakfast.com/228-design-advisory-with-brian-lovin/',
+    href: 'https://uibreakfast.com/228-design-advisory-with-mustaqim-arifin/',
     title: 'UI Breakfast',
     date: "Dec '21",
   },
   {
-    href: 'https://designmba.show/episodes/brian-lovin',
+    href: 'https://designmba.show/episodes/mustaqim-arifin',
     title: 'Design MBA',
     date: "Nov '21",
   },
   {
-    href: 'https://progressionapp.com/blog/podcast-26-brian-lovin-github-spectrum-design-details-on-the-rise-of-the-senior-ic/',
+    href: 'https://progressionapp.com/blog/podcast-26-mustaqim-arifin-github-spectrum-design-details-on-the-rise-of-the-senior-ic/',
     title: 'Progression Podcast',
     date: "Jun '21",
   },
@@ -119,12 +119,12 @@ const speakingData = [
     date: "Jan '21",
   },
   {
-    href: "https://softwareengineeringdaily.com/'20/07/15/github-mobile-with-brian-lovin-and-ryan-nystrom/",
+    href: "https://softwareengineeringdaily.com/'20/07/15/github-mobile-with-mustaqim-arifin-and-ryan-nystrom/",
     title: 'Software Engineering Daily',
     date: "Jul '20",
   },
   {
-    href: 'https://avocode.com/blog/brian-lovin-product-designer-github-interview',
+    href: 'https://avocode.com/blog/mustaqim-arifin-product-designer-github-interview',
     title: 'The Grit',
     date: "Jul '20",
   },
@@ -139,7 +139,7 @@ const speakingData = [
     date: "Feb '20",
   },
   {
-    href: 'https://www.loversmagazine.com/interviews/brian-lovin',
+    href: 'https://www.loversmagazine.com/interviews/mustaqim-arifin',
     title: 'Lovers Magazine',
     date: "Jan '18",
   },
@@ -217,7 +217,7 @@ export function Intro() {
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://github.com/brianlovin"
+                    href="https://github.com/mustaqimarifin"
                   >
                     sorta terrible at code :D
                   </a>
@@ -258,7 +258,7 @@ export function Intro() {
                 </p>
               </div>
               <div className="flex pt-6">
-                <Button href="https://changelog.brianlovin.com">
+                <Button href="https://changelog.mustaqimarifin.com">
                   View changelog
                 </Button>
               </div>
