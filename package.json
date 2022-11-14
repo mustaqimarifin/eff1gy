@@ -11,7 +11,7 @@
     "lint": "eslint ./src/pages/* ./src/components/* ./src/pages/api/* ./src/graphql/* ./src/lib/* -c .eslintrc.json --fix --ext ts,tsx",
     "generate": "graphql-codegen",
     "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'",
-    "postinstall": "npm generate && prisma generate"
+    "postinstall": "pnpm generate && prisma generate"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
