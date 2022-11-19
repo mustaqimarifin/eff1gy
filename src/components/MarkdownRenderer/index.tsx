@@ -1,4 +1,5 @@
 import deepmerge from 'deepmerge'
+import NextImage from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 import Markdown from 'react-markdown'
@@ -26,7 +27,7 @@ function LinkRenderer({ href, ...rest }: any) {
   }
   try {
     const url = new URL(href)
-    if (url.origin === 'https://brianlovin.com') {
+    if (url.origin === 'https://eff1gy.vercel.app') {
       return (
         <Link href={href}>
           <a {...rest} />
@@ -40,12 +41,79 @@ function LinkRenderer({ href, ...rest }: any) {
   }
 }
 
+const rx = Math.floor(Math.random() * (255 - 0)) + 1
+
+console.log(`my dick be ${rx}`)
+
+const keyStr =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+
+const triplet = (e1: number, e2: number, e3: number) =>
+  keyStr.charAt(e1 >> 2) +
+  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+  keyStr.charAt(e3 & 63)
+
+const rgbDataURL = (r: number, g: number, b: number) =>
+  `data:image/gif;base64,R0lGODlhAQABAPAA${
+    triplet(0, r, g) + triplet(b, 255, 255)
+  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
+
+const Image = (props) => {
+  return (
+    <NextImage {...props} layout="responsive" loading="lazy" quality={100} />
+  )
+}
+
 function getComponentsForVariant(variant) {
   // Blog posts
   switch (variant) {
     case 'longform': {
       return {
         a: LinkRenderer,
+        p: (paragraph: { children?: boolean; node?: any }) => {
+          const { node } = paragraph
+
+          if (node.children[0].tagName === 'img') {
+            const image = node.children[0]
+            const metastring = image.properties.alt
+            const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
+            const metaWidth = metastring.match(/{([^}]+)x/)
+            const metaHeight = metastring.match(/x([^}]+)}/)
+            const width = metaWidth ? metaWidth[1] : '768'
+            const height = metaHeight ? metaHeight[1] : '432'
+            const isPriority = metastring?.toLowerCase().match('{priority}')
+            const hasCaption = metastring?.toLowerCase().includes('{caption:')
+            const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
+
+            return (
+              <div className="mx-auto">
+                <Image
+                  src={`/static/img/${image.properties.src}`}
+                  //src={image.properties.src}
+                  width={width}
+                  height={height}
+                  placeholder="blur"
+                  //blurDataURL={rgbDataURL(rx, rx, rx)}
+                  blurDataURL={rgbDataURL(255, 204, 153)} //** Orange placeholder 👺 */
+                  className="object-cover"
+                  alt={alt}
+                  priority={isPriority}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
+                />
+                {hasCaption ? (
+                  <div className="caption" aria-label={caption}>
+                    {caption}
+                  </div>
+                ) : null}
+              </div>
+            )
+          }
+          return <p>{paragraph.children}</p>
+        },
         pre({ node, inline, className, children, ...props }) {
           const language = /language-(\w+)/.exec(className || '')?.[1]
           return !inline && language ? (

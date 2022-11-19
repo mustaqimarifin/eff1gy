@@ -6,7 +6,7 @@ import {
   MutationDeletePostArgs,
   MutationEditPostArgs,
 } from '~/graphql/types.generated'
-import { graphcdn } from '~/lib/graphcdn'
+import { stellate } from '~/lib/stellate'
 
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
   const { id, data } = args
@@ -42,7 +42,7 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
       },
     })
     .then((post) => {
-      if (post.publishedAt) graphcdn.purgeList('posts')
+      if (post.publishedAt) stellate.purgeList('posts')
       return post
     })
     .catch((err) => {
@@ -69,7 +69,7 @@ export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
       },
     })
     .then((post) => {
-      graphcdn.purgeList('posts')
+      stellate.purgeList('posts')
       return post
     })
     .catch((err) => {

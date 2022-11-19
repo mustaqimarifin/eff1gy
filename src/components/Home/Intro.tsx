@@ -1,11 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
-import { MapPin } from 'react-feather'
 
 import Button from '~/components/Button'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
+
+//import { MapPin } from 'react-feather'
+import { MapPin } from '../Icon/MapPin'
+import TraceImage from '../Image/TraceImage'
 
 function SectionTitle(props) {
   return (
@@ -91,22 +94,22 @@ const workHistory = [
 
 const speakingData = [
   {
-    href: 'https://maze.co/podcast/#brian-lovin',
+    href: 'https://maze.co/podcast/#mustaqim-arifin',
     title: 'The Optimal Path Podcast',
     date: "Jan '22",
   },
   {
-    href: 'https://uibreakfast.com/228-design-advisory-with-brian-lovin/',
+    href: 'https://uibreakfast.com/228-design-advisory-with-mustaqim-arifin/',
     title: 'UI Breakfast',
     date: "Dec '21",
   },
   {
-    href: 'https://designmba.show/episodes/brian-lovin',
+    href: 'https://designmba.show/episodes/mustaqim-arifin',
     title: 'Design MBA',
     date: "Nov '21",
   },
   {
-    href: 'https://progressionapp.com/blog/podcast-26-brian-lovin-github-spectrum-design-details-on-the-rise-of-the-senior-ic/',
+    href: 'https://progressionapp.com/blog/podcast-26-mustaqim-arifin-github-spectrum-design-details-on-the-rise-of-the-senior-ic/',
     title: 'Progression Podcast',
     date: "Jun '21",
   },
@@ -116,12 +119,12 @@ const speakingData = [
     date: "Jan '21",
   },
   {
-    href: "https://softwareengineeringdaily.com/'20/07/15/github-mobile-with-brian-lovin-and-ryan-nystrom/",
+    href: "https://softwareengineeringdaily.com/'20/07/15/github-mobile-with-mustaqim-arifin-and-ryan-nystrom/",
     title: 'Software Engineering Daily',
     date: "Jul '20",
   },
   {
-    href: 'https://avocode.com/blog/brian-lovin-product-designer-github-interview',
+    href: 'https://avocode.com/blog/mustaqim-arifin-product-designer-github-interview',
     title: 'The Grit',
     date: "Jul '20",
   },
@@ -136,7 +139,7 @@ const speakingData = [
     date: "Feb '20",
   },
   {
-    href: 'https://www.loversmagazine.com/interviews/brian-lovin',
+    href: 'https://www.loversmagazine.com/interviews/mustaqim-arifin',
     title: 'Lovers Magazine',
     date: "Jan '18",
   },
@@ -170,127 +173,92 @@ export function Intro() {
 
       <Detail.ContentContainer>
         <div className="pb-24 space-y-8 md:space-y-16">
+          <div className="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
+            <Image
+              alt="Mustaqim Arifin"
+              height={176}
+              width={176}
+              src="/wookie.png"
+              sizes="30vw"
+              priority
+              className="rounded-full dark:invert transition-colors duration-200"
+            />
+          </div>
           <SectionContainer>
             <SectionTitle />
             <SectionContent>
-              <div className="prose text-primary">
+              <div className="prose dark:prose-dark">
+                {/*                 <div style={{ width: 200, height: 200 }}>
+                  <embed
+                    src="https://www.youtube.com/embed/NE5H5intsck?autohide=1&autoplay=1"
+                    wmode="transparent"
+                    type="video/mp4"
+                    width="100%"
+                    height="100%"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    title="Keyboard Cat"
+                  />
+                </div> */}
                 <p>
-                  Hey, I&apos;m Brian. I&apos;m a designer,{' '}
+                  Hey, I&apos;m Mus. I&apos;m a{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://designdetails.fm"
                   >
-                    podcaster
+                    music producer
                   </a>
                   ,{' '}
                   <Link href="/writing" passHref>
-                    <a>writer</a>
+                    <a>audio engineer</a>
                   </Link>
                   , and{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://github.com/brianlovin"
+                    href="https://github.com/mustaqimarifin"
                   >
-                    software tinkerer
+                    sorta terrible at code :D
                   </a>
-                  . I&apos;m currently building{' '}
+                  . I&apos;m currently the marketing manager & creative lead at{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://github.com/mobile"
                   >
-                    native mobile apps at GitHub
+                    musegroupasia
                   </a>
                   .
                 </p>
                 <p>
-                  Before GitHub, I co-founded{' '}
+                  Before musegroupasia, I co-founded{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://spectrum.chat"
                   >
-                    Spectrum
+                    Akhyla
                   </a>
-                  , a platform for large-scale communities to have better public
-                  conversations. Spectrum was acquired by GitHub in November,
-                  2018.
+                  , a platform to electronic musicians to learn, collaborate and
+                  make records.
                 </p>
                 <p>
-                  Before Spectrum I designed payments experiences at Facebook,
-                  working across Facebook, Messenger, WhatsApp, and Instagram. I
-                  originally cut my teeth as the first product designer at{' '}
+                  During those years I was also Music Director at Infinity Games
+                  where I worked alongside some amazing talent helping shape the
+                  sound and music of{' '}
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://buffer.com"
                   >
-                    Buffer
+                    Heroes of War
                   </a>
-                  .
-                </p>
-                <p>
-                  I also co-host the{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://designdetails.fm"
-                  >
-                    Design Details Podcast
-                  </a>
-                  , a weekly conversation about design process and culture.
-                  Design Details is part of{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://spec.fm"
-                  >
-                    Spec.fm
-                  </a>
-                  , a podcast network for designers and developers, which I
-                  co-founded in 2015.
-                </p>
-                <p>
-                  You can find me on{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://twitter.com/brian_lovin"
-                  >
-                    Twitter
-                  </a>{' '}
-                  where I talk about design and development, or on{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://github.com/brianlovin"
-                  >
-                    GitHub
-                  </a>{' '}
-                  where I’m building in the open, or on{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://figma.com/@brian"
-                  >
-                    Figma
-                  </a>{' '}
-                  where I’m exploring how plugins can automate the tedious parts
-                  of interface design.
-                </p>
-
-                <p>
-                  If you’re interested in working together, let’s set up a{' '}
-                  <Link href="/crit">
-                    <a>visual design critique</a>
-                  </Link>
                   .
                 </p>
               </div>
               <div className="flex pt-6">
-                <Button href="https://changelog.brianlovin.com">
+                <Button href="https://changelog.mustaqimarifin.com">
                   View changelog
                 </Button>
               </div>
@@ -300,19 +268,19 @@ export function Intro() {
           <SectionContainer>
             <SectionTitle>Where</SectionTitle>
             <SectionContent>
-              <Image
-                priority
-                src="/static/img/sf.png"
-                width={800}
-                height={400}
-                layout="responsive"
+              <TraceImage
+                imgSrc="/map.png"
+                imgTrace="/map.svg"
+                width={1920}
+                height={1080}
+                layout="intrinsic"
                 className="rounded-2xl"
                 quality={100}
-                alt="Map of San Francisco with blue location dot in the middle"
+                alt="Map of KL with a wookie in the middle"
               />
               <p className="flex items-center justify-end pt-2 space-x-2 text-sm text-quaternary md:text-right">
-                <MapPin size={12} />
-                <span>San Francisco, CA</span>
+                <MapPin className="w-4 h-4" />
+                <span>Kuala Lumpur, WP</span>
               </p>
             </SectionContent>
           </SectionContainer>

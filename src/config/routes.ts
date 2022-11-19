@@ -24,7 +24,7 @@ const routes = {
       url: 'writing',
     }),
   },
-  crit: {
+  /*  crit: {
     label: 'Crit',
     path: '/crit',
     seo: extendSEO({
@@ -33,8 +33,8 @@ const routes = {
       image: 'og/crit.png',
       url: 'crit',
     }),
-  },
-  hn: {
+  }, */
+  /*   hn: {
     label: 'HN',
     path: '/hn',
     seo: extendSEO({
@@ -43,7 +43,7 @@ const routes = {
       image: 'og/hn.png',
       url: 'hn',
     }),
-  },
+  }, */
   bookmarks: {
     label: 'Bookmarks',
     path: '/bookmarks',
@@ -74,7 +74,7 @@ const routes = {
       url: 'ama',
     }),
   },
-  security: {
+  /*   security: {
     label: 'Security Checklist',
     path: '/security',
     seo: extendSEO({
@@ -83,7 +83,7 @@ const routes = {
       image: 'og/security.png',
       url: 'security',
     }),
-  },
+  }, */
   stack: {
     label: 'Stack',
     path: '/stack',
@@ -92,6 +92,26 @@ const routes = {
       description: 'My favorite tools and software.',
       image: 'og/stack.png',
       url: 'stack',
+    }),
+  },
+  privacy: {
+    label: 'Privacy Policy',
+    path: '/privacypolicy',
+    seo: extendSEO({
+      title: 'Privacy Policy',
+      description: null,
+      image: 'og/stack.png',
+      url: 'privacypolicy',
+    }),
+  },
+  terms: {
+    label: 'Terms of Service',
+    path: '/termsofservice',
+    seo: extendSEO({
+      title: 'Terms of Service',
+      description: null,
+      image: 'og/stack.png',
+      url: 'termsofservice',
     }),
   },
   settings: {

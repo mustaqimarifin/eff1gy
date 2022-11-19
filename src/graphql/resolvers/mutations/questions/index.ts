@@ -7,7 +7,7 @@ import {
   MutationDeleteQuestionArgs,
   MutationEditQuestionArgs,
 } from '~/graphql/types.generated'
-import { graphcdn } from '~/lib/graphcdn'
+import { stellate } from '~/lib/stellate'
 
 export async function editQuestion(
   _,
@@ -36,7 +36,7 @@ export async function editQuestion(
         },
       })
       .then((question) => {
-        graphcdn.purgeList('questions')
+        stellate.purgeList('questions')
         return question
       })
       .catch((err) => {
@@ -73,7 +73,7 @@ export async function addQuestion(
       },
     })
     .then((question) => {
-      graphcdn.purgeList('questions')
+      stellate.purgeList('questions')
       return question
     })
     .catch((err) => {
@@ -99,7 +99,7 @@ export async function deleteQuestion(
     return await prisma.question
       .delete({ where: { id } })
       .then(() => {
-        graphcdn.purgeList('questions')
+        stellate.purgeList('questions')
         return true
       })
       .catch((err) => {

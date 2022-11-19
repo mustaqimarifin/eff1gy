@@ -9,7 +9,7 @@ import {
   MutationEditStackArgs,
   MutationToggleStackUserArgs,
 } from '~/graphql/types.generated'
-import { graphcdn } from '~/lib/graphcdn'
+import { stellate } from '~/lib/stellate'
 import { validUrl } from '~/lib/validators'
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
@@ -80,7 +80,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
       include: { tags: true },
     })
     .then((stack) => {
-      graphcdn.purgeList('stacks')
+      stellate.purgeList('stacks')
       return stack
     })
     .catch((err) => {
@@ -118,7 +118,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
       include: { tags: true },
     })
     .then((stack) => {
-      graphcdn.purgeList('stacks')
+      stellate.purgeList('stacks')
       return stack
     })
     .catch((err) => {
@@ -160,7 +160,7 @@ export async function deleteStack(
       where: { id },
     })
     .then(() => {
-      graphcdn.purgeList('stacks')
+      stellate.purgeList('stacks')
       return true
     })
     .catch((err) => {

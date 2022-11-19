@@ -5,7 +5,6 @@ import * as React from 'react'
 
 import { useApollo } from '~/lib/apollo'
 
-import { FathomProvider } from './Fathom'
 import { SEO } from './SEO'
 import { Toast } from './Toaster'
 
@@ -40,7 +39,6 @@ export function Providers({ children, pageProps }: Props) {
   return (
     <>
       <SEO />
-      <FathomProvider />
       <Toast />
       <UserProvider>
         <ApolloProvider client={apolloClient}>

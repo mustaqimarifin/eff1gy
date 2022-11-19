@@ -1,26 +1,25 @@
 export const baseUrl =
   process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
-export const baseEmail = 'hi@brianlovin.com'
+export const baseEmail = 'vmprmyth@gmail.com'
 
 export const defaultSEO = {
-  title: 'Brian Lovin',
-  description:
-    'Product designer, podcaster, and writer, living in San Francisco.',
+  title: 'Mustaqim Arifin',
+  description: 'Product designer, podcaster, and writer, living in KL.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: baseUrl,
-    site_name: 'Brian Lovin',
+    site_name: 'Mustaqim Arifin',
     images: [
       {
         url: `${baseUrl}/static/og/default.png`,
-        alt: 'Brian Lovin',
+        alt: 'Mustaqim Arifin',
       },
     ],
   },
   twitter: {
-    handle: '@brian_lovin',
-    site: '@brian_lovin',
+    handle: '@vmprmyth',
+    site: '@vmprmyth',
     cardType: 'summary_large_image',
   },
 }
