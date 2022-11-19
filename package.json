@@ -9,7 +9,7 @@
     "generate": "graphql-codegen",
     "prod:db:seed": "dotenv -- sh -c 'SUPABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma db seed'",
     "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'",
-    "postinstall": "yarn generate && prisma generate"
+    "postinstall": "pnpm generate && prisma generate"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
