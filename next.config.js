@@ -1,5 +1,6 @@
 module.exports = {
   swcMinify: true,
+  reactStrictMode: true,
   resolve: {
     fallback: {
       fs: false,
@@ -11,6 +12,8 @@ module.exports = {
       'abs.twimg.com',
       'overthought.ghost.io',
       'imagedelivery.net',
+      'ik.imagekit.io',
+      'res.cloudinary.com',
     ],
   },
   async redirects() {

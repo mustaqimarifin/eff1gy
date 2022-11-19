@@ -89,8 +89,8 @@ function getComponentsForVariant(variant) {
             return (
               <div className="mx-auto">
                 <Image
-                  src={`/static/img/${image.properties.src}`}
-                  //src={image.properties.src}
+                  //src={`/static/img/${image.properties.src}`}
+                  src={image.properties.src}
                   width={width}
                   height={height}
                   placeholder="blur"

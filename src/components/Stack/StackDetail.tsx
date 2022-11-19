@@ -70,7 +70,8 @@ export function StackDetail({ slug }) {
                 <a className="inline-block">
                   <Image
                     priority
-                    src={`/static/img/stack/${stack.image}.jpeg`}
+                    //src={`/static/img/stack/${stack.image}`}
+                    src={stack.image}
                     width={80}
                     height={80}
                     layout="fixed"
