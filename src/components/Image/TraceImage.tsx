@@ -13,26 +13,28 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        top: '0px',
-        right: '0px',
-        bottom: '0px',
-        left: '0px',
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center',
-        filter: 'saturate(104%) brightness(103%) hue-rotate(3.142rad)',
-        // transform: '3s',
-        opacity: isLoaded ? '0' : '1',
-        transition: 'opacity 2s ',
-        transitionDelay: '2000ms',
       }}
     >
       <Image
         aria-hidden="true"
         src={imgTrace}
-        className="absolute"
         onLoadingComplete={() => setLoaded(false)}
+        style={{
+          position: 'absolute',
+          top: '0px',
+          right: '0px',
+          bottom: '0px',
+          left: '0px',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          filter: 'saturate(104%) brightness(103%) hue-rotate(3.142rad)',
+          // transform: '3s',
+          opacity: isLoaded ? '0' : '1',
+          transition: 'opacity 2s ',
+          transitionDelay: '2000ms',
+        }}
         alt={''}
         // loading="eager"
         {...rest}
