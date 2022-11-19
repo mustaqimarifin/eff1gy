@@ -145,7 +145,7 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: true,
         },
-        {
+        /* {
           href: '/security',
           label: 'Security Checklist',
           icon: SecurityChecklistIcon,
@@ -153,7 +153,7 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/security') >= 0,
           trailingAction: null,
           isExternal: false,
-        },
+        }, */
 
         /*        {
           href: '/hn',

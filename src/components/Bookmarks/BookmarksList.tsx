@@ -86,9 +86,14 @@ export function BookmarksList() {
             {bookmarks.edges.map((bookmark) => {
               const active = router.query.id === bookmark.node.id
               return (
-                <motion.div layout key={bookmark.node.id}>
-                  <BookmarksListItem active={active} bookmark={bookmark.node} />
-                </motion.div>
+                <ul>
+                  <motion.div layout key={bookmark.node.id}>
+                    <BookmarksListItem
+                      active={active}
+                      bookmark={bookmark.node}
+                    />
+                  </motion.div>
+                </ul>
               )
             })}
           </div>

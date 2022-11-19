@@ -46,6 +46,8 @@ export function StackUsedBy(props) {
         },
       },
       update(cache) {
+        //@ts-ignore
+
         const { stack } = cache.readQuery({
           query: GET_STACK,
           variables: { slug: props.stack.slug },

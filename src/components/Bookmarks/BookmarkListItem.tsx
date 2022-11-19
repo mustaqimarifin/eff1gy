@@ -26,32 +26,34 @@ export const BookmarksListItem = React.memo<Props>(({ bookmark, active }) => {
       partialVisibility
       onChange={(visible: boolean) => !isVisible && setIsVisible(visible)}
     >
-      <ListItem
-        key={bookmark.id}
-        title={bookmark.title}
-        byline={
-          <div className="flex items-center space-x-2">
-            {bookmark.faviconUrl && isVisible ? (
-              <img
-                src={bookmark.faviconUrl}
-                alt={`Favicon for ${bookmark.host}`}
-                className="h-4 w-4 rounded"
-                width="16px"
-                height="16px"
-              />
-            ) : (
-              <span className="flex h-4 w-4 items-center justify-center">
-                <Link size={12} />
-              </span>
-            )}
-            <span>{bookmark.host}</span>
-          </div>
-        }
-        active={active}
-        href="/bookmarks/[id]"
-        as={`/bookmarks/${bookmark.id}`}
-        onClick={(e) => handleClick(e, bookmark)}
-      />
+      <li>
+        <ListItem
+          key={bookmark.id}
+          title={bookmark.title}
+          byline={
+            <div className="flex items-center space-x-2">
+              {bookmark.faviconUrl && isVisible ? (
+                <img
+                  src={bookmark.faviconUrl}
+                  alt={`Favicon for ${bookmark.host}`}
+                  className="h-4 w-4 rounded"
+                  width="16px"
+                  height="16px"
+                />
+              ) : (
+                <span className="flex h-4 w-4 items-center justify-center">
+                  <Link size={12} />
+                </span>
+              )}
+              <span>{bookmark.host}</span>
+            </div>
+          }
+          active={active}
+          href="/bookmarks/[id]"
+          as={`/bookmarks/${bookmark.id}`}
+          onClick={(e) => handleClick(e, bookmark)}
+        />
+      </li>
     </ReactVisibilitySensor>
   )
 })

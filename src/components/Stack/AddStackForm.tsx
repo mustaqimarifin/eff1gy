@@ -9,7 +9,7 @@ import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_STACKS } from '~/graphql/queries/stack'
 import { useAddStackMutation } from '~/graphql/types.generated'
 
-import { StackImageUploader } from './StackImageUploader'
+//import { StackImageUploader } from './StackImageUploader'
 
 export function AddStackForm({ closeModal }) {
   const [url, setUrl] = React.useState('')
@@ -44,6 +44,11 @@ export function AddStackForm({ closeModal }) {
     })
   }
 
+  function onImageChange(e) {
+    error && setError('')
+    return setImage(e.target.value)
+  }
+
   function onUrlChange(e) {
     error && setError('')
     return setUrl(e.target.value)
@@ -65,20 +70,24 @@ export function AddStackForm({ closeModal }) {
     }
   }
 
-  function onImageUploaded(url) {
-    return setImage(url)
-  }
-
   const tagFilter = (t) => {
-    const allowedTags = ['indie', 'open source']
+    const allowedTags = ['tools', 'plugins']
     return allowedTags.indexOf(t.name) >= 0
   }
 
   return (
     <div className="space-y-3 p-4">
-      <StackImageUploader stack={null} onImageUploaded={onImageUploaded} />
+      {/*       <StackImageUploader stack={null} onImageUploaded={onImageUploaded} />
+       */}{' '}
       <form className="space-y-3" onSubmit={onSubmit}>
         <TagPicker filter={tagFilter} defaultValue={tag} onChange={setTag} />
+        <Input
+          type="text"
+          placeholder="/static/img/..."
+          value={image}
+          onChange={onImageChange}
+          onKeyDown={onKeyDown}
+        />
         <Input
           type="text"
           placeholder="Add a url..."
@@ -86,6 +95,7 @@ export function AddStackForm({ closeModal }) {
           onChange={onUrlChange}
           onKeyDown={onKeyDown}
         />
+
         <Input
           type="text"
           placeholder="Name"
@@ -101,7 +111,7 @@ export function AddStackForm({ closeModal }) {
           onKeyDown={onKeyDown}
         />
         <div className="flex justify-end">
-          <Button disabled={!url || !image} onClick={onSubmit}>
+          <Button disabled={!url} onClick={onSubmit}>
             {isSaving ? <LoadingSpinner /> : 'Save'}
           </Button>
         </div>
