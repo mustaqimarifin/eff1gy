@@ -6,11 +6,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src/pages/* ./src/components/* ./src/pages/api/* ./src/graphql/* ./src/lib/* -c .eslintrc.json --fix --ext ts,tsx",
-
     "generate": "graphql-codegen",
     "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'",
     "postinstall": "yarn generate && prisma generate"
-
   },
   "husky": {
     "hooks": {
