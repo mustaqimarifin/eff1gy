@@ -101,7 +101,6 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
       deleteBookmark: true,
     },
     update(cache) {
-      //@ts-ignore
       const { bookmarks } = cache.readQuery({
         query: GET_BOOKMARKS,
       })

@@ -10,7 +10,7 @@ import {
   useEditStackMutation,
 } from '~/graphql/types.generated'
 
-//import { StackImageUploader } from './StackImageUploader'
+import { StackImageUploader } from './StackImageUploader'
 
 export function EditStackForm({ closeModal, stack }) {
   const router = useRouter()
@@ -136,9 +136,7 @@ export function EditStackForm({ closeModal, stack }) {
   function onNameChange(e) {
     return dispatch({ type: 'edit-name', value: e.target.value })
   }
-  function onImageChange(e) {
-    return dispatch({ type: 'edit-image', value: e.target.value })
-  }
+
   function onURLChange(e) {
     return dispatch({ type: 'edit-url', value: e.target.value })
   }
@@ -153,33 +151,27 @@ export function EditStackForm({ closeModal, stack }) {
     }
   }
 
-  /*   function onImageUploaded(url) {
+  function onImageUploaded(url) {
     dispatch({
       type: 'edit-image',
       value: url,
     })
   }
- */
+
   function handleTagChange(value) {
     return dispatch({ type: 'edit-tag', value })
   }
 
   const tagFilter = (t) => {
-    const allowedTags = ['tools', 'plugins']
+    const allowedTags = ['indie', 'open source']
     return allowedTags.indexOf(t.name) >= 0
   }
 
   return (
     <div className="space-y-3 p-4">
-      {/*       <StackImageUploader stack={stack} onImageUploaded={onImageUploaded} /> */}
+      <StackImageUploader stack={stack} onImageUploaded={onImageUploaded} />
 
       <form className="space-y-3" onSubmit={handleSave}>
-        <Input
-          placeholder="IMG"
-          value={state.image}
-          onChange={onImageChange}
-          onKeyDown={onKeyDown}
-        />
         <Input
           placeholder="URL"
           value={state.url}

@@ -17,7 +17,6 @@ export function NavigationLink({
   const { setIsOpen } = React.useContext(GlobalNavigationContext)
   return (
     <li
-      key={href}
       className="flex items-stretch space-x-1"
       onClick={() => setIsOpen(false)}
     >

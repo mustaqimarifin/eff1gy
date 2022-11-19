@@ -8,7 +8,6 @@ import {
   MutationEditQuestionArgs,
 } from '~/graphql/types.generated'
 import { graphcdn } from '~/lib/graphcdn'
-//import { emailMe } from '~/lib/postmark'
 
 export async function editQuestion(
   _,
@@ -81,11 +80,6 @@ export async function addQuestion(
       console.error({ err })
       throw new UserInputError('Unable to add question')
     })
-
-  /*   emailMe({
-    subject: `AMA: ${title}`,
-    body: `${title}\n\n${baseUrl}/ama/${question.id}`,
-  }) */
 
   return question
 }

@@ -22,13 +22,11 @@ export const AppDissectionList = React.memo(() => {
         {summaries.map((summary) => {
           const active = router.query.slug === summary.slug
           return (
-            <ul>
-              <AppDissectionListItem
-                key={summary.slug}
-                summary={summary}
-                active={active}
-              />
-            </ul>
+            <AppDissectionListItem
+              key={summary.slug}
+              summary={summary}
+              active={active}
+            />
           )
         })}
       </div>

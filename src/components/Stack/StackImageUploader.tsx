@@ -50,12 +50,8 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    maxSize: 1000 * 1000, // 1mb,
-    accept: ['image/*'],
-
-    /*     accept: {
-      'image/*': ['.jpeg', '.png', '.webp', '.svg', '.gif'],
-    }, */
+    maxSize: 1000 * 1000, // 1mb
+    accept: '.jpg,.png,.jpeg',
     multiple: false,
   })
 

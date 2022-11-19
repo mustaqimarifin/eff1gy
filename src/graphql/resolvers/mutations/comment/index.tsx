@@ -99,13 +99,6 @@ export async function addComment(
     throw new UserInputError('Commenting on something that doesn’t exist')
   }
 
-  /*   if (!viewer.isAdmin) {
-    emailMe({
-      subject: `New comment on ${table}`,
-      body: `${text}\n\n${route}`,
-    })
-  } */
-
   const [comment] = await Promise.all([
     prisma.comment.create({
       data: {

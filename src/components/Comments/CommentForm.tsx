@@ -1,5 +1,5 @@
-import { uuidv7 } from '@kripod/uuidv7'
 import * as React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { ErrorAlert } from '~/components/Alert'
 import { CommentButton } from '~/components/Button'
@@ -29,7 +29,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
       __typename: 'Mutation',
       addComment: {
         __typename: 'Comment',
-        id: uuidv7(),
+        id: uuidv4(),
         text,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
@@ -37,7 +37,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: uuidv7(),
+          id: uuidv4(),
           username: data?.viewer?.username,
           avatar: data?.viewer?.avatar,
           name: data?.viewer?.name,
@@ -47,8 +47,6 @@ export function CommentForm({ refId, type, openModal }: Props) {
       },
     },
     update(cache, { data: { addComment } }) {
-      //@ts-ignore
-
       const { comments } = cache.readQuery({
         query: GET_COMMENTS,
         variables: { refId, type },

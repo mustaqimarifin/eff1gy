@@ -47,13 +47,11 @@ export function StackList() {
         {data.stacks.edges.map((stack) => {
           const active = router.query.slug === stack.node.slug
           return (
-            <ul>
-              <StackListItem
-                key={stack.node.id}
-                stack={stack.node}
-                active={active}
-              />
-            </ul>
+            <StackListItem
+              key={stack.node.id}
+              stack={stack.node}
+              active={active}
+            />
           )
         })}
 

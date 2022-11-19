@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 import * as React from 'react'
 
 import { TwitterButton } from '~/components/Button'

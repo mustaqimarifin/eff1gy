@@ -14,7 +14,7 @@ import {
 
 export function AddBookmarkForm({ closeModal }) {
   const [url, setUrl] = React.useState('')
-  const [tag, setTag] = React.useState('web')
+  const [tag, setTag] = React.useState('reading')
   const router = useRouter()
 
   const query = GET_BOOKMARKS
@@ -31,8 +31,6 @@ export function AddBookmarkForm({ closeModal }) {
     addBookmark({
       variables: { data: { url, tag } },
       update(cache, { data: { addBookmark } }) {
-        // @ts-ignore
-
         const { bookmarks } = cache.readQuery({ query })
         return cache.writeQuery({
           query,
@@ -82,7 +80,7 @@ export function AddBookmarkForm({ closeModal }) {
   }
 
   const tagFilter = (t) => {
-    const allowedBookmarkTags = ['web', 'lol', 'portfolio']
+    const allowedBookmarkTags = ['website', 'reading', 'portfolio']
     return allowedBookmarkTags.indexOf(t.name) >= 0
   }
 

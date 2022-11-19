@@ -12,27 +12,25 @@ interface Props {
 export const AppDissectionListItem = React.memo<Props>(
   ({ summary, active }) => {
     return (
-      <li key={summary.createdAt}>
-        <ListItem
-          key={summary.slug}
-          href="/app-dissection/[slug]"
-          as={`/app-dissection/${summary.slug}`}
-          title={summary.title}
-          description={null}
-          leadingAccessory={
-            <Image
-              width={'48px'}
-              height={'48px'}
-              layout="fixed"
-              alt={summary.title}
-              className={'rounded-xl'}
-              src={`/static/img/app-dissection/${summary.slug}.jpeg`}
-            />
-          }
-          byline={`${summary.detailsCount} details`}
-          active={active}
-        />
-      </li>
+      <ListItem
+        key={summary.slug}
+        href="/app-dissection/[slug]"
+        as={`/app-dissection/${summary.slug}`}
+        title={summary.title}
+        description={null}
+        leadingAccessory={
+          <Image
+            width={'48px'}
+            height={'48px'}
+            layout="fixed"
+            alt={summary.title}
+            className={'rounded-xl'}
+            src={`/static/img/app-dissection/${summary.slug}.jpeg`}
+          />
+        }
+        byline={`${summary.detailsCount} details`}
+        active={active}
+      />
     )
   }
 )

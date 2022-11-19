@@ -12,16 +12,14 @@ interface Props {
 export const PostListItem = React.memo<Props>(({ post, active }) => {
   const publishedAt = timestampToCleanTime({ timestamp: post.publishedAt })
   return (
-    <li key={post.publishedAt}>
-      <ListItem
-        key={post.id}
-        href="/writing/[slug]"
-        as={`/writing/${post.slug}`}
-        title={post.title}
-        description={null}
-        byline={post.publishedAt ? publishedAt.formatted : 'Draft'}
-        active={active}
-      />
-    </li>
+    <ListItem
+      key={post.id}
+      href="/writing/[slug]"
+      as={`/writing/${post.slug}`}
+      title={post.title}
+      description={null}
+      byline={post.publishedAt ? publishedAt.formatted : 'Draft'}
+      active={active}
+    />
   )
 })

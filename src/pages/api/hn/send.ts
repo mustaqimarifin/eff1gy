@@ -6,7 +6,6 @@ import { baseEmail } from '~/config/seo'
 import { CLIENT_URL, IS_PROD } from '~/graphql/constants'
 import { EmailSubscriptionType } from '~/graphql/types.generated'
 import { getHNPostsForDigest } from '~/lib/hn'
-//import { client as postmark } from '~/lib/postmark'
 import { prisma } from '~/lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -56,18 +55,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const unsubscribe_url = `${CLIENT_URL}/api/hn/unsubscribe?token=${unsubscribeToken}`
 
-      /*  if (IS_PROD) {
-        await postmark.sendEmailWithTemplate({
-          From: baseEmail,
-          To: subscriber.email,
-          TemplateId: 18037634,
-          TemplateModel: {
-            date,
-            posts,
-            unsubscribe_url,
-          },
-        })
-      } else {
+      if (IS_PROD) {
         console.log('Sending HN digest email', {
           From: baseEmail,
           To: subscriber.email,
@@ -77,7 +65,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             posts,
             unsubscribe_url,
           },
-        }) */
+        })
+      }
     } catch (err) {
       console.error('Error sending HN digest email: ', { subscriber, err })
     }

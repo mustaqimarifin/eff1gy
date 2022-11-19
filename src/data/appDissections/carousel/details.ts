@@ -104,25 +104,25 @@ export default [
   },
   {
     description:
-      'These next few screenshots didn’t warrant videos, but the illustrations here are worth sharing. For me, the illustrations make the app work.\r\n\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-1.png" width="100%">\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-2.png" width="100%">\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-3.png" width="100%">\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-4.png" width="100%">\r\n\r\nDropbox has assembled one of the best illustration teams in the world, and their work breathes life into what might otherwise be a bland application.\r\n\r\nNotice how the bottom photo has the woman hiding her face while I’m looking at the hidden photos view. Brilliant.',
+      'These next few screenshots didn’t warrant videos, but the illustrations here are worth sharing. For me, the illustrations make the app work.\r\n\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-1.png" width="100%">\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-2.png" width="100%">\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-3.png" width="100%">\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-4.png" width="100%">\r\n\r\nDropbox has assembled one of the best illustration teams in the world, and their work breathes life into what might otherwise be a bland application.\r\n\r\nNotice how the bottom photo has the woman hiding her face while I’m looking at the hidden photos view. Brilliant.',
     title: 'Illustrations',
     media: [''],
   },
   {
     description:
-      'Carousel is a gorgeous iPhone app. They get a lot of interaction design right and the product is so simple and clear. I wondered if their web application would offer that same ease-of-use and clarity; I was pleasantly surprised.\r\n\r\nHere’s the header image on their homepage. I’m constantly amazed at how such simple illustrations can create such an emotional experience. The photos tell a story, they’re relatable, they evoke real-world memories; a perfect example of emotional design.\r\n\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-5.png" width="100%">\r\n\r\nOnce you get inside the web app, a brief walkthrough pops into view. Dropbox’s clean modals take center stage and help guide users into the app while, naturally, pushing folks to activate on their mobile apps as well.\r\n\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-7.png" width="100%">',
+      'Carousel is a gorgeous iPhone app. They get a lot of interaction design right and the product is so simple and clear. I wondered if their web application would offer that same ease-of-use and clarity; I was pleasantly surprised.\r\n\r\nHere’s the header image on their homepage. I’m constantly amazed at how such simple illustrations can create such an emotional experience. The photos tell a story, they’re relatable, they evoke real-world memories; a perfect example of emotional design.\r\n\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-5.png" width="100%">\r\n\r\nOnce you get inside the web app, a brief walkthrough pops into view. Dropbox’s clean modals take center stage and help guide users into the app while, naturally, pushing folks to activate on their mobile apps as well.\r\n\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-7.png" width="100%">',
     title: 'Carousel on the web',
     media: [''],
   },
   {
     description:
-      'This sequence of photos captures the flow of sharing a photo on the web app. The animations and interaction design here is worth visiting the website to see in-person.\r\n\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-11.png" width="100%">\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-12.png" width="100%">\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-13.png" width="100%">',
+      'This sequence of photos captures the flow of sharing a photo on the web app. The animations and interaction design here is worth visiting the website to see in-person.\r\n\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-11.png" width="100%">\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-12.png" width="100%">\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-13.png" width="100%">',
     title: 'Sharing on the web',
     media: [''],
   },
   {
     description:
-      'Two more little details I loved: on the left, you can see a slick recreation of the timeline scrub. Jumping back in time is incredibly easy, and bold tooltips help guide you to a specific date. Putting this tech into the browser must have been a lot of work, but the continuity of experiences makes the application feel complete.\r\n\r\nOn the right, we’re greeted once again by our friendly cupcake encouraging you to share photos with friends.\r\n\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-9.png" width="100%">\r\n\r\n<img src="https://mustaqimarifin.s3.amazonaws.com/carousel-img-10.png" width="100%">',
+      'Two more little details I loved: on the left, you can see a slick recreation of the timeline scrub. Jumping back in time is incredibly easy, and bold tooltips help guide you to a specific date. Putting this tech into the browser must have been a lot of work, but the continuity of experiences makes the application feel complete.\r\n\r\nOn the right, we’re greeted once again by our friendly cupcake encouraging you to share photos with friends.\r\n\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-9.png" width="100%">\r\n\r\n<img src="https://brianlovin.s3.amazonaws.com/carousel-img-10.png" width="100%">',
     title: 'Timeline and sharing',
     media: [''],
   },

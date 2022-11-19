@@ -1,4 +1,4 @@
-//import * as uuid from 'uuid'
+import * as uuid from 'uuid'
 
 import {
   RATE_LIMIT_REQUEST_AMOUNT,
