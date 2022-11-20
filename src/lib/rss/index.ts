@@ -1,7 +1,8 @@
 import { Feed } from 'feed'
 
 import routes from '~/config/routes'
-import { baseEmail, CLIENT_URL } from '~/config/seo'
+import { baseEmail } from '~/config/seo'
+import { CLIENT_URL } from '~/graphql/constants'
 
 export async function generateRSS(posts) {
   const date = new Date()
