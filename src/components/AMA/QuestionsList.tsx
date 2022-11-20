@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { LayoutGroup, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import * as React from 'react'
@@ -12,7 +13,7 @@ import { QuestionListItem } from './QuestionListItem'
 
 export const QuestionsContext = React.createContext({
   filterPending: false,
-  setFilterPending: (bool: boolean) => {},
+  setFilterPending: (bool: boolean) => undefined,
 })
 
 export function QuestionsList() {

@@ -7,7 +7,7 @@ name, and description
 
 */
 
-import { prisma } from '~/lib/prisma'
+import prisma from '~/lib/prisma'
 
 import { getUser } from './getUser'
 

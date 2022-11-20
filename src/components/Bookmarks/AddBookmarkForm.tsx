@@ -51,7 +51,10 @@ export function AddBookmarkForm({ closeModal }) {
           },
         })
       },
-      onError() {},
+      onError(error) {
+        // eslint-disable-next-line prettier/prettier
+        error
+      },
     }).then(
       ({
         data: {

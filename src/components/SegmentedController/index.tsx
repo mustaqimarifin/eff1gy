@@ -8,9 +8,9 @@ type Item = {
 }
 
 type SegmentedControlProps = {
-  onSetActiveItem: Function
+  onSetActiveItem: (...args: unknown[]) => unknown
   items: Array<Item>
-  active: String
+  active: string
 }
 
 const SegmentedControl = ({

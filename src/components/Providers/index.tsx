@@ -16,7 +16,7 @@ interface Props {
 
 const globalNavigationContext = {
   isOpen: false,
-  setIsOpen: (val: boolean) => {},
+  setIsOpen: (val: boolean) => undefined,
 }
 
 export const GlobalNavigationContext = React.createContext(

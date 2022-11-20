@@ -13,7 +13,7 @@ import { BookmarksTitlebar } from './BookmarksTitlebar'
 
 export const BookmarksContext = React.createContext({
   tag: null,
-  setTag: (tag: string) => {},
+  setTag: (tag: string) => undefined,
 })
 
 export function BookmarksList() {

@@ -22,7 +22,10 @@ export function UsernameForm() {
         username,
       },
     },
-    onError() {},
+    onError(error) {
+      // eslint-disable-next-line prettier/prettier
+      error
+    },
     onCompleted() {
       setIsEditing(false)
     },

@@ -52,7 +52,10 @@ export const Comment = React.memo(function MemoComment({
         },
       })
     },
-    onError(error) {},
+    onError(error) {
+      // eslint-disable-next-line prettier/prettier
+      error
+    },
   })
 
   const [editComment] = useEditCommentMutation({
@@ -69,7 +72,10 @@ export const Comment = React.memo(function MemoComment({
         },
       },
     },
-    onError(error) {},
+    onError(error) {
+      // eslint-disable-next-line prettier/prettier
+      error
+    },
     onCompleted() {
       setIsSavingEdit(false)
       setIsEditing(false)

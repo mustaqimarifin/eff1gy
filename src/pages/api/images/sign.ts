@@ -3,7 +3,7 @@ import fetch from 'isomorphic-unfetch'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { UserRole } from '~/graphql/types.generated'
-import { prisma } from '~/lib/prisma'
+import prisma from '~/lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   function isAuthenticated(req, res) {

@@ -39,7 +39,10 @@ export function EmailForm() {
         },
       })
     },
-    onError() {},
+    onError(error) {
+      // eslint-disable-next-line prettier/prettier
+      error
+    },
     onCompleted() {
       setIsEditing(false)
     },
@@ -66,7 +69,10 @@ export function EmailForm() {
         },
       })
     },
-    onError() {},
+    onError(error) {
+      // eslint-disable-next-line prettier/prettier
+      error
+    },
     onCompleted() {
       setEmail('')
     },
@@ -90,7 +96,10 @@ export function EmailForm() {
         },
       })
     },
-    onError() {},
+    onError(error) {
+      // eslint-disable-next-line prettier/prettier
+      error
+    },
   })
 
   function onSubmit(e) {

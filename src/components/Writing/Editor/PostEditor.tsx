@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import * as React from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'

@@ -10,13 +10,13 @@ import { WritingTitlebar } from './WritingTitlebar'
 
 export const WritingContext = React.createContext({
   filter: 'published',
-  setFilter: (filter: string) => {},
+  setFilter: (filter: string) => undefined,
 })
 
 export function PostsList() {
   const router = useRouter()
   const [filter, setFilter] = React.useState('published')
-  let [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 
   const variables =
     filter === 'published'

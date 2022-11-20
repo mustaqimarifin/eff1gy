@@ -12,7 +12,7 @@ import { StackTitlebar } from './StackTitlebar'
 export function StackList() {
   const router = useRouter()
   const [isVisible, setIsVisible] = React.useState(false)
-  let [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 
   const { data, loading, fetchMore } = useGetStacksQuery()
 

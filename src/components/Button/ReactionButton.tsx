@@ -27,8 +27,8 @@ export function ReactionButton(props: Props) {
   const [nextTranslate, setNextTranslate] = React.useState(
     hasReactedState ? 'translate-y-0' : '-translate-y-4'
   )
-  let currOpacity = 'opacity-100'
-  let nextOpacity = 'opacity-0'
+  const currOpacity = 'opacity-100'
+  const nextOpacity = 'opacity-0'
   const [ping, setPing] = React.useState(false)
 
   // reset all the states as people navigate between different reactable pages

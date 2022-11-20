@@ -9,7 +9,7 @@ import { AppDissectionListItem } from './AppDissectionListItem'
 
 export const AppDissectionList = React.memo(() => {
   const router = useRouter()
-  let [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 
   return (
     <ListContainer data-cy="apps-list" onRef={setScrollContainerRef}>

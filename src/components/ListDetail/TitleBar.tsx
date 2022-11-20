@@ -68,10 +68,10 @@ export function TitleBar({
     const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56
     const initialOffsets = initialTitleOffsetsRef.current
 
-    let offsetAmount =
+    const offsetAmount =
       parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100
 
-    let opacityOffset =
+    const opacityOffset =
       parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1
 
     setOffset(Math.min(Math.max(offsetAmount, 0), 100))
