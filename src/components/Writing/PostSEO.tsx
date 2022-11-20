@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import * as React from 'react'
 
-import { baseUrl } from '~/config/seo'
+import { CLIENT_URL } from "~/graphql/constants"
 import { Post } from '~/graphql/types.generated'
 
 interface Props {
@@ -15,13 +15,13 @@ export function PostSEO({ post }: Props) {
       description={post.excerpt}
       openGraph={{
         title: post.title,
-        url: `${baseUrl}/writing/${post.slug}`,
+        url: `${CLIENT_URL}/writing/${post.slug}`,
         description: post.excerpt,
         images: [
           {
             url:
               post.featureImage ||
-              `${baseUrl}/static/img/writing/${post.slug}.png`,
+              `${CLIENT_URL}/static/img/writing/${post.slug}.png`,
             alt: post.title,
           },
         ],

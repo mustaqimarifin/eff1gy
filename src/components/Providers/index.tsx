@@ -3,6 +3,7 @@ import { UserProvider } from '@auth0/nextjs-auth0'
 import { NextPageContext } from 'next'
 import * as React from 'react'
 
+import { User } from '~/graphql/types.generated'
 import { useApollo } from '~/lib/apollo'
 
 import { SEO } from './SEO'
@@ -11,6 +12,7 @@ import { Toast } from './Toaster'
 interface Props {
   children?: any
   pageProps: NextPageContext
+  user: User
 }
 
 const globalNavigationContext = {
@@ -22,7 +24,7 @@ export const GlobalNavigationContext = React.createContext(
   globalNavigationContext
 )
 
-export function Providers({ children, pageProps }: Props) {
+export function Providers({ user, children, pageProps }: Props) {
   const apolloClient = useApollo(pageProps)
 
   const initialState = {
@@ -40,7 +42,7 @@ export function Providers({ children, pageProps }: Props) {
     <>
       <SEO />
       <Toast />
-      <UserProvider>
+      <UserProvider user={user}>
         <ApolloProvider client={apolloClient}>
           <GlobalNavigationContext.Provider value={state}>
             {children}

@@ -1,5 +1,5 @@
 const colors = require('tailwindcss/colors')
-const { fontFamily } = require('tailwindcss/defaultTheme')
+
 const mono = [
   'ui-monospace',
   'SFMono-Regular',
@@ -14,10 +14,6 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['GTAmerica', ...fontFamily.sans],
-        mono: mono,
-      },
       colors: {
         white: '#fff',
         green: colors.emerald,

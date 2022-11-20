@@ -1,3 +1,4 @@
+import { useUser } from '@auth0/nextjs-auth0'
 import Link from 'next/link'
 import * as React from 'react'
 import { Settings } from 'react-feather'
@@ -20,7 +21,9 @@ function Container(props) {
 }
 
 export function UserFooter() {
-  const { data, loading, error } = useViewerQuery()
+  const { user, isLoading, error } = useUser()
+
+  //const { data, loading, error } = useViewerQuery()
   const { setIsOpen } = React.useContext(GlobalNavigationContext)
 
   function signInButton() {
@@ -31,7 +34,7 @@ export function UserFooter() {
     )
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Container>
         <div className="flex w-full items-center justify-center py-1">
@@ -45,17 +48,17 @@ export function UserFooter() {
     return <Container>{signInButton()}</Container>
   }
 
-  if (data?.viewer) {
+  if (user) {
     return (
       <Container>
-        <Link href={`/u/${data.viewer.username}`}>
+        <Link href={`/u/${user.name}`}>
           <a
             onClick={() => setIsOpen(false)}
             className="flex flex-none items-center rounded-full"
           >
             <Avatar
-              user={data.viewer}
-              src={data.viewer.avatar}
+              user={user}
+              src={user.avatar}
               width={24}
               height={24}
               layout="fixed"

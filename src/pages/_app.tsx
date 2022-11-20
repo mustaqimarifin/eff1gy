@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
   const getLayout =
     Component.getLayout ||
     ((page) => (
-      <Providers pageProps={pageProps}>
+      <Providers user={pageProps} pageProps={pageProps}>
         <LoginErrorToast />
         <SiteLayout>{page}</SiteLayout>
       </Providers>

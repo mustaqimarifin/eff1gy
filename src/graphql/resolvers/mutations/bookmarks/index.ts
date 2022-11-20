@@ -7,8 +7,8 @@ import {
   MutationDeleteBookmarkArgs,
   MutationEditBookmarkArgs,
 } from '~/graphql/types.generated'
+import { graphcdn } from '~/lib/graphcdn'
 import { revue } from '~/lib/revue'
-import { stellate } from '~/lib/stellate'
 import { validUrl } from '~/lib/validators'
 
 import getBookmarkMetaData from './getBookmarkMetaData'
@@ -53,7 +53,7 @@ export async function editBookmark(
       include: { tags: true },
     })
     .then((bookmark) => {
-      stellate.purgeList('bookmarks')
+      graphcdn.purgeList('bookmarks')
       return bookmark
     })
     .catch((err) => {
@@ -110,7 +110,7 @@ export async function addBookmark(
       include: { tags: true },
     })
     .then((bookmark) => {
-      stellate.purgeList('bookmarks')
+      graphcdn.purgeList('bookmarks')
       return bookmark
     })
     .catch((err) => {
@@ -132,7 +132,7 @@ export async function deleteBookmark(
       where: { id },
     })
     .then(() => {
-      stellate.purgeList('bookmarks')
+      graphcdn.purgeList('bookmarks')
       return true
     })
     .catch((err) => {

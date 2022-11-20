@@ -1,7 +1,7 @@
 import { Feed } from 'feed'
 
 import routes from '~/config/routes'
-import { baseEmail, baseUrl } from '~/config/seo'
+import { baseEmail, CLIENT_URL } from '~/config/seo'
 
 export async function generateRSS(posts) {
   const date = new Date()
@@ -9,29 +9,29 @@ export async function generateRSS(posts) {
   const author = {
     name: 'Mustaqim Arifin',
     email: baseEmail,
-    link: baseUrl,
+    link: CLIENT_URL,
   }
 
   const feed = new Feed({
     title: routes.writing.seo.title,
     description: routes.writing.seo.description,
-    id: baseUrl,
-    link: baseUrl,
+    id: CLIENT_URL,
+    link: CLIENT_URL,
     language: 'en',
-    image: `${baseUrl}/static/meta/icon-512.png`,
-    favicon: `${baseUrl}/static/favicon.ico`,
+    image: `${CLIENT_URL}/static/meta/icon-512.png`,
+    favicon: `${CLIENT_URL}/static/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, Mustaqim Arifin`,
     updated,
     feedLinks: {
-      rss2: `${baseUrl}/writing/rss`,
-      json: `${baseUrl}/writing/feed`,
-      atom: `${baseUrl}/writing/atom`,
+      rss2: `${CLIENT_URL}/writing/rss`,
+      json: `${CLIENT_URL}/writing/feed`,
+      atom: `${CLIENT_URL}/writing/atom`,
     },
     author,
   })
 
   posts.forEach((post) => {
-    const url = `${baseUrl}/writing/${post.slug}`
+    const url = `${CLIENT_URL}/writing/${post.slug}`
     feed.addItem({
       title: post.title,
       id: url,

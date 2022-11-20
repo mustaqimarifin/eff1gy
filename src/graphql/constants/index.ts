@@ -1,12 +1,12 @@
-import { baseUrl } from '~/config/seo'
+import { baseUrl, devUrl } from '~/config/seo'
 
 export const IS_PROD = process.env.NODE_ENV === 'production'
 export const IS_DEV = process.env.NODE_ENV === 'development'
 export const IS_PREVIEW =
   process.env.VERCEL_ENV === 'preview' ||
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-export const STELLATE_ENDPOINT = process.env.STELLATE_ENDPOINT
-export const CLIENT_URL = IS_PROD ? baseUrl : 'http://localhost:3000'
+export const GRAPHCDN_PURGE_ENDPOINT = process.env.GRAPHCDN_PURGE_ENDPOINT
+export const CLIENT_URL = IS_PROD ? baseUrl : devUrl
 
 const PREVIEW_URL = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL
 
@@ -14,7 +14,7 @@ export const GRAPHQL_ENDPOINT = IS_DEV
   ? '/api/graphql'
   : IS_PREVIEW
   ? `https://${PREVIEW_URL}/api/graphql`
-  : 'https://eff1gy.stellate.sh'
+  : '/api/graphql'
 
 export const PAGINATION_AMOUNT = 24
 

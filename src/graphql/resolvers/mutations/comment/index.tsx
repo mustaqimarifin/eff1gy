@@ -8,7 +8,7 @@ import {
   MutationDeleteCommentArgs,
   MutationEditCommentArgs,
 } from '~/graphql/types.generated'
-import { stellate } from '~/lib/stellate'
+import { graphcdn } from '~/lib/graphcdn'
 //import { emailMe } from '~/lib/postmark'
 
 export async function editComment(
@@ -38,7 +38,7 @@ export async function editComment(
       data: { text },
     })
     .then((comment) => {
-      stellate.purgeList('comments')
+      graphcdn.purgeList('comments')
       return comment
     })
     .catch((err) => {
@@ -120,7 +120,7 @@ export async function addComment(
     throw new UserInputError('Unable to add comment')
   })
 
-  stellate.purgeList('comments')
+  graphcdn.purgeList('comments')
 
   return comment
 }
@@ -149,7 +149,7 @@ export async function deleteComment(
       where: { id },
     })
     .then(() => {
-      stellate.purgeList('comments')
+      graphcdn.purgeList('comments')
       return true
     })
     .catch((err) => {

@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { baseUrl } from '~/config/seo'
+import { CLIENT_URL } from "~/graphql/constants"
 import { prisma } from '~/lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { token } = req.query
 
   function done(path = '/settings') {
-    res.writeHead(301, { Location: `${baseUrl}${path}` })
+    res.writeHead(301, { Location: `${CLIENT_URL}${path}` })
     res.end()
   }
 

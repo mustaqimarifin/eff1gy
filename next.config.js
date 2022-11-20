@@ -1,14 +1,9 @@
 module.exports = {
   swcMinify: true,
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // don't resolve 'fs' module on the client to prevent this error on build --> Error: Can't resolve 'fs'
-      config.resolve.fallback = {
-        fs: false
-      };
-    }
-
-    return config;
+  resolve: {
+    fallback: {
+      fs: false,
+    },
   },
   images: {
     domains: [
@@ -16,8 +11,8 @@ module.exports = {
       'abs.twimg.com',
       'overthought.ghost.io',
       'imagedelivery.net',
-      'ik.imagekit.io',
       'res.cloudinary.com',
+      'ik.imagekit.io'
     ],
   },
   async redirects() {

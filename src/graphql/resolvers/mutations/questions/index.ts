@@ -1,13 +1,13 @@
 import { UserInputError } from 'apollo-server-micro'
 
-import { baseUrl } from '~/config/seo'
+import { CLIENT_URL } from "~/graphql/constants"
 import { Context } from '~/graphql/context'
 import {
   MutationAddQuestionArgs,
   MutationDeleteQuestionArgs,
   MutationEditQuestionArgs,
 } from '~/graphql/types.generated'
-import { stellate } from '~/lib/stellate'
+import { graphcdn } from '~/lib/graphcdn'
 
 export async function editQuestion(
   _,
@@ -36,7 +36,7 @@ export async function editQuestion(
         },
       })
       .then((question) => {
-        stellate.purgeList('questions')
+        graphcdn.purgeList('questions')
         return question
       })
       .catch((err) => {
@@ -73,7 +73,7 @@ export async function addQuestion(
       },
     })
     .then((question) => {
-      stellate.purgeList('questions')
+      graphcdn.purgeList('questions')
       return question
     })
     .catch((err) => {
@@ -99,7 +99,7 @@ export async function deleteQuestion(
     return await prisma.question
       .delete({ where: { id } })
       .then(() => {
-        stellate.purgeList('questions')
+        graphcdn.purgeList('questions')
         return true
       })
       .catch((err) => {
