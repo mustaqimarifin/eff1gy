@@ -1,10 +1,11 @@
-import * as uuid from 'uuid'
+//import * as uuid from 'uuid'
+
+import LRU from 'lru-cache'
 
 import {
   RATE_LIMIT_REQUEST_AMOUNT,
   RATE_LIMIT_REQUEST_DURATION,
 } from '../constants'
-const LRU = require('lru-cache')
 
 const rateLimit = (options) => {
   const tokenCache = new LRU({

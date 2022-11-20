@@ -39,6 +39,7 @@ export const Comment = React.memo(function MemoComment({
       deleteComment: true,
     },
     update(cache) {
+      //@ts-ignore
       const { comments } = cache.readQuery({
         query: GET_COMMENTS,
         variables: { refId, type },
