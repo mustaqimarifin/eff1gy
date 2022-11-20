@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo'
 import * as React from 'react'
 
-import { CLIENT_URL } from "~/graphql/constants"
+import { CLIENT_URL } from '~/graphql/constants'
 import { Post } from '~/graphql/types.generated'
 
 interface Props {

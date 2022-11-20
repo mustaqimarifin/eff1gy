@@ -7,9 +7,9 @@ import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { withProviders } from '~/components/Providers/withProviders'
-import { CLIENT_URL } from "~/graphql/constants"
 import designDetailsPosts from '~/data/appDissections'
 import { DesignDetailsPost } from '~/data/appDissections'
+import { CLIENT_URL } from '~/graphql/constants'
 
 interface Props {
   post: DesignDetailsPost

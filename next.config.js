@@ -12,7 +12,7 @@ module.exports = {
       'overthought.ghost.io',
       'imagedelivery.net',
       'res.cloudinary.com',
-      'ik.imagekit.io'
+      'ik.imagekit.io',
     ],
   },
   async redirects() {

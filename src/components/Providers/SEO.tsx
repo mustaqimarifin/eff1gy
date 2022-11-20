@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import { DefaultSeo } from 'next-seo'
 import * as React from 'react'
-import { CLIENT_URL } from '~/graphql/constants'
+
 import { defaultSEO } from '~/config/seo'
+import { CLIENT_URL } from '~/graphql/constants'
 
 export function SEO() {
   return (

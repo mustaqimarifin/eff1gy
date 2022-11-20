@@ -1,6 +1,6 @@
 import { UserInputError } from 'apollo-server-micro'
 
-import { CLIENT_URL } from "~/graphql/constants"
+import { CLIENT_URL } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
 import {
   MutationAddQuestionArgs,

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { CLIENT_URL } from "~/graphql/constants"
+import { CLIENT_URL } from '~/graphql/constants'
 import { prisma } from '~/lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

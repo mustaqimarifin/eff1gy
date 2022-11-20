@@ -15,10 +15,7 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
         overflow: 'hidden',
       }}
     >
-      <Image
-        aria-hidden="true"
-        src={imgTrace}
-        onLoadingComplete={() => setLoaded(false)}
+      <div
         style={{
           position: 'absolute',
           top: '0px',
@@ -35,10 +32,16 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           transition: 'opacity 2s ',
           transitionDelay: '2000ms',
         }}
-        alt={''}
-        // loading="eager"
-        {...rest}
-      />
+      >
+        <Image
+          aria-hidden="true"
+          src={imgTrace}
+          onLoadingComplete={() => setLoaded(false)}
+          alt={''}
+          // loading="eager"
+          {...rest}
+        />
+      </div>
       <div
         style={{
           opacity: isLoaded ? '1' : '0',

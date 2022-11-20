@@ -1,6 +1,6 @@
 //export const CLIENT_URL =
 //  process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
-import { CLIENT_URL } from "~/graphql/constants"
+import { CLIENT_URL } from '~/graphql/constants'
 export const baseUrl = 'https://eff1gy.vercel.app'
 export const devUrl = 'https://localhost:3000'
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 const colors = require('tailwindcss/colors')
 
 const mono = [
