@@ -1,8 +1,5 @@
-//export const CLIENT_URL =
-//  process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
-import { CLIENT_URL } from '~/graphql/constants'
-export const baseUrl = 'https://eff1gy.vercel.app'
-export const devUrl = 'https://localhost:3000'
+export const baseUrl =
+  process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
 
 export const baseEmail = 'vmprmyth@gmail.com'
 
@@ -12,11 +9,11 @@ export const defaultSEO = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: CLIENT_URL,
+    url: baseUrl,
     site_name: 'Mustaqim Arifin',
     images: [
       {
-        url: `${CLIENT_URL}/static/og/default.png`,
+        url: `${baseUrl}/static/og/default.png`,
         alt: 'Mustaqim Arifin',
       },
     ],
@@ -37,17 +34,17 @@ interface SEOProps {
 
 export function extendSEO(options: SEOProps) {
   const images = options.image
-    ? [{ url: `${CLIENT_URL}/static/${options.image}` }]
+    ? [{ url: `${baseUrl}/static/${options.image}` }]
     : defaultSEO.openGraph.images
 
   return {
     ...defaultSEO,
     ...options,
-    url: `${CLIENT_URL}/${options.url}`,
+    url: `${baseUrl}/${options.url}`,
     openGraph: {
       ...defaultSEO.openGraph,
       images,
-      url: `${CLIENT_URL}/${options.url}`,
+      url: `${baseUrl}/${options.url}`,
     },
   }
 }

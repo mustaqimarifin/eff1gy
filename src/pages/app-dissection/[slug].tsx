@@ -7,9 +7,9 @@ import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { withProviders } from '~/components/Providers/withProviders'
+import { baseUrl } from '~/config/seo'
 import designDetailsPosts from '~/data/appDissections'
 import { DesignDetailsPost } from '~/data/appDissections'
-import { CLIENT_URL } from '~/graphql/constants'
 
 interface Props {
   post: DesignDetailsPost
@@ -25,13 +25,13 @@ function AppDissectionPage({ post }: Props) {
           title={`${post.title} · App Dissection`}
           description={post.description}
           openGraph={{
-            url: `${CLIENT_URL}/app-dissection/${post.slug}`,
+            url: `${baseUrl}/app-dissection/${post.slug}`,
             title: post.title,
             description: removeMd(post.description),
             site_name: 'App Dissection',
             images: [
               {
-                url: `${CLIENT_URL}/static/og/app-dissection.png`,
+                url: `${baseUrl}/static/og/app-dissection.png`,
                 alt: 'App Dissection',
               },
             ],

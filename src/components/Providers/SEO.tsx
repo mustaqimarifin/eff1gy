@@ -3,7 +3,7 @@ import { DefaultSeo } from 'next-seo'
 import * as React from 'react'
 
 import { defaultSEO } from '~/config/seo'
-import { CLIENT_URL } from '~/graphql/constants'
+import { baseUrl } from '~/config/seo'
 
 export function SEO() {
   return (
@@ -24,7 +24,7 @@ export function SEO() {
           rel="alternate"
           type="application/rss+xml"
           title="RSS feed"
-          href={`${CLIENT_URL}/writing/rss`}
+          href={`${baseUrl}/writing/rss`}
         />
         <meta
           name="theme-color"

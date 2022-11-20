@@ -2,7 +2,7 @@ import { Feed } from 'feed'
 
 import routes from '~/config/routes'
 import { baseEmail } from '~/config/seo'
-import { CLIENT_URL } from '~/graphql/constants'
+import { baseUrl } from '~/config/seo'
 
 export async function generateRSS(posts) {
   const date = new Date()
@@ -10,29 +10,29 @@ export async function generateRSS(posts) {
   const author = {
     name: 'Mustaqim Arifin',
     email: baseEmail,
-    link: CLIENT_URL,
+    link: baseUrl,
   }
 
   const feed = new Feed({
     title: routes.writing.seo.title,
     description: routes.writing.seo.description,
-    id: CLIENT_URL,
-    link: CLIENT_URL,
+    id: baseUrl,
+    link: baseUrl,
     language: 'en',
-    image: `${CLIENT_URL}/static/meta/icon-512.png`,
-    favicon: `${CLIENT_URL}/static/favicon.ico`,
+    image: `${baseUrl}/static/meta/icon-512.png`,
+    favicon: `${baseUrl}/static/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, Mustaqim Arifin`,
     updated,
     feedLinks: {
-      rss2: `${CLIENT_URL}/writing/rss`,
-      json: `${CLIENT_URL}/writing/feed`,
-      atom: `${CLIENT_URL}/writing/atom`,
+      rss2: `${baseUrl}/writing/rss`,
+      json: `${baseUrl}/writing/feed`,
+      atom: `${baseUrl}/writing/atom`,
     },
     author,
   })
 
   posts.forEach((post) => {
-    const url = `${CLIENT_URL}/writing/${post.slug}`
+    const url = `${baseUrl}/writing/${post.slug}`
     feed.addItem({
       title: post.title,
       id: url,
