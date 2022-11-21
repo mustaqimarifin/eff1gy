@@ -30,7 +30,7 @@ export const StackListItem = React.memo<Props>(({ stack, active }) => {
         byline={null}
         leadingAccessory={
           <Image
-            src={`/static/img/stack/${stack.image}.jpeg`}
+            src={stack.image}
             width={48}
             height={48}
             layout="fixed"

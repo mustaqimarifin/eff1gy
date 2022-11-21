@@ -6,16 +6,16 @@ CREATE TYPE "EmailSubscriptionType" AS ENUM ('HACKER_NEWS');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('usr_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "role" "Role" NOT NULL DEFAULT E'USER',
-    "username" VARCHAR(16) NOT NULL,
+    "username" TEXT NOT NULL,
     "twitterId" TEXT NOT NULL,
     "email" TEXT,
     "pendingEmail" TEXT,
     "avatar" TEXT,
-    "description" VARCHAR(256),
-    "location" VARCHAR(32),
+    "description" TEXT,
+    "location" TEXT,
     "name" TEXT,
     "nickname" TEXT,
 
@@ -24,14 +24,14 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('bkm_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "url" VARCHAR(512) NOT NULL,
+    "url" TEXT NOT NULL,
     "host" TEXT,
-    "title" VARCHAR(280),
-    "image" VARCHAR(512),
-    "description" VARCHAR(2048),
+    "title" TEXT,
+    "image" TEXT,
+    "description" TEXT,
     "twitterHandle" TEXT,
     "faviconUrl" TEXT,
 
@@ -40,11 +40,11 @@ CREATE TABLE "Bookmark" (
 
 -- CreateTable
 CREATE TABLE "Question" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('qst_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "title" VARCHAR(256) NOT NULL,
-    "description" VARCHAR(1024),
+    "title" TEXT NOT NULL,
+    "description" TEXT,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
@@ -52,7 +52,7 @@ CREATE TABLE "Question" (
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('cmt_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Audio" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('aud_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "plays" INTEGER NOT NULL,
@@ -81,14 +81,14 @@ CREATE TABLE "Audio" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('pos_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "publishedAt" TIMESTAMP(3),
     "slug" TEXT NOT NULL,
-    "title" VARCHAR(280) NOT NULL,
+    "title" TEXT NOT NULL,
     "text" TEXT NOT NULL,
-    "excerpt" VARCHAR(280) NOT NULL,
+    "excerpt" TEXT NOT NULL,
     "featureImage" TEXT,
     "userId" TEXT NOT NULL,
 
@@ -97,11 +97,11 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "PostEdit" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('ped_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "text" TEXT NOT NULL,
-    "title" VARCHAR(280) NOT NULL,
-    "excerpt" VARCHAR(280) NOT NULL,
+    "title" TEXT NOT NULL,
+    "excerpt" TEXT NOT NULL,
     "featureImage" TEXT,
     "postId" TEXT,
 
@@ -110,7 +110,7 @@ CREATE TABLE "PostEdit" (
 
 -- CreateTable
 CREATE TABLE "Tag" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('tag_', xid()))::TEXT,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
@@ -118,12 +118,12 @@ CREATE TABLE "Tag" (
 
 -- CreateTable
 CREATE TABLE "Stack" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('stk_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
     "slug" TEXT,
-    "description" VARCHAR(280) NOT NULL,
+    "description" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "url" TEXT NOT NULL,
 
@@ -132,7 +132,7 @@ CREATE TABLE "Stack" (
 
 -- CreateTable
 CREATE TABLE "Reaction" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT (concat('rct_', xid()))::TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
     "commentId" TEXT,
