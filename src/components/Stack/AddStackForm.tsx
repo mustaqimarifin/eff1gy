@@ -71,7 +71,7 @@ export function AddStackForm({ closeModal }) {
   }
 
   const tagFilter = (t) => {
-    const allowedTags = ['tools', 'plugins']
+    const allowedTags = ['apps', 'plugins']
     return allowedTags.indexOf(t.name) >= 0
   }
 

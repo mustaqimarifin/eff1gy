@@ -20,27 +20,27 @@ export function Tag({ name }) {
   let specificClasses = ''
   if (name) {
     switch (name?.toLowerCase()) {
-      case 'indie': {
+      case 'web': {
         specificClasses =
           'border-purple-200 text-purple-600 dark:text-purple-300 bg-purple-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'open source': {
+      case 'portfolio': {
         specificClasses =
           'border-green-200 text-green-600 dark:text-green-200  bg-green-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'portfolio': {
+      case 'lol': {
         specificClasses =
           'border-blue-200 text-blue-600 dark:text-blue-200 bg-blue-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'website': {
+      case 'apps': {
         specificClasses =
           'border-red-200 text-red-600 dark:text-red-200 bg-red-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'reading': {
+      case 'plugins': {
         specificClasses =
           'border-gray-200 text-gray-600 dark:text-gray-300 bg-gray-200 bg-opacity-30 dark:bg-opacity-10 hover:bg-opacity-40'
         break

@@ -1,6 +1,6 @@
-// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-var-requires */
 const colors = require('tailwindcss/colors')
-
+const { fontFamily } = require('tailwindcss/defaultTheme')
 const mono = [
   'ui-monospace',
   'SFMono-Regular',
@@ -13,8 +13,13 @@ const mono = [
 ]
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
+  darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['GTAmerica', ...fontFamily.sans],
+        mono: mono,
+      },
       colors: {
         white: '#fff',
         green: colors.emerald,
@@ -47,6 +52,9 @@ module.exports = {
         },
       },
     },
+  },
+  variants: {
+    typography: ['dark'],
   },
   plugins: [
     require('@tailwindcss/typography'),
