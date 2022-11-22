@@ -23,7 +23,6 @@ export const QuestionListItem = React.memo<Props>(({ question, active }) => {
             src={question.author.avatar}
             width={16}
             height={16}
-            layout={'fixed'}
             className="rounded-full"
           />{' '}
           <span>{question.author.name}</span>

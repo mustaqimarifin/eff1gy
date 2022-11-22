@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server-errors'
+import { GraphQLError } from 'graphql'
 
 import { Context } from '~/graphql/context'
 import {
@@ -38,7 +38,7 @@ export async function toggleReaction(
       break
     }
     default: {
-      throw new UserInputError('Invalid reaction type')
+      throw new GraphQLError('Invalid reaction type')
     }
   }
 
@@ -56,7 +56,7 @@ export async function toggleReaction(
   ])
 
   if (!parentObject) {
-    throw new UserInputError('Reacting on something that doesn’t exist')
+    throw new GraphQLError('Reacting on something that doesn’t exist')
   }
 
   let fn

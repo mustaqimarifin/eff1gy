@@ -37,6 +37,9 @@
     "@next/next/no-html-link-for-pages": "off"
   },
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "settings": {
     "react": {
       "pragma": "React",

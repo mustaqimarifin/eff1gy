@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server-micro'
+import { GraphQLError } from 'graphql'
 
 import { CLIENT_URL } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
@@ -20,16 +20,16 @@ export async function editComment(
   const { prisma, viewer } = ctx
 
   if (!text || text.length === 0)
-    throw new UserInputError('Comment can’t be blank')
+    throw new GraphQLError('Comment can’t be blank')
 
   const comment = await prisma.comment.findUnique({
     where: { id },
   })
 
-  if (!comment) throw new UserInputError('Comment doesn’t exist')
+  if (!comment) throw new GraphQLError('Comment doesn’t exist')
 
   if (comment.userId !== viewer?.id) {
-    throw new UserInputError('You can’t edit this comment')
+    throw new GraphQLError('You can’t edit this comment')
   }
 
   return await prisma.comment
@@ -43,7 +43,7 @@ export async function editComment(
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to edit comment')
+      throw new GraphQLError('Unable to edit comment')
     })
 }
 
@@ -58,7 +58,7 @@ export async function addComment(
   const trimmedText = text.trim()
 
   if (trimmedText.length === 0)
-    throw new UserInputError('Comments can’t be blank')
+    throw new GraphQLError('Comments can’t be blank')
 
   let field
   let table
@@ -89,14 +89,14 @@ export async function addComment(
       break
     }
     default: {
-      throw new UserInputError('Invalid comment type')
+      throw new GraphQLError('Invalid comment type')
     }
   }
 
   const parentObject = await prisma[table].findUnique({ where: { id: refId } })
 
   if (!parentObject) {
-    throw new UserInputError('Commenting on something that doesn’t exist')
+    throw new GraphQLError('Commenting on something that doesn’t exist')
   }
 
   const [comment] = await Promise.all([
@@ -117,7 +117,7 @@ export async function addComment(
     }),
   ]).catch((err) => {
     console.error({ err })
-    throw new UserInputError('Unable to add comment')
+    throw new GraphQLError('Unable to add comment')
   })
 
   graphcdn.purgeList('comments')
@@ -141,7 +141,7 @@ export async function deleteComment(
   if (!comment) return true
   // no permission
   if (comment.userId !== viewer?.id && !viewer?.isAdmin) {
-    throw new UserInputError('You can’t delete this comment')
+    throw new GraphQLError('You can’t delete this comment')
   }
 
   return await prisma.comment
@@ -154,6 +154,6 @@ export async function deleteComment(
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to delete comment')
+      throw new GraphQLError('Unable to delete comment')
     })
 }

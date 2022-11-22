@@ -63,28 +63,32 @@ export function BookmarkDetail({ id }) {
         <Detail.ContentContainer>
           <Detail.Header>
             <Tags tags={bookmark.tags} />
-            <Link href={bookmark.url}>
-              <a target="_blank" rel="noopener" className="block">
-                <Detail.Title ref={titleRef}>{bookmark.title}</Detail.Title>
-              </a>
+            <Link
+              passHref
+              href={bookmark.url}
+              target="_blank"
+              rel="noopener"
+              className="block"
+            >
+              <Detail.Title ref={titleRef}>{bookmark.title}</Detail.Title>
             </Link>
-            <Link href={bookmark.url}>
-              <a
-                target="_blank"
-                rel="noopener"
-                className="text-tertiary flex items-center space-x-2 leading-snug"
-              >
-                {bookmark.faviconUrl && (
-                  <img
-                    src={bookmark.faviconUrl}
-                    alt={`Favicon for ${bookmark.host}`}
-                    className="h-4 w-4"
-                    width="16px"
-                    height="16px"
-                  />
-                )}
-                <span>{bookmark.host}</span>
-              </a>
+            <Link
+              passHref
+              href={bookmark.url}
+              target="_blank"
+              rel="noopener"
+              className="text-tertiary flex items-center space-x-2 leading-snug"
+            >
+              {bookmark.faviconUrl && (
+                <img
+                  src={bookmark.faviconUrl}
+                  alt={`Favicon for ${bookmark.host}`}
+                  className="h-4 w-4"
+                  width="16px"
+                  height="16px"
+                />
+              )}
+              <span>{bookmark.host}</span>
             </Link>
             {bookmark.description && (
               <MarkdownRenderer

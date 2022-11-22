@@ -20,27 +20,24 @@ export const StackListItem = React.memo<Props>(({ stack, active }) => {
   }
 
   return (
-    <li>
-      <ListItem
-        key={stack.name}
-        href="/stack/[slug]"
-        as={`/stack/${stack.slug}`}
-        title={stack.name}
-        description={null}
-        byline={null}
-        leadingAccessory={
-          <Image
-            src={stack.image}
-            width={48}
-            height={48}
-            layout="fixed"
-            alt={`${stack.name} icon`}
-            className={'rounded-xl'}
-          />
-        }
-        active={active}
-        onClick={(e) => handleClick(e, stack)}
-      />
-    </li>
+    <ListItem
+      key={stack.name}
+      href="/stack/[slug]"
+      as={`/stack/${stack.slug}`}
+      title={stack.name}
+      description={null}
+      byline={null}
+      leadingAccessory={
+        <Image
+          src={stack.image}
+          width={48}
+          height={48}
+          alt={`${stack.name} icon`}
+          className="rounded-xl "
+        />
+      }
+      active={active}
+      onClick={(e) => handleClick(e, stack)}
+    />
   )
 })

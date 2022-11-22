@@ -491,9 +491,9 @@ export type BookmarkCoreFragment = {
   id: string
   url: string
   host: string
-  title?: string | null | undefined
-  description?: string | null | undefined
-  faviconUrl?: string | null | undefined
+  title?: string | null
+  description?: string | null
+  faviconUrl?: string | null
 }
 
 export type BookmarkListItemFragment = {
@@ -501,106 +501,96 @@ export type BookmarkListItemFragment = {
   id: string
   url: string
   host: string
-  title?: string | null | undefined
-  description?: string | null | undefined
-  faviconUrl?: string | null | undefined
+  title?: string | null
+  description?: string | null
+  faviconUrl?: string | null
 }
 
 export type BookmarkDetailFragment = {
   __typename: 'Bookmark'
-  reactionCount?: number | null | undefined
-  viewerHasReacted?: boolean | null | undefined
+  reactionCount?: number | null
+  viewerHasReacted?: boolean | null
   id: string
   url: string
   host: string
-  title?: string | null | undefined
-  description?: string | null | undefined
-  faviconUrl?: string | null | undefined
-  tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
+  title?: string | null
+  description?: string | null
+  faviconUrl?: string | null
+  tags: Array<{ __typename?: 'Tag'; name: string } | null>
 }
 
 export type BookmarksConnectionFragment = {
   __typename?: 'BookmarksConnection'
-  pageInfo?:
-    | {
-        __typename?: 'PageInfo'
-        hasNextPage?: boolean | null | undefined
-        totalCount?: number | null | undefined
-        endCursor?: string | null | undefined
-      }
-    | null
-    | undefined
-  edges: Array<
-    | {
-        __typename?: 'BookmarkEdge'
-        cursor?: string | null | undefined
-        node?:
-          | {
-              __typename: 'Bookmark'
-              id: string
-              url: string
-              host: string
-              title?: string | null | undefined
-              description?: string | null | undefined
-              faviconUrl?: string | null | undefined
-            }
-          | null
-          | undefined
-      }
-    | null
-    | undefined
-  >
+  pageInfo?: {
+    __typename?: 'PageInfo'
+    hasNextPage?: boolean | null
+    totalCount?: number | null
+    endCursor?: string | null
+  } | null
+  edges: Array<{
+    __typename?: 'BookmarkEdge'
+    cursor?: string | null
+    node?: {
+      __typename: 'Bookmark'
+      id: string
+      url: string
+      host: string
+      title?: string | null
+      description?: string | null
+      faviconUrl?: string | null
+    } | null
+  } | null>
 }
 
 export type CommentInfoFragment = {
   __typename: 'Comment'
   id: string
   createdAt: any
-  updatedAt?: any | null | undefined
-  text?: string | null | undefined
-  viewerCanEdit?: boolean | null | undefined
-  viewerCanDelete?: boolean | null | undefined
+  updatedAt?: any | null
+  text?: string | null
+  viewerCanEdit?: boolean | null
+  viewerCanDelete?: boolean | null
   author: {
     __typename: 'User'
     id: string
-    username?: string | null | undefined
-    avatar?: string | null | undefined
-    name?: string | null | undefined
-    role?: UserRole | null | undefined
-    isViewer?: boolean | null | undefined
-    isAdmin?: boolean | null | undefined
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
   }
 }
 
 export type PostCoreFragment = {
   __typename: 'Post'
   id: string
-  publishedAt?: any | null | undefined
-  title?: string | null | undefined
-  slug?: string | null | undefined
-  excerpt?: string | null | undefined
+  publishedAt?: any | null
+  title?: string | null
+  slug?: string | null
+  excerpt?: string | null
 }
 
 export type PostListItemFragment = {
   __typename: 'Post'
   id: string
-  publishedAt?: any | null | undefined
-  title?: string | null | undefined
-  slug?: string | null | undefined
-  excerpt?: string | null | undefined
+  publishedAt?: any | null
+  title?: string | null
+  slug?: string | null
+  excerpt?: string | null
 }
 
 export type PostDetailFragment = {
   __typename: 'Post'
-  text?: string | null | undefined
-  featureImage?: string | null | undefined
-  reactionCount?: number | null | undefined
-  viewerHasReacted?: boolean | null | undefined
+  text?: string | null
+  featureImage?: string | null
+  reactionCount?: number | null
+  viewerHasReacted?: boolean | null
   id: string
-  publishedAt?: any | null | undefined
-  title?: string | null | undefined
-  slug?: string | null | undefined
-  excerpt?: string | null | undefined
+  publishedAt?: any | null
+  title?: string | null
+  slug?: string | null
+  excerpt?: string | null
 }
 
 export type QuestionCoreFragment = {
@@ -608,19 +598,16 @@ export type QuestionCoreFragment = {
   id: string
   title: string
   createdAt: any
-  author?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
+  author?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
 }
 
 export type QuestionListItemFragment = {
@@ -628,95 +615,76 @@ export type QuestionListItemFragment = {
   id: string
   title: string
   createdAt: any
-  author?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
+  author?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
 }
 
 export type QuestionDetailFragment = {
   __typename: 'Question'
-  description?: string | null | undefined
-  status?: QuestionStatus | null | undefined
-  viewerCanEdit?: boolean | null | undefined
-  viewerCanComment?: boolean | null | undefined
-  reactionCount?: number | null | undefined
-  viewerHasReacted?: boolean | null | undefined
+  description?: string | null
+  status?: QuestionStatus | null
+  viewerCanEdit?: boolean | null
+  viewerCanComment?: boolean | null
+  reactionCount?: number | null
+  viewerHasReacted?: boolean | null
   id: string
   title: string
   createdAt: any
-  author?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
+  author?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
 }
 
 export type QuestionsConnectionFragment = {
   __typename?: 'QuestionsConnection'
-  pageInfo?:
-    | {
-        __typename?: 'PageInfo'
-        hasNextPage?: boolean | null | undefined
-        totalCount?: number | null | undefined
-        endCursor?: string | null | undefined
-      }
-    | null
-    | undefined
-  edges: Array<
-    | {
-        __typename?: 'QuestionEdge'
-        cursor?: string | null | undefined
-        node?:
-          | {
-              __typename: 'Question'
-              id: string
-              title: string
-              createdAt: any
-              author?:
-                | {
-                    __typename: 'User'
-                    id: string
-                    username?: string | null | undefined
-                    avatar?: string | null | undefined
-                    name?: string | null | undefined
-                    role?: UserRole | null | undefined
-                    isViewer?: boolean | null | undefined
-                    isAdmin?: boolean | null | undefined
-                  }
-                | null
-                | undefined
-            }
-          | null
-          | undefined
-      }
-    | null
-    | undefined
-  >
+  pageInfo?: {
+    __typename?: 'PageInfo'
+    hasNextPage?: boolean | null
+    totalCount?: number | null
+    endCursor?: string | null
+  } | null
+  edges: Array<{
+    __typename?: 'QuestionEdge'
+    cursor?: string | null
+    node?: {
+      __typename: 'Question'
+      id: string
+      title: string
+      createdAt: any
+      author?: {
+        __typename: 'User'
+        id: string
+        username?: string | null
+        avatar?: string | null
+        name?: string | null
+        role?: UserRole | null
+        isViewer?: boolean | null
+        isAdmin?: boolean | null
+      } | null
+    } | null
+  } | null>
 }
 
 export type StackCoreFragment = {
   __typename: 'Stack'
   id: string
   name: string
-  image?: string | null | undefined
+  image?: string | null
   url: string
   slug: string
 }
@@ -725,7 +693,7 @@ export type StackListItemFragment = {
   __typename: 'Stack'
   id: string
   name: string
-  image?: string | null | undefined
+  image?: string | null
   url: string
   slug: string
 }
@@ -733,91 +701,70 @@ export type StackListItemFragment = {
 export type StackDetailFragment = {
   __typename: 'Stack'
   createdAt: any
-  description?: string | null | undefined
-  reactionCount?: number | null | undefined
-  viewerHasReacted?: boolean | null | undefined
-  usedByViewer?: boolean | null | undefined
+  description?: string | null
+  reactionCount?: number | null
+  viewerHasReacted?: boolean | null
+  usedByViewer?: boolean | null
   id: string
   name: string
-  image?: string | null | undefined
+  image?: string | null
   url: string
   slug: string
-  usedBy: Array<
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
-  >
-  tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
+  usedBy: Array<{
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null>
+  tags: Array<{ __typename?: 'Tag'; name: string } | null>
 }
 
 export type StacksConnectionFragment = {
   __typename?: 'StacksConnection'
-  pageInfo?:
-    | {
-        __typename?: 'PageInfo'
-        hasNextPage?: boolean | null | undefined
-        totalCount?: number | null | undefined
-        endCursor?: string | null | undefined
-      }
-    | null
-    | undefined
-  edges: Array<
-    | {
-        __typename?: 'StackEdge'
-        cursor?: string | null | undefined
-        node?:
-          | {
-              __typename: 'Stack'
-              id: string
-              name: string
-              image?: string | null | undefined
-              url: string
-              slug: string
-            }
-          | null
-          | undefined
-      }
-    | null
-    | undefined
-  >
+  pageInfo?: {
+    __typename?: 'PageInfo'
+    hasNextPage?: boolean | null
+    totalCount?: number | null
+    endCursor?: string | null
+  } | null
+  edges: Array<{
+    __typename?: 'StackEdge'
+    cursor?: string | null
+    node?: {
+      __typename: 'Stack'
+      id: string
+      name: string
+      image?: string | null
+      url: string
+      slug: string
+    } | null
+  } | null>
 }
 
 export type UserInfoFragment = {
   __typename: 'User'
   id: string
-  username?: string | null | undefined
-  avatar?: string | null | undefined
-  name?: string | null | undefined
-  role?: UserRole | null | undefined
-  isViewer?: boolean | null | undefined
-  isAdmin?: boolean | null | undefined
+  username?: string | null
+  avatar?: string | null
+  name?: string | null
+  role?: UserRole | null
+  isViewer?: boolean | null
+  isAdmin?: boolean | null
 }
 
 export type UserSettingsFragment = {
   __typename?: 'User'
-  email?: string | null | undefined
-  pendingEmail?: string | null | undefined
-  emailSubscriptions?:
-    | Array<
-        | {
-            __typename?: 'EmailSubscription'
-            type?: EmailSubscriptionType | null | undefined
-            subscribed?: boolean | null | undefined
-          }
-        | null
-        | undefined
-      >
-    | null
-    | undefined
+  email?: string | null
+  pendingEmail?: string | null
+  emailSubscriptions?: Array<{
+    __typename?: 'EmailSubscription'
+    type?: EmailSubscriptionType | null
+    subscribed?: boolean | null
+  } | null> | null
 }
 
 export type EditBookmarkMutationVariables = Exact<{
@@ -827,21 +774,18 @@ export type EditBookmarkMutationVariables = Exact<{
 
 export type EditBookmarkMutation = {
   __typename?: 'Mutation'
-  editBookmark?:
-    | {
-        __typename: 'Bookmark'
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        url: string
-        host: string
-        title?: string | null | undefined
-        description?: string | null | undefined
-        faviconUrl?: string | null | undefined
-        tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
-      }
-    | null
-    | undefined
+  editBookmark?: {
+    __typename: 'Bookmark'
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    url: string
+    host: string
+    title?: string | null
+    description?: string | null
+    faviconUrl?: string | null
+    tags: Array<{ __typename?: 'Tag'; name: string } | null>
+  } | null
 }
 
 export type DeleteBookmarkMutationVariables = Exact<{
@@ -850,7 +794,7 @@ export type DeleteBookmarkMutationVariables = Exact<{
 
 export type DeleteBookmarkMutation = {
   __typename?: 'Mutation'
-  deleteBookmark?: boolean | null | undefined
+  deleteBookmark?: boolean | null
 }
 
 export type AddBookmarkMutationVariables = Exact<{
@@ -859,21 +803,18 @@ export type AddBookmarkMutationVariables = Exact<{
 
 export type AddBookmarkMutation = {
   __typename?: 'Mutation'
-  addBookmark?:
-    | {
-        __typename: 'Bookmark'
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        url: string
-        host: string
-        title?: string | null | undefined
-        description?: string | null | undefined
-        faviconUrl?: string | null | undefined
-        tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
-      }
-    | null
-    | undefined
+  addBookmark?: {
+    __typename: 'Bookmark'
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    url: string
+    host: string
+    title?: string | null
+    description?: string | null
+    faviconUrl?: string | null
+    tags: Array<{ __typename?: 'Tag'; name: string } | null>
+  } | null
 }
 
 export type AddCommentMutationVariables = Exact<{
@@ -884,28 +825,25 @@ export type AddCommentMutationVariables = Exact<{
 
 export type AddCommentMutation = {
   __typename?: 'Mutation'
-  addComment?:
-    | {
-        __typename: 'Comment'
-        id: string
-        createdAt: any
-        updatedAt?: any | null | undefined
-        text?: string | null | undefined
-        viewerCanEdit?: boolean | null | undefined
-        viewerCanDelete?: boolean | null | undefined
-        author: {
-          __typename: 'User'
-          id: string
-          username?: string | null | undefined
-          avatar?: string | null | undefined
-          name?: string | null | undefined
-          role?: UserRole | null | undefined
-          isViewer?: boolean | null | undefined
-          isAdmin?: boolean | null | undefined
-        }
-      }
-    | null
-    | undefined
+  addComment?: {
+    __typename: 'Comment'
+    id: string
+    createdAt: any
+    updatedAt?: any | null
+    text?: string | null
+    viewerCanEdit?: boolean | null
+    viewerCanDelete?: boolean | null
+    author: {
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    }
+  } | null
 }
 
 export type EditCommentMutationVariables = Exact<{
@@ -915,28 +853,25 @@ export type EditCommentMutationVariables = Exact<{
 
 export type EditCommentMutation = {
   __typename?: 'Mutation'
-  editComment?:
-    | {
-        __typename: 'Comment'
-        id: string
-        createdAt: any
-        updatedAt?: any | null | undefined
-        text?: string | null | undefined
-        viewerCanEdit?: boolean | null | undefined
-        viewerCanDelete?: boolean | null | undefined
-        author: {
-          __typename: 'User'
-          id: string
-          username?: string | null | undefined
-          avatar?: string | null | undefined
-          name?: string | null | undefined
-          role?: UserRole | null | undefined
-          isViewer?: boolean | null | undefined
-          isAdmin?: boolean | null | undefined
-        }
-      }
-    | null
-    | undefined
+  editComment?: {
+    __typename: 'Comment'
+    id: string
+    createdAt: any
+    updatedAt?: any | null
+    text?: string | null
+    viewerCanEdit?: boolean | null
+    viewerCanDelete?: boolean | null
+    author: {
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    }
+  } | null
 }
 
 export type DeleteCommentMutationVariables = Exact<{
@@ -945,7 +880,7 @@ export type DeleteCommentMutationVariables = Exact<{
 
 export type DeleteCommentMutation = {
   __typename?: 'Mutation'
-  deleteComment?: boolean | null | undefined
+  deleteComment?: boolean | null
 }
 
 export type EditEmailSubscriptionMutationVariables = Exact<{
@@ -954,24 +889,14 @@ export type EditEmailSubscriptionMutationVariables = Exact<{
 
 export type EditEmailSubscriptionMutation = {
   __typename?: 'Mutation'
-  editEmailSubscription?:
-    | {
-        __typename?: 'User'
-        emailSubscriptions?:
-          | Array<
-              | {
-                  __typename?: 'EmailSubscription'
-                  subscribed?: boolean | null | undefined
-                  type?: EmailSubscriptionType | null | undefined
-                }
-              | null
-              | undefined
-            >
-          | null
-          | undefined
-      }
-    | null
-    | undefined
+  editEmailSubscription?: {
+    __typename?: 'User'
+    emailSubscriptions?: Array<{
+      __typename?: 'EmailSubscription'
+      subscribed?: boolean | null
+      type?: EmailSubscriptionType | null
+    } | null> | null
+  } | null
 }
 
 export type EditPostMutationVariables = Exact<{
@@ -981,21 +906,18 @@ export type EditPostMutationVariables = Exact<{
 
 export type EditPostMutation = {
   __typename?: 'Mutation'
-  editPost?:
-    | {
-        __typename: 'Post'
-        text?: string | null | undefined
-        featureImage?: string | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        publishedAt?: any | null | undefined
-        title?: string | null | undefined
-        slug?: string | null | undefined
-        excerpt?: string | null | undefined
-      }
-    | null
-    | undefined
+  editPost?: {
+    __typename: 'Post'
+    text?: string | null
+    featureImage?: string | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    publishedAt?: any | null
+    title?: string | null
+    slug?: string | null
+    excerpt?: string | null
+  } | null
 }
 
 export type DeletePostMutationVariables = Exact<{
@@ -1004,7 +926,7 @@ export type DeletePostMutationVariables = Exact<{
 
 export type DeletePostMutation = {
   __typename?: 'Mutation'
-  deletePost?: boolean | null | undefined
+  deletePost?: boolean | null
 }
 
 export type AddPostMutationVariables = Exact<{
@@ -1013,21 +935,18 @@ export type AddPostMutationVariables = Exact<{
 
 export type AddPostMutation = {
   __typename?: 'Mutation'
-  addPost?:
-    | {
-        __typename: 'Post'
-        text?: string | null | undefined
-        featureImage?: string | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        publishedAt?: any | null | undefined
-        title?: string | null | undefined
-        slug?: string | null | undefined
-        excerpt?: string | null | undefined
-      }
-    | null
-    | undefined
+  addPost?: {
+    __typename: 'Post'
+    text?: string | null
+    featureImage?: string | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    publishedAt?: any | null
+    title?: string | null
+    slug?: string | null
+    excerpt?: string | null
+  } | null
 }
 
 export type EditQuestionMutationVariables = Exact<{
@@ -1037,34 +956,28 @@ export type EditQuestionMutationVariables = Exact<{
 
 export type EditQuestionMutation = {
   __typename?: 'Mutation'
-  editQuestion?:
-    | {
-        __typename: 'Question'
-        description?: string | null | undefined
-        status?: QuestionStatus | null | undefined
-        viewerCanEdit?: boolean | null | undefined
-        viewerCanComment?: boolean | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        title: string
-        createdAt: any
-        author?:
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-      }
-    | null
-    | undefined
+  editQuestion?: {
+    __typename: 'Question'
+    description?: string | null
+    status?: QuestionStatus | null
+    viewerCanEdit?: boolean | null
+    viewerCanComment?: boolean | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    title: string
+    createdAt: any
+    author?: {
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null
+  } | null
 }
 
 export type DeleteQuestionMutationVariables = Exact<{
@@ -1073,7 +986,7 @@ export type DeleteQuestionMutationVariables = Exact<{
 
 export type DeleteQuestionMutation = {
   __typename?: 'Mutation'
-  deleteQuestion?: boolean | null | undefined
+  deleteQuestion?: boolean | null
 }
 
 export type AddQuestionMutationVariables = Exact<{
@@ -1082,34 +995,28 @@ export type AddQuestionMutationVariables = Exact<{
 
 export type AddQuestionMutation = {
   __typename?: 'Mutation'
-  addQuestion?:
-    | {
-        __typename: 'Question'
-        description?: string | null | undefined
-        status?: QuestionStatus | null | undefined
-        viewerCanEdit?: boolean | null | undefined
-        viewerCanComment?: boolean | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        title: string
-        createdAt: any
-        author?:
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-      }
-    | null
-    | undefined
+  addQuestion?: {
+    __typename: 'Question'
+    description?: string | null
+    status?: QuestionStatus | null
+    viewerCanEdit?: boolean | null
+    viewerCanComment?: boolean | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    title: string
+    createdAt: any
+    author?: {
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null
+  } | null
 }
 
 export type ToggleReactionMutationVariables = Exact<{
@@ -1124,29 +1031,28 @@ export type ToggleReactionMutation = {
         __typename?: 'Bookmark'
         id: string
         url: string
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
+        reactionCount?: number | null
+        viewerHasReacted?: boolean | null
       }
     | {
         __typename?: 'Post'
         id: string
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
+        reactionCount?: number | null
+        viewerHasReacted?: boolean | null
       }
     | {
         __typename?: 'Question'
         id: string
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
+        reactionCount?: number | null
+        viewerHasReacted?: boolean | null
       }
     | {
         __typename?: 'Stack'
         id: string
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
+        reactionCount?: number | null
+        viewerHasReacted?: boolean | null
       }
     | null
-    | undefined
 }
 
 export type EditStackMutationVariables = Exact<{
@@ -1156,37 +1062,30 @@ export type EditStackMutationVariables = Exact<{
 
 export type EditStackMutation = {
   __typename?: 'Mutation'
-  editStack?:
-    | {
-        __typename: 'Stack'
-        createdAt: any
-        description?: string | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        usedByViewer?: boolean | null | undefined
-        id: string
-        name: string
-        image?: string | null | undefined
-        url: string
-        slug: string
-        usedBy: Array<
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-        >
-        tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
-      }
-    | null
-    | undefined
+  editStack?: {
+    __typename: 'Stack'
+    createdAt: any
+    description?: string | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    usedByViewer?: boolean | null
+    id: string
+    name: string
+    image?: string | null
+    url: string
+    slug: string
+    usedBy: Array<{
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null>
+    tags: Array<{ __typename?: 'Tag'; name: string } | null>
+  } | null
 }
 
 export type DeleteStackMutationVariables = Exact<{
@@ -1195,7 +1094,7 @@ export type DeleteStackMutationVariables = Exact<{
 
 export type DeleteStackMutation = {
   __typename?: 'Mutation'
-  deleteStack?: boolean | null | undefined
+  deleteStack?: boolean | null
 }
 
 export type AddStackMutationVariables = Exact<{
@@ -1204,37 +1103,30 @@ export type AddStackMutationVariables = Exact<{
 
 export type AddStackMutation = {
   __typename?: 'Mutation'
-  addStack?:
-    | {
-        __typename: 'Stack'
-        createdAt: any
-        description?: string | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        usedByViewer?: boolean | null | undefined
-        id: string
-        name: string
-        image?: string | null | undefined
-        url: string
-        slug: string
-        usedBy: Array<
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-        >
-        tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
-      }
-    | null
-    | undefined
+  addStack?: {
+    __typename: 'Stack'
+    createdAt: any
+    description?: string | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    usedByViewer?: boolean | null
+    id: string
+    name: string
+    image?: string | null
+    url: string
+    slug: string
+    usedBy: Array<{
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null>
+    tags: Array<{ __typename?: 'Tag'; name: string } | null>
+  } | null
 }
 
 export type ToggleStackUserMutationVariables = Exact<{
@@ -1243,38 +1135,31 @@ export type ToggleStackUserMutationVariables = Exact<{
 
 export type ToggleStackUserMutation = {
   __typename?: 'Mutation'
-  toggleStackUser?:
-    | {
-        __typename: 'Stack'
-        id: string
-        name: string
-        image?: string | null | undefined
-        url: string
-        slug: string
-        usedBy: Array<
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-        >
-      }
-    | null
-    | undefined
+  toggleStackUser?: {
+    __typename: 'Stack'
+    id: string
+    name: string
+    image?: string | null
+    url: string
+    slug: string
+    usedBy: Array<{
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null>
+  } | null
 }
 
 export type DeleteUserMutationVariables = Exact<{ [key: string]: never }>
 
 export type DeleteUserMutation = {
   __typename?: 'Mutation'
-  deleteUser?: boolean | null | undefined
+  deleteUser?: boolean | null
 }
 
 export type EditUserMutationVariables = Exact<{
@@ -1283,19 +1168,16 @@ export type EditUserMutationVariables = Exact<{
 
 export type EditUserMutation = {
   __typename?: 'Mutation'
-  editUser?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
+  editUser?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
 }
 
 export type GetBookmarksQueryVariables = Exact<{
@@ -1308,35 +1190,25 @@ export type GetBookmarksQuery = {
   __typename?: 'Query'
   bookmarks: {
     __typename?: 'BookmarksConnection'
-    pageInfo?:
-      | {
-          __typename?: 'PageInfo'
-          hasNextPage?: boolean | null | undefined
-          totalCount?: number | null | undefined
-          endCursor?: string | null | undefined
-        }
-      | null
-      | undefined
-    edges: Array<
-      | {
-          __typename?: 'BookmarkEdge'
-          cursor?: string | null | undefined
-          node?:
-            | {
-                __typename: 'Bookmark'
-                id: string
-                url: string
-                host: string
-                title?: string | null | undefined
-                description?: string | null | undefined
-                faviconUrl?: string | null | undefined
-              }
-            | null
-            | undefined
-        }
-      | null
-      | undefined
-    >
+    pageInfo?: {
+      __typename?: 'PageInfo'
+      hasNextPage?: boolean | null
+      totalCount?: number | null
+      endCursor?: string | null
+    } | null
+    edges: Array<{
+      __typename?: 'BookmarkEdge'
+      cursor?: string | null
+      node?: {
+        __typename: 'Bookmark'
+        id: string
+        url: string
+        host: string
+        title?: string | null
+        description?: string | null
+        faviconUrl?: string | null
+      } | null
+    } | null>
   }
 }
 
@@ -1346,21 +1218,18 @@ export type GetBookmarkQueryVariables = Exact<{
 
 export type GetBookmarkQuery = {
   __typename?: 'Query'
-  bookmark?:
-    | {
-        __typename: 'Bookmark'
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        url: string
-        host: string
-        title?: string | null | undefined
-        description?: string | null | undefined
-        faviconUrl?: string | null | undefined
-        tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
-      }
-    | null
-    | undefined
+  bookmark?: {
+    __typename: 'Bookmark'
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    url: string
+    host: string
+    title?: string | null
+    description?: string | null
+    faviconUrl?: string | null
+    tags: Array<{ __typename?: 'Tag'; name: string } | null>
+  } | null
 }
 
 export type GetCommentsQueryVariables = Exact<{
@@ -1370,29 +1239,25 @@ export type GetCommentsQueryVariables = Exact<{
 
 export type GetCommentsQuery = {
   __typename?: 'Query'
-  comments: Array<
-    | {
-        __typename: 'Comment'
-        id: string
-        createdAt: any
-        updatedAt?: any | null | undefined
-        text?: string | null | undefined
-        viewerCanEdit?: boolean | null | undefined
-        viewerCanDelete?: boolean | null | undefined
-        author: {
-          __typename: 'User'
-          id: string
-          username?: string | null | undefined
-          avatar?: string | null | undefined
-          name?: string | null | undefined
-          role?: UserRole | null | undefined
-          isViewer?: boolean | null | undefined
-          isAdmin?: boolean | null | undefined
-        }
-      }
-    | null
-    | undefined
-  >
+  comments: Array<{
+    __typename: 'Comment'
+    id: string
+    createdAt: any
+    updatedAt?: any | null
+    text?: string | null
+    viewerCanEdit?: boolean | null
+    viewerCanDelete?: boolean | null
+    author: {
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    }
+  } | null>
 }
 
 export type GetPostsQueryVariables = Exact<{
@@ -1401,18 +1266,14 @@ export type GetPostsQueryVariables = Exact<{
 
 export type GetPostsQuery = {
   __typename?: 'Query'
-  posts: Array<
-    | {
-        __typename: 'Post'
-        id: string
-        publishedAt?: any | null | undefined
-        title?: string | null | undefined
-        slug?: string | null | undefined
-        excerpt?: string | null | undefined
-      }
-    | null
-    | undefined
-  >
+  posts: Array<{
+    __typename: 'Post'
+    id: string
+    publishedAt?: any | null
+    title?: string | null
+    slug?: string | null
+    excerpt?: string | null
+  } | null>
 }
 
 export type GetPostQueryVariables = Exact<{
@@ -1421,21 +1282,18 @@ export type GetPostQueryVariables = Exact<{
 
 export type GetPostQuery = {
   __typename?: 'Query'
-  post?:
-    | {
-        __typename: 'Post'
-        text?: string | null | undefined
-        featureImage?: string | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        publishedAt?: any | null | undefined
-        title?: string | null | undefined
-        slug?: string | null | undefined
-        excerpt?: string | null | undefined
-      }
-    | null
-    | undefined
+  post?: {
+    __typename: 'Post'
+    text?: string | null
+    featureImage?: string | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    publishedAt?: any | null
+    title?: string | null
+    slug?: string | null
+    excerpt?: string | null
+  } | null
 }
 
 export type GetQuestionsQueryVariables = Exact<{
@@ -1448,45 +1306,32 @@ export type GetQuestionsQuery = {
   __typename?: 'Query'
   questions: {
     __typename?: 'QuestionsConnection'
-    pageInfo?:
-      | {
-          __typename?: 'PageInfo'
-          hasNextPage?: boolean | null | undefined
-          totalCount?: number | null | undefined
-          endCursor?: string | null | undefined
-        }
-      | null
-      | undefined
-    edges: Array<
-      | {
-          __typename?: 'QuestionEdge'
-          cursor?: string | null | undefined
-          node?:
-            | {
-                __typename: 'Question'
-                id: string
-                title: string
-                createdAt: any
-                author?:
-                  | {
-                      __typename: 'User'
-                      id: string
-                      username?: string | null | undefined
-                      avatar?: string | null | undefined
-                      name?: string | null | undefined
-                      role?: UserRole | null | undefined
-                      isViewer?: boolean | null | undefined
-                      isAdmin?: boolean | null | undefined
-                    }
-                  | null
-                  | undefined
-              }
-            | null
-            | undefined
-        }
-      | null
-      | undefined
-    >
+    pageInfo?: {
+      __typename?: 'PageInfo'
+      hasNextPage?: boolean | null
+      totalCount?: number | null
+      endCursor?: string | null
+    } | null
+    edges: Array<{
+      __typename?: 'QuestionEdge'
+      cursor?: string | null
+      node?: {
+        __typename: 'Question'
+        id: string
+        title: string
+        createdAt: any
+        author?: {
+          __typename: 'User'
+          id: string
+          username?: string | null
+          avatar?: string | null
+          name?: string | null
+          role?: UserRole | null
+          isViewer?: boolean | null
+          isAdmin?: boolean | null
+        } | null
+      } | null
+    } | null>
   }
 }
 
@@ -1496,34 +1341,28 @@ export type GetQuestionQueryVariables = Exact<{
 
 export type GetQuestionQuery = {
   __typename?: 'Query'
-  question?:
-    | {
-        __typename: 'Question'
-        description?: string | null | undefined
-        status?: QuestionStatus | null | undefined
-        viewerCanEdit?: boolean | null | undefined
-        viewerCanComment?: boolean | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        id: string
-        title: string
-        createdAt: any
-        author?:
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-      }
-    | null
-    | undefined
+  question?: {
+    __typename: 'Question'
+    description?: string | null
+    status?: QuestionStatus | null
+    viewerCanEdit?: boolean | null
+    viewerCanComment?: boolean | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    id: string
+    title: string
+    createdAt: any
+    author?: {
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null
+  } | null
 }
 
 export type GetStacksQueryVariables = Exact<{
@@ -1535,34 +1374,24 @@ export type GetStacksQuery = {
   __typename?: 'Query'
   stacks: {
     __typename?: 'StacksConnection'
-    pageInfo?:
-      | {
-          __typename?: 'PageInfo'
-          hasNextPage?: boolean | null | undefined
-          totalCount?: number | null | undefined
-          endCursor?: string | null | undefined
-        }
-      | null
-      | undefined
-    edges: Array<
-      | {
-          __typename?: 'StackEdge'
-          cursor?: string | null | undefined
-          node?:
-            | {
-                __typename: 'Stack'
-                id: string
-                name: string
-                image?: string | null | undefined
-                url: string
-                slug: string
-              }
-            | null
-            | undefined
-        }
-      | null
-      | undefined
-    >
+    pageInfo?: {
+      __typename?: 'PageInfo'
+      hasNextPage?: boolean | null
+      totalCount?: number | null
+      endCursor?: string | null
+    } | null
+    edges: Array<{
+      __typename?: 'StackEdge'
+      cursor?: string | null
+      node?: {
+        __typename: 'Stack'
+        id: string
+        name: string
+        image?: string | null
+        url: string
+        slug: string
+      } | null
+    } | null>
   }
 }
 
@@ -1572,44 +1401,37 @@ export type GetStackQueryVariables = Exact<{
 
 export type GetStackQuery = {
   __typename?: 'Query'
-  stack?:
-    | {
-        __typename: 'Stack'
-        createdAt: any
-        description?: string | null | undefined
-        reactionCount?: number | null | undefined
-        viewerHasReacted?: boolean | null | undefined
-        usedByViewer?: boolean | null | undefined
-        id: string
-        name: string
-        image?: string | null | undefined
-        url: string
-        slug: string
-        usedBy: Array<
-          | {
-              __typename: 'User'
-              id: string
-              username?: string | null | undefined
-              avatar?: string | null | undefined
-              name?: string | null | undefined
-              role?: UserRole | null | undefined
-              isViewer?: boolean | null | undefined
-              isAdmin?: boolean | null | undefined
-            }
-          | null
-          | undefined
-        >
-        tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
-      }
-    | null
-    | undefined
+  stack?: {
+    __typename: 'Stack'
+    createdAt: any
+    description?: string | null
+    reactionCount?: number | null
+    viewerHasReacted?: boolean | null
+    usedByViewer?: boolean | null
+    id: string
+    name: string
+    image?: string | null
+    url: string
+    slug: string
+    usedBy: Array<{
+      __typename: 'User'
+      id: string
+      username?: string | null
+      avatar?: string | null
+      name?: string | null
+      role?: UserRole | null
+      isViewer?: boolean | null
+      isAdmin?: boolean | null
+    } | null>
+    tags: Array<{ __typename?: 'Tag'; name: string } | null>
+  } | null
 }
 
 export type GetTagsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetTagsQuery = {
   __typename?: 'Query'
-  tags: Array<{ __typename?: 'Tag'; name: string } | null | undefined>
+  tags: Array<{ __typename?: 'Tag'; name: string } | null>
 }
 
 export type GetUserQueryVariables = Exact<{
@@ -1618,38 +1440,32 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = {
   __typename?: 'Query'
-  user?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
+  user?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
 }
 
 export type ViewerQueryVariables = Exact<{ [key: string]: never }>
 
 export type ViewerQuery = {
   __typename?: 'Query'
-  viewer?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-      }
-    | null
-    | undefined
+  viewer?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
 }
 
 export type GetViewerWithSettingsQueryVariables = Exact<{
@@ -1658,33 +1474,23 @@ export type GetViewerWithSettingsQueryVariables = Exact<{
 
 export type GetViewerWithSettingsQuery = {
   __typename?: 'Query'
-  viewer?:
-    | {
-        __typename: 'User'
-        id: string
-        username?: string | null | undefined
-        avatar?: string | null | undefined
-        name?: string | null | undefined
-        role?: UserRole | null | undefined
-        isViewer?: boolean | null | undefined
-        isAdmin?: boolean | null | undefined
-        email?: string | null | undefined
-        pendingEmail?: string | null | undefined
-        emailSubscriptions?:
-          | Array<
-              | {
-                  __typename?: 'EmailSubscription'
-                  type?: EmailSubscriptionType | null | undefined
-                  subscribed?: boolean | null | undefined
-                }
-              | null
-              | undefined
-            >
-          | null
-          | undefined
-      }
-    | null
-    | undefined
+  viewer?: {
+    __typename: 'User'
+    id: string
+    username?: string | null
+    avatar?: string | null
+    name?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+    email?: string | null
+    pendingEmail?: string | null
+    emailSubscriptions?: Array<{
+      __typename?: 'EmailSubscription'
+      type?: EmailSubscriptionType | null
+      subscribed?: boolean | null
+    } | null> | null
+  } | null
 }
 
 export const BookmarkCoreFragmentDoc = gql`

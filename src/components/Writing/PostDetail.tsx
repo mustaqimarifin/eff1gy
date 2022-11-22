@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import * as React from 'react'
 
 import { Comments } from '~/components/Comments'

@@ -35,7 +35,7 @@ export async function getContext(req, res) {
   }
 }
 
-export default async function context(ctx) {
+export default async function context(ctx: { req: any; res: any }) {
   return await getContext(ctx.req, ctx.res)
 }
 

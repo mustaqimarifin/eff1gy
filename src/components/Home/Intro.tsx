@@ -211,7 +211,7 @@ export function Intro() {
                   </a>
                   ,{' '}
                   <Link href="/writing" passHref>
-                    <a>audio engineer</a>
+                    audio engineer
                   </Link>
                   , and{' '}
                   <a
@@ -273,8 +273,7 @@ export function Intro() {
                 imgTrace="/map.svg"
                 width={1920}
                 height={1080}
-                layout="intrinsic"
-                className="rounded-2xl"
+                className="rounded-2xl overflow-hidden"
                 quality={100}
                 alt="Map of KL with a wookie in the middle"
               />

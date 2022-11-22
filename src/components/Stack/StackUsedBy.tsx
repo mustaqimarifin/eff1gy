@@ -41,8 +41,8 @@ export function StackUsedBy(props) {
           ...props.stack,
           usedByViewer: !data?.stack?.usedByViewer,
           usedBy: data?.stack?.usedByViewer
-            ? data?.stack?.usedBy.filter((u) => u.id !== viewerData?.viewer?.id)
-            : [...data?.stack?.usedBy, viewerData?.viewer],
+            ? data.stack.usedBy.filter((u) => u.id !== viewerData.viewer.id)
+            : [...data.stack.usedBy, viewerData.viewer],
         },
       },
       update(cache) {
@@ -62,9 +62,9 @@ export function StackUsedBy(props) {
               usedByViewer: !data?.stack?.usedByViewer,
               usedBy: data?.stack?.usedByViewer
                 ? data?.stack?.usedBy.filter(
-                    (u) => u.id !== viewerData?.viewer?.id
+                    (u) => u.id !== viewerData.viewer.id
                   )
-                : [...data?.stack?.usedBy, viewerData?.viewer],
+                : [...data.stack.usedBy, viewerData.viewer],
             },
           },
         })
@@ -103,17 +103,18 @@ export function StackUsedBy(props) {
             {data.stack.usedBy.map((user) => (
               <Tooltip key={user.id} content={user.name}>
                 <span>
-                  <Link href={`/u/${user.username}`} passHref>
-                    <a className="inline-flex p-1">
-                      <Avatar
-                        user={user}
-                        src={user.avatar}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                        layout="fixed"
-                      />
-                    </a>
+                  <Link
+                    href={`/u/${user.username}`}
+                    passHref
+                    className="inline-flex p-1"
+                  >
+                    <Avatar
+                      user={user}
+                      src={user.avatar}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
                   </Link>
                 </span>
               </Tooltip>

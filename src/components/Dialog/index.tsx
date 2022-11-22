@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Dialog, Transition } from '@headlessui/react'
 import * as React from 'react'
 import { Fragment, useState } from 'react'
@@ -7,11 +8,10 @@ import { GhostButton } from '~/components/Button'
 
 interface DialogProps {
   trigger?: React.ReactElement
-  children?: (...args: unknown[]) => unknown
+  children?: Function
   title: string
-  modalContent: (...args: unknown[]) => unknown
+  modalContent: Function
 }
-
 export function DialogComponent({
   trigger = null,
   children = null,

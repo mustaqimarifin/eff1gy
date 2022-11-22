@@ -1,5 +1,5 @@
 import { IS_PROD } from '~/graphql/constants'
-import { useLocalFiles } from '~/graphql/helpers/useLocalFiles'
+//import { useLocalFiles } from '~/graphql/helpers/useLocalFiles'
 
 const headers = {
   Authorization: `Token ${process.env.REVUE_API_KEY}`,
@@ -20,12 +20,6 @@ async function getSubscriber({ email }) {
   try {
     if (IS_PROD) {
       const subscribers = await getSubscribers()
-      return subscribers.find((sub) => sub.email === email)
-    } else {
-      const subscribers = await useLocalFiles({
-        path: 'revueSubscribers',
-        fetch: getSubscribers,
-      })
       return subscribers.find((sub) => sub.email === email)
     }
   } catch (e) {

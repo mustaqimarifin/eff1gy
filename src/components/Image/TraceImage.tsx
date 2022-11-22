@@ -10,36 +10,36 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
 
   return (
     <div
+      className=" overflow-hidden "
       style={{
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      <div
-        style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          bottom: '0px',
-          left: '0px',
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'center',
-          filter: 'saturate(104%) brightness(103%) hue-rotate(3.142rad)',
-          // transform: '3s',
-          opacity: isLoaded ? '0' : '1',
-          transition: 'opacity 2s ',
-          transitionDelay: '2000ms',
-        }}
-      >
+      <div>
         <Image
           aria-hidden="true"
           src={imgTrace}
+          fill
+          priority
           onLoadingComplete={() => setLoaded(false)}
           alt={''}
-          // loading="eager"
-          {...rest}
+          style={{
+            position: 'absolute',
+            top: '0px',
+            right: '0px',
+            bottom: '0px',
+            left: '0px',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            filter: 'saturate(104%) brightness(103%) hue-rotate(3.142rad)',
+            // transform: '3s',
+            opacity: isLoaded ? '0' : '1',
+            transition: 'opacity 2s ',
+            transitionDelay: '2000ms',
+          }}
         />
       </div>
       <div
@@ -53,8 +53,9 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           src={imgSrc}
           onLoadingComplete={() => setLoaded(true)}
           alt={''}
+          className="object-cover overflow-hidden transition ease-in-out"
           {...rest}
-          // className="overflow-hidden transition ease-in-out"
+          //
         />
       </div>
     </div>

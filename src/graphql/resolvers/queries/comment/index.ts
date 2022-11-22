@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server-micro'
+import { GraphQLError } from 'graphql'
 
 import { Context } from '~/graphql/context'
 import {

@@ -81,7 +81,7 @@ export function BookmarksList() {
     <BookmarksContext.Provider value={defaultContextValue}>
       <ListContainer data-cy="bookmarks-list" onRef={setScrollContainerRef}>
         <BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
-        <LayoutGroup>
+        <LayoutGroup id="bl">
           <div className="lg:space-y-1 lg:p-3">
             {bookmarks.edges.map((bookmark) => {
               const active = router.query.id === bookmark.node.id

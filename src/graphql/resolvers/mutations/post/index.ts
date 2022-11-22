@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server-errors'
+import { GraphQLError } from 'graphql'
 
 import { Context } from '~/graphql/context'
 import {
@@ -20,7 +20,7 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
   const { prisma } = ctx
 
   const existing = await prisma.post.findUnique({ where: { slug } })
-  if (existing?.id !== id) throw new UserInputError('Slug already exists')
+  if (existing?.id !== id) throw new GraphQLError('Slug already exists')
 
   return await prisma.post
     .update({
@@ -47,7 +47,7 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to edit post')
+      throw new GraphQLError('Unable to edit post')
     })
 }
 
@@ -74,7 +74,7 @@ export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to add post')
+      throw new GraphQLError('Unable to add post')
     })
 }
 

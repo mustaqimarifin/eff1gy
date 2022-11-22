@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server-micro'
+import { GraphQLError } from 'graphql'
 
 import { IS_PROD } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
@@ -23,7 +23,7 @@ export async function editBookmark(
   const { prisma } = ctx
 
   if (!title || title.length === 0)
-    throw new UserInputError('Bookmark must have a title')
+    throw new GraphQLError('Bookmark must have a title')
 
   // reset tags
   await prisma.bookmark.update({
@@ -58,7 +58,7 @@ export async function editBookmark(
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to edit bookmark')
+      throw new GraphQLError('Unable to edit bookmark')
     })
 }
 
@@ -71,7 +71,7 @@ export async function addBookmark(
   const { url, tag } = data
   const { prisma } = ctx
 
-  if (!validUrl(url)) throw new UserInputError('URL was invalid')
+  if (!validUrl(url)) throw new GraphQLError('URL was invalid')
 
   const metadata = await getBookmarkMetaData(url)
   const { host, title, image, description, faviconUrl } = metadata
@@ -115,7 +115,7 @@ export async function addBookmark(
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to create bookmark')
+      throw new GraphQLError('Unable to create bookmark')
     })
 }
 
@@ -137,6 +137,6 @@ export async function deleteBookmark(
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to delete bookmark')
+      throw new GraphQLError('Unable to delete bookmark')
     })
 }

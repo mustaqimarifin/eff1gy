@@ -19,20 +19,12 @@ function LinkRenderer({ href, ...rest }: any) {
 
   if (href.startsWith('@')) {
     // link to a mention
-    return (
-      <Link href={`/u/${href.slice(1)}`} {...rest}>
-        <a {...rest} />
-      </Link>
-    )
+    return <Link href={`/u/${href.slice(1)}`} {...rest}></Link>
   }
   try {
     const url = new URL(href)
     if (url.origin === 'https://eff1gy.vercel.app') {
-      return (
-        <Link href={href}>
-          <a {...rest} />
-        </Link>
-      )
+      return <Link href={href} {...rest}></Link>
     }
     return <a target="_blank" rel="noopener" href={href} {...rest} />
   } catch (e) {
@@ -60,9 +52,7 @@ const rgbDataURL = (r: number, g: number, b: number) =>
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
 
 const Image = (props) => {
-  return (
-    <NextImage {...props} layout="responsive" loading="lazy" quality={100} />
-  )
+  return <NextImage {...props} loading="lazy" quality={100} />
 }
 
 function getComponentsForVariant(variant) {

@@ -133,10 +133,12 @@ export function TitleBar({
             )}
 
             {backButton && (
-              <Link href={backButtonHref}>
-                <a className="text-primary flex items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden">
-                  <ArrowLeft size={16} className="text-primary" />
-                </a>
+              <Link
+                passHref
+                href={backButtonHref}
+                className="text-primary flex items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
+              >
+                <ArrowLeft size={16} className="text-primary" />
               </Link>
             )}
 

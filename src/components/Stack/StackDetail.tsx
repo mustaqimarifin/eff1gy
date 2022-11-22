@@ -66,25 +66,20 @@ export function StackDetail({ slug }) {
         <Detail.ContentContainer>
           <Detail.Header>
             <div className="flex items-center space-x-6">
-              <Link href={stack.url}>
-                <a className="inline-block">
-                  <Image
-                    priority
-                    //src={`/static/img/stack/${stack.image}`}
-                    src={stack.image}
-                    width={80}
-                    height={80}
-                    layout="fixed"
-                    alt={`${stack.name} icon`}
-                    className={'rounded-2xl'}
-                  />
-                </a>
+              <Link href={stack.url} passHref className="inline-block">
+                <Image
+                  priority
+                  //src={`/static/img/stack/${stack.image}`}
+                  src={stack.image}
+                  width={80}
+                  height={80}
+                  alt={`${stack.name} icon`}
+                  className={'rounded-2xl'}
+                />
               </Link>
               <div className="flex flex-col space-y-1">
-                <Link href={stack.url}>
-                  <a className="block">
-                    <Detail.Title ref={titleRef}>{stack.name}</Detail.Title>
-                  </a>
+                <Link href={stack.url} passHref className="block">
+                  <Detail.Title ref={titleRef}>{stack.name}</Detail.Title>
                 </Link>
                 {stack.tags && stack.tags.length > 0 && (
                   <Tags tags={stack.tags} />
