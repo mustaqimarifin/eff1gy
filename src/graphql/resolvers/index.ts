@@ -8,8 +8,8 @@ import {
   QuestionStatus,
   UserRole,
 } from '~/graphql/types.generated'
-import { revue } from '~/lib/revue'
 
+//import { revue } from '~/lib/revue'
 import { dateScalar } from '../scalars'
 
 export default {

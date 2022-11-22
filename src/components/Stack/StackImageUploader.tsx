@@ -66,9 +66,9 @@ export function StackImageUploader({ stack, onImageUploaded }) {
           src={initialImage || previewImage}
           width="96"
           height="96"
-          layout="fixed"
           quality={100}
           className={`inline-block rounded-lg`}
+          alt={stack.name}
         />
         <button
           onClick={() => {

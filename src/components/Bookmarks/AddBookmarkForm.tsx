@@ -68,7 +68,9 @@ export function AddBookmarkForm({ closeModal }) {
         if (router.asPath.indexOf('/bookmarks') >= 0) {
           return router.push(`/bookmarks/${id}`)
         } else {
-          toast.success('Bookmark created')
+          toast('Bookmark created!', {
+            icon: '🙀 ',
+          })
         }
       }
     )

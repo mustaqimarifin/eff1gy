@@ -1,25 +1,27 @@
-import { ApolloServer } from 'apollo-server-micro'
+import { ApolloServer } from '@apollo/server'
+import { startServerAndCreateNextHandler } from '@as-integrations/next'
+import { getSession } from '@auth0/nextjs-auth0'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-import context from '~/graphql/context'
-import withRateLimit from '~/graphql/helpers/withRateLimit'
-import resolvers from '~/graphql/resolvers'
-import typeDefs from '~/graphql/typeDefs'
+import { Context, getViewer } from '~/graphql/context'
+import { schema } from '~/graphql/schema'
+import { UserRole } from '~/graphql/types.generated'
+import prisma from '~/lib/prisma'
 
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context,
-  uploads: false,
-  subscriptions: false,
-  introspection: true,
-})
+/* type ExampleContext = {
+  req: NextApiRequest
+  res: NextApiResponse
+} */
 
-export const config = {
-  api: {
-    bodyParser: false,
+const apolloServer = new ApolloServer<Context>({ schema })
+
+export default startServerAndCreateNextHandler(apolloServer, {
+  context: async (req, res) => {
+    const viewer = await getViewer(req, res)
+
+    return {
+      viewer,
+      prisma,
+    }
   },
-}
-
-const handler = apolloServer.createHandler({ path: '/api/graphql' })
-
-export default withRateLimit(handler)
+})

@@ -6,6 +6,7 @@ import {
   ServerError,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
+import { SchemaLink } from '@apollo/client/link/schema'
 import { relayStylePagination } from '@apollo/client/utilities'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
@@ -13,8 +14,9 @@ import { useMemo } from 'react'
 import toast from 'react-hot-toast'
 
 import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
+import { schema } from '~/graphql/schema'
 
-global.fetch = require('node-fetch')
+//global.fetch = require('node-fetch')
 let apolloClient
 
 function createIsomorphLink({ context }) {
@@ -22,9 +24,9 @@ function createIsomorphLink({ context }) {
     // These have to imported dynamically, instead of at the root of the page,
     // in order to make sure that we're not shipping server-side code to the client
     // eslint-disable-next-line
-    const { SchemaLink } = require('@apollo/link-schema')
+    // const { SchemaLink } = require('@apollo/link-schema')
     // eslint-disable-next-line
-    const { schema } = require('~/graphql/schema')
+    // const { schema } = require('~/graphql/schema')
     return new SchemaLink({ schema, context })
   } else {
     return new HttpLink({
@@ -38,7 +40,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message }) => {
       try {
-        toast.error(message)
+        toast.error(message, {
+          icon: '👹',
+        })
       } catch {
         console.error({ message })
       }

@@ -21,9 +21,8 @@ export const AppDissectionListItem = React.memo<Props>(
           description={null}
           leadingAccessory={
             <Image
-              width={'48px'}
-              height={'48px'}
-              layout="fixed"
+              width={48}
+              height={48}
               alt={summary.title}
               className={'rounded-xl'}
               src={`/static/img/app-dissection/${summary.slug}.jpeg`}

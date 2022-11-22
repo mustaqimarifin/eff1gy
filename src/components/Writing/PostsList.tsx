@@ -64,11 +64,7 @@ export function PostsList() {
           {posts.map((post) => {
             const active = router.query?.slug === post.slug
 
-            return (
-              <ul>
-                <PostListItem key={post.id} post={post} active={active} />
-              </ul>
-            )
+            return <PostListItem key={post.id} post={post} active={active} />
           })}
         </div>
       </ListContainer>

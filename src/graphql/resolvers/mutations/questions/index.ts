@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server-micro'
+import { GraphQLError } from 'graphql'
 
 import { baseUrl } from '~/config/seo'
 import { Context } from '~/graphql/context'
@@ -19,7 +19,7 @@ export async function editQuestion(
 
   const question = await prisma.question.findUnique({ where: { id } })
   if (!question) {
-    throw new UserInputError('Question doesn’t exist')
+    throw new GraphQLError('Question doesn’t exist')
   }
 
   if (viewer.isAdmin || viewer.id === question.userId) {
@@ -41,11 +41,11 @@ export async function editQuestion(
       })
       .catch((err) => {
         console.error({ err })
-        throw new UserInputError('Unable to edit question')
+        throw new GraphQLError('Unable to edit question')
       })
   }
 
-  throw new UserInputError('No permission to delete this question')
+  throw new GraphQLError('No permission to delete this question')
 }
 
 export async function addQuestion(
@@ -78,7 +78,7 @@ export async function addQuestion(
     })
     .catch((err) => {
       console.error({ err })
-      throw new UserInputError('Unable to add question')
+      throw new GraphQLError('Unable to add question')
     })
 
   return question
@@ -104,9 +104,9 @@ export async function deleteQuestion(
       })
       .catch((err) => {
         console.error({ err })
-        throw new UserInputError('Unable to delete question')
+        throw new GraphQLError('Unable to delete question')
       })
   }
 
-  throw new UserInputError('No permission to delete this question')
+  throw new GraphQLError('No permission to delete this question')
 }

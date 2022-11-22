@@ -211,7 +211,7 @@ export function Intro() {
                   </a>
                   ,{' '}
                   <Link href="/writing" passHref>
-                    <a>audio engineer</a>
+                    audio engineer
                   </Link>
                   , and{' '}
                   <a

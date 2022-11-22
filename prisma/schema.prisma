@@ -1,3 +1,4 @@
+
 datasource db {
   provider             = "postgresql"
   url                  = env("SUPABASE_PG_URL")
@@ -9,17 +10,18 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+
 model User {
-  id           String     @id @default(cuid())
+  id           String     @id @default(dbgenerated("(concat('usr_', xid()))::TEXT"))
   createdAt    DateTime   @default(now())
   role         Role       @default(USER)
-  username     String     @unique @db.VarChar(16)
+  username     String     @unique 
   twitterId    String     @unique
   email        String?    @unique
   pendingEmail String?
   avatar       String?
-  description  String?    @db.VarChar(256)
-  location     String?    @db.VarChar(32)
+  description  String?    
+  location     String?   
   name         String?
   nickname     String?
   comments     Comment[]
@@ -36,40 +38,39 @@ enum Role {
 }
 
 model Bookmark {
-  id            String     @id @default(cuid())
+  id            String     @id @default(dbgenerated("(concat('bkm_', xid()))::TEXT"))
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  url           String     @unique @db.VarChar(512)
+  url           String     @unique 
   host          String?
-  title         String?    @db.VarChar(280)
-  image         String?    @db.VarChar(512)
-  description   String?    @db.VarChar(2048)
+  title         String?    
+  image         String?    
+  description   String?    
   twitterHandle String?
   faviconUrl    String?
   comments      Comment[]
   reactions     Reaction[]
   tags          Tag[]
-
   @@index([host])
 }
 
 model Question {
-  id          String     @id @default(cuid())
+  id          String     @id @default(dbgenerated("(concat('qst_', xid()))::TEXT"))
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title       String     @db.VarChar(256)
-  description String?    @db.VarChar(1024)
+  title       String     
+  description String?   
   userId      String
   comments    Comment[]
   reactions   Reaction[]
 }
 
 model Comment {
-  id         String     @id @default(cuid())
+  id         String     @id @default(dbgenerated("(concat('cmt_', xid()))::TEXT"))
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  text       String     @db.Text
+  text       String    
   audio      Audio?
   reactions  Reaction[]
   author     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -82,7 +83,6 @@ model Comment {
   questionId String?
   postId     String?
   stackId    String?
-
   @@index([bookmarkId])
   @@index([questionId])
   @@index([postId])
@@ -90,7 +90,7 @@ model Comment {
 }
 
 model Audio {
-  id            String   @id @default(cuid())
+  id            String   @id @default(dbgenerated("(concat('aud_', xid()))::TEXT"))
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
@@ -102,51 +102,49 @@ model Audio {
 }
 
 model Post {
-  id           String     @id @default(cuid())
+  id           String     @id @default(dbgenerated("(concat('pos_', xid()))::TEXT"))
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   publishedAt  DateTime?
   author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   slug         String     @unique
-  title        String     @db.VarChar(280)
-  text         String     @db.Text
-  excerpt      String     @db.VarChar(280)
+  title        String    
+  text         String    
+  excerpt      String     
   featureImage String?
   comments     Comment[]
   reactions    Reaction[]
   history      PostEdit[]
   userId       String
-
   @@index([publishedAt])
 }
 
 model PostEdit {
-  id           String   @id @default(cuid())
+  id           String   @id @default(dbgenerated("(concat('ped_', xid()))::TEXT"))
   createdAt    DateTime @default(now())
-  text         String   @db.Text
-  title        String   @db.VarChar(280)
-  excerpt      String   @db.VarChar(280)
+  text         String  
+  title        String  
+  excerpt      String   
   featureImage String?
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId       String?
-
   @@index([postId])
 }
 
 model Tag {
-  id        String     @id @default(cuid())
+  id        String     @id @default(dbgenerated("(concat('tag_', xid()))::TEXT"))
   name      String     @unique
   stacks    Stack[]
   bookmarks Bookmark[]
 }
 
 model Stack {
-  id          String     @id @default(cuid())
+  id          String     @id @default(dbgenerated("(concat('stk_', xid()))::TEXT"))
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String
   slug        String?    @unique
-  description String     @db.VarChar(280)
+  description String     
   image       String
   url         String
   tags        Tag[]
@@ -156,7 +154,7 @@ model Stack {
 }
 
 model Reaction {
-  id         String    @id @default(cuid())
+  id         String    @id @default(dbgenerated("(concat('rct_', xid()))::TEXT"))
   createdAt  DateTime  @default(now())
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
@@ -170,7 +168,6 @@ model Reaction {
   questionId String?
   postId     String?
   stackId    String?
-
   @@index([commentId])
   @@index([bookmarkId])
   @@index([questionId])
@@ -185,7 +182,6 @@ enum EmailSubscriptionType {
 model EmailSubscription {
   email String
   type  EmailSubscriptionType
-
   @@unique(fields: [email, type], name: "emailAndType")
   @@index([email])
 }
