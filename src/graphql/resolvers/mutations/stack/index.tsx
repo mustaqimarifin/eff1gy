@@ -1,5 +1,4 @@
 import { GraphQLError } from 'graphql'
-//import fetch from 'isomorphic-unfetch'
 import slugify from 'slugify'
 
 import { Context } from '~/graphql/context'

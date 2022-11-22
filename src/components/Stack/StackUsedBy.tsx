@@ -41,8 +41,8 @@ export function StackUsedBy(props) {
           ...props.stack,
           usedByViewer: !data?.stack?.usedByViewer,
           usedBy: data?.stack?.usedByViewer
-            ? data?.stack?.usedBy.filter((u) => u.id !== viewerData?.viewer?.id)
-            : [...data?.stack?.usedBy, viewerData?.viewer],
+            ? data.stack.usedBy.filter((u) => u.id !== viewerData.viewer.id)
+            : [...data.stack.usedBy, viewerData.viewer],
         },
       },
       update(cache) {
@@ -62,9 +62,9 @@ export function StackUsedBy(props) {
               usedByViewer: !data?.stack?.usedByViewer,
               usedBy: data?.stack?.usedByViewer
                 ? data?.stack?.usedBy.filter(
-                    (u) => u.id !== viewerData?.viewer?.id
+                    (u) => u.id !== viewerData.viewer.id
                   )
-                : [...data?.stack?.usedBy, viewerData?.viewer],
+                : [...data.stack.usedBy, viewerData.viewer],
             },
           },
         })
@@ -114,7 +114,6 @@ export function StackUsedBy(props) {
                       width={32}
                       height={32}
                       className="rounded-full"
-                      layout="fixed"
                     />
                   </Link>
                 </span>

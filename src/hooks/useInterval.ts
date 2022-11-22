@@ -13,6 +13,7 @@ const useInterval = (callback: TimerHandler, delay: Delay) => {
   }, [callback])
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const handler = (...args: any[]) => savedCallbackRef.current!(...args)
 
     if (delay !== null) {

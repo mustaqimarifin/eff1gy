@@ -71,7 +71,7 @@ export function QuestionsList() {
       <ListContainer data-cy="questions-list" onRef={setScrollContainerRef}>
         <AMATitlebar scrollContainerRef={scrollContainerRef} />
 
-        <LayoutGroup>
+        <LayoutGroup id="ql">
           <div className="lg:space-y-1 lg:p-3">
             {questions.edges.map((question) => {
               const active = router.query?.id === question.node.id.toString() // post ids are numbers

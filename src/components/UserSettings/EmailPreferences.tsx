@@ -18,7 +18,9 @@ export function EmailSubscriptionForm({ subscription }: Props) {
   const [subscribed, setSubscribed] = React.useState(subscription.subscribed)
   const [editEmailSubscription] = useEditEmailSubscriptionMutation({
     onCompleted() {
-      toast.success('Saved')
+      toast.success('Draft Created', {
+        icon: '🙀',
+      })
     },
   })
 

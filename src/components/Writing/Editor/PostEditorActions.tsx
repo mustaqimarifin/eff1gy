@@ -29,11 +29,13 @@ export function PostEditorActions() {
 
   const [addPost, { loading: creatingPost }] = useAddPostMutation({
     onCompleted({ addPost }) {
-      toast.success('Draft created')
-      router.push({
-        pathname: '/writing/[slug]/edit',
-        query: { slug: addPost.slug },
-      })
+      toast.success('Draft Created', {
+        icon: '🙀',
+      }),
+        router.push({
+          pathname: '/writing/[slug]/edit',
+          query: { slug: addPost.slug },
+        })
     },
   })
 

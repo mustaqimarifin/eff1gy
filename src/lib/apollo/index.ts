@@ -52,7 +52,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     const err = networkError as ServerError
     try {
-      toast.error(err.result.error)
+      toast.error(err.result.error, {
+        icon: '👹',
+      })
     } catch {
       console.error({ err })
     }

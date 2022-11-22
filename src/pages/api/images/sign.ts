@@ -1,5 +1,4 @@
 import { getSession } from '@auth0/nextjs-auth0'
-import fetch from 'isomorphic-unfetch'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { UserRole } from '~/graphql/types.generated'

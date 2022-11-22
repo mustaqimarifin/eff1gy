@@ -9,9 +9,13 @@ export function LoginErrorToast() {
   useEffect(() => {
     if (errorCode) {
       if (errorCode === 'access_denied') {
-        toast.error('Sign in failed. Try again?')
+        toast.success('Sign in Failed. Try again?', {
+          icon: '🙀',
+        })
       } else {
-        toast.error('Sorry, something went wrong.')
+        toast.success('Sorry! Something blew up...', {
+          icon: '🤡',
+        })
       }
 
       // Remove the query parameter from the visible URL.

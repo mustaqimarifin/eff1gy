@@ -1,5 +1,5 @@
 // learned from https://samuelkraft.com/blog/segmented-control-framer-motion
-import { AnimateSharedLayout, motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import { useState } from 'react'
 
 type Item = {
@@ -26,7 +26,7 @@ const SegmentedControl = ({
   }
 
   return (
-    <AnimateSharedLayout>
+    <LayoutGroup id="sc">
       <ol
         className={`flex list-none rounded-md bg-black bg-opacity-5 p-1 dark:bg-white dark:bg-opacity-5`}
       >
@@ -59,7 +59,7 @@ const SegmentedControl = ({
           )
         })}
       </ol>
-    </AnimateSharedLayout>
+    </LayoutGroup>
   )
 }
 
