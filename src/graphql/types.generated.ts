@@ -24,6 +24,8 @@ export type Scalars = {
   Int: number
   Float: number
   Date: any
+  JSON: any
+  JSONObject: any
 }
 
 export type AddBookmarkInput = {
@@ -39,8 +41,10 @@ export type AddPostInput = {
 }
 
 export type AddQuestionInput = {
+  audioUrl?: InputMaybe<Scalars['String']>
   description?: InputMaybe<Scalars['String']>
   title: Scalars['String']
+  waveform?: InputMaybe<Scalars['JSON']>
 }
 
 export type AddStackInput = {
@@ -118,8 +122,10 @@ export type EditPostInput = {
 }
 
 export type EditQuestionInput = {
+  audioUrl?: InputMaybe<Scalars['String']>
   description?: InputMaybe<Scalars['String']>
   title: Scalars['String']
+  waveform?: InputMaybe<Scalars['JSON']>
 }
 
 export type EditStackInput = {
@@ -384,10 +390,12 @@ export type QueryUserArgs = {
 
 export type Question = {
   __typename?: 'Question'
+  audioUrl?: Maybe<Scalars['String']>
   author?: Maybe<User>
   createdAt: Scalars['Date']
   description?: Maybe<Scalars['String']>
   id: Scalars['ID']
+  playCount?: Maybe<Scalars['Int']>
   reactionCount?: Maybe<Scalars['Int']>
   status?: Maybe<QuestionStatus>
   title: Scalars['String']
@@ -395,6 +403,7 @@ export type Question = {
   viewerCanComment?: Maybe<Scalars['Boolean']>
   viewerCanEdit?: Maybe<Scalars['Boolean']>
   viewerHasReacted?: Maybe<Scalars['Boolean']>
+  waveform?: Maybe<Scalars['JSON']>
 }
 
 export type QuestionEdge = {
@@ -597,6 +606,8 @@ export type QuestionCoreFragment = {
   __typename: 'Question'
   id: string
   title: string
+  audioUrl?: string | null
+  waveform?: any | null
   createdAt: any
   author?: {
     __typename: 'User'
@@ -614,6 +625,8 @@ export type QuestionListItemFragment = {
   __typename: 'Question'
   id: string
   title: string
+  audioUrl?: string | null
+  waveform?: any | null
   createdAt: any
   author?: {
     __typename: 'User'
@@ -637,6 +650,8 @@ export type QuestionDetailFragment = {
   viewerHasReacted?: boolean | null
   id: string
   title: string
+  audioUrl?: string | null
+  waveform?: any | null
   createdAt: any
   author?: {
     __typename: 'User'
@@ -665,6 +680,8 @@ export type QuestionsConnectionFragment = {
       __typename: 'Question'
       id: string
       title: string
+      audioUrl?: string | null
+      waveform?: any | null
       createdAt: any
       author?: {
         __typename: 'User'
@@ -966,6 +983,8 @@ export type EditQuestionMutation = {
     viewerHasReacted?: boolean | null
     id: string
     title: string
+    audioUrl?: string | null
+    waveform?: any | null
     createdAt: any
     author?: {
       __typename: 'User'
@@ -1005,6 +1024,8 @@ export type AddQuestionMutation = {
     viewerHasReacted?: boolean | null
     id: string
     title: string
+    audioUrl?: string | null
+    waveform?: any | null
     createdAt: any
     author?: {
       __typename: 'User'
@@ -1319,6 +1340,8 @@ export type GetQuestionsQuery = {
         __typename: 'Question'
         id: string
         title: string
+        audioUrl?: string | null
+        waveform?: any | null
         createdAt: any
         author?: {
           __typename: 'User'
@@ -1351,6 +1374,8 @@ export type GetQuestionQuery = {
     viewerHasReacted?: boolean | null
     id: string
     title: string
+    audioUrl?: string | null
+    waveform?: any | null
     createdAt: any
     author?: {
       __typename: 'User'
@@ -1595,6 +1620,8 @@ export const QuestionCoreFragmentDoc = gql`
     __typename
     id
     title
+    audioUrl
+    waveform
     createdAt
     author {
       ...UserInfo

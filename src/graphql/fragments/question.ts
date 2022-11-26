@@ -7,6 +7,8 @@ export const QuestionCoreFragment = gql`
     __typename
     id
     title
+    audioUrl
+    waveform
     createdAt
     author {
       ...UserInfo

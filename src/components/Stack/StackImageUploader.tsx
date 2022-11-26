@@ -4,7 +4,7 @@ import { useDropzone } from 'react-dropzone'
 import { Trash, Upload } from 'react-feather'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { CLOUDFLARE_IMAGE_DELIVERY_BASE_URL } from '~/lib/cloudflare'
+//import { url } from '~/lib/cloudinary/api'
 
 export function StackImageUploader({ stack, onImageUploaded }) {
   const [loading, setLoading] = useState(false)
@@ -42,17 +42,17 @@ export function StackImageUploader({ stack, onImageUploaded }) {
       return console.error('Upload failed')
     }
 
-    const url = `${CLOUDFLARE_IMAGE_DELIVERY_BASE_URL}/${id}/stack`
     setLoading(false)
-    setPreviewImage(url)
-    return onImageUploaded(url)
+    //setPreviewImage(url)
+    //return onImageUploaded(url)
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     maxSize: 1000 * 1000, // 1mb,
-    accept: ['image/*'],
-
+    accept: {
+      'image/*': [],
+    },
     /*     accept: {
       'image/*': ['.jpeg', '.png', '.webp', '.svg', '.gif'],
     }, */

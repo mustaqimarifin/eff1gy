@@ -84,7 +84,7 @@ function getComponentsForVariant(variant) {
                   width={width}
                   height={height}
                   placeholder="blur"
-                  //blurDataURL={rgbDataURL(rx, rx, rx)}
+                  sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
                   blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
                   className="object-cover"
                   alt={alt}

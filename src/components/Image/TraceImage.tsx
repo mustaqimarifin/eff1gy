@@ -21,6 +21,9 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           aria-hidden="true"
           src={imgTrace}
           fill
+          sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
           priority
           onLoadingComplete={() => setLoaded(false)}
           alt={''}
@@ -53,6 +56,9 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           src={imgSrc}
           onLoadingComplete={() => setLoaded(true)}
           alt={''}
+          sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
           className="object-cover overflow-hidden transition ease-in-out"
           {...rest}
           //

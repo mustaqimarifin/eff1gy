@@ -2,6 +2,7 @@ import { getSession } from '@auth0/nextjs-auth0'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { UserRole } from '~/graphql/types.generated'
+import cloudinary from '~/lib/cloudinary'
 import prisma from '~/lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -26,17 +27,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ uploadURL: null })
   }
 
-  const CLOUDFLARE_URL = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1/direct_upload`
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_KEY}`,
+  try {
+    const uploadURL = cloudinary.v2.utils.api_sign_request(
+      {
+        // Sign upload request with transformation to mp4 for cross-browser playing compatibility
+        timestamp: new Date().getTime(),
+        upload_preset: 'ml_default',
+        folder: 'xyz',
+      },
+      process.env.CLOUDINARY_API_SECRET as string
+    )
+
+    return res.status(200).json({ uploadURL })
+  } catch (error) {
+    return res.status(500).end()
   }
-
-  const data = await fetch(CLOUDFLARE_URL, { method: 'POST', headers }).then(
-    (res) => res.json()
-  )
-
-  const { uploadURL } = data.result
-
-  return res.status(200).json({ uploadURL })
 }

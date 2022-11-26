@@ -1,6 +1,8 @@
 import { gql } from '@apollo/client'
 export default gql`
   scalar Date
+  scalar JSON
+  scalar JSONObject
 
   type Post {
     id: ID!
@@ -38,6 +40,9 @@ export default gql`
     updatedAt: Date
     author: User
     title: String!
+    audioUrl: String
+    waveform: JSON
+    playCount: Int
     description: String
     status: QuestionStatus
     viewerCanEdit: Boolean
@@ -266,11 +271,15 @@ export default gql`
   input EditQuestionInput {
     title: String!
     description: String
+    audioUrl: String
+    waveform: JSON
   }
 
   input AddQuestionInput {
     title: String!
     description: String
+    audioUrl: String
+    waveform: JSON
   }
 
   input AddPostInput {

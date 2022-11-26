@@ -1,3 +1,5 @@
+import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json'
+
 import { Context } from '~/graphql/context'
 import Mutation from '~/graphql/resolvers/mutations'
 import Query from '~/graphql/resolvers/queries'
@@ -9,11 +11,12 @@ import {
   UserRole,
 } from '~/graphql/types.generated'
 
-//import { revue } from '~/lib/revue'
 import { dateScalar } from '../scalars'
 
 export default {
   Date: dateScalar,
+  JSON: GraphQLJSON,
+  JSONObject: GraphQLJSONObject,
   Query,
   Mutation,
   Reactable: {

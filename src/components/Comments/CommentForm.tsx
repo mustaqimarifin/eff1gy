@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import xid from 'xid-js'
 
 import { ErrorAlert } from '~/components/Alert'
@@ -64,7 +63,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
     },
   })
 
-  function onSubmit(e) {
+  function onSubmit(e: { preventDefault: () => void }) {
     e.preventDefault()
 
     // not signed in, save to localstorage
@@ -101,7 +100,9 @@ export function CommentForm({ refId, type, openModal }: Props) {
     localStorage.setItem(refId, debouncedText)
   }, [debouncedText])
 
-  function handleChange(e) {
+  function handleChange(e: {
+    target: { value: React.SetStateAction<string> }
+  }) {
     return setText(e.target.value)
   }
 

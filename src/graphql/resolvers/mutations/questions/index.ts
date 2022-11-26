@@ -14,7 +14,9 @@ export async function editQuestion(
   args: MutationEditQuestionArgs,
   ctx: Context
 ) {
-  const { data, id } = args
+  const { data } = args
+  const { audioUrl, waveform } = data
+  const { id } = args
   const { prisma, viewer } = ctx
 
   const question = await prisma.question.findUnique({ where: { id } })
@@ -26,7 +28,10 @@ export async function editQuestion(
     return await prisma.question
       .update({
         where: { id },
-        data,
+        data: {
+          audioUrl,
+          waveform,
+        },
         include: {
           _count: {
             select: {

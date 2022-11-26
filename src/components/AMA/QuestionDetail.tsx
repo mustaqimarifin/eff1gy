@@ -11,6 +11,7 @@ import routes from '~/config/routes'
 import { CommentType, useGetQuestionQuery } from '~/graphql/types.generated'
 import { timestampToCleanTime } from '~/lib/transformers'
 
+import AudioPlayer from '../AudioPlayer'
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { QuestionActions } from './QuestionActions'
 
@@ -102,6 +103,18 @@ export function QuestionDetail({ id }) {
               </div>
             </div>
             <Detail.Title ref={titleRef}>{question.title}</Detail.Title>
+            {question.audioUrl && (
+              <>
+                <div className="py-4">
+                  <AudioPlayer
+                    src={question.audioUrl}
+                    isRecorder={false}
+                    id={question.id}
+                    waveform={question.waveform}
+                  />
+                </div>
+              </>
+            )}
             {question.description && (
               <MarkdownRenderer
                 children={question.description}

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import * as React from 'react'
 import { Compass } from 'react-feather'
 
@@ -70,6 +71,7 @@ function Null() {
           <p className="text-primary font-semibold">
             What you seek does not exist.
           </p>
+          <Image src="/static/clip/brickluke.webp" alt="brickluke" />
           <p className="text-tertiary">
             Maybe this link is broken. Maybe something was deleted, or moved. In
             any case, there’s nothing to see here...

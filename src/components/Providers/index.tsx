@@ -3,9 +3,9 @@ import { UserProvider } from '@auth0/nextjs-auth0'
 import { NextPageContext } from 'next'
 import * as React from 'react'
 
-//import { User } from '~/graphql/types.generated'
 import { useApollo } from '~/lib/apollo'
 
+import ReactQuery from './ReactQuery'
 import { SEO } from './SEO'
 import { Toast } from './Toaster'
 
@@ -44,7 +44,7 @@ export function Providers({ children, pageProps }: Props) {
       <UserProvider>
         <ApolloProvider client={apolloClient}>
           <GlobalNavigationContext.Provider value={state}>
-            {children}
+            <ReactQuery>{children}</ReactQuery>
           </GlobalNavigationContext.Provider>
         </ApolloProvider>
       </UserProvider>
