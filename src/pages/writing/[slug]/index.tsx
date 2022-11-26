@@ -20,25 +20,25 @@ function WritingPostPage({ slug }) {
 
 export async function getServerSideProps({ params: { slug }, req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
-  const { data } = await apolloClient.query({
+  const { data } = await client.query({
     query: GET_POST,
     variables: { slug },
   })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
-    apolloClient.query({ query: GET_POSTS }),
+    client.query({ query: GET_VIEWER }),
+    client.query({ query: GET_POSTS }),
 
     data?.post?.id &&
-      apolloClient.query({
+      client.query({
         query: GET_COMMENTS,
         variables: { refId: data.post.id, type: CommentType.Bookmark },
       }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {
       slug,
     },

@@ -9,10 +9,10 @@ const JSONFeed: React.FC = () => null
 
 export async function getServerSideProps({ req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
   const {
     data: { posts },
-  } = await apolloClient.query({
+  } = await client.query({
     query: GET_POSTS,
     variables: { filter: { published: true } },
   })

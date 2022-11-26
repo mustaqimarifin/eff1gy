@@ -16,9 +16,9 @@ function NewPostPage() {
 
 export async function getServerSideProps({ req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {},
   })
 }

@@ -23,15 +23,15 @@ function BookmarksPage() {
 
 export async function getServerSideProps({ req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
-    apolloClient.query({ query: GET_BOOKMARKS }),
-    apolloClient.query({ query: GET_TAGS }),
+    client.query({ query: GET_VIEWER }),
+    client.query({ query: GET_BOOKMARKS }),
+    client.query({ query: GET_TAGS }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {},
   })
 }

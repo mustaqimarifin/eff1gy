@@ -64,7 +64,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 })
 
-export function createApolloClient({ initialState = {}, context = {} }) {
+export function createClient({ initialState = {}, context = {} }) {
   const link = ApolloLink.from([errorLink, createIsomorphLink({ context })])
   const ssrMode = typeof window === 'undefined'
 
@@ -108,8 +108,7 @@ export function createApolloClient({ initialState = {}, context = {} }) {
 }
 
 export function initApolloClient({ initialState = null, context = {} }) {
-  const _apolloClient =
-    apolloClient ?? createApolloClient({ initialState, context })
+  const _apolloClient = apolloClient ?? createClient({ initialState, context })
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here

@@ -32,14 +32,14 @@ StackPage.getLayout = withProviders(function getLayout(page) {
 
 export async function getServerSideProps({ req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
-    apolloClient.query({ query: GET_STACKS }),
+    client.query({ query: GET_VIEWER }),
+    client.query({ query: GET_STACKS }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {},
   })
 }

@@ -17,28 +17,28 @@ function StackDetailPage({ slug }) {
 
 export async function getServerSideProps({ params: { slug }, req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
-  const { data } = await apolloClient.query({
+  const { data } = await client.query({
     query: GET_STACK,
     variables: { slug },
   })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
+    client.query({ query: GET_VIEWER }),
 
-    apolloClient.query({
+    client.query({
       query: GET_STACKS,
     }),
 
     data?.stack &&
-      apolloClient.query({
+      client.query({
         query: GET_COMMENTS,
         variables: { refId: data.stack.id, type: CommentType.Stack },
       }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {
       slug,
     },

@@ -19,25 +19,25 @@ function BookmarkPage({ id }) {
 
 export async function getServerSideProps({ params: { id }, req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
-    apolloClient.query({ query: GET_BOOKMARKS }),
-    apolloClient.query({ query: GET_TAGS }),
+    client.query({ query: GET_VIEWER }),
+    client.query({ query: GET_BOOKMARKS }),
+    client.query({ query: GET_TAGS }),
 
-    apolloClient.query({
+    client.query({
       query: GET_BOOKMARK,
       variables: { id },
     }),
 
-    apolloClient.query({
+    client.query({
       query: GET_COMMENTS,
       variables: { refId: id, type: CommentType.Bookmark },
     }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {
       id,
     },

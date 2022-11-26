@@ -19,18 +19,18 @@ export default function UserPage({ username }) {
 
 export async function getServerSideProps({ params: { username }, req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
+    client.query({ query: GET_VIEWER }),
 
-    apolloClient.query({
+    client.query({
       query: GET_USER,
       variables: { username },
     }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {
       username,
     },

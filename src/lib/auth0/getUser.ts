@@ -1,7 +1,7 @@
 import { BASE_URL } from '.'
 import { getToken } from './getToken'
 
-export async function getUser(id: any) {
+export async function getUser(id: string) {
   const token = await getToken()
   const url = `${BASE_URL}/api/v2/users/${id}`
   const options = {

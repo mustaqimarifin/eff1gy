@@ -17,30 +17,30 @@ function QuestionDetailPage({ id }) {
 
 export async function getServerSideProps({ params: { id }, req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
   await Promise.all([
-    apolloClient.query({
+    client.query({
       query: GET_QUESTIONS,
       variables: {
         filter: { status: QuestionStatus.Answered },
       },
     }),
 
-    apolloClient.query({
+    client.query({
       query: GET_QUESTION,
       variables: { id },
     }),
 
-    apolloClient.query({
+    client.query({
       query: GET_COMMENTS,
       variables: { refId: id, type: CommentType.Question },
     }),
 
-    apolloClient.query({ query: GET_VIEWER }),
+    client.query({ query: GET_VIEWER }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {
       id,
     },

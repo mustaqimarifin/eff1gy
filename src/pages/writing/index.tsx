@@ -22,18 +22,18 @@ function WritingPage() {
 
 export async function getServerSideProps({ req, res }) {
   const context = await getContext(req, res)
-  const apolloClient = initApolloClient({ context })
+  const client = initApolloClient({ context })
 
   await Promise.all([
-    apolloClient.query({ query: GET_VIEWER }),
+    client.query({ query: GET_VIEWER }),
 
-    apolloClient.query({
+    client.query({
       query: GET_POSTS,
       variables: { filter: { published: true } },
     }),
   ])
 
-  return addApolloState(apolloClient, {
+  return addApolloState(client, {
     props: {},
   })
 }

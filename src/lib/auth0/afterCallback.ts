@@ -7,11 +7,17 @@ name, and description
 
 */
 
+import { UserProfile } from '@auth0/nextjs-auth0'
+
 import prisma from '~/lib/prisma'
 
 import { getUser } from './getUser'
 
-export async function afterCallback(_, __, session) {
+export async function afterCallback(
+  _: any,
+  __: any,
+  session: { user: UserProfile }
+) {
   const { user } = session
   const { sub: id } = user
   const details = await getUser(id)
