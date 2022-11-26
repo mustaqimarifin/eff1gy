@@ -1,8 +1,10 @@
 import {
   ApolloClient,
   ApolloLink,
+  Context,
   HttpLink,
   InMemoryCache,
+  NormalizedCacheObject,
   ServerError,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
@@ -15,11 +17,12 @@ import toast from 'react-hot-toast'
 
 import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
 import { schema } from '~/graphql/schema'
+import { StrictTypedTypePolicies } from '~/graphql/types.generated'
 
 //global.fetch = require('node-fetch')
-let apolloClient
+let apolloClient: ApolloClient<NormalizedCacheObject>
 
-function createIsomorphLink({ context }) {
+function createIsomorphLink({ context }: Context) {
   if (typeof window === 'undefined') {
     // These have to imported dynamically, instead of at the root of the page,
     // in order to make sure that we're not shipping server-side code to the client
@@ -64,36 +67,37 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 export function createApolloClient({ initialState = {}, context = {} }) {
   const link = ApolloLink.from([errorLink, createIsomorphLink({ context })])
   const ssrMode = typeof window === 'undefined'
-  const cache = new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          bookmarks: relayStylePagination(['filter']),
-          questions: relayStylePagination(['filter']),
-          stacks: relayStylePagination(),
-        },
+
+  const typePolicies: StrictTypedTypePolicies = {
+    Query: {
+      fields: {
+        bookmarks: relayStylePagination(['filter']),
+        questions: relayStylePagination(['filter']),
+        stacks: relayStylePagination(),
       },
-      Comments: {
-        keyFields: ['id'],
-        fields: {
-          id: {
-            merge: false,
-          },
-        },
-      },
-      Bookmark: {
-        keyFields: ['id', 'url'],
-        fields: {
-          id: {
-            merge: false,
-          },
-          url: {
-            merge: false,
-          },
+    },
+    Comment: {
+      keyFields: ['id'],
+      fields: {
+        id: {
+          merge: false,
         },
       },
     },
-  }).restore(initialState)
+    Bookmark: {
+      keyFields: ['id', 'url'],
+      fields: {
+        id: {
+          merge: false,
+        },
+        url: {
+          merge: false,
+        },
+      },
+    },
+  }
+
+  const cache = new InMemoryCache({ typePolicies }).restore(initialState)
 
   return new ApolloClient({
     ssrMode,
@@ -136,7 +140,10 @@ export function initApolloClient({ initialState = null, context = {} }) {
   return _apolloClient
 }
 
-export function addApolloState(client, pageProps) {
+export function addApolloState(
+  client: ApolloClient<NormalizedCacheObject>,
+  pageProps: { props: any }
+) {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
   }
@@ -144,7 +151,7 @@ export function addApolloState(client, pageProps) {
   return pageProps
 }
 
-export function useApollo(pageProps) {
+export function useApollo(pageProps: any) {
   const initialState = pageProps[APOLLO_STATE_PROP_NAME]
   const store = useMemo(
     () => initApolloClient({ initialState }),

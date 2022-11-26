@@ -47,7 +47,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
       },
     },
     update(cache, { data: { addComment } }) {
-      //@ts-ignore
+      // @ts-ignore
+
       const { comments } = cache.readQuery({
         query: GET_COMMENTS,
         variables: { refId, type },
@@ -63,7 +64,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
     },
   })
 
-  function onSubmit(e: { preventDefault: () => void }) {
+  function onSubmit(e) {
     e.preventDefault()
 
     // not signed in, save to localstorage
@@ -100,9 +101,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
     localStorage.setItem(refId, debouncedText)
   }, [debouncedText])
 
-  function handleChange(e: {
-    target: { value: React.SetStateAction<string> }
-  }) {
+  function handleChange(e) {
     return setText(e.target.value)
   }
 

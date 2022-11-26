@@ -105,7 +105,7 @@ export function QuestionDetail({ id }) {
             <Detail.Title ref={titleRef}>{question.title}</Detail.Title>
             {question.audioUrl && (
               <>
-                <div className="py-4">
+                <div className="flex flex-wrap py-4">
                   <AudioPlayer
                     src={question.audioUrl}
                     isRecorder={false}

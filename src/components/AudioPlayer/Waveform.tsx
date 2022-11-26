@@ -17,9 +17,9 @@ export default function Waveform({
   const [hasDrawnAudio, setHasDrawnAudio] = React.useState(false)
   const [bars, setBars] = React.useState(waveform)
 
-  const draw = (normalizedData: React.SetStateAction<number[] | null>) => {
-    setWaveformData && setWaveformData(normalizedData)
-    return setBars(normalizedData)
+  const draw = (normalizeData) => {
+    setWaveformData && setWaveformData(normalizeData)
+    return setBars(normalizeData)
   }
 
   React.useEffect(() => {

@@ -109,13 +109,13 @@ export function TitleBar({
             currentScrollOffset === 0
               ? currentScrollOffset
               : darkMode
-              ? currentScrollOffset + 0.5
-              : currentScrollOffset + 0.8
+              ? currentScrollOffset + 0.1
+              : currentScrollOffset + 0.3
           })`,
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
           minHeight: '48px',
         }}
-        className={`filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
+        className={`filter-blur bg-slate-50 sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
       >
         <div className="flex flex-none items-center justify-between">
           <span className="flex items-center space-x-3">

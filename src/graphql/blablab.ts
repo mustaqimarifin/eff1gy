@@ -4,12 +4,6 @@
 
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
-import {
-  FieldPolicy,
-  FieldReadFunction,
-  TypePolicies,
-  TypePolicy,
-} from '@apollo/client/cache'
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -511,6 +505,16 @@ export type BookmarkCoreFragment = {
   faviconUrl?: string | null
 }
 
+export type BookmarkListItemFragment = {
+  __typename: 'Bookmark'
+  id: string
+  url: string
+  host: string
+  title?: string | null
+  description?: string | null
+  faviconUrl?: string | null
+}
+
 export type BookmarkDetailFragment = {
   __typename: 'Bookmark'
   reactionCount?: number | null
@@ -522,16 +526,6 @@ export type BookmarkDetailFragment = {
   description?: string | null
   faviconUrl?: string | null
   tags: Array<{ __typename?: 'Tag'; name: string } | null>
-}
-
-export type BookmarkListItemFragment = {
-  __typename: 'Bookmark'
-  id: string
-  url: string
-  host: string
-  title?: string | null
-  description?: string | null
-  faviconUrl?: string | null
 }
 
 export type BookmarksConnectionFragment = {
@@ -555,17 +549,6 @@ export type BookmarksConnectionFragment = {
       faviconUrl?: string | null
     } | null
   } | null>
-}
-
-export type UserInfoFragment = {
-  __typename: 'User'
-  id: string
-  username?: string | null
-  avatar?: string | null
-  name?: string | null
-  role?: UserRole | null
-  isViewer?: boolean | null
-  isAdmin?: boolean | null
 }
 
 export type CommentInfoFragment = {
@@ -638,14 +621,8 @@ export type QuestionCoreFragment = {
   } | null
 }
 
-export type QuestionDetailFragment = {
+export type QuestionListItemFragment = {
   __typename: 'Question'
-  description?: string | null
-  status?: QuestionStatus | null
-  viewerCanEdit?: boolean | null
-  viewerCanComment?: boolean | null
-  reactionCount?: number | null
-  viewerHasReacted?: boolean | null
   id: string
   title: string
   audioUrl?: string | null
@@ -663,8 +640,14 @@ export type QuestionDetailFragment = {
   } | null
 }
 
-export type QuestionListItemFragment = {
+export type QuestionDetailFragment = {
   __typename: 'Question'
+  description?: string | null
+  status?: QuestionStatus | null
+  viewerCanEdit?: boolean | null
+  viewerCanComment?: boolean | null
+  reactionCount?: number | null
+  viewerHasReacted?: boolean | null
   id: string
   title: string
   audioUrl?: string | null
@@ -723,6 +706,15 @@ export type StackCoreFragment = {
   slug: string
 }
 
+export type StackListItemFragment = {
+  __typename: 'Stack'
+  id: string
+  name: string
+  image?: string | null
+  url: string
+  slug: string
+}
+
 export type StackDetailFragment = {
   __typename: 'Stack'
   createdAt: any
@@ -748,15 +740,6 @@ export type StackDetailFragment = {
   tags: Array<{ __typename?: 'Tag'; name: string } | null>
 }
 
-export type StackListItemFragment = {
-  __typename: 'Stack'
-  id: string
-  name: string
-  image?: string | null
-  url: string
-  slug: string
-}
-
 export type StacksConnectionFragment = {
   __typename?: 'StacksConnection'
   pageInfo?: {
@@ -777,6 +760,17 @@ export type StacksConnectionFragment = {
       slug: string
     } | null
   } | null>
+}
+
+export type UserInfoFragment = {
+  __typename: 'User'
+  id: string
+  username?: string | null
+  avatar?: string | null
+  name?: string | null
+  role?: UserRole | null
+  isViewer?: boolean | null
+  isAdmin?: boolean | null
 }
 
 export type UserSettingsFragment = {
@@ -3457,561 +3451,3 @@ export type GetViewerWithSettingsQueryResult = Apollo.QueryResult<
   GetViewerWithSettingsQuery,
   GetViewerWithSettingsQueryVariables
 >
-export type BookmarkKeySpecifier = (
-  | 'createdAt'
-  | 'description'
-  | 'faviconUrl'
-  | 'host'
-  | 'id'
-  | 'image'
-  | 'reactionCount'
-  | 'tags'
-  | 'title'
-  | 'updatedAt'
-  | 'url'
-  | 'viewerHasReacted'
-  | BookmarkKeySpecifier
-)[]
-export type BookmarkFieldPolicy = {
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  description?: FieldPolicy<any> | FieldReadFunction<any>
-  faviconUrl?: FieldPolicy<any> | FieldReadFunction<any>
-  host?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  image?: FieldPolicy<any> | FieldReadFunction<any>
-  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
-  tags?: FieldPolicy<any> | FieldReadFunction<any>
-  title?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  url?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type BookmarkEdgeKeySpecifier = (
-  | 'cursor'
-  | 'node'
-  | BookmarkEdgeKeySpecifier
-)[]
-export type BookmarkEdgeFieldPolicy = {
-  cursor?: FieldPolicy<any> | FieldReadFunction<any>
-  node?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type BookmarksConnectionKeySpecifier = (
-  | 'edges'
-  | 'pageInfo'
-  | BookmarksConnectionKeySpecifier
-)[]
-export type BookmarksConnectionFieldPolicy = {
-  edges?: FieldPolicy<any> | FieldReadFunction<any>
-  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type CommentKeySpecifier = (
-  | 'author'
-  | 'createdAt'
-  | 'id'
-  | 'text'
-  | 'updatedAt'
-  | 'viewerCanDelete'
-  | 'viewerCanEdit'
-  | CommentKeySpecifier
-)[]
-export type CommentFieldPolicy = {
-  author?: FieldPolicy<any> | FieldReadFunction<any>
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  text?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerCanDelete?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type EmailSubscriptionKeySpecifier = (
-  | 'subscribed'
-  | 'type'
-  | EmailSubscriptionKeySpecifier
-)[]
-export type EmailSubscriptionFieldPolicy = {
-  subscribed?: FieldPolicy<any> | FieldReadFunction<any>
-  type?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type HackerNewsCommentKeySpecifier = (
-  | 'comments'
-  | 'comments_count'
-  | 'content'
-  | 'id'
-  | 'level'
-  | 'time'
-  | 'time_ago'
-  | 'user'
-  | HackerNewsCommentKeySpecifier
-)[]
-export type HackerNewsCommentFieldPolicy = {
-  comments?: FieldPolicy<any> | FieldReadFunction<any>
-  comments_count?: FieldPolicy<any> | FieldReadFunction<any>
-  content?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  level?: FieldPolicy<any> | FieldReadFunction<any>
-  time?: FieldPolicy<any> | FieldReadFunction<any>
-  time_ago?: FieldPolicy<any> | FieldReadFunction<any>
-  user?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type HackerNewsPostKeySpecifier = (
-  | 'comments'
-  | 'comments_count'
-  | 'content'
-  | 'domain'
-  | 'id'
-  | 'time'
-  | 'time_ago'
-  | 'title'
-  | 'url'
-  | 'user'
-  | HackerNewsPostKeySpecifier
-)[]
-export type HackerNewsPostFieldPolicy = {
-  comments?: FieldPolicy<any> | FieldReadFunction<any>
-  comments_count?: FieldPolicy<any> | FieldReadFunction<any>
-  content?: FieldPolicy<any> | FieldReadFunction<any>
-  domain?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  time?: FieldPolicy<any> | FieldReadFunction<any>
-  time_ago?: FieldPolicy<any> | FieldReadFunction<any>
-  title?: FieldPolicy<any> | FieldReadFunction<any>
-  url?: FieldPolicy<any> | FieldReadFunction<any>
-  user?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type MutationKeySpecifier = (
-  | 'addBookmark'
-  | 'addComment'
-  | 'addPost'
-  | 'addQuestion'
-  | 'addStack'
-  | 'deleteBookmark'
-  | 'deleteComment'
-  | 'deletePost'
-  | 'deleteQuestion'
-  | 'deleteStack'
-  | 'deleteUser'
-  | 'editBookmark'
-  | 'editComment'
-  | 'editEmailSubscription'
-  | 'editPost'
-  | 'editQuestion'
-  | 'editStack'
-  | 'editUser'
-  | 'toggleReaction'
-  | 'toggleStackUser'
-  | MutationKeySpecifier
-)[]
-export type MutationFieldPolicy = {
-  addBookmark?: FieldPolicy<any> | FieldReadFunction<any>
-  addComment?: FieldPolicy<any> | FieldReadFunction<any>
-  addPost?: FieldPolicy<any> | FieldReadFunction<any>
-  addQuestion?: FieldPolicy<any> | FieldReadFunction<any>
-  addStack?: FieldPolicy<any> | FieldReadFunction<any>
-  deleteBookmark?: FieldPolicy<any> | FieldReadFunction<any>
-  deleteComment?: FieldPolicy<any> | FieldReadFunction<any>
-  deletePost?: FieldPolicy<any> | FieldReadFunction<any>
-  deleteQuestion?: FieldPolicy<any> | FieldReadFunction<any>
-  deleteStack?: FieldPolicy<any> | FieldReadFunction<any>
-  deleteUser?: FieldPolicy<any> | FieldReadFunction<any>
-  editBookmark?: FieldPolicy<any> | FieldReadFunction<any>
-  editComment?: FieldPolicy<any> | FieldReadFunction<any>
-  editEmailSubscription?: FieldPolicy<any> | FieldReadFunction<any>
-  editPost?: FieldPolicy<any> | FieldReadFunction<any>
-  editQuestion?: FieldPolicy<any> | FieldReadFunction<any>
-  editStack?: FieldPolicy<any> | FieldReadFunction<any>
-  editUser?: FieldPolicy<any> | FieldReadFunction<any>
-  toggleReaction?: FieldPolicy<any> | FieldReadFunction<any>
-  toggleStackUser?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type PageInfoKeySpecifier = (
-  | 'endCursor'
-  | 'hasNextPage'
-  | 'totalCount'
-  | PageInfoKeySpecifier
-)[]
-export type PageInfoFieldPolicy = {
-  endCursor?: FieldPolicy<any> | FieldReadFunction<any>
-  hasNextPage?: FieldPolicy<any> | FieldReadFunction<any>
-  totalCount?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type PostKeySpecifier = (
-  | 'author'
-  | 'createdAt'
-  | 'excerpt'
-  | 'featureImage'
-  | 'id'
-  | 'publishedAt'
-  | 'reactionCount'
-  | 'slug'
-  | 'text'
-  | 'title'
-  | 'updatedAt'
-  | 'viewerHasReacted'
-  | PostKeySpecifier
-)[]
-export type PostFieldPolicy = {
-  author?: FieldPolicy<any> | FieldReadFunction<any>
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  excerpt?: FieldPolicy<any> | FieldReadFunction<any>
-  featureImage?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  publishedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
-  slug?: FieldPolicy<any> | FieldReadFunction<any>
-  text?: FieldPolicy<any> | FieldReadFunction<any>
-  title?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type QueryKeySpecifier = (
-  | 'bookmark'
-  | 'bookmarks'
-  | 'comment'
-  | 'comments'
-  | 'hackerNewsPost'
-  | 'hackerNewsPosts'
-  | 'post'
-  | 'posts'
-  | 'question'
-  | 'questions'
-  | 'stack'
-  | 'stacks'
-  | 'tags'
-  | 'user'
-  | 'viewer'
-  | QueryKeySpecifier
-)[]
-export type QueryFieldPolicy = {
-  bookmark?: FieldPolicy<any> | FieldReadFunction<any>
-  bookmarks?: FieldPolicy<any> | FieldReadFunction<any>
-  comment?: FieldPolicy<any> | FieldReadFunction<any>
-  comments?: FieldPolicy<any> | FieldReadFunction<any>
-  hackerNewsPost?: FieldPolicy<any> | FieldReadFunction<any>
-  hackerNewsPosts?: FieldPolicy<any> | FieldReadFunction<any>
-  post?: FieldPolicy<any> | FieldReadFunction<any>
-  posts?: FieldPolicy<any> | FieldReadFunction<any>
-  question?: FieldPolicy<any> | FieldReadFunction<any>
-  questions?: FieldPolicy<any> | FieldReadFunction<any>
-  stack?: FieldPolicy<any> | FieldReadFunction<any>
-  stacks?: FieldPolicy<any> | FieldReadFunction<any>
-  tags?: FieldPolicy<any> | FieldReadFunction<any>
-  user?: FieldPolicy<any> | FieldReadFunction<any>
-  viewer?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type QuestionKeySpecifier = (
-  | 'audioUrl'
-  | 'author'
-  | 'createdAt'
-  | 'description'
-  | 'id'
-  | 'playCount'
-  | 'reactionCount'
-  | 'status'
-  | 'title'
-  | 'updatedAt'
-  | 'viewerCanComment'
-  | 'viewerCanEdit'
-  | 'viewerHasReacted'
-  | 'waveform'
-  | QuestionKeySpecifier
-)[]
-export type QuestionFieldPolicy = {
-  audioUrl?: FieldPolicy<any> | FieldReadFunction<any>
-  author?: FieldPolicy<any> | FieldReadFunction<any>
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  description?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  playCount?: FieldPolicy<any> | FieldReadFunction<any>
-  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
-  status?: FieldPolicy<any> | FieldReadFunction<any>
-  title?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerCanComment?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
-  waveform?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type QuestionEdgeKeySpecifier = (
-  | 'cursor'
-  | 'node'
-  | QuestionEdgeKeySpecifier
-)[]
-export type QuestionEdgeFieldPolicy = {
-  cursor?: FieldPolicy<any> | FieldReadFunction<any>
-  node?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type QuestionsConnectionKeySpecifier = (
-  | 'edges'
-  | 'pageInfo'
-  | QuestionsConnectionKeySpecifier
-)[]
-export type QuestionsConnectionFieldPolicy = {
-  edges?: FieldPolicy<any> | FieldReadFunction<any>
-  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type StackKeySpecifier = (
-  | 'createdAt'
-  | 'description'
-  | 'id'
-  | 'image'
-  | 'name'
-  | 'reactionCount'
-  | 'slug'
-  | 'tags'
-  | 'updatedAt'
-  | 'url'
-  | 'usedBy'
-  | 'usedByViewer'
-  | 'viewerHasReacted'
-  | StackKeySpecifier
-)[]
-export type StackFieldPolicy = {
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  description?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  image?: FieldPolicy<any> | FieldReadFunction<any>
-  name?: FieldPolicy<any> | FieldReadFunction<any>
-  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
-  slug?: FieldPolicy<any> | FieldReadFunction<any>
-  tags?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  url?: FieldPolicy<any> | FieldReadFunction<any>
-  usedBy?: FieldPolicy<any> | FieldReadFunction<any>
-  usedByViewer?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type StackEdgeKeySpecifier = (
-  | 'cursor'
-  | 'node'
-  | StackEdgeKeySpecifier
-)[]
-export type StackEdgeFieldPolicy = {
-  cursor?: FieldPolicy<any> | FieldReadFunction<any>
-  node?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type StacksConnectionKeySpecifier = (
-  | 'edges'
-  | 'pageInfo'
-  | StacksConnectionKeySpecifier
-)[]
-export type StacksConnectionFieldPolicy = {
-  edges?: FieldPolicy<any> | FieldReadFunction<any>
-  pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type TagKeySpecifier = ('name' | TagKeySpecifier)[]
-export type TagFieldPolicy = {
-  name?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type UserKeySpecifier = (
-  | 'avatar'
-  | 'createdAt'
-  | 'email'
-  | 'emailSubscriptions'
-  | 'id'
-  | 'isAdmin'
-  | 'isViewer'
-  | 'name'
-  | 'pendingEmail'
-  | 'role'
-  | 'username'
-  | UserKeySpecifier
-)[]
-export type UserFieldPolicy = {
-  avatar?: FieldPolicy<any> | FieldReadFunction<any>
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  email?: FieldPolicy<any> | FieldReadFunction<any>
-  emailSubscriptions?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  isAdmin?: FieldPolicy<any> | FieldReadFunction<any>
-  isViewer?: FieldPolicy<any> | FieldReadFunction<any>
-  name?: FieldPolicy<any> | FieldReadFunction<any>
-  pendingEmail?: FieldPolicy<any> | FieldReadFunction<any>
-  role?: FieldPolicy<any> | FieldReadFunction<any>
-  username?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type StrictTypedTypePolicies = {
-  Bookmark?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | BookmarkKeySpecifier
-      | (() => undefined | BookmarkKeySpecifier)
-    fields?: BookmarkFieldPolicy
-  }
-  BookmarkEdge?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | BookmarkEdgeKeySpecifier
-      | (() => undefined | BookmarkEdgeKeySpecifier)
-    fields?: BookmarkEdgeFieldPolicy
-  }
-  BookmarksConnection?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | BookmarksConnectionKeySpecifier
-      | (() => undefined | BookmarksConnectionKeySpecifier)
-    fields?: BookmarksConnectionFieldPolicy
-  }
-  Comment?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | CommentKeySpecifier
-      | (() => undefined | CommentKeySpecifier)
-    fields?: CommentFieldPolicy
-  }
-  EmailSubscription?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | EmailSubscriptionKeySpecifier
-      | (() => undefined | EmailSubscriptionKeySpecifier)
-    fields?: EmailSubscriptionFieldPolicy
-  }
-  HackerNewsComment?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | HackerNewsCommentKeySpecifier
-      | (() => undefined | HackerNewsCommentKeySpecifier)
-    fields?: HackerNewsCommentFieldPolicy
-  }
-  HackerNewsPost?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | HackerNewsPostKeySpecifier
-      | (() => undefined | HackerNewsPostKeySpecifier)
-    fields?: HackerNewsPostFieldPolicy
-  }
-  Mutation?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | MutationKeySpecifier
-      | (() => undefined | MutationKeySpecifier)
-    fields?: MutationFieldPolicy
-  }
-  PageInfo?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | PageInfoKeySpecifier
-      | (() => undefined | PageInfoKeySpecifier)
-    fields?: PageInfoFieldPolicy
-  }
-  Post?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?: false | PostKeySpecifier | (() => undefined | PostKeySpecifier)
-    fields?: PostFieldPolicy
-  }
-  Query?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | QueryKeySpecifier
-      | (() => undefined | QueryKeySpecifier)
-    fields?: QueryFieldPolicy
-  }
-  Question?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | QuestionKeySpecifier
-      | (() => undefined | QuestionKeySpecifier)
-    fields?: QuestionFieldPolicy
-  }
-  QuestionEdge?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | QuestionEdgeKeySpecifier
-      | (() => undefined | QuestionEdgeKeySpecifier)
-    fields?: QuestionEdgeFieldPolicy
-  }
-  QuestionsConnection?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | QuestionsConnectionKeySpecifier
-      | (() => undefined | QuestionsConnectionKeySpecifier)
-    fields?: QuestionsConnectionFieldPolicy
-  }
-  Stack?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | StackKeySpecifier
-      | (() => undefined | StackKeySpecifier)
-    fields?: StackFieldPolicy
-  }
-  StackEdge?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | StackEdgeKeySpecifier
-      | (() => undefined | StackEdgeKeySpecifier)
-    fields?: StackEdgeFieldPolicy
-  }
-  StacksConnection?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | StacksConnectionKeySpecifier
-      | (() => undefined | StacksConnectionKeySpecifier)
-    fields?: StacksConnectionFieldPolicy
-  }
-  Tag?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?: false | TagKeySpecifier | (() => undefined | TagKeySpecifier)
-    fields?: TagFieldPolicy
-  }
-  User?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier)
-    fields?: UserFieldPolicy
-  }
-}
-export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies
-export const ListAllOperations = {
-  Query: {
-    getBookmarks: 'getBookmarks',
-    getBookmark: 'getBookmark',
-    getComments: 'getComments',
-    getPosts: 'getPosts',
-    getPost: 'getPost',
-    getQuestions: 'getQuestions',
-    getQuestion: 'getQuestion',
-    getStacks: 'getStacks',
-    getStack: 'getStack',
-    getTags: 'getTags',
-    getUser: 'getUser',
-    viewer: 'viewer',
-    getViewerWithSettings: 'getViewerWithSettings',
-  },
-  Mutation: {
-    editBookmark: 'editBookmark',
-    deleteBookmark: 'deleteBookmark',
-    addBookmark: 'addBookmark',
-    addComment: 'addComment',
-    editComment: 'editComment',
-    deleteComment: 'deleteComment',
-    editEmailSubscription: 'editEmailSubscription',
-    editPost: 'editPost',
-    deletePost: 'deletePost',
-    addPost: 'addPost',
-    editQuestion: 'editQuestion',
-    deleteQuestion: 'deleteQuestion',
-    addQuestion: 'addQuestion',
-    toggleReaction: 'toggleReaction',
-    editStack: 'editStack',
-    deleteStack: 'deleteStack',
-    addStack: 'addStack',
-    toggleStackUser: 'toggleStackUser',
-    deleteUser: 'deleteUser',
-    editUser: 'editUser',
-  },
-  Fragment: {
-    BookmarkCore: 'BookmarkCore',
-    BookmarkDetail: 'BookmarkDetail',
-    BookmarkListItem: 'BookmarkListItem',
-    BookmarksConnection: 'BookmarksConnection',
-    UserInfo: 'UserInfo',
-    CommentInfo: 'CommentInfo',
-    PostCore: 'PostCore',
-    PostListItem: 'PostListItem',
-    PostDetail: 'PostDetail',
-    QuestionCore: 'QuestionCore',
-    QuestionDetail: 'QuestionDetail',
-    QuestionListItem: 'QuestionListItem',
-    QuestionsConnection: 'QuestionsConnection',
-    StackCore: 'StackCore',
-    StackDetail: 'StackDetail',
-    StackListItem: 'StackListItem',
-    StacksConnection: 'StacksConnection',
-    UserSettings: 'UserSettings',
-  },
-}

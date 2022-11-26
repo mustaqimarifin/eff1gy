@@ -1,4 +1,5 @@
 import { GraphQLError } from 'graphql'
+import toast from 'react-hot-toast'
 
 import { CLIENT_URL } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
@@ -142,8 +143,14 @@ export async function deleteComment(
   // no permission
   if (comment.userId !== viewer?.id && !viewer?.isAdmin) {
     throw new GraphQLError('You can’t delete this comment')
+  } else {
+    // eslint-disable-next-line prettier/prettier
+    (err) => {
+      toast.error('You can’t delete this comment', {
+        icon: '🙀',
+      })
+    }
   }
-
   return await prisma.comment
     .delete({
       where: { id },

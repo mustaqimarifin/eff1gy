@@ -12,7 +12,7 @@ module.exports = {
       'ik.imagekit.io',
     ],
   },
-  async redirects() {
+  /*   async redirects() {
     return [
       {
         source: '/uses',
@@ -50,5 +50,5 @@ module.exports = {
         permanent: true,
       },
     ]
-  },
+  }, */
 }

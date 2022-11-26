@@ -66,12 +66,19 @@ function Null() {
     <Container>
       <TitleBar title="Not found" />
       <div className="flex flex-1 flex-col items-center justify-center space-y-6 px-8 text-center lg:px-16">
+        <Image
+          src="/static/clip/brickluke.webp"
+          width={200}
+          height={200}
+          alt="brickluke"
+          className="justify-center"
+        />
         <Compass className="text-secondary" size={32} />
         <div className="flex flex-col space-y-1">
           <p className="text-primary font-semibold">
             What you seek does not exist.
           </p>
-          <Image src="/static/clip/brickluke.webp" alt="brickluke" />
+
           <p className="text-tertiary">
             Maybe this link is broken. Maybe something was deleted, or moved. In
             any case, there’s nothing to see here...

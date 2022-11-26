@@ -10,7 +10,7 @@ import {
 
 import { ReactionButton } from '../Button/ReactionButton'
 
-function getReactionButton(question) {
+function getReactionButton(question: any) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
 
   function handleClick() {

@@ -16,9 +16,13 @@ generates:
       - typescript
       - typescript-operations
       - typescript-react-apollo
+      - typescript-apollo-client-helpers
+      - named-operations-object
+      
     config:
       withHOC: false
       withHooks: true
       withComponent: false
       reactApolloVersion: 3
       preResolveTypes: true
+      identifierName: ListAllOperations
