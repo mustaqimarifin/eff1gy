@@ -1,6 +1,8 @@
 import { ApolloProvider } from '@apollo/client'
-import { UserProvider } from '@auth0/nextjs-auth0'
 import { NextPageContext } from 'next'
+import { Session } from 'next-auth'
+import { SessionProvider } from 'next-auth/react'
+import { ThemeProvider } from 'next-themes'
 import * as React from 'react'
 
 import { useApollo } from '~/lib/apollo'
@@ -11,7 +13,8 @@ import { Toast } from './Toaster'
 
 interface Props {
   children?: any
-  pageProps: NextPageContext
+  session: Session
+  pageProps: any
 }
 
 const globalNavigationContext = {
@@ -23,7 +26,7 @@ export const GlobalNavigationContext = React.createContext(
   globalNavigationContext
 )
 
-export function Providers({ children, pageProps }: Props) {
+export function Providers({ session, children, pageProps }: Props) {
   const apolloClient = useApollo(pageProps)
 
   const initialState = {
@@ -41,13 +44,15 @@ export function Providers({ children, pageProps }: Props) {
     <>
       <SEO />
       <Toast />
-      <UserProvider>
+      <ThemeProvider attribute="class">
         <ApolloProvider client={apolloClient}>
           <GlobalNavigationContext.Provider value={state}>
-            <ReactQuery>{children}</ReactQuery>
+            <SessionProvider session={session}>
+              <ReactQuery>{children}</ReactQuery>
+            </SessionProvider>
           </GlobalNavigationContext.Provider>
         </ApolloProvider>
-      </UserProvider>
+      </ThemeProvider>
     </>
   )
 }

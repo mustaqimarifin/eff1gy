@@ -6,7 +6,7 @@ import { CLIENT_URL } from '~/graphql/constants'
 import { IS_PROD } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
 import { MutationEditUserArgs } from '~/graphql/types.generated'
-import { deleteUser as deleteUserFromAuth0 } from '~/lib/auth0/deleteUser'
+//import { deleteUser as deleteUserFromAuth0 } from '~/lib/auth0/deleteUser'
 //import { client as postmark } from '~/lib/postmark'
 import { validEmail, validUsername } from '~/lib/validators'
 
@@ -18,7 +18,6 @@ export async function deleteUser(_, __, ctx: Context) {
   }
 
   const user = await prisma.user.findUnique({ where: { id: viewer.id } })
-  await deleteUserFromAuth0(user.twitterId)
 
   return await prisma.user
     .delete({
@@ -30,24 +29,24 @@ export async function deleteUser(_, __, ctx: Context) {
 export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
   const { prisma, viewer } = ctx
   const { data } = args
-  const { username, email } = data
+  const { name, email } = data
 
-  if (username) {
-    if (!validUsername(username)) {
+  if (name) {
+    if (!validUsername(name)) {
       throw new GraphQLError('Usernames can be 16 characters long')
     }
 
     const user = await prisma.user.findUnique({
-      where: { username },
+      where: { email },
     })
 
     if (user && user.id !== viewer.id) {
-      throw new GraphQLError('That username is taken')
+      throw new GraphQLError('That name is taken')
     }
 
     return await prisma.user.update({
       where: { id: viewer.id },
-      data: { username },
+      data: { name },
     })
   }
 
@@ -72,7 +71,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
     }
 
     const token = jwt.sign(
-      { userId: viewer.id, pendingEmail: email },
+      { userId: viewer.id, email },
       process.env.JWT_SIGNING_KEY
     )
 
@@ -89,13 +88,13 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
 
     return await prisma.user.update({
       where: { id: viewer.id },
-      data: { pendingEmail: email },
+      data: { email },
     })
   }
 
-  // if no email or username were passed, the user is trying to cancel the pending email request
+  // if no email or name were passed, the user is trying to cancel the pending email request
   return await prisma.user.update({
     where: { id: viewer.id },
-    data: { pendingEmail: null },
+    data: {},
   })
 }

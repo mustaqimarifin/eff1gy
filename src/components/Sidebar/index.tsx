@@ -3,6 +3,7 @@ import * as React from 'react'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { GlobalNavigationContext } from '~/components/Providers'
 
+import SetTheme from '../Button/SetTheme'
 import { SidebarNavigation } from './Navigation'
 import { SidebarOverlay } from './Overlay'
 import { UserFooter } from './UserFooter'
@@ -25,6 +26,8 @@ export function Sidebar() {
           leadingAccessory={null}
           title="Mustaqim Arifin"
         />
+
+        <SetTheme />
         <SidebarNavigation />
         <UserFooter />
       </nav>

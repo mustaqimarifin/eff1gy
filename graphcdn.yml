@@ -10,7 +10,7 @@ keyFields:
       - name
     User:
       - id
-      - username
+      - name
     PageInfo: []
     StackEdge: []
     BookmarkEdge: []

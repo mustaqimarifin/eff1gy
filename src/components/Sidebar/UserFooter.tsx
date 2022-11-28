@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import * as React from 'react'
-import { Settings } from 'react-feather'
+import { Database, Settings } from 'react-feather'
 
 import { Avatar } from '~/components/Avatar'
 import { GhostButton } from '~/components/Button'
@@ -20,18 +22,30 @@ function Container(props) {
 }
 
 export function UserFooter() {
-  const { data, loading, error } = useViewerQuery()
+  //const { data, loading, error } = useViewerQuery()
+  const { data: session, status } = useSession()
   const { setIsOpen } = React.useContext(GlobalNavigationContext)
 
   function signInButton() {
-    return (
-      <a style={{ width: '100%' }} href="/api/auth/login">
-        <GhostButton style={{ width: '100%' }}>Sign in</GhostButton>
-      </a>
-    )
+    if (status === 'unauthenticated') {
+      return (
+        <>
+          <GhostButton
+            href={`/api/auth/signin`}
+            onClick={(e) => {
+              e.preventDefault()
+              signIn()
+            }}
+            style={{ width: '100%' }}
+          >
+            Sign in
+          </GhostButton>
+        </>
+      )
+    }
   }
 
-  if (loading) {
+  if (status === 'loading') {
     return (
       <Container>
         <div className="flex w-full items-center justify-center py-1">
@@ -41,22 +55,22 @@ export function UserFooter() {
     )
   }
 
-  if (error) {
+  if (!session) {
     return <Container>{signInButton()}</Container>
   }
 
-  if (data?.viewer) {
+  if (session) {
     return (
       <Container>
         <Link
           passHref
-          href={`/u/${data.viewer.username}`}
+          href={`/u/${session.userId}`}
           onClick={() => setIsOpen(false)}
           className="flex flex-none items-center rounded-full"
         >
           <Avatar
-            user={data.viewer}
-            src={data.viewer.avatar}
+            user={session.user}
+            src={session.user.image}
             width={24}
             height={24}
             className="rounded-full"

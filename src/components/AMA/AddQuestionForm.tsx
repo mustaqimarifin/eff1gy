@@ -72,7 +72,7 @@ export function AddQuestionForm({ closeModal }) {
         <div className="pt-0.5">
           <Avatar
             user={viewer}
-            src={viewer.avatar}
+            src={viewer.image}
             width={40}
             height={40}
             className="rounded-full"

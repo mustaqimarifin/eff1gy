@@ -89,7 +89,7 @@ export default [
   },
   {
     description:
-      "The empty state of the dashboard is smart; it seems like it's surfacing the best possible actions I would want to take, all in one screen. Sharing, inviting, searching...it's all there and super inviting with gorgeous colors.\r\n\r\nMy one qualm is the mix and match of native vs non-native UI. *Adding by username* shows an iOS alert, *finding friends on the app* shows a custom phone number field, and *inviting a friend* opens the iMessages composer. In this case, the *Find Friends* button is the odd-one-out, but the cleanest in terms of visuals and inputs.",
+      "The empty state of the dashboard is smart; it seems like it's surfacing the best possible actions I would want to take, all in one screen. Sharing, inviting, searching...it's all there and super inviting with gorgeous colors.\r\n\r\nMy one qualm is the mix and match of native vs non-native UI. *Adding by name* shows an iOS alert, *finding friends on the app* shows a custom phone number field, and *inviting a friend* opens the iMessages composer. In this case, the *Find Friends* button is the odd-one-out, but the cleanest in terms of visuals and inputs.",
     title: 'Native or not',
     media: [
       'https://player.vimeo.com/external/160549096.hd.mp4?s=1caafc78eb14b3f1abe85dbb417f70607861b649&profile_id=167',

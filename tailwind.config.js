@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const colors = require('tailwindcss/colors')
 const { fontFamily } = require('tailwindcss/defaultTheme')
-const mono = [
-  'ui-monospace',
+/* const mono = [
+  'MesloLGS-NF',
   'SFMono-Regular',
   'Menlo',
   'Monaco',
@@ -10,7 +10,7 @@ const mono = [
   'Liberation Mono',
   'Courier New',
   'monospace',
-]
+] */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
   darkMode: 'class',
@@ -18,9 +18,18 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['GTAmerica', ...fontFamily.sans],
-        mono: mono,
+        mono: ['SFMono', ...fontFamily.mono],
       },
       colors: {
+        //primary: '#48b7e2',
+        secondary: '#71c440',
+        accent: '#9247d1',
+        neutral: '#222334',
+        'base-100': '#F0EFF1',
+        info: '#fee6e8',
+        success: '#178766',
+        warning: '#8F580A',
+        error: '#E4536E',
         white: '#fff',
         green: colors.emerald,
         yellow: colors.amber,
@@ -34,6 +43,8 @@ module.exports = {
         'design-details-dark': '#273F3F',
         'hacker-news': '#FF965A',
         twitter: '#479BEA',
+        google: '#DB4437',
+        github: '#6e5494',
         current: 'currentColor',
       },
       boxShadow: {

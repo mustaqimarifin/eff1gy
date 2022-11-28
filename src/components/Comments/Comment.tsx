@@ -118,12 +118,12 @@ export const Comment = React.memo(function MemoComment({
         <div className="flex items-center space-x-4">
           <Link
             passHref
-            href={`/u/${comment.author.username}`}
+            href={`/u/${comment.author.id}`}
             className="inline-flex"
           >
             <Avatar
               user={comment.author}
-              src={comment.author.avatar}
+              src={comment.author.image}
               width={40}
               height={40}
               quality={100}
@@ -134,11 +134,11 @@ export const Comment = React.memo(function MemoComment({
           <div className="flex space-x-1">
             <Link
               passHref
-              href={`/u/${comment.author.username}`}
+              href={`/u/${comment.author.name}`}
               className="text-primary font-semibold leading-snug"
             >
               <div className="flex break-all line-clamp-1">
-                {comment.author.username}
+                {comment.author.name}
               </div>
             </Link>
             <p className="text-quaternary leading-snug">·</p>
@@ -161,7 +161,7 @@ export const Comment = React.memo(function MemoComment({
       </div>
 
       {isEditing ? (
-        <div className="flex flex-col space-y-3 pl-14">
+        <div className="flex flex-col space-y-3 pt-4 pl-14">
           <Textarea
             onChange={(e) => setEditText(e.target.value)}
             value={editText}

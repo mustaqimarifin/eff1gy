@@ -68,13 +68,13 @@ export function QuestionDetail({ id }) {
           <Detail.Header>
             <div className="flex items-center space-x-4 pb-2">
               <Link
-                href={`/u/${question.author.username}`}
+                href={`/u/${question.author.id}`}
                 className="inline-flex"
                 passHref
               >
                 <Avatar
                   user={question.author}
-                  src={question.author.avatar}
+                  src={question.author.image}
                   width={32}
                   height={32}
                   quality={100}
@@ -83,14 +83,14 @@ export function QuestionDetail({ id }) {
               </Link>
               <div className="flex space-x-1">
                 <Link
-                  href={`/u/${question.author.username}`}
+                  href={`/u/${question.author.name}`}
                   className="inline-flex space-x-1"
                 >
                   <span className="text-primary whitespace-nowrap font-semibold leading-snug">
                     {question.author.name}
                   </span>
                   <span className="text-tertiary inline-flex font-normal leading-snug line-clamp-1">
-                    @{question.author.username}
+                    @{question.author.name}
                   </span>
                 </Link>
                 <p className="text-quaternary leading-snug">·</p>

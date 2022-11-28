@@ -6,13 +6,14 @@ import { Input } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { GET_VIEWER_SETTINGS } from '~/graphql/queries/viewer'
 import {
+  GetViewerWithSettingsQuery,
   useEditUserMutation,
-  useGetViewerWithSettingsQuery,
 } from '~/graphql/types.generated'
 
-export function EmailForm() {
-  const { data } = useGetViewerWithSettingsQuery()
-  const { viewer } = data
+export function EmailForm(props: {
+  viewer: GetViewerWithSettingsQuery['viewer']
+}) {
+  const { viewer } = props
   const isNew = !viewer.email && !viewer.pendingEmail
 
   const [isEditing, setIsEditing] = React.useState(isNew)
@@ -26,7 +27,6 @@ export function EmailForm() {
     },
     update(cache) {
       //@ts-ignore
-
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })
@@ -58,7 +58,6 @@ export function EmailForm() {
     },
     update(cache) {
       //@ts-ignore
-
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })
@@ -90,7 +89,6 @@ export function EmailForm() {
     },
     update(cache) {
       //@ts-ignore
-
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })
@@ -174,8 +172,7 @@ export function EmailForm() {
           <WarnAlert>
             <div className="flex flex-col space-y-2">
               <div>
-                Check{' '}
-                <span className="font-medium">{data.viewer.pendingEmail}</span>{' '}
+                Check <span className="font-medium">{viewer.pendingEmail}</span>{' '}
                 to confirm your email address
               </div>
               <div className="flex space-x-2">

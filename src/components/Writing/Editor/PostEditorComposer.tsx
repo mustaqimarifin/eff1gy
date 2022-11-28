@@ -62,7 +62,7 @@ export function PostEditorComposer() {
             value={draftState.text}
             onChange={handleTextChange}
             placeholder={'Write a post...'}
-            className="block w-full p-0 pt-5 text-lg font-normal prose border-none composer text-primary focus:border-0 focus:outline-none focus:ring-0 dark:bg-black"
+            className="block w-full p-0 pt-5 text-lg font-mono prose border-none composer text-primary focus:border-0 focus:outline-none focus:ring-0 dark:bg-black"
           />
         </Detail.Header>
       </Detail.ContentContainer>

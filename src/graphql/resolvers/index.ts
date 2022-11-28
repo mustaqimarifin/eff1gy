@@ -10,6 +10,7 @@ import {
   QuestionStatus,
   UserRole,
 } from '~/graphql/types.generated'
+import { revue } from '~/lib/revue'
 
 import { dateScalar } from '../scalars'
 
@@ -99,6 +100,7 @@ export default {
     pendingEmail: ({ id }, _, { viewer }: Context) => {
       return viewer && viewer.id === id ? viewer.pendingEmail : null
     },
+
     emailSubscriptions: async ({ id }, _, { viewer, prisma }: Context) => {
       if (!viewer || !viewer.email || viewer.id !== id)
         return [

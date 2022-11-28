@@ -31,7 +31,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
               >
                 <Menu.Items
                   static
-                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
+                  className="absolute right-0 z-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
                 >
                   {comment.viewerCanEdit && (
                     <div className="py-1">

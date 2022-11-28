@@ -38,9 +38,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
         author: {
           __typename: 'User',
           id: xid.next(),
-          username: data?.viewer?.username,
-          avatar: data?.viewer?.avatar,
           name: data?.viewer?.name,
+          image: data?.viewer?.image,
           role: data?.viewer?.role,
           isViewer: true,
         },

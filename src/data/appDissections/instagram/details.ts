@@ -33,7 +33,7 @@ export default [
   },
   {
     description:
-      'Protip: If you tap + hold on a username in the comments thread it will open up a comment form pre-filled with that person’s username. This is one of the most subtle interaction patterns I’ve found. But once you find it there’s no going back to the old way of replying.',
+      'Protip: If you tap + hold on a name in the comments thread it will open up a comment form pre-filled with that person’s name. This is one of the most subtle interaction patterns I’ve found. But once you find it there’s no going back to the old way of replying.',
     title: 'Quick comment',
     media: [
       'https://player.vimeo.com/external/157885162.hd.mp4?s=c2f3bf393ff08e777aacd68ce3dfd020f0379383&profile_id=113',

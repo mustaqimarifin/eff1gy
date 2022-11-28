@@ -1,4 +1,9 @@
-module.exports = {
+/* eslint-disable @typescript-eslint/no-var-requires */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer({
   swcMinify: true,
   reactStrictMode: true,
 
@@ -11,6 +16,8 @@ module.exports = {
       'imagedelivery.net',
       'res.cloudinary.com',
       'ik.imagekit.io',
+      'avatars.githubusercontent.com',
+      'lh3.googleusercontent.com',
     ],
   },
   /*   async redirects() {
@@ -52,4 +59,4 @@ module.exports = {
       },
     ]
   }, */
-}
+})

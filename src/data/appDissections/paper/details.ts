@@ -92,7 +92,7 @@ export default [
   {
     id: '11',
     description:
-      'Chat Heads aren’t new to the Facebook ecosystem on iOS, but it’s still a delightful little interaction to see the person (or page’s) avatar slide into view with a familiar bounce.',
+      'Chat Heads aren’t new to the Facebook ecosystem on iOS, but it’s still a delightful little interaction to see the person (or page’s) image slide into view with a familiar bounce.',
     title: 'Chat heads',
     media: [
       'https://player.vimeo.com/external/157930238.sd.mp4?s=0f91b57bf51eda7c64a87665a166693ab9e644cb&profile_id=165',

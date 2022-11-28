@@ -144,7 +144,7 @@ export type EditStackInput = {
 
 export type EditUserInput = {
   email?: InputMaybe<Scalars['String']>
-  username?: InputMaybe<Scalars['String']>
+  name?: InputMaybe<Scalars['String']>
 }
 
 export type EmailSubscription = {
@@ -391,7 +391,7 @@ export type QueryStacksArgs = {
 }
 
 export type QueryUserArgs = {
-  username: Scalars['String']
+  id: Scalars['ID']
 }
 
 export type Question = {
@@ -471,6 +471,21 @@ export type StacksConnection = {
   pageInfo?: Maybe<PageInfo>
 }
 
+export type Sticker = {
+  __typename?: 'Sticker'
+  label?: Maybe<Scalars['String']>
+  metadata?: Maybe<Scalars['JSONObject']>
+  model?: Maybe<StickerModel>
+  url?: Maybe<Scalars['String']>
+}
+
+export enum StickerModel {
+  Bulma = 'BULMA',
+  Catjam = 'CATJAM',
+  Madprops = 'MADPROPS',
+  Suss = 'SUSS',
+}
+
 export type Tag = {
   __typename?: 'Tag'
   name: Scalars['String']
@@ -478,17 +493,16 @@ export type Tag = {
 
 export type User = {
   __typename?: 'User'
-  avatar?: Maybe<Scalars['String']>
   createdAt?: Maybe<Scalars['Date']>
   email?: Maybe<Scalars['String']>
   emailSubscriptions?: Maybe<Array<Maybe<EmailSubscription>>>
   id: Scalars['ID']
+  image?: Maybe<Scalars['String']>
   isAdmin?: Maybe<Scalars['Boolean']>
   isViewer?: Maybe<Scalars['Boolean']>
-  name?: Maybe<Scalars['String']>
+  name: Scalars['String']
   pendingEmail?: Maybe<Scalars['String']>
   role?: Maybe<UserRole>
-  username?: Maybe<Scalars['String']>
 }
 
 export enum UserRole {
@@ -511,6 +525,16 @@ export type BookmarkCoreFragment = {
   faviconUrl?: string | null
 }
 
+export type BookmarkListItemFragment = {
+  __typename: 'Bookmark'
+  id: string
+  url: string
+  host: string
+  title?: string | null
+  description?: string | null
+  faviconUrl?: string | null
+}
+
 export type BookmarkDetailFragment = {
   __typename: 'Bookmark'
   reactionCount?: number | null
@@ -522,16 +546,6 @@ export type BookmarkDetailFragment = {
   description?: string | null
   faviconUrl?: string | null
   tags: Array<{ __typename?: 'Tag'; name: string } | null>
-}
-
-export type BookmarkListItemFragment = {
-  __typename: 'Bookmark'
-  id: string
-  url: string
-  host: string
-  title?: string | null
-  description?: string | null
-  faviconUrl?: string | null
 }
 
 export type BookmarksConnectionFragment = {
@@ -557,17 +571,6 @@ export type BookmarksConnectionFragment = {
   } | null>
 }
 
-export type UserInfoFragment = {
-  __typename: 'User'
-  id: string
-  username?: string | null
-  avatar?: string | null
-  name?: string | null
-  role?: UserRole | null
-  isViewer?: boolean | null
-  isAdmin?: boolean | null
-}
-
 export type CommentInfoFragment = {
   __typename: 'Comment'
   id: string
@@ -579,9 +582,8 @@ export type CommentInfoFragment = {
   author: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -629,9 +631,26 @@ export type QuestionCoreFragment = {
   author?: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
+    role?: UserRole | null
+    isViewer?: boolean | null
+    isAdmin?: boolean | null
+  } | null
+}
+
+export type QuestionListItemFragment = {
+  __typename: 'Question'
+  id: string
+  title: string
+  audioUrl?: string | null
+  waveform?: any | null
+  createdAt: any
+  author?: {
+    __typename: 'User'
+    id: string
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -654,28 +673,8 @@ export type QuestionDetailFragment = {
   author?: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
-    role?: UserRole | null
-    isViewer?: boolean | null
-    isAdmin?: boolean | null
-  } | null
-}
-
-export type QuestionListItemFragment = {
-  __typename: 'Question'
-  id: string
-  title: string
-  audioUrl?: string | null
-  waveform?: any | null
-  createdAt: any
-  author?: {
-    __typename: 'User'
-    id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -703,9 +702,8 @@ export type QuestionsConnectionFragment = {
       author?: {
         __typename: 'User'
         id: string
-        username?: string | null
-        avatar?: string | null
-        name?: string | null
+        name: string
+        image?: string | null
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
@@ -715,6 +713,15 @@ export type QuestionsConnectionFragment = {
 }
 
 export type StackCoreFragment = {
+  __typename: 'Stack'
+  id: string
+  name: string
+  image?: string | null
+  url: string
+  slug: string
+}
+
+export type StackListItemFragment = {
   __typename: 'Stack'
   id: string
   name: string
@@ -738,23 +745,13 @@ export type StackDetailFragment = {
   usedBy: Array<{
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
   } | null>
   tags: Array<{ __typename?: 'Tag'; name: string } | null>
-}
-
-export type StackListItemFragment = {
-  __typename: 'Stack'
-  id: string
-  name: string
-  image?: string | null
-  url: string
-  slug: string
 }
 
 export type StacksConnectionFragment = {
@@ -777,6 +774,16 @@ export type StacksConnectionFragment = {
       slug: string
     } | null
   } | null>
+}
+
+export type UserInfoFragment = {
+  __typename: 'User'
+  id: string
+  name: string
+  image?: string | null
+  role?: UserRole | null
+  isViewer?: boolean | null
+  isAdmin?: boolean | null
 }
 
 export type UserSettingsFragment = {
@@ -859,9 +866,8 @@ export type AddCommentMutation = {
     author: {
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -887,9 +893,8 @@ export type EditCommentMutation = {
     author: {
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -995,9 +1000,8 @@ export type EditQuestionMutation = {
     author?: {
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1036,9 +1040,8 @@ export type AddQuestionMutation = {
     author?: {
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1104,9 +1107,8 @@ export type EditStackMutation = {
     usedBy: Array<{
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1145,9 +1147,8 @@ export type AddStackMutation = {
     usedBy: Array<{
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1172,9 +1173,8 @@ export type ToggleStackUserMutation = {
     usedBy: Array<{
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1198,9 +1198,8 @@ export type EditUserMutation = {
   editUser?: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -1277,9 +1276,8 @@ export type GetCommentsQuery = {
     author: {
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1352,9 +1350,8 @@ export type GetQuestionsQuery = {
         author?: {
           __typename: 'User'
           id: string
-          username?: string | null
-          avatar?: string | null
-          name?: string | null
+          name: string
+          image?: string | null
           role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
@@ -1386,9 +1383,8 @@ export type GetQuestionQuery = {
     author?: {
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1447,9 +1443,8 @@ export type GetStackQuery = {
     usedBy: Array<{
       __typename: 'User'
       id: string
-      username?: string | null
-      avatar?: string | null
-      name?: string | null
+      name: string
+      image?: string | null
       role?: UserRole | null
       isViewer?: boolean | null
       isAdmin?: boolean | null
@@ -1466,7 +1461,7 @@ export type GetTagsQuery = {
 }
 
 export type GetUserQueryVariables = Exact<{
-  username: Scalars['String']
+  id: Scalars['ID']
 }>
 
 export type GetUserQuery = {
@@ -1474,9 +1469,8 @@ export type GetUserQuery = {
   user?: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -1490,9 +1484,8 @@ export type ViewerQuery = {
   viewer?: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -1508,9 +1501,8 @@ export type GetViewerWithSettingsQuery = {
   viewer?: {
     __typename: 'User'
     id: string
-    username?: string | null
-    avatar?: string | null
-    name?: string | null
+    name: string
+    image?: string | null
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
@@ -1572,9 +1564,8 @@ export const UserInfoFragmentDoc = gql`
   fragment UserInfo on User {
     __typename
     id
-    username
-    avatar
     name
+    image
     role
     isViewer
     isAdmin
@@ -3301,8 +3292,8 @@ export type GetTagsQueryResult = Apollo.QueryResult<
   GetTagsQueryVariables
 >
 export const GetUserDocument = gql`
-  query getUser($username: String!) {
-    user(username: $username) {
+  query getUser($id: ID!) {
+    user(id: $id) {
       ...UserInfo
     }
   }
@@ -3321,7 +3312,7 @@ export const GetUserDocument = gql`
  * @example
  * const { data, loading, error } = useGetUserQuery({
  *   variables: {
- *      username: // value for 'username'
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -3798,36 +3789,47 @@ export type StacksConnectionFieldPolicy = {
   edges?: FieldPolicy<any> | FieldReadFunction<any>
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
+export type StickerKeySpecifier = (
+  | 'label'
+  | 'metadata'
+  | 'model'
+  | 'url'
+  | StickerKeySpecifier
+)[]
+export type StickerFieldPolicy = {
+  label?: FieldPolicy<any> | FieldReadFunction<any>
+  metadata?: FieldPolicy<any> | FieldReadFunction<any>
+  model?: FieldPolicy<any> | FieldReadFunction<any>
+  url?: FieldPolicy<any> | FieldReadFunction<any>
+}
 export type TagKeySpecifier = ('name' | TagKeySpecifier)[]
 export type TagFieldPolicy = {
   name?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type UserKeySpecifier = (
-  | 'avatar'
   | 'createdAt'
   | 'email'
   | 'emailSubscriptions'
   | 'id'
+  | 'image'
   | 'isAdmin'
   | 'isViewer'
   | 'name'
   | 'pendingEmail'
   | 'role'
-  | 'username'
   | UserKeySpecifier
 )[]
 export type UserFieldPolicy = {
-  avatar?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   email?: FieldPolicy<any> | FieldReadFunction<any>
   emailSubscriptions?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
+  image?: FieldPolicy<any> | FieldReadFunction<any>
   isAdmin?: FieldPolicy<any> | FieldReadFunction<any>
   isViewer?: FieldPolicy<any> | FieldReadFunction<any>
   name?: FieldPolicy<any> | FieldReadFunction<any>
   pendingEmail?: FieldPolicy<any> | FieldReadFunction<any>
   role?: FieldPolicy<any> | FieldReadFunction<any>
-  username?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StrictTypedTypePolicies = {
   Bookmark?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
@@ -3946,6 +3948,13 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | StacksConnectionKeySpecifier)
     fields?: StacksConnectionFieldPolicy
   }
+  Sticker?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+    keyFields?:
+      | false
+      | StickerKeySpecifier
+      | (() => undefined | StickerKeySpecifier)
+    fields?: StickerFieldPolicy
+  }
   Tag?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
     keyFields?: false | TagKeySpecifier | (() => undefined | TagKeySpecifier)
     fields?: TagFieldPolicy
@@ -3996,22 +4005,22 @@ export const ListAllOperations = {
   },
   Fragment: {
     BookmarkCore: 'BookmarkCore',
-    BookmarkDetail: 'BookmarkDetail',
     BookmarkListItem: 'BookmarkListItem',
+    BookmarkDetail: 'BookmarkDetail',
     BookmarksConnection: 'BookmarksConnection',
-    UserInfo: 'UserInfo',
     CommentInfo: 'CommentInfo',
     PostCore: 'PostCore',
     PostListItem: 'PostListItem',
     PostDetail: 'PostDetail',
     QuestionCore: 'QuestionCore',
-    QuestionDetail: 'QuestionDetail',
     QuestionListItem: 'QuestionListItem',
+    QuestionDetail: 'QuestionDetail',
     QuestionsConnection: 'QuestionsConnection',
     StackCore: 'StackCore',
-    StackDetail: 'StackDetail',
     StackListItem: 'StackListItem',
+    StackDetail: 'StackDetail',
     StacksConnection: 'StacksConnection',
+    UserInfo: 'UserInfo',
     UserSettings: 'UserSettings',
   },
 }

@@ -42,7 +42,7 @@ export function UserSettings() {
         <div className="divide-y divide-gray-200 py-12 dark:divide-gray-800">
           <div className="space-y-8 py-12">
             <h3 className="text-primary text-lg font-bold">Account</h3>
-            <EmailForm />
+            <EmailForm viewer={data.viewer} />
             <UsernameForm />
           </div>
 

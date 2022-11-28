@@ -3,6 +3,14 @@
 @import 'tailwindcss/utilities';
 
 @font-face {
+  font-family: 'SFMono';
+  src: url('/fonts/SFMono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'GTAmerica';
   src: url('/fonts/GTAmerica-Regular.woff2') format('woff2');
   font-weight: 400;
@@ -101,8 +109,10 @@
 
 @layer components {
   /* needed to override tailwind forms styles */
+  
+
   select {
-    @apply w-full px-4 py-2 border border-gray-200 rounded outline-none text-primary bg-gray-1000 bg-opacity-5 hover:bg-opacity-10 focus:border-gray-1000 focus:outline-none focus:ring-0 dark:border-gray-800 dark:bg-white dark:focus:border-gray-600;
+    @apply w-full px-4 py-2 border border-gray-200 rounded outline-none text-primary bg-gray-900 bg-opacity-5 hover:bg-opacity-10 focus:border-gray-900 focus:outline-none focus:ring-0 dark:border-gray-800 dark:bg-white dark:focus:border-gray-600;
   }
 
   button:focus,
@@ -139,7 +149,7 @@
     display: none;
   }
 
-  .bg-dots {
+/*   .bg-dots {
     background: linear-gradient(90deg, #f9fafb 15px, transparent 1%) center,
       linear-gradient(#f9fafb 15px, transparent 1%) center, rgba(0, 0, 0, 0.24);
     background-size: 16px 16px;
@@ -152,13 +162,13 @@
         rgba(255, 255, 255, 0.16);
       background-size: 16px 16px;
     }
-  }
+  } */
 }
 
 /* Your own custom utilities */
 @layer utilities {
   .text-primary {
-    @apply text-gray-1000 dark:text-gray-100;
+    @apply text-gray-900 dark:text-gray-100;
   }
 
   .text-secondary {
@@ -195,11 +205,11 @@
   }
 
   .highlight-link-hover {
-    @apply -mx-0.5 rounded-sm bg-opacity-20 px-0.5 text-gray-1000 no-underline dark:bg-opacity-100 dark:text-gray-300 md:hover:bg-yellow-400 md:hover:bg-opacity-30 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-1000;
+    @apply -mx-0.5 rounded-sm bg-opacity-20 px-0.5 text-gray-900 no-underline dark:bg-opacity-100 dark:text-gray-300 md:hover:bg-yellow-400 md:hover:bg-opacity-30 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-900;
   }
 
   .highlight-link {
-    @apply -mx-0.5 bg-opacity-20 px-0.5 text-gray-1000 dark:bg-gray-100 dark:bg-opacity-20 dark:text-gray-300 md:hover:bg-opacity-30 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-1000;
+    @apply -mx-0.5 bg-opacity-20 px-0.5 text-gray-900 dark:bg-gray-100 dark:bg-opacity-20 dark:text-gray-300 md:hover:bg-opacity-30 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-900;
   }
 
   .blink {

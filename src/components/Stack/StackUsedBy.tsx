@@ -104,13 +104,13 @@ export function StackUsedBy(props) {
               <Tooltip key={user.id} content={user.name}>
                 <span>
                   <Link
-                    href={`/u/${user.username}`}
+                    href={`/u/${user.id}`}
                     passHref
                     className="inline-flex p-1"
                   >
                     <Avatar
                       user={user}
-                      src={user.avatar}
+                      src={user.image}
                       width={32}
                       height={32}
                       className="rounded-full"

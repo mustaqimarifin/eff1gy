@@ -65,6 +65,20 @@ export default gql`
     POST
   }
 
+  enum StickerModel {
+    CATJAM
+    SUSS
+    BULMA
+    MADPROPS
+  }
+
+  type Sticker {
+    model: StickerModel
+    label: String
+    url: String
+    metadata: JSONObject
+  }
+
   type Tag {
     name: String!
   }
@@ -105,12 +119,11 @@ export default gql`
     id: ID!
     createdAt: Date
     role: UserRole
-    username: String
-    avatar: String
-    name: String
+    name: String!
+    image: String
+    pendingEmail: String
     isViewer: Boolean
     email: String
-    pendingEmail: String
     emailSubscriptions: [EmailSubscription]
     isAdmin: Boolean
   }
@@ -205,7 +218,7 @@ export default gql`
 
   type Query {
     viewer: User
-    user(username: String!): User
+    user(id: ID!): User
     bookmark(id: ID!): Bookmark
     bookmarks(
       first: Int
@@ -216,6 +229,8 @@ export default gql`
     stacks(first: Int, after: String): StacksConnection!
     comment(id: ID!): Comment
     comments(refId: ID!, type: CommentType!): [Comment]!
+    #reaction(type: StickerType!): Reaction
+    #reactions(refId: ID!, type: CommentType!): [Reaction]!
     posts(filter: WritingFilter): [Post]!
     post(slug: String!): Post
     question(id: ID!): Question
@@ -230,7 +245,7 @@ export default gql`
   }
 
   input EditUserInput {
-    username: String
+    name: String
     email: String
   }
 

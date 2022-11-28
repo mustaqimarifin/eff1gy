@@ -1,6 +1,6 @@
 datasource db {
   provider             = "postgresql"
-  url                  = env("SUPABASE_PG_URL")
+  url                  = "postgresql://postgres@localhost:5432/xyz"
   referentialIntegrity = "prisma"
 }
 
@@ -9,24 +9,64 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+model Account {
+  id                String  @id @default(dbgenerated("(concat('acc_', xid()))::TEXT"))
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(dbgenerated("(concat('sss_', xid()))::TEXT"))
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id           String     @id @default(dbgenerated("(concat('usr_', xid()))::TEXT"))
-  createdAt    DateTime   @default(now())
-  role         Role       @default(USER)
-  username     String     @unique
-  twitterId    String     @unique
-  email        String?    @unique
-  pendingEmail String?
-  avatar       String?
-  description  String?
-  location     String?
-  name         String?
-  nickname     String?
-  comments     Comment[]
-  questions    Question[]
-  reactions    Reaction[]
-  posts        Post[]
-  stacks       Stack[]
+  id        String   @id @default(dbgenerated("(concat('usr_', xid()))::TEXT"))
+  createdAt DateTime @default(now())
+
+  name  String  @unique
+  image String?
+  email String? @unique
+
+  role    Role    @default(USER)
+  isAdmin Boolean @default(false)
+
+  emailVerified DateTime?
+  pendingEmail  String?
+  description   String?    @db.VarChar(256)
+  location      String?    @db.VarChar(32)
+  twitterId     String?    @unique
+  accounts      Account[]
+  sessions      Session[]
+  comments      Comment[]
+  questions     Question[]
+  reactions     Reaction[]
+  posts         Post[]
+  stacks        Stack[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 enum Role {
@@ -69,18 +109,18 @@ model Question {
 }
 
 model Comment {
-  id         String     @id @default(dbgenerated("(concat('cmt_', xid()))::TEXT"))
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id        String   @id @default(dbgenerated("(concat('cmt_', xid()))::TEXT"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   text       String
   audio      Audio?
-  reactions  Reaction[]
-  author     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
-  bookmark   Bookmark?  @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  question   Question?  @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  post       Post?      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  stack      Stack?     @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   bookmarkId String?
   questionId String?
   postId     String?
@@ -159,26 +199,33 @@ model Stack {
 }
 
 model Reaction {
-  id         String    @id @default(dbgenerated("(concat('rct_', xid()))::TEXT"))
-  createdAt  DateTime  @default(now())
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
+  id        String   @id @default(dbgenerated("(concat('rct_', xid()))::TEXT"))
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  comment    Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  commentId  String?
   bookmarkId String?
   questionId String?
   postId     String?
   stackId    String?
 
-  @@index([commentId])
   @@index([bookmarkId])
   @@index([questionId])
   @@index([postId])
   @@index([stackId])
+}
+
+model Sticker {
+  id        String   @id @default(dbgenerated("(concat('stc_', xid()))::TEXT"))
+  createdAt DateTime @default(now())
+  model     String   @unique
+  label     String
+  url       String
+  metadata  Json?
 }
 
 enum EmailSubscriptionType {

@@ -3,26 +3,31 @@ const prisma = new PrismaClient()
 
 // A `main` function so that we can use async/await
 async function main() {
-  const tag = await prisma.tag.createMany({
+  const sticker = await prisma.sticker.createMany({
     data: [
       {
-        name: 'web',
+        model: 'bulma',
+        label: 'Bulma',
+        url: 'https://i.postimg.cc/8zHSsSRD/bulma.webp',
       },
       {
-        name: 'portfolio',
+        model: 'suss',
+        label: 'Suss',
+        url: 'https://i.postimg.cc/sXBdnGtD/suss.webp',
       },
       {
-        name: 'lol',
+        model: 'madprops',
+        label: 'MadProps',
+        url: 'https://i.postimg.cc/PqVnzQVR/nofucks.webp',
       },
       {
-        name: 'apps',
-      },
-      {
-        name: 'plugins',
+        model: 'catjam',
+        label: 'CatJam',
+        url: 'https://res.cloudinary.com/mstqmarfn/image/upload/v1669549546/xyz/catjam.webp',
       },
     ],
   })
-  console.log(`Created ${tag.count} AMAs`)
+  console.log(`Blew ${sticker.count} dicks`)
 }
 
 main()

@@ -4,12 +4,19 @@ import { TwitterButton } from '~/components/Button'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
+import { SignInDialogContent } from '../SignInDialog/SignInDialogContent'
+
 export function SignedOut() {
   return (
     <Detail.Container>
       <TitleBar title="Settings" />
       <div className="flex flex-1 flex-col items-center justify-center">
-        <a href="/api/auth/login">
+        {' '}
+        <SignInDialogContent />
+      </div>
+
+      {/* <div className="flex flex-1 flex-col items-center justify-center">
+        <a href="/api/auth/signin">
           <TwitterButton size="large">
             <svg
               viewBox="0 0 16 14"
@@ -23,7 +30,7 @@ export function SignedOut() {
             <span>Sign in with Twitter</span>
           </TwitterButton>
         </a>
-      </div>
+      </div> */}
     </Detail.Container>
   )
 }

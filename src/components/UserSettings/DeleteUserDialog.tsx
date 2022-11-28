@@ -11,7 +11,7 @@ export function DeleteUserDialog({ trigger }) {
 
   function onClick() {
     handleDelete()
-    router.push('/api/auth/logout')
+    router.push('/api/auth/signout')
   }
 
   return (

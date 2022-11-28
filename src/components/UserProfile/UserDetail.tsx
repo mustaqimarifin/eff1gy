@@ -5,11 +5,11 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { useGetUserQuery } from '~/graphql/types.generated'
 
-export function UserDetail({ username }) {
+export function UserDetail({ id }) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
 
-  const { data, loading, error } = useGetUserQuery({ variables: { username } })
+  const { data, loading, error } = useGetUserQuery({ variables: { id } })
 
   if (error) return null
   if (loading) return <Detail.Loading />

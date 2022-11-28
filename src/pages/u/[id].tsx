@@ -7,17 +7,13 @@ import { GET_USER } from '~/graphql/queries/user'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
-export default function UserPage({ username }) {
+export default function UserPage({ id }) {
   return (
-    <ListDetailView
-      list={null}
-      hasDetail
-      detail={<UserDetail username={username} />}
-    />
+    <ListDetailView list={null} hasDetail detail={<UserDetail id={id} />} />
   )
 }
 
-export async function getServerSideProps({ params: { username }, req, res }) {
+export async function getServerSideProps({ params: { id }, req, res }) {
   const context = await getContext(req, res)
   const client = initApolloClient({ context })
 
@@ -26,13 +22,13 @@ export async function getServerSideProps({ params: { username }, req, res }) {
 
     client.query({
       query: GET_USER,
-      variables: { username },
+      variables: { id },
     }),
   ])
 
   return addApolloState(client, {
     props: {
-      username,
+      id,
     },
   })
 }

@@ -38,7 +38,7 @@ export function ListItem({
       <div className="flex flex-col justify-center space-y-1">
         <div
           className={`font-medium line-clamp-3 ${
-            active ? 'text-white' : 'text-gray-1000 dark:text-gray-100'
+            active ? 'text-white' : 'text-gray-900 dark:text-gray-100'
           }`}
         >
           {title}
@@ -48,7 +48,7 @@ export function ListItem({
             className={`line-clamp-2 ${
               active
                 ? 'text-white text-opacity-80'
-                : 'text-gray-1000 text-opacity-60 dark:text-white'
+                : 'text-gray-900 text-opacity-60 dark:text-white'
             }`}
           >
             {description}
@@ -59,7 +59,7 @@ export function ListItem({
             className={`line-clamp-1 ${
               active
                 ? 'text-white text-opacity-60'
-                : 'text-gray-1000 text-opacity-40 dark:text-white dark:text-opacity-60'
+                : 'text-gray-900 text-opacity-40 dark:text-white dark:text-opacity-60'
             }`}
           >
             {byline}

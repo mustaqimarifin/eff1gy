@@ -76,7 +76,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
             setPreviewImage(null)
             onImageUploaded(null)
           }}
-          className="absolute -top-3 -right-3 cursor-pointer rounded-full border-2 border-white bg-gray-1000 p-2 text-white shadow-md hover:bg-red-500 focus:bg-red-500 dark:border-gray-800 dark:bg-gray-700"
+          className="absolute -top-3 -right-3 cursor-pointer rounded-full border-2 border-white bg-gray-900 p-2 text-white shadow-md hover:bg-red-500 focus:bg-red-500 dark:border-gray-800 dark:bg-gray-700"
         >
           <Trash size={16} />
         </button>

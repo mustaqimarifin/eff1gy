@@ -12,14 +12,14 @@ import { validUsername } from '~/lib/validators'
 export function UsernameForm() {
   const { data } = useGetViewerWithSettingsQuery()
   const { viewer } = data
-  const [username, setUsername] = React.useState('')
+  const [name, setUsername] = React.useState('')
   const [isEditing, setIsEditing] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   const [editUser, editUserResponse] = useEditUserMutation({
     variables: {
       data: {
-        username,
+        name,
       },
     },
     onError(error) {
@@ -34,8 +34,8 @@ export function UsernameForm() {
   function onSubmit(e) {
     e.preventDefault()
     if (editUserResponse.loading) return
-    if (username === viewer.username) return setIsEditing(false)
-    if (!validUsername(username)) return setError(true)
+    if (name === viewer.name) return setIsEditing(false)
+    if (!validUsername(name)) return setError(true)
     editUser()
   }
 
@@ -48,9 +48,9 @@ export function UsernameForm() {
     <div className="space-y-2">
       <p className="text-primary font-semibold">Username</p>
 
-      {viewer.username && (
+      {viewer.name && (
         <div className="text-primary flex space-x-2">
-          <span>@{viewer.username}</span>
+          <span>@{viewer.name}</span>
           <span>·</span>
           <button
             className="cursor-pointer font-medium text-blue-500"
@@ -65,8 +65,8 @@ export function UsernameForm() {
         <form className="space-y-2" onSubmit={onSubmit}>
           <Input
             type="text"
-            placeholder={'Choose a username'}
-            value={username}
+            placeholder={'Choose a name'}
+            value={name}
             autoFocus
             onChange={handleUsernameChange}
           />
@@ -77,12 +77,12 @@ export function UsernameForm() {
             </p>
           )}
           <p className="text-quaternary text-xs">
-            Updating your username will break any existing links to your
-            profile, so you know, don’t do it too often.
+            Updating your name will break any existing links to your profile, so
+            you know, don’t do it too often.
           </p>
           <div className="flex justify-between">
             <Button type="submit">
-              {editUserResponse.loading ? <LoadingSpinner /> : 'Save username'}
+              {editUserResponse.loading ? <LoadingSpinner /> : 'Save name'}
             </Button>
           </div>
         </form>

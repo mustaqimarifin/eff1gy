@@ -1,21 +1,21 @@
-import { getSession } from '@auth0/nextjs-auth0'
 import { PrismaClient } from '@prisma/client'
+import { unstable_getServerSession } from 'next-auth'
+import { getToken } from 'next-auth/jwt'
+import { getSession, useSession } from 'next-auth/react'
 
 import prisma from '~/lib/prisma'
 
 import { User, UserRole } from '../types.generated'
 
-export function isAuthenticated(req, res) {
-  const session = getSession(req, res)
-  return session?.user
-}
+//const { data: session } = useSession({ required: false })
 
 export async function getViewer(req, res) {
-  const user = isAuthenticated(req, res)
+  const session = await getSession({ req })
 
+  const user = session?.user
   let viewer = null
   if (user) {
-    viewer = await prisma.user.findUnique({ where: { twitterId: user.sub } })
+    viewer = await prisma.user.findUnique({ where: { id: session.userId } })
   }
 
   return viewer

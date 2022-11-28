@@ -5,10 +5,10 @@ export function validEmail(email) {
   return re.test(String(email).toLowerCase())
 }
 
-export function validUsername(username) {
+export function validUsername(name) {
   // eslint-disable-next-line
   const re = /^(?=[a-zA-Z0-9_]{4,16}$)(?!.*[_.]{2})[^_.].*[^_.]$/
-  return re.test(String(username))
+  return re.test(String(name))
 }
 
 export function validUrl(string) {

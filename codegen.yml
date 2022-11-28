@@ -18,7 +18,7 @@ generates:
       - typescript-react-apollo
       - typescript-apollo-client-helpers
       - named-operations-object
-      
+
     config:
       withHOC: false
       withHooks: true

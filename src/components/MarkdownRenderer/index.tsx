@@ -105,11 +105,12 @@ function getComponentsForVariant(variant) {
           return <p>{paragraph.children}</p>
         },
         pre({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
+          const match = /language-(\w+)/.exec(className || '')
+          return inline && match ? (
             <CodeBlock
+              language={match[1]}
+              className={className}
               text={String(children).replace(/\n$/, '')}
-              language={language}
               {...props}
             />
           ) : (
@@ -117,11 +118,12 @@ function getComponentsForVariant(variant) {
           )
         },
         code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
+          const match = /language-(\w+)/.exec(className || '')
+          return !inline && match ? (
             <CodeBlock
+              className={className}
               text={String(children).replace(/\n$/, '')}
-              language={language}
+              language={match[1]}
               {...props}
             />
           ) : (
