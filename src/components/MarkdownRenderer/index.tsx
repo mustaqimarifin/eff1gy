@@ -11,10 +11,10 @@ import linkifyRegex from 'remark-linkify-regex'
 
 import { CodeBlock } from './CodeBlock'
 
-function LinkRenderer({ href, ...rest }: any) {
+/* function LinkRenderer({ href, ...rest }: any) {
   // auto-link headings
   if (href.startsWith('#')) {
-    return <a href={href} {...rest} />
+    return <Link href={href} {...rest} />
   }
 
   if (href.startsWith('@')) {
@@ -31,8 +31,22 @@ function LinkRenderer({ href, ...rest }: any) {
     console.error(e)
     return <a target="_blank" rel="noopener" href={href} {...rest} />
   }
-}
+} */
 
+const CustomLink = (props) => {
+  const href = props.href
+  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))
+
+  if (isInternalLink) {
+    return (
+      <Link href={href} {...props}>
+        {props.children}
+      </Link>
+    )
+  }
+
+  return <a target="_blank" rel="noopener noreferrer" {...props} />
+}
 const rx = Math.floor(Math.random() * (255 - 0)) + 1
 
 console.log(`my dick be ${rx}`)
@@ -60,7 +74,7 @@ function getComponentsForVariant(variant) {
   switch (variant) {
     case 'longform': {
       return {
-        a: LinkRenderer,
+        a: CustomLink,
         p: (paragraph: { children?: boolean; node?: any }) => {
           const { node } = paragraph
 
@@ -106,7 +120,7 @@ function getComponentsForVariant(variant) {
         },
         pre({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || '')
-          return inline && match ? (
+          return !inline && match ? (
             <CodeBlock
               language={match[1]}
               className={className}
@@ -137,7 +151,7 @@ function getComponentsForVariant(variant) {
     // Questions, comments, descriptions on bookmarks, etc.
     case 'comment': {
       return {
-        a: LinkRenderer,
+        a: CustomLink,
         h1: 'p',
         h2: 'p',
         h3: 'p',

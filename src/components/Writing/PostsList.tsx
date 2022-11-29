@@ -59,14 +59,15 @@ export function PostsList() {
     <WritingContext.Provider value={defaultContextValue}>
       <ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
         <WritingTitlebar scrollContainerRef={scrollContainerRef} />
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <div className="lg:space-y-1 lg:p-3">
+            {posts.map((post) => {
+              const active = router.query?.slug === post.slug
 
-        <div className="lg:space-y-1 lg:p-3">
-          {posts.map((post) => {
-            const active = router.query?.slug === post.slug
-
-            return <PostListItem key={post.id} post={post} active={active} />
-          })}
-        </div>
+              return <PostListItem key={post.id} post={post} active={active} />
+            })}
+          </div>
+        </React.Suspense>
       </ListContainer>
     </WritingContext.Provider>
   )

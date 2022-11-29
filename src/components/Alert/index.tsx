@@ -1,6 +1,6 @@
 export function ErrorAlert({ children }) {
   return (
-    <div className="rounded-md bg-red-500 bg-opacity-10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
+    <div className="rounded-md bg-error bg-opacity-10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
       {children}
     </div>
   )
@@ -8,7 +8,7 @@ export function ErrorAlert({ children }) {
 
 export function SuccessAlert({ children }) {
   return (
-    <div className="rounded-md bg-green-500 bg-opacity-10 px-4 py-3 text-sm text-green-700 dark:text-green-400">
+    <div className="rounded-md bg-success bg-opacity-10 px-4 py-3 text-sm text-green-700 dark:text-green-400">
       {children}
     </div>
   )
@@ -16,7 +16,7 @@ export function SuccessAlert({ children }) {
 
 export function WarnAlert({ children }) {
   return (
-    <div className="rounded-md bg-yellow-500 bg-opacity-10 px-4 py-3 text-sm text-yellow-700 dark:text-yellow-400">
+    <div className="rounded-md bg-warning bg-opacity-10 px-4 py-3 text-sm text-yellow-700 dark:text-yellow-400">
       {children}
     </div>
   )

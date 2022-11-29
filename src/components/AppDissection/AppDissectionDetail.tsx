@@ -1,13 +1,24 @@
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import * as React from 'react'
 
-import { DesignDetailMedia } from '~/components/AppDissection/DetailMedia'
+//import { DesignDetailMedia } from '~/components/AppDissection/DetailMedia'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { MarkdownRenderer } from '~/components/MarkdownRenderer'
+//simport { MarkdownRenderer } from '~/components/MarkdownRenderer'
 import { DesignDetailsPost } from '~/data/appDissections'
 import { timestampToCleanTime } from '~/lib/transformers'
 
+import { LoadingSpinner } from '../LoadingSpinner'
+
+const DesignDetailMedia = dynamic(() =>
+  import('~/components/AppDissection/DetailMedia').then(
+    (mod) => mod.DesignDetailMedia
+  )
+)
+const MarkdownRenderer = dynamic(() =>
+  import('~/components/MarkdownRenderer').then((mod) => mod.MarkdownRenderer)
+)
 interface Props {
   post: DesignDetailsPost
 }
@@ -51,16 +62,17 @@ export function AppDissectionDetail({ post }: Props) {
             </div>
           </div>
         </Detail.Header>
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <div className="space-y-12">
+            <div className="prose pt-12">
+              <MarkdownRenderer children={post.description} />
+            </div>
 
-        <div className="space-y-12">
-          <div className="prose pt-12">
-            <MarkdownRenderer children={post.description} />
+            {post.details.map((detail, i) => (
+              <DesignDetailMedia detail={detail} key={`${detail.title}-${i}`} />
+            ))}
           </div>
-
-          {post.details.map((detail, i) => (
-            <DesignDetailMedia detail={detail} key={`${detail.title}-${i}`} />
-          ))}
-        </div>
+        </React.Suspense>
       </Detail.ContentContainer>
     </Detail.Container>
   )

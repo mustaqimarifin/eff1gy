@@ -8,7 +8,7 @@ export function SignInDialogContent() {
   return (
     <div
       data-cy="sign-in-dialog"
-      className="flex flex-col items-start space-y-6 p-4 md:p-6 z-40"
+      className="flex flex-col items-center space-y-6 p-8 md:p-6 z-40"
     >
       <div className="text-primary grid w-full gap-4 sm:grid-cols-2">
         <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-700 dark:bg-opacity-70">
@@ -71,7 +71,7 @@ export function SignInDialogContent() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-700 dark:bg-opacity-70">
+        <div className="hidden sm:flex sm:flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-700 dark:bg-opacity-70">
           <svg
             className="h-6 w-6 text-gray-500 dark:text-gray-400"
             fill="currentColor"

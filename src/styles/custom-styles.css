@@ -2,8 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@font-face {
-  font-family: 'SFMono';
+/* @font-face {
+  font-family: 'sfMono';
   src: url('/fonts/SFMono.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
@@ -87,11 +87,11 @@
   font-weight: 800;
   font-style: normal;
   font-display: swap;
-}
+} */
 
 @layer base {
   html {
-    @apply max-h-screen overflow-hidden text-base antialiased;
+    @apply max-h-screen overflow-hidden text-base ;
   }
 
   /* handles safari overscroll background color */
@@ -149,7 +149,7 @@
     display: none;
   }
 
-/*   .bg-dots {
+   .bg-dots {
     background: linear-gradient(90deg, #f9fafb 15px, transparent 1%) center,
       linear-gradient(#f9fafb 15px, transparent 1%) center, rgba(0, 0, 0, 0.24);
     background-size: 16px 16px;
@@ -162,7 +162,7 @@
         rgba(255, 255, 255, 0.16);
       background-size: 16px 16px;
     }
-  } */
+  } 
 }
 
 /* Your own custom utilities */

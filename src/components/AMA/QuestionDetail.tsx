@@ -83,7 +83,7 @@ export function QuestionDetail({ id }) {
               </Link>
               <div className="flex space-x-1">
                 <Link
-                  href={`/u/${question.author.name}`}
+                  href={`/u/${question.author.id}`}
                   className="inline-flex space-x-1"
                 >
                   <span className="text-primary whitespace-nowrap font-semibold leading-snug">

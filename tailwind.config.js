@@ -17,11 +17,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['GTAmerica', ...fontFamily.sans],
-        mono: ['SFMono', ...fontFamily.mono],
+        sans: ['inter', ...fontFamily.sans],
+        mono: ['sfMono', ...fontFamily.mono],
       },
       colors: {
-        //primary: '#48b7e2',
+        active: '#48b7e2',
         secondary: '#71c440',
         accent: '#9247d1',
         neutral: '#222334',

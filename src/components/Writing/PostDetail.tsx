@@ -7,6 +7,7 @@ import { MarkdownRenderer } from '~/components/MarkdownRenderer'
 import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { timestampToCleanTime } from '~/lib/transformers'
 
+import { LoadingSpinner } from '../LoadingSpinner'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
@@ -49,9 +50,9 @@ export function PostDetail({ slug }) {
               {publishedAt.formatted}
             </span>
           </Detail.Header>
-
-          <MarkdownRenderer children={post.text} className="prose mt-8" />
-
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <MarkdownRenderer children={post.text} className="prose mt-8" />
+          </React.Suspense>
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />
         </Detail.ContentContainer>

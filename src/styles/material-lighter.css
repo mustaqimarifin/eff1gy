@@ -3,7 +3,7 @@ pre[class*="language-"] {
   color: #90a4ae;
   background: none;
   border-radius: 0.3em;
-  font-family: SFMono;
+  font-family: sfMono;
   font-size: 1em;
   text-align: left;
   white-space: pre;
@@ -30,7 +30,7 @@ pre[class*="language-"] {
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: #fafafa;
+  background: rgb(250, 250, 250);
 }
 
 :not(pre) > code[class*="language-"] {

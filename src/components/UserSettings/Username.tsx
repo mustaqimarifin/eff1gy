@@ -53,7 +53,7 @@ export function UsernameForm() {
           <span>@{viewer.name}</span>
           <span>·</span>
           <button
-            className="cursor-pointer font-medium text-blue-500"
+            className="cursor-pointer font-medium text-active"
             onClick={() => setIsEditing(!isEditing)}
           >
             {isEditing ? 'Cancel' : 'Edit'}
@@ -71,7 +71,7 @@ export function UsernameForm() {
             onChange={handleUsernameChange}
           />
           {error && (
-            <p className={`text-xs text-red-500`}>
+            <p className={`text-xs text-error`}>
               Usernames should be between 4 and 16 characters and only have
               numbers, letters, or underscores.
             </p>

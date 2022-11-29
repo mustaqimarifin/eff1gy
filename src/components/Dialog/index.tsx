@@ -51,7 +51,7 @@ export function DialogComponent({
           onClose={closeModal}
           initialFocus={closeButtonRef}
         >
-          <div className="min-h-screen px-4">
+          <div className="h-fit px-4">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-100"
