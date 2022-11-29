@@ -1,6 +1,6 @@
 datasource db {
   provider             = "postgresql"
-  url                  = "postgresql://postgres@localhost:5432/xyz"
+  url                  = env("SUPABASE_URL")
   referentialIntegrity = "prisma"
 }
 
