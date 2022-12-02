@@ -66,15 +66,15 @@ export function StackDetail({ slug }) {
         <Detail.ContentContainer>
           <Detail.Header>
             <div className="flex items-center space-x-6">
-              <Link href={stack.url} passHref className="inline-block">
+              <Link href={stack.url} passHref className="inline-block ">
                 <Image
                   priority
                   //src={`/static/img/stack/${stack.image}`}
                   src={stack.image}
-                  width={80}
-                  height={80}
+                  width={60}
+                  height={60}
                   alt={`${stack.name} icon`}
-                  className={'rounded-2xl'}
+                  className={'rounded-md object-cover'}
                 />
               </Link>
               <div className="flex flex-col space-y-1">

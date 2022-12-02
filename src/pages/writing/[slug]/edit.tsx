@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client'
 import { MDXRemote } from 'next-mdx-remote'
 import * as React from 'react'
 
@@ -8,12 +7,11 @@ import { MDXComponents } from '~/components/MarkdownRenderer'
 import { mdxToCode } from '~/components/MarkdownRenderer/MDX'
 import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
-import { graphql } from '~/gql'
 import { getContext } from '~/graphql/context'
 import { GET_POST } from '~/graphql/queries/posts'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-/* import { useViewerQuery } from '~/graphql/types.generated'
- */ import { addApolloState, initApolloClient } from '~/lib/apollo'
+import { useViewerQuery } from '~/graphql/types.generated'
+import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 function EditPostPage({ post, slug }) {
   const { data } = useViewerQuery()

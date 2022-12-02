@@ -1,4 +1,3 @@
-
 import { Providers } from '~/components/Providers'
 
 export function withProviders(fn: Function) {

@@ -12,7 +12,7 @@ import {
   useDeleteCommentMutation,
   useEditCommentMutation,
 } from '~/graphql/types.generated'
-import { CleanTime } from '~/lib/functions'
+import { cleanTime } from '~/lib/functions'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentMenu } from './CommentMenu'
@@ -107,7 +107,7 @@ export const Comment = React.memo(function MemoComment({
     editComment()
   }
 
-  const createdAt = timestampToCleanTime({
+  const createdAt = cleanTime({
     month: 'short',
     timestamp: comment.createdAt,
   })

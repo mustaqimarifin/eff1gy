@@ -8,8 +8,7 @@ import { Context } from '~/graphql/context'
 import { MutationEditUserArgs } from '~/graphql/types.generated'
 //import { deleteUser as deleteUserFromAuth0 } from '~/lib/auth0/deleteUser'
 //import { client as postmark } from '~/lib/postmark'
-import { validEmail, validUsername } from '~/lib/validators'
-
+import { emailRX, nameRX } from '~/lib/functions'
 export async function deleteUser(_, __, ctx: Context) {
   const { prisma, viewer } = ctx
 
@@ -32,7 +31,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
   const { name, email } = data
 
   if (name) {
-    if (!validUsername(name)) {
+    if (!nameRX(name)) {
       throw new GraphQLError('Usernames can be 16 characters long')
     }
 
@@ -51,7 +50,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
   }
 
   if (email) {
-    if (!validEmail(email)) {
+    if (!emailRX(email)) {
       throw new GraphQLError('That email is not valid')
     }
 

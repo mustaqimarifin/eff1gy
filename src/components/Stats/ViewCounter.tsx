@@ -7,18 +7,18 @@ export type Views = {
   total: number
 }
 
-export default function ViewCounter({ id }) {
-  const { data } = useSWR<Views>(`/api/views/${id}`, ketchup)
+export default function ViewCounter({ slug }) {
+  const { data } = useSWR<Views>(`/api/views/${slug}`, ketchup)
   const views = new Number(data?.total)
 
   useEffect(() => {
     const registerView = () =>
-      fetch(`/api/views/${id}`, {
+      fetch(`/api/views/${slug}`, {
         method: 'POST',
       })
 
     registerView()
-  }, [id])
+  }, [slug])
 
   return <span>{`${views > 0 ? views.toLocaleString() : '–––'} views`}</span>
 }

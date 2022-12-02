@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("SUPABASE_PG_URL")
 }
 
 generator client {
@@ -230,8 +230,8 @@ model Reaction {
 model PageView {
   id        String   @id @default(dbgenerated("(concat('pgv_', xid()))::TEXT"))
   lastSeen  DateTime @default(now())
-  pageId    String
-  viewCount BigInt   @default(0)
+  slug      String   @unique
+  viewCount BigInt   @default(1)
 }
 
 model Sticker {

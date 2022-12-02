@@ -31,7 +31,7 @@ export default async function getBookmarkMetaData(url) {
       // if the favicon is a hard-coded URL, or points to some external asset
       // like a CDN, then just use that
       faviconUrl = null
-    } else if (validUrl(favicon)) {
+    } else if (urlRX(favicon)) {
       // sometimes favicons are embedded svgs, usually prefixed with `data:`
       // we can ignore these, since we're not going to render svgs
       faviconUrl = favicon

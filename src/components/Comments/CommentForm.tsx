@@ -11,7 +11,7 @@ import {
   useViewerQuery,
 } from '~/graphql/types.generated'
 import { useDebounce } from '~/hooks/useDebounce'
-import { CleanTime } from '~/lib/functions'
+import { cleanTime } from '~/lib/functions'
 
 interface Props {
   refId: string
@@ -31,8 +31,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
         __typename: 'Comment',
         id: xid.next(),
         text,
-        createdAt: timestampToCleanTime({ month: 'short' }).formatted,
-        updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
+        createdAt: cleanTime({ month: 'short' }).formatted,
+        updatedAt: cleanTime({ month: 'short' }).formatted,
         viewerCanDelete: false,
         viewerCanEdit: false,
         author: {

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import { Avatar } from '~/components/Avatar'
-import { Tooltip } from '~/components/Tooltip'
+import Tooltip from '~/components/Tooltip'
 import { GET_STACK } from '~/graphql/queries/stack'
 import {
   useGetStackQuery,
@@ -101,7 +101,7 @@ export function StackUsedBy(props) {
         {data?.stack?.usedBy.length > 0 && (
           <div className="-m-1 flex flex-wrap">
             {data.stack.usedBy.map((user) => (
-              <Tooltip key={user.id} content={user.name}>
+              <Tooltip key={user.id} content={user.name} id={user.id}>
                 <span>
                   <Link
                     href={`/u/${user.id}`}

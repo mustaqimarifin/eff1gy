@@ -29,7 +29,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   if (old.image !== data.image) {
     try {
       const url = new URL(old.image)
-      if (validUrl(url)) {
+      if (urlRX(url)) {
         const [, , imageId] = url.pathname.split('/')
 
         await fetch(
@@ -92,7 +92,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
   const { url, name, description, image, tag } = data
   const { prisma } = ctx
 
-  if (!validUrl(url)) throw new GraphQLError('URL was invalid')
+  if (!urlRX(url)) throw new GraphQLError('URL was invalid')
 
   const tags = tag
     ? {
@@ -138,7 +138,7 @@ export async function deleteStack(
   try {
     const url = new URL(old.image)
     const [, , imageId] = url.pathname.split('/')
-    if (validUrl(url)) {
+    if (urlRX(url)) {
       await fetch(
         `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1/${imageId}`,
         {

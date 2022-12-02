@@ -14,22 +14,18 @@ interface Props {
 
 export const PostListItem = React.memo<Props>(({ post, active }) => {
   const publishedAt = cleanTime({ timestamp: post.publishedAt })
-  const { data } = useSWR<Views>(`/api/views/${post.id}`, ketchup)
+  const { data } = useSWR<Views>(`/api/views/${post.slug}`, ketchup)
   const views = data?.total
-  const aggregateViews = () => {
-    return (
-      <p className="w-32 mb-4 text-left text-gray-500 md:text-right md:mb-0">
-        {`${views ? new Number(views).toLocaleString() : '–––'} views`}
-      </p>
-    )
-  }
+
   return (
     <ListItem
       key={post.id}
       href="/writing/[slug]"
       as={`/writing/${post.slug}`}
       title={post.title}
-      description={`${aggregateViews}`}
+      description={`${
+        views ? new Number(views).toLocaleString() : '–––'
+      } views`}
       byline={post.publishedAt ? publishedAt.formatted : 'Draft'}
       active={active}
     />

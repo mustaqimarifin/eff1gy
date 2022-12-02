@@ -50,7 +50,7 @@ export function PostDetail({ children, slug }) {
             </span>
           </Detail.Header>
           <React.Suspense fallback={<LoadingSpinner />}>
-            <div className="prose mt-8"> {children}</div>
+            <div className="prose max-w-prose mt-8"> {children}</div>
           </React.Suspense>
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />

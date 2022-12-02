@@ -71,7 +71,7 @@ export async function addBookmark(
   const { url, tag } = data
   const { prisma } = ctx
 
-  if (!validUrl(url)) throw new GraphQLError('URL was invalid')
+  if (!urlRX(url)) throw new GraphQLError('URL was invalid')
 
   const metadata = await getBookmarkMetaData(url)
   const { host, title, image, description, faviconUrl } = metadata

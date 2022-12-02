@@ -9,6 +9,7 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
+import ProsCard from '../ProsCard'
 import { CodeBlock } from './CodeBlock'
 
 const CustomLink = (props) => {
@@ -120,10 +121,10 @@ const Codex = ({ node, inline, className, children, ...props }) => {
 }
 
 export const MDXComponents = {
+  Image,
   MDImage,
   a: CustomLink,
-  pre: Predator,
-  code: Codex,
+  ProsCard,
 }
 
 export const MKComponents = {

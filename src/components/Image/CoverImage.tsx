@@ -1,7 +1,6 @@
+import clsx from 'clsx'
 import Image from 'next/image'
 import { useState } from 'react'
-
-import { XD } from '~/lib/functions'
 
 export default function CoverImage({ src }) {
   const [isLoading, setLoading] = useState(true)
@@ -14,7 +13,7 @@ export default function CoverImage({ src }) {
         width={680}
         height={503}
         priority
-        className={XD(
+        className={clsx(
           ' flex object-cover object-top justify-center items-center w-full aspect-[21/9] lg:max-w-7xl mx-auto duration-700 ease-in-out group-hover:opacity-75',
           isLoading
             ? 'scale-110 blur-2xl grayscale'

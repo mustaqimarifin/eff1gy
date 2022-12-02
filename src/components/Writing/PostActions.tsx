@@ -9,6 +9,7 @@ import {
   useViewerQuery,
 } from '~/graphql/types.generated'
 
+import ViewCounter from '../Stats/ViewCounter'
 function getReactionButton(post) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
   function handleClick() {
@@ -45,14 +46,24 @@ function getReactionButton(post) {
   }
 
   return (
-    <ReactionButton
-      id={post.id}
-      loading={loading}
-      count={post.reactionCount}
-      hasReacted={post.viewerHasReacted}
-      onClick={handleClick}
-    />
+    <>
+      <ReactionButton
+        id={post.id}
+        loading={loading}
+        count={post.reactionCount}
+        hasReacted={post.viewerHasReacted}
+        onClick={handleClick}
+      />
+    </>
   )
+}
+
+function getViewCounter(post) {
+  const { data } = useViewerQuery()
+
+  if (!data?.viewer) return null
+
+  return <ViewCounter slug={post.slug} />
 }
 
 function getEditButton(post) {
@@ -71,7 +82,7 @@ export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(post)}
-
+      {getViewCounter(post)}
       {getEditButton(post)}
     </div>
   )

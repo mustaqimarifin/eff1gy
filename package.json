@@ -63,6 +63,7 @@
     "react-textarea-autosize": "^8.4.0",
     "react-visibility-sensor": "^5.1.1",
     "rehype-autolink-headings": "^6.1.1",
+    "rehype-pretty-code": "^0.5.1",
     "rehype-sanitize": "^5.0.1",
     "rehype-slug": "^5.1.0",
     "rehype-stringify": "^9.0.3",

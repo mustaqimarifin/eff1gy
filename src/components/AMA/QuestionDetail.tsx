@@ -9,7 +9,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'
 import { CommentType, useGetQuestionQuery } from '~/graphql/types.generated'
-import { CleanTime } from '~/lib/functions'
+import { cleanTime } from '~/lib/functions'
 
 import AudioPlayer from '../AudioPlayer'
 import { MarkdownRenderer } from '../MarkdownRenderer'
@@ -31,7 +31,7 @@ export function QuestionDetail({ id }) {
   }
 
   const { question } = data
-  const createdAt = timestampToCleanTime({
+  const createdAt = cleanTime({
     month: 'short',
     timestamp: data?.question.createdAt,
   })

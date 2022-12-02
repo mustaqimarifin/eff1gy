@@ -1,4 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { MDXRemote } from 'next-mdx-remote'
 import * as React from 'react'
 
@@ -14,8 +13,7 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_POST, GET_POSTS } from '~/graphql/queries/posts'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
-/* import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
- */ import { addApolloState, initApolloClient } from '~/lib/apollo'
+import { addApolloState, initApolloClient } from '~/lib/apollo'
 function WritingPostPage({ post, slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })
 
