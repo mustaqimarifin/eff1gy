@@ -7,9 +7,9 @@ import {
   MutationDeleteBookmarkArgs,
   MutationEditBookmarkArgs,
 } from '~/graphql/types.generated'
+import { urlRX } from '~/lib/functions'
 import { graphcdn } from '~/lib/graphcdn'
 import { revue } from '~/lib/revue'
-import { validUrl } from '~/lib/validators'
 
 import getBookmarkMetaData from './getBookmarkMetaData'
 

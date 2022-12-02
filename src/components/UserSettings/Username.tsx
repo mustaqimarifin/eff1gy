@@ -7,8 +7,7 @@ import {
   useEditUserMutation,
   useGetViewerWithSettingsQuery,
 } from '~/graphql/types.generated'
-import { validUsername } from '~/lib/validators'
-
+import { nameRX } from '~/lib/functions'
 export function UsernameForm() {
   const { data } = useGetViewerWithSettingsQuery()
   const { viewer } = data
@@ -35,7 +34,7 @@ export function UsernameForm() {
     e.preventDefault()
     if (editUserResponse.loading) return
     if (name === viewer.name) return setIsEditing(false)
-    if (!validUsername(name)) return setError(true)
+    if (!nameRX(name)) return setError(true)
     editUser()
   }
 

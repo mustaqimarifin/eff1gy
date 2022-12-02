@@ -17,7 +17,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head />
         <body>
-          <span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-900">
+          <span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-1000">
             <a className="text-primary font-semibold" href="#main">
               Skip to content
             </a>

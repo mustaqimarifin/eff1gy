@@ -1,12 +1,12 @@
 datasource db {
-  provider             = "postgresql"
-  url                  = env("SUPABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider         = "prisma-client-js"
+  precountFeatures = ["filteredRelationCount"]
+  relationMode     = "foreignKeys"
 }
 
 model Account {
@@ -15,17 +15,18 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -34,13 +35,15 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
   id        String   @id @default(dbgenerated("(concat('usr_', xid()))::TEXT"))
   createdAt DateTime @default(now())
 
-  name  String  @unique
+  name  String
   image String?
   email String? @unique
 
@@ -106,6 +109,8 @@ model Question {
   userId      String
   comments    Comment[]
   reactions   Reaction[]
+
+  @@index([userId])
 }
 
 model Comment {
@@ -130,6 +135,7 @@ model Comment {
   @@index([questionId])
   @@index([postId])
   @@index([stackId])
+  @@index([userId])
 }
 
 model Audio {
@@ -161,6 +167,7 @@ model Post {
   userId       String
 
   @@index([publishedAt])
+  @@index([userId])
 }
 
 model PostEdit {
@@ -217,6 +224,14 @@ model Reaction {
   @@index([questionId])
   @@index([postId])
   @@index([stackId])
+  @@index([userId])
+}
+
+model PageView {
+  id        String   @id @default(dbgenerated("(concat('pgv_', xid()))::TEXT"))
+  lastSeen  DateTime @default(now())
+  pageId    String
+  viewCount BigInt   @default(0)
 }
 
 model Sticker {

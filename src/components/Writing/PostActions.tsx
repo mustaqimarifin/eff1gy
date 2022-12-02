@@ -20,7 +20,6 @@ function getReactionButton(post) {
         type: ReactionType.Post,
       },
       optimisticResponse: {
-        __typename: 'Mutation',
         toggleReaction: {
           __typename: 'Post',
           ...post,
@@ -72,6 +71,7 @@ export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(post)}
+
       {getEditButton(post)}
     </div>
   )

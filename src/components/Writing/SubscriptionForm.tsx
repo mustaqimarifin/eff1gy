@@ -4,7 +4,7 @@ import { ErrorAlert, SuccessAlert } from '~/components/Alert'
 import { PrimaryButton } from '~/components/Button'
 import { Input } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { validEmail } from '~/lib/validators'
+import { emailRX } from '~/lib/functions'
 
 export function WritingSubscriptionForm({ defaultValue = '' }) {
   const [email, setEmail] = React.useState(defaultValue)
@@ -19,7 +19,7 @@ export function WritingSubscriptionForm({ defaultValue = '' }) {
     e.preventDefault()
     setStatus('saving')
 
-    if (!validEmail(email)) {
+    if (!emailRX(email)) {
       setStatus('saving')
       return setStatus('invalid-email')
     }

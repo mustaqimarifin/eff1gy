@@ -5,8 +5,8 @@ import {
   EmailSubscriptionType,
   MutationEditEmailSubscriptionArgs,
 } from '~/graphql/types.generated'
+import { emailRX } from '~/lib/functions'
 import { revue } from '~/lib/revue'
-import { validEmail } from '~/lib/validators'
 
 export async function editEmailSubscription(
   _,
@@ -21,7 +21,7 @@ export async function editEmailSubscription(
     throw new GraphQLError('No email')
   }
 
-  if (email && !validEmail(email)) {
+  if (email && !emailRX(email)) {
     throw new GraphQLError('Invalid email')
   }
 

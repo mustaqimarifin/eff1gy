@@ -33,7 +33,7 @@ function signUploadRequest(timestamp: number, folder: string) {
       upload_preset: 'musxyz',
       folder,
     },
-    'IKMSu1uLbbS6Qhuf9cMz-UDgFlk'
+    process.env.CLOUDINARY_API_SECRET
   )
   const data = { signature, folder, timestamp }
 

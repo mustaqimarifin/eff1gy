@@ -1,7 +1,7 @@
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 import URL from 'url'
 
-import { validUrl } from '~/lib/validators'
+import { urlRX } from '~/lib/functions'
 
 export default async function getBookmarkMetaData(url) {
   const res = await fetch(url)

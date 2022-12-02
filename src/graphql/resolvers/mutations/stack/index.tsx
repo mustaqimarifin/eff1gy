@@ -8,8 +8,8 @@ import {
   MutationEditStackArgs,
   MutationToggleStackUserArgs,
 } from '~/graphql/types.generated'
+import { urlRX } from '~/lib/functions'
 import { graphcdn } from '~/lib/graphcdn'
-import { validUrl } from '~/lib/validators'
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   const { id, data } = args

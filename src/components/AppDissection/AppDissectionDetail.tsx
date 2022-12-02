@@ -7,7 +7,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 //simport { MarkdownRenderer } from '~/components/MarkdownRenderer'
 import { DesignDetailsPost } from '~/data/appDissections'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { CleanTime } from '~/lib/functions'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 

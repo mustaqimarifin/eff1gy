@@ -1,12 +1,12 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import TwitterProvider from 'next-auth/providers/twitter'
 
 import prisma from '~/lib/prisma'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   debug: process.env.NEXTAUTH_DEBUG === 'true',
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -24,11 +24,20 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
+
   callbacks: {
+    async signIn({ account, profile, user }) {
+      if (account.provider === 'twitter') {
+        profile.sub = user.twitterId
+      }
+      return true // Do different verification for other providers that don't have `email_verified`
+    },
     async session({ session, user }) {
       session.user.role = user.role
       session.userId = user.id
       return session
     },
   },
-})
+}
+
+export default NextAuth(authOptions)

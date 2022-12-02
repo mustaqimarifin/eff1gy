@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { emailRX } from '~/lib/functions'
 import { revue } from '~/lib/revue'
-import { validEmail } from '~/lib/validators'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { email } = JSON.parse(req.body)
 
-  if (!validEmail(email)) {
+  if (!emailRX(email)) {
     return res.status(200).json({ error: 'Invalid email' })
   }
 

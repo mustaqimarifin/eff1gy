@@ -54,16 +54,7 @@ const routes = {
       url: 'bookmarks',
     }),
   },
-  appDissection: {
-    label: 'App Dissection',
-    path: '/app-dissection',
-    seo: extendSEO({
-      title: 'App Dissection',
-      description: 'In-depth design explorations.',
-      image: 'og/app-dissection.png',
-      url: 'app-dissection',
-    }),
-  },
+
   ama: {
     label: 'AMA',
     path: '/ama',

@@ -165,7 +165,7 @@ export function SidebarNavigation() {
           isExternal: false,
         }, */
 
-        {
+        /*  {
           href: '/app-dissection',
           label: 'App Dissection',
           icon: AppDissectionIcon,
@@ -173,7 +173,7 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/app-dissection') >= 0,
           trailingAction: null,
           isExternal: false,
-        },
+        }, */
       ],
     },
     {
@@ -234,7 +234,7 @@ export function SidebarNavigation() {
             {section.label && (
               <h4
                 key={i}
-                className="px-2 pt-5 pb-2 text-xs font-semibold text-gray-900 text-opacity-40 dark:text-white"
+                className="px-2 pt-5 pb-2 text-xs font-semibold text-gray-1000 text-opacity-40 dark:text-white"
               >
                 {section.label}
               </h4>

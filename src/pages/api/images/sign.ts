@@ -1,13 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/react'
+import { unstable_getServerSession } from 'next-auth/next'
 
 import cloudinary from '~/lib/cloudinary'
 
-const {
-  CLOUDINARY_UPLOAD_PRESET,
-  CLOUDINARY_API_SECRET,
-  CLOUDINARY_BASE_PATH,
-} = process.env
+import { authOptions } from '../auth/[...nextauth]'
 
 export default async function handle(
   req: NextApiRequest,
@@ -18,14 +14,14 @@ export default async function handle(
   //   return
   // }
   try {
-    const session = await getSession({ req })
+    const session = await unstable_getServerSession(req, res, authOptions)
     if (!session.isAdmin) {
       return res.status(401).end()
     }
     const timeNow = new Date().getTime()
     const { signature, folder, timestamp } = signUploadRequest(
       timeNow,
-      `${CLOUDINARY_BASE_PATH}`
+      `${process.env.CLOUDINARY_BASE_PATH}`
     )
     return res.status(200).json({ folder, signature, timestamp })
   } catch (error) {
@@ -39,10 +35,10 @@ function signUploadRequest(timestamp: number, folder: string) {
       // Sign upload request with transformation to mp4 for cross-browser playing compatibility
       format: 'mp4',
       timestamp,
-      upload_preset: CLOUDINARY_UPLOAD_PRESET,
+      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
       folder,
     },
-    CLOUDINARY_API_SECRET as string
+    process.env.CLOUDINARY_API_SECRET as string
   )
 
   return { signature, folder, timestamp }

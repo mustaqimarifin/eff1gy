@@ -9,7 +9,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'
 import { CommentType, useGetQuestionQuery } from '~/graphql/types.generated'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { CleanTime } from '~/lib/functions'
 
 import AudioPlayer from '../AudioPlayer'
 import { MarkdownRenderer } from '../MarkdownRenderer'

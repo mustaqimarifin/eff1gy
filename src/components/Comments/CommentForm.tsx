@@ -11,7 +11,7 @@ import {
   useViewerQuery,
 } from '~/graphql/types.generated'
 import { useDebounce } from '~/hooks/useDebounce'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { CleanTime } from '~/lib/functions'
 
 interface Props {
   refId: string

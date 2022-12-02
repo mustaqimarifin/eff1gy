@@ -12,7 +12,7 @@ import {
   useDeleteCommentMutation,
   useEditCommentMutation,
 } from '~/graphql/types.generated'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { CleanTime } from '~/lib/functions'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentMenu } from './CommentMenu'
