@@ -7,15 +7,15 @@ import Document, {
 } from 'next/document'
 
 class MyDocument extends Document {
-  /*   static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx)
     return { ...initialProps }
-  } */
-
+  }
   render() {
     return (
       <Html lang="en">
         <Head />
+
         <body>
           <span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-1000">
             <a className="text-primary font-semibold" href="#main">

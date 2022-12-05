@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { Sidebar } from 'react-feather'
 import toast from 'react-hot-toast'
-import slugify from 'slugify'
 
 import Button from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
@@ -11,6 +10,7 @@ import {
   useAddPostMutation,
   useEditPostMutation,
 } from '~/graphql/types.generated'
+import { slugify } from '~/lib/functions'
 
 import { PostEditorContext } from './PostEditor'
 import { PostEditorAutoSave } from './PostEditorAutoSave'
@@ -55,7 +55,7 @@ export function PostEditorActions() {
       variables: {
         data: {
           ...draftState,
-          slug: draftState.slug || slugify(draftState.title, { lower: true }),
+          slug: draftState.slug || slugify(draftState.title),
         },
       },
     })

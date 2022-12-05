@@ -181,7 +181,6 @@ export const Comment = React.memo(function MemoComment({
         <MarkdownRenderer
           children={comment.text}
           className="comment prose flex-grow pl-14 leading-normal"
-          variant="comment"
         />
       )}
     </div>

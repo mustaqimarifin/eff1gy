@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 
 import { ease } from '~/lib/functions'
 
-type TooltipProps = {
+type QtipProps = {
   id: string
   children?: ReactNode
   content: string
@@ -13,7 +13,7 @@ type TooltipProps = {
   color?: 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'mint'
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
+const Qtip: React.FC<QtipProps> = ({
   id,
   children,
   content,
@@ -77,4 +77,4 @@ const Tooltip: React.FC<TooltipProps> = ({
   )
 }
 
-export default Tooltip
+export default Qtip

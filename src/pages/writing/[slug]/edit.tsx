@@ -13,12 +13,12 @@ import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { useViewerQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
-function EditPostPage({ post, slug }) {
+function EditPostPage({ source, slug }) {
   const { data } = useViewerQuery()
   if (!data?.viewer?.isAdmin) return <Detail.Null />
   return (
     <PostEditor slug={slug}>
-      <MDXRemote {...post.text} components={MDXComponents} />
+      <MDXRemote {...source} components={MDXComponents} />
     </PostEditor>
   )
 }
@@ -37,10 +37,7 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
   const { source } = await mdxToCode(post.text)
   return addApolloState(client, {
     props: {
-      post: {
-        ...post,
-        text: source,
-      },
+      source,
       slug,
     },
   })

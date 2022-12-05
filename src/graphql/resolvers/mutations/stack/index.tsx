@@ -1,5 +1,4 @@
 import { GraphQLError } from 'graphql'
-import slugify from 'slugify'
 
 import { Context } from '~/graphql/context'
 import {
@@ -8,7 +7,7 @@ import {
   MutationEditStackArgs,
   MutationToggleStackUserArgs,
 } from '~/graphql/types.generated'
-import { urlRX } from '~/lib/functions'
+import { slugify, urlRX } from '~/lib/functions'
 import { graphcdn } from '~/lib/graphcdn'
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
@@ -111,7 +110,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
         description,
         image,
         tags,
-        slug: slugify(name, { lower: true }),
+        slug: slugify(name),
       },
       include: { tags: true },
     })

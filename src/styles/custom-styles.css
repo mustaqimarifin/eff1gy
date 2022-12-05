@@ -2,99 +2,19 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* @font-face {
-  font-family: 'sfMono';
-  src: url('/fonts/SFMono.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: 'GTAmerica';
-  src: url('/fonts/GTAmerica-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+/* #__next {
+  @apply bg-gray-50 dark:bg-gray-900;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
-@font-face {
-  font-family: 'GTAmerica';
-  src: url('/fonts/GTAmerica-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'GTAmerica';
-  src: url('/fonts/GTAmerica-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'GTAmerica';
-  src: url('/fonts/GTAmerica-Bold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-800.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-300.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-900.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-800.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-} */
-
-@layer base {
+ */
+ @layer base {
   html {
-    @apply max-h-screen overflow-hidden text-base subpixel-antialiased;
+    @apply h-screen overflow-auto text-base subpixel-antialiased;
   }
 
-  /* handles safari overscroll background color */
   body:after {
     content: '';
     position: fixed;
@@ -105,6 +25,13 @@
     z-index: -1;
     @apply bg-white dark:bg-black;
   }
+}  
+
+table {
+  display: block;
+  max-width: fit-content;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 @layer components {
@@ -328,4 +255,106 @@
       transform: translate(20%, 10%);
     }
   }
+/*   @media (prefers-color-scheme: dark) {
+     .prose pre[data-theme='light'],  .prose code[data-theme='light'] {
+      display: none;
+    }
+  }
+   
+  @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+   .prose pre[data-theme='dark'], .prose code[data-theme='dark'] {
+      display: none;
+    }
+  } */
 }
+
+
+ /*  
+ 
+ font-family: 'sfMono';
+  src: url('/fonts/SFMono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GTAmerica';
+  src: url('/fonts/GTAmerica-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'GTAmerica';
+  src: url('/fonts/GTAmerica-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'GTAmerica';
+  src: url('/fonts/GTAmerica-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'GTAmerica';
+  src: url('/fonts/GTAmerica-Bold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-900.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+*/

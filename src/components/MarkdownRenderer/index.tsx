@@ -9,8 +9,9 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
-import ProsCard from '../ProsCard'
-import { CodeBlock } from './CodeBlock'
+import ConsCard from '../Stats/ConsCard'
+import ProsCard from '../Stats/ProsCard'
+//import { CodeBlock } from './CodeBlock'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -90,7 +91,7 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
   return <p>{paragraph.children}</p>
 }
 
-const Predator = ({ node, inline, className, children, ...props }) => {
+/* const Predator = ({ node, inline, className, children, ...props }) => {
   const match = /language-(\w+)/.exec(className || '')
   return !inline && match ? (
     <CodeBlock
@@ -102,9 +103,9 @@ const Predator = ({ node, inline, className, children, ...props }) => {
   ) : (
     <>{children}</>
   )
-}
+} */
 
-const Codex = ({ node, inline, className, children, ...props }) => {
+/* const Codex = ({ node, inline, className, children, ...props }) => {
   const match = /language-(\w+)/.exec(className || '')
   return !inline && match ? (
     <CodeBlock
@@ -118,13 +119,14 @@ const Codex = ({ node, inline, className, children, ...props }) => {
       {children}
     </code>
   )
-}
+} */
 
 export const MDXComponents = {
   Image,
   MDImage,
   a: CustomLink,
   ProsCard,
+  ConsCard,
 }
 
 export const MKComponents = {
@@ -135,11 +137,12 @@ export const MKComponents = {
   h4: 'p',
   h5: 'p',
   h6: 'p',
-  /*   pre({ children }) {
+  pre({ children }) {
     return <>{children}</>
-  }, */ pre: Predator,
-
-  code: Codex,
+  },
+  code({ children }) {
+    return <>{children}</>
+  },
 }
 
 /* function getComponentsForVariant(variant) {

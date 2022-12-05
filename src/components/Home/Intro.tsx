@@ -3,11 +3,10 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import Button from '~/components/Button'
+import { MapIcon } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
-//import { MapPin } from 'react-feather'
-import { MapPin } from '../Icon/MapPin'
 import TraceImage from '../Image/TraceImage'
 
 function SectionTitle(props) {
@@ -278,7 +277,7 @@ export function Intro() {
                 alt="Map of KL with a wookie in the middle"
               />
               <p className="flex items-center justify-end pt-2 space-x-2 text-sm text-quaternary md:text-right">
-                <MapPin className="w-4 h-4" />
+                <MapIcon className="w-4 h-4" />
                 <span>Kuala Lumpur, WP</span>
               </p>
             </SectionContent>

@@ -10,7 +10,7 @@ import { TitleBar } from './TitleBar'
 function ContentContainer(props) {
   return (
     <div
-      className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
+      className="mx-auto w-full max-w-xs md:max-w-3xl px-2 py-12  md:px-8 "
       {...props}
     />
   )
@@ -26,7 +26,7 @@ const Container = React.forwardRef<HTMLDivElement, DetailContainerProps>(
       <div
         ref={ref}
         id="main"
-        className="relative flex max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
+        className="relative flex md:max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
         {...props}
       />
     )

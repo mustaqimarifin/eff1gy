@@ -14,14 +14,14 @@ import { GET_POST, GET_POSTS } from '~/graphql/queries/posts'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
-function WritingPostPage({ post, slug }) {
+function WritingPostPage({ source, slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })
 
   if (data.post && !data.post.publishedAt)
     return (
       <PostEditor slug={slug}>
         <MDXRemote
-          {...post.text}
+          {...source}
           components={
             {
               ...MDXComponents,
@@ -33,7 +33,7 @@ function WritingPostPage({ post, slug }) {
   return (
     <PostDetail slug={slug}>
       <MDXRemote
-        {...post.text}
+        {...source}
         components={
           {
             ...MDXComponents,
@@ -67,10 +67,7 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
   const { source } = await mdxToCode(post.text)
   return addApolloState(client, {
     props: {
-      post: {
-        ...post,
-        text: source,
-      },
+      source,
       slug,
     },
   })

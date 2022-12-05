@@ -1,5 +1,4 @@
 import { ApolloProvider } from '@apollo/client'
-import { NextPageContext } from 'next'
 import { ThemeProvider } from 'next-themes'
 import * as React from 'react'
 

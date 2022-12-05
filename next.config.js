@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-/* const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-}) */
+const CompressionPlugin = require('compression-webpack-plugin')
+const zlib = require('zlib')
 
 module.exports = {
   swcMinify: true,
   reactStrictMode: true,
-
+  experimental: {
+    optimizeCss: true,
+    legacyBrowsers: false,
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     domains: [
@@ -20,43 +22,25 @@ module.exports = {
       'lh3.googleusercontent.com',
     ],
   },
-  /*   async redirects() {
-    return [
-      {
-        source: '/uses',
-        destination: '/stack',
-        permanent: true,
-      },
-      {
-        source: '/design-details',
-        destination: '/app-dissection',
-        permanent: true,
-      },
-      {
-        source: '/design-details/:slug',
-        destination: '/app-dissection/:slug',
-        permanent: true,
-      },
-      {
-        source: '/journal',
-        destination: '/writing',
-        permanent: true,
-      },
-      {
-        source: '/overthought',
-        destination: '/writing',
-        permanent: true,
-      },
-      {
-        source: '/overthought/:slug',
-        destination: '/writing/:slug',
-        permanent: true,
-      },
-      {
-        source: '/projects',
-        destination: '/',
-        permanent: true,
-      },
-    ]
-  }, */
+  webpack: (config, { dev, isServer }) => {
+    // Note: we provide webpack above so you should not `require` it
+    if (!dev && !isServer) {
+      config.plugins.push(
+        new CompressionPlugin({
+          filename: '[path][base].br',
+          algorithm: 'brotliCompress',
+          test: /\.(js|css|html|svg)$/,
+          compressionOptions: {
+            [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+          },
+          threshold: 10240,
+          minRatio: 0.8,
+          deleteOriginalAssets: false,
+        })
+      )
+    }
+
+    // Important: return the modified config
+    return config
+  },
 }
