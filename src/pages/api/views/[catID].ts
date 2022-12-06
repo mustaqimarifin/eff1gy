@@ -7,13 +7,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const slug = req.query.slug.toString()
+    const catID = req.query.catID.toString()
 
     if (req.method === 'POST') {
       const sexySHOTS = await prisma.pageView.upsert({
-        where: { slug },
+        where: { catID },
         create: {
-          slug,
+          catID,
         },
         update: {
           viewCount: {
@@ -30,7 +30,7 @@ export default async function handler(
     if (req.method === 'GET') {
       const views = await prisma.pageView.findUnique({
         where: {
-          slug,
+          catID,
         },
       })
 

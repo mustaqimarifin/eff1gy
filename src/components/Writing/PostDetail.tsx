@@ -7,6 +7,7 @@ import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { cleanTime } from '~/lib/functions'
 
 import { LoadingSpinner } from '../LoadingSpinner'
+import ViewCounter from '../Stats/ViewCounter'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
@@ -36,15 +37,20 @@ export function PostDetail({ children, slug }) {
           title={post.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
-          trailingAccessory={<PostActions post={post} />}
+          trailingAccessory={
+            <>
+              <PostActions post={post} />
+            </>
+          }
         />
 
         <Detail.ContentContainer>
           <Detail.Header>
             <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
+
             <span
               title={publishedAt.raw}
-              className="text-tertiary inline-block leading-snug font-mono"
+              className="flex text-tertiary align-top leading-snug font-mono"
             >
               {publishedAt.formatted}
             </span>

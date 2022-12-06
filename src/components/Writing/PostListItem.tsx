@@ -14,8 +14,10 @@ interface Props {
 
 export const PostListItem = React.memo<Props>(({ post, active }) => {
   const publishedAt = cleanTime({ timestamp: post.publishedAt })
-  const { data } = useSWR<Views>(`/api/views/${post.slug}`, ketchup)
+  /*   const { data } = useSWR<Views>(`/api/views/${post.slug}`, ketchup)
   const views = data?.total
+  const byline1 = Number(views).toLocaleString() */
+  const byline2 = post.publishedAt ? publishedAt.formatted : 'Draft'
 
   return (
     <ListItem
@@ -23,10 +25,8 @@ export const PostListItem = React.memo<Props>(({ post, active }) => {
       href="/writing/[slug]"
       as={`/writing/${post.slug}`}
       title={post.title}
-      description={`${
-        views ? new Number(views).toLocaleString() : '–––'
-      } views`}
-      byline={post.publishedAt ? publishedAt.formatted : 'Draft'}
+      description={post.excerpt}
+      byline={`${byline2}`}
       active={active}
     />
   )

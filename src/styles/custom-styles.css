@@ -3,13 +3,68 @@
 @import 'tailwindcss/utilities';
 
 
-/* #__next {
-  @apply bg-gray-50 dark:bg-gray-900;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+
+
+ @font-face {
+  font-family: 'UntitledSans';
+  src: url('/fonts/usw-MED.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
- */
+@font-face {
+  font-family: 'UntitledSans';
+  src: url('/fonts/usw-REG.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+} 
+@font-face {
+  font-family: 'GTAmerica';
+  src: url('/fonts/GTAmerica-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sohn';
+  src: url('/fonts/sohn.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SFMono';
+  src: url('/fonts/SFMono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-500.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Franklin';
+  src: url('/fonts/franklin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
  @layer base {
   html {
     @apply h-screen overflow-auto text-base subpixel-antialiased;
@@ -317,7 +372,7 @@ table {
 @font-face {
   font-family: 'Franklin';
   src: url('/fonts/franklin-300.woff2') format('woff2');
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }

@@ -6,9 +6,11 @@ import { GET_QUESTION } from '~/graphql/queries/questions'
 import {
   ReactionType,
   useToggleReactionMutation,
+  useViewerQuery,
 } from '~/graphql/types.generated'
 
 import { ReactionButton } from '../Button/ReactionButton'
+import ViewCounter from '../Stats/ViewCounter'
 
 function getReactionButton(question: any) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
@@ -63,11 +65,14 @@ export function QuestionActions({ question }) {
     return (
       <div className="flex items-center space-x-2">
         {getReactionButton(question)}
+        <ViewCounter catID={question.id} />
         {question.viewerCanEdit && (
-          <EditQuestionDialog
-            question={question}
-            trigger={<Button>Edit</Button>}
-          />
+          <React.Suspense fallback={`Loading...`}>
+            <EditQuestionDialog
+              question={question}
+              trigger={<Button>Edit</Button>}
+            />
+          </React.Suspense>
         )}
       </div>
     )

@@ -3,6 +3,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const zlib = require('zlib')
 
 module.exports = {
+  output: 'standalone',
   swcMinify: true,
   reactStrictMode: true,
   experimental: {

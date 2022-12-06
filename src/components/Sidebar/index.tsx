@@ -3,7 +3,7 @@ import * as React from 'react'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { GlobalNavigationContext } from '~/components/Providers'
 
-import ThemeToggle from '../Button/SetTheme'
+import ThemeToggle from '../Button/ThemeToggle'
 import { SidebarNavigation } from './Navigation'
 import { SidebarOverlay } from './Overlay'
 import { UserFooter } from './UserFooter'

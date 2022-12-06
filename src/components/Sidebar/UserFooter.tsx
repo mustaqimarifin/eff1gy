@@ -8,7 +8,7 @@ import { GhostButton } from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { useViewerQuery } from '~/graphql/types.generated'
 
-import ThemeToggle from '../Button/SetTheme'
+import ThemeToggle from '../Button/ThemeToggle'
 import { GlobalNavigationContext } from '../Providers'
 
 function Container(props) {

@@ -58,7 +58,7 @@ function SectionContainer(props) {
   )
 }
 
-const workHistory = [
+/* const workHistory = [
   {
     href: 'https://github.com/mobile',
     title: 'GitHub',
@@ -153,7 +153,7 @@ const speakingData = [
     date: "Aug '17",
   },
 ]
-
+ */
 export function Intro() {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
@@ -256,11 +256,11 @@ export function Intro() {
                   .
                 </p>
               </div>
-              <div className="flex pt-6">
+              {/*               <div className="flex pt-6">
                 <Button href="https://changelog.mustaqimarifin.com">
                   View changelog
                 </Button>
-              </div>
+              </div> */}
             </SectionContent>
           </SectionContainer>
 
@@ -284,8 +284,9 @@ export function Intro() {
           </SectionContainer>
 
           <SectionContainer>
-            <SectionTitle>Work</SectionTitle>
-            <SectionContent>
+            {/*             <SectionTitle>Work</SectionTitle>
+             */}{' '}
+            {/*   <SectionContent>
               <div className="flex flex-col space-y-3">
                 {workHistory.map((job) => (
                   <TableRow
@@ -297,12 +298,12 @@ export function Intro() {
                   />
                 ))}
               </div>
-            </SectionContent>
+            </SectionContent> */}
           </SectionContainer>
 
           <SectionContainer>
             <SectionTitle>Speaking</SectionTitle>
-            <SectionContent>
+            {/* <SectionContent>
               <div className="flex flex-col space-y-3">
                 {speakingData.map((s) => (
                   <TableRow
@@ -313,7 +314,7 @@ export function Intro() {
                   />
                 ))}
               </div>
-            </SectionContent>
+            </SectionContent> */}
           </SectionContainer>
         </div>
       </Detail.ContentContainer>

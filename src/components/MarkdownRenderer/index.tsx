@@ -1,3 +1,4 @@
+import { CH } from '@code-hike/mdx/dist/components.cjs.js'
 import deepmerge from 'deepmerge'
 import NextImage from 'next/image'
 import Link from 'next/link'
@@ -29,8 +30,8 @@ const CustomLink = (props) => {
 }
 const rx = Math.floor(Math.random() * (255 - 0)) + 1
 
-console.log(`my dick be ${rx}`)
-
+/* console.log(`my dick be ${rx}`)
+ */
 const keyStr =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 
@@ -127,6 +128,7 @@ export const MDXComponents = {
   a: CustomLink,
   ProsCard,
   ConsCard,
+  CH,
 }
 
 export const MKComponents = {

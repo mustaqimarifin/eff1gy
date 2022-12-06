@@ -14,12 +14,12 @@
   @apply w-full rounded-md;
 }
 
-.prose a {
+/* .prose a {
   @apply font-normal text-blue-600 no-underline break-words hover:underline dark:text-blue-500;
 }
-
+ */
 .prose a code {
-  @apply text-blue-600 dark:text-blue-500;
+  @apply text-orange-400;
 }
 
 .prose table {
@@ -145,29 +145,28 @@
   margin-top: 0;
 }
 
-code {
-  @apply 
-  font-mono rounded-md  px-1 py-0.5 text-pink-400  ;
-}
+
 /*  .prose code {
   @apply rounded-md border-gray-100 bg-gray-100 px-1 py-0.5 text-gray-800 dark:border-gray-800 dark:bg-gray-1000 dark:text-gray-200;
 }  */
 
- pre[data-theme='dark'],  code[data-theme='dark'] {
-  @apply bg-black
-}
+/*
 
-code,
- pre {
+.prose code {
+  @apply 
+  font-mono rounded-md  px-1 py-0.5 text-pink-400  ;
+}
+.prose code,
+ .prose pre {
   @apply text-sm font-medium font-mono;
   word-break: break-word;
 }
- pre >   code {
+ .prose pre >   code {
   display: grid;
   @apply  font-mono bg-stone-800 !important
  }
 
- pre {
+ .prose pre {
   @apply rounded-md px-8 py-6 space-y-4 bg-stone-800 !important;
 }
 

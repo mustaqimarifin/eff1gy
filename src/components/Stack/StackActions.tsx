@@ -9,6 +9,7 @@ import {
 } from '~/graphql/types.generated'
 
 import { ReactionButton } from '../Button/ReactionButton'
+import ViewCounter from '../Stats/ViewCounter'
 import { EditStackDialog } from './EditStackDialog'
 
 function getEditButton(stack) {
@@ -66,10 +67,19 @@ function getReactionButton(stack) {
   )
 }
 
+function getViewCounter(stack) {
+  const { data } = useViewerQuery()
+
+  if (!data?.viewer) return null
+
+  return <ViewCounter catID={stack.id} />
+}
+
 export function StackActions({ stack }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(stack)}
+      {getViewCounter(stack)}
       {getEditButton(stack)}
     </div>
   )

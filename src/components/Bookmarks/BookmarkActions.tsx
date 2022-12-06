@@ -10,6 +10,7 @@ import {
 } from '~/graphql/types.generated'
 
 import { ReactionButton } from '../Button/ReactionButton'
+import ViewCounter from '../Stats/ViewCounter'
 
 function getReactionButton(bookmark) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
@@ -59,11 +60,21 @@ function getReactionButton(bookmark) {
   )
 }
 
+function getViewCounter(bookmark) {
+  const { data } = useViewerQuery()
+
+  if (!data?.viewer) return null
+
+  return <ViewCounter catID={bookmark.id} />
+}
+
 export function BookmarkActions({ bookmark }) {
   const { data } = useViewerQuery()
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(bookmark)}
+      {getViewCounter(bookmark)}
+
       {data?.viewer?.isAdmin && (
         <EditBookmarkDialog
           bookmark={bookmark}

@@ -27,7 +27,6 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
-
   callbacks: {
     async signIn({ account, profile, user }) {
       if (account.provider === 'twitter') {

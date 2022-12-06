@@ -43,11 +43,7 @@ interface TitleProps {
 
 const Title = React.forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
   return (
-    <h1
-      ref={ref}
-      className="text-primary font-sans text-2xl font-bold xl:text-3xl"
-      {...props}
-    />
+    <h1 ref={ref} className="text-primary  text-4xl font-bold " {...props} />
   )
 })
 
