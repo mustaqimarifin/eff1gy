@@ -46,7 +46,7 @@ export function Comments({ refId, type }: Props) {
 
   return (
     <div className="relative flex flex-1 flex-col border-t border-gray-150 dark:border-gray-800">
-      <div className="text-quaternary absolute left-1/2 -top-5 -translate-x-1/2 transform bg-white px-8 py-2 dark:bg-black">
+      <div className="text-quaternary absolute left-1/2 -top-5 -translate-x-1/2 transform px-8 py-2 ">
         <GhostIcon />
       </div>
       <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pt-8 pb-4 md:px-8">

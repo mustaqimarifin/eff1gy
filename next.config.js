@@ -13,6 +13,7 @@ module.exports = {
   images: {
     formats: ['image/avif', 'image/webp'],
     domains: [
+      'i.scdn.co', //$ Spotify Album Art
       'pbs.twimg.com',
       'abs.twimg.com',
       'overthought.ghost.io',

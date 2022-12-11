@@ -2,23 +2,36 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@font-face {
+  font-family: 'Ivar';
+  src: url('/fonts/Ivar.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Ivar';
+  src: url('/fonts/IvarItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
 
-
- @font-face {
+@font-face {
   font-family: 'UntitledSans';
   src: url('/fonts/usw-MED.woff2') format('woff2');
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'UntitledSans';
   src: url('/fonts/usw-REG.woff2') format('woff2');
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
-} 
+}
 @font-face {
   font-family: 'GTAmerica';
   src: url('/fonts/GTAmerica-Light.woff2') format('woff2');
@@ -44,7 +57,7 @@
 @font-face {
   font-family: 'Franklin';
   src: url('/fonts/franklin-300.woff2') format('woff2');
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -52,7 +65,7 @@
 @font-face {
   font-family: 'Franklin';
   src: url('/fonts/franklin-500.woff2') format('woff2');
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
@@ -65,7 +78,7 @@
   font-display: swap;
 }
 
- @layer base {
+@layer base {
   html {
     @apply h-screen overflow-auto text-base subpixel-antialiased;
   }
@@ -80,13 +93,6 @@
     z-index: -1;
     @apply bg-white dark:bg-black;
   }
-}  
-
-table {
-  display: block;
-  max-width: fit-content;
-  overflow-x: auto;
-  white-space: nowrap;
 }
 
 @layer components {
@@ -310,7 +316,7 @@ table {
       transform: translate(20%, 10%);
     }
   }
-/*   @media (prefers-color-scheme: dark) {
+  /*   @media (prefers-color-scheme: dark) {
      .prose pre[data-theme='light'],  .prose code[data-theme='light'] {
       display: none;
     }
@@ -323,8 +329,9 @@ table {
   } */
 }
 
-
+/*  
  /*  
+/*  
  
  font-family: 'sfMono';
   src: url('/fonts/SFMono.woff2') format('woff2');

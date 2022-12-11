@@ -3,11 +3,12 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import Button from '~/components/Button'
-import { MapIcon } from '~/components/Icon'
+import { Akhyla,  MapIcon, Muse} from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
 import TraceImage from '../Image/TraceImage'
+import Buffoon from '../Vid'
 
 function SectionTitle(props) {
   return (
@@ -159,165 +160,153 @@ export function Intro() {
   const titleRef = React.useRef(null)
 
   return (
-    <Detail.Container data-cy="home-intro" ref={scrollContainerRef}>
-      <TitleBar
-        magicTitle
-        titleRef={titleRef}
-        scrollContainerRef={scrollContainerRef}
-        title="Home"
-      />
+    <>
+      <Detail.Container data-cy="home-intro" ref={scrollContainerRef}>
+        <TitleBar
+          magicTitle
+          titleRef={titleRef}
+          scrollContainerRef={scrollContainerRef}
+          title="Home"
+        />
 
-      {/* Keep this div to trigger the magic scroll */}
-      <div className="p-4" ref={titleRef} />
+        {/* Keep this div to trigger the magic scroll */}
+        <div className="p-4" ref={titleRef} />
 
-      <Detail.ContentContainer>
-        <div className="pb-24 space-y-8 md:space-y-16">
-          <div className="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
-            <Image
-              alt="Mustaqim Arifin"
-              height={176}
-              width={176}
-              src="/wookie.png"
-              sizes="30vw"
-              priority
-              className="rounded-full dark:invert transition-colors duration-200"
-            />
-          </div>
-          <SectionContainer>
-            <SectionTitle />
-            <SectionContent>
-              <div className="prose dark:prose-dark">
-                {/*                 <div style={{ width: 200, height: 200 }}>
-                  <embed
-                    src="https://www.youtube.com/embed/NE5H5intsck?autohide=1&autoplay=1"
-                    wmode="transparent"
-                    type="video/mp4"
-                    width="100%"
-                    height="100%"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                    title="Keyboard Cat"
-                  />
-                </div> */}
-                <p>
-                  Hey, I&apos;m Mus. I&apos;m a{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://designdetails.fm"
-                  >
-                    music producer
-                  </a>
-                  ,{' '}
-                  <Link href="/writing" passHref>
-                    audio engineer
+        <Detail.ContentContainer>
+          <div className="pb-24 space-y-8 md:space-y-16">
+            <article className="layout p-4 w-full max-w-3xl">
+              <h2 className="font-semibold pt-4 mb-6 text-2xl drop-shadow-sm md:text-4xl">
+                Greetings! I'm the{' '}
+                <span className="font-serif italic text-twitter dark:text-active">
+                  marketing manager&nbsp;
+                </span>
+                and{' '}
+                <span className="font-serif italic text-twitter dark:text-active">
+                  creative lead
+                </span>
+                &nbsp;at&nbsp;
+                <span>
+                  <Link href="https://stripe.com">
+                    <Muse width={60} className="inline items-center mb-1" />
                   </Link>
-                  , and{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://github.com/mustaqimarifin"
-                  >
-                    sorta terrible at code :D
-                  </a>
-                  . I&apos;m currently the marketing manager & creative lead at{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://github.com/mobile"
-                  >
-                    musegroupasia
-                  </a>
-                  .
+                  , focusing on&nbsp;
+                </span>
+                <span className="font-serif italic text-coyRed">
+                  large-scale events tech
+                </span>
+                , and{' '}
+                <span className="font-serif italic text-coyRed">
+                  optimization.&nbsp;
+                </span>{' '}
+              </h2>
+
+              <div className="w-[120px] float-right m-4 filter sm:w-[190px] ">
+                <Buffoon/>
+              </div>
+              <div className="drop-shadow-sm">
+                <p className="prose py-4 max-w-none break-words md:prose-lg dark:prose-dark">
+                  A sizable portion of my career involves my work as an&nbsp;
+                  <span className=" dark:text-hacker-news text-orange-400">
+                    audio engineer&nbsp;
+                  </span>
+                  and{' '}
+                  <span className="  dark:text-hacker-news text-orange-400">
+                    music producer
+                  </span>
+                  . In 2014, I co-founded{' '}
+                  <Akhyla className="w-8 h-8 text-red-400 inline items-center mb-1" />{' '}
+                  Akhyla - a platform to electronic musicians to learn,
+                  collaborate and make records.And in between that time was
+                  Music Director for Infinity Games working on MMORPG, Heroes of
+                  War.
                 </p>
-                <p>
-                  Before musegroupasia, I co-founded{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://spectrum.chat"
-                  >
-                    Akhyla
-                  </a>
-                  , a platform to electronic musicians to learn, collaborate and
-                  make records.
+                <p className="prose py-4 leading-loose md:prose-lg dark:prose-dark">
+                  This website is my home on the web to share my thoughts, test
+                  my web development skills, keep a record of my work, and
+                  catalog the things I discover online.
                 </p>
-                <p>
-                  During those years I was also Music Director at Infinity Games
-                  where I worked alongside some amazing talent helping shape the
-                  sound and music of{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://buffer.com"
-                  >
-                    Heroes of War
-                  </a>
-                  .
+                <p className="prose py-4 leading-loose md:prose-lg dark:prose-dark">
+                  Thanks for stopping by!{' '}
+                </p>
+                <p className="prose py-4 leading-loose md:prose-lg dark:prose-dark">
+                  Mustaqim Arifin{' '}
                 </p>
               </div>
-              {/*               <div className="flex pt-6">
-                <Button href="https://changelog.mustaqimarifin.com">
-                  View changelog
-                </Button>
-              </div> */}
-            </SectionContent>
-          </SectionContainer>
+            </article>
+            {/* <Image
+      alt="Mustaqim Arifin"
+      src="/vmp-banner.webp"
+      width={512}
+      height={512}
+      sizes="100vw"
+      style={{
+        width: '100%',
+        height: 'auto',
+      }}
+      priority
+      className="rounded-full border-4 border-orange-400 dark:invert transition-colors duration-200"
+    /> */}
+            <SectionContainer>
+              <SectionTitle />
+            </SectionContainer>
 
-          <SectionContainer>
-            <SectionTitle>Where</SectionTitle>
-            <SectionContent>
-              <TraceImage
-                imgSrc="/map.png"
-                imgTrace="/map.svg"
-                width={1920}
-                height={1080}
-                className="rounded-2xl overflow-hidden"
-                quality={100}
-                alt="Map of KL with a wookie in the middle"
-              />
-              <p className="flex items-center justify-end pt-2 space-x-2 text-sm text-quaternary md:text-right">
-                <MapIcon className="w-4 h-4" />
-                <span>Kuala Lumpur, WP</span>
-              </p>
-            </SectionContent>
-          </SectionContainer>
-
-          <SectionContainer>
-            {/*             <SectionTitle>Work</SectionTitle>
-             */}{' '}
-            {/*   <SectionContent>
-              <div className="flex flex-col space-y-3">
-                {workHistory.map((job) => (
-                  <TableRow
-                    href={job.href}
-                    title={job.title}
-                    subtitle={job.subtitle}
-                    date={job.date}
-                    key={job.href}
+            <SectionContainer>
+              <SectionTitle>Where</SectionTitle>
+              <SectionContent>
+                <div className=" ">
+                  <TraceImage
+                    imgSrc="/map.png"
+                    imgTrace="/map.svg"
+                    width={1200}
+                    height={675}
+                    sizes="33vw"
+                    className="overflow-hidden"
+                    alt="Map of KL with a wookie in the middle"
                   />
-                ))}
-              </div>
-            </SectionContent> */}
-          </SectionContainer>
+                </div>
+                <p className="flex items-center justify-end pt-2 space-x-2 text-sm text-quaternary md:text-right">
+                  <MapIcon className="w-4 h-4" />
+                  <span>Kuala Lumpur, WP</span>
+                </p>
+              </SectionContent>
+            </SectionContainer>
 
-          <SectionContainer>
-            <SectionTitle>Speaking</SectionTitle>
-            {/* <SectionContent>
-              <div className="flex flex-col space-y-3">
-                {speakingData.map((s) => (
-                  <TableRow
-                    href={s.href}
-                    title={s.title}
-                    date={s.date}
-                    key={s.href}
-                  />
-                ))}
-              </div>
-            </SectionContent> */}
-          </SectionContainer>
-        </div>
-      </Detail.ContentContainer>
-    </Detail.Container>
+            {/*    <SectionContainer>
+                        <SectionTitle>Work</SectionTitle>
+              
+              {/*   <SectionContent>
+      <div className="flex flex-col space-y-3">
+        {workHistory.map((job) => (
+          <TableRow
+            href={job.href}
+            title={job.title}
+            subtitle={job.subtitle}
+            date={job.date}
+            key={job.href}
+          />
+        ))}
+      </div>
+    </SectionContent>
+            </SectionContainer>
+
+            <SectionContainer>
+               <SectionTitle>Speaking</SectionTitle>
+               <SectionContent>
+      <div className="flex flex-col space-y-3">
+        {speakingData.map((s) => (
+          <TableRow
+            href={s.href}
+            title={s.title}
+            date={s.date}
+            key={s.href}
+          />
+        ))}
+      </div>
+    </SectionContent>
+            </SectionContainer> */}
+          </div>
+        </Detail.ContentContainer>
+      </Detail.Container>
+    </>
   )
 }

@@ -60,20 +60,12 @@ function getReactionButton(bookmark) {
   )
 }
 
-function getViewCounter(bookmark) {
-  const { data } = useViewerQuery()
-
-  if (!data?.viewer) return null
-
-  return <ViewCounter catID={bookmark.id} />
-}
-
 export function BookmarkActions({ bookmark }) {
   const { data } = useViewerQuery()
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(bookmark)}
-      {getViewCounter(bookmark)}
+      <ViewCounter catID={bookmark.id} />
 
       {data?.viewer?.isAdmin && (
         <EditBookmarkDialog

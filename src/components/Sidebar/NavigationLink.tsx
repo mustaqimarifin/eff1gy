@@ -26,7 +26,7 @@ export function NavigationLink({
         passHref
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
-        className={`flex flex-1 items-center space-x-3 rounded-md px-2 py-1.5 text-sm font-medium  ${
+        className={`flex flex-1 items-center space-x-3 rounded-md px-2 py-1.5 text-sm font-semibold  ${
           isActive
             ? 'bg-black text-white hover:bg-black hover:text-white dark:bg-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white'
             : 'text-gray-700 dark:text-gray-200 sm:hover:bg-gray-200 sm:hover:text-gray-1000 sm:dark:hover:bg-gray-700 sm:dark:hover:text-gray-200'

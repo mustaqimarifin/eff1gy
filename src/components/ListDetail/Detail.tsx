@@ -26,7 +26,7 @@ const Container = React.forwardRef<HTMLDivElement, DetailContainerProps>(
       <div
         ref={ref}
         id="main"
-        className="relative flex md:max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
+        className="relative flex md:max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-gray-900"
         {...props}
       />
     )
@@ -42,9 +42,7 @@ interface TitleProps {
 }
 
 const Title = React.forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  return (
-    <h1 ref={ref} className="text-primary  text-4xl font-bold " {...props} />
-  )
+  return <h1 ref={ref} className="text-4xl font-bold " {...props} />
 })
 
 function Loading() {

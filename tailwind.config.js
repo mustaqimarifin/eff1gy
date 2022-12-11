@@ -10,7 +10,7 @@ const linkHeadingStyles = {
   },
 }
 module.exports = {
-  content: ['./src/components/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
@@ -21,6 +21,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['UntitledSans', ...fontFamily.sans],
+        serif: ['Ivar', ...fontFamily.serif],
         mono: ['Sohn', ...fontFamily.mono],
       },
       colors: {
@@ -28,6 +29,11 @@ module.exports = {
         secondary: '#71c440',
         accent: '#9247d1',
         neutral: '#222334',
+        coyGreen: ' #51cf66',
+        coyRed: '#d68599',
+        coyYellow: '#fcc419',
+        coyBlue: '#74c0fc',
+        coyPurp: '#8888fc',
         'base-100': '#F0EFF1',
         info: '#fee6e8',
         success: '#178766',
@@ -66,32 +72,57 @@ module.exports = {
         },
       },
       typography: {
-        xl: {
-          css: {
-            pre: {
-              padding: '0.75rem 0',
-              lineHeight: '2.25',
-              fontSize: '1rem',
-            },
-          },
-        },
-        lg: {
-          css: {
-            code: {
-              '> .line': {
-                borderLeft: `2px solid transparent`,
-              },
-            },
-          },
-        },
         DEFAULT: {
           css: {
-            'h1,h2,h3,h4,h5,h6': { color: colors.white },
-            'h2 a': linkHeadingStyles,
-            'h3 a': linkHeadingStyles,
-            'h4 a': linkHeadingStyles,
-            'h5 a': linkHeadingStyles,
-            'h6 a': linkHeadingStyles,
+            ' h1,h2,h3,h4,h5,h6': { color: colors.slate[900] },
+            ' h2 a': linkHeadingStyles,
+            ' h3 a': linkHeadingStyles,
+            ' h4 a': linkHeadingStyles,
+            ' h5 a': linkHeadingStyles,
+            ' h6 a': linkHeadingStyles,
+            blockquote: {
+              fontSize: '90%',
+              color: colors.slate[500],
+              borderLeftColor: colors.zinc[700],
+              'p::before': {
+                display: 'none',
+              },
+              'p::after': {
+                display: 'none',
+              },
+            },
+            ' a': {
+              textDecoration: 'none',
+              borderBottom: 'none',
+              color: colors.pink[700],
+              transition:
+                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
+              '&:hover': {
+                color: `${colors.zinc[900]} !important`,
+                borderBottomColor: `${colors.cyan[200]} !important`,
+                background: colors.purple[200],
+              },
+            },
+            ' code': {
+              color: colors.pink[500],
+              '&::before': {
+                content: `"" !important`,
+              },
+              '&::after': {
+                content: `"" !important`,
+              },
+              fontWeight: 'normal',
+            },
+          },
+        },
+        dark: {
+          css: {
+            ' h1,h2,h3,h4,h5,h6': { color: colors.white },
+            ' h2 a': linkHeadingStyles,
+            ' h3 a': linkHeadingStyles,
+            ' h4 a': linkHeadingStyles,
+            ' h5 a': linkHeadingStyles,
+            ' h6 a': linkHeadingStyles,
             blockquote: {
               fontSize: '90%',
               color: colors.zinc[500],
@@ -103,7 +134,7 @@ module.exports = {
                 display: 'none',
               },
             },
-            a: {
+            ' a': {
               textDecoration: 'none',
               borderBottom: 'none',
               color: colors.orange[400],
@@ -115,7 +146,7 @@ module.exports = {
                 background: colors.purple[200],
               },
             },
-            '.prose code': {
+            ' code': {
               color: colors.orange[400],
               '&::before': {
                 content: `"" !important`,

@@ -37,7 +37,7 @@ export function ListItem({
       {leadingAccessory && <>{leadingAccessory}</>}
       <div className="flex flex-col justify-center space-y-1">
         <div
-          className={`font-medium line-clamp-3 ${
+          className={`font-semibold line-clamp-3 ${
             active ? 'text-white' : 'text-gray-900 dark:text-gray-100'
           }`}
         >

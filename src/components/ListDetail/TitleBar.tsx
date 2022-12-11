@@ -104,7 +104,7 @@ export function TitleBar({
   return (
     <>
       <div
-        style={{
+        /*  style={{
           background: `rgba(${darkMode ? '50,50,50' : '255,255,255'},${
             currentScrollOffset === 0
               ? currentScrollOffset
@@ -114,7 +114,7 @@ export function TitleBar({
           })`,
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
           minHeight: '48px',
-        }}
+        }} */
         className={`filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
       >
         <div className="flex flex-none items-center justify-between">
@@ -153,7 +153,7 @@ export function TitleBar({
                     }
                   : {}
               }
-              className="text-primary transform-gpu text-sm font-bold line-clamp-1"
+              className="text-primary transform-gpu text-sm lg:text-lg font-bold line-clamp-1"
             >
               {title}
             </h2>
