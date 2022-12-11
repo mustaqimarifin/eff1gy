@@ -5,13 +5,13 @@
     "dev": "next",
     "build": " next build",
     "start": "next start",
-    "format": "npx prettier --write . --ignore-path .gitignore",
+    "format": "pnpm dlx prettier --write . --ignore-path .gitignore",
     "lint": "next lint -- --ignore-path .gitignore",
-    "lint:fix": "npm run format && npm run lint -- --fix",
+    "lint:fix": "pnpm run format && pnpm run lint -- --fix",
     "generate": "graphql-codegen",
     "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'",
     "prod:db:seed": "dotenv -- sh -c 'SUPABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma db seed'",
-    "postinstall": "npm run generate && prisma generate"
+    "postinstall": "pnpm run generate && prisma generate"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

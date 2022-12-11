@@ -3,7 +3,7 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import Button from '~/components/Button'
-import { Akhyla,  MapIcon, Muse} from '~/components/Icon'
+import { Akhyla, MapIcon, Muse } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
@@ -201,7 +201,7 @@ export function Intro() {
               </h2>
 
               <div className="w-[120px] float-right m-4 filter sm:w-[190px] ">
-                <Buffoon/>
+                <Buffoon />
               </div>
               <div className="drop-shadow-sm">
                 <p className="prose py-4 max-w-none break-words md:prose-lg dark:prose-dark">

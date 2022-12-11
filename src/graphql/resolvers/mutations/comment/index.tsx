@@ -145,7 +145,7 @@ export async function deleteComment(
     throw new GraphQLError('You can’t delete this comment')
   } else {
     // eslint-disable-next-line prettier/prettier
-    (err) => {
+    ;(err) => {
       toast.error('You can’t delete this comment', {
         icon: '🙀',
       })
