@@ -23,7 +23,7 @@ export default async function handler(
       })
 
       return res.status(200).json({
-        total: sexySHOTS.viewCount,
+        total: Math.floor(sexySHOTS.viewCount * 0.5),
       })
     }
 
@@ -34,7 +34,7 @@ export default async function handler(
         },
       })
 
-      return res.status(200).json({ total: views.viewCount - 1 })
+      return res.status(200).json({ total: Math.floor(views.viewCount * 0.5) })
     }
   } catch (e) {
     return res.status(500).json({ message: e.message })

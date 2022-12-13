@@ -3,12 +3,12 @@
 //const zlib = require('zlib')
 
 module.exports = {
-  output: 'standalone',
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
     optimizeCss: true,
     legacyBrowsers: false,
+    urlImports: ['https://cdn.jsdelivr.net/'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
