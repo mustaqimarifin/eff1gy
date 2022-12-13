@@ -56,7 +56,7 @@ export function ListItem({
         )}
         {byline && (
           <div
-            className={`line-clamp-1 ${
+            className={`line-clamp-1 text-xs ${
               active
                 ? 'text-white text-opacity-60'
                 : 'text-gray-900 text-opacity-40 dark:text-white dark:text-opacity-60'

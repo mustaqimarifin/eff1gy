@@ -12,7 +12,6 @@ import linkifyRegex from 'remark-linkify-regex'
 
 import ConsCard from '../Stats/ConsCard'
 import ProsCard from '../Stats/ProsCard'
-//import { CodeBlock } from './CodeBlock'
 
 const CustomLink = (props) => {
   const href = props.href

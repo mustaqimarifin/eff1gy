@@ -6,7 +6,7 @@ module.exports = {
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true,
+    //optimizeCss: true,
     legacyBrowsers: false,
     urlImports: ['https://cdn.jsdelivr.net/'],
   },

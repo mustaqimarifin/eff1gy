@@ -5,7 +5,7 @@ import { ListItem } from '~/components/ListDetail/ListItem'
 import { Post } from '~/graphql/types.generated'
 import { cleanTime, ketchup } from '~/lib/functions'
 
-import { useIsomorphicLayoutEffect, Views } from '../Stats/ViewCounter'
+import { Views } from '../Stats/ViewCounter'
 
 interface Props {
   post: Post

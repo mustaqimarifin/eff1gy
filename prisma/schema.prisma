@@ -6,11 +6,12 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("SUPABASE_PG_URL")
+  url      = env("SUPABASE_URL")
 }
 
 model Account {
-  id                String  @id @default(dbgenerated("concat('acc', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated("concat('acc', xid())")) @db.Char(23)
+
   userId            String
   type              String
   provider          String
@@ -29,7 +30,8 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(dbgenerated("concat('sss', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated("concat('sss', xid())")) @db.Char(23)
+
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -39,8 +41,9 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(dbgenerated("concat('usr', xid())")) @db.Char(23)
-  createdAt     DateTime   @default(now())
+  id String @id @default(dbgenerated("concat('usr', xid())")) @db.Char(23)
+
+  createdAt     DateTime   @default(now()) @db.Timestamptz(6)
   name          String
   image         String?
   email         String?    @unique
@@ -69,8 +72,9 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id            String     @id @default(dbgenerated("concat('bkm', xid())")) @db.Char(23)
-  createdAt     DateTime   @default(now())
+  id String @id @default(dbgenerated("concat('bkm', xid())")) @db.Char(23)
+
+  createdAt     DateTime   @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime   @updatedAt
   url           String     @unique
   host          String?
@@ -87,8 +91,9 @@ model Bookmark {
 }
 
 model Question {
-  id          String     @id @default(dbgenerated("concat('qst', xid())")) @db.Char(23)
-  createdAt   DateTime   @default(now())
+  id String @id @default(dbgenerated("concat('qst', xid())")) @db.Char(23)
+
+  createdAt   DateTime   @default(now()) @db.Timestamptz(6)
   updatedAt   DateTime   @updatedAt
   title       String
   plays       Int        @default(0)
@@ -104,8 +109,9 @@ model Question {
 }
 
 model Comment {
-  id         String    @id @default(dbgenerated("concat('cmt', xid())")) @db.Char(23)
-  createdAt  DateTime  @default(now())
+  id String @id @default(dbgenerated("concat('cmt', xid())")) @db.Char(23)
+
+  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
   updatedAt  DateTime  @updatedAt
   text       String
   userId     String
@@ -128,7 +134,8 @@ model Comment {
 }
 
 model Audio {
-  id            String   @id @default(dbgenerated("concat('aud_', xid())"))
+  id String @id @default(dbgenerated("concat('aud_', xid())"))
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
@@ -140,7 +147,9 @@ model Audio {
 }
 
 model Post {
-  createdAt    DateTime   @default(now())
+  id String @id @default(dbgenerated("concat('pos', xid())")) @db.Char(23)
+
+  createdAt    DateTime   @default(now()) @db.Timestamptz(6)
   updatedAt    DateTime   @updatedAt
   publishedAt  DateTime?
   slug         String     @unique
@@ -149,7 +158,6 @@ model Post {
   excerpt      String
   featureImage String?
   userId       String
-  id           String     @id @default(dbgenerated("concat('pos', xid())")) @db.Char(23)
   comments     Comment[]
   author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
@@ -160,8 +168,9 @@ model Post {
 }
 
 model PostEdit {
-  id           String   @id @default(dbgenerated("concat('ped', xid())")) @db.Char(23)
-  createdAt    DateTime @default(now())
+  id String @id @default(dbgenerated("concat('ped', xid())")) @db.Char(23)
+
+  createdAt    DateTime @default(now()) @db.Timestamptz(6)
   text         String
   title        String
   excerpt      String
@@ -173,15 +182,17 @@ model PostEdit {
 }
 
 model Tag {
-  id        String     @id @default(dbgenerated("concat('tag', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated("concat('tag', xid())")) @db.Char(23)
+
   name      String     @unique
   bookmarks Bookmark[] @relation("BookmarkToTag")
   stacks    Stack[]    @relation("StackToTag")
 }
 
 model Stack {
-  id          String     @id @default(dbgenerated("concat('stk', xid())")) @db.Char(23)
-  createdAt   DateTime   @default(now())
+  id String @id @default(dbgenerated("concat('stk', xid())")) @db.Char(23)
+
+  createdAt   DateTime   @default(now()) @db.Timestamptz(6)
   updatedAt   DateTime   @updatedAt
   name        String
   slug        String?    @unique
@@ -195,8 +206,9 @@ model Stack {
 }
 
 model Reaction {
-  id         String    @id @default(dbgenerated("concat('rct', xid())")) @db.Char(23)
-  createdAt  DateTime  @default(now())
+  id String @id @default(dbgenerated("concat('rct', xid())")) @db.Char(23)
+
+  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
   userId     String
   bookmarkId String?
   questionId String?
@@ -216,20 +228,12 @@ model Reaction {
 }
 
 model PageView {
-  lastSeen  DateTime @default(now())
+  id String @id @default(dbgenerated("concat('pgv', xid())")) @db.Char(23)
+
+  lastSeen  DateTime @default(now()) @db.Timestamptz(6)
   viewCount Int?     @default(0)
   catID     String   @unique
   sessionID String?  @unique
-  id        String   @id @default(dbgenerated("concat('pgv', xid())")) @db.Char(23)
-}
-
-model Sticker {
-  id        String   @id @default(dbgenerated("concat('stc', xid())")) @db.Char(23)
-  createdAt DateTime @default(now())
-  model     String   @unique
-  label     String
-  url       String
-  metadata  Json?
 }
 
 model EmailSubscription {

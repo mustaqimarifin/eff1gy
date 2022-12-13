@@ -91,7 +91,7 @@ module.exports = {
                 display: 'none',
               },
             },
-            ' a': {
+            '.prose a': {
               textDecoration: 'none',
               borderBottom: 'none',
               color: colors.pink[700],
@@ -103,7 +103,7 @@ module.exports = {
                 background: colors.purple[200],
               },
             },
-            ' code': {
+            '.prose code': {
               color: colors.pink[500],
               '&::before': {
                 content: `"" !important`,
@@ -134,7 +134,7 @@ module.exports = {
                 display: 'none',
               },
             },
-            ' a': {
+            '.prose a': {
               textDecoration: 'none',
               borderBottom: 'none',
               color: colors.orange[400],
@@ -146,7 +146,7 @@ module.exports = {
                 background: colors.purple[200],
               },
             },
-            ' code': {
+            '.prose code': {
               color: colors.orange[400],
               '&::before': {
                 content: `"" !important`,
