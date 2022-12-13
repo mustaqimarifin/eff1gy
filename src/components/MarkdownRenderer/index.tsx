@@ -28,7 +28,7 @@ const CustomLink = (props) => {
 
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
-const rx = Math.floor(Math.random() * (255 - 0)) + 1
+//const rx = Math.floor(Math.random() * (255 - 0)) + 1
 
 /* console.log(`my dick be ${rx}`)
  */
