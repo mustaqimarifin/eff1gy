@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const CompressionPlugin = require('compression-webpack-plugin')
-const zlib = require('zlib')
+//const CompressionPlugin = require('compression-webpack-plugin')
+//const zlib = require('zlib')
 
 module.exports = {
   output: 'standalone',
@@ -24,7 +24,7 @@ module.exports = {
       'lh3.googleusercontent.com',
     ],
   },
-  webpack: (config, { dev, isServer }) => {
+  /*   webpack: (config, { dev, isServer }) => {
     // Note: we provide webpack above so you should not `require` it
     if (!dev && !isServer) {
       config.plugins.push(
@@ -44,5 +44,5 @@ module.exports = {
 
     // Important: return the modified config
     return config
-  },
+  }, */
 }

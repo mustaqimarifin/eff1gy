@@ -8,7 +8,7 @@ import {
   MutationDeleteHitArgs,
   MutationEditHitArgs,
 } from '~/graphql/types.generated'
-import { graphcdn } from '~/lib/graphcdn'
+//import { graphcdn } from '~/lib/graphcdn'
 //import { emailMe } from '~/lib/postmark'
 
 /* export async function editHit(_, args: MutationEditHitArgs, ctx: Context) {
@@ -113,7 +113,7 @@ export async function addHit(_, args: MutationAddHitArgs, ctx: Context) {
     throw new GraphQLError('Unable to add comment')
   })
 
-  graphcdn.purgeList('comments')
+  // graphcdn.purgeList('comments')
 
   return hit
 }

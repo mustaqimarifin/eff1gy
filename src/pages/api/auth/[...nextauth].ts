@@ -1,13 +1,13 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import NextAuth, { NextAuthOptions } from 'next-auth'
-import GithubProvider from 'next-auth/providers/github'
+//import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import TwitterProvider from 'next-auth/providers/twitter'
 
 import prisma from '~/lib/prisma'
 
 export const authOptions: NextAuthOptions = {
-  debug: process.env.NEXTAUTH_DEBUG === 'true',
+  //debug: process.env.NEXTAUTH_DEBUG === 'true',
   adapter: PrismaAdapter(prisma),
   providers: [
     TwitterProvider({
