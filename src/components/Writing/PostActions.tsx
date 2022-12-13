@@ -62,14 +62,6 @@ function getReactionButton(post) {
   )
 }
 
-function getViewCounter(post) {
-  const { data } = useViewerQuery()
-
-  if (!data?.viewer) return null
-
-  return <ViewCounter catID={post.id} />
-}
-
 function getEditButton(post) {
   const { data } = useViewerQuery()
 
@@ -86,7 +78,7 @@ export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(post)}
-      {getViewCounter(post)}
+      <ViewCounter catID={post.id} />
       {getEditButton(post)}
     </div>
   )

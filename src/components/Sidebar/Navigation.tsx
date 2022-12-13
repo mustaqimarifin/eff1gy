@@ -112,7 +112,7 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: false,
         },
-        {
+        /*  {
           href: '/press',
           label: 'Press',
           icon: AMAIcon,
@@ -121,7 +121,7 @@ export function SidebarNavigation() {
           //            !router.asPath.startsWith('/ama/pending'),
           trailingAction: null,
           isExternal: false,
-        },
+        }, */
       ],
     },
     {

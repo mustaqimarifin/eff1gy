@@ -20,7 +20,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['InterTight', ...fontFamily.sans],
+        sans: ['Inter', ...fontFamily.sans],
         serif: ['Ivar', ...fontFamily.serif],
         mono: ['SFMono', ...fontFamily.mono],
       },

@@ -53,8 +53,12 @@ export default function NowPlaying({ className, ...rest }) {
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
         )}
       >
-        {' '}
-        <p className="flex-1 text-sm text-center font-medium">Not Playing...</p>
+        <div className="absolute left-1.5 p-2  opacity-30">
+          <Spotify color="#1ED760" />
+        </div>
+        <p className="flex-1 text-sm opacity-30  text-center font-medium">
+          Not Playing...
+        </p>
       </div>
     </>
   )

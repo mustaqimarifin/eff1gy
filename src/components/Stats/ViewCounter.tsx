@@ -13,7 +13,7 @@ export const useIsomorphicLayoutEffect =
 
 export default function ViewCounter({ catID }) {
   const { data } = useSWR<Views>(`/api/views/${catID}`, ketchup)
-  const views = data?.total - 1
+  const views = new Number(data?.total)
 
   useIsomorphicLayoutEffect(() => {
     const registerView = () =>

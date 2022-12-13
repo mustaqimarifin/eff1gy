@@ -165,7 +165,7 @@ export function EditStackForm({ closeModal, stack }) {
   }
 
   const tagFilter = (t) => {
-    const allowedTags = ['tools', 'plugins']
+    const allowedTags = ['software', 'gear', 'plugins']
     return allowedTags.indexOf(t.name) >= 0
   }
 
