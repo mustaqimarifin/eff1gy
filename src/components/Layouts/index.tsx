@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import { Sidebar } from '~/components/Sidebar'
 
+import { PageTransition } from '../Providers/PageTransition'
+
 interface Props {
   list: React.ReactElement | null
   detail: React.ReactElement | null

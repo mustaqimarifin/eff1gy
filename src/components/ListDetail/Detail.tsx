@@ -26,7 +26,7 @@ const Container = React.forwardRef<HTMLDivElement, DetailContainerProps>(
       <div
         ref={ref}
         id="main"
-        className="relative flex md:max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-gray-900"
+        className="relative flex md:max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-zinc-900 "
         {...props}
       />
     )

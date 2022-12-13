@@ -7,14 +7,21 @@ import Document, {
 } from 'next/document'
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  /*   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx)
     return { ...initialProps }
-  }
+  } */
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <script
+            async
+            defer
+            data-website-id="588c3922-1f46-48a7-b0f3-0f2341bc7950"
+            src="https://umami-sandy-chi.vercel.app/pagoda.js"
+          ></script>
+        </Head>
 
         <body>
           <span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-1000">

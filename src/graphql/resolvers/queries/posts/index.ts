@@ -43,7 +43,7 @@ export async function getPost(
       },
     }),
     prisma.post.findUnique({
-      where: { id: slug },
+      where: { slug },
       include: {
         _count: {
           select: {

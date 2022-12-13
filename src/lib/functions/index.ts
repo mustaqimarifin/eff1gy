@@ -6,6 +6,14 @@ type Props = {
   day?: 'numeric' | '2-digit'
 }
 
+export const cacheOnly = {
+  revalidateOnFocus: false,
+  revalidateOnMount: false,
+  revalidateOnReconnect: false,
+  refreshWhenOffline: false,
+  refreshWhenHidden: false,
+  refreshInterval: 0,
+}
 export function cleanTime({
   timestamp = null,
   locale = 'en-us',

@@ -3,7 +3,7 @@ import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json'
 import { Context } from '~/graphql/context'
 import Mutation from '~/graphql/resolvers/mutations'
 import Query from '~/graphql/resolvers/queries'
-import { getCommentAuthor } from '~/graphql/resolvers/queries/comment'
+import { getCommentAuthor } from '~/graphql/resolvers/queries/comments'
 import { getQuestionAuthor } from '~/graphql/resolvers/queries/questions'
 import {
   EmailSubscriptionType,

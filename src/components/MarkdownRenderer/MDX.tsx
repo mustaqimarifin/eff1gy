@@ -2,7 +2,6 @@
 import { remarkCodeHike } from '@code-hike/mdx'
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import reCODE from 'rehype-code-titles'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
@@ -20,7 +19,6 @@ export async function mdxToCode<T>(text: string) {
       ],
       rehypePlugins: [
         rehypeSlug,
-        reCODE,
         [
           rehypeAutolinkHeadings,
           { behavior: 'wrap' },

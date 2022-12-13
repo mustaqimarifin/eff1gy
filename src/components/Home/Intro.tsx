@@ -3,7 +3,7 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import Button from '~/components/Button'
-import { Akhyla, MapIcon, Muse } from '~/components/Icon'
+import { Akhyla, MapIcon, Muse, Muse2 } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
@@ -174,28 +174,24 @@ export function Intro() {
 
         <Detail.ContentContainer>
           <div className="pb-24 space-y-8 md:space-y-16">
-            <article className="layout p-4 w-full max-w-3xl">
-              <h2 className="font-semibold pt-4 mb-6 text-2xl drop-shadow-sm md:text-4xl">
+            <article className="layout p-2 w-full lg:max-w-3xl">
+              <h2 className="font-serif font-medium pt-4 mb-6 text-2xl drop-shadow-sm md:text-4xl">
                 Greetings! I'm the{' '}
-                <span className="font-serif italic text-twitter dark:text-active">
+                <span className="font-serif font-normal   text-twitter dark:text-active">
                   marketing manager&nbsp;
                 </span>
                 and{' '}
-                <span className="font-serif italic text-twitter dark:text-active">
-                  creative lead
+                <span className="font-serif font-normal  text-twitter dark:text-active">
+                  creative lead&nbsp;
                 </span>
-                &nbsp;at&nbsp;
-                <span>
-                  <Link href="https://stripe.com">
-                    <Muse width={60} className="inline items-center mb-1" />
-                  </Link>
-                  , focusing on&nbsp;
-                </span>
-                <span className="font-serif italic text-coyRed">
+                at{` `}
+                <Muse2 className="h-12 inline items-center dark:invert" />,{' '}
+                <span>focusing on&nbsp;</span>
+                <span className="font-serif  text-coyRed">
                   large-scale events tech
                 </span>
-                , and{' '}
-                <span className="font-serif italic text-coyRed">
+                , and&nbsp;
+                <span className="font-serif  text-coyRed">
                   optimization.&nbsp;
                 </span>{' '}
               </h2>

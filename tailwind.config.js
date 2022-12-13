@@ -74,12 +74,12 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
-            ' h1,h2,h3,h4,h5,h6': { color: colors.slate[900] },
-            ' h2 a': linkHeadingStyles,
-            ' h3 a': linkHeadingStyles,
-            ' h4 a': linkHeadingStyles,
-            ' h5 a': linkHeadingStyles,
-            ' h6 a': linkHeadingStyles,
+            '.prose h1,h2,h3,h4,h5,h6': { color: colors.slate[900] },
+            '.prose h2 a': linkHeadingStyles,
+            '.prose h3 a': linkHeadingStyles,
+            '.prose h4 a': linkHeadingStyles,
+            '.prose h5 a': linkHeadingStyles,
+            '.prose h6 a': linkHeadingStyles,
             blockquote: {
               fontSize: '90%',
               color: colors.slate[500],
@@ -117,12 +117,12 @@ module.exports = {
         },
         dark: {
           css: {
-            ' h1,h2,h3,h4,h5,h6': { color: colors.white },
-            ' h2 a': linkHeadingStyles,
-            ' h3 a': linkHeadingStyles,
-            ' h4 a': linkHeadingStyles,
-            ' h5 a': linkHeadingStyles,
-            ' h6 a': linkHeadingStyles,
+            '.prose h1,h2,h3,h4,h5,h6': { color: colors.white },
+            '.prose h2 a': linkHeadingStyles,
+            '.prose h3 a': linkHeadingStyles,
+            '.prose h4 a': linkHeadingStyles,
+            '.prose h5 a': linkHeadingStyles,
+            '.prose h6 a': linkHeadingStyles,
             blockquote: {
               fontSize: '90%',
               color: colors.zinc[500],

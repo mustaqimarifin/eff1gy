@@ -32,6 +32,8 @@ export const QuestionDetailFragment = gql`
     viewerCanEdit
     viewerCanComment
     reactionCount
+    hitRate
+
     viewerHasReacted
   }
   ${QuestionCoreFragment}

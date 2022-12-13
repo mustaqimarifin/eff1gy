@@ -4,6 +4,8 @@ import * as React from 'react'
 
 import { useApollo } from '~/lib/apollo'
 
+import { AnalyticsWrapper } from './Analytics'
+import { PageTransition } from './PageTransition'
 import ReactQuery from './ReactQuery'
 import { SEO } from './SEO'
 import { Toast } from './Toaster'
@@ -40,6 +42,8 @@ export function Providers({ children, pageProps }: Props) {
     <>
       <SEO />
       <Toast />
+      <AnalyticsWrapper />
+
       <ThemeProvider attribute="class">
         <ApolloProvider client={apolloClient}>
           <GlobalNavigationContext.Provider value={state}>

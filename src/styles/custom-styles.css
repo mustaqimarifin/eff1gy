@@ -21,14 +21,14 @@
 @font-face {
   font-family: 'UntitledSans';
   src: url('/fonts/usw-MED.woff2') format('woff2');
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'UntitledSans';
   src: url('/fonts/usw-REG.woff2') format('woff2');
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -96,6 +96,22 @@
 }
 
 @layer components {
+  pre::-webkit-scrollbar {
+    display: none;
+  }
+
+  pre {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  table {
+    display: block;
+    max-width: fit-content;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
   /* needed to override tailwind forms styles */
 
   select {

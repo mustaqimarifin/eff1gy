@@ -17,7 +17,7 @@ export default function TOS() {
             title="Privacy Policy"
           />
 
-          <div className="prose mx-auto flex max-w-2xl flex-col items-start justify-start pb-16 text-left text-gray-600  prose-headings:font-bold dark:prose-invert dark:text-gray-300">
+          <div className="prose mx-auto flex max-w-2xl flex-col items-start justify-start pb-16 text-left text-gray-600  prose-headings:font-bold dark:prose-dark dark:text-gray-300">
             <h1 className="mt-8 flex leading-7  transition-all hover:text-gray-800 dark:hover:text-gray-200  ">
               Terms of Service
               <svg

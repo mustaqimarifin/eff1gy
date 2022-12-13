@@ -14,7 +14,7 @@ export function Avatar({ user, src, ...props }) {
 
   return (
     <Image
-      alt={`${user.name || user.name}'s profile photo`}
+      alt={`${user.name}'s profile photo`}
       src={srcState}
       {...props}
       onError={() => {

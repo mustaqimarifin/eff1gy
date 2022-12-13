@@ -44,12 +44,12 @@ export async function toggleReaction(
 
   const [parentObject, existingReaction] = await Promise.all([
     prisma[table].findUnique({
-      where: { id: refId },
+      where: { id: String(refId) },
     }),
 
     prisma.reaction.findMany({
       where: {
-        [field]: refId,
+        [field]: String(refId),
         userId: viewer.id,
       },
     }),
@@ -72,7 +72,7 @@ export async function toggleReaction(
       prisma.reaction.create({
         data: {
           userId: viewer.id,
-          [field]: refId,
+          [field]: String(refId),
         },
       })
   }

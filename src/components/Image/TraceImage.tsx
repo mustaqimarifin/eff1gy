@@ -21,9 +21,9 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           aria-hidden="true"
           src={imgTrace}
           fill
-          sizes="(max-width: 768px) 100vw,
+          /*           sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
-              33vw"
+              33vw" */
           priority
           onLoadingComplete={() => setLoaded(false)}
           alt={''}
@@ -42,6 +42,7 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
             opacity: isLoaded ? '0' : '1',
             transition: 'opacity 2s ',
             transitionDelay: '2000ms',
+            borderRadius: '20px',
           }}
         />
       </div>
@@ -56,10 +57,13 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           src={imgSrc}
           onLoadingComplete={() => setLoaded(true)}
           alt={''}
-          sizes="(max-width: 768px) 100vw,
+          /*           sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
-              33vw"
+              33vw" */
           className="object-cover overflow-hidden transition ease-in-out"
+          style={{
+            borderRadius: '20px',
+          }}
           {...rest}
           //
         />

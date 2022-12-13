@@ -17,6 +17,7 @@ export default gql`
     featureImage: String
     reactionCount: Int
     viewerHasReacted: Boolean
+    hitRate: Int
   }
 
   type Bookmark {
@@ -32,6 +33,7 @@ export default gql`
     tags: [Tag]!
     reactionCount: Int
     viewerHasReacted: Boolean
+    hitRate: Int
   }
 
   type Question {
@@ -49,6 +51,7 @@ export default gql`
     viewerCanComment: Boolean
     reactionCount: Int
     viewerHasReacted: Boolean
+    hitRate: Int
   }
 
   enum CommentType {
@@ -65,18 +68,11 @@ export default gql`
     POST
   }
 
-  enum StickerModel {
-    CATJAM
-    SUSS
-    BULMA
-    MADPROPS
-  }
-
-  type Sticker {
-    model: StickerModel
-    label: String
-    url: String
-    metadata: JSONObject
+  enum HitType {
+    BOOKMARK
+    QUESTION
+    STACK
+    POST
   }
 
   type Tag {
@@ -97,6 +93,7 @@ export default gql`
     usedByViewer: Boolean
     reactionCount: Int
     viewerHasReacted: Boolean
+    hitRate: Int
   }
 
   enum UserRole {
@@ -136,6 +133,14 @@ export default gql`
     author: User!
     viewerCanEdit: Boolean
     viewerCanDelete: Boolean
+  }
+
+  type Hit {
+    id: ID!
+    createdAt: Date!
+    updatedAt: Date
+    catID: String
+    hitRate: Int
   }
 
   type HackerNewsComment {
@@ -229,6 +234,8 @@ export default gql`
     stacks(first: Int, after: String): StacksConnection!
     comment(id: ID!): Comment
     comments(refId: ID!, type: CommentType!): [Comment]!
+    hit(id: ID!): Hit
+    hits(pageId: ID!, type: HitType!): [Hit]!
     #reaction(type: StickerType!): Reaction
     #reactions(refId: ID!, type: CommentType!): [Reaction]!
     posts(filter: WritingFilter): [Post]!
@@ -325,9 +332,15 @@ export default gql`
     addQuestion(data: AddQuestionInput!): Question
     editQuestion(id: ID!, data: EditQuestionInput!): Question
     deleteQuestion(id: ID!): Boolean
+
     addComment(refId: ID!, type: CommentType!, text: String!): Comment
     editComment(id: ID!, text: String): Comment
     deleteComment(id: ID!): Boolean
+
+    addHit(pageId: ID!, type: HitType!): Hit
+    editHit(id: ID!, text: String): Hit
+    deleteHit(id: ID!): Boolean
+
     editUser(data: EditUserInput): User
     deleteUser: Boolean
     editEmailSubscription(data: EmailSubscriptionInput): User

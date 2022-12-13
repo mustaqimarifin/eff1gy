@@ -1,4 +1,5 @@
 import * as React from 'react'
+import useSWR from 'swr'
 
 import Button from '~/components/Button'
 import { ReactionButton } from '~/components/Button/ReactionButton'
@@ -8,8 +9,9 @@ import {
   useToggleReactionMutation,
   useViewerQuery,
 } from '~/graphql/types.generated'
+import { ketchup } from '~/lib/functions'
 
-import ViewCounter from '../Stats/ViewCounter'
+import ViewCounter, { Views } from '../Stats/ViewCounter'
 
 //import ViewCounter from '../Stats/ViewCounter'
 function getReactionButton(post) {
@@ -60,13 +62,13 @@ function getReactionButton(post) {
   )
 }
 
-/* function getViewCounter(post) {
+function getViewCounter(post) {
   const { data } = useViewerQuery()
 
   if (!data?.viewer) return null
 
-  return <ViewCounter slug={post.slug} />
-} */
+  return <ViewCounter catID={post.id} />
+}
 
 function getEditButton(post) {
   const { data } = useViewerQuery()
@@ -84,7 +86,7 @@ export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(post)}
-      <ViewCounter catID={post.id} />
+      {getViewCounter(post)}
       {getEditButton(post)}
     </div>
   )

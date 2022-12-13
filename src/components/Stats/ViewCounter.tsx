@@ -1,26 +1,28 @@
 import { EyeOpenIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
 import { useEffect, useLayoutEffect } from 'react'
 import useSWR from 'swr'
 
 import Button from '~/components/Button'
-import { ketchup } from '~/lib/functions'
+import { cacheOnly, ketchup } from '~/lib/functions'
 export type Views = {
   total: number
 }
-/* 
-const ViewCounter = (catID) => {
-  const { data } = useQuery<Views>(['views'], () =>
-    ketchup<Views>(`/api/views/${catID}`)
-  )
-  const views = new Number(data?.total) */
 
 export const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function ViewCounter({ catID }) {
   const { data } = useSWR<Views>(`/api/views/${catID}`, ketchup)
-  const views = data?.total
+  const views = data?.total - 1
+
+  useIsomorphicLayoutEffect(() => {
+    const registerView = () =>
+      fetch(`/api/views/${catID}`, {
+        method: 'POST',
+      })
+
+    registerView()
+  }, [catID])
 
   return (
     <>

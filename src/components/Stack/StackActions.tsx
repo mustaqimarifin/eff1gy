@@ -67,19 +67,11 @@ function getReactionButton(stack) {
   )
 }
 
-function getViewCounter(stack) {
-  const { data } = useViewerQuery()
-
-  if (!data?.viewer) return null
-
-  return <ViewCounter catID={stack.id} />
-}
-
 export function StackActions({ stack }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(stack)}
-      {getViewCounter(stack)}
+      <ViewCounter catID={stack.id} />
       {getEditButton(stack)}
     </div>
   )
