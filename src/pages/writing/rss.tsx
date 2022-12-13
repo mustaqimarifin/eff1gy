@@ -1,9 +1,3 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextApiRequest,
-  NextApiResponse,
-} from 'next'
 import * as React from 'react'
 
 import { getContext } from '~/graphql/context'
