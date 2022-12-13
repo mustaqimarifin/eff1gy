@@ -29,7 +29,7 @@ export function WritingTitlebar({ scrollContainerRef }) {
     return null
   }
 
-  function getSubscribeButton() {
+  /*   function getSubscribeButton() {
     if (data?.viewer?.isAdmin) return null
     return (
       <DialogComponent
@@ -43,12 +43,12 @@ export function WritingTitlebar({ scrollContainerRef }) {
         modalContent={() => <WritingSubscriptionForm />}
       />
     )
-  }
+  } */
 
   function trailingAccessory() {
     return (
       <div className="flex space-x-2">
-        {getSubscribeButton()}
+        {/*  {getSubscribeButton()} */}
         {getAddButton()}
       </div>
     )

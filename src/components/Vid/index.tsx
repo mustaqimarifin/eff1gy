@@ -7,7 +7,7 @@ const Buffoon = () => {
         <Image
           width={300}
           height={300}
-          src="/static/img/vmp-banner.webp"
+          src="/static/clip/vmp-banner.webp"
           alt={''}
         ></Image>
       </div>

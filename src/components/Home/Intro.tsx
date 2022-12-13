@@ -251,8 +251,8 @@ export function Intro() {
               <SectionContent>
                 <div className=" ">
                   <TraceImage
-                    imgSrc="/map.png"
-                    imgTrace="/map.svg"
+                    imgSrc="/site/home/map.jpg"
+                    imgTrace="/site/home/map-trace.png"
                     width={1200}
                     height={675}
                     sizes="33vw"

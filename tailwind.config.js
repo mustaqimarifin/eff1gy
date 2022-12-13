@@ -20,9 +20,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['UntitledSans', ...fontFamily.sans],
+        sans: ['InterTight', ...fontFamily.sans],
         serif: ['Ivar', ...fontFamily.serif],
-        mono: ['Sohn', ...fontFamily.mono],
+        mono: ['SFMono', ...fontFamily.mono],
       },
       colors: {
         active: '#48b7e2',

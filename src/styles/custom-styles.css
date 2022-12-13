@@ -32,13 +32,22 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'GTAmerica';
-  src: url('/fonts/GTAmerica-Light.woff2') format('woff2');
-  font-weight: 300;
+  font-family: 'InterTight';
+  src: url('/fonts/InterTight.woff2') format('woff2');
+  font-weight: 300 700;
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'InterTight';
+  src: url('/fonts/InterTight-Italic.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Sohn';
   src: url('/fonts/sohn.woff2') format('woff2');
@@ -80,7 +89,7 @@
 
 @layer base {
   html {
-    @apply h-screen overflow-auto text-base subpixel-antialiased;
+    @apply h-screen overflow-hidden text-base subpixel-antialiased;
   }
 
   body:after {

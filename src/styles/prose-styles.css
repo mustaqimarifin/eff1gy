@@ -180,15 +180,3 @@
   position: relative;
   scroll-margin-top: 4rem;
 }
-
-.rehype-code-title {
-  @apply px-5 py-3  text-sm font-bold text-gray-800 bg-gray-200 border border-b-0 border-gray-200 rounded-t-lg dark:text-gray-200 dark:border-gray-700 dark:bg-gray-800;
-}
-
-.rehype-code-title + pre {
-  @apply mt-0 rounded-t-none;
-}
-
-.highlight-line {
-  @apply block px-4 -mx-4 bg-gray-100 border-l-4 border-blue-500 dark:bg-gray-800;
-}

@@ -5,7 +5,7 @@ export const baseEmail = 'vmprmyth@gmail.com'
 
 export const defaultSEO = {
   title: 'Mustaqim Arifin',
-  description: 'Product designer, podcaster, and writer, living in KL.',
+  description: 'Marketing manager and Music Producer living in KL.',
   openGraph: {
     type: 'website',
     locale: 'en_US',

@@ -18,12 +18,12 @@ export default function Track(track) {
           ) : (
             <Image
               className="rounded-lg"
-              src="/static/img/kitteh-col.svg"
+              src="/site/home/kit.svg"
               width={48}
               height={48}
               alt=""
               placeholder="blur"
-              blurDataURL="/static/img/SVG-placeholder.png"
+              blurDataURL="/site/fallback/spotify-fb.png"
             />
           )}
         </div>

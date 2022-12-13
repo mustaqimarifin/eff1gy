@@ -11,9 +11,14 @@ export function SignInDialogContent() {
       className="flex flex-col items-center space-y-6 p-8 md:p-6 z-40"
     >
       <div className="text-primary grid w-full gap-4 grid-cols-2">
-        <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-700 dark:bg-opacity-70">
+        <div className="flex flex-col items-center  justify-center space-y-2 rounded-lg bg-gray-100 p-2 dark:bg-gray-700 dark:bg-opacity-70">
           <div className="flex container justify-center">
-            <Image src="/ama2.svg" width={200} height={100} alt="ama" />
+            <Image
+              src="/site/login/ama3.png"
+              width={200}
+              height={100}
+              alt="ama"
+            />
           </div>
           {/*           <svg
             className="h-6 w-6 text-gray-500 dark:text-gray-400"
@@ -29,9 +34,14 @@ export function SignInDialogContent() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-700 dark:bg-opacity-70">
+        <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-2 dark:bg-gray-700 dark:bg-opacity-70">
           <div className="flex container justify-center">
-            <Image src="/shiro.svg" width={200} height={100} alt="ama" />
+            <Image
+              src="/site/login/caesar.png"
+              width={200}
+              height={100}
+              alt="ama"
+            />
           </div>
           {/*           <svg
             className="h-6 w-6 text-gray-500 dark:text-gray-400"
@@ -52,7 +62,12 @@ export function SignInDialogContent() {
 
         <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-700 dark:bg-opacity-70">
           <div className="flex container justify-center w-25 ">
-            <Image src="/sailor2.webp" width={300} height={200} alt="ama" />
+            <Image
+              src="/site/login/sailor2.webp"
+              width={300}
+              height={200}
+              alt="ama"
+            />
           </div>
           {/* <svg
             className="h-6 w-6 text-gray-500 dark:text-gray-400"

@@ -91,7 +91,7 @@ const routes = {
     seo: extendSEO({
       title: 'Privacy Policy',
       description: null,
-      image: 'og/stack.png',
+      image: 'og/pp.png',
       url: 'privacypolicy',
     }),
   },
@@ -101,7 +101,7 @@ const routes = {
     seo: extendSEO({
       title: 'Terms of Service',
       description: null,
-      image: 'og/stack.png',
+      image: 'og/tos.png',
       url: 'termsofservice',
     }),
   },
