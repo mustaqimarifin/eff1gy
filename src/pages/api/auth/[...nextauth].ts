@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ account, profile, user }) {
       if (account.provider === 'twitter') {
-        profile.sub = user.twitterId
+        profile.sub = user.id
       }
       return true // Do different verification for other providers that don't have `email_verified`
     },

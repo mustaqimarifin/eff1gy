@@ -5,9 +5,18 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
+import { BUNDLED_LANGUAGES, getHighlighter } from 'shiki'
 
 import theme from '~/styles/moonlight-ii.json'
 
+/* const options = {
+  theme: theme,
+  getHighlighter: (options) =>
+    getHighlighter({
+      ...options,
+      langs: [...BUNDLED_LANGUAGES],
+    }),
+} */
 export async function mdxToCode<T>(text: string) {
   const source = await serialize(text, {
     mdxOptions: {

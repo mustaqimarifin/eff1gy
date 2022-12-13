@@ -5,3 +5,8 @@ declare module 'https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/index.cjs
   //declare module 'https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/components.esm.mjs //declare module 'https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/index.min.css'
   export * from '@code-hike/mdx'
 }
+
+declare module 'https://cdn.jsdelivr.net/npm/shiki@0.11.1/dist/index.unpkg.iife.min.js' {
+  //declare module 'https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/components.esm.mjs //declare module 'https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/index.min.css'
+  export * from 'shiki'
+}

@@ -8,14 +8,14 @@ export type Views = {
   total: number
 }
 
-export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+//export const useIsomorphicLayoutEffect =
+//  typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function ViewCounter({ catID }) {
   const { data } = useSWR<Views>(`/api/views/${catID}`, ketchup)
   const views = new Number(data?.total)
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     const registerView = () =>
       fetch(`/api/views/${catID}`, {
         method: 'POST',
