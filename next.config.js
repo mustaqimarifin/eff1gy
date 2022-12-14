@@ -2,10 +2,15 @@
 //const CompressionPlugin = require('compression-webpack-plugin')
 //const zlib = require('zlib')
 
+const path = require('path')
+
 module.exports = {
+  output: 'standalone',
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
+    outputFileTracingRoot: path.join(__dirname, '../../'),
+
     //optimizeCss: true,
     legacyBrowsers: false,
     //urlImports: ['https://cdn.jsdelivr.net/'],

@@ -14,6 +14,12 @@ import { GET_POST, GET_POSTS } from '~/graphql/queries/posts'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
+
+// in your next.js page
+export const config = {
+  // pnpm in my case, maybe 'node_modules/**/shiki/**/*.json' for npm or yarn.
+  unstable_includeFiles: ['node_modules/.pnpm/**/shiki/**/*.json'],
+}
 function WritingPostPage({ source, slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })
 
@@ -27,6 +33,7 @@ function WritingPostPage({ source, slug }) {
               ...MDXComponents,
             } as any
           }
+          lazy
         />
       </PostEditor>
     )
@@ -39,6 +46,7 @@ function WritingPostPage({ source, slug }) {
             ...MDXComponents,
           } as any
         }
+        lazy
       />
     </PostDetail>
   )
