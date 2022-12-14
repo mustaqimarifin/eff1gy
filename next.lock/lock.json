@@ -1,6 +1,0 @@
-{
-  "https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/index.cjs.min.js": { "integrity": "sha512-sYJbXzeuw5LAboK+NXQhog3IH4DE6ZtYiszitSelKxRvdYr9tmZsM+7JQ0EXudNyaBE97N9XhKnMFwHQbb/D6Q==", "contentType": "application/javascript; charset=utf-8" },
-  "https://cdn.jsdelivr.net/npm/@code-hike/mdx@0.7.4/dist/index.min.css": { "integrity": "sha512-V0p+0/cshWx1s3YCkgsRQrNWQZPkr5bOzrsD+RSkp1vR6Pq73leMzSWNQzeRXh2NQQ410+evyXYfyNx9MVS9fA==", "contentType": "text/css; charset=utf-8" },
-  "https://cdn.jsdelivr.net/npm/shiki@0.11.1/dist/index.unpkg.iife.min.js": { "integrity": "sha512-7zioy8dKWQAT9GaPRLZVDKwKNAl40fspDyAJeB7ip2pzEL9TsIeo2+cWgrxddoEEhgNs193uFucQePQ6BjMbNQ==", "contentType": "application/javascript; charset=utf-8" },
-  "version": 1
-}

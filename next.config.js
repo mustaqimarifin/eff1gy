@@ -8,7 +8,7 @@ module.exports = {
   experimental: {
     //optimizeCss: true,
     legacyBrowsers: false,
-    urlImports: ['https://cdn.jsdelivr.net/'],
+    //urlImports: ['https://cdn.jsdelivr.net/'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],

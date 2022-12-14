@@ -103,6 +103,11 @@ module.exports = {
                 background: colors.purple[200],
               },
             },
+            '.prose pre': {
+              background: 'none',
+              transition:
+                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
+            },
             '.prose code': {
               color: colors.pink[500],
               '&::before': {
@@ -145,6 +150,11 @@ module.exports = {
                 borderBottomColor: `${colors.cyan[200]} !important`,
                 background: colors.purple[200],
               },
+            },
+            '.prose pre': {
+              background: colors.slate[100],
+              transition:
+                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
             },
             '.prose code': {
               color: colors.orange[400],

@@ -1,22 +1,31 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { remarkCodeHike } from '@code-hike/mdx'
+
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+//import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
-import { BUNDLED_LANGUAGES, getHighlighter } from 'shiki'
+const shiki = require('shiki')
 
-import theme from '~/styles/moonlight-ii.json'
+import theme2 from '~/lib/mdx/shiki/themes/slack-ochin.json'
+//import theme from '~/styles/moonlight-ii.json'
+//const rehypePrettyCode = require('rehype-pretty-code')
+const { remarkCodeHike } = require('@code-hike/mdx')
 
-/* const options = {
-  theme: theme,
-  getHighlighter: (options) =>
-    getHighlighter({
-      ...options,
-      langs: [...BUNDLED_LANGUAGES],
-    }),
-} */
+shiki
+  .getHighlighter({
+    theme: 'nord',
+  })
+  .then((highlighter) => {
+    const code = highlighter.getLoadedLanguages(`console.log('shiki');`, {
+      lang: [],
+    })
+    return code
+  })
+
+//const hehe = highlighter.getLoadedLanguages()
+
 export async function mdxToCode<T>(text: string) {
   const source = await serialize(text, {
     mdxOptions: {
@@ -24,10 +33,20 @@ export async function mdxToCode<T>(text: string) {
       remarkPlugins: [
         remarkGfm,
         linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
-        [remarkCodeHike, { autoImport: false, theme }],
+        [
+          remarkCodeHike,
+          {
+            autoImport: false,
+            theme: theme2,
+            lineNumbers: true,
+            showCopyButton: true,
+            skipLanguages: false,
+          },
+        ],
       ],
       rehypePlugins: [
-        rehypeSlug,
+        /*         [rehypePrettyCode, options],
+         */ rehypeSlug,
         [
           rehypeAutolinkHeadings,
           { behavior: 'wrap' },
