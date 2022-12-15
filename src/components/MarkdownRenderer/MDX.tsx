@@ -7,23 +7,10 @@ import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
+
 //import { schema } from '.'
 //const rehypePrettyCode = require('rehype-pretty-code')
-import { getHighlighter, Lang, setCDN, Theme } from 'shiki'
-import useSWRImmutable from 'swr/immutable'
-
 import theme from '~/styles/nord.json'
-type Params = {
-  lang: Lang
-}
-
-setCDN('https://unpkg.com/shiki/')
-const fetcher = ({ lang }: Params) => getHighlighter({ langs: [lang] })
-
-export const useTheme = ({ lang }: Params) => {
-  const { data: highlighter, error } = useSWRImmutable({ lang }, fetcher)
-  return { highlighter, error, loading: !highlighter && !error }
-}
 
 const root = process.cwd()
 

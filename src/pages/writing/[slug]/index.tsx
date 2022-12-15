@@ -15,8 +15,9 @@ import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 // in your next.js page
-//export const config = {
-//unstable_includeFiles: ['node_modules/.pnpm/**/shiki/languages/*.json'],}
+export const config = {
+  unstable_includeFiles: ['node_modules/.pnpm/**/shiki/languages/*.json'],
+}
 function WritingPostPage({ post, slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })
 
