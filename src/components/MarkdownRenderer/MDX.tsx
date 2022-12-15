@@ -13,7 +13,7 @@ import linkifyRegex from 'remark-linkify-regex'
 
 //const shiki = require('shiki')
 import theme2 from '~/lib/mdx/shiki/themes/nord.json'
-import theme from '~/styles/moonlight-ii.json'
+//import theme from '~/styles/moonlight-ii.json'
 //import { schema } from '.'
 //const rehypePrettyCode = require('rehype-pretty-code')
 //const { remarkCodeHike } = require('@code-hike/mdx')
