@@ -29,7 +29,7 @@ export function Sidebar() {
         />
 
         <SidebarNavigation />
-        <NowPlaying className=" p-6" />
+        <NowPlaying className="p-6" />
 
         <UserFooter />
       </nav>

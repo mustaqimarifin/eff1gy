@@ -1,9 +1,10 @@
 import { Switch } from '@headlessui/react'
-import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
+
+import { MoonIcon, SunIcon } from '~/components/Icon'
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()
@@ -45,7 +46,7 @@ const ThemeToggle = () => {
             animate={{
               opacity: 1,
               x: 26,
-              rotate: 180,
+              rotate: 360,
               transition: { ease: [0.11, 0.7, 0, 1] },
             }}
           >

@@ -1,6 +1,10 @@
 import { CH } from '@code-hike/mdx/dist/components.cjs.js'
 import deepmerge from 'deepmerge'
-import { ComponentMap, getMDXComponent } from 'mdx-bundler/client'
+import {
+  ComponentMap,
+  getMDXComponent,
+  MDXContentProps,
+} from 'mdx-bundler/client'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
@@ -137,7 +141,10 @@ interface Props {
 }
 
 export const MDSEX = ({ mdx, ...rest }: Props) => {
-  const MDXLayout = React.useMemo(() => getMDXComponent(mdx), [mdx])
+  const MDXLayout = React.useMemo(
+    (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
+    [mdx]
+  )
 
   return <MDXLayout components={MDXComponents} {...rest} />
 }

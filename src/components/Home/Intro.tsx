@@ -3,7 +3,7 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import Button from '~/components/Button'
-import { Akhyla, MapIcon, Muse, Muse2 } from '~/components/Icon'
+import { Akhyla, MapIcon, Muse2 } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 

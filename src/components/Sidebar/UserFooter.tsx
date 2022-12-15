@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import * as React from 'react'
-import { Database, Settings } from 'react-feather'
+import { Settings } from 'react-feather'
 2
 
 import { Avatar } from '~/components/Avatar'

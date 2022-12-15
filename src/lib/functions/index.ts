@@ -18,7 +18,7 @@ export function cleanTime({
   timestamp = null,
   locale = 'en-us',
   year = 'numeric',
-  month = 'long',
+  month = 'short',
   day = 'numeric',
 }: Props) {
   const date = timestamp ? new Date(timestamp) : new Date()

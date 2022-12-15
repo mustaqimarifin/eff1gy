@@ -26,7 +26,6 @@ import {
 } from '~/components/Icon'
 import { useViewerQuery } from '~/graphql/types.generated'
 
-import NowPlaying from '../Stats/Spotify/NowPlaying'
 import { NavigationLink } from './NavigationLink'
 
 function ThisAddBookmarkDialog() {
