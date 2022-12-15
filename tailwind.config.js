@@ -20,7 +20,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
+        sans: ['UntitledSans', ...fontFamily.sans],
         serif: ['Ivar', ...fontFamily.serif],
         mono: ['SFMono', ...fontFamily.mono],
       },
@@ -142,7 +142,7 @@ module.exports = {
             '.prose a': {
               textDecoration: 'none',
               borderBottom: 'none',
-              color: colors.orange[400],
+              color: colors.rose[300],
               transition:
                 'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
               '&:hover': {
@@ -157,7 +157,7 @@ module.exports = {
                 'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
             },
             '.prose code': {
-              color: colors.orange[400],
+              color: colors.rose[400],
               '&::before': {
                 content: `"" !important`,
               },

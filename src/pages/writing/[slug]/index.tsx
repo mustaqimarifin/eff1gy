@@ -1,8 +1,8 @@
-import { MDXRemote } from 'next-mdx-remote'
+//import { MDXRemote } from 'next-mdx-remote'
 import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { MDXComponents } from '~/components/MarkdownRenderer'
+import { MDSEX, MDXComponents } from '~/components/MarkdownRenderer'
 import { mdxToCode } from '~/components/MarkdownRenderer/MDX'
 import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
@@ -16,36 +16,19 @@ import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 // in your next.js page
-export const config = {
-  // pnpm in my case, maybe 'node_modules/**/shiki/**/*.json' for npm or yarn.
-  unstable_includeFiles: ['node_modules/.pnpm/**/shiki/languages/*.json'],
-}
+//export const config = { unstable_includeFiles: ['node_modules/.pnpm/**/shiki/languages/*.json'],}
 function WritingPostPage({ post, slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })
 
   if (data.post && !data.post.publishedAt)
     return (
       <PostEditor slug={slug}>
-        <MDXRemote
-          {...post.text}
-          components={
-            {
-              ...MDXComponents,
-            } as any
-          }
-        />
+        <MDSEX mdx={post.text} />
       </PostEditor>
     )
   return (
     <PostDetail slug={slug}>
-      <MDXRemote
-        {...post.text}
-        components={
-          {
-            ...MDXComponents,
-          } as any
-        }
-      />
+      <MDSEX mdx={post.text} />
     </PostDetail>
   )
 }

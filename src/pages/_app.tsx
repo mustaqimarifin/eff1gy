@@ -1,6 +1,6 @@
 import '~/styles/custom-styles.css'
 import '~/styles/prose-styles.css'
-import '@code-hike/mdx/dist/index.css'
+import '~/styles/code.css'
 
 import Head from 'next/head'
 import * as React from 'react'

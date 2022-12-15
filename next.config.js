@@ -10,9 +10,11 @@ module.exports = {
   reactStrictMode: true,
   experimental: {
     //outputFileTracingRoot: path.join(__dirname, '../../'),
-
+    esmExternals: 'loose',
     optimizeCss: true,
     legacyBrowsers: false,
+    //transpilePackages: ['shiki'],
+
     //urlImports: ['https://cdn.jsdelivr.net/'],
   },
   images: {
@@ -41,7 +43,7 @@ module.exports = {
             [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
           },
           threshold: 10240,
-          minRatio: 0.8,
+          minRatio: 0.7,
           deleteOriginalAssets: false,
         })
       )

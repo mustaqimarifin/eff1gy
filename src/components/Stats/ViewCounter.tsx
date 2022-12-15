@@ -27,7 +27,7 @@ export default function ViewCounter({ catID }) {
         <span className="text-pink-500 font-mono">
           <EyeOpenIcon />
         </span>
-        <span>{`${views > 0 ? views.toLocaleString() : '–––'}`}</span>
+        <span>{`${views > 0 ? views.toLocaleString() : '–'}`}</span>
       </Button>
     </>
   )

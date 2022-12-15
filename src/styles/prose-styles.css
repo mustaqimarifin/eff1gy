@@ -17,11 +17,11 @@
 /* .prose a {
   @apply font-normal text-blue-600 no-underline break-words hover:underline dark:text-blue-500;
 }
- */
+
 .prose a code {
   @apply text-orange-400;
 }
-
+ */
 .prose table {
   @apply my-2 border border-gray-200 rounded-md text-gray-1000 dark:border-gray-800 dark:text-gray-50;
 }

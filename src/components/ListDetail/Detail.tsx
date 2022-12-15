@@ -10,7 +10,7 @@ import { TitleBar } from './TitleBar'
 function ContentContainer(props) {
   return (
     <div
-      className="mx-auto w-full max-w-xs md:max-w-3xl px-2 py-12   md:px-8 "
+      className="mx-auto w-full max-w-xs lg:max-w-3xl px-2 py-12   lg:px-4 "
       {...props}
     />
   )
