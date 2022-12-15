@@ -341,17 +341,19 @@
       transform: translate(20%, 10%);
     }
   }
-     @media (prefers-color-scheme: dark) {
-      pre[data-theme='light'],   code[data-theme='light'] {
+  @media (prefers-color-scheme: dark) {
+    pre[data-theme='light'],
+    code[data-theme='light'] {
       display: none;
     }
   }
-   
+
   @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-    pre[data-theme='dark'],  code[data-theme='dark'] {
+    pre[data-theme='dark'],
+    code[data-theme='dark'] {
       display: none;
     }
-  } 
+  }
 }
 
 /*  

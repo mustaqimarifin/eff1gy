@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-//const CompressionPlugin = require('compression-webpack-plugin')
-//const zlib = require('zlib')
+const CompressionPlugin = require('compression-webpack-plugin')
+const zlib = require('zlib')
 
 const path = require('path')
 
 module.exports = {
-  output: 'standalone',
+  //output: 'standalone',
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    outputFileTracingRoot: path.join(__dirname, '../../'),
+    //outputFileTracingRoot: path.join(__dirname, '../../'),
 
-    //optimizeCss: true,
+    optimizeCss: true,
     legacyBrowsers: false,
     //urlImports: ['https://cdn.jsdelivr.net/'],
   },
@@ -29,7 +29,7 @@ module.exports = {
       'lh3.googleusercontent.com',
     ],
   },
-  /*   webpack: (config, { dev, isServer }) => {
+  webpack: (config, { dev, isServer }) => {
     // Note: we provide webpack above so you should not `require` it
     if (!dev && !isServer) {
       config.plugins.push(
@@ -49,5 +49,5 @@ module.exports = {
 
     // Important: return the modified config
     return config
-  }, */
+  },
 }

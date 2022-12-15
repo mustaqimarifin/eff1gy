@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypePresetMinify from 'rehype-preset-minify'
 //import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
@@ -45,6 +45,7 @@ export async function mdxToCode<T>(text: string) {
         ],
       ],
       rehypePlugins: [
+        rehypePresetMinify,
         /*         [rehypePrettyCode, options],
          */ rehypeSlug,
         [
@@ -61,9 +62,9 @@ export async function mdxToCode<T>(text: string) {
     },
   })
 
-  const { compiledSource } = source
+  //const { compiledSource } = source
 
   return {
-    source: { compiledSource },
+    mdx: source,
   }
 }

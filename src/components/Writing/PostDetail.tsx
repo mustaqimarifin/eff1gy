@@ -57,7 +57,6 @@ export function PostDetail({ children, slug }) {
           </Detail.Header>
           <React.Suspense fallback={<LoadingSpinner />}>
             <div className="prose lg:prose-lg dark:prose-dark max-w-prose mt-8">
-              {' '}
               {children}
             </div>
           </React.Suspense>

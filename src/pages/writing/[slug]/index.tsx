@@ -18,35 +18,33 @@ import { addApolloState, initApolloClient } from '~/lib/apollo'
 // in your next.js page
 export const config = {
   // pnpm in my case, maybe 'node_modules/**/shiki/**/*.json' for npm or yarn.
-  unstable_includeFiles: ['node_modules/.pnpm/**/shiki/**/*.json'],
+  unstable_includeFiles: ['node_modules/.pnpm/**/shiki/languages/*.json'],
 }
-function WritingPostPage({ source, slug }) {
+function WritingPostPage({ post, slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })
 
   if (data.post && !data.post.publishedAt)
     return (
       <PostEditor slug={slug}>
         <MDXRemote
-          {...source}
+          {...post.text}
           components={
             {
               ...MDXComponents,
             } as any
           }
-          lazy
         />
       </PostEditor>
     )
   return (
     <PostDetail slug={slug}>
       <MDXRemote
-        {...source}
+        {...post.text}
         components={
           {
             ...MDXComponents,
           } as any
         }
-        lazy
       />
     </PostDetail>
   )
@@ -72,10 +70,13 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
       }),
   ])
   const { post } = data
-  const { source } = await mdxToCode(post.text)
+  const { mdx } = await mdxToCode(post.text)
   return addApolloState(client, {
     props: {
-      source,
+      post: {
+        ...post,
+        text: mdx,
+      },
       slug,
     },
   })
