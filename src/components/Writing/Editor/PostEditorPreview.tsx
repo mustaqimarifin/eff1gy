@@ -1,4 +1,3 @@
-import { MDXRemote } from 'next-mdx-remote'
 import * as React from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'

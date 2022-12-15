@@ -1,22 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
-//import dynamic from 'next/dynamic'
-//import { serialize } from 'next-mdx-remote/serialize'
 import path from 'path'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePresetMinify from 'rehype-preset-minify'
-//import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
-//const shiki = require('shiki')
 import theme2 from '~/lib/mdx/shiki/themes/nord.json'
 //import theme from '~/styles/moonlight-ii.json'
 //import { schema } from '.'
 //const rehypePrettyCode = require('rehype-pretty-code')
-//const { remarkCodeHike } = require('@code-hike/mdx')
 
 /* shiki
   .getHighlighter({

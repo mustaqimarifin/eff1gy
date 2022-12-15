@@ -1,10 +1,8 @@
-//import { MDXRemote } from 'next-mdx-remote'
 import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
-import { MDSEX, MDXComponents } from '~/components/MarkdownRenderer'
-//import { MDXComponents } from '~/components/MarkdownRenderer'
+import { MDSEX } from '~/components/MarkdownRenderer'
 import { mdxToCode } from '~/components/MarkdownRenderer/MDX'
 import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
