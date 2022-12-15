@@ -5,11 +5,11 @@ const zlib = require('zlib')
 const path = require('path')
 
 module.exports = {
-  //output: 'standalone',
+  output: 'standalone',
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    //outputFileTracingRoot: path.join(__dirname, '../../'),
+    outputFileTracingRoot: path.join(__dirname, '../../'),
     esmExternals: 'loose',
     optimizeCss: true,
     legacyBrowsers: false,

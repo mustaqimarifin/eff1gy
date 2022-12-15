@@ -7,23 +7,24 @@ import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
-
-import theme2 from '~/lib/mdx/shiki/themes/nord.json'
-//import theme from '~/styles/moonlight-ii.json'
 //import { schema } from '.'
 //const rehypePrettyCode = require('rehype-pretty-code')
+import { getHighlighter, Lang, setCDN, Theme } from 'shiki'
+import useSWRImmutable from 'swr/immutable'
 
-/* shiki
-  .getHighlighter({
-    theme: 'nord',
-  })
-  .then((highlighter) => {
-    const code = highlighter.getLoadedLanguages(`console.log('shiki');`, {
-      lang: [],
-    })
-    return code
-  })
- */
+import theme from '~/styles/nord.json'
+type Params = {
+  lang: Lang
+}
+
+setCDN('https://unpkg.com/shiki/')
+const fetcher = ({ lang }: Params) => getHighlighter({ langs: [lang] })
+
+export const useTheme = ({ lang }: Params) => {
+  const { data: highlighter, error } = useSWRImmutable({ lang }, fetcher)
+  return { highlighter, error, loading: !highlighter && !error }
+}
+
 const root = process.cwd()
 
 export async function mdxToCode<T>(text: string) {
@@ -61,7 +62,7 @@ export async function mdxToCode<T>(text: string) {
           remarkCodeHike,
           {
             autoImport: false,
-            theme: theme2,
+            theme: theme,
             lineNumbers: true,
             showCopyButton: true,
             skipLanguages: false,
@@ -71,7 +72,6 @@ export async function mdxToCode<T>(text: string) {
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypePresetMinify,
-
         rehypeSlug,
         [
           rehypeAutolinkHeadings,
