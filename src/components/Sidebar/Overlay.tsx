@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { GlobalNavigationContext } from '~/components/Providers'
+import { GlobalNavigationContext } from '~/components/MarkdownRenderer/Providers'
 
 export function SidebarOverlay() {
   const { isOpen, setIsOpen } = React.useContext(GlobalNavigationContext)

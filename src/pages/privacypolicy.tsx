@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import PP from '~/components/Home/PP'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/Providers/withProviders'
+import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
 import routes from '~/config/routes'
 
 function Privacy() {

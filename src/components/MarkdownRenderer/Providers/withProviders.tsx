@@ -1,4 +1,4 @@
-import { Providers } from '~/components/Providers'
+import { Providers } from '~/components/MarkdownRenderer/Providers'
 
 export function withProviders(fn: Function) {
   return function withPage(page) {

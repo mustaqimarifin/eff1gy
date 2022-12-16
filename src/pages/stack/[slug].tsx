@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/Providers/withProviders'
+import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
 import { StackDetail } from '~/components/Stack/StackDetail'
 import { StackList } from '~/components/Stack/StackList'
 import { getContext } from '~/graphql/context'

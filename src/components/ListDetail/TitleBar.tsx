@@ -2,7 +2,7 @@ import Link from 'next/link'
 import * as React from 'react'
 import { ArrowLeft, Menu, X } from 'react-feather'
 
-import { GlobalNavigationContext } from '~/components/Providers'
+import { GlobalNavigationContext } from '~/components/MarkdownRenderer/Providers'
 
 interface Props {
   title: string

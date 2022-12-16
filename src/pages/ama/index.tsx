@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { QuestionsList } from '~/components/AMA/QuestionsList'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/Providers/withProviders'
+import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
 import routes from '~/config/routes'
 import { getContext } from '~/graphql/context'
 import { GET_QUESTIONS } from '~/graphql/queries/questions'

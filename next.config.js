@@ -28,6 +28,7 @@ module.exports = {
       'res.cloudinary.com',
       'ik.imagekit.io',
       'avatars.githubusercontent.com',
+      'github.githubassets.com',
       'lh3.googleusercontent.com',
     ],
   },

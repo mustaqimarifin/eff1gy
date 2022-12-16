@@ -44,6 +44,7 @@
     "graphql-type-json": "^0.3.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
+    "lqip-modern": "^2.0.0",
     "mdx-bundler": "^9.0.1",
     "next": "^13.0.6",
     "next-auth": "^4.18.6",
@@ -71,6 +72,7 @@
     "sharp": "^0.31.2",
     "shiki": "^0.11.1",
     "swr": "^2.0.0",
+    "unist-util-visit": "^4.1.1",
     "xid-js": "^1.0.1"
   },
   "devDependencies": {

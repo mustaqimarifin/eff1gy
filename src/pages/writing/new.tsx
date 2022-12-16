@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
-import { withProviders } from '~/components/Providers/withProviders'
+import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
 import { getContext } from '~/graphql/context'
 import { useViewerQuery } from '~/graphql/types.generated'

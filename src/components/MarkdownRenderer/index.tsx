@@ -1,4 +1,5 @@
 import { CH } from '@code-hike/mdx/dist/components.cjs.js'
+import clsx from 'clsx'
 import deepmerge from 'deepmerge'
 import {
   ComponentMap,
@@ -17,6 +18,7 @@ import linkifyRegex from 'remark-linkify-regex'
 
 import ConsCard from '../Stats/ConsCard'
 import ProsCard from '../Stats/ProsCard'
+import imageMetadata from './image-metadata'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -36,6 +38,14 @@ const CustomLink = (props) => {
 
 /* console.log(`my dick be ${rx}`)
  */
+
+const Paragraph: React.FC = (props: { children }) => {
+  if (typeof props.children !== 'string' && props.children.type === 'img') {
+    return <>{props.children}</>
+  }
+
+  return <p {...props} />
+}
 const keyStr =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 
@@ -51,7 +61,20 @@ const rgbDataURL = (r: number, g: number, b: number) =>
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
 
 const Image = (props) => {
-  return <NextImage {...props} loading="lazy" quality={100} />
+  const [isLoading, setLoading] = React.useState(false)
+
+  return (
+    <NextImage
+      {...props}
+      quality={100}
+      className="mdx-image"
+      /*  className={clsx(
+        ' flex object-cover object-top justify-center items-center w-full aspect-[21/9] lg:max-w-7xl mx-auto duration-700 ease-in-out group-hover:opacity-75',
+        isLoading ? 'scale-103 blur-md ' : 'scale-100 blur-0 '
+      )}
+      onLoadingComplete={() => setLoading(true)} */
+    />
+  )
 }
 
 const MDImage = (paragraph: { children?: any; node?: any }) => {
@@ -127,9 +150,10 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
 } */
 
 export const MDXComponents: ComponentMap = {
-  Image,
+  img: Image,
   MDImage,
   a: CustomLink,
+  p: Paragraph,
   ProsCard,
   ConsCard,
   CH,

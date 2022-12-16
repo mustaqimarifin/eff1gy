@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { GlobalNavigationContext } from '~/components/Providers'
+import { GlobalNavigationContext } from '~/components/MarkdownRenderer/Providers'
 
 import ThemeToggle from '../Button/ThemeToggle'
 import NowPlaying from '../Stats/Spotify/NowPlaying'

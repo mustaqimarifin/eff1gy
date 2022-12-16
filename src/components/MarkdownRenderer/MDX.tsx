@@ -8,9 +8,9 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
-//import { schema } from '.'
-//const rehypePrettyCode = require('rehype-pretty-code')
 import theme from '~/styles/nord.json'
+
+import imageMetadata from './image-metadata'
 
 const root = process.cwd()
 
@@ -59,6 +59,7 @@ export async function mdxToCode<T>(text: string) {
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypePresetMinify,
+        imageMetadata,
         rehypeSlug,
         [
           rehypeAutolinkHeadings,
@@ -67,6 +68,13 @@ export async function mdxToCode<T>(text: string) {
         ],
       ]
 
+      return options
+    },
+    esbuildOptions: (options) => {
+      options.loader = {
+        ...options.loader,
+        '.js': 'jsx',
+      }
       return options
     },
   })

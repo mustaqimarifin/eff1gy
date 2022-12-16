@@ -105,6 +105,27 @@
     overflow-x: auto;
     white-space: nowrap;
   }
+  
+  img .mdx-image {
+    objectFit: cover;
+    objectPosition: center;
+  }
+  
+  img .placeholder {
+  filter: blur(20px);
+  transform: scale(1.1);
+}
+  
+  .placeholder::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(20px);
+  pointer-events: none;
+}
 
   /* needed to override tailwind forms styles */
 

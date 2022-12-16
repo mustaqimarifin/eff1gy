@@ -9,7 +9,7 @@ import { GhostButton } from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { useViewerQuery } from '~/graphql/types.generated'
 
-import { GlobalNavigationContext } from '../Providers'
+import { GlobalNavigationContext } from '../MarkdownRenderer/Providers'
 
 function Container(props) {
   return (

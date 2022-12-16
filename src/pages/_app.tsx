@@ -7,7 +7,7 @@ import * as React from 'react'
 
 import { SiteLayout } from '~/components/Layouts'
 import { LoginErrorToast } from '~/components/LoginErrorToast'
-import { Providers } from '~/components/Providers'
+import { Providers } from '~/components/MarkdownRenderer/Providers'
 
 export default function App({ Component, pageProps }) {
   const getLayout =

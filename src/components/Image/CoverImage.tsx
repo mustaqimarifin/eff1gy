@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import { useState } from 'react'
 
-export default function CoverImage({ src }) {
+export default function CoverImage({ src, blurDataUrl }) {
   const [isLoading, setLoading] = useState(true)
 
   return (
@@ -12,7 +12,6 @@ export default function CoverImage({ src }) {
         alt={''}
         width={680}
         height={503}
-        priority
         className={clsx(
           ' flex object-cover object-top justify-center items-center w-full aspect-[21/9] lg:max-w-7xl mx-auto duration-700 ease-in-out group-hover:opacity-75',
           isLoading
@@ -20,6 +19,7 @@ export default function CoverImage({ src }) {
             : 'scale-100 blur-0 grayscale-0'
         )}
         onLoadingComplete={() => setLoading(false)}
+        blurDataURL={blurDataUrl}
       />
       {/*       <figcaption className="text-center ">
         {caption && (
