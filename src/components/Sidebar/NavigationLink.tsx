@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import * as React from 'react'
 
-import { GlobalNavigationContext } from '~/components/MarkdownRenderer/Providers'
+import { GlobalNavigationContext } from '~/components/Providers'
 import { trackEvent } from '~/lib/umami'
 
 export function NavigationLink({

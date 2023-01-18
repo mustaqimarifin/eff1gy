@@ -1,0 +1,23 @@
+{
+  "content": {
+    "type": "Buffer",
+    "data": [
+      82, 73, 70, 70, 112, 0, 0, 0, 87, 69, 66, 80, 86, 80, 56, 32, 100, 0, 0,
+      0, 112, 2, 0, 157, 1, 42, 16, 0, 9, 0, 5, 64, 124, 37, 176, 2, 116, 56,
+      140, 247, 138, 65, 169, 180, 188, 202, 247, 160, 0, 242, 44, 108, 178, 64,
+      77, 35, 188, 41, 80, 238, 121, 75, 141, 164, 3, 129, 162, 131, 202, 7,
+      246, 220, 12, 22, 3, 96, 32, 188, 217, 130, 217, 218, 11, 191, 236, 163,
+      52, 194, 177, 59, 70, 234, 85, 172, 215, 199, 114, 181, 215, 147, 122, 2,
+      163, 117, 148, 198, 237, 209, 165, 72, 27, 73, 50, 137, 172, 56, 0, 0, 0,
+      0
+    ]
+  },
+  "metadata": {
+    "originalWidth": 1920,
+    "originalHeight": 1080,
+    "width": 16,
+    "height": 9,
+    "type": "webp",
+    "dataURIBase64": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABwAgCdASoQAAkABUB8JbACdDiM94pBqbS8yvegAPIsbLJATSO8KVDueUuNpAOBooPKB/bcDBYDYCC82YLZ2gu/7KM0wrE7RupVrNfHcrXXk3oCo3WUxu3RpUgbSTKJrDgAAAAA"
+  }
+}

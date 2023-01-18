@@ -20,7 +20,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['UntitledSans', ...fontFamily.sans],
+        sans: ['Franklin', ...fontFamily.sans],
         serif: ['Ivar', ...fontFamily.serif],
         mono: ['SFMono', ...fontFamily.mono],
       },

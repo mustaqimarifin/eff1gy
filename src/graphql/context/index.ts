@@ -1,10 +1,11 @@
 import { PrismaClient } from '@prisma/client'
+import jwt from 'jsonwebtoken'
 import { getToken } from 'next-auth/jwt'
-import { unstable_getServerSession } from 'next-auth/next'
 
+//import { unstable_getServerSession } from 'next-auth/next'
 import prisma from '~/lib/prisma'
-import { authOptions } from '~/pages/api/auth/[...nextauth]'
 
+//import { authOptions } from '~/pages/api/auth/[...nextauth]'
 import { User, UserRole } from '../types.generated'
 export async function getViewer(req, res) {
   /*   const session = await unstable_getServerSession(req, res, authOptions)

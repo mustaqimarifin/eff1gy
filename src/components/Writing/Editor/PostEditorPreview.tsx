@@ -16,7 +16,10 @@ export function PostEditorPreview({ children }) {
         <Detail.Title>{title}</Detail.Title>
       </Detail.Header>
 
-      <div className="prose mt-8">{children}</div>
+      <MarkdownRenderer
+        className="prose mt-8"
+        children={text}
+      ></MarkdownRenderer>
 
       {/* bottom padding to give space between post content and comments */}
       <div className="py-6" />

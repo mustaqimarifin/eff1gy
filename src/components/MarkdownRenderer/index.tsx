@@ -1,11 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { CH } from '@code-hike/mdx/dist/components.cjs.js'
-import clsx from 'clsx'
-import deepmerge from 'deepmerge'
-import {
-  ComponentMap,
-  getMDXComponent,
-  MDXContentProps,
-} from 'mdx-bundler/client'
+//import merge from 'deepmerge'
+import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
@@ -15,10 +11,12 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
+import xid from 'xid-js'
+
+import { deepmergeArray } from '~/lib/functions'
 
 import ConsCard from '../Stats/ConsCard'
 import ProsCard from '../Stats/ProsCard'
-import imageMetadata from './image-metadata'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -60,21 +58,8 @@ const rgbDataURL = (r: number, g: number, b: number) =>
     triplet(0, r, g) + triplet(b, 255, 255)
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
 
-const Image = (props) => {
-  const [isLoading, setLoading] = React.useState(false)
-
-  return (
-    <NextImage
-      {...props}
-      quality={100}
-      className="mdx-image"
-      /*  className={clsx(
-        ' flex object-cover object-top justify-center items-center w-full aspect-[21/9] lg:max-w-7xl mx-auto duration-700 ease-in-out group-hover:opacity-75',
-        isLoading ? 'scale-103 blur-md ' : 'scale-100 blur-0 '
-      )}
-      onLoadingComplete={() => setLoading(true)} */
-    />
-  )
+function Image(props) {
+  return <NextImage {...props} quality={75} className="mdx-image" />
 }
 
 const MDImage = (paragraph: { children?: any; node?: any }) => {
@@ -93,13 +78,15 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
 
     return (
       <div className="mx-auto">
-        <Image
+        <NextImage
+          id={xid.next()}
           src={image.properties.src}
           width={width}
           height={height}
           placeholder="blur"
           sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-          blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
+          // blurDataURL={previewImage.dataURIBase64}
+          //blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
           className="object-cover"
           alt={alt}
           priority={isPriority}
@@ -149,9 +136,9 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
   )
 } */
 
-export const MDXComponents: ComponentMap = {
-  img: Image,
+export const MDXComponents = {
   MDImage,
+  img: Image,
   a: CustomLink,
   p: Paragraph,
   ProsCard,
@@ -169,9 +156,9 @@ export const MDSEX = ({ mdx, ...rest }: Props) => {
     (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
     [mdx]
   )
-
   return <MDXLayout components={MDXComponents} {...rest} />
 }
+//const Component = React.useMemo(() => getMDXComponent(mdx), [mdx])
 
 export const MKComponents = {
   a: CustomLink,
@@ -218,8 +205,8 @@ export const MKComponents = {
     }
   }
 } */
-
-export const schema = deepmerge(defaultSchema, {
+const merge = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
+export const schema = merge(defaultSchema, {
   tagNames: [...defaultSchema.tagNames, 'sup', 'sub', 'section'],
   attributes: {
     '*': ['className'],

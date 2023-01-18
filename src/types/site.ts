@@ -10,3 +10,13 @@ export type SpotifyData = {
 export type TopTracks = {
   tracks: SpotifyData[]
 }
+
+export type PreviewImage = {
+  originalWidth: number
+  originalHeight: number
+  dataURIBase64: string
+}
+
+export type PreviewImageMap = {
+  [id: string]: PreviewImage | null
+}

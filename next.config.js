@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const CompressionPlugin = require('compression-webpack-plugin')
-const zlib = require('zlib')
+//const CompressionPlugin = require('compression-webpack-plugin')
+//const zlib = require('zlib')
+//const { ESBuildMinifyPlugin, ESBuildPlugin } = require('esbuild-loader')
 
 const path = require('path')
 
 module.exports = {
-  output: 'standalone',
+  // output: 'standalone',
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-    esmExternals: 'loose',
-    optimizeCss: true,
+    //outputFileTracingRoot: path.join(__dirname, '../../'),
     legacyBrowsers: false,
+    //esmExternals: true,
     //transpilePackages: ['shiki'],
 
     //urlImports: ['https://cdn.jsdelivr.net/'],
@@ -30,9 +30,10 @@ module.exports = {
       'avatars.githubusercontent.com',
       'github.githubassets.com',
       'lh3.googleusercontent.com',
+      'wallpaperaccess.com',
     ],
   },
-  webpack: (config, { dev, isServer }) => {
+  /* webpack: (config, { dev, isServer, webpack }) => {
     // Note: we provide webpack above so you should not `require` it
     if (!dev && !isServer) {
       config.plugins.push(
@@ -46,11 +47,36 @@ module.exports = {
           threshold: 10240,
           minRatio: 0.7,
           deleteOriginalAssets: false,
+        }),
+        new ESBuildPlugin(),
+        new webpack.ProvidePlugin({
+          React: 'react',
         })
       )
+      const terserIndex = config.optimization.minimizer.findIndex(
+        (minimizer) => minimizer.constructor.name === 'TerserPlugin'
+      )
+      if (terserIndex > -1) {
+        config.optimization.minimizer.splice(
+          terserIndex,
+          1,
+          new ESBuildMinifyPlugin()
+        )
+      }
+
+      const jsLoader = config.module.rules.find(
+        (rule) => rule.test && rule.test.test('.tsx')
+      )
+      if (jsLoader) {
+        jsLoader.use.loader = 'esbuild-loader'
+        jsLoader.use.options = {
+          loader: 'tsx',
+          target: 'esnext',
+        }
+      }
     }
 
     // Important: return the modified config
     return config
-  },
+  }, */
 }

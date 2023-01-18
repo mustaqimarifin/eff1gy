@@ -7,6 +7,7 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { GET_POSTS } from '~/graphql/queries/posts'
 import {
+  useDeletePostMutation,
   useEditPostMutation,
   useGetPostsQuery,
 } from '~/graphql/types.generated'
@@ -25,7 +26,19 @@ export function PostEditorMetaSidebar() {
   const scrollContainerRef = React.useRef(null)
 
   const [editPost, { loading: editingPost }] = useEditPostMutation()
+  const [nukePost, _] = useDeletePostMutation()
 
+  function handleNuke() {
+    // if already publish, don't try to publish again
+    if (existingPost.publishedAt) return
+
+    return nukePost({
+      variables: {
+        id: existingPost.id,
+      },
+      refetchQueries: [GET_POSTS],
+    })
+  }
   function handlePublish() {
     // if already publish, don't try to publish again
     if (existingPost.publishedAt) return
@@ -104,7 +117,7 @@ export function PostEditorMetaSidebar() {
           </div>
         </div>
 
-        <div className="filter-blur sticky bottom-0 z-10 flex items-center justify-between space-x-3 border-t border-gray-150 bg-white bg-opacity-80 p-2 dark:border-gray-800 dark:bg-gray-1000 dark:bg-opacity-60">
+        <div className="filter-blur sticky bottom-0 z-10 flex flex-col items-center justify-between space-x-3 border-t border-gray-150 bg-white bg-opacity-80 p-2 dark:border-gray-800 dark:bg-gray-1000 dark:bg-opacity-60">
           {existingPost?.id && !existingPost?.publishedAt && (
             <PrimaryButton
               style={{ width: '100%' }}
@@ -115,13 +128,22 @@ export function PostEditorMetaSidebar() {
             </PrimaryButton>
           )}
           {existingPost?.id && existingPost?.publishedAt && (
-            <Button
-              style={{ width: '100%' }}
-              disabled={editingPost}
-              onClick={handleUnpublish}
-            >
-              {editingPost ? <LoadingSpinner /> : 'Unpublish'}
-            </Button>
+            <>
+              <Button
+                style={{ width: '100%' }}
+                disabled={editingPost}
+                onClick={handleUnpublish}
+              >
+                {editingPost ? <LoadingSpinner /> : 'Unpublish'}
+              </Button>
+              <Button
+                style={{ width: '100%' }}
+                disabled={editingPost}
+                onClick={handleNuke}
+              >
+                {editingPost ? <LoadingSpinner /> : 'Delete'}
+              </Button>
+            </>
           )}
         </div>
       </nav>

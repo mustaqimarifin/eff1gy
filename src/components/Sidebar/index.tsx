@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { GlobalNavigationContext } from '~/components/MarkdownRenderer/Providers'
+import { GlobalNavigationContext } from '~/components/Providers'
 
 import ThemeToggle from '../Button/ThemeToggle'
 import NowPlaying from '../Stats/Spotify/NowPlaying'
@@ -24,7 +24,7 @@ export function Sidebar() {
       >
         <TitleBar
           scrollContainerRef={scrollContainerRef}
-          leadingAccessory={<ThemeToggle />}
+          leadingAccessory={null}
           title="[eff1gy]"
         />
 

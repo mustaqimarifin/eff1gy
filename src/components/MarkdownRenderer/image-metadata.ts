@@ -1,7 +1,13 @@
-import lqipModern from 'lqip-modern'
+import got from 'got'
+import lqip from 'lqip-modern'
 import path from 'path'
 //import { Node } from 'unist'
 import { Node, visit } from 'unist-util-visit'
+
+import { sha256 } from '~/lib/functions'
+//import redis from '~/lib/redis'
+//import { db } from '~/lib/redis/redis'
+//import { PreviewImage } from '~/types/site'
 //import { promisify } from 'util'
 
 //const sizeOf = promisify(imageSize);
@@ -17,6 +23,8 @@ type ImageNode = {
   }
 }
 
+type Result = string | number | Buffer
+
 function isImageNode(node: Node): node is ImageNode {
   const img = node as ImageNode
   return (
@@ -28,24 +36,28 @@ function isImageNode(node: Node): node is ImageNode {
 }
 
 async function addProps(node: ImageNode): Promise<void> {
-  let result
-  const isExternal = node.properties.src.startsWith('http')
+  let result: {
+    metadata: {
+      originalWidth: number
+      originalHeight: number
+      dataURIBase64: string
+    }
+  }
+  const url = node.properties.src
+  const id = sha256(url)
+  const local_img = path.join(process.cwd(), 'public', url)
+  const ext_img = url.startsWith('http')
 
-  if (!isExternal) {
-    //res = await sizeOf(path.join(process.cwd(), 'public', node.properties.src));
-    result = await lqipModern(
-      path.join(process.cwd(), 'public', node.properties.src)
-    )
+  if (!ext_img) {
+    result = await lqip(local_img)
   } else {
-    const imageRes = await fetch(node.properties.src)
-    const imageBuffer = Buffer.from(await imageRes.arrayBuffer())
-
-    result = await lqipModern(imageBuffer)
+    const { body } = await got(url, { responseType: 'buffer' })
+    result = await lqip(body)
   }
 
-  if (!result) throw Error(`Invalid image with src "${node.properties.src}"`)
-  ;(node.properties.width = result.metadata.originalWidth),
-    (node.properties.height = result.metadata.originalHeight),
+  if (!result) throw Error(`Invalid image with src "${url}"`)
+  ;(node.properties.width = result.metadata.originalWidth || 768),
+    (node.properties.height = result.metadata.originalHeight || 432),
     (node.properties.blurDataURL = result.metadata.dataURIBase64)
   node.properties.placeholder = 'blur'
 }

@@ -4,6 +4,17 @@ export default gql`
   scalar JSON
   scalar JSONObject
 
+  enum CacheControlScope {
+    PUBLIC
+    PRIVATE
+  }
+
+  directive @cacheControl(
+    maxAge: Int
+    scope: CacheControlScope
+    inheritMaxAge: Boolean
+  ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
+
   type Post {
     id: ID!
     createdAt: Date

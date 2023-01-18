@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 
@@ -10,6 +9,8 @@ import {
   useDeleteQuestionMutation,
   useEditQuestionMutation,
 } from '~/graphql/types.generated'
+
+import AudioRecorder from '../AudioRecorder'
 
 interface State {
   title: string
@@ -28,9 +29,9 @@ type Action =
   | { type: 'remove-audio' }
   | { type: 'add-waveform'; value: { waveform: number[]; src: string } }
 
-const AudioRecorder = dynamic(() => import('../AudioRecorder'), {
+/* const AudioRecorder = dynamic(() => import('../AudioRecorder'), {
   ssr: false,
-})
+}) */
 
 export function EditQuestionForm({ closeModal, question }) {
   const router = useRouter()

@@ -14,6 +14,12 @@ export const cacheOnly = {
   refreshWhenHidden: false,
   refreshInterval: 0,
 }
+
+import crypto from 'crypto'
+export function sha256(input) {
+  const buffer = Buffer.isBuffer(input) ? input : Buffer.from(input)
+  return crypto.createHash('sha256').update(buffer).digest('base64')
+}
 export function cleanTime({
   timestamp = null,
   locale = 'en-us',
@@ -579,4 +585,24 @@ export const transformValues = (obj, callback) => {
       [key]: callback(key, value),
     }
   }, {})
+}
+
+export function deepmergeArray(options) {
+  const deepmerge = options.deepmerge
+  const clone = options.clone
+  return function (target, source) {
+    let i = 0
+    const tl = target.length
+    const sl = source.length
+    const il = Math.max(target.length, source.length)
+    const result = new Array(il)
+    for (i = 0; i < il; ++i) {
+      if (i < sl) {
+        result[i] = deepmerge(target[i], source[i])
+      } else {
+        result[i] = clone(target[i])
+      }
+    }
+    return result
+  }
 }

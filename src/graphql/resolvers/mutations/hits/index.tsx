@@ -32,7 +32,7 @@ import {
       data: { text },
     })
     .then((comment) => {
-      graphcdn.purgeList('comments')
+      //graphcdn.purgeList('comments')
       return comment
     })
     .catch((err) => {
@@ -113,7 +113,7 @@ export async function addHit(_, args: MutationAddHitArgs, ctx: Context) {
     throw new GraphQLError('Unable to add comment')
   })
 
-  // graphcdn.purgeList('comments')
+  // //graphcdn.purgeList('comments')
 
   return hit
 }

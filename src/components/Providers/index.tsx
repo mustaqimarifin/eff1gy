@@ -5,7 +5,6 @@ import * as React from 'react'
 import { useApollo } from '~/lib/apollo'
 
 import { AnalyticsWrapper } from './Analytics'
-import { PageTransition } from './PageTransition'
 import ReactQuery from './ReactQuery'
 import { SEO } from './SEO'
 import { Toast } from './Toaster'

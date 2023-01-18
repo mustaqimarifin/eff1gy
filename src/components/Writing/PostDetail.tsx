@@ -6,8 +6,6 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
 import { cleanTime } from '~/lib/functions'
 
-import { LoadingSpinner } from '../LoadingSpinner'
-import ViewCounter from '../Stats/ViewCounter'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
@@ -55,11 +53,9 @@ export function PostDetail({ children, slug }) {
               {publishedAt.formatted}
             </span>
           </Detail.Header>
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <div className="prose  dark:prose-dark lg:max-width-3xl mt-8">
-              {children}
-            </div>
-          </React.Suspense>
+          <div className="prose  dark:prose-dark lg:max-width-3xl mt-8">
+            {children}
+          </div>
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />
         </Detail.ContentContainer>
