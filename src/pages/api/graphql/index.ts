@@ -17,15 +17,15 @@ import { schema } from '~/graphql/schema'
 import prisma from '~/lib/prisma'
 
 const faultTolerantCache = new Keyv({
-  // store: new KeyvRedis(process.env.UPSTASH_URL),
-  store: new KeyvRedis('redis://localhost:6379'),
+  store: new KeyvRedis(process.env.UPSTASH_URL),
+  //store: new KeyvRedis('redis://localhost:6379'),
 })
 export const redisCache = new ErrorsAreMissesCache(
   new KeyvAdapter(faultTolerantCache)
 )
 const server = new ApolloServer<Context>({
   schema,
-  //cache: redisCache,
+  cache: redisCache,
   plugins: [
     ApolloServerPluginCacheControl({
       // Cache everything for 1 second by default.

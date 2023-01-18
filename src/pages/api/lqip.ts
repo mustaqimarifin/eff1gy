@@ -1,5 +1,4 @@
 import got from 'got'
-import { RedisKey } from 'ioredis'
 import lqip from 'lqip-modern'
 import { NextApiRequest, NextApiResponse } from 'next'
 
