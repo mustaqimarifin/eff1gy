@@ -7,6 +7,7 @@ import {
 import responseCachePlugin from '@apollo/server-plugin-response-cache'
 import { KeyvAdapter } from '@apollo/utils.keyvadapter'
 import { ErrorsAreMissesCache } from '@apollo/utils.keyvaluecache'
+import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import KeyvRedis from '@keyv/redis'
 import Keyv from 'keyv'
@@ -17,23 +18,22 @@ import { schema } from '~/graphql/schema'
 import { User } from '~/graphql/types.generated'
 import prisma from '~/lib/prisma'
 
-import { authOptions } from '../auth/[...nextauth]'
-
-const faultTolerantCache = new Keyv({
-  // store: new KeyvRedis(process.env.UPSTASH_URL),
-  store: new KeyvRedis('redis://localhost:6379'),
+/* const faultTolerantCache = new Keyv({
+  store: new KeyvRedis(process.env.UPSTASH_URL),
 })
 export const redisCache = new ErrorsAreMissesCache(
   new KeyvAdapter(faultTolerantCache)
-)
+) */
 const server = new ApolloServer<Context>({
   schema,
-
-  //cache: redisCache,
+  persistedQueries: {
+    ttl: 900, // 15 minutes
+  },
+  cache: new InMemoryLRUCache(),
   plugins: [
     ApolloServerPluginCacheControl({
       // Cache everything for 1 second by default.
-      defaultMaxAge: 0,
+      defaultMaxAge: 5,
       // Don't send the `cache-control` response header.
       calculateHttpHeaders: 'if-cacheable',
     }),

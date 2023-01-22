@@ -112,6 +112,7 @@
     "autoprefixer": "^10.4.13",
     "compression-webpack-plugin": "^10.0.0",
     "critters": "^0.0.16",
+    "crypto-hash": "^2.0.1",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.32.0",
     "eslint-config-next": "^13.1.2",

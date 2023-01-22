@@ -45,6 +45,7 @@ specifiers:
   clsx: ^1.2.1
   compression-webpack-plugin: ^10.0.0
   critters: ^0.0.16
+  crypto-hash: ^2.0.1
   deepmerge: ^4.2.2
   dotenv-cli: ^6.0.0
   esbuild: ^0.17.2
@@ -199,6 +200,7 @@ devDependencies:
   autoprefixer: 10.4.13_postcss@8.4.21
   compression-webpack-plugin: 10.0.0_webpack@5.75.0
   critters: 0.0.16
+  crypto-hash: 2.0.1
   dotenv-cli: 6.0.0
   eslint: 8.32.0
   eslint-config-next: 13.1.2_7uibuqfxkfaozanbtbziikiqje
@@ -4260,6 +4262,11 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    dev: true
+
+  /crypto-hash/2.0.1:
+    resolution: {integrity: sha512-t4mkp7Vh6MuCZRBf0XLzBOfhkH3nW6YEAotMDSjshVQ1GffCMGdPLSr7pKH0rdXY02jTjAZ7QW2apD0buaZXcQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
   /css-blank-pseudo/3.0.3_postcss@8.4.21:

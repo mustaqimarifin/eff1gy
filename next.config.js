@@ -11,7 +11,7 @@ module.exports = withBundleAnalyzer({
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    esmExternals: 'loose',
+    //esmExternals: 'loose',
     optimizeCss: true,
     legacyBrowsers: false,
     nextScriptWorkers: true,

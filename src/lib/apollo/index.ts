@@ -8,8 +8,10 @@ import {
   ServerError,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { SchemaLink } from '@apollo/client/link/schema'
 import { relayStylePagination } from '@apollo/client/utilities'
+import { sha256 } from 'crypto-hash'
 import isEqual from 'lodash-es/isEqual'
 //import isEqual from 'lodash/isEqual'
 //import { isEqual } from 'lodash-es'
@@ -27,20 +29,21 @@ export const ssrMode = typeof window === 'undefined'
 
 function createIsomorphLink({ context }: Context) {
   if (ssrMode) {
-    // These have to imported dynamically, instead of at the root of the page,
-    // in order to make sure that we're not shipping server-side code to the client
-    // eslint-disable-next-line
-    // const { SchemaLink } = require('@apollo/link-schema')
-    // eslint-disable-next-line
-    // const { schema } = require('~/graphql/schema')
     return new SchemaLink({ schema, context })
   } else {
-    return new HttpLink({
-      uri: GRAPHQL_ENDPOINT || '/api/graphql',
-      credentials: 'include',
-    })
+    return LinkChain
   }
 }
+
+const LinkChain = createPersistedQueryLink({
+  sha256,
+  useGETForHashedQueries: true,
+}).concat(
+  new HttpLink({
+    uri: 'https://eff1gy.vercel.app/api/graphql',
+    credentials: 'include',
+  })
+)
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {

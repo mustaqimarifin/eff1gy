@@ -4,9 +4,8 @@ import path from 'path'
 //import { Node } from 'unist'
 import { Node, visit } from 'unist-util-visit'
 
-import { sha256 } from '~/lib/functions'
+//import { sha256 } from '~/lib/functions'
 //import redis from '~/lib/redis'
-//import { db } from '~/lib/redis/redis'
 //import { PreviewImage } from '~/types/site'
 //import { promisify } from 'util'
 
@@ -23,7 +22,7 @@ type ImageNode = {
   }
 }
 
-type Result = string | number | Buffer
+//type Result = string | number | Buffer
 
 function isImageNode(node: Node): node is ImageNode {
   const img = node as ImageNode
@@ -44,7 +43,7 @@ async function addProps(node: ImageNode): Promise<void> {
     }
   }
   const url = node.properties.src
-  const id = sha256(url)
+  //const id = sha256(url)
   const local_img = path.join(process.cwd(), 'public', url)
   const ext_img = url.startsWith('http')
 

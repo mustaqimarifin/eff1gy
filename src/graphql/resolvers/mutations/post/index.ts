@@ -7,7 +7,6 @@ import {
   MutationEditPostArgs,
 } from '~/graphql/types.generated'
 //import { graphcdn } from '~/lib/redis'
-import { db } from '~/lib/redis/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
