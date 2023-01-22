@@ -78,6 +78,7 @@ export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(post)}
+      <ViewCounter catID={post.slug} />
       {getEditButton(post)}
     </div>
   )

@@ -95,6 +95,11 @@ export type BookmarksConnection = {
   pageInfo?: Maybe<PageInfo>
 }
 
+export enum CacheControlScope {
+  Private = 'PRIVATE',
+  Public = 'PUBLIC',
+}
+
 export type Comment = {
   __typename?: 'Comment'
   author: User

@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import TOS from '~/components/Home/TOS'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
+import { withProviders } from '~/components/Providers/withProviders'
 import routes from '~/config/routes'
 
 function Terms() {

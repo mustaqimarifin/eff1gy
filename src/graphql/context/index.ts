@@ -1,22 +1,22 @@
 import { PrismaClient } from '@prisma/client'
-import { getToken } from 'next-auth/jwt'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from 'next-auth/next'
 
 import prisma from '~/lib/prisma'
 import { authOptions } from '~/pages/api/auth/[...nextauth]'
 
 import { User, UserRole } from '../types.generated'
-export async function getViewer(req, res) {
-  /*   const session = await unstable_getServerSession(req, res, authOptions)
-  const user = session?.user */
 
-  const token = await getToken({ req })
-
+export async function getViewer(req: NextApiRequest, res: NextApiResponse) {
+  const session = await unstable_getServerSession(req, res, authOptions)
+  //const token = await getToken({ req })
+  const user = session?.user
   let viewer = null
-  if (token) {
+  if (user) {
+    viewer = await prisma.user.findUnique({ where: { id: session.userId } })
+  } /* if (token) {
     viewer = await prisma.user.findUnique({ where: { id: token.sub } })
-  }
-
+  } */
   return viewer
     ? {
         ...viewer,
@@ -25,17 +25,13 @@ export async function getViewer(req, res) {
     : null
 }
 
-export async function getContext(req, res) {
+export async function getContext(req: NextApiRequest, res: NextApiResponse) {
   const viewer = await getViewer(req, res)
 
   return {
     viewer,
     prisma,
   }
-}
-
-export default async function context(ctx: { req: any; res: any }) {
-  return await getContext(ctx.req, ctx.res)
 }
 
 export type Context = {

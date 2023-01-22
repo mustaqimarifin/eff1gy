@@ -1,3 +1,4 @@
+/* trunk-ignore(stylelint/unit-whitelist) */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -21,7 +22,7 @@
 @font-face {
   font-family: 'UntitledSans';
   src: url('/fonts/usw-MED.woff2') format('woff2');
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
@@ -74,7 +75,8 @@
 
 @layer base {
   html {
-    @apply h-screen overflow-hidden  ;
+    height: 100vh;
+    overflow: hidden;
   }
 
   body:after {
@@ -105,27 +107,27 @@
     overflow-x: auto;
     white-space: nowrap;
   }
-  
+
   img .mdx-image {
-    objectFit: cover;
-    objectPosition: center;
+    object-fit: cover;
+    object-position: center;
   }
-  
+
   img .placeholder {
-  filter: blur(20px);
-  transform: scale(1.1);
-}
-  
+    filter: blur(20px);
+    transform: scale(1.1);
+  }
+
   .placeholder::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  backdrop-filter: blur(20px);
-  pointer-events: none;
-}
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(20px);
+    pointer-events: none;
+  }
 
   /* needed to override tailwind forms styles */
 

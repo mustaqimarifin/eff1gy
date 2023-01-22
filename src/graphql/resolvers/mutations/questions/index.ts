@@ -7,6 +7,7 @@ import {
   MutationDeleteQuestionArgs,
   MutationEditQuestionArgs,
 } from '~/graphql/types.generated'
+//import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 
 export async function editQuestion(
@@ -41,7 +42,7 @@ export async function editQuestion(
         },
       })
       /*       .then((question) => {
-        graphcdn.purgeList('questions')
+        //graphcdn.purgeList('questions')
         return question
       }) */
       .catch((err) => {
@@ -77,10 +78,10 @@ export async function addQuestion(
         },
       },
     })
-    /*     .then((question) => {
-      graphcdn.purgeList('questions')
+    .then((question) => {
+      //graphcdn.purgeList('questions')
       return question
-    }) */
+    })
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to add question')
@@ -103,10 +104,10 @@ export async function deleteQuestion(
   if (viewer.isAdmin || viewer.id === question.userId) {
     return await prisma.question
       .delete({ where: { id } })
-      /*       .then(() => {
-        graphcdn.purgeList('questions')
+      .then(() => {
+        //graphcdn.purgeList('questions')
         return true
-      }) */
+      })
       .catch((err) => {
         console.error({ err })
         throw new GraphQLError('Unable to delete question')

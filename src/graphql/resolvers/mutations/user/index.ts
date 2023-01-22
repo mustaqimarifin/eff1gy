@@ -16,7 +16,7 @@ export async function deleteUser(_, __, ctx: Context) {
     throw new GraphQLError('Admins can’t be deleted')
   }
 
-  const user = await prisma.user.findUnique({ where: { id: viewer.id } })
+  await prisma.user.findUnique({ where: { id: viewer.id } })
 
   return await prisma.user
     .delete({

@@ -1,5 +1,5 @@
 import { EyeOpenIcon } from '@radix-ui/react-icons'
-import { useEffect } from 'react'
+import { cache, useEffect } from 'react'
 import useSWR from 'swr'
 
 import Button from '~/components/Button'
@@ -9,12 +9,12 @@ export type Views = {
 }
 
 export default function ViewCounter({ catID }) {
-  const { data } = useSWR<Views>(`/api/views/${catID}`, ketchup)
+  const { data } = useSWR<Views>(`/api/page/${catID}`, ketchup)
   const views = new Number(data?.total)
 
   useEffect(() => {
     const registerView = () =>
-      fetch(`/api/views/${catID}`, {
+      fetch(`/api/page/${catID}`, {
         method: 'POST',
       })
 
@@ -23,12 +23,14 @@ export default function ViewCounter({ catID }) {
 
   return (
     <>
-      <Button aria-label="Views">
-        <span className="text-pink-500 font-mono">
-          <EyeOpenIcon />
-        </span>
-        <span>{`${views > 0 ? views.toLocaleString() : '–'}`}</span>
-      </Button>
+      <div className="cursor-none">
+        <Button aria-label="Views">
+          <span className="text-gray-500 hover:text-rose-300 font-mono ">
+            <EyeOpenIcon />
+          </span>
+          <span>{`${views > 0 ? views.toLocaleString() : '–'}`}</span>
+        </Button>
+      </div>
     </>
   )
 }

@@ -8,6 +8,7 @@ import {
   MutationEditBookmarkArgs,
 } from '~/graphql/types.generated'
 import { urlRX } from '~/lib/functions'
+//import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 import { revue } from '~/lib/revue'
 
@@ -53,7 +54,7 @@ export async function editBookmark(
       include: { tags: true },
     })
     /*     .then((bookmark) => {
-      graphcdn.purgeList('bookmarks')
+      //graphcdn.purgeList('bookmarks')
       return bookmark
     }) */
     .catch((err) => {
@@ -109,10 +110,10 @@ export async function addBookmark(
       },
       include: { tags: true },
     })
-    /*     .then((bookmark) => {
-      graphcdn.purgeList('bookmarks')
+    .then((bookmark) => {
+      //graphcdn.purgeList('bookmarks')
       return bookmark
-    }) */
+    })
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to create bookmark')
@@ -131,10 +132,10 @@ export async function deleteBookmark(
     .delete({
       where: { id },
     })
-    /*     .then(() => {
-      graphcdn.purgeList('bookmarks')
+    .then(() => {
+      //graphcdn.purgeList('bookmarks')
       return true
-    }) */
+    })
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to delete bookmark')

@@ -1,10 +1,11 @@
+import { Post, PostEdit } from '@prisma/client'
 import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { MDSEX } from '~/components/MarkdownRenderer'
 import { mdxToCode } from '~/components/MarkdownRenderer/MDX'
-import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
+import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
 import { getContext } from '~/graphql/context'
 import { GET_POST } from '~/graphql/queries/posts'
@@ -12,7 +13,11 @@ import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { useViewerQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
-function EditPostPage({ post, slug }) {
+type Props = {
+  post: PostEdit
+  slug: string
+}
+function EditPostPage({ post, slug }: Props) {
   const { data } = useViewerQuery()
   if (!data?.viewer?.isAdmin) return <Detail.Null />
   return (

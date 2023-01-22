@@ -24,9 +24,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
-  session: {
+  /*   session: {
     strategy: 'jwt',
-  },
+  }, */
   callbacks: {
     async signIn({ account, profile, user }) {
       if (account.provider === 'twitter') {
@@ -34,14 +34,14 @@ export const authOptions: NextAuthOptions = {
       }
       return true // Do different verification for other providers that don't have `email_verified`
     },
-    async jwt({ token, user }) {
+    /*     async jwt({ token, user }) {
       if (user) {
         token.role = user.role
         token.id = user.id
       }
 
       return token
-    },
+    }, */
     async session({ session, user }) {
       session.user.role = user.role
       session.userId = user.id

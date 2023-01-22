@@ -6,7 +6,7 @@ hooks:
     - eslint --fix
     - prettier --write
 generates:
-  ./src/graphql/types.generated.ts:
+  ./src/graphql/typeSlut.tsx:
     plugins:
       - add:
           content: |
@@ -26,3 +26,6 @@ generates:
       reactApolloVersion: 3
       preResolveTypes: true
       identifierName: ListAllOperations
+      flattenGeneratedTypes: true,
+      flattenGeneratedTypesIncludeFragments: true
+      mergeFragmentTypes: true

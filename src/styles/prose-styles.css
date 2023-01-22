@@ -82,7 +82,10 @@
   left: 0;
 }
 
-.prose h1,
+.prose h1 a {
+  @apply font-ivar !important;
+}
+
 .prose h2,
 .prose h3,
 .prose h4,
@@ -143,6 +146,11 @@
 
 .prose p + p {
   margin-top: 0;
+}
+.prose code,
+.prose pre {
+  @apply font-medium;
+  word-break: break-word;
 }
 
 /*  .prose code {

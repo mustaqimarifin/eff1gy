@@ -16,9 +16,9 @@ interface Props {
 
 export const PostListItem = React.memo<Props>(({ post, active }) => {
   const publishedAt = cleanTime({ timestamp: post.publishedAt })
-  const { data } = useSWR<Views>(`/api/views/${post.id}`, ketchup)
-  const views = new Number(data?.total)
-  const byline1 = `${views > 0 ? views.toLocaleString() : '-'} 👁`
+  //const { data } = useSWR<Views>(`/api/views/${post.id}`, ketchup)
+  //const views = new Number(data?.total)
+  //const byline1 = `${views > 0 ? views.toLocaleString() : '-'} 👁`
   const byline2 = post.publishedAt ? publishedAt.formatted : 'Draft'
 
   return (
@@ -28,7 +28,8 @@ export const PostListItem = React.memo<Props>(({ post, active }) => {
       as={`/writing/${post.slug}`}
       title={post.title}
       description={post.excerpt}
-      byline={`${byline1} | ${byline2}`}
+      byline={byline2}
+      //byline={`${byline1} | ${byline2}`}
       active={active}
     />
   )

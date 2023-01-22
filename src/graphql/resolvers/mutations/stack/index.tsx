@@ -8,6 +8,7 @@ import {
   MutationToggleStackUserArgs,
 } from '~/graphql/types.generated'
 import { slugify, urlRX } from '~/lib/functions'
+//import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
@@ -76,10 +77,10 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
       },
       include: { tags: true },
     })
-    /*  .then((stack) => {
-      graphcdn.purgeList('stacks')
+    .then((stack) => {
+      //graphcdn.purgeList('stacks')
       return stack
-    }) */
+    })
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to edit stack')
@@ -114,10 +115,10 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
       },
       include: { tags: true },
     })
-    /*     .then((stack) => {
-      graphcdn.purgeList('stacks')
+    .then((stack) => {
+      //graphcdn.purgeList('stacks')
       return stack
-    }) */
+    })
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to add stack')
@@ -156,10 +157,10 @@ export async function deleteStack(
     .delete({
       where: { id },
     })
-    /*     .then(() => {
-      graphcdn.purgeList('stacks')
+    .then(() => {
+      //graphcdn.purgeList('stacks')
       return true
-    }) */
+    })
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to delete stack')

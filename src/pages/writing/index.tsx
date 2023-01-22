@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo'
 import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
+import { withProviders } from '~/components/Providers/withProviders'
 import { PostsList } from '~/components/Writing/PostsList'
 import routes from '~/config/routes'
 import { getContext } from '~/graphql/context'
@@ -26,7 +26,6 @@ export async function getServerSideProps({ req, res }) {
 
   await Promise.all([
     client.query({ query: GET_VIEWER }),
-
     client.query({
       query: GET_POSTS,
       variables: { filter: { published: true } },

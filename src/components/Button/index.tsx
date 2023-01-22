@@ -28,7 +28,7 @@ function BaseButton({ href = null, as = null, forwardedRef = null, ...rest }) {
 }
 
 const baseClasses =
-  'flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold'
+  'flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold font-mono'
 
 function getSize(size = null) {
   switch (size) {

@@ -3,9 +3,13 @@ import React from 'react'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
-export default function PP() {
+import { CoverImage, Image } from '../Image'
+
+export default function PP(props) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
+  //const data = JSON.parse(props.data)
+
   return (
     <Detail.Container data-cy="pp" ref={scrollContainerRef}>
       <Detail.ContentContainer>

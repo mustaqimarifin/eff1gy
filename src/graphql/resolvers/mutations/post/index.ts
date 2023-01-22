@@ -6,6 +6,8 @@ import {
   MutationDeletePostArgs,
   MutationEditPostArgs,
 } from '~/graphql/types.generated'
+//import { graphcdn } from '~/lib/redis'
+import { db } from '~/lib/redis/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
@@ -42,7 +44,7 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
       },
     })
     /*     .then((post) => {
-      if (post.publishedAt) graphcdn.purgeList('posts')
+      if (post.publishedAt) //graphcdn.purgeList('posts')
       return post
     }) */
     .catch((err) => {
@@ -69,7 +71,7 @@ export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
       },
     })
     /*     .then((post) => {
-      graphcdn.purgeList('posts')
+      //graphcdn.purgeList('posts')
       return post
     }) */
     .catch((err) => {

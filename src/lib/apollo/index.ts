@@ -10,8 +10,9 @@ import {
 import { onError } from '@apollo/client/link/error'
 import { SchemaLink } from '@apollo/client/link/schema'
 import { relayStylePagination } from '@apollo/client/utilities'
-import merge from 'deepmerge'
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash-es/isEqual'
+//import isEqual from 'lodash/isEqual'
+//import { isEqual } from 'lodash-es'
 import { useMemo } from 'react'
 import toast from 'react-hot-toast'
 
@@ -19,11 +20,13 @@ import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
 import { schema } from '~/graphql/schema'
 import { StrictTypedTypePolicies } from '~/graphql/types.generated'
 
-//global.fetch = require('node-fetch')
+import { deepmergeArray } from '../functions'
+
 let apolloClient: ApolloClient<NormalizedCacheObject>
+export const ssrMode = typeof window === 'undefined'
 
 function createIsomorphLink({ context }: Context) {
-  if (typeof window === 'undefined') {
+  if (ssrMode) {
     // These have to imported dynamically, instead of at the root of the page,
     // in order to make sure that we're not shipping server-side code to the client
     // eslint-disable-next-line
@@ -66,8 +69,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 export function createClient({ initialState = {}, context = {} }) {
   const link = ApolloLink.from([errorLink, createIsomorphLink({ context })])
-  const ssrMode = typeof window === 'undefined'
-
   const typePolicies: StrictTypedTypePolicies = {
     Query: {
       fields: {
@@ -102,7 +103,7 @@ export function createClient({ initialState = {}, context = {} }) {
   return new ApolloClient({
     ssrMode,
     link,
-    cache,
+    cache: cache,
     ssrForceFetchDelay: 1000, // prevents immediate refetch of SSR queries on the client
   })
 }
@@ -116,7 +117,8 @@ export function initApolloClient({ initialState = null, context = {} }) {
     // Get existing cache, loaded during client side data fetching
     const existingCache = _apolloClient.extract()
 
-    // Merge the existing cache into data passed from getStaticProps/getServerSideProps
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const merge = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
     const data = merge(initialState, existingCache, {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
@@ -150,7 +152,7 @@ export function addApolloState(
   return pageProps
 }
 
-export function useApollo(pageProps: any) {
+export function useApollo(pageProps: { [x: string]: any }) {
   const initialState = pageProps[APOLLO_STATE_PROP_NAME]
   const store = useMemo(
     () => initApolloClient({ initialState }),

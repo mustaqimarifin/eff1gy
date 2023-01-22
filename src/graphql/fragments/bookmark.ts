@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+
 //import { BookmarkCoreFragment } from '../types.generated'
 
 export const BookmarkCoreFragment = gql`

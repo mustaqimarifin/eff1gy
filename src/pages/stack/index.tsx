@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo'
 import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/MarkdownRenderer/Providers/withProviders'
+import { withProviders } from '~/components/Providers/withProviders'
 import { StackList } from '~/components/Stack/StackList'
 import routes from '~/config/routes'
 import { getContext } from '~/graphql/context'

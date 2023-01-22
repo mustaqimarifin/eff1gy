@@ -3,12 +3,11 @@ import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
 import path from 'path'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
-import theme from '~/styles/nord.json'
+import theme from '~/styles/monochrome-light-amplified.json'
 
 import imageMetadata from './image-metadata'
 
@@ -50,7 +49,7 @@ export async function mdxToCode<T>(text: string) {
           {
             autoImport: false,
             theme: theme,
-            lineNumbers: true,
+            lineNumbers: false,
             showCopyButton: true,
             skipLanguages: false,
           },
@@ -58,7 +57,7 @@ export async function mdxToCode<T>(text: string) {
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-        rehypePresetMinify,
+        //rehypePresetMinify,
         imageMetadata,
         rehypeSlug,
         [

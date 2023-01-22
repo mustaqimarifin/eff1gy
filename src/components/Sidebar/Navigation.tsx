@@ -26,6 +26,7 @@ import {
 } from '~/components/Icon'
 import { useViewerQuery } from '~/graphql/types.generated'
 
+import ThemeToggle from '../Button/ThemeToggle'
 import { NavigationLink } from './NavigationLink'
 
 function ThisAddBookmarkDialog() {

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import * as React from 'react'
 import { ArrowLeft, Menu, X } from 'react-feather'
 
-import { GlobalNavigationContext } from '~/components/MarkdownRenderer/Providers'
+import { GlobalNavigationContext } from '~/components/Providers'
 
 interface Props {
   title: string
@@ -153,7 +153,7 @@ export function TitleBar({
                     }
                   : {}
               }
-              className="text-primary transform-gpu text-sm lg:text-lg font-bold line-clamp-1"
+              className="text-primary transform-gpu text-sm  font-bold line-clamp-1"
             >
               {title}
             </h2>

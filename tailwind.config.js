@@ -10,7 +10,7 @@ const linkHeadingStyles = {
   },
 }
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
@@ -20,8 +20,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['UntitledSans', ...fontFamily.sans],
-        serif: ['Ivar', ...fontFamily.serif],
+        sans: ['Franklin', ...fontFamily.sans],
+        ivar: ['Ivar', ...fontFamily.serif],
         mono: ['SFMono', ...fontFamily.mono],
       },
       colors: {
@@ -94,7 +94,7 @@ module.exports = {
             '.prose a': {
               textDecoration: 'none',
               borderBottom: 'none',
-              color: colors.pink[700],
+              color: colors.rose[500],
               transition:
                 'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
               '&:hover': {
@@ -109,7 +109,7 @@ module.exports = {
                 'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
             },
             '.prose code': {
-              color: colors.pink[500],
+              color: colors.rose[500],
               '&::before': {
                 content: `"" !important`,
               },
@@ -157,7 +157,7 @@ module.exports = {
                 'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
             },
             '.prose code': {
-              color: colors.rose[400],
+              color: colors.rose[300],
               '&::before': {
                 content: `"" !important`,
               },

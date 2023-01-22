@@ -45,7 +45,7 @@ export function ReactionButton(props: Props) {
       <SignInDialog
         trigger={
           <Button aria-label="Like">
-            <span className="text-gray-500">
+            <span className="text-gray-500 ">
               <HeartIcon />
             </span>
             <span>{count}</span>
@@ -83,7 +83,7 @@ export function ReactionButton(props: Props) {
           <HeartFillIcon />
         </span>
       ) : (
-        <span className="text-gray-500">
+        <span className="text-gray-500 hover:text-rose-300">
           <HeartIcon />
         </span>
       )}
