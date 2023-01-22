@@ -88,6 +88,7 @@
   },
   "devDependencies": {
     "@builder.io/partytown": "^0.7.5",
+    "@cerner/duplicate-package-checker-webpack-plugin": "^2.3.0",
     "@graphql-codegen/add": "^3.2.3",
     "@graphql-codegen/cli": "^2.16.4",
     "@graphql-codegen/named-operations-object": "^2.3.1",
@@ -111,7 +112,6 @@
     "@typescript-eslint/parser": "^5.48.2",
     "autoprefixer": "^10.4.13",
     "compression-webpack-plugin": "^10.0.0",
-    "critters": "^0.0.16",
     "crypto-hash": "^2.0.1",
     "dotenv-cli": "^6.0.0",
     "eslint": "^8.32.0",

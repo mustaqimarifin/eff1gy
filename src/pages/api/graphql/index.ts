@@ -5,12 +5,12 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default'
 import responseCachePlugin from '@apollo/server-plugin-response-cache'
-import { KeyvAdapter } from '@apollo/utils.keyvadapter'
-import { ErrorsAreMissesCache } from '@apollo/utils.keyvaluecache'
+//import { KeyvAdapter } from '@apollo/utils.keyvadapter'
+//import { ErrorsAreMissesCache } from '@apollo/utils.keyvaluecache'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import KeyvRedis from '@keyv/redis'
-import Keyv from 'keyv'
+//import KeyvRedis from '@keyv/redis'
+//import Keyv from 'keyv'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { Context, getViewer } from '~/graphql/context'

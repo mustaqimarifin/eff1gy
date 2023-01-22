@@ -1,22 +1,23 @@
 import { PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { unstable_getServerSession } from 'next-auth/next'
+import { getToken } from 'next-auth/jwt'
 
+//import { unstable_getServerSession } from 'next-auth/next'
 import prisma from '~/lib/prisma'
-import { authOptions } from '~/pages/api/auth/[...nextauth]'
 
+//import { authOptions } from '~/pages/api/auth/[...nextauth]'
 import { User, UserRole } from '../typeSlut'
 
 export async function getViewer(req: NextApiRequest, res: NextApiResponse) {
-  const session = await unstable_getServerSession(req, res, authOptions)
-  //const token = await getToken({ req })
-  const user = session?.user
+  //const session = await unstable_getServerSession(req, res, authOptions)
+  const token = await getToken({ req })
+  //const user = session?.user
   let viewer = null
-  if (user) {
+  /*   if (user) {
     viewer = await prisma.user.findUnique({ where: { id: session.userId } })
-  } /* if (token) {
+  } */ if (token) {
     viewer = await prisma.user.findUnique({ where: { id: token.sub } })
-  } */
+  }
   return viewer
     ? {
         ...viewer,

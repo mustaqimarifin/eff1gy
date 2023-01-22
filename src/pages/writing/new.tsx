@@ -11,7 +11,7 @@ import { addApolloState, initApolloClient } from '~/lib/apollo'
 function NewPostPage() {
   const { data } = useViewerQuery()
   if (!data?.viewer?.isAdmin) return <Detail.Null />
-  return <PostEditor children={null} />
+  return <PostEditor />
 }
 
 export async function getServerSideProps({ req, res }) {

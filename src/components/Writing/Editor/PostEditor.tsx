@@ -26,7 +26,7 @@ export const PostEditorContext = React.createContext({
   setIsPreviewing: (isPreviewing: boolean) => {},
 })
 
-export function PostEditor({ children, slug: propsSlug = '' }) {
+export function PostEditor({ slug: propsSlug = '' }) {
   const scrollContainerRef = React.useRef(null)
   const { data } = useGetPostQuery({ variables: { slug: propsSlug } })
 
@@ -72,11 +72,7 @@ export function PostEditor({ children, slug: propsSlug = '' }) {
           leadingAccessory={<PreviewSwitch />}
         />
 
-        {isPreviewing ? (
-          <PostEditorPreview children={children} />
-        ) : (
-          <PostEditorComposer />
-        )}
+        {isPreviewing ? <PostEditorPreview /> : <PostEditorComposer />}
       </Detail.Container>
       <PostEditorMetaSidebar />
     </PostEditorContext.Provider>

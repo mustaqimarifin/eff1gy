@@ -2,8 +2,9 @@
 //const CompressionPlugin = require('compression-webpack-plugin')
 //const zlib = require('zlib')
 //const { ESBuildMinifyPlugin, ESBuildPlugin } = require('esbuild-loader')
+const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin')
 
-//const path = require('path')
+const path = require('path')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -12,7 +13,6 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   experimental: {
     //esmExternals: 'loose',
-    optimizeCss: true,
     legacyBrowsers: false,
 
     //transpilePackages: ['shiki'],

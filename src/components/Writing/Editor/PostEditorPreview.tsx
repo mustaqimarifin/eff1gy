@@ -5,7 +5,7 @@ import { MarkdownRenderer } from '~/components/MarkdownRenderer'
 
 import { PostEditorContext } from './PostEditor'
 
-export function PostEditorPreview({ children }) {
+export function PostEditorPreview() {
   const context = React.useContext(PostEditorContext)
   const { draftState } = context
   const { title, text } = draftState

@@ -17,14 +17,10 @@ type Props = {
   post: PostEdit
   slug: string
 }
-function EditPostPage({ post, slug }: Props) {
+function EditPostPage({ slug }: Props) {
   const { data } = useViewerQuery()
   if (!data?.viewer?.isAdmin) return <Detail.Null />
-  return (
-    <PostEditor slug={slug}>
-      <MDSEX mdx={post.text} />
-    </PostEditor>
-  )
+  return <PostEditor slug={slug} />
 }
 
 export async function getServerSideProps({ params: { slug }, req, res }) {
@@ -37,14 +33,8 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
   })
   await Promise.all([client.query({ query: GET_VIEWER })])
 
-  const { post } = data
-  const { mdx } = await mdxToCode(post.text)
   return addApolloState(client, {
     props: {
-      post: {
-        ...post,
-        text: mdx,
-      },
       slug,
     },
   })

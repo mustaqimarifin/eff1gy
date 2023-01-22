@@ -154,7 +154,7 @@ export function addApolloState(
   return pageProps
 }
 
-export function useApollo(pageProps: { [x: string]: any }) {
+export function useApollo(pageProps) {
   const initialState = pageProps[APOLLO_STATE_PROP_NAME]
   const store = useMemo(
     () => initApolloClient({ initialState }),
