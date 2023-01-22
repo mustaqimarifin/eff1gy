@@ -67,7 +67,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 })
 
-export function createClient({ initialState = {}, context = {} }) {
+export function createClient({ initialState, context = {} }) {
   const link = ApolloLink.from([errorLink, createIsomorphLink({ context })])
   const typePolicies: StrictTypedTypePolicies = {
     Query: {
@@ -97,7 +97,6 @@ export function createClient({ initialState = {}, context = {} }) {
       },
     },
   }
-
   const cache = new InMemoryCache({ typePolicies }).restore(initialState)
 
   return new ApolloClient({

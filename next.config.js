@@ -11,10 +11,9 @@ module.exports = withBundleAnalyzer({
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    //outputFileTracingRoot: path.join(__dirname, '../../'),
+    esmExternals: 'loose',
+    optimizeCss: true,
     legacyBrowsers: false,
-    esmExternals: true,
-    nextScriptWorkers: true,
     //transpilePackages: ['shiki'],
 
     //urlImports: ['https://cdn.jsdelivr.net/'],
@@ -85,6 +84,27 @@ module.exports = withBundleAnalyzer({
           React: 'react',
         })
       )
+      const terserIndex = config.optimization.minimizer.findIndex(
+        (minimizer) => minimizer.constructor.name === 'TerserPlugin'
+      )
+      if (terserIndex > -1) {
+        config.optimization.minimizer.splice(
+          terserIndex,
+          1,
+          new ESBuildMinifyPlugin()
+        )
+      }
+
+      const jsLoader = config.module.rules.find(
+        (rule) => rule.test && rule.test.test('.tsx')
+      )
+      if (jsLoader) {
+        jsLoader.use.loader = 'esbuild-loader'
+        jsLoader.use.options = {
+          loader: 'tsx',
+          target: 'esnext',
+        }
+      }
       const terserIndex = config.optimization.minimizer.findIndex(
         (minimizer) => minimizer.constructor.name === 'TerserPlugin'
       )

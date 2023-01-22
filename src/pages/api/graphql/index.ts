@@ -38,7 +38,7 @@ const server = new ApolloServer<Context>({
       calculateHttpHeaders: 'if-cacheable',
     }),
     responseCachePlugin(),
-    // Install a landing page plugin based on NODE_ENV
+
     process.env.NODE_ENV === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({
           graphRef: 'my-graph-id@my-graph-variant',
