@@ -4,7 +4,7 @@ import { MessageCircle } from 'react-feather'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { SignInDialog } from '~/components/SignInDialog'
-import { CommentType, useGetCommentsQuery } from '~/graphql/types.generated'
+import { CommentType, useGetCommentsQuery } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks/useWindowFocus'
 
 import { GhostIcon } from '../Icon'

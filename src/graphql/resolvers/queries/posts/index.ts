@@ -2,7 +2,7 @@ import { Context } from '~/graphql/context'
 import {
   GetPostQueryVariables,
   GetPostsQueryVariables,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export async function getPosts(_, args: GetPostsQueryVariables, ctx: Context) {
   const { filter } = args

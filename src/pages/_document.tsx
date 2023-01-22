@@ -5,7 +5,7 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document'
-import Script from 'next/script'
+//import Script from 'next/script'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -16,11 +16,11 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <Script
+          {/*           <Script
             data-website-id="588c3922-1f46-48a7-b0f3-0f2341bc7950"
             src="https://umami-sandy-chi.vercel.app/pagoda.js"
             strategy="worker"
-          ></Script>
+          ></Script> */}
         </Head>
 
         <body>

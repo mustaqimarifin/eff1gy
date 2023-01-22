@@ -14,7 +14,6 @@ module.exports = withBundleAnalyzer({
     //esmExternals: 'loose',
     optimizeCss: true,
     legacyBrowsers: false,
-    nextScriptWorkers: true,
 
     //transpilePackages: ['shiki'],
 

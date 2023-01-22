@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import { useGetBookmarksQuery } from '~/graphql/types.generated'
+import { useGetBookmarksQuery } from '~/graphql/typeSlut'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'

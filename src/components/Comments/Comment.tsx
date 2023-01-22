@@ -11,7 +11,7 @@ import {
   CommentType,
   useDeleteCommentMutation,
   useEditCommentMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { cleanTime } from '~/lib/functions'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'

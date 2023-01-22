@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql'
 
 import { Context } from '~/graphql/context'
-import { Bookmark, HitType, QueryHitArgs } from '~/graphql/types.generated'
+import { Bookmark, HitType, QueryHitArgs } from '~/graphql/typeSlut'
 
 export async function getHit(_, args: QueryHitArgs, ctx: Context) {
   const { id } = args

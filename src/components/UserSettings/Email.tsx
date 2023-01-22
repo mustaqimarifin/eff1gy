@@ -8,7 +8,7 @@ import { GET_VIEWER_SETTINGS } from '~/graphql/queries/viewer'
 import {
   GetViewerWithSettingsQuery,
   useEditUserMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export function EmailForm(props: {
   viewer: GetViewerWithSettingsQuery['viewer']

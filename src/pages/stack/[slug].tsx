@@ -8,7 +8,7 @@ import { getContext } from '~/graphql/context'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_STACK, GET_STACKS } from '~/graphql/queries/stack'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-import { CommentType } from '~/graphql/types.generated'
+import { CommentType } from '~/graphql/typeSlut'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 function StackDetailPage({ slug }) {

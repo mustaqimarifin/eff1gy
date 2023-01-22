@@ -8,7 +8,7 @@ import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'
-import { CommentType, useGetQuestionQuery } from '~/graphql/types.generated'
+import { CommentType, useGetQuestionQuery } from '~/graphql/typeSlut'
 import { cleanTime } from '~/lib/functions'
 
 import AudioPlayer from '../AudioPlayer'

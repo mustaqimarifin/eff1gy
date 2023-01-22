@@ -4,7 +4,7 @@ import { Plus } from 'react-feather'
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { SignInDialog } from '~/components/SignInDialog'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 
 import SegmentedControl from '../SegmentedController'
 import { AddQuestionDialog } from './AddQuestionDialog'

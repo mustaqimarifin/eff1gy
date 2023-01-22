@@ -5,10 +5,7 @@ import toast from 'react-hot-toast'
 
 import Button from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import {
-  useAddPostMutation,
-  useEditPostMutation,
-} from '~/graphql/types.generated'
+import { useAddPostMutation, useEditPostMutation } from '~/graphql/typeSlut'
 import { slugify } from '~/lib/functions'
 
 import { PostEditorContext } from './PostEditor'

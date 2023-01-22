@@ -8,7 +8,7 @@ import {
   useGetStackQuery,
   useToggleStackUserMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks/useWindowFocus'
 
 export function StackUsedBy(props) {

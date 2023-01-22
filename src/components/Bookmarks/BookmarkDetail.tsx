@@ -9,7 +9,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
 import routes from '~/config/routes'
-import { CommentType, useGetBookmarkQuery } from '~/graphql/types.generated'
+import { CommentType, useGetBookmarkQuery } from '~/graphql/typeSlut'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { BookmarkActions } from './BookmarkActions'

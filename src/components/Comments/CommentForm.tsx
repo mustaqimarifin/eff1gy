@@ -9,7 +9,7 @@ import {
   CommentType,
   useAddCommentMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks/useDebounce'
 import { cleanTime } from '~/lib/functions'
 

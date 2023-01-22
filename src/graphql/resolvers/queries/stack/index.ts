@@ -3,7 +3,7 @@ import { Context } from '~/graphql/context'
 import {
   GetStackQueryVariables,
   GetStacksQueryVariables,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export async function getStacks(
   _,

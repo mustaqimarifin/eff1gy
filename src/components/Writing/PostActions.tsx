@@ -8,7 +8,7 @@ import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { ketchup } from '~/lib/functions'
 
 import ViewCounter, { Views } from '../Stats/ViewCounter'

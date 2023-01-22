@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { useGetPostsQuery } from '~/graphql/types.generated'
+import { useGetPostsQuery } from '~/graphql/typeSlut'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 import { PostListItem } from './PostListItem'

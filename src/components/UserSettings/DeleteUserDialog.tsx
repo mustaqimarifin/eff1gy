@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { DeleteButton } from '~/components/Button'
 import { DialogComponent } from '~/components/Dialog'
-import { useDeleteUserMutation } from '~/graphql/types.generated'
+import { useDeleteUserMutation } from '~/graphql/typeSlut'
 
 export function DeleteUserDialog({ trigger }) {
   const router = useRouter()

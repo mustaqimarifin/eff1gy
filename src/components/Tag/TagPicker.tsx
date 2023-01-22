@@ -2,7 +2,7 @@ import { Listbox } from '@headlessui/react'
 import * as React from 'react'
 import { ChevronDown } from 'react-feather'
 
-import { useGetTagsQuery } from '~/graphql/types.generated'
+import { useGetTagsQuery } from '~/graphql/typeSlut'
 
 import { Tag } from '.'
 

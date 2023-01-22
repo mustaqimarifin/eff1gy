@@ -3,7 +3,7 @@ import { Plus } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 
 import { AddBookmarkDialog } from './AddBookmarkDialog'
 import { BookmarksFilterMenu } from './FilterMenu'

@@ -10,7 +10,7 @@ import {
   useDeletePostMutation,
   useEditPostMutation,
   useGetPostsQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 import { PostEditorContext } from './PostEditor'
 

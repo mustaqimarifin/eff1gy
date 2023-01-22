@@ -1,11 +1,7 @@
 import { GraphQLError } from 'graphql'
 
 import { Context } from '~/graphql/context'
-import {
-  Bookmark,
-  CommentType,
-  QueryCommentArgs,
-} from '~/graphql/types.generated'
+import { Bookmark, CommentType, QueryCommentArgs } from '~/graphql/typeSlut'
 
 export async function getComment(_, args: QueryCommentArgs, ctx: Context) {
   const { id } = args

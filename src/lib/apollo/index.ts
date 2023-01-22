@@ -20,7 +20,7 @@ import toast from 'react-hot-toast'
 
 import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
 import { schema } from '~/graphql/schema'
-import { StrictTypedTypePolicies } from '~/graphql/types.generated'
+import { StrictTypedTypePolicies } from '~/graphql/typeSlut'
 
 import { deepmergeArray } from '../functions'
 

@@ -4,7 +4,7 @@ import { Context } from '~/graphql/context'
 import {
   EmailSubscriptionType,
   MutationEditEmailSubscriptionArgs,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { emailRX } from '~/lib/functions'
 import { revue } from '~/lib/revue'
 

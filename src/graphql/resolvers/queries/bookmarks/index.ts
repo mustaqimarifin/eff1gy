@@ -1,6 +1,6 @@
 import { PAGINATION_AMOUNT } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
-import { GetBookmarksQueryVariables } from '~/graphql/types.generated'
+import { GetBookmarksQueryVariables } from '~/graphql/typeSlut'
 
 export async function getBookmarks(
   _,

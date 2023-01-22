@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Check } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
-import { useGetTagsQuery } from '~/graphql/types.generated'
+import { useGetTagsQuery } from '~/graphql/typeSlut'
 
 import { BookmarksContext } from './BookmarksList'
 

@@ -14,7 +14,7 @@ import {
   CommentType,
   QuestionStatus,
   useGetQuestionQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 function QuestionDetailPage({ id }) {
   return <QuestionDetail id={id} />

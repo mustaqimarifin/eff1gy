@@ -3,11 +3,7 @@ import * as React from 'react'
 import { EditQuestionDialog } from '~/components/AMA/EditQuestionDialog'
 import Button from '~/components/Button'
 import { GET_QUESTION } from '~/graphql/queries/questions'
-import {
-  ReactionType,
-  useToggleReactionMutation,
-  useViewerQuery,
-} from '~/graphql/types.generated'
+import { ReactionType, useToggleReactionMutation } from '~/graphql/typeSlut'
 
 import { ReactionButton } from '../Button/ReactionButton'
 import ViewCounter from '../Stats/ViewCounter'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { useEditPostMutation } from '~/graphql/types.generated'
+import { useEditPostMutation } from '~/graphql/typeSlut'
 import useInterval from '~/hooks/useInterval'
 
 import { PostEditorContext } from './PostEditor'

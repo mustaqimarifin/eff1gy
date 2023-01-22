@@ -15,7 +15,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { Context, getViewer } from '~/graphql/context'
 import { schema } from '~/graphql/schema'
-import { User } from '~/graphql/types.generated'
+import { User } from '~/graphql/typeSlut'
 import prisma from '~/lib/prisma'
 
 /* const faultTolerantCache = new Keyv({

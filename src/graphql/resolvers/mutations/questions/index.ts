@@ -6,7 +6,7 @@ import {
   MutationAddQuestionArgs,
   MutationDeleteQuestionArgs,
   MutationEditQuestionArgs,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 

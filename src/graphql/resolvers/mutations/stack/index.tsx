@@ -6,7 +6,7 @@ import {
   MutationDeleteStackArgs,
   MutationEditStackArgs,
   MutationToggleStackUserArgs,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { slugify, urlRX } from '~/lib/functions'
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'

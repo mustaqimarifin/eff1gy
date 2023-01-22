@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
+import { CommentType, useGetPostQuery } from '~/graphql/typeSlut'
 import { cleanTime } from '~/lib/functions'
 
 import ViewCounter from '../Stats/ViewCounter'

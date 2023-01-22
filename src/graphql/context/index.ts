@@ -5,7 +5,7 @@ import { unstable_getServerSession } from 'next-auth/next'
 import prisma from '~/lib/prisma'
 import { authOptions } from '~/pages/api/auth/[...nextauth]'
 
-import { User, UserRole } from '../types.generated'
+import { User, UserRole } from '../typeSlut'
 
 export async function getViewer(req: NextApiRequest, res: NextApiResponse) {
   const session = await unstable_getServerSession(req, res, authOptions)

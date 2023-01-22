@@ -6,7 +6,7 @@ import { LoadingSpinner } from '~/components/LoadingSpinner'
 import {
   useEditUserMutation,
   useGetViewerWithSettingsQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { nameRX } from '~/lib/functions'
 export function UsernameForm() {
   const { data } = useGetViewerWithSettingsQuery()

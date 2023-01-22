@@ -10,7 +10,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
 import routes from '~/config/routes'
-import { CommentType, useGetStackQuery } from '~/graphql/types.generated'
+import { CommentType, useGetStackQuery } from '~/graphql/typeSlut'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { SignInDialog } from '../SignInDialog'

@@ -11,7 +11,7 @@ import { getContext } from '~/graphql/context'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_POST, GET_POSTS } from '~/graphql/queries/posts'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
+import { CommentType, useGetPostQuery } from '~/graphql/typeSlut'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 // in your next.js page

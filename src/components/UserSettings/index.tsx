@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetViewerWithSettingsQuery } from '~/graphql/types.generated'
+import { useGetViewerWithSettingsQuery } from '~/graphql/typeSlut'
 
 import { EmailForm } from './Email'
 import { EmailPreferences } from './EmailPreferences'

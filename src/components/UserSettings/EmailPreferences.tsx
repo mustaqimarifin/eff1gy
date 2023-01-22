@@ -6,7 +6,7 @@ import {
   EmailSubscriptionType,
   useEditEmailSubscriptionMutation,
   useGetViewerWithSettingsQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 import { WritingSubscriptionForm } from '../Writing/SubscriptionForm'
 

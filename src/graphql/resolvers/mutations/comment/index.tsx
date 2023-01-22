@@ -8,7 +8,7 @@ import {
   MutationAddCommentArgs,
   MutationDeleteCommentArgs,
   MutationEditCommentArgs,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 //import { emailMe } from '~/lib/postmark'

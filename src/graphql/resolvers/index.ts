@@ -9,7 +9,7 @@ import {
   EmailSubscriptionType,
   QuestionStatus,
   UserRole,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { revue } from '~/lib/revue'
 
 import { dateScalar } from '../scalars'

@@ -7,7 +7,7 @@ import {
   MutationAddHitArgs,
   MutationDeleteHitArgs,
   MutationEditHitArgs,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 //import { graphcdn } from '~/lib/graphcdn'
 //import { emailMe } from '~/lib/postmark'
 

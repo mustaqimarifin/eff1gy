@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Button from '~/components/Button'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 
 import { HeartFillIcon, HeartIcon } from '../Icon'
 import { SignInDialog } from '../SignInDialog'

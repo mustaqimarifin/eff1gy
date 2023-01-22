@@ -7,7 +7,7 @@ import { Settings } from 'react-feather'
 import { Avatar } from '~/components/Avatar'
 import { GhostButton } from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 
 import { GlobalNavigationContext } from '../Providers'
 

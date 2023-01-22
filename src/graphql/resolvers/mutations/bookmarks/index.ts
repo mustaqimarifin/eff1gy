@@ -6,7 +6,7 @@ import {
   MutationAddBookmarkArgs,
   MutationDeleteBookmarkArgs,
   MutationEditBookmarkArgs,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { urlRX } from '~/lib/functions'
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'

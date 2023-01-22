@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { GhostButton } from '~/components/Button'
-import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/types.generated'
+import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/typeSlut'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 import { QuestionsContext } from './QuestionsList'

@@ -6,7 +6,7 @@ import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 import { ReactionButton } from '../Button/ReactionButton'
 import { EditStackDialog } from './EditStackDialog'

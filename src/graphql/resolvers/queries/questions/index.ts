@@ -5,7 +5,7 @@ import {
   QueryQuestionArgs,
   Question,
   QuestionStatus,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export async function getQuestion(_, { id }: QueryQuestionArgs, ctx: Context) {
   const { prisma, viewer } = ctx

@@ -7,7 +7,7 @@ import { Input, Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_STACKS } from '~/graphql/queries/stack'
-import { useAddStackMutation } from '~/graphql/types.generated'
+import { useAddStackMutation } from '~/graphql/typeSlut'
 
 //import { StackImageUploader } from './StackImageUploader'
 

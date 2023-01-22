@@ -24,7 +24,7 @@ import {
   VideoIcon,
   WritingIcon,
 } from '~/components/Icon'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 
 import ThemeToggle from '../Button/ThemeToggle'
 import { NavigationLink } from './NavigationLink'

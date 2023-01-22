@@ -10,7 +10,7 @@ import { GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import {
   useAddBookmarkMutation,
   useGetBookmarksQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export function AddBookmarkForm({ closeModal }) {
   const [url, setUrl] = React.useState('')

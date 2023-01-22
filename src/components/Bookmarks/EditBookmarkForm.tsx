@@ -11,7 +11,7 @@ import { GET_BOOKMARK } from '~/graphql/queries/bookmarks'
 import {
   useDeleteBookmarkMutation,
   useEditBookmarkMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
   const router = useRouter()

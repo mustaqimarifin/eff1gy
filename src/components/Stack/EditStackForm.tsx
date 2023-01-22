@@ -8,7 +8,7 @@ import { GET_STACK, GET_STACKS } from '~/graphql/queries/stack'
 import {
   useDeleteStackMutation,
   useEditStackMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 //import { StackImageUploader } from './StackImageUploader'
 

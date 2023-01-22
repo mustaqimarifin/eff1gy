@@ -9,7 +9,7 @@ import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_TAGS } from '~/graphql/queries/tags'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-import { CommentType } from '~/graphql/types.generated'
+import { CommentType } from '~/graphql/typeSlut'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 function BookmarkPage({ id }) {
