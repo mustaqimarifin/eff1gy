@@ -1,16 +1,15 @@
-import { remarkCodeHike } from '@code-hike/mdx'
+//import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
 import { join } from 'path/posix'
 import { cwd } from 'process'
 //import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-//import rehypeMinify from 'rehype-preset-minify'
+import rehypeMinify from 'rehype-preset-minify'
 // import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex/index.js'
 
-import moonlight from '~/styles/nord.json'
-
+//import moonlight from '~/styles/nord.json'
 import imageMetadata from './image-metadata'
 //import { options as ShikiOptions } from './Shiki'
 
@@ -45,7 +44,7 @@ export async function mdxToCode(text: string) {
         ...(options.remarkPlugins ?? []),
         remarkGfm,
         linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
-        [
+        /*  [
           remarkCodeHike,
           {
             autoImport: false,
@@ -53,11 +52,11 @@ export async function mdxToCode(text: string) {
             showCopyButton: true,
             theme: moonlight,
           },
-        ],
+        ], */
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-        //rehypeMinify,
+        rehypeMinify,
         //[rehypePrettyCode],
         imageMetadata,
         rehypeSlug,
@@ -74,10 +73,10 @@ export async function mdxToCode(text: string) {
       options.minify = true
       options.treeShaking = true
       options.bundle = true
-      options.platform = 'neutral'
+      //options.platform = 'node'
       options.packages = 'external'
       options.charset = 'utf8'
-      options.jsx = 'preserve'
+      options.jsx = 'automatic'
       options.loader = {
         ...options.loader,
         '.js': 'jsx',

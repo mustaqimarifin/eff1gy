@@ -12,10 +12,10 @@ import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { SchemaLink } from '@apollo/client/link/schema'
 import { relayStylePagination } from '@apollo/client/utilities'
 import { sha256 } from 'crypto-hash'
-//import deepMerge from 'deepmerge'
-//import isEqual from 'lodash-es/isEqual'
+import deepMerge from 'deepmerge'
+import isEqual from 'lodash-es/isEqual'
 //import isEqual from 'lodash/isEqual'
-import { isEqual } from 'lodash-es'
+//import { isEqual } from 'lodash-es'
 import { useMemo } from 'react'
 import toast from 'react-hot-toast'
 
@@ -23,7 +23,7 @@ import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
 import { schema } from '~/graphql/schema'
 import { StrictTypedTypePolicies } from '~/graphql/typeSlut'
 
-import { deepmergeArray } from '../functions'
+//import { deepmergeArray } from '../functions'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 export const ssrMode = typeof window === 'undefined'
@@ -121,8 +121,8 @@ export function initApolloClient({ initialState = null, context = {} }) {
     const existingCache = _apolloClient.extract()
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const merge = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
-    const data = merge(initialState, existingCache, {
+    //const merge = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
+    const data = deepMerge(initialState, existingCache, {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,

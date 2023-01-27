@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { CH } from '@code-hike/mdx/components'
+//import { CH } from '@code-hike/mdx/components'
 //import merge from 'deepmerge'
 import {
   getMDXComponent,
@@ -21,6 +21,7 @@ import { deepmergeArray } from '~/lib/functions'
 
 import ConsCard from '../Stats/ConsCard'
 import ProsCard from '../Stats/ProsCard'
+import { CodeBlock } from './CodeBlock'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -139,7 +140,7 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
   return <p>{paragraph.children}</p>
 }
 
-/* const Predator = ({ node, inline, className, children, ...props }) => {
+const Predator = ({ node, inline, className, children, ...props }) => {
   const match = /language-(\w+)/.exec(className || '')
   return !inline && match ? (
     <CodeBlock
@@ -151,9 +152,9 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
   ) : (
     <>{children}</>
   )
-} */
+}
 
-/* const Codex = ({ node, inline, className, children, ...props }) => {
+const Codex = ({ node, inline, className, children, ...props }) => {
   const match = /language-(\w+)/.exec(className || '')
   return !inline && match ? (
     <CodeBlock
@@ -167,7 +168,7 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
       {children}
     </code>
   )
-} */
+}
 
 export const MDXComponents = {
   MDImage,
@@ -178,7 +179,8 @@ export const MDXComponents = {
   h2: H2,
   h3: H3,
   ConsCard,
-  CH,
+  pre: Predator,
+  code: Codex,
 }
 
 interface Props {
@@ -195,7 +197,7 @@ export const MDSEX = ({ mdx, ...rest }: Props) => {
     (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
     [mdx]
   )
-  return <MDXLayout components={MDXComponents} {...rest} />
+  return <MDXLayout components={{ ...MDXComponents }} {...rest} />
 }
 //const Component = React.useMemo(() => getMDXComponent(mdx), [mdx])
 

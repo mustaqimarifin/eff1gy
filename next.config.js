@@ -15,13 +15,11 @@ module.exports = withBundleAnalyzer({
   },
   swcMinify: true,
   reactStrictMode: true,
+  transpilePackages: ['react-syntax-highlighter'],
   experimental: {
     esmExternals: 'loose',
     legacyBrowsers: false,
     swcPlugins: [['next-superjson-plugin', {}]],
-
-    //transpilePackages: ['shiki'],
-
     //urlImports: ['https://cdn.jsdelivr.net/'],
   },
   images: {
