@@ -61,8 +61,7 @@ model User {
   reactions     Reaction[]
   sessions      Session[]
   stacks        Stack[]    @relation("StackToUser")
-  Comment2      Comment2[]
-  Like          Like[]
+
 }
 
 model VerificationToken {
@@ -164,7 +163,7 @@ model Post {
   author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
   reactions    Reaction[]
-  Comment2     Comment2[]
+
 
   @@index([publishedAt])
   @@index([userId])
