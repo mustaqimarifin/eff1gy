@@ -1,13 +1,8 @@
-import { EyeOpenIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { Moon } from 'react-feather'
-import useSWR from 'swr'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 import { Post } from '~/graphql/typeSlut'
-import { cleanTime, ketchup } from '~/lib/functions'
-
-import { Views } from '../Stats/ViewCounter'
+import { cleanTime } from '~/lib/functions'
 
 interface Props {
   post: Post

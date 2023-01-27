@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
+import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { MoreHorizontal } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
 
@@ -16,7 +16,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
                   aria-label="Open comment actions menu"
                   size="small-square"
                 >
-                  <MoreHorizontal size={16} />
+                  <DotsHorizontalIcon />
                 </GhostButton>
               </Menu.Button>
 
@@ -29,10 +29,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items
-                  static
-                  className="absolute right-0 z-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
-                >
+                <Menu.Items className="absolute right-0 z-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
                   {comment.viewerCanEdit && (
                     <div className="py-1">
                       <Menu.Item>

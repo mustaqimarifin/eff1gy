@@ -1,6 +1,6 @@
+import { StackIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { Sidebar } from 'react-feather'
 import toast from 'react-hot-toast'
 
 import Button from '~/components/Button'
@@ -72,7 +72,7 @@ export function PostEditorActions() {
         )}
       </Button>
       <Button onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>
-        <Sidebar size={16} />
+        <StackIcon />
       </Button>
     </div>
   )

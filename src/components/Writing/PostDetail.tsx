@@ -1,17 +1,24 @@
+import { getMDXComponent } from 'mdx-bundler/client'
 import * as React from 'react'
+import superjson from 'superjson'
 
 import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { CommentType, useGetPostQuery } from '~/graphql/typeSlut'
+import { CommentType, Post, useGetPostQuery } from '~/graphql/typeSlut'
 import { cleanTime } from '~/lib/functions'
 
+import { MDSEX } from '../MarkdownRenderer'
 import ViewCounter from '../Stats/ViewCounter'
 import ClientOnly from '../Switch/ClientOnly'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
-export function PostDetail({ children, slug }) {
+interface PD {
+  children: React.ReactNode
+  slug: string
+}
+export function PostDetail({ children, slug }: PD) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
   const { data, error, loading } = useGetPostQuery({ variables: { slug } })
@@ -25,6 +32,7 @@ export function PostDetail({ children, slug }) {
   }
   const { post } = data
   const publishedAt = cleanTime({ timestamp: post.publishedAt })
+
   return (
     <>
       <PostSEO post={post} />

@@ -1,7 +1,7 @@
+import { TrashIcon, UploadIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Trash, Upload } from 'react-feather'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 //import { url } from '~/lib/cloudinary/api'
@@ -78,7 +78,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
           }}
           className="absolute -top-3 -right-3 cursor-pointer rounded-full border-2 border-white bg-gray-900 p-2 text-white shadow-md hover:bg-red-500 focus:bg-red-500 dark:border-gray-800 dark:bg-gray-700"
         >
-          <Trash size={16} />
+          <TrashIcon />
         </button>
       </div>
     )
@@ -90,7 +90,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
       className={`text-tertiary flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-200 bg-gray-100 p-6 hover:bg-gray-150 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-800`}
     >
       <input {...getInputProps()} />
-      {loading ? <LoadingSpinner /> : <Upload size={16} />}
+      {loading ? <LoadingSpinner /> : <UploadIcon />}
     </div>
   )
 }

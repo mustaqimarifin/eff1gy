@@ -31,7 +31,6 @@ export type Scalars = {
   Float: number
   Date: any
   JSON: any
-  JSONObject: any
 }
 
 export type AddBookmarkInput = {

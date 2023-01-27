@@ -1,6 +1,10 @@
+import {
+  ArrowLeftIcon,
+  Cross2Icon,
+  HamburgerMenuIcon,
+} from '@radix-ui/react-icons'
 import Link from 'next/link'
 import * as React from 'react'
-import { ArrowLeft, Menu, X } from 'react-feather'
 
 import { GlobalNavigationContext } from '~/components/Providers'
 
@@ -125,9 +129,9 @@ export function TitleBar({
                 className="flex cursor-pointer items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
               >
                 {isOpen ? (
-                  <X size={16} className="text-primary" />
+                  <Cross2Icon className="text-primary" />
                 ) : (
-                  <Menu size={16} className="text-primary" />
+                  <HamburgerMenuIcon className="text-primary" />
                 )}
               </span>
             )}
@@ -138,7 +142,7 @@ export function TitleBar({
                 passHref
                 className="text-primary flex items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
               >
-                <ArrowLeft size={16} className="text-primary" />
+                <ArrowLeftIcon className="text-primary" />
               </Link>
             )}
 

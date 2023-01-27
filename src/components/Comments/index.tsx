@@ -1,6 +1,5 @@
 import { LayoutGroup, motion } from 'framer-motion'
 import * as React from 'react'
-import { MessageCircle } from 'react-feather'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { SignInDialog } from '~/components/SignInDialog'

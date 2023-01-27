@@ -1,5 +1,5 @@
+import { Cross2Icon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { X } from 'react-feather'
 
 import Button, { GhostButton, PrimaryButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
@@ -88,7 +88,7 @@ export function PostEditorMetaSidebar() {
           leadingAccessory={null}
           trailingAccessory={
             <GhostButton size="small-square" aria-label="Close details">
-              <X size={16} onClick={() => setSidebarIsOpen(false)} />
+              <Cross2Icon onClick={() => setSidebarIsOpen(false)} />
             </GhostButton>
           }
           globalMenu={false}

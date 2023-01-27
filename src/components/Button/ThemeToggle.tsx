@@ -1,9 +1,9 @@
 import { Switch } from '@headlessui/react'
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { clsx } from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
-import { Moon, Sun } from 'react-feather'
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()
@@ -35,7 +35,7 @@ const ThemeToggle = () => {
               transition: { ease: [0.11, 0.7, 0, 1] },
             }}
           >
-            <Moon />
+            <MoonIcon />
           </motion.span>
         </AnimatePresence>
       ) : (
@@ -49,7 +49,7 @@ const ThemeToggle = () => {
               transition: { ease: [0.11, 0.7, 0, 1] },
             }}
           >
-            <Sun />
+            <SunIcon />
           </motion.span>
         </AnimatePresence>
       )}

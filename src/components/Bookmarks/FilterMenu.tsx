@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
+import { CheckIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { Check } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
 import { useGetTagsQuery } from '~/graphql/typeSlut'
@@ -89,7 +89,7 @@ export function BookmarksFilterMenu() {
                             } text-secondary flex w-full cursor-pointer items-center space-x-2 py-2 px-4 text-sm capitalize`}
                           >
                             {tag === t.name ? (
-                              <Check size={16} />
+                              <CheckIcon />
                             ) : (
                               <span className="w-4" />
                             )}

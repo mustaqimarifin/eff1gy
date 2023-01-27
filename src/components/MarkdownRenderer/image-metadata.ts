@@ -1,8 +1,9 @@
 import got from 'got'
 import lqip from 'lqip-modern'
-import path from 'path'
-//import { Node } from 'unist'
-import { Node, visit } from 'unist-util-visit'
+import { join } from 'path'
+import { cwd } from 'process'
+import { visit } from 'unist-util-visit'
+import type { Node } from 'unist-util-visit/lib'
 
 //import { sha256 } from '~/lib/functions'
 //import redis from '~/lib/redis'
@@ -25,7 +26,7 @@ type ImageNode = {
 //type Result = string | number | Buffer
 
 function isImageNode(node: Node): node is ImageNode {
-  const img = node as ImageNode
+  const img = node as unknown as ImageNode
   return (
     img.type === 'element' &&
     img.tagName === 'img' &&
@@ -44,16 +45,22 @@ async function addProps(node: ImageNode): Promise<void> {
   }
   const url = node.properties.src
   //const id = sha256(url)
-  const local_img = path.join(process.cwd(), 'public', url)
+  const local_img = join(cwd(), 'public', url)
   const ext_img = url.startsWith('http')
 
-  if (!ext_img) {
+  /*   if (!ext_img) {
     result = await lqip(local_img)
   } else {
     const { body } = await got(url, { responseType: 'buffer' })
     result = await lqip(body)
+  } */
+  if (!ext_img) {
+    result = await lqip(local_img)
   }
-
+  if (ext_img) {
+    const { body } = await got(url, { responseType: 'buffer' })
+    result = await lqip(body)
+  }
   if (!result) throw Error(`Invalid image with src "${url}"`)
   ;(node.properties.width = result.metadata.originalWidth || 768),
     (node.properties.height = result.metadata.originalHeight || 432),

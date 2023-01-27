@@ -1,7 +1,7 @@
+import { Link1Icon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import * as React from 'react'
-import { Link as LinkIcon } from 'react-feather'
 
 import { PrimaryButton } from '~/components/Button'
 import { Comments } from '~/components/Comments'
@@ -105,7 +105,7 @@ export function BookmarkDetail({ id }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <LinkIcon size={14} />
+              <Link1Icon />
               <span>Visit</span>
             </PrimaryButton>
           </div>

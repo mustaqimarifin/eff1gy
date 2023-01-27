@@ -1,5 +1,5 @@
+import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { Plus } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -16,7 +16,7 @@ export function StackTitlebar({ scrollContainerRef }) {
         <AddStackDialog
           trigger={
             <GhostButton aria-label="Add Stack" size="small-square">
-              <Plus size={16} />
+              <PlusIcon />
             </GhostButton>
           }
         />

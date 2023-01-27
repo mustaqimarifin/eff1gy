@@ -1,6 +1,6 @@
+import { CookieIcon } from '@radix-ui/react-icons'
 import Image from 'next/image'
 import * as React from 'react'
-import { Compass } from 'react-feather'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 
@@ -67,7 +67,7 @@ function Null() {
           alt="brickluke"
           className="justify-center"
         />
-        <Compass className="text-secondary" size={32} />
+        <CookieIcon className="text-secondary" />
         <div className="flex flex-col space-y-1">
           <p className="text-primary font-semibold">
             What you seek does not exist.

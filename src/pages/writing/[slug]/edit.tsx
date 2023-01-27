@@ -1,5 +1,4 @@
 import { Post, PostEdit } from '@prisma/client'
-import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
@@ -27,7 +26,7 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
   const context = await getContext(req, res)
   const client = initApolloClient({ context })
 
-  const { data } = await client.query({
+  await client.query({
     query: GET_POST,
     variables: { slug },
   })

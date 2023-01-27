@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 
@@ -10,7 +11,9 @@ import {
   useEditQuestionMutation,
 } from '~/graphql/typeSlut'
 
-import AudioRecorder from '../AudioRecorder'
+const AudioRecorder = dynamic(() => import('../AudioRecorder'), {
+  loading: () => <LoadingSpinner />,
+})
 
 interface State {
   title: string

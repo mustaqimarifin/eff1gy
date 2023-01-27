@@ -1,7 +1,6 @@
-// @ts-ignore
+import { TrashIcon } from '@radix-ui/react-icons'
 import { useMutation } from '@tanstack/react-query'
 import * as React from 'react'
-import { Trash } from 'react-feather'
 
 import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
 
@@ -256,7 +255,7 @@ export default function AudioRecorder({
         <div className="flex justify-between w-full">
           {state.status !== 'recording' && (
             <DeleteButton onClick={handleDelete}>
-              <Trash size={16} />
+              <TrashIcon />
             </DeleteButton>
           )}
 

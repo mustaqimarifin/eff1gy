@@ -1,7 +1,7 @@
+import { Link2Icon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { Link as LinkIcon } from 'react-feather'
 
 import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
@@ -183,7 +183,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
           rel="noopener noreferrer"
           className="text-secondary inline-flex items-center space-x-2 pb-2 text-sm opacity-70 hover:opacity-100"
         >
-          <LinkIcon className="flex-none" size={12} />
+          <Link2Icon className="flex-none" />
           <span className="line-clamp-1">{bookmark.url}</span>
         </Link>
 

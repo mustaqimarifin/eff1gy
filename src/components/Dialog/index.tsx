@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Dialog, Transition } from '@headlessui/react'
+import { Cross2Icon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { Fragment, useState } from 'react'
-import { X } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
 
@@ -88,7 +88,7 @@ export function DialogComponent({
                       ref={closeButtonRef}
                       onClick={closeModal}
                     >
-                      <X size={16} />
+                      <Cross2Icon />
                     </GhostButton>
                   </div>
 

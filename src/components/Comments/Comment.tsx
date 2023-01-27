@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import * as React from 'react'
 
@@ -14,8 +15,10 @@ import {
 } from '~/graphql/typeSlut'
 import { cleanTime } from '~/lib/functions'
 
-import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentMenu } from './CommentMenu'
+const MarkdownRenderer = dynamic(() =>
+  import('../MarkdownRenderer').then((m) => m.MarkdownRenderer)
+)
 
 interface Props {
   comment: CommentProp

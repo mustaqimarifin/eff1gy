@@ -1,6 +1,6 @@
 import '~/styles/custom-styles.css'
 import '~/styles/prose-styles.css'
-import '~/styles/code.css'
+import '@code-hike/mdx/dist/index.css'
 
 import { AppProps } from 'next/app'
 import Head from 'next/head'

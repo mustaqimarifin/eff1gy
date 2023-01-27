@@ -1,6 +1,7 @@
+import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { Plus } from 'react-feather'
 
+//import  PlusIcon  from '@radix-ui/react-icons/dist/PlusIcon'
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { SignInDialog } from '~/components/SignInDialog'
@@ -24,7 +25,7 @@ export function AMATitlebar({ scrollContainerRef }) {
               size="small-square"
               data-cy="open-add-question-dialog"
             >
-              <Plus size={16} />
+              <PlusIcon />
             </GhostButton>
           }
         />
@@ -39,7 +40,7 @@ export function AMATitlebar({ scrollContainerRef }) {
             size="small-square"
             data-cy="open-add-question-dialog"
           >
-            <Plus size={16} />
+            <PlusIcon />
           </GhostButton>
         }
       />

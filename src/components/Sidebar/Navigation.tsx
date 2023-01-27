@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
+import { PlusIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { Plus } from 'react-feather'
 
 import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
 import { GhostButton } from '~/components/Button'
@@ -34,7 +34,7 @@ function ThisAddBookmarkDialog() {
     <AddBookmarkDialog
       trigger={
         <GhostButton aria-label="Add bookmark" size="small-square">
-          <Plus size={16} />
+          <PlusIcon />
         </GhostButton>
       }
     />

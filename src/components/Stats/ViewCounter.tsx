@@ -1,15 +1,21 @@
 import { EyeOpenIcon } from '@radix-ui/react-icons'
-import { cache, useEffect } from 'react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 
 import Button from '~/components/Button'
 import { cacheOnly, ketchup } from '~/lib/functions'
+
+import { LoadingSpinner } from '../LoadingSpinner'
 export type Views = {
   total: number
 }
 
 export default function ViewCounter({ catID }) {
-  const { data } = useSWR<Views>(`/api/page/${catID}`, ketchup)
+  const { data, isLoading } = useSWR<Views>(
+    `/api/page/${catID}`,
+    ketchup,
+    cacheOnly
+  )
   const views = new Number(data?.total)
 
   useEffect(() => {
@@ -21,6 +27,10 @@ export default function ViewCounter({ catID }) {
     registerView()
   }, [catID])
 
+  const load = () => {
+    return <LoadingSpinner />
+  }
+
   return (
     <>
       <div className="cursor-none">
@@ -28,7 +38,7 @@ export default function ViewCounter({ catID }) {
           <span className="text-gray-500 hover:text-rose-300 font-mono ">
             <EyeOpenIcon />
           </span>
-          <span>{`${views > 0 ? views.toLocaleString() : '–'}`}</span>
+          <span>{isLoading ? load() : views.toLocaleString()}</span>
         </Button>
       </div>
     </>

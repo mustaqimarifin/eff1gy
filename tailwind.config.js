@@ -2,13 +2,13 @@
 const colors = require('tailwindcss/colors')
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
-const linkHeadingStyles = {
+/* const linkHeadingStyles = {
   color: colors.gray[100],
   borderBottomColor: 'transparent !important',
   '&:hover': {
     color: `${colors.gray[900]} !important`,
   },
-}
+} */
 module.exports = {
   content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
   plugins: [
@@ -75,11 +75,11 @@ module.exports = {
         DEFAULT: {
           css: {
             '.prose h1,h2,h3,h4,h5,h6': { color: colors.slate[900] },
-            '.prose h2 a': linkHeadingStyles,
+            /*             '.prose h2 a': linkHeadingStyles,
             '.prose h3 a': linkHeadingStyles,
             '.prose h4 a': linkHeadingStyles,
             '.prose h5 a': linkHeadingStyles,
-            '.prose h6 a': linkHeadingStyles,
+            '.prose h6 a': linkHeadingStyles, */
             blockquote: {
               fontSize: '90%',
               color: colors.slate[500],
@@ -123,11 +123,11 @@ module.exports = {
         dark: {
           css: {
             '.prose h1,h2,h3,h4,h5,h6': { color: colors.white },
-            '.prose h2 a': linkHeadingStyles,
+            /*             '.prose h2 a': linkHeadingStyles,
             '.prose h3 a': linkHeadingStyles,
             '.prose h4 a': linkHeadingStyles,
             '.prose h5 a': linkHeadingStyles,
-            '.prose h6 a': linkHeadingStyles,
+            '.prose h6 a': linkHeadingStyles, */
             blockquote: {
               fontSize: '90%',
               color: colors.zinc[500],

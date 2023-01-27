@@ -2,18 +2,23 @@
 //const CompressionPlugin = require('compression-webpack-plugin')
 //const zlib = require('zlib')
 //const { ESBuildMinifyPlugin, ESBuildPlugin } = require('esbuild-loader')
-const DuplicatePackageCheckerPlugin = require('@cerner/duplicate-package-checker-webpack-plugin')
 
 const path = require('path')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 module.exports = withBundleAnalyzer({
+  modularizeImports: {
+    'lodash-es': {
+      transform: 'lodash-es/{{ member }}',
+    },
+  },
   swcMinify: true,
   reactStrictMode: true,
   experimental: {
-    //esmExternals: 'loose',
+    esmExternals: 'loose',
     legacyBrowsers: false,
+    swcPlugins: [['next-superjson-plugin', {}]],
 
     //transpilePackages: ['shiki'],
 

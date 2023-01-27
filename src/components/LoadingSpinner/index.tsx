@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export function LoadingSpinner() {
+export function LoadingSpinner(...args) {
   return (
     <svg
       className="text-primary h-3.5 w-3.5 animate-spin"

@@ -15,7 +15,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { Context, getViewer } from '~/graphql/context'
 import { schema } from '~/graphql/schema'
-import { User } from '~/graphql/typeSlut'
 import prisma from '~/lib/prisma'
 
 /* const faultTolerantCache = new Keyv({
@@ -51,7 +50,7 @@ const server = new ApolloServer<Context>({
 
 export default startServerAndCreateNextHandler(server, {
   context: async (req: NextApiRequest, res: NextApiResponse) => {
-    const viewer: User = await getViewer(req, res)
+    const viewer = await getViewer(req, res)
 
     return {
       viewer,

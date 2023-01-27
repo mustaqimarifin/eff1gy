@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { MDSEX } from '~/components/MarkdownRenderer'
 import { mdxToCode } from '~/components/MarkdownRenderer/MDX'
@@ -24,7 +22,7 @@ import { addApolloState, initApolloClient } from '~/lib/apollo'
 const WritingPostPage = ({ post, slug }) => {
   const { data } = useGetPostQuery({ variables: { slug } })
 
-  if (data.post && !data.post.publishedAt) return <PostEditor slug={slug} />
+  if (data?.post && !data.post.publishedAt) return <PostEditor />
   return (
     <PostDetail slug={slug}>
       <MDSEX mdx={post.text} />
@@ -56,7 +54,7 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
     data?.post?.id &&
       client.query({
         query: GET_COMMENTS,
-        variables: { refId: data.post.id, type: CommentType.Bookmark },
+        variables: { refId: data.post.id, type: CommentType.Post },
       }),
   ])
   const { post } = data

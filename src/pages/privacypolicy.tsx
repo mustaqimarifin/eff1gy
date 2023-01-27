@@ -1,5 +1,4 @@
 import { NextSeo } from 'next-seo'
-import * as React from 'react'
 
 import PP from '~/components/Home/PP'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'

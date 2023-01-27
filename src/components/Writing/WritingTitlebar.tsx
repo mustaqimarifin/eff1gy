@@ -1,14 +1,14 @@
+import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { Plus, Radio } from 'react-feather'
 
-import Button, { GhostButton } from '~/components/Button'
+import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { useViewerQuery } from '~/graphql/typeSlut'
 
-import { DialogComponent } from '../Dialog'
+//import { DialogComponent } from '../Dialog'
 import SegmentedControl from '../SegmentedController'
 import { WritingContext } from './PostsList'
-import { WritingSubscriptionForm } from './SubscriptionForm'
+//import { WritingSubscriptionForm } from './SubscriptionForm'
 
 export function WritingTitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()
@@ -22,7 +22,7 @@ export function WritingTitlebar({ scrollContainerRef }) {
           size="small-square"
           aria-label="Add post"
         >
-          <Plus size={16} />
+          <PlusIcon />
         </GhostButton>
       )
     }

@@ -12,9 +12,10 @@ import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { SchemaLink } from '@apollo/client/link/schema'
 import { relayStylePagination } from '@apollo/client/utilities'
 import { sha256 } from 'crypto-hash'
-import isEqual from 'lodash-es/isEqual'
+//import deepMerge from 'deepmerge'
+//import isEqual from 'lodash-es/isEqual'
 //import isEqual from 'lodash/isEqual'
-//import { isEqual } from 'lodash-es'
+import { isEqual } from 'lodash-es'
 import { useMemo } from 'react'
 import toast from 'react-hot-toast'
 
@@ -34,14 +35,14 @@ function createIsomorphLink({ context }: Context) {
     return LinkChain
   }
 }
-
 const LinkChain = createPersistedQueryLink({
   sha256,
   useGETForHashedQueries: true,
 }).concat(
   new HttpLink({
-    uri: 'https://eff1gy.vercel.app/api/graphql',
-    credentials: 'include',
+    uri: GRAPHQL_ENDPOINT || '/api/graphql',
+    credentials: 'same-origin',
+    useGETForQueries: true,
   })
 )
 

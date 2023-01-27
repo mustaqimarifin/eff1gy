@@ -1,5 +1,5 @@
+import { CrossCircledIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { XCircle } from 'react-feather'
 
 export function Tags({ tags }) {
   if (!tags || tags.length === 0) return null
@@ -77,7 +77,7 @@ export function Tag({ name }) {
     <span className={`${baseClasses} ${specificClasses}`}>
       {name === '__clear_tag_picker' ? (
         <>
-          <XCircle size={16} />
+          <CrossCircledIcon />
           <span>Clear tag</span>
         </>
       ) : (

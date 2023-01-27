@@ -1,5 +1,5 @@
+import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-import { Plus } from 'react-feather'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -21,7 +21,7 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
               data-cy="open-add-bookmark-dialog"
               size="small-square"
             >
-              <Plus size={16} />
+              <PlusIcon />
             </GhostButton>
           }
         />

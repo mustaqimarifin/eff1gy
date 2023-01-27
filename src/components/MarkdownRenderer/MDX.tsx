@@ -1,29 +1,30 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
-import path from 'path'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { join } from 'path/posix'
+import { cwd } from 'process'
+//import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+//import rehypeMinify from 'rehype-preset-minify'
+// import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
-import linkifyRegex from 'remark-linkify-regex'
+import linkifyRegex from 'remark-linkify-regex/index.js'
 
-import theme from '~/styles/monochrome-light-amplified.json'
+import moonlight from '~/styles/nord.json'
 
 import imageMetadata from './image-metadata'
+//import { options as ShikiOptions } from './Shiki'
 
-const root = process.cwd()
-
-export async function mdxToCode<T>(text: string) {
+export async function mdxToCode(text: string) {
   if (process.platform === 'win32') {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
+    process.env.ESBUILD_BINARY_PATH = join(
+      cwd(),
       'node_modules',
       'esbuild',
       'esbuild.exe'
     )
   } else {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
+    process.env.ESBUILD_BINARY_PATH = join(
+      cwd(),
       'node_modules',
       'esbuild',
       'bin',
@@ -34,7 +35,7 @@ export async function mdxToCode<T>(text: string) {
   const { code } = await bundleMDX({
     source: text,
     // mdx imports can be automatically source from the components directory
-    cwd: path.join(root, 'components'),
+    cwd: join(cwd(), 'components'),
     mdxOptions(options) {
       // this is the recommended way to add custom remark/rehype plugins:
       // The syntax might look weird, but it protects you in case we add/remove
@@ -48,28 +49,35 @@ export async function mdxToCode<T>(text: string) {
           remarkCodeHike,
           {
             autoImport: false,
-            theme: theme,
             lineNumbers: false,
             showCopyButton: true,
-            skipLanguages: false,
+            theme: moonlight,
           },
         ],
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-        //rehypePresetMinify,
+        //rehypeMinify,
+        //[rehypePrettyCode],
         imageMetadata,
         rehypeSlug,
-        [
+        /* [
           rehypeAutolinkHeadings,
           { behavior: 'wrap' },
           { properties: { className: ['anchor'] } },
-        ],
+        ], */
       ]
 
       return options
     },
     esbuildOptions: (options) => {
+      options.minify = true
+      options.treeShaking = true
+      options.bundle = true
+      options.platform = 'neutral'
+      options.packages = 'external'
+      options.charset = 'utf8'
+      options.jsx = 'preserve'
       options.loader = {
         ...options.loader,
         '.js': 'jsx',

@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { withProviders } from '~/components/Providers/withProviders'

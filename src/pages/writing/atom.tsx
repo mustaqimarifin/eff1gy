@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { getContext } from '~/graphql/context'
 import { GET_POSTS } from '~/graphql/queries/posts'
 import { initApolloClient } from '~/lib/apollo'

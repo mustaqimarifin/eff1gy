@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { ListDetailView } from '~/components/Layouts'
 
 export default function Home() {

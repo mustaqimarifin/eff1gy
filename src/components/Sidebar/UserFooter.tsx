@@ -1,7 +1,7 @@
+import { GearIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import * as React from 'react'
-import { Settings } from 'react-feather'
 2
 
 import { Avatar } from '~/components/Avatar'
@@ -79,7 +79,7 @@ export function UserFooter() {
           size="small-square"
           href="/settings"
         >
-          <Settings size={16} />
+          <GearIcon />
         </GhostButton>
       </Container>
     )

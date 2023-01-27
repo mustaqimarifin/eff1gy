@@ -1,8 +1,8 @@
+import { Link2Icon } from '@radix-ui/react-icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import * as React from 'react'
-import { Link as LinkIcon } from 'react-feather'
 
 import { PrimaryButton } from '~/components/Button'
 import { Comments } from '~/components/Comments'
@@ -99,7 +99,7 @@ export function StackDetail({ slug }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <LinkIcon size={14} />
+              <Link2Icon />
               <span>Visit</span>
             </PrimaryButton>
 

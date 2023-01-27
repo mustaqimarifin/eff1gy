@@ -1,5 +1,4 @@
 import { NextSeo } from 'next-seo'
-import * as React from 'react'
 
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { withProviders } from '~/components/Providers/withProviders'

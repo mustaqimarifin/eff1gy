@@ -7,12 +7,13 @@ type Props = {
 }
 
 export const cacheOnly = {
+  dedupingInterval: 2000,
   revalidateOnFocus: false,
-  revalidateOnMount: false,
+  /* revalidateOnMount: false,
   revalidateOnReconnect: false,
   refreshWhenOffline: false,
   refreshWhenHidden: false,
-  refreshInterval: 0,
+  refreshInterval: 0, */
 }
 
 import crypto from 'crypto'

@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { CH } from '@code-hike/mdx/dist/components.cjs.js'
+import { CH } from '@code-hike/mdx/components'
 //import merge from 'deepmerge'
-import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
+import {
+  getMDXComponent,
+  getMDXExport,
+  MDXContentProps,
+} from 'mdx-bundler/client'
 import NextImage from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 import Markdown from 'react-markdown'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
-import rehypeSlug from 'rehype-slug'
+//import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 import xid from 'xid-js'
@@ -36,7 +40,36 @@ const CustomLink = (props) => {
 
 /* console.log(`my dick be ${rx}`)
  */
-
+function getAnchor(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/[ ]/g, '-')
+}
+const H2 = ({ children }) => {
+  const anchor = getAnchor(children)
+  const link = `#${anchor}`
+  return (
+    <h2 id={anchor}>
+      <a href={link} className="anchor-link">
+        §
+      </a>
+      {children}
+    </h2>
+  )
+}
+const H3 = ({ children }) => {
+  const anchor = getAnchor(children)
+  const link = `#${anchor}`
+  return (
+    <h3 id={anchor}>
+      <a href={link} className="anchor-link">
+        §
+      </a>
+      {children}
+    </h3>
+  )
+}
 const Paragraph: React.FC = (props: { children }) => {
   if (typeof props.children !== 'string' && props.children.type === 'img') {
     return <>{props.children}</>
@@ -142,6 +175,8 @@ export const MDXComponents = {
   a: CustomLink,
   p: Paragraph,
   ProsCard,
+  h2: H2,
+  h3: H3,
   ConsCard,
   CH,
 }
@@ -152,6 +187,10 @@ interface Props {
 }
 
 export const MDSEX = ({ mdx, ...rest }: Props) => {
+  /*   const mdxExport = getMDXExport(mdx)
+  const MDXLayout = React.useMemo(() => mdxExport.default, [mdx])
+  return <MDXLayout components={MDXComponents} {...rest} /> */
+
   const MDXLayout = React.useMemo(
     (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
     [mdx]
@@ -215,7 +254,7 @@ export const schema = merge(defaultSchema, {
   clobber: ['name', 'id'],
 })
 
-export function MarkdownRenderer(props: any) {
+export const MarkdownRenderer = (props: any) => {
   const { children, ...rest } = props
 
   //!const components = getComponentsForVariant(variant)
@@ -226,7 +265,7 @@ export function MarkdownRenderer(props: any) {
       remarkPlugins={[remarkGfm, linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
       rehypePlugins={[
         [rehypeSanitize, schema],
-        rehypeSlug,
+        // rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       ]}
       components={MKComponents}
