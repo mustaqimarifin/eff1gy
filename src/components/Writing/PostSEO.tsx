@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { baseUrl } from '~/config/seo'
-import { Post } from '~/graphql/types.generated'
+import { Post } from '~/graphql/typeSlut'
 import { NextSeo } from 'next-seo'
 
 interface Props {

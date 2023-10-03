@@ -1,6 +1,5 @@
 import { getBookmark, getBookmarks } from './bookmarks'
 import { getComment, getComments } from './comments'
-import { getHit, getHits } from './hits'
 import { getPost, getPosts } from './posts'
 import { getQuestion, getQuestions } from './questions'
 import { getStack, getStacks } from './stack'
@@ -22,6 +21,4 @@ export default {
   stacks: getStacks,
   stack: getStack,
   tags: getTags,
-  hit: getHit,
-  hits: getHits,
 }

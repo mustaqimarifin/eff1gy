@@ -1,6 +1,6 @@
-import deepmerge from 'deepmerge'
-import Link from 'next/link'
 import * as React from 'react'
+import Link from 'next/link'
+import deepmerge from 'deepmerge'
 import Markdown from 'react-markdown'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
@@ -8,8 +8,8 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
+import DickPics from '../Image/Pics'
 import { CodeBlock } from './CodeBlock'
-import imageMetadata from './image-metadata'
 
 function LinkRenderer({ href, ...rest }: any) {
   // auto-link headings
@@ -39,6 +39,7 @@ function getComponentsForVariant(variant) {
     case 'longform': {
       return {
         a: LinkRenderer,
+        img: DickPics,
         pre({ node, inline, className, children, ...props }) {
           const language = /language-(\w+)/.exec(className || '')?.[1]
           return !inline && language ? (
@@ -121,7 +122,7 @@ export function MarkdownRenderer(props: any) {
       rehypePlugins={[
         [rehypeSanitize, schema],
         rehypeSlug,
-        imageMetadata,
+        //imageMetadata,
         [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       ]}
       components={components}

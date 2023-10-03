@@ -1,7 +1,7 @@
+import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
-import * as React from 'react'
 
 import { GoogleButton, TwitterButton } from '../Button'
 

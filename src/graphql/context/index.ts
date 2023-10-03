@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-//import { getToken } from 'next-auth/jwt'
-import { getServerSession } from 'next-auth/next'
-
+import { PrismaClient } from '@prisma/client'
 import { prisma } from '~/lib/prisma'
 import { authOptions } from '~/pages/api/auth/[...nextauth]'
+//import { getToken } from 'next-auth/jwt'
+import { getServerSession } from 'next-auth/next'
 
 import { User, UserRole } from '../typeSlut'
 

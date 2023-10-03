@@ -1,5 +1,5 @@
-import { XCircle } from 'lucide-react'
 import * as React from 'react'
+import { XCircle } from 'lucide-react'
 
 export function Tags({ tags }) {
   if (!tags || tags.length === 0) return null

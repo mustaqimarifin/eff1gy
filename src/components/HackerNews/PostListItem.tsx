@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { HackerNewsPost } from '~/graphql/types.generated'
+import { HackerNewsPost } from '~/graphql/typeSlut'
 
 interface Props {
   post: HackerNewsPost

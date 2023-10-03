@@ -1,10 +1,9 @@
-import { Plus } from 'lucide-react'
 import * as React from 'react'
-
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { SignInDialog } from '~/components/SignInDialog'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
+import { Plus } from 'lucide-react'
 
 import SegmentedControl from '../SegmentedController'
 import { AddQuestionDialog } from './AddQuestionDialog'

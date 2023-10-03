@@ -1,8 +1,7 @@
-import { Listbox } from '@headlessui/react'
-import { ChevronDown } from 'lucide-react'
 import * as React from 'react'
-
-import { useGetTagsQuery } from '~/graphql/types.generated'
+import { Listbox } from '@headlessui/react'
+import { useGetTagsQuery } from '~/graphql/typeSlut'
+import { ChevronDown } from 'lucide-react'
 
 import { Tag } from '.'
 

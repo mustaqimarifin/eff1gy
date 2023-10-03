@@ -10,8 +10,8 @@ export async function toggleReaction(
   const { refId, type } = args
   const { viewer, prisma } = ctx
 
-  let field
-  let table
+  let field: string
+  let table: string
   switch (type) {
     case ReactionType.Bookmark: {
       field = 'bookmarkId'
@@ -40,12 +40,12 @@ export async function toggleReaction(
 
   const [parentObject, existingReaction] = await Promise.all([
     prisma[table].findUnique({
-      where: { id: String(refId) },
+      where: { id: refId },
     }),
 
     prisma.reaction.findMany({
       where: {
-        [field]: String(refId),
+        [field]: refId,
         userId: viewer.id,
       },
     }),

@@ -1,7 +1,5 @@
-import { useRouter } from 'next/router'
 import * as React from 'react'
-import toast from 'react-hot-toast'
-
+import { useRouter } from 'next/router'
 import Button from '~/components/Button'
 import { Input } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
@@ -11,7 +9,8 @@ import {
   GetBookmarksQuery,
   useAddBookmarkMutation,
   useGetBookmarksQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
+import toast from 'react-hot-toast'
 
 export function AddBookmarkForm({ closeModal }) {
   const [url, setUrl] = React.useState('')

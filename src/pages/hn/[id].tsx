@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { PostDetail } from '~/components/HackerNews/PostDetail'
 import { PostsList } from '~/components/HackerNews/PostsList'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'

@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { GlobalNavigationContext } from '~/components/Providers'
 

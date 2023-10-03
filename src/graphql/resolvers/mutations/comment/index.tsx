@@ -62,8 +62,8 @@ export async function addComment(
   if (trimmedText.length === 0)
     throw new GraphQLError('Comments can’t be blank')
 
-  let field: ['questionId' | 'stackId' | 'bookmarkId' | 'postId']
-  let table: ['question' | 'stack' | 'bookmark' | 'post']
+  let field: string
+  let table: string
   let route: string
   switch (type) {
     case CommentType.Bookmark: {

@@ -1,12 +1,11 @@
 import * as React from 'react'
-import toast from 'react-hot-toast'
-
 import {
   EmailSubscription,
   EmailSubscriptionType,
   GetViewerWithSettingsQuery,
   useEditEmailSubscriptionMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
+import toast from 'react-hot-toast'
 
 import { WritingSubscriptionForm } from '../Writing/SubscriptionForm'
 

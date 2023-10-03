@@ -1,5 +1,3 @@
-import GraphQLJSON from 'graphql-type-json'
-
 import { Context } from '~/graphql/context'
 import Mutation from '~/graphql/resolvers/mutations'
 import Query from '~/graphql/resolvers/queries'
@@ -10,6 +8,7 @@ import {
   QuestionStatus,
   UserRole,
 } from '~/graphql/typeSlut'
+import GraphQLJSON from 'graphql-type-json'
 
 import { DateQL } from '../scalars'
 

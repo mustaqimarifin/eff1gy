@@ -6,9 +6,6 @@ import {
 } from '~/graphql/typeSlut'
 import { GraphQLError } from 'graphql'
 
-//import { graphcdn } from '~/lib/redis'
-//import { graphcdn } from '~/lib/graphcdn'
-
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
   const { id, data } = args
   const {

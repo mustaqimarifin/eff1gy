@@ -1,7 +1,4 @@
-import { NextSeo } from 'next-seo'
 import * as React from 'react'
-import removeMd from 'remove-markdown'
-
 import { AppDissectionDetail } from '~/components/AppDissection/AppDissectionDetail'
 import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
@@ -9,6 +6,8 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { withProviders } from '~/components/Providers/withProviders'
 import { baseUrl } from '~/config/seo'
 import designDetailsPosts, { DesignDetailsPost } from '~/data/appDissections'
+import { NextSeo } from 'next-seo'
+import removeMd from 'remove-markdown'
 
 interface Props {
   post: DesignDetailsPost

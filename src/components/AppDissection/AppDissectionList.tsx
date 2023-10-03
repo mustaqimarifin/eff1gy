@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { summaries } from '~/data/appDissections'

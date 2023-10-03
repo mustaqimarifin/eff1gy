@@ -1,6 +1,3 @@
-import { GraphQLError } from 'graphql'
-
-import { IS_PROD } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
 import {
   MutationAddBookmarkArgs,
@@ -8,9 +5,8 @@ import {
   MutationEditBookmarkArgs,
 } from '~/graphql/typeSlut'
 import { urlRX } from '~/lib/functions'
+import { GraphQLError } from 'graphql'
 
-//import { graphcdn } from '~/lib/redis'
-//import { graphcdn } from '~/lib/graphcdn'
 import getBookmarkMetaData from './getBookmarkMetaData'
 
 export async function editBookmark(

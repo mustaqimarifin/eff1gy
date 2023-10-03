@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-import { HackerNewsPost } from '~/graphql/types.generated'
+import { HackerNewsPost } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 interface Props {

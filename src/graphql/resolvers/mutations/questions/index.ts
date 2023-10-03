@@ -1,5 +1,3 @@
-import { GraphQLError } from 'graphql'
-
 import { baseUrl } from '~/config/seo'
 import { Context } from '~/graphql/context'
 import {
@@ -7,6 +5,7 @@ import {
   MutationDeleteQuestionArgs,
   MutationEditQuestionArgs,
 } from '~/graphql/typeSlut'
+import { GraphQLError } from 'graphql'
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'

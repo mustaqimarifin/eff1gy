@@ -1,15 +1,11 @@
-import { X } from 'lucide-react'
 import * as React from 'react'
-
 import Button, { GhostButton, PrimaryButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { GET_POSTS } from '~/graphql/queries/posts'
-import {
-  useEditPostMutation,
-  useGetPostsQuery,
-} from '~/graphql/types.generated'
+import { useEditPostMutation, useGetPostsQuery } from '~/graphql/typeSlut'
+import { X } from 'lucide-react'
 
 import { PostEditorContext } from './PostEditor'
 

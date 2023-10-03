@@ -30,10 +30,7 @@ import {
 } from '~/graphql/resolvers/mutations/stack'
 import { deleteUser, editUser } from '~/graphql/resolvers/mutations/user'
 
-import { addHit } from './hits'
-
 export default {
-  addHit: requiresUser(addHit),
   addBookmark: requiresAdmin(addBookmark),
   editBookmark: requiresAdmin(editBookmark),
   deleteBookmark: requiresAdmin(deleteBookmark),

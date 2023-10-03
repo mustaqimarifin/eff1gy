@@ -1,10 +1,9 @@
-import { LayoutGroup, motion } from 'framer-motion'
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import { useGetBookmarksQuery } from '~/graphql/types.generated'
+import { useGetBookmarksQuery } from '~/graphql/typeSlut'
+import { LayoutGroup, motion } from 'framer-motion'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'

@@ -1,11 +1,10 @@
-import Link from 'next/link'
 import * as React from 'react'
-
+import Link from 'next/link'
 import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { MarkdownRenderer } from '~/components/MarkdownRenderer'
-import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
+import { CommentType, useGetPostQuery } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 import { PostActions } from './PostActions'

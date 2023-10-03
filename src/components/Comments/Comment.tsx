@@ -1,6 +1,5 @@
-import Link from 'next/link'
 import * as React from 'react'
-
+import Link from 'next/link'
 import { Avatar } from '~/components/Avatar'
 import Button, { PrimaryButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -12,7 +11,7 @@ import {
   GetCommentsQuery,
   useDeleteCommentMutation,
   useEditCommentMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'

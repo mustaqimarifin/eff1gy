@@ -1,7 +1,6 @@
-import { ApolloProvider } from '@apollo/client'
-import { NextPageContext } from 'next'
 import * as React from 'react'
-
+import { NextPageContext } from 'next'
+import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '~/lib/apollo'
 
 import { SEO } from './SEO'

@@ -1,9 +1,8 @@
-import { Link } from 'lucide-react'
 import * as React from 'react'
-import ReactVisibilitySensor from 'react-visibility-sensor'
-
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { BookmarkListItemFragment } from '~/graphql/types.generated'
+import { BookmarkListItemFragment } from '~/graphql/typeSlut'
+import { Link } from 'lucide-react'
+import ReactVisibilitySensor from 'react-visibility-sensor'
 
 interface Props {
   bookmark: BookmarkListItemFragment

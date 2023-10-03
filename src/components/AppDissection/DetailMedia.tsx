@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import VisibilitySensor from 'react-visibility-sensor'
-
 import { MarkdownRenderer } from '~/components/MarkdownRenderer'
 import { DesignDetail } from '~/data/appDissections'
+import VisibilitySensor from 'react-visibility-sensor'
 
 interface Props {
   detail: DesignDetail

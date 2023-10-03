@@ -4,7 +4,7 @@ import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
 import { PostDetail } from '~/components/Writing/PostDetail'
 import { PostsList } from '~/components/Writing/PostsList'
-import { useGetPostQuery } from '~/graphql/types.generated'
+import { useGetPostQuery } from '~/graphql/typeSlut'
 
 function WritingPostPage({ slug }) {
   const { data } = useGetPostQuery({ variables: { slug } })

@@ -1,6 +1,5 @@
-import Link from 'next/link'
 import React from 'react'
-
+import Link from 'next/link'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'

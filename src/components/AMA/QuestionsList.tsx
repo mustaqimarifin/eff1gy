@@ -1,9 +1,8 @@
-import { LayoutGroup, motion } from 'framer-motion'
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/types.generated'
+import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/typeSlut'
+import { LayoutGroup, motion } from 'framer-motion'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'

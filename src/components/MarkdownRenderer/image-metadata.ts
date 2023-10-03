@@ -1,6 +1,6 @@
-import lqip from 'lqip-modern'
 import { join } from 'path'
 import { cwd } from 'process'
+import lqip from 'lqip-modern'
 import { visit } from 'unist-util-visit'
 
 type ImageNode = {
@@ -64,8 +64,8 @@ async function addProps(node: ImageNode): Promise<void> {
 }
 
 const imageMetadata = () => {
-  return async function transformer(tree: Node): Promise<Node> {
-    const images: ImageNode[] = []
+  return async function transformer(tree) {
+    const images = []
 
     visit(tree, 'element', (node) => {
       if (isImageNode(node)) {

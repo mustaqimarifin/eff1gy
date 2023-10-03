@@ -1,14 +1,13 @@
-import Link from 'next/link'
-import { NextSeo } from 'next-seo'
 import * as React from 'react'
-
+import Link from 'next/link'
 import { Avatar } from '~/components/Avatar'
 import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'
-import { CommentType, useGetQuestionQuery } from '~/graphql/types.generated'
+import { CommentType, useGetQuestionQuery } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
+import { NextSeo } from 'next-seo'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { QuestionActions } from './QuestionActions'

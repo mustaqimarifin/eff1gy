@@ -3,7 +3,7 @@ import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 
 function EditPostPage({ slug }) {
   const { data } = useViewerQuery()

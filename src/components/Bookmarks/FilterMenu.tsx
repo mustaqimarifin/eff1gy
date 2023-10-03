@@ -1,9 +1,8 @@
-import { Menu, Transition } from '@headlessui/react'
-import { Check } from 'lucide-react'
 import * as React from 'react'
-
+import { Menu, Transition } from '@headlessui/react'
 import { GhostButton } from '~/components/Button'
-import { useGetTagsQuery } from '~/graphql/types.generated'
+import { useGetTagsQuery } from '~/graphql/typeSlut'
+import { Check } from 'lucide-react'
 
 import { BookmarksContext } from './BookmarksList'
 

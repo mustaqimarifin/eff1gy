@@ -1,9 +1,8 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { X } from 'lucide-react'
 import * as React from 'react'
 import { Fragment, useState } from 'react'
-
+import { Dialog, Transition } from '@headlessui/react'
 import { GhostButton } from '~/components/Button'
+import { X } from 'lucide-react'
 
 interface DialogProps {
   trigger?: React.ReactElement

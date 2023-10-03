@@ -11,7 +11,7 @@ import {
   useEditEmailSubscriptionMutation,
   useEditUserMutation,
   useGetViewerWithSettingsQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { validEmail } from '~/lib/validators'
 
 export function HackerNewsSubscriptionForm() {

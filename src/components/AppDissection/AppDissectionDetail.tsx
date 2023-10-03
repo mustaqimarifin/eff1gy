@@ -1,6 +1,5 @@
-import Image from 'next/image'
 import * as React from 'react'
-
+import Image from 'next/image'
 import { DesignDetailMedia } from '~/components/AppDissection/DetailMedia'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'

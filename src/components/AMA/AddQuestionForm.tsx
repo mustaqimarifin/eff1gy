@@ -1,14 +1,10 @@
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { ErrorAlert } from '~/components/Alert'
 import { PrimaryButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import {
-  useAddQuestionMutation,
-  useViewerQuery,
-} from '~/graphql/types.generated'
+import { useAddQuestionMutation, useViewerQuery } from '~/graphql/typeSlut'
 
 import { Avatar } from '../Avatar'
 

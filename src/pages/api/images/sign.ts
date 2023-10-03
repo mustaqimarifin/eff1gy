@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-
 import cloudinary from '~/lib/cloudinary'
 
 import { getSession } from '../auth/[...nextauth]'

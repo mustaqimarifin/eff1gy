@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 

@@ -1,7 +1,6 @@
-import { Compass } from 'lucide-react'
 import * as React from 'react'
-
 import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { Compass } from 'lucide-react'
 
 import Button from '../Button'
 import { TitleBar } from './TitleBar'

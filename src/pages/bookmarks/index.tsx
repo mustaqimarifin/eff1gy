@@ -20,6 +20,21 @@ function BookmarksPage() {
   )
 }
 
+export async function getServerSideProps({ req, res }) {
+  const context = await getContext(req, res)
+  const client = initApolloClient({ context })
+
+  await Promise.all([
+    client.query({ query: GET_VIEWER }),
+    client.query({ query: GET_BOOKMARKS }),
+    client.query({ query: GET_TAGS }),
+  ])
+
+  return addApolloState(client, {
+    props: {},
+  })
+}
+
 BookmarksPage.getLayout = withProviders(function getLayout(page) {
   return (
     <SiteLayout>

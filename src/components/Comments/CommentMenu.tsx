@@ -1,8 +1,7 @@
-import { Menu, Transition } from '@headlessui/react'
-import { MoreHorizontal } from 'lucide-react'
 import * as React from 'react'
-
+import { Menu, Transition } from '@headlessui/react'
 import { GhostButton } from '~/components/Button'
+import { MoreHorizontal } from 'lucide-react'
 
 export function CommentMenu({ handleDelete, handleEdit, comment }) {
   return (

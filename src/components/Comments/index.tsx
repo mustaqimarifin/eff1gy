@@ -1,10 +1,9 @@
-import { MessageCircle } from 'lucide-react'
 import * as React from 'react'
-
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { SignInDialog } from '~/components/SignInDialog'
-import { CommentType, useGetCommentsQuery } from '~/graphql/types.generated'
+import { CommentType, useGetCommentsQuery } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks/useWindowFocus'
+import { MessageCircle } from 'lucide-react'
 
 import { Comment } from './Comment'
 import { CommentForm } from './CommentForm'

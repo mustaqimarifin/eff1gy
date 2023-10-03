@@ -5,7 +5,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'
 import { baseUrl } from '~/config/seo'
-import { useGetHackerNewsPostQuery } from '~/graphql/types.generated'
+import { useGetHackerNewsPostQuery } from '~/graphql/typeSlut'
 import { Link as LinkIcon } from 'lucide-react'
 import { NextSeo } from 'next-seo'
 

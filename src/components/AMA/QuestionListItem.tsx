@@ -1,8 +1,7 @@
 import * as React from 'react'
-
 import { Avatar } from '~/components/Avatar'
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { Question } from '~/graphql/types.generated'
+import { Question } from '~/graphql/typeSlut'
 
 interface Props {
   question: Question

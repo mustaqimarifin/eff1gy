@@ -1,11 +1,10 @@
-import { MapPin } from 'lucide-react'
+import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import * as React from 'react'
-
 import Button from '~/components/Button'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
+import { MapPin } from 'lucide-react'
 
 function SectionTitle(props) {
   return (

@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { Dropzone } from '~/components/Dropzone'
 import { Textarea } from '~/components/Input'
 import { Detail } from '~/components/ListDetail/Detail'

@@ -1,7 +1,7 @@
 import 'tippy.js/dist/tippy.css'
 
-import Tippy from '@tippyjs/react'
 import * as React from 'react'
+import Tippy from '@tippyjs/react'
 
 interface Props {
   content: string

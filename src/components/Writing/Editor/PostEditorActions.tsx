@@ -1,16 +1,12 @@
-import { Sidebar } from 'lucide-react'
-import { useRouter } from 'next/router'
 import * as React from 'react'
-import toast from 'react-hot-toast'
-import slugify from 'slugify'
-
+import { useRouter } from 'next/router'
 import Button from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { Switch } from '~/components/Switch'
-import {
-  useAddPostMutation,
-  useEditPostMutation,
-} from '~/graphql/types.generated'
+import { useAddPostMutation, useEditPostMutation } from '~/graphql/typeSlut'
+import { slugify } from '~/lib/functions'
+import { Sidebar } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 import { PostEditorContext } from './PostEditor'
 import { PostEditorAutoSave } from './PostEditorAutoSave'
@@ -53,7 +49,7 @@ export function PostEditorActions() {
       variables: {
         data: {
           ...draftState,
-          slug: draftState.slug || slugify(draftState.title, { lower: true }),
+          slug: draftState.slug || slugify(draftState.title),
         },
       },
     })

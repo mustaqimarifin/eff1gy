@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { Post } from '~/graphql/types.generated'
+import { Post } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 interface Props {

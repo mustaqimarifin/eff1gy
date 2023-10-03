@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { ErrorAlert } from '~/components/Alert'
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -9,7 +8,7 @@ import {
   GetCommentsQuery,
   useAddCommentMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks/useDebounce'
 import { genId } from '~/lib/nanoid'
 import { timestampToCleanTime } from '~/lib/transformers'

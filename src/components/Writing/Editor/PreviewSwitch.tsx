@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { Switch } from '~/components/Switch'
 
 import { PostEditorContext } from './PostEditor'

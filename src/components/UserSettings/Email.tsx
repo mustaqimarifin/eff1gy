@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { WarnAlert } from '~/components/Alert'
 import Button from '~/components/Button'
 import { Input } from '~/components/Input'
@@ -8,7 +7,7 @@ import { GET_VIEWER_SETTINGS } from '~/graphql/queries/viewer'
 import {
   GetViewerWithSettingsQuery,
   useEditUserMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export function EmailForm(props: {
   viewer: GetViewerWithSettingsQuery['viewer']

@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import Button from '~/components/Button'
 import { ReactionButton } from '~/components/Button/ReactionButton'
 import { GET_POST } from '~/graphql/queries/posts'
@@ -7,7 +6,7 @@ import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 function getReactionButton(post) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()

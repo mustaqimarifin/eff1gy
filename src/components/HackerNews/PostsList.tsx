@@ -5,7 +5,7 @@ import { DialogComponent } from '~/components/Dialog'
 import { HackerNewsSubscriptionForm } from '~/components/HackerNews/SubscriptionForm'
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetHackerNewsPostsQuery } from '~/graphql/types.generated'
+import { useGetHackerNewsPostsQuery } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks/useWindowFocus'
 import { Radio } from 'lucide-react'
 

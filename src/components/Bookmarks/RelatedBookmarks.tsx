@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { useGetBookmarksQuery } from '~/graphql/types.generated'
+import { useGetBookmarksQuery } from '~/graphql/typeSlut'
 
 export function RelatedBookmarks({ bookmark }) {
   const { data, loading } = useGetBookmarksQuery({

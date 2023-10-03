@@ -1,8 +1,6 @@
-import { Link as LinkIcon } from 'lucide-react'
+import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import * as React from 'react'
-
 import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { TagPicker } from '~/components/Tag/TagPicker'
@@ -11,7 +9,8 @@ import {
   GetBookmarksQuery,
   useDeleteBookmarkMutation,
   useEditBookmarkMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
+import { Link as LinkIcon } from 'lucide-react'
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
   const router = useRouter()

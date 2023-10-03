@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import { EditBookmarkDialog } from '~/components/Bookmarks/EditBookmarkDialog'
 import Button from '~/components/Button'
 import { GET_BOOKMARK } from '~/graphql/queries/bookmarks'
@@ -7,7 +6,7 @@ import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 import { ReactionButton } from '../Button/ReactionButton'
 

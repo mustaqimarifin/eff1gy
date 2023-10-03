@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { DeleteButton, PrimaryButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
@@ -8,7 +7,7 @@ import { GET_QUESTION, GET_QUESTIONS } from '~/graphql/queries/questions'
 import {
   useDeleteQuestionMutation,
   useEditQuestionMutation,
-} from '~/graphql/types.generated'
+} from '~/graphql/typeSlut'
 
 export function EditQuestionForm({ closeModal, question }) {
   const router = useRouter()

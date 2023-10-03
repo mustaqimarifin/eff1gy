@@ -1,6 +1,6 @@
-import clsx from 'clsx'
-import Image from 'next/image'
 import { useState } from 'react'
+import Image from 'next/image'
+import clsx from 'clsx'
 
 export default function CoverImage({ src, blurDataUrl }) {
   const [isLoading, setLoading] = useState(true)

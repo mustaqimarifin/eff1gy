@@ -1,5 +1,5 @@
-import { useTheme } from 'next-themes'
 import React, { useContext, useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
 
 export default function SunMoon() {
   const [mounted, setMounted] = useState(false)

@@ -1,6 +1,6 @@
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 
 import Button from '../Button'
 import { ExternalLinkIcon, YouTubeIcon } from '../Icon'
@@ -35,7 +35,7 @@ export function Testimonial({
             width={56}
             height={56}
             alt="testimonial avatar"
-            src={testimonial.imageSrc}
+            src={testimonial.avatarSrc}
             className="flex-none rounded-full bg-gray-300"
           />
         </Link>
@@ -87,7 +87,6 @@ export function Testimonial({
             className="absolute left-0 top-0 h-full w-full rounded-md"
             src={testimonial.youtube}
             title="YouTube video player"
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>

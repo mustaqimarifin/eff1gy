@@ -1,10 +1,9 @@
-import { useApolloClient } from '@apollo/client'
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
+import { useApolloClient } from '@apollo/client'
 import { DeleteButton } from '~/components/Button'
 import { DialogComponent } from '~/components/Dialog'
-import { useDeleteUserMutation } from '~/graphql/types.generated'
+import { useDeleteUserMutation } from '~/graphql/typeSlut'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 

@@ -8,9 +8,6 @@ import {
 import { slugify, urlRX } from '~/lib/functions'
 import { GraphQLError } from 'graphql'
 
-//import { graphcdn } from '~/lib/redis'
-//import { graphcdn } from '~/lib/graphcdn'
-
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   const { id, data } = args
   const { name, url, tag, description, image } = data

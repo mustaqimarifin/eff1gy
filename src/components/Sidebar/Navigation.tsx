@@ -21,7 +21,7 @@ import {
   WritingIcon,
   YouTubeIcon,
 } from '~/components/Icon'
-import { useViewerQuery } from '~/graphql/types.generated'
+import { useViewerQuery } from '~/graphql/typeSlut'
 import { Plus } from 'lucide-react'
 
 import { NavigationLink } from './NavigationLink'
