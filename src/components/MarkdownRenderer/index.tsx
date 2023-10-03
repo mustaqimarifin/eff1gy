@@ -23,7 +23,7 @@ function LinkRenderer({ href, ...rest }: any) {
   }
   try {
     const url = new URL(href)
-    if (url.origin === 'https://brianlovin.com') {
+    if (url.origin === 'https://eff1gy.vercel.app') {
       return <Link href={href} {...rest} />
     }
     return <a target="_blank" rel="noopener" href={href} {...rest} />

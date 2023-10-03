@@ -40,4 +40,4 @@ rules:
     maxAge: 2592000
     swr: 2592000
     scope: AUTHENTICATED
-originUrl: "https://brianlovin.com/api/graphql"
+originUrl: "https://eff1gy.vercel.app/api/graphql"

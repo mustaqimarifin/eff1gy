@@ -9,7 +9,7 @@ export default function TOS() {
   return (
     <Detail.Container data-cy="pp" ref={scrollContainerRef}>
       <Detail.ContentContainer>
-        <div className="pb-24 space-y-8 md:space-y-16">
+        <div className="space-y-8 pb-24 md:space-y-16">
           <TitleBar
             magicTitle
             titleRef={titleRef}
@@ -17,7 +17,7 @@ export default function TOS() {
             title="Privacy Policy"
           />
 
-          <div className="prose mx-auto flex max-w-2xl flex-col items-start justify-start pb-16 text-left text-gray-600  prose-headings:font-bold dark:prose-dark dark:text-gray-300">
+          <div className="dark:prose-dark prose mx-auto flex max-w-2xl flex-col items-start justify-start pb-16 text-left  text-gray-600 prose-headings:font-bold dark:text-gray-300">
             <h1 className="mt-8 flex leading-7  transition-all hover:text-gray-800 dark:hover:text-gray-200  ">
               Terms of Service
               <svg

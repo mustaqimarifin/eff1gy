@@ -1,13 +1,13 @@
-import { TrashIcon } from '@radix-ui/react-icons'
-import { useMutation } from '@tanstack/react-query'
 import * as React from 'react'
-
+import { useMutation } from '@tanstack/react-query'
 import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
+import { TrashIcon } from 'lucide-react'
 
 import { ErrorAlert } from '../Alert'
 import AudioPlayer from '../AudioPlayer'
 import Button, { DeleteButton, RecordingButton } from '../Button'
 import { LoadingSpinner } from '../LoadingSpinner'
+
 interface Props {
   id: string
   initialAudioUrl?: string
@@ -224,7 +224,7 @@ export default function AudioRecorder({
   })
 
   return (
-    <div className="flex flex-col p-4 space-y-4 bg-gray-100 border border-gray-200 rounded-md dark:border-gray-800 dark:bg-gray-900">
+    <div className="flex flex-col space-y-4 rounded-md border border-gray-200 bg-gray-100 p-4 dark:border-gray-800 dark:bg-gray-900">
       {state.status === 'idle' && (
         <Button onClick={startRecording}>
           {initialAudioUrl ? 'Re-record answer' : 'Record answer'}
@@ -252,7 +252,7 @@ export default function AudioRecorder({
       )}
 
       {state.audioUrl && state.status !== 'uploading' && (
-        <div className="flex justify-between w-full">
+        <div className="flex w-full justify-between">
           {state.status !== 'recording' && (
             <DeleteButton onClick={handleDelete}>
               <TrashIcon />

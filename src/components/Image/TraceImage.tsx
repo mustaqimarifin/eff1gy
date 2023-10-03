@@ -58,7 +58,7 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
           /*           sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw" */
-          className="object-cover overflow-hidden transition ease-in-out"
+          className="overflow-hidden object-cover transition ease-in-out"
           style={{
             borderRadius: '20px',
           }}

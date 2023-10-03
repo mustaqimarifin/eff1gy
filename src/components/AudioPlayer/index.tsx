@@ -151,12 +151,12 @@ export default function AudioPlayer({
   return (
     <div className="flex flex-wrap">
       <HiddenAudioPlayer preload={isRecorder} ref={audioRef} src={src} />
-      <div className="flex  overflow-hidden items-center p-2 pr-6 space-x-4 text-white bg-white border rounded-md shadow-sm dark:border-gray-700 dark:text-white dark:bg-gray-800">
+      <div className="flex  items-center space-x-4 overflow-hidden rounded-md border bg-white p-2 pr-6 text-white shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
         <PlayPauseButton isPlaying={isPlaying} onClick={togglePlay} />
         <div
           ref={scrubbableRef}
           onClick={scrub}
-          className="relative flex items-center w-full space-x-1"
+          className="relative flex w-full items-center space-x-1"
         >
           <ProgressOverlay ref={progressOverlayRef} />
           <Waveform

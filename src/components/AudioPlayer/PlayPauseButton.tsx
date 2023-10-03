@@ -4,7 +4,7 @@ export default function PlayPauseButton({ isPlaying, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="flex items-center justify-center flex-none w-12 h-12 bg-black border border-black rounded-md cursor-pointer dark:bg-gray-600 hover:bg-blue-500 dark:focus:border-blue-400 dark:focus:bg-blue-500 dark:hover:border-blue-400 hover:border-blue-600 focus:border-blue-600 dark:border-gray-600 focus:bg-blue-500 focus:ring-0 focus:outline-none"
+      className="flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-md border border-black bg-black hover:border-blue-600 hover:bg-blue-500 focus:border-blue-600 focus:bg-blue-500 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-600 dark:hover:border-blue-400 dark:focus:border-blue-400 dark:focus:bg-blue-500"
     >
       {!isPlaying ? (
         <svg

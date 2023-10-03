@@ -70,7 +70,7 @@ export default function Waveform({
             <span
               key={i}
               style={{ height, minWidth: '2px', minHeight: '2px' }}
-              className="w-full bg-gray-800 rounded-md dark:bg-gray-200"
+              className="w-full rounded-md bg-gray-800 dark:bg-gray-200"
             />
           )
         })}

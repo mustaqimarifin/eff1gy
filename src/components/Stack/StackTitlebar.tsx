@@ -1,4 +1,4 @@
-import { PlusIcon } from '@radix-ui/react-icons'
+import { PlusIcon } from 'lucide-react'
 import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'

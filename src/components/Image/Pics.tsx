@@ -4,7 +4,7 @@ import React from 'react'
 const DickPics = (props) => {
   const { src, alt, blurDataURL } = props
   return (
-    <div className="filter drop-shadow-sm">
+    <div className="drop-shadow-sm filter">
       <Image
         src={require(`public/static/img/${src}`)}
         alt={alt}

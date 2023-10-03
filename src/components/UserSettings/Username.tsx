@@ -9,6 +9,7 @@ import {
   useGetViewerWithSettingsQuery,
 } from '~/graphql/typeSlut'
 import { nameRX } from '~/lib/functions'
+
 export function UsernameForm(props: {
   viewer: GetViewerWithSettingsQuery['viewer']
 }) {
@@ -54,7 +55,7 @@ export function UsernameForm(props: {
           <span>@{viewer.name}</span>
           <span>·</span>
           <button
-            className="cursor-pointer font-medium text-active"
+            className="text-active cursor-pointer font-medium"
             onClick={() => setIsEditing(!isEditing)}
           >
             {isEditing ? 'Cancel' : 'Edit'}
@@ -72,7 +73,7 @@ export function UsernameForm(props: {
             onChange={handleUsernameChange}
           />
           {error && (
-            <p className={`text-xs text-error`}>
+            <p className={`text-error text-xs`}>
               Usernames should be between 4 and 16 characters and only have
               numbers, letters, or underscores.
             </p>

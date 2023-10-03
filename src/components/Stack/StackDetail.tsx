@@ -1,4 +1,4 @@
-import { Link2Icon } from '@radix-ui/react-icons'
+import { Link2Icon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'

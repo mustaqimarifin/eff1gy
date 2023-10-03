@@ -4,7 +4,7 @@ const ProgressOverlay = React.forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       ref={ref}
-      className="absolute w-full h-full origin-left bg-white opacity-50 pointer-events-none dark:bg-gray-800 bg-blend-multiply z-1"
+      className="z-1 pointer-events-none absolute h-full w-full origin-left bg-white opacity-50 bg-blend-multiply dark:bg-gray-800"
     />
   )
 })
