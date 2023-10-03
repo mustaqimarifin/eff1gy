@@ -1,24 +1,13 @@
 const colors = require('tailwindcss/colors')
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
-const mono = [
-  'ui-monospace',
-  'SFMono-Regular',
-  'Menlo',
-  'Monaco',
-  'Consolas',
-  'Liberation Mono',
-  'Courier New',
-  'monospace',
-]
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Franklin', ...fontFamily.sans],
-        ivar: ['Ivar', ...fontFamily.serif],
-        mono: ['SFMono', ...fontFamily.mono],
+        sans: ['Inter', ...fontFamily.sans],
+        mono: ['Sohn', ...fontFamily.mono],
       },
       colors: {
         white: '#fff',

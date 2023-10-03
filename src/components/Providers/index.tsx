@@ -2,6 +2,7 @@ import * as React from 'react'
 import { NextPageContext } from 'next'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '~/lib/apollo'
+import { ThemeProvider } from 'next-themes'
 
 import { SEO } from './SEO'
 import { Toast } from './Toaster'
@@ -38,12 +39,13 @@ export function Providers({ children, pageProps }: Props) {
     <>
       <SEO />
       <Toast />
-
-      <ApolloProvider client={apolloClient}>
-        <GlobalNavigationContext.Provider value={state}>
-          {children}
-        </GlobalNavigationContext.Provider>
-      </ApolloProvider>
+      <ThemeProvider attribute="class">
+        <ApolloProvider client={apolloClient}>
+          <GlobalNavigationContext.Provider value={state}>
+            {children}
+          </GlobalNavigationContext.Provider>
+        </ApolloProvider>
+      </ThemeProvider>
     </>
   )
 }
