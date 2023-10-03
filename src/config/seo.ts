@@ -1,11 +1,11 @@
 export const baseUrl =
-  process.env.NODE_ENV === 'production' ? 'https://brianlovin.com' : ''
+  process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
 export const baseEmail = 'hi@brianlovin.com'
 
 export const defaultSEO = {
   title: 'Mustaqim Arifin',
   description:
-    'Product designer, podcaster, and writer, living in San Francisco.',
+    'Product designer, podcaster, and writer, living in Kuala Lumpur.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
