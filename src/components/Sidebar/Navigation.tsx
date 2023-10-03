@@ -15,6 +15,8 @@ import {
   HomeIcon,
   PodcastIcon,
   SecurityChecklistIcon,
+  SoundcloudIcon,
+  Spotify,
   StackIcon,
   StaffDesignIcon,
   TwitterIcon,
@@ -115,7 +117,7 @@ export function SidebarNavigation() {
           isExternal: true,
         },
 
-        {
+        /*         {
           href: 'https://designdetails.fm',
           label: 'Design Details',
           icon: PodcastIcon,
@@ -143,9 +145,9 @@ export function SidebarNavigation() {
           isActive: false,
           trailingAction: null,
           isExternal: true,
-        },
+        }, */
 
-        {
+        /*         {
           href: '/security',
           label: 'Security Checklist',
           icon: SecurityChecklistIcon,
@@ -173,14 +175,14 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/app-dissection') >= 0,
           trailingAction: null,
           isExternal: false,
-        },
+        }, */
       ],
     },
     {
       label: 'Online',
       items: [
         {
-          href: 'https://twitter.com/brian_lovin',
+          href: 'https://twitter.com/vmprmyth',
           label: 'Twitter',
           icon: TwitterIcon,
           trailingAccessory: ExternalLinkIcon,
@@ -190,9 +192,9 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://www.youtube.com/channel/UC-esBYEUGQ6iK1wmw76f5MA',
-          label: 'YouTube',
-          icon: YouTubeIcon,
+          href: 'https://open.spotify.com/artist/6bBbUUix7BfttiaHCDkcEI',
+          label: 'Spotify',
+          icon: Spotify,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
           trailingAction: null,
@@ -200,7 +202,7 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://github.com/brianlovin',
+          href: 'https://github.com/mustaqimarifin',
           label: 'GitHub',
           icon: GitHubIcon,
           trailingAccessory: ExternalLinkIcon,
@@ -210,9 +212,9 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://figma.com/@brian',
-          label: 'Figma',
-          icon: FigmaIcon,
+          href: 'https://soundcloud.com/vmprmyth',
+          label: 'SoundCloud',
+          icon: SoundcloudIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
           trailingAction: null,

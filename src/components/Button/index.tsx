@@ -142,7 +142,7 @@ export const TwitterButton = React.forwardRef((props: ButtonProps, ref) => {
 })
 
 export const GoogleButton = React.forwardRef((props: ButtonProps, ref) => {
-  const classes = `bg-error text-white space-x-4 items-center`
+  const classes = `bg-pink-600 text-white space-x-4 items-center`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
   const radius = composer.getRadius(props.size)

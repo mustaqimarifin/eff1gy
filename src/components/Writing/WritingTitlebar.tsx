@@ -45,12 +45,7 @@ export function WritingTitlebar({ scrollContainerRef }) {
   }
 
   function trailingAccessory() {
-    return (
-      <div className="flex space-x-2">
-        {getSubscribeButton()}
-        {getAddButton()}
-      </div>
-    )
+    return <div className="flex space-x-2">{getAddButton()}</div>
   }
 
   function getChildren() {

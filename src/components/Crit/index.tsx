@@ -57,7 +57,7 @@ const testimonials = [
     reportSrc: null,
     youtube: null,
     quote:
-      'Money well spent! Thanks for the super detailed write-up and feedback on the Payment Links experience @brian_lovin. Incredibly valuable to get an unbiased outside opinion like that.',
+      'Money well spent! Thanks for the super detailed write-up and feedback on the Payment Links experience @vmprmyth. Incredibly valuable to get an unbiased outside opinion like that.',
   },
   {
     avatarSrc: '/static/img/crit/tommoor.png',

@@ -37,7 +37,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: genId(),
+          id: data?.viewer?.id,
           name: data?.viewer?.name,
           image: data?.viewer?.image,
           role: data?.viewer?.role,

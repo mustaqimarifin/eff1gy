@@ -1,6 +1,8 @@
 import * as React from 'react'
+import NextImage from 'next/image'
 import Link from 'next/link'
 import deepmerge from 'deepmerge'
+import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
 import Markdown from 'react-markdown'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
@@ -99,7 +101,105 @@ function getComponentsForVariant(variant) {
     }
   }
 }
+function Image(props) {
+  return <NextImage {...props} quality={75} className="mdx-image" />
+}
 
+const MDImage = (paragraph: { children?: any; node?: any }) => {
+  const { node } = paragraph
+  if (node.children[0].tagName === 'img') {
+    const image = node.children[0]
+    const metastring = image.properties.alt
+    const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
+    const metaWidth = metastring.match(/{([^}]+)x/)
+    const metaHeight = metastring.match(/x([^}]+)}/)
+    const width = metaWidth ? metaWidth[1] : '768'
+    const height = metaHeight ? metaHeight[1] : '432'
+    const isPriority = metastring?.toLowerCase().match('{priority}')
+    const hasCaption = metastring?.toLowerCase().includes('{caption:')
+    const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
+
+    return (
+      <div className="mx-auto">
+        <NextImage
+          src={image.properties.src}
+          width={width}
+          height={height}
+          placeholder="blur"
+          sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
+          // blurDataURL={previewImage.dataURIBase64}
+          //blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
+          className="object-cover"
+          alt={alt}
+          priority={isPriority}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
+        {hasCaption ? (
+          <div className="caption" aria-label={caption}>
+            {caption}
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+  return <p>{paragraph.children}</p>
+}
+
+const Predator = ({ node, inline, className, children, ...props }) => {
+  const match = /language-(\w+)/.exec(className || '')
+  return !inline && match ? (
+    <CodeBlock
+      language={match[1]}
+      className={className}
+      text={String(children).replace(/\n$/, '')}
+      {...props}
+    />
+  ) : (
+    <>{children}</>
+  )
+}
+
+const Codex = ({ node, inline, className, children, ...props }) => {
+  const match = /language-(\w+)/.exec(className || '')
+  return !inline && match ? (
+    <CodeBlock
+      className={className}
+      text={String(children).replace(/\n$/, '')}
+      language={match[1]}
+      {...props}
+    />
+  ) : (
+    <code className={className} {...props}>
+      {children}
+    </code>
+  )
+}
+
+export const MDXComponents = {
+  MDImage,
+  img: Image,
+  a: LinkRenderer,
+}
+
+interface Props {
+  mdx: string
+  [key: string]: unknown
+}
+
+export const MDSEX = ({ mdx, ...rest }: Props) => {
+  /*   const mdxExport = getMDXExport(mdx)
+  const MDXLayout = React.useMemo(() => mdxExport.default, [mdx])
+  return <MDXLayout components={MDXComponents} {...rest} /> */
+
+  const MDXLayout = React.useMemo(
+    (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
+    [mdx]
+  )
+  return <MDXLayout components={{ ...MDXComponents }} {...rest} />
+}
 export function MarkdownRenderer(props: any) {
   // variant = 'longform' | 'comment'
   const { children, variant = 'longform', ...rest } = props

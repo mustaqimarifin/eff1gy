@@ -34,16 +34,7 @@ const routes = {
       url: 'crit',
     }),
   },
-  hn: {
-    label: 'HN',
-    path: '/hn',
-    seo: extendSEO({
-      title: 'HN',
-      description: 'A better Hacker News.',
-      image: 'og/hn.png',
-      url: 'hn',
-    }),
-  },
+
   bookmarks: {
     label: 'Bookmarks',
     path: '/bookmarks',
@@ -74,16 +65,7 @@ const routes = {
       url: 'ama',
     }),
   },
-  security: {
-    label: 'Security Checklist',
-    path: '/security',
-    seo: extendSEO({
-      title: 'Security Checklist',
-      description: 'Staying safe on the internet.',
-      image: 'og/security.png',
-      url: 'security',
-    }),
-  },
+
   stack: {
     label: 'Stack',
     path: '/stack',

@@ -10,7 +10,7 @@ import { timestampToCleanTime } from '~/lib/transformers'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
-export function PostDetail({ slug }) {
+export function PostDetail({ children, slug }) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
   const { data, error, loading } = useGetPostQuery({ variables: { slug } })
@@ -50,7 +50,7 @@ export function PostDetail({ slug }) {
             </span>
           </Detail.Header>
 
-          <MarkdownRenderer children={post.text} className="prose mt-8" />
+          <div className="prose mt-8">{children}</div>
 
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />

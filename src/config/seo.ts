@@ -19,8 +19,8 @@ export const defaultSEO = {
     ],
   },
   twitter: {
-    handle: '@brian_lovin',
-    site: '@brian_lovin',
+    handle: '@vmprmyth',
+    site: '@vmprmyth',
     cardType: 'summary_large_image',
   },
 }
