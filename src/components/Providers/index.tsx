@@ -1,33 +1,27 @@
 import { ApolloProvider } from '@apollo/client'
-//import { SessionProvider } from 'next-auth/react'
-import { ThemeProvider } from 'next-themes'
+import { NextPageContext } from 'next'
 import * as React from 'react'
 
 import { useApollo } from '~/lib/apollo'
 
-//import { AnalyticsWrapper } from './Analytics'
-import ReactQuery from './ReactQuery'
 import { SEO } from './SEO'
 import { Toast } from './Toaster'
 
 interface Props {
-  children?: any
-  pageProps: any
+  children?: React.ReactNode
+  pageProps: NextPageContext
 }
 
 const globalNavigationContext = {
   isOpen: false,
-  setIsOpen: (val: boolean) => undefined,
+  setIsOpen: (val: boolean) => {},
 }
 
 export const GlobalNavigationContext = React.createContext(
   globalNavigationContext
 )
 
-export function Providers({
-  children,
-  pageProps: { session, ...pageProps },
-}: Props) {
+export function Providers({ children, pageProps }: Props) {
   const apolloClient = useApollo(pageProps)
 
   const initialState = {
@@ -46,16 +40,11 @@ export function Providers({
       <SEO />
       <Toast />
 
-      <ThemeProvider attribute="class">
-        {/*         <SessionProvider session={pageProps.session}>
-         */}{' '}
-        <ApolloProvider client={apolloClient}>
-          <GlobalNavigationContext.Provider value={state}>
-            <ReactQuery>{children}</ReactQuery>
-          </GlobalNavigationContext.Provider>
-        </ApolloProvider>
-        {/*   </SessionProvider> */}
-      </ThemeProvider>
+      <ApolloProvider client={apolloClient}>
+        <GlobalNavigationContext.Provider value={state}>
+          {children}
+        </GlobalNavigationContext.Provider>
+      </ApolloProvider>
     </>
   )
 }

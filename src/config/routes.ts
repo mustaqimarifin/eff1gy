@@ -24,7 +24,7 @@ const routes = {
       url: 'writing',
     }),
   },
-  /*  crit: {
+  crit: {
     label: 'Crit',
     path: '/crit',
     seo: extendSEO({
@@ -33,8 +33,8 @@ const routes = {
       image: 'og/crit.png',
       url: 'crit',
     }),
-  }, */
-  /*   hn: {
+  },
+  hn: {
     label: 'HN',
     path: '/hn',
     seo: extendSEO({
@@ -43,7 +43,7 @@ const routes = {
       image: 'og/hn.png',
       url: 'hn',
     }),
-  }, */
+  },
   bookmarks: {
     label: 'Bookmarks',
     path: '/bookmarks',
@@ -54,7 +54,16 @@ const routes = {
       url: 'bookmarks',
     }),
   },
-
+  appDissection: {
+    label: 'App Dissection',
+    path: '/app-dissection',
+    seo: extendSEO({
+      title: 'App Dissection',
+      description: 'In-depth design explorations.',
+      image: 'og/app-dissection.png',
+      url: 'app-dissection',
+    }),
+  },
   ama: {
     label: 'AMA',
     path: '/ama',
@@ -65,7 +74,7 @@ const routes = {
       url: 'ama',
     }),
   },
-  /*   security: {
+  security: {
     label: 'Security Checklist',
     path: '/security',
     seo: extendSEO({
@@ -74,7 +83,7 @@ const routes = {
       image: 'og/security.png',
       url: 'security',
     }),
-  }, */
+  },
   stack: {
     label: 'Stack',
     path: '/stack',
@@ -83,26 +92,6 @@ const routes = {
       description: 'My favorite tools and software.',
       image: 'og/stack.png',
       url: 'stack',
-    }),
-  },
-  privacy: {
-    label: 'Privacy Policy',
-    path: '/privacypolicy',
-    seo: extendSEO({
-      title: 'Privacy Policy',
-      description: null,
-      image: 'og/pp.png',
-      url: 'privacypolicy',
-    }),
-  },
-  terms: {
-    label: 'Terms of Service',
-    path: '/termsofservice',
-    seo: extendSEO({
-      title: 'Terms of Service',
-      description: null,
-      image: 'og/tos.png',
-      url: 'termsofservice',
     }),
   },
   settings: {

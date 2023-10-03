@@ -1,8 +1,7 @@
 import * as React from 'react'
-
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { Post } from '~/graphql/typeSlut'
-import { cleanTime } from '~/lib/functions'
+import { Post } from '~/graphql/types.generated'
+import { timestampToCleanTime } from '~/lib/transformers'
 
 interface Props {
   post: Post
@@ -10,21 +9,15 @@ interface Props {
 }
 
 export const PostListItem = React.memo<Props>(({ post, active }) => {
-  const publishedAt = cleanTime({ timestamp: post.publishedAt })
-  //const { data } = useSWR<Views>(`/api/views/${post.id}`, ketchup)
-  //const views = new Number(data?.total)
-  //const byline1 = `${views > 0 ? views.toLocaleString() : '-'} 👁`
-  const byline2 = post.publishedAt ? publishedAt.formatted : 'Draft'
-
+  const publishedAt = timestampToCleanTime({ timestamp: post.publishedAt })
   return (
     <ListItem
       key={post.id}
       href="/writing/[slug]"
       as={`/writing/${post.slug}`}
       title={post.title}
-      description={post.excerpt}
-      byline={byline2}
-      //byline={`${byline1} | ${byline2}`}
+      description={null}
+      byline={post.publishedAt ? publishedAt.formatted : 'Draft'}
       active={active}
     />
   )

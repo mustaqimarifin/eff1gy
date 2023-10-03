@@ -1,8 +1,6 @@
-import { Feed } from 'feed'
-
 import routes from '~/config/routes'
-import { baseEmail } from '~/config/seo'
-import { baseUrl } from '~/config/seo'
+import { baseEmail, baseUrl } from '~/config/seo'
+import { Feed } from 'feed'
 
 export async function generateRSS(posts) {
   const date = new Date()

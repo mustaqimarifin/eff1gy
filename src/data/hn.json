@@ -1,0 +1,40 @@
+{
+  "name": "Welcome to the HNPWA API",
+  "endpoints": [
+    {
+      "topic": "news",
+      "url": "https://api.hnpwa.com/v0/news/1.json",
+      "maxPages": 10
+    },
+    {
+      "topic": "newest",
+      "url": "https://api.hnpwa.com/v0/newest/1.json",
+      "maxPages": 10
+    },
+    {
+      "topic": "ask",
+      "url": "https://api.hnpwa.com/v0/ask/1.json",
+      "maxPages": 2
+    },
+    {
+      "topic": "show",
+      "url": "https://api.hnpwa.com/v0/show/1.json",
+      "maxPages": 2
+    },
+    {
+      "topic": "jobs",
+      "url": "https://api.hnpwa.com/v0/jobs/1.json",
+      "maxPages": 1
+    },
+    {
+      "topic"   : "item"                                ,
+      "url"     : "https://api.hnpwa.com/v0/item/1.json",
+      "maxPages": null
+    },
+    {
+      "topic"   : "user"                                         ,
+      "url"     : "https://api.hnpwa.com/v0/users/davideast.json",
+      "maxPages": null
+    }
+  ]
+}

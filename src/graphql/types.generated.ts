@@ -10,6 +10,7 @@ import {
   TypePolicies,
   TypePolicy,
 } from '@apollo/client/cache'
+
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {

@@ -1,16 +1,16 @@
 generator client {
-  provider         = "prisma-client-js"
-  precountFeatures = "(array)"
-  relationMode     = "foreignKeys"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("SUPABASE_PG_URL")
+  provider   = "postgresql"
+  url        = env("SQL2")
+  extensions = [pgcrypto]
 }
 
 model Account {
-  id String @id @default(dbgenerated("concat('acc', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
   userId            String
   type              String
@@ -30,7 +30,7 @@ model Account {
 }
 
 model Session {
-  id String @id @default(dbgenerated("concat('sss', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
   sessionToken String   @unique
   userId       String
@@ -41,9 +41,9 @@ model Session {
 }
 
 model User {
-  id String @id @default(dbgenerated("concat('usr', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt     DateTime   @default(now()) @db.Timestamptz(6)
+  createdAt     DateTime   @default(now())
   name          String
   image         String?
   email         String?    @unique
@@ -61,7 +61,6 @@ model User {
   reactions     Reaction[]
   sessions      Session[]
   stacks        Stack[]    @relation("StackToUser")
-
 }
 
 model VerificationToken {
@@ -73,7 +72,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(dbgenerated("concat('bkm', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
   createdAt     DateTime   @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime   @updatedAt
@@ -92,9 +91,9 @@ model Bookmark {
 }
 
 model Question {
-  id String @id @default(dbgenerated("concat('qst', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt   DateTime   @default(now()) @db.Timestamptz(6)
+  createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
   plays       Int        @default(0)
@@ -110,9 +109,9 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(dbgenerated("concat('cmt', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+  createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
   userId     String
@@ -135,8 +134,7 @@ model Comment {
 }
 
 model Audio {
-  id String @id @default(dbgenerated("concat('aud_', xid())"))
-
+  id            String   @id @default(dbgenerated(" nanoid()"))
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
@@ -148,9 +146,9 @@ model Audio {
 }
 
 model Post {
-  id String @id @default(dbgenerated("concat('pos', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+  createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   publishedAt  DateTime?
   slug         String     @unique
@@ -164,15 +162,14 @@ model Post {
   history      PostEdit[]
   reactions    Reaction[]
 
-
   @@index([publishedAt])
   @@index([userId])
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated("concat('ped', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  createdAt    DateTime @default(now())
   text         String
   title        String
   excerpt      String
@@ -184,7 +181,7 @@ model PostEdit {
 }
 
 model Tag {
-  id String @id @default(dbgenerated("concat('tag', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
   name      String     @unique
   bookmarks Bookmark[] @relation("BookmarkToTag")
@@ -192,9 +189,9 @@ model Tag {
 }
 
 model Stack {
-  id String @id @default(dbgenerated("concat('stk', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt   DateTime   @default(now()) @db.Timestamptz(6)
+  createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String
   slug        String?    @unique
@@ -208,9 +205,9 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("concat('rct', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+  createdAt  DateTime  @default(now())
   userId     String
   bookmarkId String?
   questionId String?
@@ -230,9 +227,9 @@ model Reaction {
 }
 
 model PageView {
-  id String @id @default(dbgenerated("concat('pgv', xid())")) @db.Char(23)
+  id String @id @default(dbgenerated(" nanoid()"))
 
-  lastSeen  DateTime @default(now()) @db.Timestamptz(6)
+  lastSeen  DateTime @default(now())
   viewCount Int?     @default(0)
   catID     String   @unique
   sessionID String?  @unique

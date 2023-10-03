@@ -8,7 +8,7 @@ import { GET_VIEWER_SETTINGS } from '~/graphql/queries/viewer'
 import {
   GetViewerWithSettingsQuery,
   useEditUserMutation,
-} from '~/graphql/typeSlut'
+} from '~/graphql/types.generated'
 
 export function EmailForm(props: {
   viewer: GetViewerWithSettingsQuery['viewer']
@@ -26,7 +26,7 @@ export function EmailForm(props: {
       },
     },
     update(cache) {
-      //@ts-ignore
+      // @ts-ignore
       const { viewer } = cache.readQuery({
         query: GET_VIEWER_SETTINGS,
       })
@@ -41,10 +41,7 @@ export function EmailForm(props: {
         },
       })
     },
-    onError(error) {
-      // eslint-disable-next-line prettier/prettier
-      error
-    },
+    onError() {},
     onCompleted() {
       setIsEditing(false)
     },
@@ -57,8 +54,7 @@ export function EmailForm(props: {
       },
     },
     update(cache) {
-      //@ts-ignore
-      const { viewer } = cache.readQuery({
+      const { viewer } = cache.readQuery<GetViewerWithSettingsQuery>({
         query: GET_VIEWER_SETTINGS,
       })
 
@@ -72,10 +68,7 @@ export function EmailForm(props: {
         },
       })
     },
-    onError(error) {
-      // eslint-disable-next-line prettier/prettier
-      error
-    },
+    onError() {},
     onCompleted() {
       setEmail('')
     },
@@ -88,8 +81,7 @@ export function EmailForm(props: {
       },
     },
     update(cache) {
-      //@ts-ignore
-      const { viewer } = cache.readQuery({
+      const { viewer } = cache.readQuery<GetViewerWithSettingsQuery>({
         query: GET_VIEWER_SETTINGS,
       })
 
@@ -100,10 +92,7 @@ export function EmailForm(props: {
         },
       })
     },
-    onError(error) {
-      // eslint-disable-next-line prettier/prettier
-      error
-    },
+    onError() {},
   })
 
   function onSubmit(e) {

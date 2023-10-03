@@ -1,24 +1,17 @@
-import { getMDXComponent } from 'mdx-bundler/client'
+import Link from 'next/link'
 import * as React from 'react'
-import superjson from 'superjson'
 
 import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { CommentType, Post, useGetPostQuery } from '~/graphql/typeSlut'
-import { cleanTime } from '~/lib/functions'
+import { MarkdownRenderer } from '~/components/MarkdownRenderer'
+import { CommentType, useGetPostQuery } from '~/graphql/types.generated'
+import { timestampToCleanTime } from '~/lib/transformers'
 
-import { MDSEX } from '../MarkdownRenderer'
-import ViewCounter from '../Stats/ViewCounter'
-import ClientOnly from '../Switch/ClientOnly'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
-interface PD {
-  children: React.ReactNode
-  slug: string
-}
-export function PostDetail({ children, slug }: PD) {
+export function PostDetail({ slug }) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
   const { data, error, loading } = useGetPostQuery({ variables: { slug } })
@@ -31,8 +24,7 @@ export function PostDetail({ children, slug }: PD) {
     return <Detail.Null />
   }
   const { post } = data
-  const publishedAt = cleanTime({ timestamp: post.publishedAt })
-
+  const publishedAt = timestampToCleanTime({ timestamp: post.publishedAt })
   return (
     <>
       <PostSEO post={post} />
@@ -45,33 +37,27 @@ export function PostDetail({ children, slug }: PD) {
           title={post.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
-          trailingAccessory={
-            <>
-              <PostActions post={post} />
-            </>
-          }
+          trailingAccessory={<PostActions post={post} />}
         />
 
         <Detail.ContentContainer>
           <Detail.Header>
             <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
-
             <span
               title={publishedAt.raw}
-              className="flex text-tertiary align-top leading-snug font-mono"
+              className="text-tertiary inline-block leading-snug"
             >
               {publishedAt.formatted}
             </span>
           </Detail.Header>
-          <div className="prose xl:prose-lg dark:prose-dark lg:max-w-3xl mt-8">
-            {children}
-          </div>
+
+          <MarkdownRenderer children={post.text} className="prose mt-8" />
+
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />
         </Detail.ContentContainer>
-        <ClientOnly>
-          <Comments refId={post.id} type={CommentType.Post} />
-        </ClientOnly>
+
+        <Comments refId={post.id} type={CommentType.Post} />
       </Detail.Container>
     </>
   )

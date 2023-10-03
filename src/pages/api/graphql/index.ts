@@ -1,40 +1,34 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { ApolloServer } from '@apollo/server'
+import responseCachePlugin from '@apollo/server-plugin-response-cache'
 import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheControl'
 import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default'
-import responseCachePlugin from '@apollo/server-plugin-response-cache'
 import { KeyvAdapter } from '@apollo/utils.keyvadapter'
 import { ErrorsAreMissesCache } from '@apollo/utils.keyvaluecache'
 //import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import KeyvRedis from '@keyv/redis'
-import Keyv from 'keyv'
-import { NextApiRequest, NextApiResponse } from 'next'
-
 import { Context, getViewer } from '~/graphql/context'
 import { schema } from '~/graphql/schema'
-import prisma from '~/lib/prisma'
+import { prisma } from '~/lib/prisma'
+import Keyv from 'keyv'
 
-const faultTolerantCache = new Keyv({
-  store: new KeyvRedis(process.env.UPSTASH_URL),
-})
-const redisCache = new ErrorsAreMissesCache(new KeyvAdapter(faultTolerantCache))
 const server = new ApolloServer<Context>({
   schema,
   persistedQueries: {
     ttl: 900, // 15 minutes
   },
-  cache: redisCache,
   plugins: [
-    ApolloServerPluginCacheControl({
+    /* ApolloServerPluginCacheControl({
       // Cache everything for 1 second by default.
       defaultMaxAge: 5,
       // Don't send the `cache-control` response header.
       calculateHttpHeaders: 'if-cacheable',
     }),
-    responseCachePlugin(),
+    responseCachePlugin(), */
 
     process.env.NODE_ENV === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({

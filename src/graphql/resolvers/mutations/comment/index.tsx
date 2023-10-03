@@ -1,6 +1,3 @@
-import { GraphQLError } from 'graphql'
-import toast from 'react-hot-toast'
-
 import { CLIENT_URL } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
 import {
@@ -9,12 +6,15 @@ import {
   MutationDeleteCommentArgs,
   MutationEditCommentArgs,
 } from '~/graphql/typeSlut'
+import { GraphQLError } from 'graphql'
+import toast from 'react-hot-toast'
+
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
 //import { emailMe } from '~/lib/postmark'
 
 export async function editComment(
-  _,
+  _: any,
   args: MutationEditCommentArgs,
   ctx: Context
 ) {
@@ -50,7 +50,7 @@ export async function editComment(
 }
 
 export async function addComment(
-  _,
+  _: any,
   args: MutationAddCommentArgs,
   ctx: Context
 ) {
@@ -62,9 +62,9 @@ export async function addComment(
   if (trimmedText.length === 0)
     throw new GraphQLError('Comments can’t be blank')
 
-  let field
-  let table
-  let route
+  let field: ['questionId' | 'stackId' | 'bookmarkId' | 'postId']
+  let table: ['question' | 'stack' | 'bookmark' | 'post']
+  let route: string
   switch (type) {
     case CommentType.Bookmark: {
       field = 'bookmarkId'
@@ -128,7 +128,7 @@ export async function addComment(
 }
 
 export async function deleteComment(
-  _,
+  _: any,
   args: MutationDeleteCommentArgs,
   ctx: Context
 ) {
@@ -146,7 +146,7 @@ export async function deleteComment(
     throw new GraphQLError('You can’t delete this comment')
   } else {
     // eslint-disable-next-line prettier/prettier
-    ;(err) => {
+    ;(err: any) => {
       toast.error('You can’t delete this comment', {
         icon: '🙀',
       })

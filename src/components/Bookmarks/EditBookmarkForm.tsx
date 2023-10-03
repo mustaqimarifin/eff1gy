@@ -1,4 +1,4 @@
-import { Link2Icon } from '@radix-ui/react-icons'
+import { Link as LinkIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
@@ -6,12 +6,12 @@ import * as React from 'react'
 import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { TagPicker } from '~/components/Tag/TagPicker'
-import { GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
-import { GET_BOOKMARK } from '~/graphql/queries/bookmarks'
+import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import {
+  GetBookmarksQuery,
   useDeleteBookmarkMutation,
   useEditBookmarkMutation,
-} from '~/graphql/typeSlut'
+} from '~/graphql/types.generated'
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
   const router = useRouter()
@@ -101,8 +101,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
       deleteBookmark: true,
     },
     update(cache) {
-      //@ts-ignore
-      const { bookmarks } = cache.readQuery({
+      const { bookmarks } = cache.readQuery<GetBookmarksQuery>({
         query: GET_BOOKMARKS,
       })
 
@@ -177,13 +176,12 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
         />
         {state.error && <p className="text-red-500">{state.error}</p>}
         <Link
-          passHref
           href={bookmark.url}
           target="_blank"
           rel="noopener noreferrer"
           className="text-secondary inline-flex items-center space-x-2 pb-2 text-sm opacity-70 hover:opacity-100"
         >
-          <Link2Icon className="flex-none" />
+          <LinkIcon className="flex-none" size={12} />
           <span className="line-clamp-1">{bookmark.url}</span>
         </Link>
 

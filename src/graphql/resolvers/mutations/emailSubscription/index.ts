@@ -1,5 +1,3 @@
-import { GraphQLError } from 'graphql'
-
 import { Context } from '~/graphql/context'
 import {
   EmailSubscriptionType,
@@ -7,6 +5,7 @@ import {
 } from '~/graphql/typeSlut'
 import { emailRX } from '~/lib/functions'
 import { revue } from '~/lib/revue'
+import { GraphQLError } from 'graphql'
 
 export async function editEmailSubscription(
   _,

@@ -10,7 +10,6 @@ import {
   QuestionStatus,
   UserRole,
 } from '~/graphql/typeSlut'
-import { revue } from '~/lib/revue'
 
 import { DateQL } from '../scalars'
 

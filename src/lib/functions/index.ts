@@ -1,3 +1,5 @@
+import crypto from 'crypto'
+
 type Props = {
   timestamp?: number | string
   locale?: string
@@ -16,7 +18,6 @@ export const cacheOnly = {
   refreshInterval: 0, */
 }
 
-import crypto from 'crypto'
 export function sha256(input) {
   const buffer = Buffer.isBuffer(input) ? input : Buffer.from(input)
   return crypto.createHash('sha256').update(buffer).digest('base64')
@@ -135,12 +136,15 @@ export const throttle = (func, limit) => {
       lastRan = Date.now()
     } else {
       clearTimeout(lastFunc)
-      lastFunc = setTimeout(function () {
-        if (Date.now() - lastRan >= limit) {
-          func(null, args)
-          lastRan = Date.now()
-        }
-      }, limit - (Date.now() - lastRan))
+      lastFunc = setTimeout(
+        function () {
+          if (Date.now() - lastRan >= limit) {
+            func(null, args)
+            lastRan = Date.now()
+          }
+        },
+        limit - (Date.now() - lastRan)
+      )
     }
   }
 }
@@ -154,12 +158,15 @@ export const throttleV2 = (func, limit) => {
       lastRan = Date.now()
     } else {
       clearTimeout(timeoutId)
-      timeoutId = setTimeout(function () {
-        if (Date.now() - lastRan >= limit) {
-          func(null, args)
-          lastRan = Date.now()
-        }
-      }, limit - (Date.now() - lastRan))
+      timeoutId = setTimeout(
+        function () {
+          if (Date.now() - lastRan >= limit) {
+            func(null, args)
+            lastRan = Date.now()
+          }
+        },
+        limit - (Date.now() - lastRan)
+      )
     }
   }
 

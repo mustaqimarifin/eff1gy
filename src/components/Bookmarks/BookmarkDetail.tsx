@@ -1,4 +1,4 @@
-import { Link1Icon } from '@radix-ui/react-icons'
+import { Link as LinkIcon } from 'lucide-react'
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import * as React from 'react'
@@ -9,7 +9,7 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
 import routes from '~/config/routes'
-import { CommentType, useGetBookmarkQuery } from '~/graphql/typeSlut'
+import { CommentType, useGetBookmarkQuery } from '~/graphql/types.generated'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { BookmarkActions } from './BookmarkActions'
@@ -64,7 +64,6 @@ export function BookmarkDetail({ id }) {
           <Detail.Header>
             <Tags tags={bookmark.tags} />
             <Link
-              passHref
               href={bookmark.url}
               target="_blank"
               rel="noopener"
@@ -73,7 +72,6 @@ export function BookmarkDetail({ id }) {
               <Detail.Title ref={titleRef}>{bookmark.title}</Detail.Title>
             </Link>
             <Link
-              passHref
               href={bookmark.url}
               target="_blank"
               rel="noopener"
@@ -105,7 +103,7 @@ export function BookmarkDetail({ id }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Link1Icon />
+              <LinkIcon size={14} />
               <span>Visit</span>
             </PrimaryButton>
           </div>

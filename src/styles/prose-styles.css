@@ -1,9 +1,9 @@
 .prose {
-  @apply text-gray-700 dark:text-gray-300;
+  @apply text-gray-700 dark:text-gray-400;
 }
 
 .prose blockquote {
-  @apply font-normal border-l-2 border-gray-200 dark:border-gray-800 dark:text-gray-400;
+  @apply border-l-2 border-gray-200 font-normal dark:border-gray-800 dark:text-gray-400;
 }
 
 .prose figure {
@@ -14,16 +14,16 @@
   @apply w-full rounded-md;
 }
 
-/* .prose a {
-  @apply font-normal text-blue-600 no-underline break-words hover:underline dark:text-blue-500;
+.prose a {
+  @apply break-words font-normal text-blue-600 no-underline hover:underline dark:text-blue-500;
 }
 
 .prose a code {
-  @apply text-orange-400;
+  @apply text-blue-600 dark:text-blue-500;
 }
- */
+
 .prose table {
-  @apply my-2 border border-gray-200 rounded-md text-gray-1000 dark:border-gray-800 dark:text-gray-50;
+  @apply my-2 rounded-md border border-gray-200 text-gray-1000 dark:border-gray-800 dark:text-gray-50;
 }
 
 .prose.comment table {
@@ -35,14 +35,14 @@
 }
 
 .prose thead th {
-  @apply p-2 text-gray-800 dark:text-gray-200;
+  @apply p-2;
   padding-left: 1rem !important;
 }
 
 .prose thead th,
 .prose tbody th,
 .prose tbody td {
-  @apply p-2 border-r border-gray-200 dark:border-gray-800;
+  @apply border-r border-gray-200 p-2 dark:border-gray-800;
   padding-left: 1rem !important;
 }
 
@@ -55,12 +55,12 @@
 }
 
 .prose tbody tr:nth-child(2n) {
-  @apply bg-gray-50 dark:bg-gray-1000;
+  @apply bg-gray-50 dark:bg-gray-900;
 }
 
 .prose b,
 .prose strong {
-  @apply font-bold text-gray-1000 dark:text-gray-300;
+  @apply font-bold text-gray-900 dark:text-gray-300;
 }
 
 .prose hr {
@@ -82,16 +82,13 @@
   left: 0;
 }
 
-.prose h1 a {
-  @apply font-ivar !important;
-}
-
+.prose h1,
 .prose h2,
 .prose h3,
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply font-bold text-gray-1000 dark:text-gray-100;
+  @apply font-sans font-bold text-gray-900 dark:text-gray-100;
   scroll-margin-top: 4rem;
 }
 
@@ -101,11 +98,15 @@
 .prose h4 a,
 .prose h5 a,
 .prose h6 a {
-  @apply font-bold no-underline text-gray-1000 dark:text-gray-100;
+  @apply font-sans font-bold text-gray-1000 no-underline dark:text-gray-100;
 }
 
 .prose h5 {
-  @apply mt-12 -mb-3 text-xl;
+  @apply -mb-3 mt-12 text-xl;
+}
+
+.prose pre {
+  @apply space-y-4 rounded-md border-gray-300 bg-gray-400 bg-opacity-5 px-8 py-6 text-sm text-gray-800 dark:border-gray-800 dark:text-gray-200;
 }
 
 .prose.comment {
@@ -113,7 +114,7 @@
 }
 
 .prose.comment pre {
-  @apply px-3 py-2 my-2;
+  @apply my-2 px-3 py-2;
 }
 
 /* this is needed to avoid HN comments from overflowing off the right edge of the screen */
@@ -147,39 +148,24 @@
 .prose p + p {
   margin-top: 0;
 }
-.prose code,
-.prose pre {
-  @apply font-medium;
-  word-break: break-word;
-}
-
-/*  .prose code {
-  @apply rounded-md border-gray-100 bg-gray-100 px-1 py-0.5 text-gray-800 dark:border-gray-800 dark:bg-gray-1000 dark:text-gray-200;
-}  
-
-
 
 .prose code {
-  @apply 
-  font-mono rounded-md  px-1 py-0.5 text-pink-400  ;
+  @apply rounded-md border-gray-100 bg-gray-100 px-1 py-0.5 text-gray-800 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-200;
 }
+
 .prose code,
- .prose pre {
-  @apply text-sm font-medium font-mono;
+.prose pre {
+  @apply whitespace-pre-wrap text-sm font-medium;
   word-break: break-word;
 }
- .prose pre >   code {
-  display: grid;
-  @apply  font-mono bg-stone-800 !important
- }
 
- .prose pre {
-  @apply rounded-md px-8 py-6 space-y-4 bg-stone-800 !important;
+.prose pre > code {
+  @apply bg-gray-800 text-gray-200;
 }
 
- .prose pre {
-  @apply px-8 py-6 space-y-4 text-sm text-gray-800 bg-gray-400 border-gray-300 rounded-md bg-opacity-5 dark:border-gray-800 dark:text-gray-200;
-} 
+.prose pre {
+  @apply bg-gray-800 text-gray-100;
+}
 
 .prose sup {
   @apply text-sm text-blue-500 dark:text-gray-400;
@@ -188,5 +174,3 @@
   position: relative;
   scroll-margin-top: 4rem;
 }
-
-*/

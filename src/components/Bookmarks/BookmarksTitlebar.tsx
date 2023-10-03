@@ -1,9 +1,9 @@
-import { PlusIcon } from '@radix-ui/react-icons'
+import { Plus } from 'lucide-react'
 import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useViewerQuery } from '~/graphql/typeSlut'
+import { useViewerQuery } from '~/graphql/types.generated'
 
 import { AddBookmarkDialog } from './AddBookmarkDialog'
 import { BookmarksFilterMenu } from './FilterMenu'
@@ -21,7 +21,7 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
               data-cy="open-add-bookmark-dialog"
               size="small-square"
             >
-              <PlusIcon />
+              <Plus size={16} />
             </GhostButton>
           }
         />

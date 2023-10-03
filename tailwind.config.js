@@ -1,22 +1,18 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const colors = require('tailwindcss/colors')
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
-/* const linkHeadingStyles = {
-  color: colors.gray[100],
-  borderBottomColor: 'transparent !important',
-  '&:hover': {
-    color: `${colors.gray[900]} !important`,
-  },
-} */
+const mono = [
+  'ui-monospace',
+  'SFMono-Regular',
+  'Menlo',
+  'Monaco',
+  'Consolas',
+  'Liberation Mono',
+  'Courier New',
+  'monospace',
+]
 module.exports = {
-  content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/line-clamp'),
-  ],
-  darkMode: 'class',
+  content: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
   theme: {
     extend: {
       fontFamily: {
@@ -25,20 +21,6 @@ module.exports = {
         mono: ['SFMono', ...fontFamily.mono],
       },
       colors: {
-        active: '#48b7e2',
-        secondary: '#71c440',
-        accent: '#9247d1',
-        neutral: '#222334',
-        coyGreen: ' #51cf66',
-        coyRed: '#d68599',
-        coyYellow: '#fcc419',
-        coyBlue: '#74c0fc',
-        coyPurp: '#8888fc',
-        'base-100': '#F0EFF1',
-        info: '#fee6e8',
-        success: '#178766',
-        warning: '#8F580A',
-        error: '#E4536E',
         white: '#fff',
         green: colors.emerald,
         yellow: colors.amber,
@@ -52,8 +34,6 @@ module.exports = {
         'design-details-dark': '#273F3F',
         'hacker-news': '#FF965A',
         twitter: '#479BEA',
-        google: '#DB4437',
-        github: '#6e5494',
         current: 'currentColor',
       },
       boxShadow: {
@@ -71,107 +51,7 @@ module.exports = {
           '100%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
         },
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            '.prose h1,h2,h3,h4,h5,h6': { color: colors.slate[900] },
-            /*             '.prose h2 a': linkHeadingStyles,
-            '.prose h3 a': linkHeadingStyles,
-            '.prose h4 a': linkHeadingStyles,
-            '.prose h5 a': linkHeadingStyles,
-            '.prose h6 a': linkHeadingStyles, */
-            blockquote: {
-              fontSize: '90%',
-              color: colors.slate[500],
-              borderLeftColor: colors.zinc[700],
-              'p::before': {
-                display: 'none',
-              },
-              'p::after': {
-                display: 'none',
-              },
-            },
-            '.prose a': {
-              textDecoration: 'none',
-              borderBottom: 'none',
-              color: colors.rose[500],
-              transition:
-                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
-              '&:hover': {
-                color: `${colors.zinc[900]} !important`,
-                borderBottomColor: `${colors.cyan[200]} !important`,
-                background: colors.purple[200],
-              },
-            },
-            '.prose pre': {
-              background: 'none',
-              transition:
-                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
-            },
-            '.prose code': {
-              color: colors.rose[500],
-              '&::before': {
-                content: `"" !important`,
-              },
-              '&::after': {
-                content: `"" !important`,
-              },
-              fontWeight: 'normal',
-            },
-          },
-        },
-        dark: {
-          css: {
-            '.prose h1,h2,h3,h4,h5,h6': { color: colors.white },
-            /*             '.prose h2 a': linkHeadingStyles,
-            '.prose h3 a': linkHeadingStyles,
-            '.prose h4 a': linkHeadingStyles,
-            '.prose h5 a': linkHeadingStyles,
-            '.prose h6 a': linkHeadingStyles, */
-            blockquote: {
-              fontSize: '90%',
-              color: colors.zinc[500],
-              borderLeftColor: colors.zinc[700],
-              'p::before': {
-                display: 'none',
-              },
-              'p::after': {
-                display: 'none',
-              },
-            },
-            '.prose a': {
-              textDecoration: 'none',
-              borderBottom: 'none',
-              color: colors.rose[300],
-              transition:
-                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
-              '&:hover': {
-                color: `${colors.zinc[900]} !important`,
-                borderBottomColor: `${colors.cyan[200]} !important`,
-                background: colors.purple[200],
-              },
-            },
-            '.prose pre': {
-              background: colors.slate[100],
-              transition:
-                'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
-            },
-            '.prose code': {
-              color: colors.rose[300],
-              '&::before': {
-                content: `"" !important`,
-              },
-              '&::after': {
-                content: `"" !important`,
-              },
-              fontWeight: 'normal',
-            },
-          },
-        },
-      },
     },
   },
-  variants: {
-    typography: ['dark'],
-  },
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 }

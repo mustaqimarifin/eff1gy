@@ -1,7 +1,6 @@
 import * as React from 'react'
-
 import Button from '~/components/Button'
-import { useViewerQuery } from '~/graphql/typeSlut'
+import { useViewerQuery } from '~/graphql/types.generated'
 
 import { HeartFillIcon, HeartIcon } from '../Icon'
 import { SignInDialog } from '../SignInDialog'
@@ -27,8 +26,8 @@ export function ReactionButton(props: Props) {
   const [nextTranslate, setNextTranslate] = React.useState(
     hasReactedState ? 'translate-y-0' : '-translate-y-4'
   )
-  const currOpacity = 'opacity-100'
-  const nextOpacity = 'opacity-0'
+  let currOpacity = 'opacity-100'
+  let nextOpacity = 'opacity-0'
   const [ping, setPing] = React.useState(false)
 
   // reset all the states as people navigate between different reactable pages
@@ -45,7 +44,7 @@ export function ReactionButton(props: Props) {
       <SignInDialog
         trigger={
           <Button aria-label="Like">
-            <span className="text-gray-500 ">
+            <span className="text-gray-500">
               <HeartIcon />
             </span>
             <span>{count}</span>
@@ -76,14 +75,14 @@ export function ReactionButton(props: Props) {
       {hasReactedState ? (
         <span className="relative text-red-500">
           {ping && (
-            <span className="absolute top-0 left-0 animate-ping">
+            <span className="absolute left-0 top-0 animate-ping">
               <HeartFillIcon />
             </span>
           )}
           <HeartFillIcon />
         </span>
       ) : (
-        <span className="text-gray-500 hover:text-rose-300">
+        <span className="text-gray-500">
           <HeartIcon />
         </span>
       )}

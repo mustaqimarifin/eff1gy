@@ -8,10 +8,9 @@ import {
   MutationEditBookmarkArgs,
 } from '~/graphql/typeSlut'
 import { urlRX } from '~/lib/functions'
+
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
-import { revue } from '~/lib/revue'
-
 import getBookmarkMetaData from './getBookmarkMetaData'
 
 export async function editBookmark(
@@ -81,16 +80,6 @@ export async function addBookmark(
     Preemptively add bookmarks to Revue, assuming I want to share them
     more broadly in the newsletter
   */
-  if (IS_PROD) {
-    try {
-      const { id } = await revue.getCurrentIssue()
-      await revue.addItemToIssue({ id, url })
-    } catch (err) {
-      console.error({ err })
-    }
-  } else {
-    console.log('Adding bookmark to newsletter', { url })
-  }
 
   return await prisma.bookmark
     .create({

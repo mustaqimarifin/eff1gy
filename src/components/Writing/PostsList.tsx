@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { useGetPostsQuery } from '~/graphql/typeSlut'
+import { useGetPostsQuery } from '~/graphql/types.generated'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 import { PostListItem } from './PostListItem'
@@ -10,13 +9,13 @@ import { WritingTitlebar } from './WritingTitlebar'
 
 export const WritingContext = React.createContext({
   filter: 'published',
-  setFilter: (filter: string) => undefined,
+  setFilter: (filter: string) => {},
 })
 
 export function PostsList() {
   const router = useRouter()
   const [filter, setFilter] = React.useState('published')
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  let [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 
   const variables =
     filter === 'published'
@@ -59,6 +58,7 @@ export function PostsList() {
     <WritingContext.Provider value={defaultContextValue}>
       <ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
         <WritingTitlebar scrollContainerRef={scrollContainerRef} />
+
         <div className="lg:space-y-1 lg:p-3">
           {posts.map((post) => {
             const active = router.query?.slug === post.slug

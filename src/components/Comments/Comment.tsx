@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import * as React from 'react'
 
@@ -10,15 +9,14 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import {
   Comment as CommentProp,
   CommentType,
+  GetCommentsQuery,
   useDeleteCommentMutation,
   useEditCommentMutation,
-} from '~/graphql/typeSlut'
-import { cleanTime } from '~/lib/functions'
+} from '~/graphql/types.generated'
+import { timestampToCleanTime } from '~/lib/transformers'
 
+import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentMenu } from './CommentMenu'
-const MarkdownRenderer = dynamic(() =>
-  import('../MarkdownRenderer').then((m) => m.MarkdownRenderer)
-)
 
 interface Props {
   comment: CommentProp
@@ -42,8 +40,7 @@ export const Comment = React.memo(function MemoComment({
       deleteComment: true,
     },
     update(cache) {
-      //@ts-ignore
-      const { comments } = cache.readQuery({
+      const { comments } = cache.readQuery<GetCommentsQuery>({
         query: GET_COMMENTS,
         variables: { refId, type },
       })
@@ -56,10 +53,7 @@ export const Comment = React.memo(function MemoComment({
         },
       })
     },
-    onError(error) {
-      // eslint-disable-next-line prettier/prettier
-      error
-    },
+    onError(error) {},
   })
 
   const [editComment] = useEditCommentMutation({
@@ -76,10 +70,7 @@ export const Comment = React.memo(function MemoComment({
         },
       },
     },
-    onError(error) {
-      // eslint-disable-next-line prettier/prettier
-      error
-    },
+    onError(error) {},
     onCompleted() {
       setIsSavingEdit(false)
       setIsEditing(false)
@@ -110,7 +101,7 @@ export const Comment = React.memo(function MemoComment({
     editComment()
   }
 
-  const createdAt = cleanTime({
+  const createdAt = timestampToCleanTime({
     month: 'short',
     timestamp: comment.createdAt,
   })
@@ -119,34 +110,30 @@ export const Comment = React.memo(function MemoComment({
     <div className="group flex flex-col space-y-0">
       <div className="flex items-center justify-between space-x-4">
         <div className="flex items-center space-x-4">
-          <Link
-            passHref
-            href={`/u/${comment.author.id}`}
-            className="inline-flex"
-          >
+          <Link href={`/u/${comment.author.name}`} className="inline-flex">
             <Avatar
               user={comment.author}
               src={comment.author.image}
               width={40}
               height={40}
               quality={100}
+              layout="fixed"
               className="rounded-full"
             />
           </Link>
 
           <div className="flex space-x-1">
             <Link
-              passHref
               href={`/u/${comment.author.name}`}
               className="text-primary font-semibold leading-snug"
             >
-              <div className="flex break-all line-clamp-1">
+              <div className="line-clamp-1 flex break-all">
                 {comment.author.name}
               </div>
             </Link>
             <p className="text-quaternary leading-snug">·</p>
             <p
-              className="text-quaternary leading-snug line-clamp-1"
+              className="text-quaternary line-clamp-1 leading-snug"
               title={createdAt.raw}
             >
               {createdAt.formatted}
@@ -164,7 +151,7 @@ export const Comment = React.memo(function MemoComment({
       </div>
 
       {isEditing ? (
-        <div className="flex flex-col space-y-3 pt-4 pl-14">
+        <div className="flex flex-col space-y-3 pl-14">
           <Textarea
             onChange={(e) => setEditText(e.target.value)}
             value={editText}
@@ -184,6 +171,7 @@ export const Comment = React.memo(function MemoComment({
         <MarkdownRenderer
           children={comment.text}
           className="comment prose flex-grow pl-14 leading-normal"
+          variant="comment"
         />
       )}
     </div>

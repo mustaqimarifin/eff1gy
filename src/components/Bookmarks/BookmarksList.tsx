@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import { useGetBookmarksQuery } from '~/graphql/typeSlut'
+import { useGetBookmarksQuery } from '~/graphql/types.generated'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -13,7 +13,7 @@ import { BookmarksTitlebar } from './BookmarksTitlebar'
 
 export const BookmarksContext = React.createContext({
   tag: null,
-  setTag: (tag: string) => undefined,
+  setTag: (tag: string) => {},
 })
 
 export function BookmarksList() {
@@ -81,7 +81,7 @@ export function BookmarksList() {
     <BookmarksContext.Provider value={defaultContextValue}>
       <ListContainer data-cy="bookmarks-list" onRef={setScrollContainerRef}>
         <BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
-        <LayoutGroup id="bl">
+        <LayoutGroup>
           <div className="lg:space-y-1 lg:p-3">
             {bookmarks.edges.map((bookmark) => {
               const active = router.query.id === bookmark.node.id

@@ -1,13 +1,12 @@
-import { GearIcon } from '@radix-ui/react-icons'
+import { Settings } from 'lucide-react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import * as React from 'react'
-2
 
 import { Avatar } from '~/components/Avatar'
 import { GhostButton } from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { useViewerQuery } from '~/graphql/typeSlut'
+import { useViewerQuery } from '~/graphql/types.generated'
 
 import { GlobalNavigationContext } from '../Providers'
 
@@ -15,7 +14,7 @@ function Container(props) {
   return (
     <div
       data-cy="sign-in-button"
-      className="filter-blur sticky bottom-0 z-10 flex items-center justify-between space-x-3 border-t border-gray-150 bg-white bg-opacity-80 p-2 dark:border-gray-800 dark:bg-gray-1000 dark:bg-opacity-60"
+      className="filter-blur sticky bottom-0 z-10 flex items-center justify-between space-x-3 border-t border-gray-150 bg-white bg-opacity-80 p-2 dark:border-gray-800 dark:bg-gray-900 dark:bg-opacity-60"
       {...props}
     />
   )
@@ -27,18 +26,16 @@ export function UserFooter() {
 
   function signInButton() {
     return (
-      <>
-        <GhostButton
-          href={`/api/auth/signin`}
-          onClick={(e) => {
-            e.preventDefault()
-            signIn()
-          }}
-          style={{ width: '100%' }}
-        >
-          Sign in
-        </GhostButton>
-      </>
+      <GhostButton
+        href={`/api/auth/signin`}
+        onClick={(e) => {
+          e.preventDefault()
+          signIn()
+        }}
+        style={{ width: '100%' }}
+      >
+        Sign in
+      </GhostButton>
     )
   }
 
@@ -60,8 +57,7 @@ export function UserFooter() {
     return (
       <Container>
         <Link
-          passHref
-          href={`/u/${data.viewer.id}`}
+          href={`/u/${data.viewer.name}`}
           onClick={() => setIsOpen(false)}
           className="flex flex-none items-center rounded-full"
         >
@@ -70,6 +66,7 @@ export function UserFooter() {
             src={data.viewer.image}
             width={24}
             height={24}
+            layout="fixed"
             className="rounded-full"
           />
         </Link>
@@ -79,7 +76,7 @@ export function UserFooter() {
           size="small-square"
           href="/settings"
         >
-          <GearIcon />
+          <Settings size={16} />
         </GhostButton>
       </Container>
     )

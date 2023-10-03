@@ -1,7 +1,6 @@
-import Link from 'next/link'
 import * as React from 'react'
-
-import { useGetBookmarksQuery } from '~/graphql/typeSlut'
+import Link from 'next/link'
+import { useGetBookmarksQuery } from '~/graphql/types.generated'
 
 export function RelatedBookmarks({ bookmark }) {
   const { data, loading } = useGetBookmarksQuery({
@@ -39,7 +38,7 @@ export function RelatedBookmarks({ bookmark }) {
                 href="/bookmarks/[id]"
                 as={`/bookmarks/${r.node.id}`}
                 onClick={handleClick}
-                className="text-primary -mx-2 flex justify-between rounded-md px-2 py-2 font-medium line-clamp-1 hover:bg-gray-200 dark:hover:bg-gray-700 md:-mx-3 md:px-3"
+                className="text-primary -mx-2 line-clamp-1 flex justify-between rounded-md px-2 py-2 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 md:-mx-3 md:px-3"
               >
                 <span>{r.node.title}</span>
               </Link>

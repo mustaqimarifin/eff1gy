@@ -1,7 +1,6 @@
-import { GraphQLError } from 'graphql'
-
 import { Context } from '~/graphql/context'
 import { MutationToggleReactionArgs, ReactionType } from '~/graphql/typeSlut'
+import { GraphQLError } from 'graphql'
 
 export async function toggleReaction(
   _,

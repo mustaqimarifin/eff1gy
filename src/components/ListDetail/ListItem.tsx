@@ -24,11 +24,10 @@ export function ListItem({
 }: Props) {
   return (
     <Link
-      passHref
       href={href}
       as={as}
       onClick={onClick && onClick}
-      className={`flex space-x-3 border-b border-gray-100 py-3 px-3.5 text-sm dark:border-gray-900 lg:rounded-lg lg:border-none lg:py-2 ${
+      className={`flex space-x-3 border-b border-gray-100 px-3.5 py-3 text-sm dark:border-gray-900 lg:rounded-lg lg:border-none lg:py-2 ${
         active
           ? 'bg-black dark:bg-gray-700'
           : 'sm:hover:bg-gray-200 sm:dark:hover:bg-gray-800'
@@ -37,8 +36,8 @@ export function ListItem({
       {leadingAccessory && <>{leadingAccessory}</>}
       <div className="flex flex-col justify-center space-y-1">
         <div
-          className={`font-semibold line-clamp-3 ${
-            active ? 'text-white' : 'text-gray-900 dark:text-gray-100'
+          className={`line-clamp-3 font-medium ${
+            active ? 'text-white' : 'text-gray-1000 dark:text-gray-100'
           }`}
         >
           {title}
@@ -48,7 +47,7 @@ export function ListItem({
             className={`line-clamp-2 ${
               active
                 ? 'text-white text-opacity-80'
-                : 'text-gray-900 text-opacity-60 dark:text-white'
+                : 'text-gray-1000 text-opacity-60 dark:text-white'
             }`}
           >
             {description}
@@ -56,10 +55,10 @@ export function ListItem({
         )}
         {byline && (
           <div
-            className={`line-clamp-1 text-xs ${
+            className={`line-clamp-1 ${
               active
                 ? 'text-white text-opacity-60'
-                : 'text-gray-900 text-opacity-40 dark:text-white dark:text-opacity-60'
+                : 'text-gray-1000 text-opacity-40 dark:text-white dark:text-opacity-60'
             }`}
           >
             {byline}

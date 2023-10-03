@@ -1,32 +1,29 @@
-/* eslint-disable react/jsx-key */
-import { PlusIcon } from '@radix-ui/react-icons'
-import { useRouter } from 'next/router'
 import * as React from 'react'
-
+import { useRouter } from 'next/router'
 import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
 import { GhostButton } from '~/components/Button'
 import {
   AMAIcon,
   AppDissectionIcon,
   BookmarksIcon,
+  CampsiteIcon,
   CritIcon,
   ExternalLinkIcon,
   FigmaIcon,
   GitHubIcon,
   HackerNewsIcon,
   HomeIcon,
-  MidnightOilIcon,
+  PodcastIcon,
   SecurityChecklistIcon,
-  SoundcloudIcon,
   StackIcon,
   StaffDesignIcon,
   TwitterIcon,
-  VideoIcon,
   WritingIcon,
+  YouTubeIcon,
 } from '~/components/Icon'
-import { useViewerQuery } from '~/graphql/typeSlut'
+import { useViewerQuery } from '~/graphql/types.generated'
+import { Plus } from 'lucide-react'
 
-import ThemeToggle from '../Button/ThemeToggle'
 import { NavigationLink } from './NavigationLink'
 
 function ThisAddBookmarkDialog() {
@@ -34,7 +31,7 @@ function ThisAddBookmarkDialog() {
     <AddBookmarkDialog
       trigger={
         <GhostButton aria-label="Add bookmark" size="small-square">
-          <PlusIcon />
+          <Plus size={16} />
         </GhostButton>
       }
     />
@@ -67,16 +64,6 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: false,
         },
-
-        /*         {
-          href: '/crit',
-          label: 'Crit',
-          icon: CritIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/crit') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        }, */
       ],
     },
     {
@@ -103,6 +90,7 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: false,
         },
+
         {
           href: '/stack',
           label: 'Stack',
@@ -112,25 +100,15 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: false,
         },
-        /*  {
-          href: '/press',
-          label: 'Press',
-          icon: AMAIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/press') >= 0,
-          //            !router.asPath.startsWith('/ama/pending'),
-          trailingAction: null,
-          isExternal: false,
-        }, */
       ],
     },
     {
       label: 'Projects',
       items: [
         {
-          href: 'https://soundcloud.com/vmprmyth',
-          label: 'VMPRMYTH',
-          icon: SoundcloudIcon,
+          href: 'https://campsite.design',
+          label: 'Campsite',
+          icon: CampsiteIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
           trailingAction: null,
@@ -138,15 +116,36 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://soundcloud.com/midnightoilmusic',
-          label: 'Midnight Oil',
-          icon: MidnightOilIcon,
+          href: 'https://designdetails.fm',
+          label: 'Design Details',
+          icon: PodcastIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
           trailingAction: null,
           isExternal: true,
         },
-        /* {
+
+        {
+          href: 'https://staff.design',
+          label: 'Staff Design',
+          icon: StaffDesignIcon,
+          trailingAccessory: ExternalLinkIcon,
+          isActive: false,
+          trailingAction: null,
+          isExternal: true,
+        },
+
+        {
+          href: 'https://figma.com/@brian',
+          label: 'Figma Plugins',
+          icon: FigmaIcon,
+          trailingAccessory: ExternalLinkIcon,
+          isActive: false,
+          trailingAction: null,
+          isExternal: true,
+        },
+
+        {
           href: '/security',
           label: 'Security Checklist',
           icon: SecurityChecklistIcon,
@@ -154,9 +153,9 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/security') >= 0,
           trailingAction: null,
           isExternal: false,
-        }, */
+        },
 
-        /*        {
+        {
           href: '/hn',
           label: 'Hacker News',
           icon: HackerNewsIcon,
@@ -164,9 +163,9 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/hn') >= 0,
           trailingAction: null,
           isExternal: false,
-        }, */
+        },
 
-        /*  {
+        {
           href: '/app-dissection',
           label: 'App Dissection',
           icon: AppDissectionIcon,
@@ -174,14 +173,14 @@ export function SidebarNavigation() {
           isActive: router.asPath.indexOf('/app-dissection') >= 0,
           trailingAction: null,
           isExternal: false,
-        }, */
+        },
       ],
     },
     {
       label: 'Online',
       items: [
         {
-          href: 'https://twitter.com/vmprmyth',
+          href: 'https://twitter.com/brian_lovin',
           label: 'Twitter',
           icon: TwitterIcon,
           trailingAccessory: ExternalLinkIcon,
@@ -191,7 +190,17 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://github.com/mustaqimarifin',
+          href: 'https://www.youtube.com/channel/UC-esBYEUGQ6iK1wmw76f5MA',
+          label: 'YouTube',
+          icon: YouTubeIcon,
+          trailingAccessory: ExternalLinkIcon,
+          isActive: false,
+          trailingAction: null,
+          isExternal: true,
+        },
+
+        {
+          href: 'https://github.com/brianlovin',
           label: 'GitHub',
           icon: GitHubIcon,
           trailingAccessory: ExternalLinkIcon,
@@ -199,43 +208,29 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: true,
         },
-      ],
-    },
-    {
-      label: 'Misc',
-      items: [
-        {
-          href: '/privacypolicy',
-          label: 'Privacy Policy',
-          icon: StackIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/privacypolicy') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
 
         {
-          href: '/termsofservice',
-          label: 'Terms of Service',
-          icon: StackIcon,
-          trailingAccessory: null,
-          isActive: router.asPath.indexOf('/termsofservice') >= 0,
+          href: 'https://figma.com/@brian',
+          label: 'Figma',
+          icon: FigmaIcon,
+          trailingAccessory: ExternalLinkIcon,
+          isActive: false,
           trailingAction: null,
-          isExternal: false,
+          isExternal: true,
         },
       ],
     },
   ]
 
   return (
-    <div className="flex-1 px-3 py-3 space-y-1">
+    <div className="flex-1 space-y-1 px-3 py-3">
       {sections.map((section, i) => {
         return (
           <ul key={i} className="space-y-1">
             {section.label && (
               <h4
                 key={i}
-                className="px-2 pt-5 pb-2 text-xs font-semibold text-gray-1000 text-opacity-40 dark:text-white"
+                className="px-2 pb-2 pt-5 text-xs font-semibold text-gray-1000 text-opacity-40 dark:text-white"
               >
                 {section.label}
               </h4>

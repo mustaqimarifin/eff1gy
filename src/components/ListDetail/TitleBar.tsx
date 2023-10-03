@@ -1,12 +1,7 @@
-import {
-  ArrowLeftIcon,
-  Cross2Icon,
-  HamburgerMenuIcon,
-} from '@radix-ui/react-icons'
-import Link from 'next/link'
 import * as React from 'react'
-
+import Link from 'next/link'
 import { GlobalNavigationContext } from '~/components/Providers'
+import { ArrowLeft, Menu, X } from 'lucide-react'
 
 interface Props {
   title: string
@@ -72,10 +67,10 @@ export function TitleBar({
     const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56
     const initialOffsets = initialTitleOffsetsRef.current
 
-    const offsetAmount =
+    let offsetAmount =
       parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100
 
-    const opacityOffset =
+    let opacityOffset =
       parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1
 
     setOffset(Math.min(Math.max(offsetAmount, 0), 100))
@@ -108,18 +103,18 @@ export function TitleBar({
   return (
     <>
       <div
-        /*          style={{
-          background: `rgba(${darkMode ? '255,255,255' : '255,255,255'},${
+        style={{
+          background: `rgba(${darkMode ? '50,50,50' : '255,255,255'},${
             currentScrollOffset === 0
               ? currentScrollOffset
               : darkMode
-              ? currentScrollOffset + 0.9
-              : currentScrollOffset + 0
+              ? currentScrollOffset + 0.5
+              : currentScrollOffset + 0.8
           })`,
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
           minHeight: '48px',
-        }}  */
-        className={`filter-blur shadow bg-gray-100 dark:bg-black  sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
+        }}
+        className={`filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
       >
         <div className="flex flex-none items-center justify-between">
           <span className="flex items-center space-x-3">
@@ -129,9 +124,9 @@ export function TitleBar({
                 className="flex cursor-pointer items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
               >
                 {isOpen ? (
-                  <Cross2Icon className="text-primary" />
+                  <X size={16} className="text-primary" />
                 ) : (
-                  <HamburgerMenuIcon className="text-primary" />
+                  <Menu size={16} className="text-primary" />
                 )}
               </span>
             )}
@@ -139,10 +134,9 @@ export function TitleBar({
             {backButton && (
               <Link
                 href={backButtonHref}
-                passHref
                 className="text-primary flex items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
               >
-                <ArrowLeftIcon className="text-primary" />
+                <ArrowLeft size={16} className="text-primary" />
               </Link>
             )}
 
@@ -157,7 +151,7 @@ export function TitleBar({
                     }
                   : {}
               }
-              className="text-primary transform-gpu text-sm  font-bold line-clamp-1"
+              className="text-primary line-clamp-1 transform-gpu text-sm font-bold"
             >
               {title}
             </h2>

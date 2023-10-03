@@ -1,18 +1,17 @@
+import { useApolloClient } from '@apollo/client'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 
 import { DeleteButton } from '~/components/Button'
 import { DialogComponent } from '~/components/Dialog'
-import { useDeleteUserMutation } from '~/graphql/typeSlut'
+import { useDeleteUserMutation } from '~/graphql/types.generated'
+
+import { LoadingSpinner } from '../LoadingSpinner'
 
 export function DeleteUserDialog({ trigger }) {
   const router = useRouter()
-  const [handleDelete] = useDeleteUserMutation()
-
-  function onClick() {
-    handleDelete()
-    router.push('/api/auth/signout')
-  }
+  const apolloClient = useApolloClient()
+  const [handleDelete, { loading }] = useDeleteUserMutation()
 
   return (
     <DialogComponent
@@ -22,7 +21,14 @@ export function DeleteUserDialog({ trigger }) {
         <div className="text-primary flex flex-col space-y-4 p-4 text-left">
           <p>All comments, reactions, and AMA questions will be deleted.</p>
 
-          <DeleteButton onClick={onClick}>Delete my account</DeleteButton>
+          <DeleteButton
+            onClick={async () => {
+              await handleDelete()
+              await apolloClient.resetStore()
+            }}
+          >
+            {loading ? <LoadingSpinner /> : 'Delete my account'}
+          </DeleteButton>
         </div>
       )}
     />

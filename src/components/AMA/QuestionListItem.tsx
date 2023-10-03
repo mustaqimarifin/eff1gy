@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { Question } from '~/graphql/typeSlut'
+import { Question } from '~/graphql/types.generated'
 
 interface Props {
   question: Question
@@ -23,6 +23,7 @@ export const QuestionListItem = React.memo<Props>(({ question, active }) => {
             src={question.author.image}
             width={16}
             height={16}
+            layout={'fixed'}
             className="rounded-full"
           />{' '}
           <span>{question.author.name}</span>

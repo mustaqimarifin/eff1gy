@@ -1,6 +1,6 @@
 overwrite: true
 schema: src/graphql/typeDefs/index.ts
-documents: './src/**/*.{tsx,ts}'
+documents: "./src/**/*.{tsx,ts}"
 hooks:
   afterOneFileWrite:
     - eslint --fix

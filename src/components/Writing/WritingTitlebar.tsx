@@ -1,14 +1,13 @@
-import { PlusIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
-
-import { GhostButton } from '~/components/Button'
+import Button, { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useViewerQuery } from '~/graphql/typeSlut'
+import { useViewerQuery } from '~/graphql/types.generated'
+import { Plus, Radio } from 'lucide-react'
 
-//import { DialogComponent } from '../Dialog'
+import { DialogComponent } from '../Dialog'
 import SegmentedControl from '../SegmentedController'
 import { WritingContext } from './PostsList'
-//import { WritingSubscriptionForm } from './SubscriptionForm'
+import { WritingSubscriptionForm } from './SubscriptionForm'
 
 export function WritingTitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()
@@ -22,14 +21,14 @@ export function WritingTitlebar({ scrollContainerRef }) {
           size="small-square"
           aria-label="Add post"
         >
-          <PlusIcon />
+          <Plus size={16} />
         </GhostButton>
       )
     }
     return null
   }
 
-  /*   function getSubscribeButton() {
+  function getSubscribeButton() {
     if (data?.viewer?.isAdmin) return null
     return (
       <DialogComponent
@@ -43,12 +42,12 @@ export function WritingTitlebar({ scrollContainerRef }) {
         modalContent={() => <WritingSubscriptionForm />}
       />
     )
-  } */
+  }
 
   function trailingAccessory() {
     return (
       <div className="flex space-x-2">
-        {/*  {getSubscribeButton()} */}
+        {getSubscribeButton()}
         {getAddButton()}
       </div>
     )
@@ -59,7 +58,7 @@ export function WritingTitlebar({ scrollContainerRef }) {
     const { setFilter, filter } = React.useContext(WritingContext)
     if (data?.viewer?.isAdmin) {
       return (
-        <div className="pt-2 pb-1">
+        <div className="pb-1 pt-2">
           <SegmentedControl
             onSetActiveItem={setFilter}
             active={filter}

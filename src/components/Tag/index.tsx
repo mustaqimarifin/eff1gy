@@ -1,4 +1,4 @@
-import { CrossCircledIcon } from '@radix-ui/react-icons'
+import { XCircle } from 'lucide-react'
 import * as React from 'react'
 
 export function Tags({ tags }) {
@@ -20,50 +20,29 @@ export function Tag({ name }) {
   let specificClasses = ''
   if (name) {
     switch (name?.toLowerCase()) {
-      case 'web': {
+      case 'indie': {
         specificClasses =
           'border-purple-200 text-purple-600 dark:text-purple-300 bg-purple-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'portfolio': {
+      case 'open source': {
         specificClasses =
           'border-green-200 text-green-600 dark:text-green-200  bg-green-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'lol': {
+      case 'portfolio': {
         specificClasses =
           'border-blue-200 text-blue-600 dark:text-blue-200 bg-blue-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-      case 'software': {
+      case 'website': {
         specificClasses =
           'border-red-200 text-red-600 dark:text-red-200 bg-red-500 bg-opacity-5 dark:bg-opacity-10'
         break
       }
-
-      case 'plugins': {
+      case 'reading': {
         specificClasses =
           'border-gray-200 text-gray-600 dark:text-gray-300 bg-gray-200 bg-opacity-30 dark:bg-opacity-10 hover:bg-opacity-40'
-        break
-      }
-      case 'gear': {
-        specificClasses =
-          'border-orange-200 text-orange-600 dark:text-orange-300 bg-orange-200 bg-opacity-30 dark:bg-opacity-10 hover:bg-opacity-40'
-        break
-      }
-      case 'art': {
-        specificClasses =
-          'border-pink-200 text-pink-600 dark:text-pink-300 bg-pink-200 bg-opacity-30 dark:bg-opacity-10 hover:bg-opacity-40'
-        break
-      }
-      case 'music': {
-        specificClasses =
-          'border-indigo-200 text-indigo-600 dark:text-indigo-300 bg-indigo-200 bg-opacity-30 dark:bg-opacity-10 hover:bg-opacity-40'
-        break
-      }
-      case 'ramble': {
-        specificClasses =
-          'border-rose-200 text-rose-600 dark:text-rose-300 bg-rose-200 bg-opacity-30 dark:bg-opacity-10 hover:bg-opacity-40'
         break
       }
       case '__clear_tag_picker': {
@@ -77,7 +56,7 @@ export function Tag({ name }) {
     <span className={`${baseClasses} ${specificClasses}`}>
       {name === '__clear_tag_picker' ? (
         <>
-          <CrossCircledIcon />
+          <XCircle size={16} />
           <span>Clear tag</span>
         </>
       ) : (

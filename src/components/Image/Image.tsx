@@ -1,8 +1,8 @@
 import NextImage from 'next/image'
 import useSWR from 'swr'
-import xid from 'xid-js'
 
 import { ketchup } from '~/lib/functions'
+import { genId } from '~/lib/nanoid'
 import { PreviewImage } from '~/types/site'
 
 export default function BlurImage({ url, alt, ...rest }) {
@@ -12,7 +12,7 @@ export default function BlurImage({ url, alt, ...rest }) {
   return (
     <div className="drop-shadow-sm filter">
       <NextImage
-        id={xid.next()}
+        id={genId()}
         src={url}
         alt={alt}
         width={previewImage.originalWidth}

@@ -1,12 +1,16 @@
-import { StackIcon } from '@radix-ui/react-icons'
+import { Sidebar } from 'lucide-react'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import toast from 'react-hot-toast'
+import slugify from 'slugify'
 
 import Button from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { useAddPostMutation, useEditPostMutation } from '~/graphql/typeSlut'
-import { slugify } from '~/lib/functions'
+import { Switch } from '~/components/Switch'
+import {
+  useAddPostMutation,
+  useEditPostMutation,
+} from '~/graphql/types.generated'
 
 import { PostEditorContext } from './PostEditor'
 import { PostEditorAutoSave } from './PostEditorAutoSave'
@@ -25,13 +29,11 @@ export function PostEditorActions() {
 
   const [addPost, { loading: creatingPost }] = useAddPostMutation({
     onCompleted({ addPost }) {
-      toast.success('Draft Created', {
-        icon: '🙀',
-      }),
-        router.push({
-          pathname: '/writing/[slug]/edit',
-          query: { slug: addPost.slug },
-        })
+      toast.success('Draft created')
+      router.push({
+        pathname: '/writing/[slug]/edit',
+        query: { slug: addPost.slug },
+      })
     },
   })
 
@@ -51,7 +53,7 @@ export function PostEditorActions() {
       variables: {
         data: {
           ...draftState,
-          slug: draftState.slug || slugify(draftState.title),
+          slug: draftState.slug || slugify(draftState.title, { lower: true }),
         },
       },
     })
@@ -72,7 +74,7 @@ export function PostEditorActions() {
         )}
       </Button>
       <Button onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>
-        <StackIcon />
+        <Sidebar size={16} />
       </Button>
     </div>
   )

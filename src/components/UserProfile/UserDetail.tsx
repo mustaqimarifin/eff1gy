@@ -3,7 +3,7 @@ import React from 'react'
 import Button from '~/components/Button'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetUserQuery } from '~/graphql/typeSlut'
+import { useGetUserQuery } from '~/graphql/types.generated'
 
 export function UserDetail({ id }) {
   const scrollContainerRef = React.useRef(null)

@@ -1,5 +1,5 @@
-import { Switch as SwitchComponent } from '@headlessui/react'
 import { useState } from 'react'
+import { Switch as SwitchComponent } from '@headlessui/react'
 
 export function Switch({
   label = null,

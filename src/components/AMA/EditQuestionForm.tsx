@@ -1,40 +1,14 @@
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 
-import Button, { DeleteButton, PrimaryButton } from '~/components/Button'
+import { DeleteButton, PrimaryButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { GET_QUESTION, GET_QUESTIONS } from '~/graphql/queries/questions'
 import {
   useDeleteQuestionMutation,
   useEditQuestionMutation,
-} from '~/graphql/typeSlut'
-
-const AudioRecorder = dynamic(() => import('../AudioRecorder'), {
-  loading: () => <LoadingSpinner />,
-})
-
-interface State {
-  title: string
-  description: string
-  error: string
-  waveform: number[]
-  src: string
-  isRecording: boolean
-}
-
-type Action =
-  | { type: 'edit-title'; value: string }
-  | { type: 'edit-description'; value: string }
-  | { type: 'error'; value: string }
-  | { type: 'is-recording'; value: boolean }
-  | { type: 'remove-audio' }
-  | { type: 'add-waveform'; value: { waveform: number[]; src: string } }
-
-/* const AudioRecorder = dynamic(() => import('../AudioRecorder'), {
-  ssr: false,
-}) */
+} from '~/graphql/types.generated'
 
 export function EditQuestionForm({ closeModal, question }) {
   const router = useRouter()
@@ -43,12 +17,9 @@ export function EditQuestionForm({ closeModal, question }) {
     error: '',
     title: question.title || question.url,
     description: question.description || '',
-    waveform: question.waveform,
-    src: question.audioUrl,
-    isRecording: false,
   }
 
-  function reducer(state: State, action: Action) {
+  function reducer(state, action) {
     switch (action.type) {
       case 'edit-title': {
         return {
@@ -62,26 +33,6 @@ export function EditQuestionForm({ closeModal, question }) {
           ...state,
           error: '',
           description: action.value,
-        }
-      }
-      case 'add-waveform': {
-        return {
-          ...state,
-          waveform: action.value.waveform,
-          src: action.value.src,
-        }
-      }
-      case 'is-recording': {
-        return {
-          ...state,
-          isRecording: action.value,
-        }
-      }
-      case 'remove-audio': {
-        return {
-          ...state,
-          waveform: null,
-          src: null,
         }
       }
       case 'error': {
@@ -112,8 +63,6 @@ export function EditQuestionForm({ closeModal, question }) {
         ...question,
         title: state.title,
         description: state.description,
-        audioUrl: state.src,
-        waveform: state.waveform,
       },
     },
     onError({ message }) {
@@ -189,25 +138,6 @@ export function EditQuestionForm({ closeModal, question }) {
     return dispatch({ type: 'edit-description', value: e.target.value })
   }
 
-  async function onUploadComplete({ waveform, src }) {
-    dispatch({ type: 'add-waveform', value: { waveform, src } })
-    dispatch({ type: 'is-recording', value: false })
-  }
-
-  function onRecordingStart() {
-    // signUploadMutation.mutate()
-    dispatch({ type: 'is-recording', value: true })
-  }
-
-  function onRecordingStop() {
-    // signUploadMutation.mutate()
-    dispatch({ type: 'is-recording', value: false })
-  }
-
-  function onDeleteAudio() {
-    dispatch({ type: 'remove-audio' })
-  }
-
   return (
     <div className="p-4">
       <form className="space-y-3" onSubmit={handleSave}>
@@ -218,19 +148,7 @@ export function EditQuestionForm({ closeModal, question }) {
           onKeyDown={onKeyDown}
         />
         {state.error && <p className="text-red-500">{state.error}</p>}
-        <div className="flex flex-col space-y-2 ">
-          <p className="text-sm font-semibold text-primary">Record answer</p>
-          <AudioRecorder
-            id={question.id}
-            initialAudioUrl={state.src}
-            initialWaveform={state.waveform}
-            onUploadComplete={onUploadComplete}
-            // onTranscriptionComplete={onTranscriptionComplete}
-            onRecordingStart={onRecordingStart}
-            onRecordingStop={onRecordingStop}
-            onDeleteAudio={onDeleteAudio}
-          />
-        </div>
+
         <Textarea
           rows={4}
           defaultValue={question.description}
@@ -239,32 +157,24 @@ export function EditQuestionForm({ closeModal, question }) {
           placeholder={'Add optional details'}
         />
       </form>
-      {state.isRecording && (
-        <div className="flex justify-between space-between">
-          <Button onClick={closeModal}>Cancel</Button>
-        </div>
-      )}
-
-      {!state.isRecording && (
-        <div className="flex justify-between pt-3">
-          <DeleteButton
-            onClick={() => {
-              closeModal()
-              handleDelete()
-            }}
+      <div className="flex justify-between pt-3">
+        <DeleteButton
+          onClick={() => {
+            closeModal()
+            handleDelete()
+          }}
+        >
+          Delete
+        </DeleteButton>
+        <div className="flex space-x-3">
+          <PrimaryButton
+            disabled={loading || state.title.trim().length === 0}
+            onClick={handleSave}
           >
-            Delete
-          </DeleteButton>
-          <div className="flex space-x-3">
-            <PrimaryButton
-              disabled={loading || state.title.trim().length === 0}
-              onClick={handleSave}
-            >
-              {loading ? <LoadingSpinner /> : 'Save'}
-            </PrimaryButton>
-          </div>
+            {loading ? <LoadingSpinner /> : 'Save'}
+          </PrimaryButton>
         </div>
-      )}
+      </div>
     </div>
   )
 }

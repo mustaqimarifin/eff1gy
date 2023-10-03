@@ -1,9 +1,8 @@
-import { UploadApiResponse } from 'cloudinary'
 import React from 'react'
-import { useDropzone } from 'react-dropzone'
-
 import { signUpload } from '~/lib/cloudinary/api'
 import { UploadSignatureMetadata } from '~/types/Upload'
+import { UploadApiResponse } from 'cloudinary'
+import { useDropzone } from 'react-dropzone'
 
 //import { CLOUDFLARE_IMAGE_DELIVERY_BASE_URL } from '~/lib/cloudinary'
 import { ActiveDropzone } from './ActiveDropzone'

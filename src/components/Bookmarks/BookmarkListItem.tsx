@@ -1,9 +1,9 @@
-import { Link2Icon } from '@radix-ui/react-icons'
+import { Link } from 'lucide-react'
 import * as React from 'react'
 import ReactVisibilitySensor from 'react-visibility-sensor'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
-import { BookmarkListItemFragment } from '~/graphql/typeSlut'
+import { BookmarkListItemFragment } from '~/graphql/types.generated'
 
 interface Props {
   bookmark: BookmarkListItemFragment
@@ -41,7 +41,7 @@ export const BookmarksListItem = React.memo<Props>(({ bookmark, active }) => {
               />
             ) : (
               <span className="flex h-4 w-4 items-center justify-center">
-                <Link2Icon />
+                <Link size={12} />
               </span>
             )}
             <span>{bookmark.host}</span>

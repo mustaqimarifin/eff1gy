@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetViewerWithSettingsQuery } from '~/graphql/typeSlut'
+import { useGetViewerWithSettingsQuery } from '~/graphql/types.generated'
 
 import { EmailForm } from './Email'
 import { EmailPreferences } from './EmailPreferences'
@@ -43,13 +43,13 @@ export function UserSettings() {
           <div className="space-y-8 py-12">
             <h3 className="text-primary text-lg font-bold">Account</h3>
             <EmailForm viewer={data.viewer} />
-            <UsernameForm />
+            <UsernameForm viewer={data.viewer} />
           </div>
 
           {data.viewer.email && (
             <div className="space-y-8 py-12">
               <h3 className="text-primary text-lg font-bold">Emails</h3>
-              <EmailPreferences />
+              <EmailPreferences viewer={data.viewer} />
             </div>
           )}
 

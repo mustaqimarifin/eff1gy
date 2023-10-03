@@ -5,7 +5,10 @@ import { ErrorAlert } from '~/components/Alert'
 import { PrimaryButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { useAddQuestionMutation, useViewerQuery } from '~/graphql/typeSlut'
+import {
+  useAddQuestionMutation,
+  useViewerQuery,
+} from '~/graphql/types.generated'
 
 import { Avatar } from '../Avatar'
 

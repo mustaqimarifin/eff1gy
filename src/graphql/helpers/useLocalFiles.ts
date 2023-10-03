@@ -1,4 +1,5 @@
-import * as fs from 'fs'
+import fs from 'fs'
+
 export async function useLocalFiles({ path, fetch }) {
   const fullPath = `./src/data/local/${path}.json`
   try {

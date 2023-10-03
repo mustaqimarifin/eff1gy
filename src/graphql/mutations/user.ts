@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-
 import { UserInfoFragment } from '~/graphql/fragments/user'
 
 export const DELETE_USER = gql`

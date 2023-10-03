@@ -1,5 +1,3 @@
-import { GraphQLError } from 'graphql'
-
 import { CLIENT_URL } from '~/graphql/constants'
 import { Context } from '~/graphql/context'
 import {
@@ -8,6 +6,8 @@ import {
   MutationDeleteHitArgs,
   MutationEditHitArgs,
 } from '~/graphql/typeSlut'
+import { GraphQLError } from 'graphql'
+
 //import { graphcdn } from '~/lib/graphcdn'
 //import { emailMe } from '~/lib/postmark'
 

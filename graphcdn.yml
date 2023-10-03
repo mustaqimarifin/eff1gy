@@ -1,6 +1,6 @@
-schema: './src/graphql/typeDefs/index.ts'
+schema: "./src/graphql/typeDefs/index.ts"
 scopes:
-  AUTHENTICATED: '__Secure-next-auth.session-token'
+  AUTHENTICATED: "cookie:authik_session_token"
 rootTypeNames:
   query: Query
   mutation: Mutation
@@ -10,7 +10,7 @@ keyFields:
       - name
     User:
       - id
-      - name
+      - username
     PageInfo: []
     StackEdge: []
     BookmarkEdge: []
@@ -40,4 +40,4 @@ rules:
     maxAge: 2592000
     swr: 2592000
     scope: AUTHENTICATED
-originUrl: 'https://eff1gy.vercel.app/api/graphql'
+originUrl: "https://brianlovin.com/api/graphql"

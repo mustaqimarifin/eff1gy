@@ -17,7 +17,7 @@ type ButtonProps = ButtonAsButton | ButtonAsLink
 
 function BaseButton({ href = null, as = null, forwardedRef = null, ...rest }) {
   if (href && href.startsWith('/')) {
-    return <Link href={href} as={as} {...rest}></Link>
+    return <Link href={href} as={as} {...rest} />
   }
 
   if (href) {
@@ -28,7 +28,7 @@ function BaseButton({ href = null, as = null, forwardedRef = null, ...rest }) {
 }
 
 const baseClasses =
-  'flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold font-mono'
+  'flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold'
 
 function getSize(size = null) {
   switch (size) {
@@ -72,7 +72,7 @@ const composer = {
 }
 
 export const Button = React.forwardRef((props: ButtonProps, ref) => {
-  const classes = `text-gray-700 hover:text-gray-900 shadow-xs bg-white border border-gray-400 border-opacity-30 dark:border-gray-700 dark:hover:border-gray-600 dark:bg-white dark:bg-opacity-10 dark:text-gray-200 dark:hover:text-white hover:border-opacity-50 hover:shadow-sm`
+  const classes = `text-gray-700 hover:text-gray-1000 shadow-xs bg-white border border-gray-400 border-opacity-30 dark:border-gray-700 dark:hover:border-gray-600 dark:bg-white dark:bg-opacity-10 dark:text-gray-200 dark:hover:text-white hover:border-opacity-50 hover:shadow-sm`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
   const radius = composer.getRadius(props.size)
@@ -111,7 +111,7 @@ export const RecordingButton = React.forwardRef((props: ButtonProps, ref) => {
 })
 
 export const GhostButton = React.forwardRef((props: ButtonProps, ref) => {
-  const classes = `text-gray-700 hover:text-gray-900 bg-gray-200 bg-opacity-0 hover:bg-opacity-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:text-white`
+  const classes = `text-gray-700 hover:text-gray-1000 bg-gray-200 bg-opacity-0 hover:bg-opacity-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:text-white`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
   const radius = composer.getRadius(props.size)

@@ -1,14 +1,11 @@
+import { MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import * as React from 'react'
 
 import Button from '~/components/Button'
-import { Akhyla, MapIcon, Muse2 } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-
-import TraceImage from '../Image/TraceImage'
-import Buffoon from '../Vid'
 
 function SectionTitle(props) {
   return (
@@ -36,15 +33,15 @@ function TableRow({ href, title, subtitle, date }: TableRowProps) {
       target="_blank"
       rel="noopener noreferrer"
       href={href}
-      className="flex items-center space-x-4 group"
+      className="group flex items-center space-x-4"
     >
-      <strong className="flex-none font-medium text-gray-900 group-hover:text-blue-600 group-hover:underline dark:text-gray-100 dark:group-hover:text-blue-500">
+      <strong className="flex-none font-medium text-gray-1000 group-hover:text-blue-600 group-hover:underline dark:text-gray-100 dark:group-hover:text-blue-500">
         {title}
       </strong>
-      <span className="w-full border-t border-gray-300 border-dashed shrink dark:border-gray-800" />
-      {subtitle && <span className="flex-none text-tertiary">{subtitle}</span>}
+      <span className="w-full shrink border-t border-dashed border-gray-300 dark:border-gray-800" />
+      {subtitle && <span className="text-tertiary flex-none">{subtitle}</span>}
       {date && (
-        <span className="flex-none font-mono text-quaternary">{date}</span>
+        <span className="text-quaternary flex-none font-mono">{date}</span>
       )}
     </a>
   )
@@ -53,18 +50,24 @@ function TableRow({ href, title, subtitle, date }: TableRowProps) {
 function SectionContainer(props) {
   return (
     <div
-      className="grid items-start grid-cols-1 gap-6 md:grid-cols-12"
+      className="grid grid-cols-1 items-start gap-6 md:grid-cols-12"
       {...props}
     />
   )
 }
 
-/* const workHistory = [
+const workHistory = [
+  {
+    href: 'https://campsite.design',
+    title: 'Campsite',
+    subtitle: 'Founder',
+    date: '2022—\u00a0\u00a0',
+  },
   {
     href: 'https://github.com/mobile',
     title: 'GitHub',
     subtitle: 'Product Designer',
-    date: '2018—\u00a0\u00a0',
+    date: '2018—22',
   },
   {
     href: 'https://designdetails.fm',
@@ -94,22 +97,37 @@ function SectionContainer(props) {
 
 const speakingData = [
   {
-    href: 'https://maze.co/podcast/#mustaqim-arifin',
+    href: 'https://fullstackwhatever.com/',
+    title: 'Full Stack Whatever',
+    date: "Jan '22",
+  },
+  {
+    href: 'https://artofproductpodcast.com/episode-202',
+    title: 'The Art of Product',
+    date: "Mar '22",
+  },
+  {
+    href: 'https://museapp.com/podcast/51-personal-brand/',
+    title: 'Metamuse: Personal Brand',
+    date: "Mar '22",
+  },
+  {
+    href: 'https://maze.co/podcast/#brian-lovin',
     title: 'The Optimal Path Podcast',
     date: "Jan '22",
   },
   {
-    href: 'https://uibreakfast.com/228-design-advisory-with-mustaqim-arifin/',
+    href: 'https://uibreakfast.com/228-design-advisory-with-brian-lovin/',
     title: 'UI Breakfast',
     date: "Dec '21",
   },
   {
-    href: 'https://designmba.show/episodes/mustaqim-arifin',
+    href: 'https://designmba.show/episodes/brian-lovin',
     title: 'Design MBA',
     date: "Nov '21",
   },
   {
-    href: 'https://progressionapp.com/blog/podcast-26-mustaqim-arifin-github-spectrum-design-details-on-the-rise-of-the-senior-ic/',
+    href: 'https://progressionapp.com/blog/podcast-26-brian-lovin-github-spectrum-design-details-on-the-rise-of-the-senior-ic/',
     title: 'Progression Podcast',
     date: "Jun '21",
   },
@@ -119,12 +137,12 @@ const speakingData = [
     date: "Jan '21",
   },
   {
-    href: "https://softwareengineeringdaily.com/'20/07/15/github-mobile-with-mustaqim-arifin-and-ryan-nystrom/",
+    href: "https://softwareengineeringdaily.com/'20/07/15/github-mobile-with-brian-lovin-and-ryan-nystrom/",
     title: 'Software Engineering Daily',
     date: "Jul '20",
   },
   {
-    href: 'https://avocode.com/blog/mustaqim-arifin-product-designer-github-interview',
+    href: 'https://avocode.com/blog/brian-lovin-product-designer-github-interview',
     title: 'The Grit',
     date: "Jul '20",
   },
@@ -139,7 +157,7 @@ const speakingData = [
     date: "Feb '20",
   },
   {
-    href: 'https://www.loversmagazine.com/interviews/mustaqim-arifin',
+    href: 'https://www.loversmagazine.com/interviews/brian-lovin',
     title: 'Lovers Magazine',
     date: "Jan '18",
   },
@@ -154,155 +172,214 @@ const speakingData = [
     date: "Aug '17",
   },
 ]
- */
+
 export function Intro() {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
 
   return (
-    <>
-      <Detail.Container data-cy="home-intro" ref={scrollContainerRef}>
-        <TitleBar
-          magicTitle
-          titleRef={titleRef}
-          scrollContainerRef={scrollContainerRef}
-          title="Home"
-        />
+    <Detail.Container data-cy="home-intro" ref={scrollContainerRef}>
+      <TitleBar
+        magicTitle
+        titleRef={titleRef}
+        scrollContainerRef={scrollContainerRef}
+        title="Home"
+      />
 
-        {/* Keep this div to trigger the magic scroll */}
-        <div className="p-4" ref={titleRef} />
+      {/* Keep this div to trigger the magic scroll */}
+      <div className="p-4" ref={titleRef} />
 
-        <Detail.ContentContainer>
-          <div className="pb-24 space-y-8 md:space-y-16">
-            <article className="layout p-2 w-full lg:max-w-3xl">
-              <h2 className="font-serif font-medium pt-4 mb-6 text-2xl drop-shadow-sm md:text-4xl">
-                Greetings! I'm the{' '}
-                <span className="font-serif font-normal   text-twitter dark:text-active">
-                  marketing manager&nbsp;
-                </span>
-                and{' '}
-                <span className="font-serif font-normal  text-twitter dark:text-active">
-                  creative lead&nbsp;
-                </span>
-                at{` `}
-                <Muse2 className="h-12 inline items-center dark:invert" />,{' '}
-                <span>focusing on&nbsp;</span>
-                <span className="font-serif  text-coyRed">
-                  large-scale events tech
-                </span>
-                , and&nbsp;
-                <span className="font-serif  text-coyRed">
-                  optimization.&nbsp;
-                </span>{' '}
-              </h2>
+      <Detail.ContentContainer>
+        <div className="space-y-8 pb-24 md:space-y-16">
+          <SectionContainer>
+            <SectionTitle />
+            <SectionContent>
+              <div className="text-primary prose">
+                <p>
+                  Hey, I&apos;m Brian. I&apos;m a designer,{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://designdetails.fm"
+                  >
+                    podcaster
+                  </a>
+                  ,{' '}
+                  <Link href="/writing" passHref>
+                    writer
+                  </Link>
+                  , and{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://github.com/brianlovin"
+                  >
+                    software tinkerer
+                  </a>
+                  . I&apos;m currently building{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://campsite.design"
+                  >
+                    Campsite
+                  </a>
+                  , a tool that helps teams share and collaborate on
+                  work-in-progress.
+                </p>
 
-              <div className="w-[120px] float-right m-4 filter sm:w-[190px] ">
-                <Buffoon />
+                <p>
+                  Before Campsite, I spent four years designing{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://github.com/mobile"
+                  >
+                    native mobile apps at GitHub
+                  </a>
+                  .
+                </p>
+                <p>
+                  Before GitHub, I co-founded{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://spectrum.chat"
+                  >
+                    Spectrum
+                  </a>
+                  , a platform for large-scale communities to have better public
+                  conversations. Spectrum was acquired by GitHub in November,
+                  2018.
+                </p>
+                <p>
+                  Before Spectrum I designed payments experiences at Facebook,
+                  working across Facebook, Messenger, WhatsApp, and Instagram. I
+                  originally cut my teeth as the first product designer at{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://buffer.com"
+                  >
+                    Buffer
+                  </a>
+                  .
+                </p>
+                <p>
+                  I also co-host the{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://designdetails.fm"
+                  >
+                    Design Details Podcast
+                  </a>
+                  , a weekly conversation about design process and culture.
+                  Design Details is part of{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://spec.fm"
+                  >
+                    Spec.fm
+                  </a>
+                  , a podcast network for designers and developers, which I
+                  co-founded in 2015.
+                </p>
               </div>
-              <div className="drop-shadow-sm">
-                <p className="prose py-4 max-w-none break-words md:prose-lg dark:prose-dark">
-                  A sizable portion of my career involves my work as an&nbsp;
-                  <span className=" dark:text-hacker-news text-orange-400">
-                    audio engineer&nbsp;
-                  </span>
-                  and{' '}
-                  <span className="  dark:text-hacker-news text-orange-400">
-                    music producer
-                  </span>
-                  . In 2014, I co-founded{' '}
-                  <Akhyla className="w-8 h-8 text-red-400 inline items-center mb-1" />{' '}
-                  Akhyla - a platform to electronic musicians to learn,
-                  collaborate and make records.And in between that time was
-                  Music Director for Infinity Games working on MMORPG, Heroes of
-                  War.
-                </p>
-                <p className="prose py-4 leading-loose md:prose-lg dark:prose-dark">
-                  This website is my home on the web to share my thoughts, test
-                  my web development skills, keep a record of my work, and
-                  catalog the things I discover online.
-                </p>
-                <p className="prose py-4 leading-loose md:prose-lg dark:prose-dark">
-                  Thanks for stopping by!{' '}
-                </p>
-                <p className="prose py-4 leading-loose md:prose-lg dark:prose-dark">
-                  Mustaqim Arifin{' '}
-                </p>
+              <div className="flex pt-6">
+                <Button href="https://changelog.brianlovin.com">
+                  View changelog
+                </Button>
               </div>
-            </article>
-            {/* <Image
-      alt="Mustaqim Arifin"
-      src="/vmp-banner.webp"
-      width={512}
-      height={512}
-      sizes="100vw"
-      style={{
-        width: '100%',
-        height: 'auto',
-      }}
-      priority
-      className="rounded-full border-4 border-orange-400 dark:invert transition-colors duration-200"
-    /> */}
-            <SectionContainer>
-              <SectionTitle />
-            </SectionContainer>
+            </SectionContent>
+          </SectionContainer>
 
-            <SectionContainer>
-              <SectionTitle>Where</SectionTitle>
-              <SectionContent>
-                <div className=" ">
-                  <TraceImage
-                    imgSrc="/site/home/map.jpg"
-                    imgTrace="/site/home/map-trace.png"
-                    width={1200}
-                    height={675}
-                    sizes="33vw"
-                    className="overflow-hidden"
-                    alt="Map of KL with a wookie in the middle"
+          <SectionContainer>
+            <SectionTitle>Online</SectionTitle>
+            <SectionContent>
+              <div className="flex flex-col space-y-3">
+                <TableRow
+                  href={'/twitter'}
+                  title={'Twitter'}
+                  subtitle={'Follow'}
+                  date={''}
+                />
+                <TableRow
+                  href={'/youtube'}
+                  title={'YouTube'}
+                  subtitle={'Subscribe'}
+                  date={''}
+                />
+                <TableRow
+                  href={'/github'}
+                  title={'GitHub'}
+                  subtitle={'Follow'}
+                  date={''}
+                />
+                <TableRow
+                  href={'/figma'}
+                  title={'Figma'}
+                  subtitle={'Follow'}
+                  date={''}
+                />
+              </div>
+            </SectionContent>
+          </SectionContainer>
+
+          <SectionContainer>
+            <SectionTitle>Where</SectionTitle>
+            <SectionContent>
+              <Image
+                priority
+                src="/static/img/sf.png"
+                width={800}
+                height={400}
+                className="rounded-2xl"
+                quality={100}
+                alt="Map of San Francisco with blue location dot in the middle"
+              />
+              <p className="text-quaternary flex items-center justify-end space-x-2 pt-2 text-sm md:text-right">
+                <MapPin size={12} />
+                <span>San Francisco, CA</span>
+              </p>
+            </SectionContent>
+          </SectionContainer>
+
+          <SectionContainer>
+            <SectionTitle>Work</SectionTitle>
+            <SectionContent>
+              <div className="flex flex-col space-y-3">
+                {workHistory.map((job) => (
+                  <TableRow
+                    href={job.href}
+                    title={job.title}
+                    subtitle={job.subtitle}
+                    date={job.date}
+                    key={job.href}
                   />
-                </div>
-                <p className="flex items-center justify-end pt-2 space-x-2 text-sm text-quaternary md:text-right">
-                  <MapIcon className="w-4 h-4" />
-                  <span>Kuala Lumpur, WP</span>
-                </p>
-              </SectionContent>
-            </SectionContainer>
+                ))}
+              </div>
+            </SectionContent>
+          </SectionContainer>
 
-            {/*    <SectionContainer>
-                        <SectionTitle>Work</SectionTitle>
-              
-              {/*   <SectionContent>
-      <div className="flex flex-col space-y-3">
-        {workHistory.map((job) => (
-          <TableRow
-            href={job.href}
-            title={job.title}
-            subtitle={job.subtitle}
-            date={job.date}
-            key={job.href}
-          />
-        ))}
-      </div>
-    </SectionContent>
-            </SectionContainer>
-
-            <SectionContainer>
-               <SectionTitle>Speaking</SectionTitle>
-               <SectionContent>
-      <div className="flex flex-col space-y-3">
-        {speakingData.map((s) => (
-          <TableRow
-            href={s.href}
-            title={s.title}
-            date={s.date}
-            key={s.href}
-          />
-        ))}
-      </div>
-    </SectionContent>
-            </SectionContainer> */}
-          </div>
-        </Detail.ContentContainer>
-      </Detail.Container>
-    </>
+          <SectionContainer>
+            <SectionTitle>Speaking</SectionTitle>
+            <SectionContent>
+              <div className="flex flex-col space-y-3">
+                {speakingData.map((s) => (
+                  <TableRow
+                    href={s.href}
+                    title={s.title}
+                    date={s.date}
+                    key={s.href}
+                  />
+                ))}
+              </div>
+            </SectionContent>
+          </SectionContainer>
+        </div>
+      </Detail.ContentContainer>
+    </Detail.Container>
   )
 }

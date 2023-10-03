@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { LayoutGroup, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/typeSlut'
+import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/types.generated'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -13,7 +12,7 @@ import { QuestionListItem } from './QuestionListItem'
 
 export const QuestionsContext = React.createContext({
   filterPending: false,
-  setFilterPending: (bool: boolean) => undefined,
+  setFilterPending: (bool: boolean) => {},
 })
 
 export function QuestionsList() {
@@ -71,7 +70,7 @@ export function QuestionsList() {
       <ListContainer data-cy="questions-list" onRef={setScrollContainerRef}>
         <AMATitlebar scrollContainerRef={scrollContainerRef} />
 
-        <LayoutGroup id="ql">
+        <LayoutGroup>
           <div className="lg:space-y-1 lg:p-3">
             {questions.edges.map((question) => {
               const active = router.query?.id === question.node.id.toString() // post ids are numbers

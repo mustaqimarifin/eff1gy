@@ -1,8 +1,8 @@
 import { Listbox } from '@headlessui/react'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { ChevronDown } from 'lucide-react'
 import * as React from 'react'
 
-import { useGetTagsQuery } from '~/graphql/typeSlut'
+import { useGetTagsQuery } from '~/graphql/types.generated'
 
 import { Tag } from '.'
 
@@ -27,7 +27,7 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
         >
           {selected ? <>{selected}</> : 'Choose a tag...'}
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronDownIcon aria-hidden="true" />
+            <ChevronDown size={16} aria-hidden="true" />
           </span>
         </Listbox.Button>
         <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white text-base shadow-sm dark:border-gray-700 dark:bg-gray-700">

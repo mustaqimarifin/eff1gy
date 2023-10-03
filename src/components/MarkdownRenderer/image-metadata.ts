@@ -1,16 +1,8 @@
-import got from 'got'
 import lqip from 'lqip-modern'
 import { join } from 'path'
 import { cwd } from 'process'
 import { visit } from 'unist-util-visit'
-import type { Node } from 'unist-util-visit/lib'
 
-//import { sha256 } from '~/lib/functions'
-//import redis from '~/lib/redis'
-//import { PreviewImage } from '~/types/site'
-//import { promisify } from 'util'
-
-//const sizeOf = promisify(imageSize);
 type ImageNode = {
   type: 'element'
   tagName: 'img'
@@ -25,7 +17,7 @@ type ImageNode = {
 
 //type Result = string | number | Buffer
 
-function isImageNode(node: Node): node is ImageNode {
+function isImageNode(node: Node) {
   const img = node as unknown as ImageNode
   return (
     img.type === 'element' &&
@@ -58,7 +50,10 @@ async function addProps(node: ImageNode): Promise<void> {
     result = await lqip(local_img)
   }
   if (ext_img) {
-    const { body } = await got(url, { responseType: 'buffer' })
+    // const { body } = await got(url, { responseType: 'buffer' })
+    const body = await fetch(url).then(async (res) =>
+      Buffer.from(await res.arrayBuffer())
+    )
     result = await lqip(body)
   }
   if (!result) throw Error(`Invalid image with src "${url}"`)

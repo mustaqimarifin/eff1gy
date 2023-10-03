@@ -1,85 +1,15 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-@font-face {
-  font-family: 'Ivar';
-  src: url('/fonts/Ivar.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Ivar';
-  src: url('/fonts/IvarItalic.woff2') format('woff2');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'UntitledSans';
-  src: url('/fonts/usw-MED.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'UntitledSans';
-  src: url('/fonts/usw-REG.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter.woff2') format('woff2');
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'SFMono';
-  src: url('/fonts/SFMono.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-300.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Franklin';
-  src: url('/fonts/franklin-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
   html {
-    height: 100vh;
-    overflow: hidden;
+    @apply max-h-screen overflow-hidden text-base antialiased;
   }
 
+  /* handles safari overscroll background color */
   body:after {
-    content: '';
+    content: "";
     position: fixed;
     top: -50%;
     right: -50%;
@@ -91,52 +21,14 @@
 }
 
 @layer components {
-  pre::-webkit-scrollbar {
-    display: none;
-  }
-
-  pre {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  table {
-    display: block;
-    max-width: fit-content;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  img .mdx-image {
-    object-fit: cover;
-    object-position: center;
-  }
-
-  img .placeholder {
-    filter: blur(20px);
-    transform: scale(1.1);
-  }
-
-  .placeholder::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backdrop-filter: blur(20px);
-    pointer-events: none;
-  }
-
   /* needed to override tailwind forms styles */
-
   select {
-    @apply w-full px-4 py-2 border border-gray-200 rounded outline-none text-primary bg-gray-1000 bg-opacity-5 hover:bg-opacity-10 focus:border-gray-1000 focus:outline-none focus:ring-0 dark:border-gray-800 dark:bg-white dark:focus:border-gray-600;
+    @apply text-primary w-full rounded border border-gray-200 bg-gray-1000 bg-opacity-5 px-4 py-2 outline-none hover:bg-opacity-10 focus:border-gray-1000 focus:outline-none focus:ring-0 dark:border-gray-800 dark:bg-white dark:focus:border-gray-600;
   }
 
   button:focus,
   a:focus {
-    @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-white dark:ring-purple-500 dark:ring-offset-black;
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white dark:ring-blue-500 dark:ring-offset-black;
   }
 
   button:active:not(:focus-visible),
@@ -146,22 +38,22 @@
     @apply outline-none ring-0 ring-offset-0;
   }
 
-  input[type='text'],
+  input[type="text"],
   textarea {
-    @apply bg-white border border-gray-200 outline-none dark:border-gray-700 dark:bg-gray-800;
+    @apply border border-gray-200 bg-white outline-none dark:border-gray-700 dark:bg-gray-800;
   }
 
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     @apply dark:border-gray-600 dark:bg-gray-700;
   }
 
   input:focus,
   textarea:focus {
-    @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-white dark:ring-offset-black;
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white dark:ring-offset-black;
   }
 
   .font-list-heading {
-    @apply font-sans text-lg font-bold text-primary;
+    @apply text-primary font-sans text-lg font-bold;
   }
 
   .tabbed-navigation::-webkit-scrollbar {
@@ -169,14 +61,17 @@
   }
 
   .bg-dots {
-    background: linear-gradient(90deg, #f9fafb 15px, transparent 1%) center,
-      linear-gradient(#f9fafb 15px, transparent 1%) center, rgba(0, 0, 0, 0.24);
+    background:
+      linear-gradient(90deg, #f9fafb 15px, transparent 1%) center,
+      linear-gradient(#f9fafb 15px, transparent 1%) center,
+      rgba(0, 0, 0, 0.24);
     background-size: 16px 16px;
   }
 
   @media (prefers-color-scheme: dark) {
     .bg-dots {
-      background: linear-gradient(90deg, #050505 15px, transparent 1%) center,
+      background:
+        linear-gradient(90deg, #050505 15px, transparent 1%) center,
         linear-gradient(#050505 15px, transparent 1%) center,
         rgba(255, 255, 255, 0.16);
       background-size: 16px 16px;
@@ -284,7 +179,7 @@
 
   .meta:before,
   .meta:after {
-    content: '';
+    content: "";
     position: absolute;
     width: 1024px;
     height: 1024px;
@@ -348,25 +243,4 @@
       transform: translate(20%, 10%);
     }
   }
-  @media (prefers-color-scheme: dark) {
-    pre[data-theme='light'],
-    code[data-theme='light'] {
-      display: none;
-    }
-  }
-
-  @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-    pre[data-theme='dark'],
-    code[data-theme='dark'] {
-      display: none;
-    }
-  }
-}
-
-.ch-codeblock .ch-code-button {
-  display: none;
-}
-
-.ch-codeblock:hover .ch-code-button {
-  display: block;
 }

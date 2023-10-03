@@ -1,9 +1,9 @@
 import { Menu, Transition } from '@headlessui/react'
-import { CheckIcon } from '@radix-ui/react-icons'
+import { Check } from 'lucide-react'
 import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'
-import { useGetTagsQuery } from '~/graphql/typeSlut'
+import { useGetTagsQuery } from '~/graphql/types.generated'
 
 import { BookmarksContext } from './BookmarksList'
 
@@ -15,7 +15,7 @@ export function BookmarksFilterMenu() {
 
   const { tags } = data
 
-  const allowedTags = ['web', 'lol', 'portfolio', 'art']
+  const allowedTags = ['website', 'reading', 'portfolio']
 
   const filtered = tags.filter((t) => allowedTags.indexOf(t.name) >= 0)
 
@@ -27,7 +27,7 @@ export function BookmarksFilterMenu() {
             <>
               <Menu.Button as="div" className="relative z-0 inline-flex">
                 {tag && (
-                  <div className="absolute top-1 right-1 h-3 w-3 rounded-full border-2 border-white bg-blue-500 dark:border-gray-900" />
+                  <div className="absolute right-1 top-1 h-3 w-3 rounded-full border-2 border-white bg-blue-500 dark:border-gray-900" />
                 )}
                 <GhostButton aria-label="Filter bookmarks" size="small-square">
                   <svg
@@ -69,7 +69,7 @@ export function BookmarksFilterMenu() {
                             active
                               ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
                               : 'text-gray-900 dark:text-gray-200'
-                          } text-secondary flex w-full cursor-pointer items-center space-x-2 py-2 px-4 text-sm`}
+                          } text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm`}
                         >
                           All bookmarks
                         </a>
@@ -86,10 +86,10 @@ export function BookmarksFilterMenu() {
                               active
                                 ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
                                 : 'text-gray-900 dark:text-gray-200'
-                            } text-secondary flex w-full cursor-pointer items-center space-x-2 py-2 px-4 text-sm capitalize`}
+                            } text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm capitalize`}
                           >
                             {tag === t.name ? (
-                              <CheckIcon />
+                              <Check size={16} />
                             ) : (
                               <span className="w-4" />
                             )}

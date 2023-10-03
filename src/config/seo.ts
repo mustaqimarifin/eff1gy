@@ -1,11 +1,11 @@
 export const baseUrl =
-  process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
-
-export const baseEmail = 'vmprmyth@gmail.com'
+  process.env.NODE_ENV === 'production' ? 'https://brianlovin.com' : ''
+export const baseEmail = 'hi@brianlovin.com'
 
 export const defaultSEO = {
   title: 'Mustaqim Arifin',
-  description: 'Marketing manager and Music Producer living in KL.',
+  description:
+    'Product designer, podcaster, and writer, living in San Francisco.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -19,8 +19,8 @@ export const defaultSEO = {
     ],
   },
   twitter: {
-    handle: '@vmprmyth',
-    site: '@vmprmyth',
+    handle: '@brian_lovin',
+    site: '@brian_lovin',
     cardType: 'summary_large_image',
   },
 }

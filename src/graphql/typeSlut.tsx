@@ -10,6 +10,7 @@ import {
   TypePolicies,
   TypePolicy,
 } from '@apollo/client/cache'
+
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -21,71 +22,80 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>
 }
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never }
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never
+    }
 const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
-  Date: any
-  JSON: any
+  ID: { input: string; output: string }
+  String: { input: string; output: string }
+  Boolean: { input: boolean; output: boolean }
+  Int: { input: number; output: number }
+  Float: { input: number; output: number }
+  Date: { input: any; output: any }
+  JSON: { input: any; output: any }
 }
 
 export type AddBookmarkInput = {
-  tag: Scalars['String']
-  url: Scalars['String']
+  tag: Scalars['String']['input']
+  url: Scalars['String']['input']
 }
 
 export type AddPostInput = {
-  excerpt?: InputMaybe<Scalars['String']>
-  slug: Scalars['String']
-  text: Scalars['String']
-  title: Scalars['String']
+  excerpt?: InputMaybe<Scalars['String']['input']>
+  slug: Scalars['String']['input']
+  text: Scalars['String']['input']
+  title: Scalars['String']['input']
 }
 
 export type AddQuestionInput = {
-  audioUrl?: InputMaybe<Scalars['String']>
-  description?: InputMaybe<Scalars['String']>
-  title: Scalars['String']
-  waveform?: InputMaybe<Scalars['JSON']>
+  audioUrl?: InputMaybe<Scalars['String']['input']>
+  description?: InputMaybe<Scalars['String']['input']>
+  title: Scalars['String']['input']
+  waveform?: InputMaybe<Scalars['JSON']['input']>
 }
 
 export type AddStackInput = {
-  description: Scalars['String']
-  image: Scalars['String']
-  name: Scalars['String']
-  tag?: InputMaybe<Scalars['String']>
-  url: Scalars['String']
+  description: Scalars['String']['input']
+  image: Scalars['String']['input']
+  name: Scalars['String']['input']
+  tag?: InputMaybe<Scalars['String']['input']>
+  url: Scalars['String']['input']
 }
 
 export type Bookmark = {
   __typename?: 'Bookmark'
-  createdAt: Scalars['Date']
-  description?: Maybe<Scalars['String']>
-  faviconUrl?: Maybe<Scalars['String']>
-  hitRate?: Maybe<Scalars['Int']>
-  host: Scalars['String']
-  id: Scalars['ID']
-  image?: Maybe<Scalars['String']>
-  reactionCount?: Maybe<Scalars['Int']>
+  createdAt: Scalars['Date']['output']
+  description?: Maybe<Scalars['String']['output']>
+  faviconUrl?: Maybe<Scalars['String']['output']>
+  hitRate?: Maybe<Scalars['Int']['output']>
+  host: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  image?: Maybe<Scalars['String']['output']>
+  reactionCount?: Maybe<Scalars['Int']['output']>
   tags: Array<Maybe<Tag>>
-  title?: Maybe<Scalars['String']>
-  updatedAt: Scalars['Date']
-  url: Scalars['String']
-  viewerHasReacted?: Maybe<Scalars['Boolean']>
+  title?: Maybe<Scalars['String']['output']>
+  updatedAt: Scalars['Date']['output']
+  url: Scalars['String']['output']
+  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type BookmarkEdge = {
   __typename?: 'BookmarkEdge'
-  cursor?: Maybe<Scalars['String']>
+  cursor?: Maybe<Scalars['String']['output']>
   node?: Maybe<Bookmark>
 }
 
 export type BookmarkFilter = {
-  host?: InputMaybe<Scalars['String']>
-  tag?: InputMaybe<Scalars['String']>
+  host?: InputMaybe<Scalars['String']['input']>
+  tag?: InputMaybe<Scalars['String']['input']>
 }
 
 export type BookmarksConnection = {
@@ -102,12 +112,12 @@ export enum CacheControlScope {
 export type Comment = {
   __typename?: 'Comment'
   author: User
-  createdAt: Scalars['Date']
-  id: Scalars['ID']
-  text?: Maybe<Scalars['String']>
-  updatedAt?: Maybe<Scalars['Date']>
-  viewerCanDelete?: Maybe<Scalars['Boolean']>
-  viewerCanEdit?: Maybe<Scalars['Boolean']>
+  createdAt: Scalars['Date']['output']
+  id: Scalars['ID']['output']
+  text?: Maybe<Scalars['String']['output']>
+  updatedAt?: Maybe<Scalars['Date']['output']>
+  viewerCanDelete?: Maybe<Scalars['Boolean']['output']>
+  viewerCanEdit?: Maybe<Scalars['Boolean']['output']>
 }
 
 export enum CommentType {
@@ -118,49 +128,49 @@ export enum CommentType {
 }
 
 export type EditBookmarkInput = {
-  description?: InputMaybe<Scalars['String']>
-  faviconUrl?: InputMaybe<Scalars['String']>
-  tag?: InputMaybe<Scalars['String']>
-  title: Scalars['String']
+  description?: InputMaybe<Scalars['String']['input']>
+  faviconUrl?: InputMaybe<Scalars['String']['input']>
+  tag?: InputMaybe<Scalars['String']['input']>
+  title: Scalars['String']['input']
 }
 
 export type EditPostInput = {
-  excerpt?: InputMaybe<Scalars['String']>
-  published?: InputMaybe<Scalars['Boolean']>
-  slug: Scalars['String']
-  text: Scalars['String']
-  title: Scalars['String']
+  excerpt?: InputMaybe<Scalars['String']['input']>
+  published?: InputMaybe<Scalars['Boolean']['input']>
+  slug: Scalars['String']['input']
+  text: Scalars['String']['input']
+  title: Scalars['String']['input']
 }
 
 export type EditQuestionInput = {
-  audioUrl?: InputMaybe<Scalars['String']>
-  description?: InputMaybe<Scalars['String']>
-  title: Scalars['String']
-  waveform?: InputMaybe<Scalars['JSON']>
+  audioUrl?: InputMaybe<Scalars['String']['input']>
+  description?: InputMaybe<Scalars['String']['input']>
+  title: Scalars['String']['input']
+  waveform?: InputMaybe<Scalars['JSON']['input']>
 }
 
 export type EditStackInput = {
-  description: Scalars['String']
-  image: Scalars['String']
-  name: Scalars['String']
-  tag?: InputMaybe<Scalars['String']>
-  url: Scalars['String']
+  description: Scalars['String']['input']
+  image: Scalars['String']['input']
+  name: Scalars['String']['input']
+  tag?: InputMaybe<Scalars['String']['input']>
+  url: Scalars['String']['input']
 }
 
 export type EditUserInput = {
-  email?: InputMaybe<Scalars['String']>
-  name?: InputMaybe<Scalars['String']>
+  email?: InputMaybe<Scalars['String']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
 }
 
 export type EmailSubscription = {
   __typename?: 'EmailSubscription'
-  subscribed?: Maybe<Scalars['Boolean']>
+  subscribed?: Maybe<Scalars['Boolean']['output']>
   type?: Maybe<EmailSubscriptionType>
 }
 
 export type EmailSubscriptionInput = {
-  email?: InputMaybe<Scalars['String']>
-  subscribed: Scalars['Boolean']
+  email?: InputMaybe<Scalars['String']['input']>
+  subscribed: Scalars['Boolean']['input']
   type: EmailSubscriptionType
 }
 
@@ -172,36 +182,36 @@ export enum EmailSubscriptionType {
 export type HackerNewsComment = {
   __typename?: 'HackerNewsComment'
   comments?: Maybe<Array<Maybe<HackerNewsComment>>>
-  comments_count?: Maybe<Scalars['String']>
-  content?: Maybe<Scalars['String']>
-  id?: Maybe<Scalars['ID']>
-  level?: Maybe<Scalars['Int']>
-  time?: Maybe<Scalars['Int']>
-  time_ago?: Maybe<Scalars['String']>
-  user?: Maybe<Scalars['String']>
+  comments_count?: Maybe<Scalars['String']['output']>
+  content?: Maybe<Scalars['String']['output']>
+  id?: Maybe<Scalars['ID']['output']>
+  level?: Maybe<Scalars['Int']['output']>
+  time?: Maybe<Scalars['Int']['output']>
+  time_ago?: Maybe<Scalars['String']['output']>
+  user?: Maybe<Scalars['String']['output']>
 }
 
 export type HackerNewsPost = {
   __typename?: 'HackerNewsPost'
   comments?: Maybe<Array<Maybe<HackerNewsComment>>>
-  comments_count?: Maybe<Scalars['String']>
-  content?: Maybe<Scalars['String']>
-  domain?: Maybe<Scalars['String']>
-  id?: Maybe<Scalars['ID']>
-  time?: Maybe<Scalars['Int']>
-  time_ago?: Maybe<Scalars['String']>
-  title?: Maybe<Scalars['String']>
-  url?: Maybe<Scalars['String']>
-  user?: Maybe<Scalars['String']>
+  comments_count?: Maybe<Scalars['String']['output']>
+  content?: Maybe<Scalars['String']['output']>
+  domain?: Maybe<Scalars['String']['output']>
+  id?: Maybe<Scalars['ID']['output']>
+  time?: Maybe<Scalars['Int']['output']>
+  time_ago?: Maybe<Scalars['String']['output']>
+  title?: Maybe<Scalars['String']['output']>
+  url?: Maybe<Scalars['String']['output']>
+  user?: Maybe<Scalars['String']['output']>
 }
 
 export type Hit = {
   __typename?: 'Hit'
-  catID?: Maybe<Scalars['String']>
-  createdAt: Scalars['Date']
-  hitRate?: Maybe<Scalars['Int']>
-  id: Scalars['ID']
-  updatedAt?: Maybe<Scalars['Date']>
+  catID?: Maybe<Scalars['String']['output']>
+  createdAt: Scalars['Date']['output']
+  hitRate?: Maybe<Scalars['Int']['output']>
+  id: Scalars['ID']['output']
+  updatedAt?: Maybe<Scalars['Date']['output']>
 }
 
 export enum HitType {
@@ -219,13 +229,13 @@ export type Mutation = {
   addPost?: Maybe<Post>
   addQuestion?: Maybe<Question>
   addStack?: Maybe<Stack>
-  deleteBookmark?: Maybe<Scalars['Boolean']>
-  deleteComment?: Maybe<Scalars['Boolean']>
-  deleteHit?: Maybe<Scalars['Boolean']>
-  deletePost?: Maybe<Scalars['Boolean']>
-  deleteQuestion?: Maybe<Scalars['Boolean']>
-  deleteStack?: Maybe<Scalars['Boolean']>
-  deleteUser?: Maybe<Scalars['Boolean']>
+  deleteBookmark?: Maybe<Scalars['Boolean']['output']>
+  deleteComment?: Maybe<Scalars['Boolean']['output']>
+  deleteHit?: Maybe<Scalars['Boolean']['output']>
+  deletePost?: Maybe<Scalars['Boolean']['output']>
+  deleteQuestion?: Maybe<Scalars['Boolean']['output']>
+  deleteStack?: Maybe<Scalars['Boolean']['output']>
+  deleteUser?: Maybe<Scalars['Boolean']['output']>
   editBookmark?: Maybe<Bookmark>
   editComment?: Maybe<Comment>
   editEmailSubscription?: Maybe<User>
@@ -243,13 +253,13 @@ export type MutationAddBookmarkArgs = {
 }
 
 export type MutationAddCommentArgs = {
-  refId: Scalars['ID']
-  text: Scalars['String']
+  refId: Scalars['ID']['input']
+  text: Scalars['String']['input']
   type: CommentType
 }
 
 export type MutationAddHitArgs = {
-  pageId: Scalars['ID']
+  pageId: Scalars['ID']['input']
   type: HitType
 }
 
@@ -266,37 +276,37 @@ export type MutationAddStackArgs = {
 }
 
 export type MutationDeleteBookmarkArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationDeleteCommentArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationDeleteHitArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationDeletePostArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationDeleteQuestionArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationDeleteStackArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationEditBookmarkArgs = {
   data: EditBookmarkInput
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationEditCommentArgs = {
-  id: Scalars['ID']
-  text?: InputMaybe<Scalars['String']>
+  id: Scalars['ID']['input']
+  text?: InputMaybe<Scalars['String']['input']>
 }
 
 export type MutationEditEmailSubscriptionArgs = {
@@ -304,23 +314,23 @@ export type MutationEditEmailSubscriptionArgs = {
 }
 
 export type MutationEditHitArgs = {
-  id: Scalars['ID']
-  text?: InputMaybe<Scalars['String']>
+  id: Scalars['ID']['input']
+  text?: InputMaybe<Scalars['String']['input']>
 }
 
 export type MutationEditPostArgs = {
   data: EditPostInput
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationEditQuestionArgs = {
   data: EditQuestionInput
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationEditStackArgs = {
   data: EditStackInput
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type MutationEditUserArgs = {
@@ -328,36 +338,36 @@ export type MutationEditUserArgs = {
 }
 
 export type MutationToggleReactionArgs = {
-  refId: Scalars['ID']
+  refId: Scalars['ID']['input']
   type: ReactionType
 }
 
 export type MutationToggleStackUserArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type PageInfo = {
   __typename?: 'PageInfo'
-  endCursor?: Maybe<Scalars['String']>
-  hasNextPage?: Maybe<Scalars['Boolean']>
-  totalCount?: Maybe<Scalars['Int']>
+  endCursor?: Maybe<Scalars['String']['output']>
+  hasNextPage?: Maybe<Scalars['Boolean']['output']>
+  totalCount?: Maybe<Scalars['Int']['output']>
 }
 
 export type Post = {
   __typename?: 'Post'
   author?: Maybe<User>
-  createdAt?: Maybe<Scalars['Date']>
-  excerpt?: Maybe<Scalars['String']>
-  featureImage?: Maybe<Scalars['String']>
-  hitRate?: Maybe<Scalars['Int']>
-  id: Scalars['ID']
-  publishedAt?: Maybe<Scalars['Date']>
-  reactionCount?: Maybe<Scalars['Int']>
-  slug?: Maybe<Scalars['String']>
-  text?: Maybe<Scalars['String']>
-  title?: Maybe<Scalars['String']>
-  updatedAt?: Maybe<Scalars['Date']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']>
+  createdAt?: Maybe<Scalars['Date']['output']>
+  excerpt?: Maybe<Scalars['String']['output']>
+  featureImage?: Maybe<Scalars['String']['output']>
+  hitRate?: Maybe<Scalars['Int']['output']>
+  id: Scalars['ID']['output']
+  publishedAt?: Maybe<Scalars['Date']['output']>
+  reactionCount?: Maybe<Scalars['Int']['output']>
+  slug?: Maybe<Scalars['String']['output']>
+  text?: Maybe<Scalars['String']['output']>
+  title?: Maybe<Scalars['String']['output']>
+  updatedAt?: Maybe<Scalars['Date']['output']>
+  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type Query = {
@@ -382,39 +392,39 @@ export type Query = {
 }
 
 export type QueryBookmarkArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type QueryBookmarksArgs = {
-  after?: InputMaybe<Scalars['String']>
+  after?: InputMaybe<Scalars['String']['input']>
   filter?: InputMaybe<BookmarkFilter>
-  first?: InputMaybe<Scalars['Int']>
+  first?: InputMaybe<Scalars['Int']['input']>
 }
 
 export type QueryCommentArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type QueryCommentsArgs = {
-  refId: Scalars['ID']
+  refId: Scalars['ID']['input']
   type: CommentType
 }
 
 export type QueryHackerNewsPostArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type QueryHitArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type QueryHitsArgs = {
-  pageId: Scalars['ID']
+  pageId: Scalars['ID']['input']
   type: HitType
 }
 
 export type QueryPostArgs = {
-  slug: Scalars['String']
+  slug: Scalars['String']['input']
 }
 
 export type QueryPostsArgs = {
@@ -422,50 +432,50 @@ export type QueryPostsArgs = {
 }
 
 export type QueryQuestionArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type QueryQuestionsArgs = {
-  after?: InputMaybe<Scalars['String']>
+  after?: InputMaybe<Scalars['String']['input']>
   filter?: InputMaybe<QuestionFilter>
-  first?: InputMaybe<Scalars['Int']>
+  first?: InputMaybe<Scalars['Int']['input']>
 }
 
 export type QueryStackArgs = {
-  slug: Scalars['String']
+  slug: Scalars['String']['input']
 }
 
 export type QueryStacksArgs = {
-  after?: InputMaybe<Scalars['String']>
-  first?: InputMaybe<Scalars['Int']>
+  after?: InputMaybe<Scalars['String']['input']>
+  first?: InputMaybe<Scalars['Int']['input']>
 }
 
 export type QueryUserArgs = {
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }
 
 export type Question = {
   __typename?: 'Question'
-  audioUrl?: Maybe<Scalars['String']>
+  audioUrl?: Maybe<Scalars['String']['output']>
   author?: Maybe<User>
-  createdAt: Scalars['Date']
-  description?: Maybe<Scalars['String']>
-  hitRate?: Maybe<Scalars['Int']>
-  id: Scalars['ID']
-  playCount?: Maybe<Scalars['Int']>
-  reactionCount?: Maybe<Scalars['Int']>
+  createdAt: Scalars['Date']['output']
+  description?: Maybe<Scalars['String']['output']>
+  hitRate?: Maybe<Scalars['Int']['output']>
+  id: Scalars['ID']['output']
+  playCount?: Maybe<Scalars['Int']['output']>
+  reactionCount?: Maybe<Scalars['Int']['output']>
   status?: Maybe<QuestionStatus>
-  title: Scalars['String']
-  updatedAt?: Maybe<Scalars['Date']>
-  viewerCanComment?: Maybe<Scalars['Boolean']>
-  viewerCanEdit?: Maybe<Scalars['Boolean']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']>
-  waveform?: Maybe<Scalars['JSON']>
+  title: Scalars['String']['output']
+  updatedAt?: Maybe<Scalars['Date']['output']>
+  viewerCanComment?: Maybe<Scalars['Boolean']['output']>
+  viewerCanEdit?: Maybe<Scalars['Boolean']['output']>
+  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
+  waveform?: Maybe<Scalars['JSON']['output']>
 }
 
 export type QuestionEdge = {
   __typename?: 'QuestionEdge'
-  cursor?: Maybe<Scalars['String']>
+  cursor?: Maybe<Scalars['String']['output']>
   node?: Maybe<Question>
 }
 
@@ -495,25 +505,25 @@ export enum ReactionType {
 
 export type Stack = {
   __typename?: 'Stack'
-  createdAt: Scalars['Date']
-  description?: Maybe<Scalars['String']>
-  hitRate?: Maybe<Scalars['Int']>
-  id: Scalars['ID']
-  image?: Maybe<Scalars['String']>
-  name: Scalars['String']
-  reactionCount?: Maybe<Scalars['Int']>
-  slug: Scalars['String']
+  createdAt: Scalars['Date']['output']
+  description?: Maybe<Scalars['String']['output']>
+  hitRate?: Maybe<Scalars['Int']['output']>
+  id: Scalars['ID']['output']
+  image?: Maybe<Scalars['String']['output']>
+  name: Scalars['String']['output']
+  reactionCount?: Maybe<Scalars['Int']['output']>
+  slug: Scalars['String']['output']
   tags: Array<Maybe<Tag>>
-  updatedAt?: Maybe<Scalars['Date']>
-  url: Scalars['String']
+  updatedAt?: Maybe<Scalars['Date']['output']>
+  url: Scalars['String']['output']
   usedBy: Array<Maybe<User>>
-  usedByViewer?: Maybe<Scalars['Boolean']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']>
+  usedByViewer?: Maybe<Scalars['Boolean']['output']>
+  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type StackEdge = {
   __typename?: 'StackEdge'
-  cursor?: Maybe<Scalars['String']>
+  cursor?: Maybe<Scalars['String']['output']>
   node?: Maybe<Stack>
 }
 
@@ -525,20 +535,20 @@ export type StacksConnection = {
 
 export type Tag = {
   __typename?: 'Tag'
-  name: Scalars['String']
+  name: Scalars['String']['output']
 }
 
 export type User = {
   __typename?: 'User'
-  createdAt?: Maybe<Scalars['Date']>
-  email?: Maybe<Scalars['String']>
+  createdAt?: Maybe<Scalars['Date']['output']>
+  email?: Maybe<Scalars['String']['output']>
   emailSubscriptions?: Maybe<Array<Maybe<EmailSubscription>>>
-  id: Scalars['ID']
-  image?: Maybe<Scalars['String']>
-  isAdmin?: Maybe<Scalars['Boolean']>
-  isViewer?: Maybe<Scalars['Boolean']>
-  name: Scalars['String']
-  pendingEmail?: Maybe<Scalars['String']>
+  id: Scalars['ID']['output']
+  image?: Maybe<Scalars['String']['output']>
+  isAdmin?: Maybe<Scalars['Boolean']['output']>
+  isViewer?: Maybe<Scalars['Boolean']['output']>
+  name: Scalars['String']['output']
+  pendingEmail?: Maybe<Scalars['String']['output']>
   role?: Maybe<UserRole>
 }
 
@@ -549,7 +559,7 @@ export enum UserRole {
 }
 
 export type WritingFilter = {
-  published?: InputMaybe<Scalars['Boolean']>
+  published?: InputMaybe<Scalars['Boolean']['input']>
 }
 
 export type BookmarkDetailFragment = {
@@ -839,7 +849,7 @@ export type UserSettingsFragment = {
 } & { __typename?: 'User' }
 
 export type EditBookmarkMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
   data: EditBookmarkInput
 }>
 
@@ -861,7 +871,7 @@ export type EditBookmarkMutation = {
 } & { __typename?: 'Mutation' }
 
 export type DeleteBookmarkMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type DeleteBookmarkMutation = { deleteBookmark?: boolean | null } & {
@@ -890,9 +900,9 @@ export type AddBookmarkMutation = {
 } & { __typename?: 'Mutation' }
 
 export type AddCommentMutationVariables = Exact<{
-  refId: Scalars['ID']
+  refId: Scalars['ID']['input']
   type: CommentType
-  text: Scalars['String']
+  text: Scalars['String']['input']
 }>
 
 export type AddCommentMutation = {
@@ -917,8 +927,8 @@ export type AddCommentMutation = {
 } & { __typename?: 'Mutation' }
 
 export type EditCommentMutationVariables = Exact<{
-  id: Scalars['ID']
-  text: Scalars['String']
+  id: Scalars['ID']['input']
+  text: Scalars['String']['input']
 }>
 
 export type EditCommentMutation = {
@@ -943,7 +953,7 @@ export type EditCommentMutation = {
 } & { __typename?: 'Mutation' }
 
 export type DeleteCommentMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type DeleteCommentMutation = { deleteComment?: boolean | null } & {
@@ -969,7 +979,7 @@ export type EditEmailSubscriptionMutation = {
 } & { __typename?: 'Mutation' }
 
 export type EditPostMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
   data: EditPostInput
 }>
 
@@ -991,7 +1001,7 @@ export type EditPostMutation = {
 } & { __typename?: 'Mutation' }
 
 export type DeletePostMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type DeletePostMutation = { deletePost?: boolean | null } & {
@@ -1020,7 +1030,7 @@ export type AddPostMutation = {
 } & { __typename?: 'Mutation' }
 
 export type EditQuestionMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
   data: EditQuestionInput
 }>
 
@@ -1054,7 +1064,7 @@ export type EditQuestionMutation = {
 } & { __typename?: 'Mutation' }
 
 export type DeleteQuestionMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type DeleteQuestionMutation = { deleteQuestion?: boolean | null } & {
@@ -1095,7 +1105,7 @@ export type AddQuestionMutation = {
 } & { __typename?: 'Mutation' }
 
 export type ToggleReactionMutationVariables = Exact<{
-  refId: Scalars['ID']
+  refId: Scalars['ID']['input']
   type: ReactionType
 }>
 
@@ -1116,7 +1126,7 @@ export type ToggleReactionMutation = {
 } & { __typename?: 'Mutation' }
 
 export type EditStackMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
   data: EditStackInput
 }>
 
@@ -1151,7 +1161,7 @@ export type EditStackMutation = {
 } & { __typename?: 'Mutation' }
 
 export type DeleteStackMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type DeleteStackMutation = { deleteStack?: boolean | null } & {
@@ -1193,7 +1203,7 @@ export type AddStackMutation = {
 } & { __typename?: 'Mutation' }
 
 export type ToggleStackUserMutationVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type ToggleStackUserMutation = {
@@ -1243,8 +1253,8 @@ export type EditUserMutation = {
 } & { __typename?: 'Mutation' }
 
 export type GetBookmarksQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>
-  after?: InputMaybe<Scalars['String']>
+  first?: InputMaybe<Scalars['Int']['input']>
+  after?: InputMaybe<Scalars['String']['input']>
   filter?: InputMaybe<BookmarkFilter>
 }>
 
@@ -1277,7 +1287,7 @@ export type GetBookmarksQuery = {
 } & { __typename?: 'Query' }
 
 export type GetBookmarkQueryVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type GetBookmarkQuery = {
@@ -1298,7 +1308,7 @@ export type GetBookmarkQuery = {
 } & { __typename?: 'Query' }
 
 export type GetCommentsQueryVariables = Exact<{
-  refId: Scalars['ID']
+  refId: Scalars['ID']['input']
   type: CommentType
 }>
 
@@ -1342,7 +1352,7 @@ export type GetPostsQuery = {
 } & { __typename?: 'Query' }
 
 export type GetPostQueryVariables = Exact<{
-  slug: Scalars['String']
+  slug: Scalars['String']['input']
 }>
 
 export type GetPostQuery = {
@@ -1363,8 +1373,8 @@ export type GetPostQuery = {
 } & { __typename?: 'Query' }
 
 export type GetQuestionsQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>
-  after?: InputMaybe<Scalars['String']>
+  first?: InputMaybe<Scalars['Int']['input']>
+  after?: InputMaybe<Scalars['String']['input']>
   filter?: InputMaybe<QuestionFilter>
 }>
 
@@ -1406,7 +1416,7 @@ export type GetQuestionsQuery = {
 } & { __typename?: 'Query' }
 
 export type GetQuestionQueryVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type GetQuestionQuery = {
@@ -1439,8 +1449,8 @@ export type GetQuestionQuery = {
 } & { __typename?: 'Query' }
 
 export type GetStacksQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>
-  after?: InputMaybe<Scalars['String']>
+  first?: InputMaybe<Scalars['Int']['input']>
+  after?: InputMaybe<Scalars['String']['input']>
 }>
 
 export type GetStacksQuery = {
@@ -1471,7 +1481,7 @@ export type GetStacksQuery = {
 } & { __typename?: 'Query' }
 
 export type GetStackQueryVariables = Exact<{
-  slug: Scalars['String']
+  slug: Scalars['String']['input']
 }>
 
 export type GetStackQuery = {
@@ -1511,7 +1521,7 @@ export type GetTagsQuery = {
 } & { __typename?: 'Query' }
 
 export type GetUserQueryVariables = Exact<{
-  id: Scalars['ID']
+  id: Scalars['ID']['input']
 }>
 
 export type GetUserQuery = {

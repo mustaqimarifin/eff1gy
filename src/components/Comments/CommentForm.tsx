@@ -1,5 +1,4 @@
 import * as React from 'react'
-import xid from 'xid-js'
 
 import { ErrorAlert } from '~/components/Alert'
 import { CommentButton } from '~/components/Button'
@@ -7,11 +6,13 @@ import { Textarea } from '~/components/Input'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import {
   CommentType,
+  GetCommentsQuery,
   useAddCommentMutation,
   useViewerQuery,
-} from '~/graphql/typeSlut'
+} from '~/graphql/types.generated'
 import { useDebounce } from '~/hooks/useDebounce'
-import { cleanTime } from '~/lib/functions'
+import { genId } from '~/lib/nanoid'
+import { timestampToCleanTime } from '~/lib/transformers'
 
 interface Props {
   refId: string
@@ -29,15 +30,15 @@ export function CommentForm({ refId, type, openModal }: Props) {
       __typename: 'Mutation',
       addComment: {
         __typename: 'Comment',
-        id: xid.next(),
+        id: genId(),
         text,
-        createdAt: cleanTime({ month: 'short' }).formatted,
-        updatedAt: cleanTime({ month: 'short' }).formatted,
+        createdAt: timestampToCleanTime({ month: 'short' }).formatted,
+        updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
         viewerCanDelete: false,
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: xid.next(),
+          id: genId(),
           name: data?.viewer?.name,
           image: data?.viewer?.image,
           role: data?.viewer?.role,
@@ -46,9 +47,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
       },
     },
     update(cache, { data: { addComment } }) {
-      // @ts-ignore
-
-      const { comments } = cache.readQuery({
+      const { comments } = cache.readQuery<GetCommentsQuery>({
         query: GET_COMMENTS,
         variables: { refId, type },
       })
@@ -105,12 +104,12 @@ export function CommentForm({ refId, type, openModal }: Props) {
   }
 
   return (
-    <div className="filter-blur  bottom-0 flex flex-col border-t border-gray-150 bg-white bg-opacity-90 pb-10 dark:border-gray-800 dark:bg-gray-900 sm:pb-0">
+    <div className="filter-blur sticky bottom-0 flex flex-col border-t border-gray-150 bg-white bg-opacity-90 pb-10 dark:border-gray-800 dark:bg-gray-900 sm:pb-0">
       <form
         className="mx-auto flex w-full max-w-3xl flex-none items-center space-x-4 px-4 py-4 md:px-6"
         onSubmit={onSubmit}
       >
-        <div className=" relative flex w-full flex-none">
+        <div className="relative flex w-full flex-none">
           <Textarea
             data-cy="comment-form-textarea"
             placeholder="Write a comment..."

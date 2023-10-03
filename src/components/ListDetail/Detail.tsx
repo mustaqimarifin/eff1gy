@@ -1,5 +1,4 @@
-import { CookieIcon } from '@radix-ui/react-icons'
-import Image from 'next/image'
+import { Compass } from 'lucide-react'
 import * as React from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
@@ -10,7 +9,7 @@ import { TitleBar } from './TitleBar'
 function ContentContainer(props) {
   return (
     <div
-      className="mx-auto  max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl px-3 py-12   lg:px-4 "
+      className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
       {...props}
     />
   )
@@ -26,7 +25,7 @@ const Container = React.forwardRef<HTMLDivElement, DetailContainerProps>(
       <div
         ref={ref}
         id="main"
-        className="relative flex max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-zinc-900 "
+        className="relative flex max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
         {...props}
       />
     )
@@ -42,7 +41,13 @@ interface TitleProps {
 }
 
 const Title = React.forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  return <h1 ref={ref} className="text-4xl font-bold " {...props} />
+  return (
+    <h1
+      ref={ref}
+      className="text-primary font-sans text-2xl font-bold xl:text-3xl"
+      {...props}
+    />
+  )
 })
 
 function Loading() {
@@ -60,19 +65,11 @@ function Null() {
     <Container>
       <TitleBar title="Not found" />
       <div className="flex flex-1 flex-col items-center justify-center space-y-6 px-8 text-center lg:px-16">
-        <Image
-          src="/static/clip/brickluke.webp"
-          width={200}
-          height={200}
-          alt="brickluke"
-          className="justify-center"
-        />
-        <CookieIcon className="text-secondary" />
+        <Compass className="text-secondary" size={32} />
         <div className="flex flex-col space-y-1">
           <p className="text-primary font-semibold">
             What you seek does not exist.
           </p>
-
           <p className="text-tertiary">
             Maybe this link is broken. Maybe something was deleted, or moved. In
             any case, there’s nothing to see here...

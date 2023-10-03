@@ -1,11 +1,10 @@
-import { PlusIcon } from '@radix-ui/react-icons'
+import { Plus } from 'lucide-react'
 import * as React from 'react'
 
-//import  PlusIcon  from '@radix-ui/react-icons/dist/PlusIcon'
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { SignInDialog } from '~/components/SignInDialog'
-import { useViewerQuery } from '~/graphql/typeSlut'
+import { useViewerQuery } from '~/graphql/types.generated'
 
 import SegmentedControl from '../SegmentedController'
 import { AddQuestionDialog } from './AddQuestionDialog'
@@ -25,7 +24,7 @@ export function AMATitlebar({ scrollContainerRef }) {
               size="small-square"
               data-cy="open-add-question-dialog"
             >
-              <PlusIcon />
+              <Plus size={16} />
             </GhostButton>
           }
         />
@@ -40,7 +39,7 @@ export function AMATitlebar({ scrollContainerRef }) {
             size="small-square"
             data-cy="open-add-question-dialog"
           >
-            <PlusIcon />
+            <Plus size={16} />
           </GhostButton>
         }
       />
@@ -54,7 +53,7 @@ export function AMATitlebar({ scrollContainerRef }) {
   function getChildren() {
     if (data?.viewer?.isAdmin) {
       return (
-        <div className="pt-2 pb-1">
+        <div className="pb-1 pt-2">
           <SegmentedControl
             onSetActiveItem={() => setFilterPending(!filterPending)}
             active={filterPending ? 'pending' : 'answered'}

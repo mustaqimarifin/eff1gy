@@ -1,8 +1,7 @@
-import jwt from 'jsonwebtoken'
 import { NextApiRequest, NextApiResponse } from 'next'
-
 import { baseUrl } from '~/config/seo'
-import prisma from '~/lib/prisma'
+import { prisma } from '~/lib/prisma'
+import jwt from 'jsonwebtoken'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { token } = req.query

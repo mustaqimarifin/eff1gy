@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import * as React from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetPostQuery } from '~/graphql/typeSlut'
+import { useGetPostQuery } from '~/graphql/types.generated'
 
 import { PostEditorActions } from './PostEditorActions'
 import { PostEditorComposer } from './PostEditorComposer'
