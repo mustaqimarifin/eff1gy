@@ -104,13 +104,13 @@ export function TitleBar({
     <>
       <div
         style={{
-          background: `rgba(${darkMode ? '50,50,50' : '255,255,255'},${
+          /*           background: `rgba(${darkMode ? '18,18,18' : '50,50,50'},${
             currentScrollOffset === 0
               ? currentScrollOffset
               : darkMode
               ? currentScrollOffset + 0.5
               : currentScrollOffset + 0.8
-          })`,
+          })`, */
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
           minHeight: '48px',
         }}

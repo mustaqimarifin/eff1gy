@@ -125,13 +125,13 @@
     filter: grayscale(100%);
   }
 
-  .filter-saturate {
+/*   .filter-saturate {
     -webkit-filter: brightness(105%) saturate(200%) contrast(1);
     filter: brightness(105%) saturate(200%) contrast(1);
   }
-
+ */
   .filter-blur {
-    backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(100%) blur(20px);
   }
 
   .highlight-link-hover {

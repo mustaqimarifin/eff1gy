@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { withProviders } from '~/components/Providers/withProviders'
 import { PostsList } from '~/components/Writing/PostsList'
@@ -17,6 +16,23 @@ function WritingPage() {
       openGraph={routes.writing.seo.openGraph}
     />
   )
+}
+
+export async function getServerSideProps({ req, res }) {
+  const context = await getContext(req, res)
+  const client = initApolloClient({ context })
+
+  await Promise.all([
+    client.query({ query: GET_VIEWER }),
+    client.query({
+      query: GET_POSTS,
+      variables: { filter: { published: true } },
+    }),
+  ])
+
+  return addApolloState(client, {
+    props: {},
+  })
 }
 
 WritingPage.getLayout = withProviders(function getLayout(page) {

@@ -2,6 +2,7 @@
 import { join } from 'path/posix'
 import { cwd } from 'process'
 import { bundleMDX } from 'mdx-bundler'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 //import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
@@ -80,11 +81,11 @@ export async function mdxToCode(text: string) {
         [rehypePrettyCode, phoptions],
         imageMetadata,
         rehypeSlug,
-        /* [
+        [
           rehypeAutolinkHeadings,
           { behavior: 'wrap' },
           { properties: { className: ['anchor'] } },
-        ], */
+        ],
       ]
 
       return options

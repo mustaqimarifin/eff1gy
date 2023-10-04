@@ -102,7 +102,7 @@ function getComponentsForVariant(variant) {
   }
 }
 function Image(props) {
-  return <NextImage {...props} quality={75} className="mdx-image" />
+  return <NextImage {...props} quality={75} className="mdx-image rounded-md" />
 }
 
 const MDImage = (paragraph: { children?: any; node?: any }) => {
