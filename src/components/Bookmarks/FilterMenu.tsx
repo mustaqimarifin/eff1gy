@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { GhostButton } from '~/components/Button'
 import { useGetTagsQuery } from '~/graphql/typeSlut'
-import { Check } from 'lucide-react'
+import { CheckIcon } from 'lucide-react'
 
 import { BookmarksContext } from './BookmarksList'
 
@@ -14,7 +14,7 @@ export function BookmarksFilterMenu() {
 
   const { tags } = data
 
-  const allowedTags = ['website', 'reading', 'portfolio']
+  const allowedTags = ['web', 'lol', 'portfolio', 'art']
 
   const filtered = tags.filter((t) => allowedTags.indexOf(t.name) >= 0)
 
@@ -88,7 +88,7 @@ export function BookmarksFilterMenu() {
                             } text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm capitalize`}
                           >
                             {tag === t.name ? (
-                              <Check size={16} />
+                              <CheckIcon />
                             ) : (
                               <span className="w-4" />
                             )}

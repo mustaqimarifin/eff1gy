@@ -5,7 +5,6 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 
 import HeroImage from '../hero-image'
 import { TraceImage } from '../Image'
-import Buffoon from '../Vid'
 
 function SectionTitle(props) {
   return (
@@ -174,21 +173,21 @@ export function Intro() {
             <article className="layout w-full p-2 lg:max-w-3xl">
               <h2 className="mb-6 pt-4 font-serif text-2xl font-medium drop-shadow-sm md:text-4xl">
                 Greetings! I'm the{' '}
-                <span className="dark:text-active font-serif   font-normal text-twitter">
+                <span className="dark:text-active font-serif font-normal text-twitter">
                   marketing manager&nbsp;
                 </span>
                 and{' '}
-                <span className="dark:text-active font-serif  font-normal text-twitter">
+                <span className="dark:text-active font-serif font-normal text-twitter">
                   creative lead&nbsp;
                 </span>
                 at{` `}
                 <Muse2 className="inline h-12 items-center dark:invert" />,{' '}
                 <span>focusing on&nbsp;</span>
-                <span className="text-coyRed  font-serif">
+                <span className="text-coyRed font-serif">
                   large-scale events tech
                 </span>
                 , and&nbsp;
-                <span className="text-coyRed  font-serif">
+                <span className="text-coyRed font-serif">
                   optimization.&nbsp;
                 </span>{' '}
               </h2>
@@ -199,11 +198,11 @@ export function Intro() {
               <div className="drop-shadow-sm">
                 <p className="dark:prose-dark prose max-w-none break-words py-4 md:prose-lg">
                   A sizable portion of my career involves my work as an&nbsp;
-                  <span className=" text-orange-400 dark:text-hacker-news">
+                  <span className="text-orange-400 dark:text-hacker-news">
                     audio engineer&nbsp;
                   </span>
                   and{' '}
-                  <span className="  text-orange-400 dark:text-hacker-news">
+                  <span className="text-orange-400 dark:text-hacker-news">
                     music producer
                   </span>
                   . In 2014, I co-founded{' '}
@@ -237,7 +236,7 @@ export function Intro() {
         height: 'auto',
       }}
       priority
-      className="rounded-full border-4 border-orange-400 dark:invert transition-colors duration-200"
+      className="transition-colors duration-200 border-4 border-orange-400 rounded-full dark:invert"
     /> */}
             <SectionContainer>
               <SectionTitle />
@@ -246,7 +245,7 @@ export function Intro() {
             <SectionContainer>
               <SectionTitle>Where</SectionTitle>
               <SectionContent>
-                <div className=" ">
+                <div className="">
                   <TraceImage
                     imgSrc="/site/home/map.jpg"
                     imgTrace="/site/home/map-trace.png"

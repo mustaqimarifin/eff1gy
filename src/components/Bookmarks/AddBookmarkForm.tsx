@@ -6,7 +6,6 @@ import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import {
-  GetBookmarksQuery,
   useAddBookmarkMutation,
   useGetBookmarksQuery,
 } from '~/graphql/typeSlut'
@@ -14,7 +13,7 @@ import toast from 'react-hot-toast'
 
 export function AddBookmarkForm({ closeModal }) {
   const [url, setUrl] = React.useState('')
-  const [tag, setTag] = React.useState('reading')
+  const [tag, setTag] = React.useState('web')
   const router = useRouter()
 
   const query = GET_BOOKMARKS
@@ -31,7 +30,9 @@ export function AddBookmarkForm({ closeModal }) {
     addBookmark({
       variables: { data: { url, tag } },
       update(cache, { data: { addBookmark } }) {
-        const { bookmarks } = cache.readQuery<GetBookmarksQuery>({ query })
+        // @ts-ignore
+
+        const { bookmarks } = cache.readQuery({ query })
         return cache.writeQuery({
           query,
           data: {
@@ -49,7 +50,10 @@ export function AddBookmarkForm({ closeModal }) {
           },
         })
       },
-      onError() {},
+      onError(error) {
+        // eslint-disable-next-line prettier/prettier
+        error
+      },
     }).then(
       ({
         data: {
@@ -63,7 +67,9 @@ export function AddBookmarkForm({ closeModal }) {
         if (router.asPath.indexOf('/bookmarks') >= 0) {
           return router.push(`/bookmarks/${id}`)
         } else {
-          toast.success('Bookmark created')
+          toast('Bookmark created!', {
+            icon: '🙀 ',
+          })
         }
       }
     )
@@ -80,7 +86,7 @@ export function AddBookmarkForm({ closeModal }) {
   }
 
   const tagFilter = (t) => {
-    const allowedBookmarkTags = ['website', 'reading', 'portfolio']
+    const allowedBookmarkTags = ['web', 'lol', 'portfolio']
     return allowedBookmarkTags.indexOf(t.name) >= 0
   }
 

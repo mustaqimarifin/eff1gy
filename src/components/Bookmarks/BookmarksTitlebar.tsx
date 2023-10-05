@@ -2,7 +2,7 @@ import * as React from 'react'
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { useViewerQuery } from '~/graphql/typeSlut'
-import { Plus } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 
 import { AddBookmarkDialog } from './AddBookmarkDialog'
 import { BookmarksFilterMenu } from './FilterMenu'
@@ -20,7 +20,7 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
               data-cy="open-add-bookmark-dialog"
               size="small-square"
             >
-              <Plus size={16} />
+              <PlusIcon />
             </GhostButton>
           }
         />

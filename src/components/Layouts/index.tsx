@@ -25,7 +25,7 @@ export function ListDetailView({ list, detail, hasDetail = false }: Props) {
   )
 }
 
-export function SiteLayout({ children }) {
+export function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex h-full min-h-screen w-full">
       <Sidebar />

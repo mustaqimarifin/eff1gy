@@ -76,6 +76,26 @@ const routes = {
       url: 'stack',
     }),
   },
+  privacy: {
+    label: 'Privacy Policy',
+    path: '/privacypolicy',
+    seo: extendSEO({
+      title: 'Privacy Policy',
+      description: null,
+      image: 'og/pp.png',
+      url: 'privacypolicy',
+    }),
+  },
+  terms: {
+    label: 'Terms of Service',
+    path: '/termsofservice',
+    seo: extendSEO({
+      title: 'Terms of Service',
+      description: null,
+      image: 'og/tos.png',
+      url: 'termsofservice',
+    }),
+  },
   settings: {
     label: 'Settings',
     path: '/settings',

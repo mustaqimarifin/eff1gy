@@ -10,6 +10,8 @@ import {
 
 import { ReactionButton } from '../Button/ReactionButton'
 
+//import ViewCounter from '../Stats/ViewCounter'
+
 function getReactionButton(bookmark) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
 
@@ -63,6 +65,8 @@ export function BookmarkActions({ bookmark }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(bookmark)}
+      {/*     <ViewCounter catID={bookmark.id} /> */}
+
       {data?.viewer?.isAdmin && (
         <EditBookmarkDialog
           bookmark={bookmark}

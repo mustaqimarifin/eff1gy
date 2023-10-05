@@ -6,11 +6,10 @@ import { Input, Textarea } from '~/components/Input'
 import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import {
-  GetBookmarksQuery,
   useDeleteBookmarkMutation,
   useEditBookmarkMutation,
 } from '~/graphql/typeSlut'
-import { Link as LinkIcon } from 'lucide-react'
+import { Link2Icon } from 'lucide-react'
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
   const router = useRouter()
@@ -100,7 +99,8 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
       deleteBookmark: true,
     },
     update(cache) {
-      const { bookmarks } = cache.readQuery<GetBookmarksQuery>({
+      //@ts-ignore
+      const { bookmarks } = cache.readQuery({
         query: GET_BOOKMARKS,
       })
 
@@ -175,12 +175,13 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
         />
         {state.error && <p className="text-red-500">{state.error}</p>}
         <Link
+          passHref
           href={bookmark.url}
           target="_blank"
           rel="noopener noreferrer"
           className="text-secondary inline-flex items-center space-x-2 pb-2 text-sm opacity-70 hover:opacity-100"
         >
-          <LinkIcon className="flex-none" size={12} />
+          <Link2Icon className="flex-none" />
           <span className="line-clamp-1">{bookmark.url}</span>
         </Link>
 

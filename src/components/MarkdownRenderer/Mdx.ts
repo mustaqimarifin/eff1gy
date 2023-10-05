@@ -1,14 +1,10 @@
-//import { remarkCodeHike } from '@code-hike/mdx'
-import { join } from 'path/posix'
+import { join } from 'path'
 import { cwd } from 'process'
 import { bundleMDX } from 'mdx-bundler'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-//import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
-import linkifyRegex from 'remark-linkify-regex/index.js'
 
 //import moonlight from '~/styles/nord.json'
 import imageMetadata from './image-metadata'
@@ -55,7 +51,7 @@ export async function mdxToCode(text: string) {
   const { code } = await bundleMDX({
     source: text,
     // mdx imports can be automatically source from the components directory
-    cwd: join(cwd(), 'components'),
+    //cwd: join(cwd(), 'components'),
     mdxOptions(options) {
       // this is the recommended way to add custom remark/rehype plugins:
       // The syntax might look weird, but it protects you in case we add/remove
@@ -64,7 +60,6 @@ export async function mdxToCode(text: string) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         remarkGfm,
-        linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
         /*  [
           remarkCodeHike,
           {
@@ -81,27 +76,9 @@ export async function mdxToCode(text: string) {
         [rehypePrettyCode, phoptions],
         imageMetadata,
         rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          { behavior: 'wrap' },
-          { properties: { className: ['anchor'] } },
-        ],
+        [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       ]
 
-      return options
-    },
-    esbuildOptions: (options) => {
-      options.minify = true
-      options.treeShaking = true
-      options.bundle = true
-      //options.platform = 'node'
-      options.packages = 'external'
-      options.charset = 'utf8'
-      options.jsx = 'automatic'
-      options.loader = {
-        ...options.loader,
-        '.js': 'jsx',
-      }
       return options
     },
   })

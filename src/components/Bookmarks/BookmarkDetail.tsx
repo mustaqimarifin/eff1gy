@@ -7,7 +7,7 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
 import routes from '~/config/routes'
 import { CommentType, useGetBookmarkQuery } from '~/graphql/typeSlut'
-import { Link as LinkIcon } from 'lucide-react'
+import { LinkIcon } from 'lucide-react'
 import { NextSeo } from 'next-seo'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
@@ -63,6 +63,7 @@ export function BookmarkDetail({ id }) {
           <Detail.Header>
             <Tags tags={bookmark.tags} />
             <Link
+              passHref
               href={bookmark.url}
               target="_blank"
               rel="noopener"
@@ -71,6 +72,7 @@ export function BookmarkDetail({ id }) {
               <Detail.Title ref={titleRef}>{bookmark.title}</Detail.Title>
             </Link>
             <Link
+              passHref
               href={bookmark.url}
               target="_blank"
               rel="noopener"
@@ -102,7 +104,7 @@ export function BookmarkDetail({ id }) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <LinkIcon size={14} />
+              <LinkIcon />
               <span>Visit</span>
             </PrimaryButton>
           </div>
