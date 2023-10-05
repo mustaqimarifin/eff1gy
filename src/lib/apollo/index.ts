@@ -27,7 +27,7 @@ import toast from 'react-hot-toast'
 let apolloClient: ApolloClient<NormalizedCacheObject>
 export const ssrMode = typeof window === 'undefined'
 
-function createIsomorphLink({ context }: Context) {
+/* function createIsomorphLink({ context }: Context) {
   if (ssrMode) {
     return new SchemaLink({ schema, context })
   } else {
@@ -36,18 +36,25 @@ function createIsomorphLink({ context }: Context) {
       credentials: 'include',
     })
   }
-  /* const LinkChain = createPersistedQueryLink({
+} */
+function createIsomorphLink({ context }: Context) {
+  if (ssrMode) {
+    return new SchemaLink({ schema, context })
+  } else {
+    return LinkChain
+  }
+}
+const LinkChain = createPersistedQueryLink({
   sha256,
   useGETForHashedQueries: true,
 }).concat(
   new HttpLink({
     uri: GRAPHQL_ENDPOINT || '/api/graphql',
-    credentials: 'same-origin',
+    credentials: 'include',
     useGETForQueries: true,
   })
 )
- */
-}
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message }) => {
@@ -108,7 +115,7 @@ export function createClient({ initialState, context = {} }) {
   return new ApolloClient({
     ssrMode,
     link,
-    cache: cache,
+    cache,
     ssrForceFetchDelay: 1000, // prevents immediate refetch of SSR queries on the client
   })
 }

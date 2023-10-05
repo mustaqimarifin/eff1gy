@@ -5,25 +5,22 @@ export default {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  transpilePackages: ["shiki"],
-  experimental: {
-    swcPlugins: [["next-superjson-plugin", {}]],
-    //urlImports: ['https://cdn.jsdelivr.net/'],
-  },
+  transpilePackages: ['shiki'],
+
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ['image/avif', 'image/webp'],
     domains: [
-      "i.scdn.co", //$ Spotify Album Art
-      "pbs.twimg.com",
-      "abs.twimg.com",
-      "overthought.ghost.io",
-      "imagedelivery.net",
-      "res.cloudinary.com",
-      "ik.imagekit.io",
-      "avatars.githubusercontent.com",
-      "github.githubassets.com",
-      "lh3.googleusercontent.com",
-      "wallpaperaccess.com",
+      'i.scdn.co', //$ Spotify Album Art
+      'pbs.twimg.com',
+      'abs.twimg.com',
+      'overthought.ghost.io',
+      'imagedelivery.net',
+      'res.cloudinary.com',
+      'ik.imagekit.io',
+      'avatars.githubusercontent.com',
+      'github.githubassets.com',
+      'lh3.googleusercontent.com',
+      'wallpaperaccess.com',
     ],
   },
 }

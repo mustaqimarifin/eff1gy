@@ -45,11 +45,11 @@ function AppDissectionPage({ post }: Props) {
 }
 
 export async function getStaticPaths() {
-  const paths = designDetailsPosts.map(({ slug }) => ({
+  /*   const paths = designDetailsPosts.map(({ slug }) => ({
     params: { slug },
-  }))
+  })) */
 
-  return { paths, fallback: true }
+  return { paths: [], fallback: 'blocking' }
 }
 
 export async function getStaticProps({ params: { slug } }) {

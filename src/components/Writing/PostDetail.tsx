@@ -10,7 +10,11 @@ import { timestampToCleanTime } from '~/lib/transformers'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
-export function PostDetail({ children, slug }) {
+interface PD {
+  children: React.ReactNode
+  slug: string
+}
+export function PostDetail({ children, slug }: PD) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
   const { data, error, loading } = useGetPostQuery({ variables: { slug } })

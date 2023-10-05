@@ -1,4 +1,5 @@
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
+import { Detail } from '~/components/ListDetail/Detail'
 import { MDSEX } from '~/components/MarkdownRenderer'
 import { mdxToCode } from '~/components/MarkdownRenderer/Mdx'
 import { withProviders } from '~/components/Providers/withProviders'
@@ -19,13 +20,18 @@ import { addApolloState, initApolloClient } from '~/lib/apollo'
 //  'node_modules/.pnpm/**/shiki/languages/*.json',
 // ],
 //}
-const WritingPostPage = ({ post, slug }) => {
-  const { data } = useGetPostQuery({ variables: { slug } })
+
+const WritingPostPage = ({ mdx, slug }) => {
+  const { data, loading, error } = useGetPostQuery({ variables: { slug } })
 
   if (data?.post && !data.post.publishedAt) return <PostEditor />
+  if (loading) return <Detail.Loading />
+  if (!data?.post || error) {
+    return <Detail.Null />
+  }
   return (
     <PostDetail slug={slug}>
-      <MDSEX mdx={post.text} />
+      <MDSEX mdx={mdx} />
     </PostDetail>
   )
 }
@@ -61,10 +67,7 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
   const { mdx } = await mdxToCode(post.text)
   return addApolloState(client, {
     props: {
-      post: {
-        ...post,
-        text: mdx,
-      },
+      mdx,
       slug,
     },
   })

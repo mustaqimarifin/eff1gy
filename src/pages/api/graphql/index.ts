@@ -10,11 +10,9 @@ import { KeyvAdapter } from '@apollo/utils.keyvadapter'
 import { ErrorsAreMissesCache } from '@apollo/utils.keyvaluecache'
 //import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import KeyvRedis from '@keyv/redis'
 import { Context, getViewer } from '~/graphql/context'
 import { schema } from '~/graphql/schema'
 import { prisma } from '~/lib/prisma'
-import Keyv from 'keyv'
 
 const server = new ApolloServer<Context>({
   schema,
@@ -29,14 +27,15 @@ const server = new ApolloServer<Context>({
       calculateHttpHeaders: 'if-cacheable',
     }),
     responseCachePlugin(), */
+    responseCachePlugin(),
 
-    process.env.NODE_ENV === 'production'
+    /* process.env.NODE_ENV === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({
           graphRef: 'my-graph-id@my-graph-variant',
           footer: false,
           embed: true,
         })
-      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }), */
   ],
 })
 
