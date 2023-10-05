@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
 import { DesignDetailMedia } from '~/components/AppDissection/DetailMedia'
 import { Detail } from '~/components/ListDetail/Detail'
@@ -12,8 +12,8 @@ interface Props {
 }
 
 export function AppDissectionDetail({ post }: Props) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
 
   const date = timestampToCleanTime({ timestamp: post.createdAt })
 

@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider   = "postgresql"
-  url        = env("SQL2")
+  url        = env("SQL3")
   extensions = [pgcrypto]
 }
 
