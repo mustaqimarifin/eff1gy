@@ -24,7 +24,7 @@ import { addApolloState, initApolloClient } from '~/lib/apollo'
 const WritingPostPage = ({ mdx, slug }) => {
   const { data, loading, error } = useGetPostQuery({ variables: { slug } })
 
-  if (data?.post && !data.post.publishedAt) return <PostEditor />
+  if (data?.post && !data.post.publishedAt) return <PostEditor slug={slug} />
   if (loading) return <Detail.Loading />
   if (!data?.post || error) {
     return <Detail.Null />

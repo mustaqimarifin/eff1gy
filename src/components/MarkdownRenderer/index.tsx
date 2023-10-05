@@ -177,11 +177,23 @@ const Codex = ({ node, inline, className, children, ...props }) => {
     </code>
   )
 }
+const CustomLink = (props) => {
+  const href = props.href
+  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))
 
+  if (isInternalLink) {
+    return (
+      <Link href={href} {...props}>
+        {props.children}
+      </Link>
+    )
+  }
+
+  return <a target="_blank" rel="noopener noreferrer" {...props} />
+}
 export const MDXComponents = {
-  MDImage,
   img: Image,
-  a: LinkRenderer,
+  a: CustomLink,
 }
 
 interface Props {
