@@ -2,8 +2,6 @@ import React from 'react'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
-import { CoverImage, Image } from '../Image'
-
 export default function PP(props) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
@@ -20,8 +18,8 @@ export default function PP(props) {
             title="Privacy Policy"
           />
           <>
-            <div className="dark:prose-dark prose mx-auto flex max-w-2xl flex-col items-start justify-start border-gray-200 pb-16  text-left text-gray-600 prose-headings:font-bold dark:border-gray-700 dark:text-gray-300">
-              <h1 className="mt-8 flex h-6  leading-7 transition-all">
+            <div className="dark:prose-dark prose mx-auto flex max-w-2xl flex-col items-start justify-start border-gray-200 pb-16 text-left text-gray-600 prose-headings:font-bold dark:border-gray-700 dark:text-gray-300">
+              <h1 className="mt-8 flex h-6 leading-7 transition-all">
                 Privacy Policy
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

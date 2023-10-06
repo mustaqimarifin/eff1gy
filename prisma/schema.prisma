@@ -74,7 +74,7 @@ model VerificationToken {
 model Bookmark {
   id String @id @default(dbgenerated(" nanoid()"))
 
-  createdAt     DateTime   @default(now()) @db.Timestamptz(6)
+  createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   url           String     @unique
   host          String?

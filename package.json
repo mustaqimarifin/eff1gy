@@ -70,7 +70,6 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@cerner/duplicate-package-checker-webpack-plugin": "^2.6.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/named-operations-object": "^3.0.0",
     "@graphql-codegen/typescript": "^4.0.1",

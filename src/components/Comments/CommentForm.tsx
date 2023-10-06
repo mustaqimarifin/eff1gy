@@ -64,11 +64,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
   function onSubmit(e) {
     e.preventDefault()
 
-    // not signed in, save to localstorage
     if (!data?.viewer) {
-      // persist everything to local storage so we don't lose it
       localStorage.setItem(refId, text)
-      // pop the sign in modal
       return openModal()
     }
 

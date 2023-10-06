@@ -59,8 +59,8 @@ async function addProps(node: ImageNode): Promise<void> {
   if (!result) throw Error(`Invalid image with src "${url}"`)
   ;(node.properties.width = result.metadata.originalWidth || 768),
     (node.properties.height = result.metadata.originalHeight || 432),
-    (node.properties.blurDataURL = result.metadata.dataURIBase64)
-  node.properties.placeholder = 'blur'
+    (node.properties.blurDataURL = result.metadata.dataURIBase64),
+    (node.properties.placeholder = 'blur')
 }
 
 const imageMetadata = () => {

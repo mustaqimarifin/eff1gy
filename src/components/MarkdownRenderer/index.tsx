@@ -202,10 +202,6 @@ interface Props {
 }
 
 export const MDSEX = ({ mdx, ...rest }: Props) => {
-  /*   const mdxExport = getMDXExport(mdx)
-  const MDXLayout = React.useMemo(() => mdxExport.default, [mdx])
-  return <MDXLayout components={MDXComponents} {...rest} /> */
-
   const MDXLayout = React.useMemo(
     (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
     [mdx]
@@ -234,7 +230,6 @@ export function MarkdownRenderer(props: any) {
       rehypePlugins={[
         [rehypeSanitize, schema],
         rehypeSlug,
-        //imageMetadata,
         [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       ]}
       components={components}

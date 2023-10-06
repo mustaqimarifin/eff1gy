@@ -116,23 +116,17 @@ export function createClient({ initialState, context = {} }) {
     ssrMode,
     link,
     cache,
-    ssrForceFetchDelay: 1000, // prevents immediate refetch of SSR queries on the client
+    ssrForceFetchDelay: 1000,
   })
 }
 
 export function initApolloClient({ initialState = null, context = {} }) {
   const _apolloClient = apolloClient ?? createClient({ initialState, context })
-
-  // If your page has Next.js data fetching methods that use Apollo Client, the initial state
-  // gets hydrated here
   if (initialState) {
-    // Get existing cache, loaded during client side data fetching
     const existingCache = _apolloClient.extract()
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     //const merge = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
     const data = deepMerge(initialState, existingCache, {
-      // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
         ...destinationArray.filter((d) =>
@@ -141,13 +135,10 @@ export function initApolloClient({ initialState = null, context = {} }) {
       ],
     })
 
-    // Restore the cache with the merged data
     _apolloClient.cache.restore(data)
   }
 
-  // For SSG and SSR always create a new Apollo Client
   if (typeof window === 'undefined') return _apolloClient
-  // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient

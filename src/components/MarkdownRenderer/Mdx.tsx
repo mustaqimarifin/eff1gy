@@ -34,8 +34,6 @@ export async function mdxToCode(text: string) {
     keepBackground: false,
     filterMetaString: (string) => string.replace(/filename="[^"]*"/, ''),
     onVisitLine(node) {
-      // Prevent lines from collapsing in `display: grid` mode, and allow empty
-      // lines to be copy/pasted
       if (node.children.length === 0) {
         node.children = [{ type: 'text', value: ' ' }]
       }
@@ -50,13 +48,8 @@ export async function mdxToCode(text: string) {
 
   const { code } = await bundleMDX({
     source: text,
-    // mdx imports can be automatically source from the components directory
     //cwd: join(cwd(), 'components'),
     mdxOptions(options) {
-      // this is the recommended way to add custom remark/rehype plugins:
-      // The syntax might look weird, but it protects you in case we add/remove
-      // plugins in the future.
-
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         remarkGfm,
@@ -72,7 +65,6 @@ export async function mdxToCode(text: string) {
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-
         [rehypePrettyCode, phoptions],
         imageMetadata,
         rehypeSlug,

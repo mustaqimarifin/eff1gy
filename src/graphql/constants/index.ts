@@ -16,7 +16,7 @@ export const GRAPHQL_ENDPOINT = IS_DEV
   ? '/api/graphql'
   : IS_PREVIEW
   ? `https://${PREVIEW_URL}/api/graphql`
-  : '/api/graphql'
+  : `https://eff1gy.vercel.app/api/graphql`
 
 export const PAGINATION_AMOUNT = 24
 
