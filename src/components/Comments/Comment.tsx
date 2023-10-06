@@ -116,7 +116,6 @@ export const Comment = React.memo(function MemoComment({
               width={40}
               height={40}
               quality={100}
-              
               className="rounded-full"
             />
           </Link>

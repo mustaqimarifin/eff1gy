@@ -3,14 +3,12 @@ import { cwd } from 'process'
 import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-//import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
 //import moonlight from '~/styles/nord.json'
 import imageMetadata from './image-metadata'
 
-//import { options as ShikiOptions } from './Shiki'
 const root = process.cwd()
 
 export async function mdxToCode(text: string) {
@@ -50,7 +48,6 @@ export async function mdxToCode(text: string) {
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-        // [rehypePrettyCode, shoptions],
         imageMetadata,
         rehypeSlug,
         [

@@ -40,17 +40,10 @@ async function addProps(node: ImageNode): Promise<void> {
   const local_img = join(cwd(), 'public', url)
   const ext_img = url.startsWith('http')
 
-  /*   if (!ext_img) {
-    result = await lqip(local_img)
-  } else {
-    const { body } = await got(url, { responseType: 'buffer' })
-    result = await lqip(body)
-  } */
   if (!ext_img) {
     result = await lqip(local_img)
   }
   if (ext_img) {
-    // const { body } = await got(url, { responseType: 'buffer' })
     const body = await fetch(url).then(async (res) =>
       Buffer.from(await res.arrayBuffer())
     )
