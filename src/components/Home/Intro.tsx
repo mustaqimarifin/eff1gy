@@ -196,7 +196,7 @@ export function Intro() {
                 <Image
                   alt=""
                   className="rounded-full grayscale transition duration-1000 ease-out hover:grayscale-0 hover:duration-75"
-                  src="/../../avatar2.webp"
+                  src="/avatar2.webp"
                   width={100}
                   height={100}
                   priority
