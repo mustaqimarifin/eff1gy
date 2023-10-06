@@ -1,8 +1,9 @@
 import { join } from 'path'
 import { cwd } from 'process'
+import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
+//import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
@@ -10,6 +11,7 @@ import remarkGfm from 'remark-gfm'
 import imageMetadata from './image-metadata'
 
 //import { options as ShikiOptions } from './Shiki'
+const root = process.cwd()
 
 export async function mdxToCode(text: string) {
   if (process.platform === 'win32') {
@@ -29,46 +31,37 @@ export async function mdxToCode(text: string) {
     )
   }
 
-  const phoptions: Options = {
-    theme: 'nord',
-    keepBackground: false,
-    filterMetaString: (string) => string.replace(/filename="[^"]*"/, ''),
-    onVisitLine(node) {
-      if (node.children.length === 0) {
-        node.children = [{ type: 'text', value: ' ' }]
-      }
-    },
-    onVisitHighlightedLine(node) {
-      node.properties?.className?.push('line--highlighted')
-    },
-    onVisitHighlightedChars(node) {
-      node.properties.className = ['word--highlighted']
-    },
-  }
-
   const { code } = await bundleMDX({
     source: text,
-    //cwd: join(cwd(), 'components'),
+    cwd: join(root, 'components'),
     mdxOptions(options) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         remarkGfm,
-        /*  [
+        [
           remarkCodeHike,
           {
             autoImport: false,
             lineNumbers: false,
             showCopyButton: true,
-            theme: moonlight,
+            theme: 'poimandres',
           },
-        ], */
+        ],
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-        [rehypePrettyCode, phoptions],
+        // [rehypePrettyCode, shoptions],
         imageMetadata,
         rehypeSlug,
-        [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+        [
+          rehypeAutolinkHeadings,
+          { behavior: 'wrap' },
+          {
+            properties: {
+              className: ['anchor'],
+            },
+          },
+        ],
       ]
 
       return options

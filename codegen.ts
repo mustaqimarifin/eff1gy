@@ -1,20 +1,20 @@
-import { CodegenConfig } from '@graphql-codegen/cli'
+import { CodegenConfig } from "@graphql-codegen/cli"
 
 const config: CodegenConfig = {
-  schema: 'src/graphql/typeDefs/index.ts',
+  schema: "src/graphql/typeDefs/index.ts",
   overwrite: true,
-  documents: './src/**/*.{tsx,ts}',
+  documents: "./src/**/*.{tsx,ts}",
   hooks: {
-    afterOneFileWrite: ['eslint --fix', 'prettier --write'],
+    afterOneFileWrite: ["eslint --fix", "prettier --write"],
   },
   generates: {
-    './src/graphql/typeSlut.tsx': {
+    "./src/graphql/typeSlut.tsx": {
       plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-react-apollo',
-        'typescript-apollo-client-helpers',
-        'named-operations-object',
+        "typescript",
+        "typescript-operations",
+        "typescript-react-apollo",
+        "typescript-apollo-client-helpers",
+        "named-operations-object",
       ],
       config: {
         withHOC: false,
@@ -22,7 +22,7 @@ const config: CodegenConfig = {
         withComponent: false,
         reactApolloVersion: 3,
         preResolveTypes: true,
-        identifierName: 'ListAllOperations',
+        identifierName: "ListAllOperations",
         flattenGeneratedTypes: true,
         flattenGeneratedTypesIncludeFragments: true,
         mergeFragmentTypes: true,

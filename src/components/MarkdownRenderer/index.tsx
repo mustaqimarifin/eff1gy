@@ -1,6 +1,7 @@
 import * as React from 'react'
 import NextImage from 'next/image'
 import Link from 'next/link'
+import { CH } from '@code-hike/mdx/components'
 import deepmerge from 'deepmerge'
 import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
 import Markdown from 'react-markdown'
@@ -40,7 +41,8 @@ function getComponentsForVariant(variant) {
     case 'longform': {
       return {
         a: LinkRenderer,
-        img: MDImage,
+        img: Image,
+        Callout,
         pre({ node, inline, className, children, ...props }) {
           const language = /language-(\w+)/.exec(className || '')?.[1]
           return !inline && language ? (
@@ -175,9 +177,20 @@ const CustomLink = (props) => {
 
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
+
+function Callout(props) {
+  return (
+    <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
+      <div className="mr-4 flex w-4 items-center">{props.emoji}</div>
+      <div className="callout w-full">{props.children}</div>
+    </div>
+  )
+}
 export const MDXComponents = {
   img: Image,
   a: CustomLink,
+  CH,
+  Callout,
 }
 
 interface Props {
@@ -190,7 +203,11 @@ export const MDSEX = ({ mdx, ...rest }: Props) => {
     (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
     [mdx]
   )
-  return <MDXLayout components={{ ...MDXComponents }} {...rest} />
+  return (
+    <article className="dark:prose-dark prose mt-8 ">
+      <MDXLayout components={{ ...MDXComponents }} {...rest} />
+    </article>
+  )
 }
 export function MarkdownRenderer(props: any) {
   // variant = 'longform' | 'comment'

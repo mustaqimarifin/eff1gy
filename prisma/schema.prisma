@@ -1,18 +1,18 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
+  provider         = "prisma-client-js"
+  precountFeatures = "(array)"
+  relationMode     = "foreignKeys"
 }
 
 datasource db {
-  provider   = "postgresql"
-  url        = env("SQL3")
-  extensions = [pgcrypto]
+  provider = "postgresql"
+  url      = env("SQL3")
 }
 
 model Account {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
-  userId            String
+  userId            String  @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -30,10 +30,8 @@ model Account {
 }
 
 model Session {
-  id String @id @default(dbgenerated(" nanoid()"))
-
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.Uuid
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -41,7 +39,7 @@ model Session {
 }
 
 model User {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt     DateTime   @default(now())
   name          String
@@ -72,7 +70,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -91,8 +89,7 @@ model Bookmark {
 }
 
 model Question {
-  id String @id @default(dbgenerated(" nanoid()"))
-
+  id          String     @id @default(uuid()) @db.Uuid
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
@@ -100,7 +97,7 @@ model Question {
   waveform    Json?
   audioUrl    String?
   description String?
-  userId      String
+  userId      String     @db.Uuid
   comments    Comment[]
   author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   reactions   Reaction[]
@@ -109,16 +106,16 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
-  userId     String
-  bookmarkId String?
-  questionId String?
-  stackId    String?
-  postId     String?
+  userId     String    @db.Uuid
+  bookmarkId String?   @db.Uuid
+  questionId String?   @db.Uuid
+  stackId    String?   @db.Uuid
+  postId     String?   @db.Uuid
   audio      Audio?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -134,19 +131,19 @@ model Comment {
 }
 
 model Audio {
-  id            String   @id @default(dbgenerated(" nanoid()"))
+  id            String   @id @default(uuid()) @db.Uuid
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
   waveform      Json
   url           String
   transcription String
-  commentId     String   @unique
+  commentId     String   @unique @db.Uuid
   comment       Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
 
 model Post {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
@@ -156,7 +153,7 @@ model Post {
   text         String
   excerpt      String
   featureImage String?
-  userId       String
+  userId       String     @db.Uuid
   comments     Comment[]
   author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
@@ -167,21 +164,21 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt    DateTime @default(now())
   text         String
   title        String
   excerpt      String
   featureImage String?
-  postId       String?
+  postId       String?  @db.Uuid
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
 }
 
 model Tag {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   name      String     @unique
   bookmarks Bookmark[] @relation("BookmarkToTag")
@@ -189,7 +186,7 @@ model Tag {
 }
 
 model Stack {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -205,14 +202,14 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   createdAt  DateTime  @default(now())
-  userId     String
-  bookmarkId String?
-  questionId String?
-  stackId    String?
-  postId     String?
+  userId     String    @db.Uuid
+  bookmarkId String?   @db.Uuid
+  questionId String?   @db.Uuid
+  stackId    String?   @db.Uuid
+  postId     String?   @db.Uuid
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
@@ -227,7 +224,7 @@ model Reaction {
 }
 
 model PageView {
-  id String @id @default(dbgenerated(" nanoid()"))
+  id String @id @default(uuid()) @db.Uuid
 
   lastSeen  DateTime @default(now())
   viewCount Int?     @default(0)

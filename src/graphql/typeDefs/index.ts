@@ -15,7 +15,7 @@ export default gql`
     inheritMaxAge: Boolean
   ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
 
-  type Post @cacheControl(maxAge: 240) {
+  type Post {
     id: ID!
     createdAt: Date
     updatedAt: Date
@@ -31,7 +31,7 @@ export default gql`
     hitRate: Int
   }
 
-  type Bookmark @cacheControl(maxAge: 240) {
+  type Bookmark {
     id: ID!
     createdAt: Date!
     updatedAt: Date!

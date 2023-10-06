@@ -1,6 +1,6 @@
 import '~/styles/custom-styles.css'
-import '~/styles/dracula.css'
 import '~/styles/prose-styles.css'
+import '@code-hike/mdx/dist/index.css'
 
 import * as React from 'react'
 import { SiteLayout } from '~/components/Layouts'

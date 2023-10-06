@@ -71,7 +71,6 @@ export function QuestionDetail({ id }) {
                   width={32}
                   height={32}
                   quality={100}
-                  layout="fixed"
                   className="rounded-full"
                 />
               </Link>

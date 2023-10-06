@@ -27,7 +27,7 @@ import toast from 'react-hot-toast'
 let apolloClient: ApolloClient<NormalizedCacheObject>
 export const ssrMode = typeof window === 'undefined'
 
-/* function createIsomorphLink({ context }: Context) {
+function createIsomorphLink({ context }: Context) {
   if (ssrMode) {
     return new SchemaLink({ schema, context })
   } else {
@@ -36,8 +36,8 @@ export const ssrMode = typeof window === 'undefined'
       credentials: 'include',
     })
   }
-} */
-function createIsomorphLink({ context }: Context) {
+}
+/* function createIsomorphLink({ context }: Context) {
   if (ssrMode) {
     return new SchemaLink({ schema, context })
   } else {
@@ -53,7 +53,7 @@ const LinkChain = createPersistedQueryLink({
     credentials: 'include',
     useGETForQueries: true,
   })
-)
+) */
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {

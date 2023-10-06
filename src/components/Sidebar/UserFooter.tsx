@@ -65,7 +65,6 @@ export function UserFooter() {
             src={data.viewer.image}
             width={24}
             height={24}
-            layout="fixed"
             className="rounded-full"
           />
         </Link>

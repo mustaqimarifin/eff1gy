@@ -16,9 +16,9 @@ import { prisma } from '~/lib/prisma'
 
 const server = new ApolloServer<Context>({
   schema,
-  persistedQueries: {
+  /*   persistedQueries: {
     ttl: 900, // 15 minutes
-  },
+  }, */
   plugins: [
     /* ApolloServerPluginCacheControl({
       // Cache everything for 1 second by default.
@@ -27,15 +27,14 @@ const server = new ApolloServer<Context>({
       calculateHttpHeaders: 'if-cacheable',
     }),
     responseCachePlugin(), */
-    responseCachePlugin(),
-
-    /* process.env.NODE_ENV === 'production'
+    //responseCachePlugin(),
+    process.env.NODE_ENV === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({
           graphRef: 'my-graph-id@my-graph-variant',
           footer: false,
           embed: true,
         })
-      : ApolloServerPluginLandingPageLocalDefault({ footer: false }), */
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
   ],
 })
 
