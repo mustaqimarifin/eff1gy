@@ -10,7 +10,6 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
-import DickPics from '../Image/Pics'
 import { CodeBlock } from './CodeBlock'
 
 function LinkRenderer({ href, ...rest }: any) {
@@ -41,7 +40,7 @@ function getComponentsForVariant(variant) {
     case 'longform': {
       return {
         a: LinkRenderer,
-        img: DickPics,
+        img: MDImage,
         pre({ node, inline, className, children, ...props }) {
           const language = /language-(\w+)/.exec(className || '')?.[1]
           return !inline && language ? (
@@ -105,6 +104,20 @@ function Image(props) {
   return <NextImage {...props} quality={75} className="mdx-image rounded-md" />
 }
 
+const keyStr =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+
+const triplet = (e1: number, e2: number, e3: number) =>
+  keyStr.charAt(e1 >> 2) +
+  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+  keyStr.charAt(e3 & 63)
+
+const rgbDataURL = (r: number, g: number, b: number) =>
+  `data:image/gif;base64,R0lGODlhAQABAPAA${
+    triplet(0, r, g) + triplet(b, 255, 255)
+  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
+
 const MDImage = (paragraph: { children?: any; node?: any }) => {
   const { node } = paragraph
   if (node.children[0].tagName === 'img') {
@@ -128,7 +141,7 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
           placeholder="blur"
           sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
           // blurDataURL={previewImage.dataURIBase64}
-          //blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
+          blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
           className="object-cover"
           alt={alt}
           priority={isPriority}
@@ -148,35 +161,6 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
   return <p>{paragraph.children}</p>
 }
 
-const Predator = ({ node, inline, className, children, ...props }) => {
-  const match = /language-(\w+)/.exec(className || '')
-  return !inline && match ? (
-    <CodeBlock
-      language={match[1]}
-      className={className}
-      text={String(children).replace(/\n$/, '')}
-      {...props}
-    />
-  ) : (
-    <>{children}</>
-  )
-}
-
-const Codex = ({ node, inline, className, children, ...props }) => {
-  const match = /language-(\w+)/.exec(className || '')
-  return !inline && match ? (
-    <CodeBlock
-      className={className}
-      text={String(children).replace(/\n$/, '')}
-      language={match[1]}
-      {...props}
-    />
-  ) : (
-    <code className={className} {...props}>
-      {children}
-    </code>
-  )
-}
 const CustomLink = (props) => {
   const href = props.href
   const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))

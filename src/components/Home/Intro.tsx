@@ -1,10 +1,10 @@
 import * as React from 'react'
+import Image from 'next/image'
 import { Akhyla, MapIcon, Muse2 } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
 import { TraceImage } from '../Image'
-import Buffoon from '../Vid'
 
 function SectionTitle(props) {
   return (
@@ -193,7 +193,14 @@ export function Intro() {
               </h2>
 
               <div className="float-right m-4 w-[120px] filter sm:w-[190px] ">
-                <Buffoon />
+                <Image
+                  alt=""
+                  className="rounded-full grayscale transition duration-1000 ease-out hover:grayscale-0 hover:duration-75"
+                  src="/../../avatar2.webp"
+                  width={100}
+                  height={100}
+                  priority
+                />
               </div>
               <div className="drop-shadow-sm">
                 <p className="dark:prose-dark prose max-w-none break-words py-4 md:prose-lg">
