@@ -1,5 +1,5 @@
-import * as React from 'react'
-import Link from 'next/link'
+import * as React from "react"
+import Link from "next/link"
 
 interface BaseButtonProps {
   [key: string]: unknown
@@ -16,7 +16,7 @@ type ButtonAsLink = BaseButtonProps &
 type ButtonProps = ButtonAsButton | ButtonAsLink
 
 function BaseButton({ href = null, as = null, forwardedRef = null, ...rest }) {
-  if (href && href.startsWith('/')) {
+  if (href && href.startsWith("/")) {
     return <Link href={href} as={as} {...rest} />
   }
 
@@ -28,39 +28,39 @@ function BaseButton({ href = null, as = null, forwardedRef = null, ...rest }) {
 }
 
 const baseClasses =
-  'flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold'
+  "flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold"
 
 function getSize(size = null) {
   switch (size) {
-    case 'large': {
-      return 'px-4 py-3 text-sm'
+    case "large": {
+      return "px-4 py-3 text-sm"
     }
-    case 'small': {
-      return 'px-2.5 py-1.5 text-xs'
+    case "small": {
+      return "px-2.5 py-1.5 text-xs"
     }
-    case 'small-square': {
-      return 'p-2 text-sm'
+    case "small-square": {
+      return "p-2 text-sm"
     }
     default: {
-      return 'px-4 py-2 text-sm'
+      return "px-4 py-2 text-sm"
     }
   }
 }
 
 function getOpacity(disabled = false) {
-  return disabled ? 'opacity-50 cursor-not-allowed' : 'opacity-100'
+  return disabled ? "opacity-50 cursor-not-allowed" : "opacity-100"
 }
 
 function getRadius(size = null) {
   switch (size) {
-    case 'large': {
-      return 'rounded-lg'
+    case "large": {
+      return "rounded-lg"
     }
-    case 'small': {
-      return 'rounded'
+    case "small": {
+      return "rounded"
     }
     default: {
-      return 'rounded-md'
+      return "rounded-md"
     }
   }
 }
@@ -122,8 +122,8 @@ export const GhostButton = React.forwardRef((props: ButtonProps, ref) => {
 export const CommentButton = React.forwardRef((props: ButtonProps, ref) => {
   const classes = `${
     props.disabled
-      ? 'text-gray-500 border-gray-400 bg-white dark:border-gray-700'
-      : 'border-blue-600 bg-blue-500 dark:bg-opacity-100 text-white hover:bg-blue-600 dark:border-blue-400'
+      ? "text-gray-500 border-gray-400 bg-white dark:border-gray-700"
+      : "border-blue-600 bg-blue-500 dark:bg-opacity-100 text-white hover:bg-blue-600 dark:border-blue-400"
   } shadow-xs bg-white border border-opacity-30 dark:bg-opacity-10 hover:border-opacity-50 hover:shadow-sm w-8 rounded`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)

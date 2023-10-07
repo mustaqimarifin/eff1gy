@@ -1,58 +1,58 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import Button, { DeleteButton } from '~/components/Button'
-import { Input, Textarea } from '~/components/Input'
-import { TagPicker } from '~/components/Tag/TagPicker'
-import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
+import * as React from "react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import Button, { DeleteButton } from "~/components/Button"
+import { Input, Textarea } from "~/components/Input"
+import { TagPicker } from "~/components/Tag/TagPicker"
+import { GET_BOOKMARK, GET_BOOKMARKS } from "~/graphql/queries/bookmarks"
 import {
   useDeleteBookmarkMutation,
   useEditBookmarkMutation,
-} from '~/graphql/typeSlut'
-import { Link2Icon } from 'lucide-react'
+} from "~/graphql/typeSlut"
+import { Link2Icon } from "lucide-react"
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
   const router = useRouter()
 
   const initialState = {
-    error: '',
+    error: "",
     title: bookmark.title || bookmark.url,
-    description: bookmark.description || '',
-    tag: bookmark.tags[0]?.name || 'reading',
+    description: bookmark.description || "",
+    tag: bookmark.tags[0]?.name || "reading",
     faviconUrl: bookmark.faviconUrl,
   }
 
   function reducer(state, action) {
     switch (action.type) {
-      case 'edit-title': {
+      case "edit-title": {
         return {
           ...state,
-          error: '',
+          error: "",
           title: action.value,
         }
       }
-      case 'edit-favicon': {
+      case "edit-favicon": {
         return {
           ...state,
-          error: '',
+          error: "",
           faviconUrl: action.value,
         }
       }
-      case 'edit-description': {
+      case "edit-description": {
         return {
           ...state,
-          error: '',
+          error: "",
           description: action.value,
         }
       }
-      case 'edit-tag': {
+      case "edit-tag": {
         return {
           ...state,
-          error: '',
+          error: "",
           tag: action.value,
         }
       }
-      case 'error': {
+      case "error": {
         return {
           ...state,
           error: action.value,
@@ -76,9 +76,9 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
       },
     },
     optimisticResponse: {
-      __typename: 'Mutation',
+      __typename: "Mutation",
       editBookmark: {
-        __typename: 'Bookmark',
+        __typename: "Bookmark",
         ...bookmark,
         title: state.title,
         description: state.description,
@@ -87,15 +87,15 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
       },
     },
     onError({ message }) {
-      const value = message.replace('GraphQL error:', '')
-      dispatch({ type: 'error', value })
+      const value = message.replace("GraphQL error:", "")
+      dispatch({ type: "error", value })
     },
   })
 
   const [handleDelete] = useDeleteBookmarkMutation({
     variables: { id: bookmark.id },
     optimisticResponse: {
-      __typename: 'Mutation',
+      __typename: "Mutation",
       deleteBookmark: true,
     },
     update(cache) {
@@ -130,7 +130,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
     e.preventDefault()
 
     if (!state.title || state.title.length === 0) {
-      return dispatch({ type: 'error', value: 'Bookmark must have a title' })
+      return dispatch({ type: "error", value: "Bookmark must have a title" })
     }
 
     editBookmark()
@@ -138,11 +138,11 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
   }
 
   function onTitleChange(e) {
-    return dispatch({ type: 'edit-title', value: e.target.value })
+    return dispatch({ type: "edit-title", value: e.target.value })
   }
 
   function onFaviconChange(e) {
-    return dispatch({ type: 'edit-favicon', value: e.target.value })
+    return dispatch({ type: "edit-favicon", value: e.target.value })
   }
 
   function onKeyDown(e) {
@@ -152,15 +152,15 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
   }
 
   function onDescriptionChange(e) {
-    return dispatch({ type: 'edit-description', value: e.target.value })
+    return dispatch({ type: "edit-description", value: e.target.value })
   }
 
   function onTagChange(val) {
-    dispatch({ type: 'edit-tag', value: val })
+    dispatch({ type: "edit-tag", value: val })
   }
 
   const tagFilter = (t) => {
-    const allowedBookmarkTags = ['website', 'reading', 'portfolio']
+    const allowedBookmarkTags = ["website", "reading", "portfolio"]
     return allowedBookmarkTags.indexOf(t.name) >= 0
   }
 
@@ -196,7 +196,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
           defaultValue={bookmark.description}
           onChange={onDescriptionChange}
           onKeyDown={onKeyDown}
-          placeholder={'Description...'}
+          placeholder={"Description..."}
         />
 
         <Input

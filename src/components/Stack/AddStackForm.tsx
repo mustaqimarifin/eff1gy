@@ -1,23 +1,23 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import { ErrorAlert } from '~/components/Alert'
-import Button from '~/components/Button'
-import { Input, Textarea } from '~/components/Input'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { TagPicker } from '~/components/Tag/TagPicker'
-import { GET_STACKS } from '~/graphql/queries/stack'
-import { useAddStackMutation } from '~/graphql/typeSlut'
+import * as React from "react"
+import { useRouter } from "next/router"
+import { ErrorAlert } from "~/components/Alert"
+import Button from "~/components/Button"
+import { Input, Textarea } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { TagPicker } from "~/components/Tag/TagPicker"
+import { GET_STACKS } from "~/graphql/queries/stack"
+import { useAddStackMutation } from "~/graphql/typeSlut"
 
 //import { StackImageUploader } from './StackImageUploader'
 
 export function AddStackForm({ closeModal }) {
-  const [url, setUrl] = React.useState('')
-  const [name, setName] = React.useState('')
-  const [description, setDescription] = React.useState('')
+  const [url, setUrl] = React.useState("")
+  const [name, setName] = React.useState("")
+  const [description, setDescription] = React.useState("")
   const [tag, setTag] = React.useState(null)
-  const [image, setImage] = React.useState('')
+  const [image, setImage] = React.useState("")
   const [isSaving, setIsSaving] = React.useState(false)
-  const [error, setError] = React.useState('')
+  const [error, setError] = React.useState("")
 
   const router = useRouter()
 
@@ -28,9 +28,9 @@ export function AddStackForm({ closeModal }) {
     },
     refetchQueries: [GET_STACKS],
     onError({ message }) {
-      const clean = message.replace('GraphQL error:', '')
+      const clean = message.replace("GraphQL error:", "")
       setError(clean)
-      setUrl('')
+      setUrl("")
       setIsSaving(false)
     },
   })
@@ -44,22 +44,22 @@ export function AddStackForm({ closeModal }) {
   }
 
   function onImageChange(e) {
-    error && setError('')
+    error && setError("")
     return setImage(e.target.value)
   }
 
   function onUrlChange(e) {
-    error && setError('')
+    error && setError("")
     return setUrl(e.target.value)
   }
 
   function onNameChange(e) {
-    error && setError('')
+    error && setError("")
     return setName(e.target.value)
   }
 
   function onDescriptionChange(e) {
-    error && setError('')
+    error && setError("")
     return setDescription(e.target.value)
   }
 
@@ -70,14 +70,14 @@ export function AddStackForm({ closeModal }) {
   }
 
   const tagFilter = (t) => {
-    const allowedTags = ['software', 'gear', 'plugins']
+    const allowedTags = ["software", "gear", "plugins"]
     return allowedTags.indexOf(t.name) >= 0
   }
 
   return (
     <div className="space-y-3 p-4">
       {/*       <StackImageUploader stack={null} onImageUploaded={onImageUploaded} />
-       */}{' '}
+       */}{" "}
       <form className="space-y-3" onSubmit={onSubmit}>
         <TagPicker filter={tagFilter} defaultValue={tag} onChange={setTag} />
         <Input
@@ -111,7 +111,7 @@ export function AddStackForm({ closeModal }) {
         />
         <div className="flex justify-end">
           <Button disabled={!url} onClick={onSubmit}>
-            {isSaving ? <LoadingSpinner /> : 'Save'}
+            {isSaving ? <LoadingSpinner /> : "Save"}
           </Button>
         </div>
         {error && <ErrorAlert>{error}</ErrorAlert>}

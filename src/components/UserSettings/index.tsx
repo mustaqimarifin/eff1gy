@@ -1,17 +1,17 @@
-import * as React from 'react'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetViewerWithSettingsQuery } from '~/graphql/typeSlut'
+import * as React from "react"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { useGetViewerWithSettingsQuery } from "~/graphql/typeSlut"
 
-import { EmailForm } from './Email'
-import { EmailPreferences } from './EmailPreferences'
-import { UserSettingsFooter } from './Footer'
-import { SignedOut } from './SignedOut'
-import { UsernameForm } from './Username'
+import { EmailForm } from "./Email"
+import { EmailPreferences } from "./EmailPreferences"
+import { UserSettingsFooter } from "./Footer"
+import { SignedOut } from "./SignedOut"
+import { UsernameForm } from "./Username"
 
 export function UserSettings() {
   const { data, loading } = useGetViewerWithSettingsQuery({
-    fetchPolicy: 'network-only',
+    fetchPolicy: "network-only",
   })
 
   const titleRef = React.useRef(null)
@@ -29,7 +29,7 @@ export function UserSettings() {
     <Detail.Container ref={scrollContainerRef}>
       <TitleBar
         magicTitle
-        title={'Settings'}
+        title={"Settings"}
         titleRef={titleRef}
         scrollContainerRef={scrollContainerRef}
       />

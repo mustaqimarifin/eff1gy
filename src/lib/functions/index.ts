@@ -1,11 +1,11 @@
-import crypto from 'crypto'
+import crypto from "crypto"
 
 type Props = {
   timestamp?: number | string
   locale?: string
-  year?: 'numeric' | '2-digit'
-  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
-  day?: 'numeric' | '2-digit'
+  year?: "numeric" | "2-digit"
+  month?: "numeric" | "2-digit" | "long" | "short" | "narrow"
+  day?: "numeric" | "2-digit"
 }
 
 export const cacheOnly = {
@@ -20,14 +20,14 @@ export const cacheOnly = {
 
 export function sha256(input) {
   const buffer = Buffer.isBuffer(input) ? input : Buffer.from(input)
-  return crypto.createHash('sha256').update(buffer).digest('base64')
+  return crypto.createHash("sha256").update(buffer).digest("base64")
 }
 export function cleanTime({
   timestamp = null,
-  locale = 'en-us',
-  year = 'numeric',
-  month = 'short',
-  day = 'numeric',
+  locale = "en-us",
+  year = "numeric",
+  month = "short",
+  day = "numeric",
 }: Props) {
   const date = timestamp ? new Date(timestamp) : new Date()
 
@@ -177,23 +177,23 @@ export const throttleV2 = (func, limit) => {
   return [wrappedFunc, cleanUp]
 }
 
-export const slugify = (str = '') => {
+export const slugify = (str = "") => {
   let slug = str
     .toLowerCase()
-    .replace(/\s/g, '-')
-    .replace(/[^a-zA-Z0-9-]/g, '')
+    .replace(/\s/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
 
   // If the value starts with a number, swap it out!
   // Doing this in a dumb way for now.
   if (slug.match(/^[\d]{1,2}/)) {
-    slug = slug.replace(/^[\d]{1,2}/, 'digit')
+    slug = slug.replace(/^[\d]{1,2}/, "digit")
   }
 
   return slug
 }
 export const isEmpty = (obj) => Object.keys(obj).length === 0
 
-export const sortBy = (arr, key, direction = 'asc', comparator) => {
+export const sortBy = (arr, key, direction = "asc", comparator) => {
   const comparatorToUse =
     comparator ||
     function (a, b) {
@@ -209,10 +209,10 @@ export const sortBy = (arr, key, direction = 'asc', comparator) => {
   return arr.sort((a, b) => {
     return comparatorToUse(
       //@ts-ignore
-      sortBy === 'asc' ? a[key] : b[key],
+      sortBy === "asc" ? a[key] : b[key],
       //@ts-ignore
 
-      sortBy === 'asc' ? b[key] : a[key]
+      sortBy === "asc" ? b[key] : a[key]
     )
   })
 }
@@ -237,7 +237,7 @@ export const pick = (obj, keys) => {
   keys = Array.isArray(keys) ? keys : [keys]
 
   while ((key = keys[i++])) {
-    if (typeof obj[key] !== 'undefined') {
+    if (typeof obj[key] !== "undefined") {
       o[key] = obj[key]
     }
   }
@@ -291,11 +291,11 @@ export const capitalize = (str) => str[0].toUpperCase() + str.slice(1)
 
 export const capitalizeSentence = (str) => {
   return str
-    .split(' ')
+    .split(" ")
     .map((word) => {
       return word[0].toUpperCase() + word.slice(1)
     })
-    .join(' ')
+    .join(" ")
 }
 
 export const deleteCookie = (key) => {
@@ -312,7 +312,7 @@ export const convertHexToRGBA = (hex, alpha = 1) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-export const hyphenate = (str) => str.replace(/([A-Z])/g, '-$1').toLowerCase()
+export const hyphenate = (str) => str.replace(/([A-Z])/g, "-$1").toLowerCase()
 
 export const delay = (duration) =>
   new Promise((resolve) => window.setTimeout(resolve, duration))
@@ -322,15 +322,15 @@ export const getTimeOfDay = () => {
   const hourOfDay = now.getHours()
 
   if (hourOfDay <= 4) {
-    return 'night'
+    return "night"
   } else if (hourOfDay <= 11) {
-    return 'morning'
+    return "morning"
   } else if (hourOfDay <= 17) {
-    return 'afternoon'
+    return "afternoon"
   } else if (hourOfDay <= 21) {
-    return 'evening'
+    return "evening"
   } else {
-    return 'night'
+    return "night"
   }
 }
 
@@ -338,7 +338,7 @@ export const generateId = (len = 4) => {
   // prettier-ignore
   const characters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-  return sample(characters, len).join('')
+  return sample(characters, len).join("")
 }
 
 export const normalize = (
@@ -443,7 +443,7 @@ export const getQuadrantForPoint = ([x, y]: number[]) => {
  * output: ['js', 'cat cat', 'bee', 'dog']
  */
 export const splitCommaSeparatedArray = (str) => {
-  return str.replace(/,\s+/g, ',').split(',')
+  return str.replace(/,\s+/g, ",").split(",")
 }
 
 export function hash(val) {
@@ -537,34 +537,34 @@ export function moveCursorWithinInput(input, position) {
   } else if (input.createTextRange) {
     const range = input.createTextRange()
     range.collapse(true)
-    range.moveEnd('character', position)
-    range.moveStart('character', position)
+    range.moveEnd("character", position)
+    range.moveStart("character", position)
     range.select()
   }
 }
 
 export function detectBrowser() {
-  if (typeof navigator === 'undefined') {
+  if (typeof navigator === "undefined") {
     return null
   }
   if (
-    (navigator.userAgent.indexOf('Opera') ||
-      navigator.userAgent.indexOf('OPR')) != -1
+    (navigator.userAgent.indexOf("Opera") ||
+      navigator.userAgent.indexOf("OPR")) != -1
   ) {
-    return 'Opera'
-  } else if (navigator.userAgent.indexOf('Chrome') != -1) {
-    return 'Chrome'
-  } else if (navigator.userAgent.indexOf('Safari') != -1) {
-    return 'Safari'
-  } else if (navigator.userAgent.indexOf('Firefox') != -1) {
-    return 'Firefox'
+    return "Opera"
+  } else if (navigator.userAgent.indexOf("Chrome") != -1) {
+    return "Chrome"
+  } else if (navigator.userAgent.indexOf("Safari") != -1) {
+    return "Safari"
+  } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+    return "Firefox"
   } else if (
-    navigator.userAgent.indexOf('MSIE') != -1 ||
+    navigator.userAgent.indexOf("MSIE") != -1 ||
     !!document.DOCUMENT_NODE == true
   ) {
-    return 'IE'
+    return "IE"
   } else {
-    return 'Unknown'
+    return "Unknown"
   }
 }
 
@@ -572,7 +572,7 @@ export async function copyToClipboard(content) {
   try {
     await navigator.clipboard.writeText(content)
   } catch (err) {
-    console.error('Failed to copy: ', err)
+    console.error("Failed to copy: ", err)
   }
 }
 
@@ -583,7 +583,7 @@ export async function copyToClipboard(content) {
  * a dictionary-style object with string values.
  */
 export const transformValues = (obj, callback) => {
-  if (typeof obj !== 'object') {
+  if (typeof obj !== "object") {
     return obj
   }
 

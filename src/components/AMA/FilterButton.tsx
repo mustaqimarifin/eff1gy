@@ -1,9 +1,9 @@
-import * as React from 'react'
-import { GhostButton } from '~/components/Button'
-import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/typeSlut'
+import * as React from "react"
+import { GhostButton } from "~/components/Button"
+import { QuestionStatus, useGetQuestionsQuery } from "~/graphql/typeSlut"
 
-import { LoadingSpinner } from '../LoadingSpinner'
-import { QuestionsContext } from './QuestionsList'
+import { LoadingSpinner } from "../LoadingSpinner"
+import { QuestionsContext } from "./QuestionsList"
 
 export function QuestionsFilterButton() {
   const { setFilterPending, filterPending } = React.useContext(QuestionsContext)
@@ -22,7 +22,7 @@ export function QuestionsFilterButton() {
       )}
       <GhostButton
         aria-label={
-          filterPending ? 'Show answered questions' : 'Show pending questions'
+          filterPending ? "Show answered questions" : "Show pending questions"
         }
         onClick={() => setFilterPending(!filterPending)}
         size="small-square"

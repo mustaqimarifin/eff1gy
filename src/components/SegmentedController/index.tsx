@@ -1,6 +1,6 @@
 // learned from https://samuelkraft.com/blog/segmented-control-framer-motion
-import { useState } from 'react'
-import { LayoutGroup, motion } from 'framer-motion'
+import { useState } from "react"
+import { LayoutGroup, motion } from "framer-motion"
 
 type Item = {
   id: string

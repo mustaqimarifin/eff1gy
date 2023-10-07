@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { baseUrl } from '~/config/seo'
-import { prisma } from '~/lib/prisma'
-import jwt from 'jsonwebtoken'
+import { type NextApiRequest, type NextApiResponse } from "next"
+import { baseUrl } from "~/config/seo"
+import { prisma } from "~/lib/prisma"
+import jwt from "jsonwebtoken"
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { token } = req.query
 
-  function done(path = '/settings') {
+  function done(path = "/settings") {
     res.writeHead(301, { Location: `${baseUrl}${path}` })
     res.end()
   }
@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (!token) {
-    error('No token found in the request.')
+    error("No token found in the request.")
   }
 
   try {
@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { userId, pendingEmail } = decoded
 
     if (!userId || !pendingEmail) {
-      error('Invalid token')
+      error("Invalid token")
     }
 
     const [user, userByEmail] = await Promise.all([
@@ -42,19 +42,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     ])
 
     if (!user) {
-      done('/')
+      done("/")
     }
 
     if (userByEmail && userByEmail.id !== user.id) {
       // user is trying to change their email to an email that another user
       // already uses
-      error('Email already in use, try using a different email')
+      error("Email already in use, try using a different email")
     }
 
     if (!user.pendingEmail || user.pendingEmail !== pendingEmail) {
       // user didn't have a pending email, or pending email doesn't match the token
       // so they might be clicking an expired link
-      error('Email is no longer pending, this link may be expired')
+      error("Email is no longer pending, this link may be expired")
     }
 
     if (user.email) {

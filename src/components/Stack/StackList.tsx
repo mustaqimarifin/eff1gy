@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { useGetStacksQuery } from '~/graphql/typeSlut'
+import * as React from "react"
+import { useRouter } from "next/router"
+import { ListContainer } from "~/components/ListDetail/ListContainer"
+import { useGetStacksQuery } from "~/graphql/typeSlut"
 
-import { ListLoadMore } from '../ListDetail/ListLoadMore'
-import { LoadingSpinner } from '../LoadingSpinner'
-import { StackListItem } from './StackListItem'
-import { StackTitlebar } from './StackTitlebar'
+import { ListLoadMore } from "../ListDetail/ListLoadMore"
+import { LoadingSpinner } from "../LoadingSpinner"
+import { StackListItem } from "./StackListItem"
+import { StackTitlebar } from "./StackTitlebar"
 
 export function StackList() {
   const router = useRouter()

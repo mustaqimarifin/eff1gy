@@ -1,5 +1,9 @@
-import { Context } from '~/graphql/context'
-import { Bookmark, CommentType, QueryCommentArgs } from '~/graphql/typeSlut'
+import { type Context } from "~/graphql/context"
+import {
+  CommentType,
+  type Bookmark,
+  type QueryCommentArgs,
+} from "~/graphql/typeSlut"
 
 export async function getComment(_, args: QueryCommentArgs, ctx: Context) {
   const { id } = args
@@ -26,6 +30,13 @@ export async function getComments(_, args, ctx: Context) {
   switch (type) {
     case CommentType.Bookmark: {
       const results = await prisma.bookmark
+        .findUnique({ where: { id: refId } })
+        .comments()
+
+      return results || []
+    }
+    case CommentType.Blog: {
+      const results = await prisma.blog
         .findUnique({ where: { id: refId } })
         .comments()
 

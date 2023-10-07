@@ -1,17 +1,17 @@
 type Props = {
   timestamp?: number | string
   locale?: string
-  year?: 'numeric' | '2-digit'
-  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
-  day?: 'numeric' | '2-digit'
+  year?: "numeric" | "2-digit"
+  month?: "numeric" | "2-digit" | "long" | "short" | "narrow"
+  day?: "numeric" | "2-digit"
 }
 
 export function timestampToCleanTime({
   timestamp = null,
-  locale = 'en-us',
-  year = 'numeric',
-  month = 'long',
-  day = 'numeric',
+  locale = "en-us",
+  year = "numeric",
+  month = "long",
+  day = "numeric",
 }: Props) {
   const date = timestamp ? new Date(timestamp) : new Date()
 

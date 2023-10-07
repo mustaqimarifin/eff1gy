@@ -1,14 +1,14 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { Comments } from '~/components/Comments'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { MarkdownRenderer } from '~/components/MarkdownRenderer'
-import { CommentType, useGetPostQuery } from '~/graphql/typeSlut'
-import { timestampToCleanTime } from '~/lib/transformers'
+import * as React from "react"
+import Link from "next/link"
+import { Comments } from "~/components/Comments"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { MarkdownRenderer } from "~/components/MarkdownRenderer"
+import { CommentType, useGetPostQuery } from "~/graphql/typeSlut"
+import { timestampToCleanTime } from "~/lib/transformers"
 
-import { PostActions } from './PostActions'
-import { PostSEO } from './PostSEO'
+import { PostActions } from "./PostActions"
+import { PostSEO } from "./PostSEO"
 
 interface PD {
   children: React.ReactNode
@@ -35,7 +35,7 @@ export function PostDetail({ children, slug }: PD) {
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={'/writing'}
+          backButtonHref={"/writing"}
           magicTitle
           title={post.title}
           titleRef={titleRef}

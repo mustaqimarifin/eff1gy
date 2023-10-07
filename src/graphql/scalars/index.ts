@@ -1,8 +1,8 @@
-import { GraphQLScalarType, Kind } from 'graphql'
+import { GraphQLScalarType, Kind } from "graphql"
 
 export const DateQL = new GraphQLScalarType({
-  name: 'Date',
-  description: 'Date custom scalar type',
+  name: "Date",
+  description: "Date custom scalar type",
   serialize(value: Date) {
     return value.getTime() // Convert outgoing Date to integer for JSON
   },

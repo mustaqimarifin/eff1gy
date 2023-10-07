@@ -1,4 +1,4 @@
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
 
 export function CodeBlock({
   text,

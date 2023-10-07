@@ -1,9 +1,9 @@
-import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import { Context } from '~/graphql/context'
+import { PAGINATION_AMOUNT } from "~/graphql/constants"
+import { type Context } from "~/graphql/context"
 import {
-  GetStackQueryVariables,
-  GetStacksQueryVariables,
-} from '~/graphql/typeSlut'
+  type GetStackQueryVariables,
+  type GetStacksQueryVariables,
+} from "~/graphql/typeSlut"
 
 export async function getStacks(
   _,
@@ -32,7 +32,7 @@ export async function getStacks(
       take,
       skip,
       cursor,
-      orderBy: { name: 'asc' },
+      orderBy: { name: "asc" },
       include: {
         _count: {
           select: {

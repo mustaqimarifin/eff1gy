@@ -1,13 +1,13 @@
-import * as React from 'react'
-import Button, { GhostButton } from '~/components/Button'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useViewerQuery } from '~/graphql/typeSlut'
-import { Plus, Radio } from 'lucide-react'
+import * as React from "react"
+import Button, { GhostButton } from "~/components/Button"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { useViewerQuery } from "~/graphql/typeSlut"
+import { Plus, Radio } from "lucide-react"
 
-import { DialogComponent } from '../Dialog'
-import SegmentedControl from '../SegmentedController'
-import { WritingContext } from './PostsList'
-import { WritingSubscriptionForm } from './SubscriptionForm'
+import { DialogComponent } from "../Dialog"
+import SegmentedControl from "../SegmentedController"
+import { WritingContext } from "./PostsList"
+import { WritingSubscriptionForm } from "./SubscriptionForm"
 
 export function WritingTitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()
@@ -58,8 +58,8 @@ export function WritingTitlebar({ scrollContainerRef }) {
             onSetActiveItem={setFilter}
             active={filter}
             items={[
-              { id: 'published', label: 'Published' },
-              { id: 'draft', label: 'Drafts' },
+              { id: "published", label: "Published" },
+              { id: "draft", label: "Drafts" },
             ]}
           />
         </div>

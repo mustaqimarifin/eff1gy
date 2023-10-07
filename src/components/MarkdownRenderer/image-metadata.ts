@@ -1,17 +1,17 @@
-import { join } from 'path'
-import { cwd } from 'process'
-import lqip from 'lqip-modern'
-import { visit } from 'unist-util-visit'
+import { join } from "path"
+import { cwd } from "process"
+import lqip from "lqip-modern"
+import { visit } from "unist-util-visit"
 
 type ImageNode = {
-  type: 'element'
-  tagName: 'img'
+  type: "element"
+  tagName: "img"
   properties: {
     src: string
     height?: number
     width?: number
     blurDataURL?: string
-    placeholder?: 'blur' | 'empty'
+    placeholder?: "blur" | "empty"
   }
 }
 
@@ -20,10 +20,10 @@ type ImageNode = {
 function isImageNode(node: Node) {
   const img = node as unknown as ImageNode
   return (
-    img.type === 'element' &&
-    img.tagName === 'img' &&
+    img.type === "element" &&
+    img.tagName === "img" &&
     img.properties &&
-    typeof img.properties.src === 'string'
+    typeof img.properties.src === "string"
   )
 }
 
@@ -37,8 +37,8 @@ async function addProps(node: ImageNode): Promise<void> {
   }
   const url = node.properties.src
   //const id = sha256(url)
-  const local_img = join(cwd(), 'public', url)
-  const ext_img = url.startsWith('http')
+  const local_img = join(cwd(), "public", url)
+  const ext_img = url.startsWith("http")
 
   if (!ext_img) {
     result = await lqip(local_img)
@@ -53,14 +53,14 @@ async function addProps(node: ImageNode): Promise<void> {
   ;(node.properties.width = result.metadata.originalWidth || 768),
     (node.properties.height = result.metadata.originalHeight || 432),
     (node.properties.blurDataURL = result.metadata.dataURIBase64),
-    (node.properties.placeholder = 'blur')
+    (node.properties.placeholder = "blur")
 }
 
 const imageMetadata = () => {
   return async function transformer(tree) {
     const images = []
 
-    visit(tree, 'element', (node) => {
+    visit(tree, "element", (node) => {
       if (isImageNode(node)) {
         images.push(node)
       }

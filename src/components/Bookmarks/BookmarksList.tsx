@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import { useGetBookmarksQuery } from '~/graphql/typeSlut'
-import { LayoutGroup, motion } from 'framer-motion'
+import * as React from "react"
+import { useRouter } from "next/router"
+import { ListContainer } from "~/components/ListDetail/ListContainer"
+import { PAGINATION_AMOUNT } from "~/graphql/constants"
+import { useGetBookmarksQuery } from "~/graphql/typeSlut"
+import { LayoutGroup, motion } from "framer-motion"
 
-import { ListLoadMore } from '../ListDetail/ListLoadMore'
-import { LoadingSpinner } from '../LoadingSpinner'
-import { BookmarksListItem } from './BookmarkListItem'
-import { BookmarksTitlebar } from './BookmarksTitlebar'
+import { ListLoadMore } from "../ListDetail/ListLoadMore"
+import { LoadingSpinner } from "../LoadingSpinner"
+import { BookmarksListItem } from "./BookmarkListItem"
+import { BookmarksTitlebar } from "./BookmarksTitlebar"
 
 export const BookmarksContext = React.createContext({
   tag: null,

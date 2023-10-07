@@ -1,22 +1,22 @@
-import * as React from 'react'
-import { WarnAlert } from '~/components/Alert'
-import Button from '~/components/Button'
-import { Input } from '~/components/Input'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { GET_VIEWER_SETTINGS } from '~/graphql/queries/viewer'
+import * as React from "react"
+import { WarnAlert } from "~/components/Alert"
+import Button from "~/components/Button"
+import { Input } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { GET_VIEWER_SETTINGS } from "~/graphql/queries/viewer"
 import {
-  GetViewerWithSettingsQuery,
   useEditUserMutation,
-} from '~/graphql/typeSlut'
+  type GetViewerWithSettingsQuery,
+} from "~/graphql/typeSlut"
 
 export function EmailForm(props: {
-  viewer: GetViewerWithSettingsQuery['viewer']
+  viewer: GetViewerWithSettingsQuery["viewer"]
 }) {
   const { viewer } = props
   const isNew = !viewer.email && !viewer.pendingEmail
 
   const [isEditing, setIsEditing] = React.useState(isNew)
-  const [email, setEmail] = React.useState('')
+  const [email, setEmail] = React.useState("")
 
   const [setPendingEmail, setPendingEmailResponse] = useEditUserMutation({
     variables: {
@@ -69,7 +69,7 @@ export function EmailForm(props: {
     },
     onError() {},
     onCompleted() {
-      setEmail('')
+      setEmail("")
     },
   })
 
@@ -121,7 +121,7 @@ export function EmailForm(props: {
             className="cursor-pointer font-medium text-blue-500"
             onClick={() => setIsEditing(!isEditing)}
           >
-            {isEditing ? 'Cancel' : 'Edit'}
+            {isEditing ? "Cancel" : "Edit"}
           </button>
         </div>
       )}
@@ -137,7 +137,7 @@ export function EmailForm(props: {
           <Input
             type="email"
             placeholder={
-              isNew ? 'Add your email address' : 'Update your email address'
+              isNew ? "Add your email address" : "Update your email address"
             }
             value={email}
             autoFocus
@@ -148,7 +148,7 @@ export function EmailForm(props: {
               {setPendingEmailResponse.loading ? (
                 <LoadingSpinner />
               ) : (
-                'Save email'
+                "Save email"
               )}
             </Button>
           </div>
@@ -160,7 +160,7 @@ export function EmailForm(props: {
           <WarnAlert>
             <div className="flex flex-col space-y-2">
               <div>
-                Check <span className="font-medium">{viewer.pendingEmail}</span>{' '}
+                Check <span className="font-medium">{viewer.pendingEmail}</span>{" "}
                 to confirm your email address
               </div>
               <div className="flex space-x-2">
@@ -168,14 +168,14 @@ export function EmailForm(props: {
                   {cancelPendingEmailResponse.loading ? (
                     <LoadingSpinner />
                   ) : (
-                    'Cancel request'
+                    "Cancel request"
                   )}
                 </Button>
                 <Button onClick={resendPendingEmail} type="submit">
                   {resendPendingEmailResponse.loading ? (
                     <LoadingSpinner />
                   ) : (
-                    'Resend confirmation'
+                    "Resend confirmation"
                   )}
                 </Button>
               </div>

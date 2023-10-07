@@ -1,39 +1,39 @@
 //import isEqual from 'lodash/isEqual'
 //import { isEqual } from 'lodash-es'
-import { useMemo } from 'react'
+import { useMemo } from "react"
 import {
   ApolloClient,
   ApolloLink,
-  Context,
   HttpLink,
   InMemoryCache,
-  NormalizedCacheObject,
-  ServerError,
-} from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
-import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
-import { SchemaLink } from '@apollo/client/link/schema'
-import { relayStylePagination } from '@apollo/client/utilities'
-import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
-import { schema } from '~/graphql/schema'
-import { StrictTypedTypePolicies } from '~/graphql/typeSlut'
-import { sha256 } from 'crypto-hash'
-import deepMerge from 'deepmerge'
-import isEqual from 'lodash-es/isEqual'
-import toast from 'react-hot-toast'
+  type Context,
+  type NormalizedCacheObject,
+  type ServerError,
+} from "@apollo/client"
+import { onError } from "@apollo/client/link/error"
+import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
+import { SchemaLink } from "@apollo/client/link/schema"
+import { relayStylePagination } from "@apollo/client/utilities"
+import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from "~/graphql/constants"
+import { schema } from "~/graphql/schema"
+import { type StrictTypedTypePolicies } from "~/graphql/typeSlut"
+import { sha256 } from "crypto-hash"
+import deepMerge from "deepmerge"
+import isEqual from "lodash-es/isEqual"
+import toast from "react-hot-toast"
 
 //import { deepmergeArray } from '../functions'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
-export const ssrMode = typeof window === 'undefined'
+export const ssrMode = typeof window === "undefined"
 
 function createIsomorphLink({ context }: Context) {
   if (ssrMode) {
     return new SchemaLink({ schema, context })
   } else {
     return new HttpLink({
-      uri: GRAPHQL_ENDPOINT || '/api/graphql',
-      credentials: 'include',
+      uri: GRAPHQL_ENDPOINT || "/api/graphql",
+      credentials: "include",
     })
   }
 }
@@ -60,7 +60,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach(({ message }) => {
       try {
         toast.error(message, {
-          icon: '👹',
+          icon: "👹",
         })
       } catch {
         console.error({ message })
@@ -71,8 +71,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     const err = networkError as ServerError
     try {
-      toast.error('error', {
-        icon: '👹',
+      toast.error("error", {
+        icon: "👹",
       })
     } catch {
       console.error({ err })
@@ -85,13 +85,13 @@ export function createClient({ initialState, context = {} }) {
   const typePolicies: StrictTypedTypePolicies = {
     Query: {
       fields: {
-        bookmarks: relayStylePagination(['filter']),
-        questions: relayStylePagination(['filter']),
+        bookmarks: relayStylePagination(["filter"]),
+        questions: relayStylePagination(["filter"]),
         stacks: relayStylePagination(),
       },
     },
     Comment: {
-      keyFields: ['id'],
+      keyFields: ["id"],
       fields: {
         id: {
           merge: false,
@@ -99,7 +99,7 @@ export function createClient({ initialState, context = {} }) {
       },
     },
     Bookmark: {
-      keyFields: ['id', 'url'],
+      keyFields: ["id", "url"],
       fields: {
         id: {
           merge: false,
@@ -138,7 +138,7 @@ export function initApolloClient({ initialState = null, context = {} }) {
     _apolloClient.cache.restore(data)
   }
 
-  if (typeof window === 'undefined') return _apolloClient
+  if (typeof window === "undefined") return _apolloClient
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient

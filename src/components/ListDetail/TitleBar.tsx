@@ -1,7 +1,7 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { GlobalNavigationContext } from '~/components/Providers'
-import { ArrowLeft, Menu, X } from 'lucide-react'
+import * as React from "react"
+import Link from "next/link"
+import { GlobalNavigationContext } from "~/components/Providers"
+import { ArrowLeft, Menu, X } from "lucide-react"
 
 interface Props {
   title: string
@@ -67,10 +67,10 @@ export function TitleBar({
     const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56
     const initialOffsets = initialTitleOffsetsRef.current
 
-    let offsetAmount =
+    const offsetAmount =
       parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100
 
-    let opacityOffset =
+    const opacityOffset =
       parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1
 
     setOffset(Math.min(Math.max(offsetAmount, 0), 100))
@@ -78,9 +78,9 @@ export function TitleBar({
   }, [title, titleRef, scrollContainerRef])
 
   React.useEffect(() => {
-    scrollContainerRef?.current?.addEventListener('scroll', handler)
+    scrollContainerRef?.current?.addEventListener("scroll", handler)
     return () =>
-      scrollContainerRef?.current?.removeEventListener('scroll', handler)
+      scrollContainerRef?.current?.removeEventListener("scroll", handler)
   }, [title, titleRef, scrollContainerRef])
 
   React.useEffect(() => {
@@ -96,7 +96,7 @@ export function TitleBar({
   React.useEffect(() => {
     const isDarkMode =
       window?.matchMedia &&
-      window?.matchMedia('(prefers-color-scheme: dark)').matches
+      window?.matchMedia("(prefers-color-scheme: dark)").matches
     if (isDarkMode) setDarkMode(true)
   }, [])
 
@@ -112,7 +112,7 @@ export function TitleBar({
             : currentScrollOffset + 0.8
         })`, */
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
-          minHeight: '48px',
+          minHeight: "48px",
         }}
         className={`filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
       >

@@ -21,7 +21,7 @@
 .prose a code {
   @apply text-blue-600 dark:text-blue-500;
 }
-
+/* 
 .prose table {
   @apply my-2 rounded-md border border-gray-200 text-gray-1000 dark:border-gray-800 dark:text-gray-50;
 }
@@ -57,7 +57,7 @@
 .prose tbody tr:nth-child(2n) {
   @apply bg-gray-50 dark:bg-gray-900;
 }
-
+ */
 .prose b,
 .prose strong {
   @apply font-bold text-gray-900 dark:text-gray-300;
@@ -105,14 +105,14 @@
   @apply -mb-3 mt-12 text-xl;
 }
 
-.prose pre {
+/* .prose pre {
   @apply space-y-4 rounded-md border-gray-300 bg-gray-400 bg-opacity-5 px-8 py-6 text-sm text-gray-800 dark:border-gray-800 dark:text-gray-200;
 }
-
-.prose.comment {
+ */
+/* .prose.comment {
   @apply max-w-none;
 }
-
+ */
 .prose.comment pre {
   @apply my-2 px-3 py-2;
 }
@@ -149,7 +149,7 @@
   margin-top: 0;
 }
 
-table {
+.prose table {
   display: block;
   max-width: fit-content;
   overflow-x: auto;

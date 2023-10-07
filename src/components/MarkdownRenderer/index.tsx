@@ -1,31 +1,31 @@
-import * as React from 'react'
-import NextImage from 'next/image'
-import Link from 'next/link'
-import { CH } from '@code-hike/mdx/components'
-import deepmerge from 'deepmerge'
-import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
-import Markdown from 'react-markdown'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
-import linkifyRegex from 'remark-linkify-regex'
+import * as React from "react"
+import NextImage from "next/legacy/image"
+import Link from "next/link"
+import { CH } from "@code-hike/mdx/components"
+import deepmerge from "deepmerge"
+import { getMDXComponent, type MDXContentProps } from "mdx-bundler/client"
+import Markdown from "react-markdown"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize"
+import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
+import linkifyRegex from "remark-linkify-regex"
 
-import { CodeBlock } from './CodeBlock'
+import { CodeBlock } from "./CodeBlock"
 
 function LinkRenderer({ href, ...rest }: any) {
   // auto-link headings
-  if (href.startsWith('#')) {
+  if (href.startsWith("#")) {
     return <a href={href} {...rest} />
   }
 
-  if (href.startsWith('@')) {
+  if (href.startsWith("@")) {
     // link to a mention
     return <Link href={`/u/${href.slice(1)}`} {...rest} />
   }
   try {
     const url = new URL(href)
-    if (url.origin === 'https://eff1gy.vercel.app') {
+    if (url.origin === "https://eff1gy.vercel.app") {
       return <Link href={href} {...rest} />
     }
     return <a target="_blank" rel="noopener" href={href} {...rest} />
@@ -35,19 +35,73 @@ function LinkRenderer({ href, ...rest }: any) {
   }
 }
 
+function ProsCard({ title, pros }) {
+  return (
+    <div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
+      <span>{`You might use ${title} if...`}</span>
+      <div className="mt-4">
+        {pros.map((pro) => (
+          <div key={pro} className="mb-2 flex items-baseline font-medium">
+            <div className="mr-2 h-4 w-4">
+              <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                  <path d="M22 4L12 14.01l-3-3" />
+                </g>
+              </svg>
+            </div>
+            <span>{pro}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ConsCard({ title, cons }) {
+  return (
+    <div className="my-6 w-full rounded-xl border border-red-200 bg-neutral-50 p-6 dark:border-red-900 dark:bg-neutral-900">
+      <span>{`You might not use ${title} if...`}</span>
+      <div className="mt-4">
+        {cons.map((con) => (
+          <div key={con} className="mb-2 flex items-baseline font-medium">
+            <div className="mr-2 h-4 w-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-4 w-4 text-red-500"
+              >
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+              </svg>
+            </div>
+            <span>{con}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function getComponentsForVariant(variant) {
   // Blog posts
   switch (variant) {
-    case 'longform': {
+    case "longform": {
       return {
         a: LinkRenderer,
         img: Image,
         Callout,
         pre({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
+          const language = /language-(\w+)/.exec(className || "")?.[1]
           return !inline && language ? (
             <CodeBlock
-              text={String(children).replace(/\n$/, '')}
+              text={String(children).replace(/\n$/, "")}
               language={language}
               {...props}
             />
@@ -56,10 +110,10 @@ function getComponentsForVariant(variant) {
           )
         },
         code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
+          const language = /language-(\w+)/.exec(className || "")?.[1]
           return !inline && language ? (
             <CodeBlock
-              text={String(children).replace(/\n$/, '')}
+              text={String(children).replace(/\n$/, "")}
               language={language}
               {...props}
             />
@@ -72,23 +126,23 @@ function getComponentsForVariant(variant) {
       }
     }
     // Questions, comments, descriptions on bookmarks, etc.
-    case 'comment': {
+    case "comment": {
       return {
         a: LinkRenderer,
-        h1: 'p',
-        h2: 'p',
-        h3: 'p',
-        h4: 'p',
-        h5: 'p',
-        h6: 'p',
+        h1: "p",
+        h2: "p",
+        h3: "p",
+        h4: "p",
+        h5: "p",
+        h6: "p",
         pre({ children }) {
           return <>{children}</>
         },
         code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
+          const language = /language-(\w+)/.exec(className || "")?.[1]
           return !inline && language ? (
             <CodeBlock
-              text={String(children).replace(/\n$/, '')}
+              text={String(children).replace(/\n$/, "")}
               language={language}
               {...props}
             />
@@ -107,7 +161,7 @@ function Image(props) {
 }
 
 const keyStr =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
 const triplet = (e1: number, e2: number, e3: number) =>
   keyStr.charAt(e1 >> 2) +
@@ -122,16 +176,16 @@ const rgbDataURL = (r: number, g: number, b: number) =>
 
 const MDImage = (paragraph: { children?: any; node?: any }) => {
   const { node } = paragraph
-  if (node.children[0].tagName === 'img') {
+  if (node.children[0].tagName === "img") {
     const image = node.children[0]
     const metastring = image.properties.alt
-    const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
+    const alt = metastring?.replace(/ *\{[^)]*\} */g, "")
     const metaWidth = metastring.match(/{([^}]+)x/)
     const metaHeight = metastring.match(/x([^}]+)}/)
-    const width = metaWidth ? metaWidth[1] : '768'
-    const height = metaHeight ? metaHeight[1] : '432'
-    const isPriority = metastring?.toLowerCase().match('{priority}')
-    const hasCaption = metastring?.toLowerCase().includes('{caption:')
+    const width = metaWidth ? metaWidth[1] : "768"
+    const height = metaHeight ? metaHeight[1] : "432"
+    const isPriority = metastring?.toLowerCase().match("{priority}")
+    const hasCaption = metastring?.toLowerCase().includes("{caption:")
     const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
 
     return (
@@ -148,8 +202,8 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
           alt={alt}
           priority={isPriority}
           style={{
-            maxWidth: '100%',
-            height: 'auto',
+            maxWidth: "100%",
+            height: "auto",
           }}
         />
         {hasCaption ? (
@@ -165,7 +219,7 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
 
 const CustomLink = (props) => {
   const href = props.href
-  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))
+  const isInternalLink = href && (href.startsWith("/") || href.startsWith("#"))
 
   if (isInternalLink) {
     return (
@@ -191,6 +245,8 @@ export const MDXComponents = {
   a: CustomLink,
   CH,
   Callout,
+  ProsCard,
+  ConsCard,
 }
 
 interface Props {
@@ -203,23 +259,20 @@ export const MDSEX = ({ mdx, ...rest }: Props) => {
     (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
     [mdx]
   )
-  return (
-    <article className="dark:prose-dark prose mt-8 ">
-      <MDXLayout components={{ ...MDXComponents }} {...rest} />
-    </article>
-  )
+  return <MDXLayout components={{ ...MDXComponents }} {...rest} />
 }
 export function MarkdownRenderer(props: any) {
   // variant = 'longform' | 'comment'
-  const { children, variant = 'longform', ...rest } = props
+  const { children, variant = "longform", ...rest } = props
 
   const schema = deepmerge(defaultSchema, {
-    tagNames: [...defaultSchema.tagNames, 'sup', 'sub', 'section'],
+    //@ts-ignore
+    tagNames: [...defaultSchema?.tagNames, "sup", "sub", "section"],
     attributes: {
-      '*': ['className'],
+      "*": ["className"],
     },
-    clobberPrefix: '',
-    clobber: ['name', 'id'],
+    clobberPrefix: "",
+    clobber: ["name", "id"],
   })
 
   const components = getComponentsForVariant(variant)
@@ -231,7 +284,7 @@ export function MarkdownRenderer(props: any) {
       rehypePlugins={[
         [rehypeSanitize, schema],
         rehypeSlug,
-        [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+        [rehypeAutolinkHeadings, { behavior: "wrap" }],
       ]}
       components={components}
     >

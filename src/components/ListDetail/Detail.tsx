@@ -1,14 +1,23 @@
-import * as React from 'react'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { Compass } from 'lucide-react'
+import * as React from "react"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { Compass } from "lucide-react"
 
-import Button from '../Button'
-import { TitleBar } from './TitleBar'
+import Button from "../Button"
+import { TitleBar } from "./TitleBar"
+
+/* function ContentContainer(props) {
+  return (
+    <div
+      className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
+      {...props}
+    />
+  )
+}  */
 
 function ContentContainer(props) {
   return (
     <div
-      className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
+      className="mx-auto  max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl   lg:px-4 "
       {...props}
     />
   )

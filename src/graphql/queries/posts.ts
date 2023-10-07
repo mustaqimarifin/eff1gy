@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 import {
   PostDetailFragment,
   PostListItemFragment,
-} from '~/graphql/fragments/post'
+} from "~/graphql/fragments/post"
 
 export const GET_POSTS = gql`
   query getPosts($filter: WritingFilter) {

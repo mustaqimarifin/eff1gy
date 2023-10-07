@@ -1,18 +1,18 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import { ErrorAlert } from '~/components/Alert'
-import { PrimaryButton } from '~/components/Button'
-import { Textarea } from '~/components/Input'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { useAddQuestionMutation, useViewerQuery } from '~/graphql/typeSlut'
+import * as React from "react"
+import { useRouter } from "next/router"
+import { ErrorAlert } from "~/components/Alert"
+import { PrimaryButton } from "~/components/Button"
+import { Textarea } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { useAddQuestionMutation, useViewerQuery } from "~/graphql/typeSlut"
 
-import { Avatar } from '../Avatar'
+import { Avatar } from "../Avatar"
 
 export function AddQuestionForm({ closeModal }) {
   const { data } = useViewerQuery()
-  const [title, setTitle] = React.useState('')
-  const [description, setDescription] = React.useState('')
-  const [error, setError] = React.useState('')
+  const [title, setTitle] = React.useState("")
+  const [description, setDescription] = React.useState("")
+  const [error, setError] = React.useState("")
   const router = useRouter()
 
   const [handleAddQuestion, { loading }] = useAddQuestionMutation({
@@ -21,7 +21,7 @@ export function AddQuestionForm({ closeModal }) {
       return router.push(`/ama/${id}`)
     },
     onError({ message }) {
-      const clean = message.replace('GraphQL error:', '')
+      const clean = message.replace("GraphQL error:", "")
       setError(clean)
     },
   })
@@ -29,7 +29,7 @@ export function AddQuestionForm({ closeModal }) {
   function onSubmit(e) {
     e.preventDefault()
     if (title.trim().length === 0) {
-      setError('Question can’t be blank')
+      setError("Question can’t be blank")
       return
     }
 
@@ -44,12 +44,12 @@ export function AddQuestionForm({ closeModal }) {
   }
 
   function onTitleChange(e) {
-    error && setError('')
+    error && setError("")
     return setTitle(e.target.value)
   }
 
   function onDescriptionChange(e) {
-    error && setError('')
+    error && setError("")
     return setDescription(e.target.value)
   }
 
@@ -95,7 +95,7 @@ export function AddQuestionForm({ closeModal }) {
           disabled={title.trim().length === 0 || loading}
           onClick={onSubmit}
         >
-          {loading ? <LoadingSpinner /> : 'Ask away'}
+          {loading ? <LoadingSpinner /> : "Ask away"}
         </PrimaryButton>
       </div>
       {error && <ErrorAlert>{error}</ErrorAlert>}

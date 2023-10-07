@@ -1,9 +1,9 @@
 //import * as React from 'react'
 
-import Button, { DeleteButton } from '~/components/Button'
-import { signOut } from 'next-auth/react'
+import Button, { DeleteButton } from "~/components/Button"
+import { signOut } from "next-auth/react"
 
-import { DeleteUserDialog } from './DeleteUserDialog'
+import { DeleteUserDialog } from "./DeleteUserDialog"
 
 export function UserSettingsFooter() {
   return (

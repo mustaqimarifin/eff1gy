@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { baseUrl } from '~/config/seo'
-import { Post } from '~/graphql/typeSlut'
-import { NextSeo } from 'next-seo'
+import * as React from "react"
+import { baseUrl } from "~/config/seo"
+import { type Post } from "~/graphql/typeSlut"
+import { NextSeo } from "next-seo"
 
 interface Props {
   post: Post
@@ -26,7 +26,7 @@ export function PostSEO({ post }: Props) {
         ],
       }}
       twitter={{
-        cardType: 'summary_large_image',
+        cardType: "summary_large_image",
       }}
     />
   )

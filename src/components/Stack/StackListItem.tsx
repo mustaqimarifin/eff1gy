@@ -1,7 +1,7 @@
-import * as React from 'react'
-import Image from 'next/image'
-import { ListItem } from '~/components/ListDetail/ListItem'
-import { StackListItemFragment } from '~/graphql/typeSlut'
+import * as React from "react"
+import Image from "next/image"
+import { ListItem } from "~/components/ListDetail/ListItem"
+import { type StackListItemFragment } from "~/graphql/typeSlut"
 
 // TODO: Figure out how to get this dynamically
 interface Props {
@@ -14,7 +14,7 @@ export const StackListItem = React.memo<Props>(({ stack, active }) => {
     if (e.metaKey) {
       e.preventDefault()
       e.stopPropagation()
-      window.open(stack.url, '_blank').focus()
+      window.open(stack.url, "_blank").focus()
     }
   }
 

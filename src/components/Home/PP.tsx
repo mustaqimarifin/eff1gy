@@ -1,6 +1,6 @@
-import React from 'react'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
+import React from "react"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
 
 export default function PP(props) {
   const scrollContainerRef = React.useRef(null)
@@ -47,7 +47,7 @@ export default function PP(props) {
                 We use Your Personal data to provide and improve the Service. By
                 using the Service, You agree to the collection and use of
                 information in accordance with this Privacy Policy. This Privacy
-                Policy has been created with the help of the{' '}
+                Policy has been created with the help of the{" "}
                 <a
                   href="https://www.privacypolicies.com/privacy-policy-generator/"
                   target="_blank"
@@ -134,7 +134,7 @@ export default function PP(props) {
                 <li>
                   <p>
                     <strong>Website</strong> refers to Mustaqim Arifin,
-                    accessible from{' '}
+                    accessible from{" "}
                     <a
                       href="https://eff1gy.vercel.app"
                       rel="external nofollow noopener noreferrer"
@@ -231,14 +231,14 @@ export default function PP(props) {
                 Cookies. Persistent Cookies remain on Your personal computer or
                 mobile device when You go offline, while Session Cookies are
                 deleted as soon as You close Your web browser. Learn more about
-                cookies on the{' '}
+                cookies on the{" "}
                 <a
                   href="https://www.privacypolicies.com/blog/privacy-policy-template/#Use_Of_Cookies_Log_Files_And_Tracking"
                   target="_blank"
                   rel="noreferrer"
                 >
                   Privacy Policies website
-                </a>{' '}
+                </a>{" "}
                 article.
               </p>
               <p>
@@ -563,7 +563,7 @@ export default function PP(props) {
               <h2>Contact Us</h2>
               <p>
                 If you have any questions about this Privacy Policy, reach out
-                to :{' '}
+                to :{" "}
                 <a
                   className="text-cyan-600 no-underline decoration-pink-500 decoration-dotted decoration-2  transition ease-in-out  hover:scale-[1.03]  hover:underline hover:duration-1000 dark:text-cyan-400"
                   href="mailto:mustaqim.arifin@gmail.com"

@@ -1,18 +1,18 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { PrimaryButton } from '~/components/Button'
-import { Comments } from '~/components/Comments'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { Tags } from '~/components/Tag'
-import routes from '~/config/routes'
-import { CommentType, useGetBookmarkQuery } from '~/graphql/typeSlut'
-import { LinkIcon } from 'lucide-react'
-import { NextSeo } from 'next-seo'
+import * as React from "react"
+import Link from "next/link"
+import { PrimaryButton } from "~/components/Button"
+import Comments from "~/components/Comments"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { Tags } from "~/components/Tag"
+import routes from "~/config/routes"
+import { CommentType, useGetBookmarkQuery } from "~/graphql/typeSlut"
+import { LinkIcon } from "lucide-react"
+import { NextSeo } from "next-seo"
 
-import { MarkdownRenderer } from '../MarkdownRenderer'
-import { BookmarkActions } from './BookmarkActions'
-import { RelatedBookmarks } from './RelatedBookmarks'
+import { MarkdownRenderer } from "../MarkdownRenderer"
+import { BookmarkActions } from "./BookmarkActions"
+import { RelatedBookmarks } from "./RelatedBookmarks"
 
 export function BookmarkDetail({ id }) {
   const scrollContainerRef: React.RefObject<HTMLDivElement> = React.useRef(null)
@@ -51,7 +51,7 @@ export function BookmarkDetail({ id }) {
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={'/bookmarks'}
+          backButtonHref={"/bookmarks"}
           magicTitle
           title={bookmark.title}
           titleRef={titleRef}

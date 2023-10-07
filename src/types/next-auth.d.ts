@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import type { User as PrismaUser, UserRole } from '@prisma/client'
-import NextAuth, { DefaultSession, Session } from 'next-auth'
+import type { User as PrismaUser, UserRole } from "@prisma/client"
+import NextAuth, { Session, type DefaultSession } from "next-auth"
 
-declare module 'next-auth' {
+declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
@@ -11,7 +11,7 @@ declare module 'next-auth' {
       /** HOKAGE */
       id: string
       role: UserRole
-    } & DefaultSession['user']
+    } & DefaultSession["user"]
     isAdmin: boolean
     userId: string
   }

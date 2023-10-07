@@ -1,7 +1,7 @@
-import { customAlphabet } from 'nanoid'
+import { customAlphabet } from "nanoid"
 
 const nanoId = customAlphabet(
-  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
   7
 )
 

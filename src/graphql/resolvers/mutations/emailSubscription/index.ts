@@ -1,10 +1,10 @@
-import { Context } from '~/graphql/context'
+import { type Context } from "~/graphql/context"
 import {
   EmailSubscriptionType,
-  MutationEditEmailSubscriptionArgs,
-} from '~/graphql/typeSlut'
-import { emailRX } from '~/lib/functions'
-import { GraphQLError } from 'graphql'
+  type MutationEditEmailSubscriptionArgs,
+} from "~/graphql/typeSlut"
+import { emailRX } from "~/lib/functions"
+import { GraphQLError } from "graphql"
 
 export async function editEmailSubscription(
   _,
@@ -16,11 +16,11 @@ export async function editEmailSubscription(
   const { prisma, viewer } = ctx
 
   if (!viewer?.email && !email) {
-    throw new GraphQLError('No email')
+    throw new GraphQLError("No email")
   }
 
   if (email && !emailRX(email)) {
-    throw new GraphQLError('Invalid email')
+    throw new GraphQLError("Invalid email")
   }
 
   const emailToUse = viewer && viewer.email ? viewer.email : email

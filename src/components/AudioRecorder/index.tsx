@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { useMutation } from '@tanstack/react-query'
-import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
-import { TrashIcon } from 'lucide-react'
+import * as React from "react"
+import { useMutation } from "@tanstack/react-query"
+import { signUpload, uploadToCloudinary } from "~/lib/cloudinary/api"
+import { TrashIcon } from "lucide-react"
 
-import { ErrorAlert } from '../Alert'
-import AudioPlayer from '../AudioPlayer'
-import Button, { DeleteButton, RecordingButton } from '../Button'
-import { LoadingSpinner } from '../LoadingSpinner'
+import { ErrorAlert } from "../Alert"
+import AudioPlayer from "../AudioPlayer"
+import Button, { DeleteButton, RecordingButton } from "../Button"
+import { LoadingSpinner } from "../LoadingSpinner"
 
 interface Props {
   id: string
@@ -22,12 +22,12 @@ interface Props {
 
 interface State {
   status:
-    | 'idle'
-    | 'recording'
-    | 'recorded'
-    | 'uploading'
+    | "idle"
+    | "recording"
+    | "recorded"
+    | "uploading"
     // | 'transcribing'
-    | 'done'
+    | "done"
   audioUrl: string | null
   audioBlob: Blob | null
   waveform: number[]
@@ -36,15 +36,15 @@ interface State {
 }
 
 type Action =
-  | { type: 'reset' }
-  | { type: 'start-recording' }
-  | { type: 'stop-recording'; audioUrl: string; audioBlob: Blob }
-  | { type: 'start-uploading' }
+  | { type: "reset" }
+  | { type: "start-recording" }
+  | { type: "stop-recording"; audioUrl: string; audioBlob: Blob }
+  | { type: "start-uploading" }
   // | { type: 'start-transcribing' }
-  | { type: 'done'; transcript: string }
-  | { type: 'set-waveform'; waveform: number[] }
-  | { type: 'error'; error: string }
-  | { type: 'delete' }
+  | { type: "done"; transcript: string }
+  | { type: "set-waveform"; waveform: number[] }
+  | { type: "error"; error: string }
+  | { type: "delete" }
 
 export default function AudioRecorder({
   id,
@@ -57,7 +57,7 @@ export default function AudioRecorder({
   onUploadComplete,
 }: Props) {
   const initialState = {
-    status: initialAudioUrl ? 'recorded' : 'idle',
+    status: initialAudioUrl ? "recorded" : "idle",
     audioUrl: initialAudioUrl,
     audioBlob: null,
     waveform: initialWaveform,
@@ -67,33 +67,33 @@ export default function AudioRecorder({
 
   function reducer(state: State, action: Action) {
     switch (action.type) {
-      case 'reset': {
+      case "reset": {
         return initialState
       }
-      case 'start-recording': {
+      case "start-recording": {
         return {
           ...state,
-          status: 'recording',
+          status: "recording",
         }
       }
-      case 'stop-recording': {
+      case "stop-recording": {
         return {
           ...state,
-          status: 'recorded',
+          status: "recorded",
           audioUrl: action.audioUrl,
           audioBlob: action.audioBlob,
         }
       }
-      case 'set-waveform': {
+      case "set-waveform": {
         return {
           ...state,
           waveform: action.waveform,
         }
       }
-      case 'start-uploading': {
+      case "start-uploading": {
         return {
           ...state,
-          status: 'uploading',
+          status: "uploading",
         }
       }
       // case 'start-transcribing': {
@@ -102,28 +102,28 @@ export default function AudioRecorder({
       //     status: 'transcribing',
       //   }
       // }
-      case 'done': {
+      case "done": {
         return {
           ...state,
           // transcript: action.transcript,
-          status: 'done',
+          status: "done",
         }
       }
-      case 'error': {
+      case "error": {
         onRecordingError && onRecordingError()
         return {
           ...initialState,
           error: action.error,
         }
       }
-      case 'delete': {
+      case "delete": {
         return {
           ...initialState,
           audioUrl: null,
           audioBlob: null,
           waveform: [],
           // transcript: null,
-          status: 'idle',
+          status: "idle",
         }
       }
       default:
@@ -157,8 +157,8 @@ export default function AudioRecorder({
       handleMediaSetup()
     } else {
       dispatch({
-        type: 'error',
-        error: 'Media Decives will work only with SSL',
+        type: "error",
+        error: "Media Decives will work only with SSL",
       })
     }
   }, [])
@@ -176,35 +176,35 @@ export default function AudioRecorder({
   function startRecording() {
     if (navigator.mediaDevices) {
       onRecordingStart && onRecordingStart()
-      dispatch({ type: 'start-recording' })
+      dispatch({ type: "start-recording" })
       mediaRecorder.start(10)
     } else {
-      dispatch({ type: 'error', error: 'Audio recording is not supported' })
+      dispatch({ type: "error", error: "Audio recording is not supported" })
     }
   }
 
   function stopRecording() {
     mediaRecorder.stop()
-    const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' })
+    const audioBlob = new Blob(audioChunks, { type: "audio/mp3" })
     const audioUrl = window.URL.createObjectURL(audioBlob)
     onRecordingStop && onRecordingStop()
-    dispatch({ type: 'stop-recording', audioUrl, audioBlob })
+    dispatch({ type: "stop-recording", audioUrl, audioBlob })
   }
 
   function reRecord() {
-    dispatch({ type: 'reset' })
+    dispatch({ type: "reset" })
     setAudioChunks([])
     startRecording()
   }
 
   function handleDelete() {
     onDeleteAudio && onDeleteAudio()
-    dispatch({ type: 'delete' })
+    dispatch({ type: "delete" })
     setAudioChunks([])
   }
 
   function handleUpload() {
-    dispatch({ type: 'start-uploading' })
+    dispatch({ type: "start-uploading" })
     signUploadMutation.mutate()
   }
 
@@ -225,41 +225,41 @@ export default function AudioRecorder({
 
   return (
     <div className="flex flex-col space-y-4 rounded-md border border-gray-200 bg-gray-100 p-4 dark:border-gray-800 dark:bg-gray-900">
-      {state.status === 'idle' && (
+      {state.status === "idle" && (
         <Button onClick={startRecording}>
-          {initialAudioUrl ? 'Re-record answer' : 'Record answer'}
+          {initialAudioUrl ? "Re-record answer" : "Record answer"}
         </Button>
       )}
 
-      {state.status === 'recording' && (
+      {state.status === "recording" && (
         <RecordingButton onClick={stopRecording}>
           Stop recording...
         </RecordingButton>
       )}
 
-      {state.audioUrl && state.status !== 'recording' && (
+      {state.audioUrl && state.status !== "recording" && (
         <>
           <AudioPlayer
             id={null}
             isRecorder={true}
             waveform={state.waveform}
             setWaveformData={(waveform) =>
-              dispatch({ type: 'set-waveform', waveform })
+              dispatch({ type: "set-waveform", waveform })
             }
             src={state.audioUrl}
           />
         </>
       )}
 
-      {state.audioUrl && state.status !== 'uploading' && (
+      {state.audioUrl && state.status !== "uploading" && (
         <div className="flex w-full justify-between">
-          {state.status !== 'recording' && (
+          {state.status !== "recording" && (
             <DeleteButton onClick={handleDelete}>
               <TrashIcon />
             </DeleteButton>
           )}
 
-          {(state.status === 'recorded' || state.status === 'done') && (
+          {(state.status === "recorded" || state.status === "done") && (
             <div className="flex space-x-3">
               <Button onClick={reRecord}>Record again</Button>
               <Button onClick={handleUpload}>Upload audio</Button>
@@ -270,7 +270,7 @@ export default function AudioRecorder({
 
       {state.error && <ErrorAlert>{state.error}</ErrorAlert>}
 
-      {state.status === 'uploading' && (
+      {state.status === "uploading" && (
         <div className="flex items-center justify-center">
           <LoadingSpinner />
           <p className="text-primary">Uploading...</p>

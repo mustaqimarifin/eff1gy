@@ -1,10 +1,10 @@
-import { gql } from '@apollo/client'
-import { UserInfoFragment } from '~/graphql/fragments/user'
+import { gql } from "@apollo/client"
+import { UserInfoFragment } from "~/graphql/fragments/user"
 
 import {
   StackDetailFragment,
   StacksConnectionFragment,
-} from '../fragments/stack'
+} from "../fragments/stack"
 
 export const GET_STACKS = gql`
   query getStacks($first: Int, $after: String) {

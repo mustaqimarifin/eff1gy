@@ -1,8 +1,8 @@
-import { GetHackerNewsPostQueryVariables } from '~/graphql/typeSlut'
-import { getHNPosts, getPostById } from '~/lib/hn'
+import { type GetHackerNewsPostQueryVariables } from "~/graphql/typeSlut"
+import { getHNPosts, getPostById } from "~/lib/hn"
 
 export async function getHackerNewsPosts() {
-  return await getHNPosts('top')
+  return await getHNPosts("top")
 }
 
 export async function getHackerNewsPost(

@@ -1,4 +1,4 @@
-import { TrackEvent } from '~/lib/umami'
+import { TrackEvent } from "~/lib/umami"
 
 export {}
 

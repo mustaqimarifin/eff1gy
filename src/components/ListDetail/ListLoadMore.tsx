@@ -1,7 +1,7 @@
-import * as React from 'react'
-import ReactVisibilitySensor from 'react-visibility-sensor'
+import * as React from "react"
+import ReactVisibilitySensor from "react-visibility-sensor"
 
-import { LoadingSpinner } from '../LoadingSpinner'
+import { LoadingSpinner } from "../LoadingSpinner"
 
 export function ListLoadMore({ setIsVisible }) {
   return (

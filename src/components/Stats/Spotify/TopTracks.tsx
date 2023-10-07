@@ -1,11 +1,11 @@
-import { ketchup } from '~/lib/functions'
-import { TopTracks } from '~/types/site'
-import useSWR from 'swr'
+import { ketchup } from "~/lib/functions"
+import { type TopTracks } from "~/types/site"
+import useSWR from "swr"
 
-import Track from './Track'
+import Track from "./Track"
 
 export default function Tracks() {
-  const { data } = useSWR<TopTracks>('/api/stats/top-tracks', ketchup)
+  const { data } = useSWR<TopTracks>("/api/stats/top-tracks", ketchup)
 
   if (!data) {
     return null

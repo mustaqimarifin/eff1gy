@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client'
-import * as Apollo from '@apollo/client'
+import { gql } from "@apollo/client"
+import * as Apollo from "@apollo/client"
 import {
-  FieldPolicy,
-  FieldReadFunction,
-  TypePolicies,
-  TypePolicy,
-} from '@apollo/client/cache'
+  type FieldPolicy,
+  type FieldReadFunction,
+  type TypePolicies,
+  type TypePolicy,
+} from "@apollo/client/cache"
 
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
@@ -25,7 +25,7 @@ export type MakeEmpty<
 export type Incremental<T> =
   | T
   | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never
+      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never
     }
 const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
@@ -40,198 +40,209 @@ export type Scalars = {
 }
 
 export type AddBookmarkInput = {
-  tag: Scalars['String']['input']
-  url: Scalars['String']['input']
+  tag: Scalars["String"]["input"]
+  url: Scalars["String"]["input"]
 }
 
 export type AddPostInput = {
-  excerpt?: InputMaybe<Scalars['String']['input']>
-  slug: Scalars['String']['input']
-  text: Scalars['String']['input']
-  title: Scalars['String']['input']
+  excerpt?: InputMaybe<Scalars["String"]["input"]>
+  slug: Scalars["String"]["input"]
+  text: Scalars["String"]["input"]
+  title: Scalars["String"]["input"]
 }
 
 export type AddQuestionInput = {
-  audioUrl?: InputMaybe<Scalars['String']['input']>
-  description?: InputMaybe<Scalars['String']['input']>
-  title: Scalars['String']['input']
-  waveform?: InputMaybe<Scalars['JSON']['input']>
+  audioUrl?: InputMaybe<Scalars["String"]["input"]>
+  description?: InputMaybe<Scalars["String"]["input"]>
+  title: Scalars["String"]["input"]
+  waveform?: InputMaybe<Scalars["JSON"]["input"]>
 }
 
 export type AddStackInput = {
-  description: Scalars['String']['input']
-  image: Scalars['String']['input']
-  name: Scalars['String']['input']
-  tag?: InputMaybe<Scalars['String']['input']>
-  url: Scalars['String']['input']
+  description: Scalars["String"]["input"]
+  image: Scalars["String"]["input"]
+  name: Scalars["String"]["input"]
+  tag?: InputMaybe<Scalars["String"]["input"]>
+  url: Scalars["String"]["input"]
+}
+
+export type Blog = {
+  __typename?: "Blog"
+  date?: Maybe<Scalars["Date"]["output"]>
+  id: Scalars["ID"]["output"]
+  reactionCount?: Maybe<Scalars["Int"]["output"]>
+  slug: Scalars["String"]["output"]
+  title?: Maybe<Scalars["String"]["output"]>
+  viewerHasReacted?: Maybe<Scalars["Boolean"]["output"]>
 }
 
 export type Bookmark = {
-  __typename?: 'Bookmark'
-  createdAt: Scalars['Date']['output']
-  description?: Maybe<Scalars['String']['output']>
-  faviconUrl?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
-  host: Scalars['String']['output']
-  id: Scalars['ID']['output']
-  image?: Maybe<Scalars['String']['output']>
-  reactionCount?: Maybe<Scalars['Int']['output']>
+  __typename?: "Bookmark"
+  createdAt: Scalars["Date"]["output"]
+  description?: Maybe<Scalars["String"]["output"]>
+  faviconUrl?: Maybe<Scalars["String"]["output"]>
+  hitRate?: Maybe<Scalars["Int"]["output"]>
+  host: Scalars["String"]["output"]
+  id: Scalars["ID"]["output"]
+  image?: Maybe<Scalars["String"]["output"]>
+  reactionCount?: Maybe<Scalars["Int"]["output"]>
   tags: Array<Maybe<Tag>>
-  title?: Maybe<Scalars['String']['output']>
-  updatedAt: Scalars['Date']['output']
-  url: Scalars['String']['output']
-  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
+  title?: Maybe<Scalars["String"]["output"]>
+  updatedAt: Scalars["Date"]["output"]
+  url: Scalars["String"]["output"]
+  viewerHasReacted?: Maybe<Scalars["Boolean"]["output"]>
 }
 
 export type BookmarkEdge = {
-  __typename?: 'BookmarkEdge'
-  cursor?: Maybe<Scalars['String']['output']>
+  __typename?: "BookmarkEdge"
+  cursor?: Maybe<Scalars["String"]["output"]>
   node?: Maybe<Bookmark>
 }
 
 export type BookmarkFilter = {
-  host?: InputMaybe<Scalars['String']['input']>
-  tag?: InputMaybe<Scalars['String']['input']>
+  host?: InputMaybe<Scalars["String"]["input"]>
+  tag?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type BookmarksConnection = {
-  __typename?: 'BookmarksConnection'
+  __typename?: "BookmarksConnection"
   edges: Array<Maybe<BookmarkEdge>>
   pageInfo?: Maybe<PageInfo>
 }
 
 export enum CacheControlScope {
-  Private = 'PRIVATE',
-  Public = 'PUBLIC',
+  Private = "PRIVATE",
+  Public = "PUBLIC",
 }
 
 export type Comment = {
-  __typename?: 'Comment'
+  __typename?: "Comment"
   author: User
-  createdAt: Scalars['Date']['output']
-  id: Scalars['ID']['output']
-  text?: Maybe<Scalars['String']['output']>
-  updatedAt?: Maybe<Scalars['Date']['output']>
-  viewerCanDelete?: Maybe<Scalars['Boolean']['output']>
-  viewerCanEdit?: Maybe<Scalars['Boolean']['output']>
+  createdAt: Scalars["Date"]["output"]
+  id: Scalars["ID"]["output"]
+  text?: Maybe<Scalars["String"]["output"]>
+  updatedAt?: Maybe<Scalars["Date"]["output"]>
+  viewerCanDelete?: Maybe<Scalars["Boolean"]["output"]>
+  viewerCanEdit?: Maybe<Scalars["Boolean"]["output"]>
 }
 
 export enum CommentType {
-  Bookmark = 'BOOKMARK',
-  Post = 'POST',
-  Question = 'QUESTION',
-  Stack = 'STACK',
+  Blog = "BLOG",
+  Bookmark = "BOOKMARK",
+  Post = "POST",
+  Question = "QUESTION",
+  Stack = "STACK",
 }
 
 export type EditBookmarkInput = {
-  description?: InputMaybe<Scalars['String']['input']>
-  faviconUrl?: InputMaybe<Scalars['String']['input']>
-  tag?: InputMaybe<Scalars['String']['input']>
-  title: Scalars['String']['input']
+  description?: InputMaybe<Scalars["String"]["input"]>
+  faviconUrl?: InputMaybe<Scalars["String"]["input"]>
+  tag?: InputMaybe<Scalars["String"]["input"]>
+  title: Scalars["String"]["input"]
 }
 
 export type EditPostInput = {
-  excerpt?: InputMaybe<Scalars['String']['input']>
-  published?: InputMaybe<Scalars['Boolean']['input']>
-  slug: Scalars['String']['input']
-  text: Scalars['String']['input']
-  title: Scalars['String']['input']
+  excerpt?: InputMaybe<Scalars["String"]["input"]>
+  published?: InputMaybe<Scalars["Boolean"]["input"]>
+  slug: Scalars["String"]["input"]
+  text: Scalars["String"]["input"]
+  title: Scalars["String"]["input"]
 }
 
 export type EditQuestionInput = {
-  audioUrl?: InputMaybe<Scalars['String']['input']>
-  description?: InputMaybe<Scalars['String']['input']>
-  title: Scalars['String']['input']
-  waveform?: InputMaybe<Scalars['JSON']['input']>
+  audioUrl?: InputMaybe<Scalars["String"]["input"]>
+  description?: InputMaybe<Scalars["String"]["input"]>
+  title: Scalars["String"]["input"]
+  waveform?: InputMaybe<Scalars["JSON"]["input"]>
 }
 
 export type EditStackInput = {
-  description: Scalars['String']['input']
-  image: Scalars['String']['input']
-  name: Scalars['String']['input']
-  tag?: InputMaybe<Scalars['String']['input']>
-  url: Scalars['String']['input']
+  description: Scalars["String"]["input"]
+  image: Scalars["String"]["input"]
+  name: Scalars["String"]["input"]
+  tag?: InputMaybe<Scalars["String"]["input"]>
+  url: Scalars["String"]["input"]
 }
 
 export type EditUserInput = {
-  email?: InputMaybe<Scalars['String']['input']>
-  name?: InputMaybe<Scalars['String']['input']>
+  email?: InputMaybe<Scalars["String"]["input"]>
+  name?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type EmailSubscription = {
-  __typename?: 'EmailSubscription'
-  subscribed?: Maybe<Scalars['Boolean']['output']>
+  __typename?: "EmailSubscription"
+  subscribed?: Maybe<Scalars["Boolean"]["output"]>
   type?: Maybe<EmailSubscriptionType>
 }
 
 export type EmailSubscriptionInput = {
-  email?: InputMaybe<Scalars['String']['input']>
-  subscribed: Scalars['Boolean']['input']
+  email?: InputMaybe<Scalars["String"]["input"]>
+  subscribed: Scalars["Boolean"]["input"]
   type: EmailSubscriptionType
 }
 
 export enum EmailSubscriptionType {
-  HackerNews = 'HACKER_NEWS',
-  Newsletter = 'NEWSLETTER',
+  HackerNews = "HACKER_NEWS",
+  Newsletter = "NEWSLETTER",
 }
 
 export type HackerNewsComment = {
-  __typename?: 'HackerNewsComment'
+  __typename?: "HackerNewsComment"
   comments?: Maybe<Array<Maybe<HackerNewsComment>>>
-  comments_count?: Maybe<Scalars['String']['output']>
-  content?: Maybe<Scalars['String']['output']>
-  id?: Maybe<Scalars['ID']['output']>
-  level?: Maybe<Scalars['Int']['output']>
-  time?: Maybe<Scalars['Int']['output']>
-  time_ago?: Maybe<Scalars['String']['output']>
-  user?: Maybe<Scalars['String']['output']>
+  comments_count?: Maybe<Scalars["String"]["output"]>
+  content?: Maybe<Scalars["String"]["output"]>
+  id?: Maybe<Scalars["ID"]["output"]>
+  level?: Maybe<Scalars["Int"]["output"]>
+  time?: Maybe<Scalars["Int"]["output"]>
+  time_ago?: Maybe<Scalars["String"]["output"]>
+  user?: Maybe<Scalars["String"]["output"]>
 }
 
 export type HackerNewsPost = {
-  __typename?: 'HackerNewsPost'
+  __typename?: "HackerNewsPost"
   comments?: Maybe<Array<Maybe<HackerNewsComment>>>
-  comments_count?: Maybe<Scalars['String']['output']>
-  content?: Maybe<Scalars['String']['output']>
-  domain?: Maybe<Scalars['String']['output']>
-  id?: Maybe<Scalars['ID']['output']>
-  time?: Maybe<Scalars['Int']['output']>
-  time_ago?: Maybe<Scalars['String']['output']>
-  title?: Maybe<Scalars['String']['output']>
-  url?: Maybe<Scalars['String']['output']>
-  user?: Maybe<Scalars['String']['output']>
+  comments_count?: Maybe<Scalars["String"]["output"]>
+  content?: Maybe<Scalars["String"]["output"]>
+  domain?: Maybe<Scalars["String"]["output"]>
+  id?: Maybe<Scalars["ID"]["output"]>
+  time?: Maybe<Scalars["Int"]["output"]>
+  time_ago?: Maybe<Scalars["String"]["output"]>
+  title?: Maybe<Scalars["String"]["output"]>
+  url?: Maybe<Scalars["String"]["output"]>
+  user?: Maybe<Scalars["String"]["output"]>
 }
 
 export type Hit = {
-  __typename?: 'Hit'
-  catID?: Maybe<Scalars['String']['output']>
-  createdAt: Scalars['Date']['output']
-  hitRate?: Maybe<Scalars['Int']['output']>
-  id: Scalars['ID']['output']
-  updatedAt?: Maybe<Scalars['Date']['output']>
+  __typename?: "Hit"
+  catID?: Maybe<Scalars["String"]["output"]>
+  createdAt: Scalars["Date"]["output"]
+  hitRate?: Maybe<Scalars["Int"]["output"]>
+  id: Scalars["ID"]["output"]
+  updatedAt?: Maybe<Scalars["Date"]["output"]>
 }
 
 export enum HitType {
-  Bookmark = 'BOOKMARK',
-  Post = 'POST',
-  Question = 'QUESTION',
-  Stack = 'STACK',
+  Bookmark = "BOOKMARK",
+  Post = "POST",
+  Question = "QUESTION",
+  Stack = "STACK",
 }
 
 export type Mutation = {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
   addBookmark?: Maybe<Bookmark>
   addComment?: Maybe<Comment>
   addHit?: Maybe<Hit>
   addPost?: Maybe<Post>
   addQuestion?: Maybe<Question>
   addStack?: Maybe<Stack>
-  deleteBookmark?: Maybe<Scalars['Boolean']['output']>
-  deleteComment?: Maybe<Scalars['Boolean']['output']>
-  deleteHit?: Maybe<Scalars['Boolean']['output']>
-  deletePost?: Maybe<Scalars['Boolean']['output']>
-  deleteQuestion?: Maybe<Scalars['Boolean']['output']>
-  deleteStack?: Maybe<Scalars['Boolean']['output']>
-  deleteUser?: Maybe<Scalars['Boolean']['output']>
+  deleteBookmark?: Maybe<Scalars["Boolean"]["output"]>
+  deleteComment?: Maybe<Scalars["Boolean"]["output"]>
+  deleteHit?: Maybe<Scalars["Boolean"]["output"]>
+  deletePost?: Maybe<Scalars["Boolean"]["output"]>
+  deleteQuestion?: Maybe<Scalars["Boolean"]["output"]>
+  deleteStack?: Maybe<Scalars["Boolean"]["output"]>
+  deleteUser?: Maybe<Scalars["Boolean"]["output"]>
   editBookmark?: Maybe<Bookmark>
   editComment?: Maybe<Comment>
   editEmailSubscription?: Maybe<User>
@@ -249,13 +260,13 @@ export type MutationAddBookmarkArgs = {
 }
 
 export type MutationAddCommentArgs = {
-  refId: Scalars['ID']['input']
-  text: Scalars['String']['input']
+  refId: Scalars["ID"]["input"]
+  text: Scalars["String"]["input"]
   type: CommentType
 }
 
 export type MutationAddHitArgs = {
-  pageId: Scalars['ID']['input']
+  pageId: Scalars["ID"]["input"]
   type: HitType
 }
 
@@ -272,37 +283,37 @@ export type MutationAddStackArgs = {
 }
 
 export type MutationDeleteBookmarkArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteCommentArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteHitArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationDeletePostArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteQuestionArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteStackArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationEditBookmarkArgs = {
   data: EditBookmarkInput
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationEditCommentArgs = {
-  id: Scalars['ID']['input']
-  text?: InputMaybe<Scalars['String']['input']>
+  id: Scalars["ID"]["input"]
+  text?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type MutationEditEmailSubscriptionArgs = {
@@ -310,23 +321,23 @@ export type MutationEditEmailSubscriptionArgs = {
 }
 
 export type MutationEditHitArgs = {
-  id: Scalars['ID']['input']
-  text?: InputMaybe<Scalars['String']['input']>
+  id: Scalars["ID"]["input"]
+  text?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type MutationEditPostArgs = {
   data: EditPostInput
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationEditQuestionArgs = {
   data: EditQuestionInput
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationEditStackArgs = {
   data: EditStackInput
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type MutationEditUserArgs = {
@@ -334,40 +345,42 @@ export type MutationEditUserArgs = {
 }
 
 export type MutationToggleReactionArgs = {
-  refId: Scalars['ID']['input']
+  refId: Scalars["ID"]["input"]
   type: ReactionType
 }
 
 export type MutationToggleStackUserArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type PageInfo = {
-  __typename?: 'PageInfo'
-  endCursor?: Maybe<Scalars['String']['output']>
-  hasNextPage?: Maybe<Scalars['Boolean']['output']>
-  totalCount?: Maybe<Scalars['Int']['output']>
+  __typename?: "PageInfo"
+  endCursor?: Maybe<Scalars["String"]["output"]>
+  hasNextPage?: Maybe<Scalars["Boolean"]["output"]>
+  totalCount?: Maybe<Scalars["Int"]["output"]>
 }
 
 export type Post = {
-  __typename?: 'Post'
+  __typename?: "Post"
   author?: Maybe<User>
-  createdAt?: Maybe<Scalars['Date']['output']>
-  excerpt?: Maybe<Scalars['String']['output']>
-  featureImage?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
-  id: Scalars['ID']['output']
-  publishedAt?: Maybe<Scalars['Date']['output']>
-  reactionCount?: Maybe<Scalars['Int']['output']>
-  slug?: Maybe<Scalars['String']['output']>
-  text?: Maybe<Scalars['String']['output']>
-  title?: Maybe<Scalars['String']['output']>
-  updatedAt?: Maybe<Scalars['Date']['output']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
+  createdAt?: Maybe<Scalars["Date"]["output"]>
+  excerpt?: Maybe<Scalars["String"]["output"]>
+  featureImage?: Maybe<Scalars["String"]["output"]>
+  hitRate?: Maybe<Scalars["Int"]["output"]>
+  id: Scalars["ID"]["output"]
+  publishedAt?: Maybe<Scalars["Date"]["output"]>
+  reactionCount?: Maybe<Scalars["Int"]["output"]>
+  slug?: Maybe<Scalars["String"]["output"]>
+  text?: Maybe<Scalars["String"]["output"]>
+  title?: Maybe<Scalars["String"]["output"]>
+  updatedAt?: Maybe<Scalars["Date"]["output"]>
+  viewerHasReacted?: Maybe<Scalars["Boolean"]["output"]>
 }
 
 export type Query = {
-  __typename?: 'Query'
+  __typename?: "Query"
+  blog?: Maybe<Blog>
+  blogs: Array<Maybe<Blog>>
   bookmark?: Maybe<Bookmark>
   bookmarks: BookmarksConnection
   comment?: Maybe<Comment>
@@ -387,40 +400,44 @@ export type Query = {
   viewer?: Maybe<User>
 }
 
+export type QueryBlogArgs = {
+  slug: Scalars["String"]["input"]
+}
+
 export type QueryBookmarkArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type QueryBookmarksArgs = {
-  after?: InputMaybe<Scalars['String']['input']>
+  after?: InputMaybe<Scalars["String"]["input"]>
   filter?: InputMaybe<BookmarkFilter>
-  first?: InputMaybe<Scalars['Int']['input']>
+  first?: InputMaybe<Scalars["Int"]["input"]>
 }
 
 export type QueryCommentArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type QueryCommentsArgs = {
-  refId: Scalars['ID']['input']
+  refId: Scalars["ID"]["input"]
   type: CommentType
 }
 
 export type QueryHackerNewsPostArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type QueryHitArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type QueryHitsArgs = {
-  pageId: Scalars['ID']['input']
+  pageId: Scalars["ID"]["input"]
   type: HitType
 }
 
 export type QueryPostArgs = {
-  slug: Scalars['String']['input']
+  slug: Scalars["String"]["input"]
 }
 
 export type QueryPostsArgs = {
@@ -428,50 +445,50 @@ export type QueryPostsArgs = {
 }
 
 export type QueryQuestionArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type QueryQuestionsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>
+  after?: InputMaybe<Scalars["String"]["input"]>
   filter?: InputMaybe<QuestionFilter>
-  first?: InputMaybe<Scalars['Int']['input']>
+  first?: InputMaybe<Scalars["Int"]["input"]>
 }
 
 export type QueryStackArgs = {
-  slug: Scalars['String']['input']
+  slug: Scalars["String"]["input"]
 }
 
 export type QueryStacksArgs = {
-  after?: InputMaybe<Scalars['String']['input']>
-  first?: InputMaybe<Scalars['Int']['input']>
+  after?: InputMaybe<Scalars["String"]["input"]>
+  first?: InputMaybe<Scalars["Int"]["input"]>
 }
 
 export type QueryUserArgs = {
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }
 
 export type Question = {
-  __typename?: 'Question'
-  audioUrl?: Maybe<Scalars['String']['output']>
+  __typename?: "Question"
+  audioUrl?: Maybe<Scalars["String"]["output"]>
   author?: Maybe<User>
-  createdAt: Scalars['Date']['output']
-  description?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
-  id: Scalars['ID']['output']
-  playCount?: Maybe<Scalars['Int']['output']>
-  reactionCount?: Maybe<Scalars['Int']['output']>
+  createdAt: Scalars["Date"]["output"]
+  description?: Maybe<Scalars["String"]["output"]>
+  hitRate?: Maybe<Scalars["Int"]["output"]>
+  id: Scalars["ID"]["output"]
+  playCount?: Maybe<Scalars["Int"]["output"]>
+  reactionCount?: Maybe<Scalars["Int"]["output"]>
   status?: Maybe<QuestionStatus>
-  title: Scalars['String']['output']
-  updatedAt?: Maybe<Scalars['Date']['output']>
-  viewerCanComment?: Maybe<Scalars['Boolean']['output']>
-  viewerCanEdit?: Maybe<Scalars['Boolean']['output']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
-  waveform?: Maybe<Scalars['JSON']['output']>
+  title: Scalars["String"]["output"]
+  updatedAt?: Maybe<Scalars["Date"]["output"]>
+  viewerCanComment?: Maybe<Scalars["Boolean"]["output"]>
+  viewerCanEdit?: Maybe<Scalars["Boolean"]["output"]>
+  viewerHasReacted?: Maybe<Scalars["Boolean"]["output"]>
+  waveform?: Maybe<Scalars["JSON"]["output"]>
 }
 
 export type QuestionEdge = {
-  __typename?: 'QuestionEdge'
-  cursor?: Maybe<Scalars['String']['output']>
+  __typename?: "QuestionEdge"
+  cursor?: Maybe<Scalars["String"]["output"]>
   node?: Maybe<Question>
 }
 
@@ -480,82 +497,83 @@ export type QuestionFilter = {
 }
 
 export enum QuestionStatus {
-  Answered = 'ANSWERED',
-  Pending = 'PENDING',
+  Answered = "ANSWERED",
+  Pending = "PENDING",
 }
 
 export type QuestionsConnection = {
-  __typename?: 'QuestionsConnection'
+  __typename?: "QuestionsConnection"
   edges: Array<Maybe<QuestionEdge>>
   pageInfo?: Maybe<PageInfo>
 }
 
-export type Reactable = Bookmark | Post | Question | Stack
+export type Reactable = Blog | Bookmark | Post | Question | Stack
 
 export enum ReactionType {
-  Bookmark = 'BOOKMARK',
-  Post = 'POST',
-  Question = 'QUESTION',
-  Stack = 'STACK',
+  Blog = "BLOG",
+  Bookmark = "BOOKMARK",
+  Post = "POST",
+  Question = "QUESTION",
+  Stack = "STACK",
 }
 
 export type Stack = {
-  __typename?: 'Stack'
-  createdAt: Scalars['Date']['output']
-  description?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
-  id: Scalars['ID']['output']
-  image?: Maybe<Scalars['String']['output']>
-  name: Scalars['String']['output']
-  reactionCount?: Maybe<Scalars['Int']['output']>
-  slug: Scalars['String']['output']
+  __typename?: "Stack"
+  createdAt: Scalars["Date"]["output"]
+  description?: Maybe<Scalars["String"]["output"]>
+  hitRate?: Maybe<Scalars["Int"]["output"]>
+  id: Scalars["ID"]["output"]
+  image?: Maybe<Scalars["String"]["output"]>
+  name: Scalars["String"]["output"]
+  reactionCount?: Maybe<Scalars["Int"]["output"]>
+  slug: Scalars["String"]["output"]
   tags: Array<Maybe<Tag>>
-  updatedAt?: Maybe<Scalars['Date']['output']>
-  url: Scalars['String']['output']
+  updatedAt?: Maybe<Scalars["Date"]["output"]>
+  url: Scalars["String"]["output"]
   usedBy: Array<Maybe<User>>
-  usedByViewer?: Maybe<Scalars['Boolean']['output']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
+  usedByViewer?: Maybe<Scalars["Boolean"]["output"]>
+  viewerHasReacted?: Maybe<Scalars["Boolean"]["output"]>
 }
 
 export type StackEdge = {
-  __typename?: 'StackEdge'
-  cursor?: Maybe<Scalars['String']['output']>
+  __typename?: "StackEdge"
+  cursor?: Maybe<Scalars["String"]["output"]>
   node?: Maybe<Stack>
 }
 
 export type StacksConnection = {
-  __typename?: 'StacksConnection'
+  __typename?: "StacksConnection"
   edges: Array<Maybe<StackEdge>>
   pageInfo?: Maybe<PageInfo>
 }
 
 export type Tag = {
-  __typename?: 'Tag'
-  name: Scalars['String']['output']
+  __typename?: "Tag"
+  name: Scalars["String"]["output"]
 }
 
 export type User = {
-  __typename?: 'User'
-  createdAt?: Maybe<Scalars['Date']['output']>
-  email?: Maybe<Scalars['String']['output']>
+  __typename?: "User"
+  createdAt?: Maybe<Scalars["Date"]["output"]>
+  email?: Maybe<Scalars["String"]["output"]>
   emailSubscriptions?: Maybe<Array<Maybe<EmailSubscription>>>
-  id: Scalars['ID']['output']
-  image?: Maybe<Scalars['String']['output']>
-  isAdmin?: Maybe<Scalars['Boolean']['output']>
-  isViewer?: Maybe<Scalars['Boolean']['output']>
-  name: Scalars['String']['output']
-  pendingEmail?: Maybe<Scalars['String']['output']>
+  id: Scalars["ID"]["output"]
+  image?: Maybe<Scalars["String"]["output"]>
+  isAdmin?: Maybe<Scalars["Boolean"]["output"]>
+  isViewer?: Maybe<Scalars["Boolean"]["output"]>
+  name: Scalars["String"]["output"]
+  pendingEmail?: Maybe<Scalars["String"]["output"]>
   role?: Maybe<UserRole>
 }
 
 export enum UserRole {
-  Admin = 'ADMIN',
-  Blocked = 'BLOCKED',
-  User = 'USER',
+  Admin = "ADMIN",
+  Blocked = "BLOCKED",
+  User = "USER",
 }
 
 export type WritingFilter = {
-  published?: InputMaybe<Scalars['Boolean']['input']>
+  published?: InputMaybe<Scalars["Boolean"]["input"]>
 }
 
 export type BookmarkDetailFragment = {
@@ -568,8 +586,8 @@ export type BookmarkDetailFragment = {
   title?: string | null
   description?: string | null
   faviconUrl?: string | null
-  tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-} & { __typename: 'Bookmark' }
+  tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+} & { __typename: "Bookmark" }
 
 export type BookmarkCoreFragment = {
   id: string
@@ -578,7 +596,7 @@ export type BookmarkCoreFragment = {
   title?: string | null
   description?: string | null
   faviconUrl?: string | null
-} & { __typename: 'Bookmark' }
+} & { __typename: "Bookmark" }
 
 export type CommentInfoFragment = {
   id: string
@@ -594,8 +612,8 @@ export type CommentInfoFragment = {
     role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
-  } & { __typename: 'User' }
-} & { __typename: 'Comment' }
+  } & { __typename: "User" }
+} & { __typename: "Comment" }
 
 export type UserInfoFragment = {
   id: string
@@ -604,7 +622,7 @@ export type UserInfoFragment = {
   role?: UserRole | null
   isViewer?: boolean | null
   isAdmin?: boolean | null
-} & { __typename: 'User' }
+} & { __typename: "User" }
 
 export type PostDetailFragment = {
   text?: string | null
@@ -617,7 +635,7 @@ export type PostDetailFragment = {
   title?: string | null
   slug?: string | null
   excerpt?: string | null
-} & { __typename: 'Post' }
+} & { __typename: "Post" }
 
 export type PostCoreFragment = {
   id: string
@@ -625,7 +643,7 @@ export type PostCoreFragment = {
   title?: string | null
   slug?: string | null
   excerpt?: string | null
-} & { __typename: 'Post' }
+} & { __typename: "Post" }
 
 export type QuestionDetailFragment = {
   description?: string | null
@@ -648,9 +666,9 @@ export type QuestionDetailFragment = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename: 'Question' }
+} & { __typename: "Question" }
 
 export type QuestionCoreFragment = {
   id: string
@@ -666,9 +684,9 @@ export type QuestionCoreFragment = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename: 'Question' }
+} & { __typename: "Question" }
 
 export type StackDetailFragment = {
   createdAt: any
@@ -690,11 +708,11 @@ export type StackDetailFragment = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
   >
-  tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-} & { __typename: 'Stack' }
+  tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+} & { __typename: "Stack" }
 
 export type StackCoreFragment = {
   id: string
@@ -702,7 +720,30 @@ export type StackCoreFragment = {
   image?: string | null
   url: string
   slug: string
-} & { __typename: 'Stack' }
+} & { __typename: "Stack" }
+
+export type BlogListItemFragment = {
+  id: string
+  date?: any | null
+  title?: string | null
+  slug: string
+} & { __typename: "Blog" }
+
+export type BlogCoreFragment = {
+  id: string
+  date?: any | null
+  title?: string | null
+  slug: string
+} & { __typename: "Blog" }
+
+export type BlogDetailFragment = {
+  reactionCount?: number | null
+  viewerHasReacted?: boolean | null
+  id: string
+  date?: any | null
+  title?: string | null
+  slug: string
+} & { __typename: "Blog" }
 
 export type BookmarksConnectionFragment = {
   pageInfo?:
@@ -710,7 +751,7 @@ export type BookmarksConnectionFragment = {
         hasNextPage?: boolean | null
         totalCount?: number | null
         endCursor?: string | null
-      } & { __typename?: 'PageInfo' })
+      } & { __typename?: "PageInfo" })
     | null
   edges: Array<
     | ({
@@ -723,12 +764,12 @@ export type BookmarksConnectionFragment = {
               title?: string | null
               description?: string | null
               faviconUrl?: string | null
-            } & { __typename: 'Bookmark' })
+            } & { __typename: "Bookmark" })
           | null
-      } & { __typename?: 'BookmarkEdge' })
+      } & { __typename?: "BookmarkEdge" })
     | null
   >
-} & { __typename?: 'BookmarksConnection' }
+} & { __typename?: "BookmarksConnection" }
 
 export type BookmarkListItemFragment = {
   id: string
@@ -737,14 +778,14 @@ export type BookmarkListItemFragment = {
   title?: string | null
   description?: string | null
   faviconUrl?: string | null
-} & { __typename: 'Bookmark' }
+} & { __typename: "Bookmark" }
 
 export type HackerNewsListItemInfoFragment = {
   id?: string | null
   title?: string | null
   domain?: string | null
   url?: string | null
-} & { __typename?: 'HackerNewsPost' }
+} & { __typename?: "HackerNewsPost" }
 
 export type HackerNewsPostInfoFragment = {
   user?: string | null
@@ -788,19 +829,19 @@ export type HackerNewsPostInfoFragment = {
                           time_ago?: string | null
                           level?: number | null
                           content?: string | null
-                        } & { __typename?: 'HackerNewsComment' })
+                        } & { __typename?: "HackerNewsComment" })
                       | null
                     > | null
-                  } & { __typename?: 'HackerNewsComment' })
+                  } & { __typename?: "HackerNewsComment" })
                 | null
               > | null
-            } & { __typename?: 'HackerNewsComment' })
+            } & { __typename?: "HackerNewsComment" })
           | null
         > | null
-      } & { __typename?: 'HackerNewsComment' })
+      } & { __typename?: "HackerNewsComment" })
     | null
   > | null
-} & { __typename?: 'HackerNewsPost' }
+} & { __typename?: "HackerNewsPost" }
 
 export type HackerNewsCommentInfoFragment = {
   id?: string | null
@@ -809,7 +850,7 @@ export type HackerNewsCommentInfoFragment = {
   time_ago?: string | null
   level?: number | null
   content?: string | null
-} & { __typename?: 'HackerNewsComment' }
+} & { __typename?: "HackerNewsComment" }
 
 export type PostListItemFragment = {
   id: string
@@ -817,7 +858,7 @@ export type PostListItemFragment = {
   title?: string | null
   slug?: string | null
   excerpt?: string | null
-} & { __typename: 'Post' }
+} & { __typename: "Post" }
 
 export type QuestionsConnectionFragment = {
   pageInfo?:
@@ -825,7 +866,7 @@ export type QuestionsConnectionFragment = {
         hasNextPage?: boolean | null
         totalCount?: number | null
         endCursor?: string | null
-      } & { __typename?: 'PageInfo' })
+      } & { __typename?: "PageInfo" })
     | null
   edges: Array<
     | ({
@@ -845,14 +886,14 @@ export type QuestionsConnectionFragment = {
                     role?: UserRole | null
                     isViewer?: boolean | null
                     isAdmin?: boolean | null
-                  } & { __typename: 'User' })
+                  } & { __typename: "User" })
                 | null
-            } & { __typename: 'Question' })
+            } & { __typename: "Question" })
           | null
-      } & { __typename?: 'QuestionEdge' })
+      } & { __typename?: "QuestionEdge" })
     | null
   >
-} & { __typename?: 'QuestionsConnection' }
+} & { __typename?: "QuestionsConnection" }
 
 export type QuestionListItemFragment = {
   id: string
@@ -868,9 +909,9 @@ export type QuestionListItemFragment = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename: 'Question' }
+} & { __typename: "Question" }
 
 export type StacksConnectionFragment = {
   pageInfo?:
@@ -878,7 +919,7 @@ export type StacksConnectionFragment = {
         hasNextPage?: boolean | null
         totalCount?: number | null
         endCursor?: string | null
-      } & { __typename?: 'PageInfo' })
+      } & { __typename?: "PageInfo" })
     | null
   edges: Array<
     | ({
@@ -890,12 +931,12 @@ export type StacksConnectionFragment = {
               image?: string | null
               url: string
               slug: string
-            } & { __typename: 'Stack' })
+            } & { __typename: "Stack" })
           | null
-      } & { __typename?: 'StackEdge' })
+      } & { __typename?: "StackEdge" })
     | null
   >
-} & { __typename?: 'StacksConnection' }
+} & { __typename?: "StacksConnection" }
 
 export type StackListItemFragment = {
   id: string
@@ -903,21 +944,21 @@ export type StackListItemFragment = {
   image?: string | null
   url: string
   slug: string
-} & { __typename: 'Stack' }
+} & { __typename: "Stack" }
 
 export type UserSettingsFragment = {
   email?: string | null
   pendingEmail?: string | null
   emailSubscriptions?: Array<
     | ({ type?: EmailSubscriptionType | null; subscribed?: boolean | null } & {
-        __typename?: 'EmailSubscription'
+        __typename?: "EmailSubscription"
       })
     | null
   > | null
-} & { __typename?: 'User' }
+} & { __typename?: "User" }
 
 export type EditBookmarkMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
   data: EditBookmarkInput
 }>
 
@@ -933,17 +974,17 @@ export type EditBookmarkMutation = {
         reactionCount?: number | null
         hitRate?: number | null
         viewerHasReacted?: boolean | null
-        tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-      } & { __typename: 'Bookmark' })
+        tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+      } & { __typename: "Bookmark" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type DeleteBookmarkMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type DeleteBookmarkMutation = { deleteBookmark?: boolean | null } & {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
 }
 
 export type AddBookmarkMutationVariables = Exact<{
@@ -962,15 +1003,15 @@ export type AddBookmarkMutation = {
         reactionCount?: number | null
         hitRate?: number | null
         viewerHasReacted?: boolean | null
-        tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-      } & { __typename: 'Bookmark' })
+        tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+      } & { __typename: "Bookmark" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type AddCommentMutationVariables = Exact<{
-  refId: Scalars['ID']['input']
+  refId: Scalars["ID"]["input"]
   type: CommentType
-  text: Scalars['String']['input']
+  text: Scalars["String"]["input"]
 }>
 
 export type AddCommentMutation = {
@@ -989,14 +1030,14 @@ export type AddCommentMutation = {
           role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
-        } & { __typename: 'User' }
-      } & { __typename: 'Comment' })
+        } & { __typename: "User" }
+      } & { __typename: "Comment" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type EditCommentMutationVariables = Exact<{
-  id: Scalars['ID']['input']
-  text: Scalars['String']['input']
+  id: Scalars["ID"]["input"]
+  text: Scalars["String"]["input"]
 }>
 
 export type EditCommentMutation = {
@@ -1015,17 +1056,17 @@ export type EditCommentMutation = {
           role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
-        } & { __typename: 'User' }
-      } & { __typename: 'Comment' })
+        } & { __typename: "User" }
+      } & { __typename: "Comment" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type DeleteCommentMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type DeleteCommentMutation = { deleteComment?: boolean | null } & {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
 }
 
 export type EditEmailSubscriptionMutationVariables = Exact<{
@@ -1039,15 +1080,15 @@ export type EditEmailSubscriptionMutation = {
           | ({
               subscribed?: boolean | null
               type?: EmailSubscriptionType | null
-            } & { __typename?: 'EmailSubscription' })
+            } & { __typename?: "EmailSubscription" })
           | null
         > | null
-      } & { __typename?: 'User' })
+      } & { __typename?: "User" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type EditPostMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
   data: EditPostInput
 }>
 
@@ -1064,16 +1105,16 @@ export type EditPostMutation = {
         reactionCount?: number | null
         hitRate?: number | null
         viewerHasReacted?: boolean | null
-      } & { __typename: 'Post' })
+      } & { __typename: "Post" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type DeletePostMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type DeletePostMutation = { deletePost?: boolean | null } & {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
 }
 
 export type AddPostMutationVariables = Exact<{
@@ -1093,12 +1134,12 @@ export type AddPostMutation = {
         reactionCount?: number | null
         hitRate?: number | null
         viewerHasReacted?: boolean | null
-      } & { __typename: 'Post' })
+      } & { __typename: "Post" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type EditQuestionMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
   data: EditQuestionInput
 }>
 
@@ -1125,18 +1166,18 @@ export type EditQuestionMutation = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
-      } & { __typename: 'Question' })
+      } & { __typename: "Question" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type DeleteQuestionMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type DeleteQuestionMutation = { deleteQuestion?: boolean | null } & {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
 }
 
 export type AddQuestionMutationVariables = Exact<{
@@ -1166,14 +1207,14 @@ export type AddQuestionMutation = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
-      } & { __typename: 'Question' })
+      } & { __typename: "Question" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type ToggleReactionMutationVariables = Exact<{
-  refId: Scalars['ID']['input']
+  refId: Scalars["ID"]["input"]
   type: ReactionType
 }>
 
@@ -1181,20 +1222,20 @@ export type ToggleReactionMutation = {
   toggleReaction?:
     | ({
         id: string
+        reactionCount?: number | null
+        viewerHasReacted?: boolean | null
+      } & { __typename?: "Blog" | "Post" | "Question" | "Stack" })
+    | ({
+        id: string
         url: string
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
-      } & { __typename?: 'Bookmark' })
-    | ({
-        id: string
-        reactionCount?: number | null
-        viewerHasReacted?: boolean | null
-      } & { __typename?: 'Post' | 'Question' | 'Stack' })
+      } & { __typename?: "Bookmark" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type EditStackMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
   data: EditStackInput
 }>
 
@@ -1220,20 +1261,20 @@ export type EditStackMutation = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
         >
-        tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-      } & { __typename: 'Stack' })
+        tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+      } & { __typename: "Stack" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type DeleteStackMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type DeleteStackMutation = { deleteStack?: boolean | null } & {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
 }
 
 export type AddStackMutationVariables = Exact<{
@@ -1262,16 +1303,16 @@ export type AddStackMutation = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
         >
-        tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-      } & { __typename: 'Stack' })
+        tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+      } & { __typename: "Stack" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type ToggleStackUserMutationVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type ToggleStackUserMutation = {
@@ -1290,17 +1331,17 @@ export type ToggleStackUserMutation = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
         >
-      } & { __typename: 'Stack' })
+      } & { __typename: "Stack" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
 
 export type DeleteUserMutationVariables = Exact<{ [key: string]: never }>
 
 export type DeleteUserMutation = { deleteUser?: boolean | null } & {
-  __typename?: 'Mutation'
+  __typename?: "Mutation"
 }
 
 export type EditUserMutationVariables = Exact<{
@@ -1316,13 +1357,44 @@ export type EditUserMutation = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename?: 'Mutation' }
+} & { __typename?: "Mutation" }
+
+export type GetBlogsQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetBlogsQuery = {
+  blogs: Array<
+    | ({
+        id: string
+        date?: any | null
+        title?: string | null
+        slug: string
+      } & { __typename: "Blog" })
+    | null
+  >
+} & { __typename?: "Query" }
+
+export type GetBlogQueryVariables = Exact<{
+  slug: Scalars["String"]["input"]
+}>
+
+export type GetBlogQuery = {
+  blog?:
+    | ({
+        id: string
+        date?: any | null
+        title?: string | null
+        slug: string
+        reactionCount?: number | null
+        viewerHasReacted?: boolean | null
+      } & { __typename: "Blog" })
+    | null
+} & { __typename?: "Query" }
 
 export type GetBookmarksQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']['input']>
-  after?: InputMaybe<Scalars['String']['input']>
+  first?: InputMaybe<Scalars["Int"]["input"]>
+  after?: InputMaybe<Scalars["String"]["input"]>
   filter?: InputMaybe<BookmarkFilter>
 }>
 
@@ -1333,7 +1405,7 @@ export type GetBookmarksQuery = {
           hasNextPage?: boolean | null
           totalCount?: number | null
           endCursor?: string | null
-        } & { __typename?: 'PageInfo' })
+        } & { __typename?: "PageInfo" })
       | null
     edges: Array<
       | ({
@@ -1346,16 +1418,16 @@ export type GetBookmarksQuery = {
                 title?: string | null
                 description?: string | null
                 faviconUrl?: string | null
-              } & { __typename: 'Bookmark' })
+              } & { __typename: "Bookmark" })
             | null
-        } & { __typename?: 'BookmarkEdge' })
+        } & { __typename?: "BookmarkEdge" })
       | null
     >
-  } & { __typename?: 'BookmarksConnection' }
-} & { __typename?: 'Query' }
+  } & { __typename?: "BookmarksConnection" }
+} & { __typename?: "Query" }
 
 export type GetBookmarkQueryVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type GetBookmarkQuery = {
@@ -1370,13 +1442,13 @@ export type GetBookmarkQuery = {
         reactionCount?: number | null
         hitRate?: number | null
         viewerHasReacted?: boolean | null
-        tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-      } & { __typename: 'Bookmark' })
+        tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+      } & { __typename: "Bookmark" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetCommentsQueryVariables = Exact<{
-  refId: Scalars['ID']['input']
+  refId: Scalars["ID"]["input"]
   type: CommentType
 }>
 
@@ -1396,11 +1468,11 @@ export type GetCommentsQuery = {
           role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
-        } & { __typename: 'User' }
-      } & { __typename: 'Comment' })
+        } & { __typename: "User" }
+      } & { __typename: "Comment" })
     | null
   >
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetHackerNewsPostsQueryVariables = Exact<{ [key: string]: never }>
 
@@ -1411,13 +1483,13 @@ export type GetHackerNewsPostsQuery = {
         title?: string | null
         domain?: string | null
         url?: string | null
-      } & { __typename?: 'HackerNewsPost' })
+      } & { __typename?: "HackerNewsPost" })
     | null
   >
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetHackerNewsPostQueryVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type GetHackerNewsPostQuery = {
@@ -1464,21 +1536,21 @@ export type GetHackerNewsPostQuery = {
                                 time_ago?: string | null
                                 level?: number | null
                                 content?: string | null
-                              } & { __typename?: 'HackerNewsComment' })
+                              } & { __typename?: "HackerNewsComment" })
                             | null
                           > | null
-                        } & { __typename?: 'HackerNewsComment' })
+                        } & { __typename?: "HackerNewsComment" })
                       | null
                     > | null
-                  } & { __typename?: 'HackerNewsComment' })
+                  } & { __typename?: "HackerNewsComment" })
                 | null
               > | null
-            } & { __typename?: 'HackerNewsComment' })
+            } & { __typename?: "HackerNewsComment" })
           | null
         > | null
-      } & { __typename?: 'HackerNewsPost' })
+      } & { __typename?: "HackerNewsPost" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetPostsQueryVariables = Exact<{
   filter?: InputMaybe<WritingFilter>
@@ -1492,13 +1564,13 @@ export type GetPostsQuery = {
         title?: string | null
         slug?: string | null
         excerpt?: string | null
-      } & { __typename: 'Post' })
+      } & { __typename: "Post" })
     | null
   >
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetPostQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+  slug: Scalars["String"]["input"]
 }>
 
 export type GetPostQuery = {
@@ -1514,13 +1586,13 @@ export type GetPostQuery = {
         reactionCount?: number | null
         hitRate?: number | null
         viewerHasReacted?: boolean | null
-      } & { __typename: 'Post' })
+      } & { __typename: "Post" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetQuestionsQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']['input']>
-  after?: InputMaybe<Scalars['String']['input']>
+  first?: InputMaybe<Scalars["Int"]["input"]>
+  after?: InputMaybe<Scalars["String"]["input"]>
   filter?: InputMaybe<QuestionFilter>
 }>
 
@@ -1531,7 +1603,7 @@ export type GetQuestionsQuery = {
           hasNextPage?: boolean | null
           totalCount?: number | null
           endCursor?: string | null
-        } & { __typename?: 'PageInfo' })
+        } & { __typename?: "PageInfo" })
       | null
     edges: Array<
       | ({
@@ -1551,18 +1623,18 @@ export type GetQuestionsQuery = {
                       role?: UserRole | null
                       isViewer?: boolean | null
                       isAdmin?: boolean | null
-                    } & { __typename: 'User' })
+                    } & { __typename: "User" })
                   | null
-              } & { __typename: 'Question' })
+              } & { __typename: "Question" })
             | null
-        } & { __typename?: 'QuestionEdge' })
+        } & { __typename?: "QuestionEdge" })
       | null
     >
-  } & { __typename?: 'QuestionsConnection' }
-} & { __typename?: 'Query' }
+  } & { __typename?: "QuestionsConnection" }
+} & { __typename?: "Query" }
 
 export type GetQuestionQueryVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type GetQuestionQuery = {
@@ -1588,15 +1660,15 @@ export type GetQuestionQuery = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
-      } & { __typename: 'Question' })
+      } & { __typename: "Question" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetStacksQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']['input']>
-  after?: InputMaybe<Scalars['String']['input']>
+  first?: InputMaybe<Scalars["Int"]["input"]>
+  after?: InputMaybe<Scalars["String"]["input"]>
 }>
 
 export type GetStacksQuery = {
@@ -1606,7 +1678,7 @@ export type GetStacksQuery = {
           hasNextPage?: boolean | null
           totalCount?: number | null
           endCursor?: string | null
-        } & { __typename?: 'PageInfo' })
+        } & { __typename?: "PageInfo" })
       | null
     edges: Array<
       | ({
@@ -1618,16 +1690,16 @@ export type GetStacksQuery = {
                 image?: string | null
                 url: string
                 slug: string
-              } & { __typename: 'Stack' })
+              } & { __typename: "Stack" })
             | null
-        } & { __typename?: 'StackEdge' })
+        } & { __typename?: "StackEdge" })
       | null
     >
-  } & { __typename?: 'StacksConnection' }
-} & { __typename?: 'Query' }
+  } & { __typename?: "StacksConnection" }
+} & { __typename?: "Query" }
 
 export type GetStackQueryVariables = Exact<{
-  slug: Scalars['String']['input']
+  slug: Scalars["String"]["input"]
 }>
 
 export type GetStackQuery = {
@@ -1652,22 +1724,22 @@ export type GetStackQuery = {
               role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
-            } & { __typename: 'User' })
+            } & { __typename: "User" })
           | null
         >
-        tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-      } & { __typename: 'Stack' })
+        tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+      } & { __typename: "Stack" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetTagsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetTagsQuery = {
-  tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
-} & { __typename?: 'Query' }
+  tags: Array<({ name: string } & { __typename?: "Tag" }) | null>
+} & { __typename?: "Query" }
 
 export type GetUserQueryVariables = Exact<{
-  id: Scalars['ID']['input']
+  id: Scalars["ID"]["input"]
 }>
 
 export type GetUserQuery = {
@@ -1679,9 +1751,9 @@ export type GetUserQuery = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type ViewerQueryVariables = Exact<{ [key: string]: never }>
 
@@ -1694,9 +1766,9 @@ export type ViewerQuery = {
         role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
 export type GetViewerWithSettingsQueryVariables = Exact<{
   [key: string]: never
@@ -1717,13 +1789,36 @@ export type GetViewerWithSettingsQuery = {
           | ({
               type?: EmailSubscriptionType | null
               subscribed?: boolean | null
-            } & { __typename?: 'EmailSubscription' })
+            } & { __typename?: "EmailSubscription" })
           | null
         > | null
-      } & { __typename: 'User' })
+      } & { __typename: "User" })
     | null
-} & { __typename?: 'Query' }
+} & { __typename?: "Query" }
 
+export const BlogCoreFragmentDoc = gql`
+  fragment BlogCore on Blog {
+    __typename
+    id
+    date
+    title
+    slug
+  }
+`
+export const BlogListItemFragmentDoc = gql`
+  fragment BlogListItem on Blog {
+    ...BlogCore
+  }
+  ${BlogCoreFragmentDoc}
+`
+export const BlogDetailFragmentDoc = gql`
+  fragment BlogDetail on Blog {
+    ...BlogCore
+    reactionCount
+    viewerHasReacted
+  }
+  ${BlogCoreFragmentDoc}
+`
 export const BookmarkCoreFragmentDoc = gql`
   fragment BookmarkCore on Bookmark {
     __typename
@@ -2651,6 +2746,11 @@ export const ToggleReactionDocument = gql`
         reactionCount
         viewerHasReacted
       }
+      ... on Blog {
+        id
+        reactionCount
+        viewerHasReacted
+      }
     }
   }
 `
@@ -2993,6 +3093,108 @@ export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>
 export type EditUserMutationOptions = Apollo.BaseMutationOptions<
   EditUserMutation,
   EditUserMutationVariables
+>
+export const GetBlogsDocument = gql`
+  query getBlogs {
+    blogs {
+      ...BlogListItem
+    }
+  }
+  ${BlogListItemFragmentDoc}
+`
+
+/**
+ * __useGetBlogsQuery__
+ *
+ * To run a query within a React component, call `useGetBlogsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBlogsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBlogsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetBlogsQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetBlogsQuery, GetBlogsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<GetBlogsQuery, GetBlogsQueryVariables>(
+    GetBlogsDocument,
+    options
+  )
+}
+export function useGetBlogsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBlogsQuery,
+    GetBlogsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<GetBlogsQuery, GetBlogsQueryVariables>(
+    GetBlogsDocument,
+    options
+  )
+}
+export type GetBlogsQueryHookResult = ReturnType<typeof useGetBlogsQuery>
+export type GetBlogsLazyQueryHookResult = ReturnType<
+  typeof useGetBlogsLazyQuery
+>
+export type GetBlogsQueryResult = Apollo.QueryResult<
+  GetBlogsQuery,
+  GetBlogsQueryVariables
+>
+export const GetBlogDocument = gql`
+  query getBlog($slug: String!) {
+    blog(slug: $slug) {
+      ...BlogDetail
+    }
+  }
+  ${BlogDetailFragmentDoc}
+`
+
+/**
+ * __useGetBlogQuery__
+ *
+ * To run a query within a React component, call `useGetBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBlogQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetBlogQuery(
+  baseOptions: Apollo.QueryHookOptions<GetBlogQuery, GetBlogQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<GetBlogQuery, GetBlogQueryVariables>(
+    GetBlogDocument,
+    options
+  )
+}
+export function useGetBlogLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetBlogQuery, GetBlogQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<GetBlogQuery, GetBlogQueryVariables>(
+    GetBlogDocument,
+    options
+  )
+}
+export type GetBlogQueryHookResult = ReturnType<typeof useGetBlogQuery>
+export type GetBlogLazyQueryHookResult = ReturnType<typeof useGetBlogLazyQuery>
+export type GetBlogQueryResult = Apollo.QueryResult<
+  GetBlogQuery,
+  GetBlogQueryVariables
 >
 export const GetBookmarksDocument = gql`
   query getBookmarks($first: Int, $after: String, $filter: BookmarkFilter) {
@@ -3821,20 +4023,37 @@ export type GetViewerWithSettingsQueryResult = Apollo.QueryResult<
   GetViewerWithSettingsQuery,
   GetViewerWithSettingsQueryVariables
 >
+export type BlogKeySpecifier = (
+  | "date"
+  | "id"
+  | "reactionCount"
+  | "slug"
+  | "title"
+  | "viewerHasReacted"
+  | BlogKeySpecifier
+)[]
+export type BlogFieldPolicy = {
+  date?: FieldPolicy<any> | FieldReadFunction<any>
+  id?: FieldPolicy<any> | FieldReadFunction<any>
+  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
+  slug?: FieldPolicy<any> | FieldReadFunction<any>
+  title?: FieldPolicy<any> | FieldReadFunction<any>
+  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
+}
 export type BookmarkKeySpecifier = (
-  | 'createdAt'
-  | 'description'
-  | 'faviconUrl'
-  | 'hitRate'
-  | 'host'
-  | 'id'
-  | 'image'
-  | 'reactionCount'
-  | 'tags'
-  | 'title'
-  | 'updatedAt'
-  | 'url'
-  | 'viewerHasReacted'
+  | "createdAt"
+  | "description"
+  | "faviconUrl"
+  | "hitRate"
+  | "host"
+  | "id"
+  | "image"
+  | "reactionCount"
+  | "tags"
+  | "title"
+  | "updatedAt"
+  | "url"
+  | "viewerHasReacted"
   | BookmarkKeySpecifier
 )[]
 export type BookmarkFieldPolicy = {
@@ -3853,8 +4072,8 @@ export type BookmarkFieldPolicy = {
   viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type BookmarkEdgeKeySpecifier = (
-  | 'cursor'
-  | 'node'
+  | "cursor"
+  | "node"
   | BookmarkEdgeKeySpecifier
 )[]
 export type BookmarkEdgeFieldPolicy = {
@@ -3862,8 +4081,8 @@ export type BookmarkEdgeFieldPolicy = {
   node?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type BookmarksConnectionKeySpecifier = (
-  | 'edges'
-  | 'pageInfo'
+  | "edges"
+  | "pageInfo"
   | BookmarksConnectionKeySpecifier
 )[]
 export type BookmarksConnectionFieldPolicy = {
@@ -3871,13 +4090,13 @@ export type BookmarksConnectionFieldPolicy = {
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type CommentKeySpecifier = (
-  | 'author'
-  | 'createdAt'
-  | 'id'
-  | 'text'
-  | 'updatedAt'
-  | 'viewerCanDelete'
-  | 'viewerCanEdit'
+  | "author"
+  | "createdAt"
+  | "id"
+  | "text"
+  | "updatedAt"
+  | "viewerCanDelete"
+  | "viewerCanEdit"
   | CommentKeySpecifier
 )[]
 export type CommentFieldPolicy = {
@@ -3890,8 +4109,8 @@ export type CommentFieldPolicy = {
   viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type EmailSubscriptionKeySpecifier = (
-  | 'subscribed'
-  | 'type'
+  | "subscribed"
+  | "type"
   | EmailSubscriptionKeySpecifier
 )[]
 export type EmailSubscriptionFieldPolicy = {
@@ -3899,14 +4118,14 @@ export type EmailSubscriptionFieldPolicy = {
   type?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type HackerNewsCommentKeySpecifier = (
-  | 'comments'
-  | 'comments_count'
-  | 'content'
-  | 'id'
-  | 'level'
-  | 'time'
-  | 'time_ago'
-  | 'user'
+  | "comments"
+  | "comments_count"
+  | "content"
+  | "id"
+  | "level"
+  | "time"
+  | "time_ago"
+  | "user"
   | HackerNewsCommentKeySpecifier
 )[]
 export type HackerNewsCommentFieldPolicy = {
@@ -3920,16 +4139,16 @@ export type HackerNewsCommentFieldPolicy = {
   user?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type HackerNewsPostKeySpecifier = (
-  | 'comments'
-  | 'comments_count'
-  | 'content'
-  | 'domain'
-  | 'id'
-  | 'time'
-  | 'time_ago'
-  | 'title'
-  | 'url'
-  | 'user'
+  | "comments"
+  | "comments_count"
+  | "content"
+  | "domain"
+  | "id"
+  | "time"
+  | "time_ago"
+  | "title"
+  | "url"
+  | "user"
   | HackerNewsPostKeySpecifier
 )[]
 export type HackerNewsPostFieldPolicy = {
@@ -3945,11 +4164,11 @@ export type HackerNewsPostFieldPolicy = {
   user?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type HitKeySpecifier = (
-  | 'catID'
-  | 'createdAt'
-  | 'hitRate'
-  | 'id'
-  | 'updatedAt'
+  | "catID"
+  | "createdAt"
+  | "hitRate"
+  | "id"
+  | "updatedAt"
   | HitKeySpecifier
 )[]
 export type HitFieldPolicy = {
@@ -3960,29 +4179,29 @@ export type HitFieldPolicy = {
   updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type MutationKeySpecifier = (
-  | 'addBookmark'
-  | 'addComment'
-  | 'addHit'
-  | 'addPost'
-  | 'addQuestion'
-  | 'addStack'
-  | 'deleteBookmark'
-  | 'deleteComment'
-  | 'deleteHit'
-  | 'deletePost'
-  | 'deleteQuestion'
-  | 'deleteStack'
-  | 'deleteUser'
-  | 'editBookmark'
-  | 'editComment'
-  | 'editEmailSubscription'
-  | 'editHit'
-  | 'editPost'
-  | 'editQuestion'
-  | 'editStack'
-  | 'editUser'
-  | 'toggleReaction'
-  | 'toggleStackUser'
+  | "addBookmark"
+  | "addComment"
+  | "addHit"
+  | "addPost"
+  | "addQuestion"
+  | "addStack"
+  | "deleteBookmark"
+  | "deleteComment"
+  | "deleteHit"
+  | "deletePost"
+  | "deleteQuestion"
+  | "deleteStack"
+  | "deleteUser"
+  | "editBookmark"
+  | "editComment"
+  | "editEmailSubscription"
+  | "editHit"
+  | "editPost"
+  | "editQuestion"
+  | "editStack"
+  | "editUser"
+  | "toggleReaction"
+  | "toggleStackUser"
   | MutationKeySpecifier
 )[]
 export type MutationFieldPolicy = {
@@ -4011,9 +4230,9 @@ export type MutationFieldPolicy = {
   toggleStackUser?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type PageInfoKeySpecifier = (
-  | 'endCursor'
-  | 'hasNextPage'
-  | 'totalCount'
+  | "endCursor"
+  | "hasNextPage"
+  | "totalCount"
   | PageInfoKeySpecifier
 )[]
 export type PageInfoFieldPolicy = {
@@ -4022,19 +4241,19 @@ export type PageInfoFieldPolicy = {
   totalCount?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type PostKeySpecifier = (
-  | 'author'
-  | 'createdAt'
-  | 'excerpt'
-  | 'featureImage'
-  | 'hitRate'
-  | 'id'
-  | 'publishedAt'
-  | 'reactionCount'
-  | 'slug'
-  | 'text'
-  | 'title'
-  | 'updatedAt'
-  | 'viewerHasReacted'
+  | "author"
+  | "createdAt"
+  | "excerpt"
+  | "featureImage"
+  | "hitRate"
+  | "id"
+  | "publishedAt"
+  | "reactionCount"
+  | "slug"
+  | "text"
+  | "title"
+  | "updatedAt"
+  | "viewerHasReacted"
   | PostKeySpecifier
 )[]
 export type PostFieldPolicy = {
@@ -4053,26 +4272,30 @@ export type PostFieldPolicy = {
   viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type QueryKeySpecifier = (
-  | 'bookmark'
-  | 'bookmarks'
-  | 'comment'
-  | 'comments'
-  | 'hackerNewsPost'
-  | 'hackerNewsPosts'
-  | 'hit'
-  | 'hits'
-  | 'post'
-  | 'posts'
-  | 'question'
-  | 'questions'
-  | 'stack'
-  | 'stacks'
-  | 'tags'
-  | 'user'
-  | 'viewer'
+  | "blog"
+  | "blogs"
+  | "bookmark"
+  | "bookmarks"
+  | "comment"
+  | "comments"
+  | "hackerNewsPost"
+  | "hackerNewsPosts"
+  | "hit"
+  | "hits"
+  | "post"
+  | "posts"
+  | "question"
+  | "questions"
+  | "stack"
+  | "stacks"
+  | "tags"
+  | "user"
+  | "viewer"
   | QueryKeySpecifier
 )[]
 export type QueryFieldPolicy = {
+  blog?: FieldPolicy<any> | FieldReadFunction<any>
+  blogs?: FieldPolicy<any> | FieldReadFunction<any>
   bookmark?: FieldPolicy<any> | FieldReadFunction<any>
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>
   comment?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4092,21 +4315,21 @@ export type QueryFieldPolicy = {
   viewer?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type QuestionKeySpecifier = (
-  | 'audioUrl'
-  | 'author'
-  | 'createdAt'
-  | 'description'
-  | 'hitRate'
-  | 'id'
-  | 'playCount'
-  | 'reactionCount'
-  | 'status'
-  | 'title'
-  | 'updatedAt'
-  | 'viewerCanComment'
-  | 'viewerCanEdit'
-  | 'viewerHasReacted'
-  | 'waveform'
+  | "audioUrl"
+  | "author"
+  | "createdAt"
+  | "description"
+  | "hitRate"
+  | "id"
+  | "playCount"
+  | "reactionCount"
+  | "status"
+  | "title"
+  | "updatedAt"
+  | "viewerCanComment"
+  | "viewerCanEdit"
+  | "viewerHasReacted"
+  | "waveform"
   | QuestionKeySpecifier
 )[]
 export type QuestionFieldPolicy = {
@@ -4127,8 +4350,8 @@ export type QuestionFieldPolicy = {
   waveform?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type QuestionEdgeKeySpecifier = (
-  | 'cursor'
-  | 'node'
+  | "cursor"
+  | "node"
   | QuestionEdgeKeySpecifier
 )[]
 export type QuestionEdgeFieldPolicy = {
@@ -4136,8 +4359,8 @@ export type QuestionEdgeFieldPolicy = {
   node?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type QuestionsConnectionKeySpecifier = (
-  | 'edges'
-  | 'pageInfo'
+  | "edges"
+  | "pageInfo"
   | QuestionsConnectionKeySpecifier
 )[]
 export type QuestionsConnectionFieldPolicy = {
@@ -4145,20 +4368,20 @@ export type QuestionsConnectionFieldPolicy = {
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StackKeySpecifier = (
-  | 'createdAt'
-  | 'description'
-  | 'hitRate'
-  | 'id'
-  | 'image'
-  | 'name'
-  | 'reactionCount'
-  | 'slug'
-  | 'tags'
-  | 'updatedAt'
-  | 'url'
-  | 'usedBy'
-  | 'usedByViewer'
-  | 'viewerHasReacted'
+  | "createdAt"
+  | "description"
+  | "hitRate"
+  | "id"
+  | "image"
+  | "name"
+  | "reactionCount"
+  | "slug"
+  | "tags"
+  | "updatedAt"
+  | "url"
+  | "usedBy"
+  | "usedByViewer"
+  | "viewerHasReacted"
   | StackKeySpecifier
 )[]
 export type StackFieldPolicy = {
@@ -4178,8 +4401,8 @@ export type StackFieldPolicy = {
   viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StackEdgeKeySpecifier = (
-  | 'cursor'
-  | 'node'
+  | "cursor"
+  | "node"
   | StackEdgeKeySpecifier
 )[]
 export type StackEdgeFieldPolicy = {
@@ -4187,29 +4410,29 @@ export type StackEdgeFieldPolicy = {
   node?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StacksConnectionKeySpecifier = (
-  | 'edges'
-  | 'pageInfo'
+  | "edges"
+  | "pageInfo"
   | StacksConnectionKeySpecifier
 )[]
 export type StacksConnectionFieldPolicy = {
   edges?: FieldPolicy<any> | FieldReadFunction<any>
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type TagKeySpecifier = ('name' | TagKeySpecifier)[]
+export type TagKeySpecifier = ("name" | TagKeySpecifier)[]
 export type TagFieldPolicy = {
   name?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type UserKeySpecifier = (
-  | 'createdAt'
-  | 'email'
-  | 'emailSubscriptions'
-  | 'id'
-  | 'image'
-  | 'isAdmin'
-  | 'isViewer'
-  | 'name'
-  | 'pendingEmail'
-  | 'role'
+  | "createdAt"
+  | "email"
+  | "emailSubscriptions"
+  | "id"
+  | "image"
+  | "isAdmin"
+  | "isViewer"
+  | "name"
+  | "pendingEmail"
+  | "role"
   | UserKeySpecifier
 )[]
 export type UserFieldPolicy = {
@@ -4225,131 +4448,135 @@ export type UserFieldPolicy = {
   role?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StrictTypedTypePolicies = {
-  Bookmark?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Blog?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | BlogKeySpecifier | (() => undefined | BlogKeySpecifier)
+    fields?: BlogFieldPolicy
+  }
+  Bookmark?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | BookmarkKeySpecifier
       | (() => undefined | BookmarkKeySpecifier)
     fields?: BookmarkFieldPolicy
   }
-  BookmarkEdge?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  BookmarkEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | BookmarkEdgeKeySpecifier
       | (() => undefined | BookmarkEdgeKeySpecifier)
     fields?: BookmarkEdgeFieldPolicy
   }
-  BookmarksConnection?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  BookmarksConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | BookmarksConnectionKeySpecifier
       | (() => undefined | BookmarksConnectionKeySpecifier)
     fields?: BookmarksConnectionFieldPolicy
   }
-  Comment?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Comment?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | CommentKeySpecifier
       | (() => undefined | CommentKeySpecifier)
     fields?: CommentFieldPolicy
   }
-  EmailSubscription?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  EmailSubscription?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | EmailSubscriptionKeySpecifier
       | (() => undefined | EmailSubscriptionKeySpecifier)
     fields?: EmailSubscriptionFieldPolicy
   }
-  HackerNewsComment?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  HackerNewsComment?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | HackerNewsCommentKeySpecifier
       | (() => undefined | HackerNewsCommentKeySpecifier)
     fields?: HackerNewsCommentFieldPolicy
   }
-  HackerNewsPost?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  HackerNewsPost?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | HackerNewsPostKeySpecifier
       | (() => undefined | HackerNewsPostKeySpecifier)
     fields?: HackerNewsPostFieldPolicy
   }
-  Hit?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Hit?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?: false | HitKeySpecifier | (() => undefined | HitKeySpecifier)
     fields?: HitFieldPolicy
   }
-  Mutation?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | MutationKeySpecifier
       | (() => undefined | MutationKeySpecifier)
     fields?: MutationFieldPolicy
   }
-  PageInfo?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  PageInfo?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | PageInfoKeySpecifier
       | (() => undefined | PageInfoKeySpecifier)
     fields?: PageInfoFieldPolicy
   }
-  Post?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Post?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?: false | PostKeySpecifier | (() => undefined | PostKeySpecifier)
     fields?: PostFieldPolicy
   }
-  Query?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | QueryKeySpecifier
       | (() => undefined | QueryKeySpecifier)
     fields?: QueryFieldPolicy
   }
-  Question?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Question?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | QuestionKeySpecifier
       | (() => undefined | QuestionKeySpecifier)
     fields?: QuestionFieldPolicy
   }
-  QuestionEdge?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  QuestionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | QuestionEdgeKeySpecifier
       | (() => undefined | QuestionEdgeKeySpecifier)
     fields?: QuestionEdgeFieldPolicy
   }
-  QuestionsConnection?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  QuestionsConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | QuestionsConnectionKeySpecifier
       | (() => undefined | QuestionsConnectionKeySpecifier)
     fields?: QuestionsConnectionFieldPolicy
   }
-  Stack?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Stack?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | StackKeySpecifier
       | (() => undefined | StackKeySpecifier)
     fields?: StackFieldPolicy
   }
-  StackEdge?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  StackEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | StackEdgeKeySpecifier
       | (() => undefined | StackEdgeKeySpecifier)
     fields?: StackEdgeFieldPolicy
   }
-  StacksConnection?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  StacksConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
       | StacksConnectionKeySpecifier
       | (() => undefined | StacksConnectionKeySpecifier)
     fields?: StacksConnectionFieldPolicy
   }
-  Tag?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  Tag?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?: false | TagKeySpecifier | (() => undefined | TagKeySpecifier)
     fields?: TagFieldPolicy
   }
-  User?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+  User?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier)
     fields?: UserFieldPolicy
   }
@@ -4357,65 +4584,70 @@ export type StrictTypedTypePolicies = {
 export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies
 export const ListAllOperations = {
   Query: {
-    getBookmarks: 'getBookmarks',
-    getBookmark: 'getBookmark',
-    getComments: 'getComments',
-    getHackerNewsPosts: 'getHackerNewsPosts',
-    getHackerNewsPost: 'getHackerNewsPost',
-    getPosts: 'getPosts',
-    getPost: 'getPost',
-    getQuestions: 'getQuestions',
-    getQuestion: 'getQuestion',
-    getStacks: 'getStacks',
-    getStack: 'getStack',
-    getTags: 'getTags',
-    getUser: 'getUser',
-    viewer: 'viewer',
-    getViewerWithSettings: 'getViewerWithSettings',
+    getBlogs: "getBlogs",
+    getBlog: "getBlog",
+    getBookmarks: "getBookmarks",
+    getBookmark: "getBookmark",
+    getComments: "getComments",
+    getHackerNewsPosts: "getHackerNewsPosts",
+    getHackerNewsPost: "getHackerNewsPost",
+    getPosts: "getPosts",
+    getPost: "getPost",
+    getQuestions: "getQuestions",
+    getQuestion: "getQuestion",
+    getStacks: "getStacks",
+    getStack: "getStack",
+    getTags: "getTags",
+    getUser: "getUser",
+    viewer: "viewer",
+    getViewerWithSettings: "getViewerWithSettings",
   },
   Mutation: {
-    editBookmark: 'editBookmark',
-    deleteBookmark: 'deleteBookmark',
-    addBookmark: 'addBookmark',
-    addComment: 'addComment',
-    editComment: 'editComment',
-    deleteComment: 'deleteComment',
-    editEmailSubscription: 'editEmailSubscription',
-    editPost: 'editPost',
-    deletePost: 'deletePost',
-    addPost: 'addPost',
-    editQuestion: 'editQuestion',
-    deleteQuestion: 'deleteQuestion',
-    addQuestion: 'addQuestion',
-    toggleReaction: 'toggleReaction',
-    editStack: 'editStack',
-    deleteStack: 'deleteStack',
-    addStack: 'addStack',
-    toggleStackUser: 'toggleStackUser',
-    deleteUser: 'deleteUser',
-    editUser: 'editUser',
+    editBookmark: "editBookmark",
+    deleteBookmark: "deleteBookmark",
+    addBookmark: "addBookmark",
+    addComment: "addComment",
+    editComment: "editComment",
+    deleteComment: "deleteComment",
+    editEmailSubscription: "editEmailSubscription",
+    editPost: "editPost",
+    deletePost: "deletePost",
+    addPost: "addPost",
+    editQuestion: "editQuestion",
+    deleteQuestion: "deleteQuestion",
+    addQuestion: "addQuestion",
+    toggleReaction: "toggleReaction",
+    editStack: "editStack",
+    deleteStack: "deleteStack",
+    addStack: "addStack",
+    toggleStackUser: "toggleStackUser",
+    deleteUser: "deleteUser",
+    editUser: "editUser",
   },
   Fragment: {
-    BookmarkCore: 'BookmarkCore',
-    BookmarkListItem: 'BookmarkListItem',
-    BookmarkDetail: 'BookmarkDetail',
-    BookmarksConnection: 'BookmarksConnection',
-    CommentInfo: 'CommentInfo',
-    HackerNewsListItemInfo: 'HackerNewsListItemInfo',
-    HackerNewsCommentInfo: 'HackerNewsCommentInfo',
-    HackerNewsPostInfo: 'HackerNewsPostInfo',
-    PostCore: 'PostCore',
-    PostListItem: 'PostListItem',
-    PostDetail: 'PostDetail',
-    QuestionCore: 'QuestionCore',
-    QuestionListItem: 'QuestionListItem',
-    QuestionDetail: 'QuestionDetail',
-    QuestionsConnection: 'QuestionsConnection',
-    StackCore: 'StackCore',
-    StackListItem: 'StackListItem',
-    StackDetail: 'StackDetail',
-    StacksConnection: 'StacksConnection',
-    UserInfo: 'UserInfo',
-    UserSettings: 'UserSettings',
+    BlogCore: "BlogCore",
+    BlogListItem: "BlogListItem",
+    BlogDetail: "BlogDetail",
+    BookmarkCore: "BookmarkCore",
+    BookmarkListItem: "BookmarkListItem",
+    BookmarkDetail: "BookmarkDetail",
+    BookmarksConnection: "BookmarksConnection",
+    CommentInfo: "CommentInfo",
+    HackerNewsListItemInfo: "HackerNewsListItemInfo",
+    HackerNewsCommentInfo: "HackerNewsCommentInfo",
+    HackerNewsPostInfo: "HackerNewsPostInfo",
+    PostCore: "PostCore",
+    PostListItem: "PostListItem",
+    PostDetail: "PostDetail",
+    QuestionCore: "QuestionCore",
+    QuestionListItem: "QuestionListItem",
+    QuestionDetail: "QuestionDetail",
+    QuestionsConnection: "QuestionsConnection",
+    StackCore: "StackCore",
+    StackListItem: "StackListItem",
+    StackDetail: "StackDetail",
+    StacksConnection: "StacksConnection",
+    UserInfo: "UserInfo",
+    UserSettings: "UserSettings",
   },
 }

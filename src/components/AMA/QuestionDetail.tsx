@@ -1,16 +1,16 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { Avatar } from '~/components/Avatar'
-import { Comments } from '~/components/Comments'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import routes from '~/config/routes'
-import { CommentType, useGetQuestionQuery } from '~/graphql/typeSlut'
-import { timestampToCleanTime } from '~/lib/transformers'
-import { NextSeo } from 'next-seo'
+import * as React from "react"
+import Link from "next/link"
+import { Avatar } from "~/components/Avatar"
+import { Comments } from "~/components/Comments"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import routes from "~/config/routes"
+import { CommentType, useGetQuestionQuery } from "~/graphql/typeSlut"
+import { timestampToCleanTime } from "~/lib/transformers"
+import { NextSeo } from "next-seo"
 
-import { MarkdownRenderer } from '../MarkdownRenderer'
-import { QuestionActions } from './QuestionActions'
+import { MarkdownRenderer } from "../MarkdownRenderer"
+import { QuestionActions } from "./QuestionActions"
 
 export function QuestionDetail({ id }) {
   const scrollContainerRef = React.useRef(null)
@@ -29,7 +29,7 @@ export function QuestionDetail({ id }) {
 
   const { question } = data
   const createdAt = timestampToCleanTime({
-    month: 'short',
+    month: "short",
     timestamp: data?.question.createdAt,
   })
 
@@ -53,7 +53,7 @@ export function QuestionDetail({ id }) {
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={'/ama'}
+          backButtonHref={"/ama"}
           magicTitle
           title={question.title}
           titleRef={titleRef}

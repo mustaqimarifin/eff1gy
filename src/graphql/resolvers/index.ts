@@ -1,16 +1,16 @@
-import { Context } from '~/graphql/context'
-import Mutation from '~/graphql/resolvers/mutations'
-import Query from '~/graphql/resolvers/queries'
-import { getCommentAuthor } from '~/graphql/resolvers/queries/comments'
-import { getQuestionAuthor } from '~/graphql/resolvers/queries/questions'
+import { type Context } from "~/graphql/context"
+import Mutation from "~/graphql/resolvers/mutations"
+import Query from "~/graphql/resolvers/queries"
+import { getCommentAuthor } from "~/graphql/resolvers/queries/comments"
+import { getQuestionAuthor } from "~/graphql/resolvers/queries/questions"
 import {
   EmailSubscriptionType,
   QuestionStatus,
   UserRole,
-} from '~/graphql/typeSlut'
-import GraphQLJSON from 'graphql-type-json'
+} from "~/graphql/typeSlut"
+import GraphQLJSON from "graphql-type-json"
 
-import { DateQL } from '../scalars'
+import { DateQL } from "../scalars"
 
 const resolvers = {
   Date: DateQL,
@@ -20,14 +20,16 @@ const resolvers = {
   Reactable: {
     __resolveType(obj) {
       switch (obj.reactableType) {
-        case 'question':
-          return 'Question'
-        case 'stack':
-          return 'Stack'
-        case 'post':
-          return 'Post'
-        case 'bookmark':
-          return 'Bookmark'
+        case "question":
+          return "Question"
+        case "stack":
+          return "Stack"
+        case "post":
+          return "Post"
+        case "bookmark":
+          return "Bookmark"
+        case "blog":
+          return "Blog"
         default:
           return null
       }
@@ -171,6 +173,30 @@ const resolvers = {
       if (_count?.reactions) return _count.reactions
 
       const reactions = await prisma.post
+        .findUnique({
+          where: { id },
+        })
+        .reactions()
+
+      return reactions.length
+    },
+  },
+  Blog: {
+    viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {
+      if (!viewer) return false
+
+      const reactions = await prisma.blog
+        .findUnique({
+          where: { id },
+        })
+        .reactions()
+
+      return reactions.some(({ userId }) => userId === viewer.id)
+    },
+    reactionCount: async ({ id, _count }, _, { prisma }: Context) => {
+      if (_count?.reactions) return _count.reactions
+
+      const reactions = await prisma.blog
         .findUnique({
           where: { id },
         })

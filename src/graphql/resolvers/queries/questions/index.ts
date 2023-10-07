@@ -1,11 +1,11 @@
-import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import { Context } from '~/graphql/context'
+import { PAGINATION_AMOUNT } from "~/graphql/constants"
+import { type Context } from "~/graphql/context"
 import {
-  GetQuestionsQueryVariables,
-  QueryQuestionArgs,
-  Question,
   QuestionStatus,
-} from '~/graphql/typeSlut'
+  type GetQuestionsQueryVariables,
+  type QueryQuestionArgs,
+  type Question,
+} from "~/graphql/typeSlut"
 
 export async function getQuestion(_, { id }: QueryQuestionArgs, ctx: Context) {
   const { prisma, viewer } = ctx
@@ -107,7 +107,7 @@ export async function getQuestions(
       cursor,
       where,
       orderBy: {
-        updatedAt: 'desc',
+        updatedAt: "desc",
       },
       include: {
         _count: {

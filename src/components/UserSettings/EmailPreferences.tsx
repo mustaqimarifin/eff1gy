@@ -1,13 +1,13 @@
-import * as React from 'react'
+import * as React from "react"
 import {
-  EmailSubscription,
   EmailSubscriptionType,
-  GetViewerWithSettingsQuery,
   useEditEmailSubscriptionMutation,
-} from '~/graphql/typeSlut'
-import toast from 'react-hot-toast'
+  type EmailSubscription,
+  type GetViewerWithSettingsQuery,
+} from "~/graphql/typeSlut"
+import toast from "react-hot-toast"
 
-import { WritingSubscriptionForm } from '../Writing/SubscriptionForm'
+import { WritingSubscriptionForm } from "../Writing/SubscriptionForm"
 
 interface Props {
   subscription: EmailSubscription
@@ -17,7 +17,7 @@ export function EmailSubscriptionForm({ subscription }: Props) {
   const [subscribed, setSubscribed] = React.useState(subscription.subscribed)
   const [editEmailSubscription] = useEditEmailSubscriptionMutation({
     onCompleted() {
-      toast.success('Saved')
+      toast.success("Saved")
     },
   })
 
@@ -40,16 +40,16 @@ export function EmailSubscriptionForm({ subscription }: Props) {
     switch (type) {
       case EmailSubscriptionType.HackerNews: {
         return {
-          title: 'Hacker News Daily Digest',
+          title: "Hacker News Daily Digest",
           subtitle:
-            'A daily email with the top stories in tech discussed on Hacker News.',
+            "A daily email with the top stories in tech discussed on Hacker News.",
         }
       }
       case EmailSubscriptionType.Newsletter: {
         return {
-          title: 'Overthought Newsletter',
+          title: "Overthought Newsletter",
           subtitle:
-            'A curated newsletter of design, development, and technology news. Delivered weekly-ish.',
+            "A curated newsletter of design, development, and technology news. Delivered weekly-ish.",
         }
       }
       default: {
@@ -80,7 +80,7 @@ export function EmailSubscriptionForm({ subscription }: Props) {
 }
 
 export function EmailPreferences(props: {
-  viewer: GetViewerWithSettingsQuery['viewer']
+  viewer: GetViewerWithSettingsQuery["viewer"]
 }) {
   const { viewer } = props
 

@@ -1,13 +1,13 @@
-import { CLIENT_URL } from '~/graphql/constants'
-import { Context } from '~/graphql/context'
+import { CLIENT_URL } from "~/graphql/constants"
+import { type Context } from "~/graphql/context"
 import {
   CommentType,
-  MutationAddCommentArgs,
-  MutationDeleteCommentArgs,
-  MutationEditCommentArgs,
-} from '~/graphql/typeSlut'
-import { GraphQLError } from 'graphql'
-import toast from 'react-hot-toast'
+  type MutationAddCommentArgs,
+  type MutationDeleteCommentArgs,
+  type MutationEditCommentArgs,
+} from "~/graphql/typeSlut"
+import { GraphQLError } from "graphql"
+import toast from "react-hot-toast"
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
@@ -22,16 +22,16 @@ export async function editComment(
   const { prisma, viewer } = ctx
 
   if (!text || text.length === 0)
-    throw new GraphQLError('Comment can’t be blank')
+    throw new GraphQLError("Comment can’t be blank")
 
   const comment = await prisma.comment.findUnique({
     where: { id },
   })
 
-  if (!comment) throw new GraphQLError('Comment doesn’t exist')
+  if (!comment) throw new GraphQLError("Comment doesn’t exist")
 
   if (comment.userId !== viewer?.id) {
-    throw new GraphQLError('You can’t edit this comment')
+    throw new GraphQLError("You can’t edit this comment")
   }
 
   return await prisma.comment
@@ -45,7 +45,7 @@ export async function editComment(
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError('Unable to edit comment')
+      throw new GraphQLError("Unable to edit comment")
     })
 }
 
@@ -60,45 +60,51 @@ export async function addComment(
   const trimmedText = text.trim()
 
   if (trimmedText.length === 0)
-    throw new GraphQLError('Comments can’t be blank')
+    throw new GraphQLError("Comments can’t be blank")
 
   let field: string
   let table: string
   let route: string
   switch (type) {
     case CommentType.Bookmark: {
-      field = 'bookmarkId'
-      table = 'bookmark'
+      field = "bookmarkId"
+      table = "bookmark"
       route = `${CLIENT_URL}/bookmarks/${refId}`
       break
     }
+    case CommentType.Blog: {
+      field = "blogId"
+      table = "blog"
+      route = `${CLIENT_URL}/blog/${refId}`
+      break
+    }
     case CommentType.Post: {
-      field = 'postId'
-      table = 'post'
+      field = "postId"
+      table = "post"
       route = `${CLIENT_URL}/writing/${refId}`
       break
     }
     case CommentType.Question: {
-      field = 'questionId'
-      table = 'question'
+      field = "questionId"
+      table = "question"
       route = `${CLIENT_URL}/ama/${refId}`
       break
     }
     case CommentType.Stack: {
-      field = 'stackId'
-      table = 'stack'
+      field = "stackId"
+      table = "stack"
       route = `${CLIENT_URL}/stack/${refId}`
       break
     }
     default: {
-      throw new GraphQLError('Invalid comment type')
+      throw new GraphQLError("Invalid comment type")
     }
   }
 
   const parentObject = await prisma[table].findUnique({ where: { id: refId } })
 
   if (!parentObject) {
-    throw new GraphQLError('Commenting on something that doesn’t exist')
+    throw new GraphQLError("Commenting on something that doesn’t exist")
   }
 
   const [comment] = await Promise.all([
@@ -119,7 +125,7 @@ export async function addComment(
     }),
   ]).catch((err) => {
     console.error({ err })
-    throw new GraphQLError('Unable to add comment')
+    throw new GraphQLError("Unable to add comment")
   })
 
   //graphcdn.purgeList('comments')
@@ -143,12 +149,12 @@ export async function deleteComment(
   if (!comment) return true
   // no permission
   if (comment.userId !== viewer?.id && !viewer?.isAdmin) {
-    throw new GraphQLError('You can’t delete this comment')
+    throw new GraphQLError("You can’t delete this comment")
   } else {
     // eslint-disable-next-line prettier/prettier
     ;(err: any) => {
-      toast.error('You can’t delete this comment', {
-        icon: '🙀',
+      toast.error("You can’t delete this comment", {
+        icon: "🙀",
       })
     }
   }
@@ -162,6 +168,6 @@ export async function deleteComment(
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError('Unable to delete comment')
+      throw new GraphQLError("Unable to delete comment")
     })
 }

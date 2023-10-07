@@ -1,6 +1,9 @@
-import { Context } from '~/graphql/context'
-import { MutationToggleReactionArgs, ReactionType } from '~/graphql/typeSlut'
-import { GraphQLError } from 'graphql'
+import { type Context } from "~/graphql/context"
+import {
+  ReactionType,
+  type MutationToggleReactionArgs,
+} from "~/graphql/typeSlut"
+import { GraphQLError } from "graphql"
 
 export async function toggleReaction(
   _,
@@ -14,27 +17,32 @@ export async function toggleReaction(
   let table: string
   switch (type) {
     case ReactionType.Bookmark: {
-      field = 'bookmarkId'
-      table = 'bookmark'
+      field = "bookmarkId"
+      table = "bookmark"
       break
     }
     case ReactionType.Post: {
-      field = 'postId'
-      table = 'post'
+      field = "postId"
+      table = "post"
+      break
+    }
+    case ReactionType.Blog: {
+      field = "blogId"
+      table = "blog"
       break
     }
     case ReactionType.Question: {
-      field = 'questionId'
-      table = 'question'
+      field = "questionId"
+      table = "question"
       break
     }
     case ReactionType.Stack: {
-      field = 'stackId'
-      table = 'stack'
+      field = "stackId"
+      table = "stack"
       break
     }
     default: {
-      throw new GraphQLError('Invalid reaction type')
+      throw new GraphQLError("Invalid reaction type")
     }
   }
 
@@ -52,7 +60,7 @@ export async function toggleReaction(
   ])
 
   if (!parentObject) {
-    throw new GraphQLError('Reacting on something that doesn’t exist')
+    throw new GraphQLError("Reacting on something that doesn’t exist")
   }
 
   let fn

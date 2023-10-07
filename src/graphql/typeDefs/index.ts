@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
 export default gql`
   scalar Date
@@ -14,6 +14,15 @@ export default gql`
     scope: CacheControlScope
     inheritMaxAge: Boolean
   ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
+
+  type Blog {
+    id: ID!
+    date: Date
+    title: String
+    slug: String!
+    reactionCount: Int
+    viewerHasReacted: Boolean
+  }
 
   type Post {
     id: ID!
@@ -70,6 +79,7 @@ export default gql`
     QUESTION
     STACK
     POST
+    BLOG
   }
 
   enum ReactionType {
@@ -77,6 +87,7 @@ export default gql`
     QUESTION
     STACK
     POST
+    BLOG
   }
 
   enum HitType {
@@ -251,6 +262,8 @@ export default gql`
     #reactions(refId: ID!, type: CommentType!): [Reaction]!
     posts(filter: WritingFilter): [Post]!
     post(slug: String!): Post
+    blogs: [Blog]!
+    blog(slug: String!): Blog
     question(id: ID!): Question
     questions(
       first: Int
@@ -330,7 +343,7 @@ export default gql`
     published: Boolean
   }
 
-  union Reactable = Bookmark | Question | Post | Stack
+  union Reactable = Bookmark | Question | Post | Stack | Blog
 
   type Mutation {
     addBookmark(data: AddBookmarkInput!): Bookmark
@@ -356,6 +369,7 @@ export default gql`
     deleteUser: Boolean
     editEmailSubscription(data: EmailSubscriptionInput): User
     addPost(data: AddPostInput!): Post
+
     editPost(id: ID!, data: EditPostInput!): Post
     deletePost(id: ID!): Boolean
     toggleReaction(refId: ID!, type: ReactionType!): Reactable

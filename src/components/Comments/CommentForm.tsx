@@ -1,17 +1,17 @@
-import * as React from 'react'
-import { ErrorAlert } from '~/components/Alert'
-import { CommentButton } from '~/components/Button'
-import { Textarea } from '~/components/Input'
-import { GET_COMMENTS } from '~/graphql/queries/comments'
+import * as React from "react"
+import { ErrorAlert } from "~/components/Alert"
+import { CommentButton } from "~/components/Button"
+import { Textarea } from "~/components/Input"
+import { GET_COMMENTS } from "~/graphql/queries/comments"
 import {
   CommentType,
   GetCommentsQuery,
   useAddCommentMutation,
   useViewerQuery,
-} from '~/graphql/typeSlut'
-import { useDebounce } from '~/hooks/useDebounce'
-import { genId } from '~/lib/nanoid'
-import { timestampToCleanTime } from '~/lib/transformers'
+} from "~/graphql/typeSlut"
+import { useDebounce } from "~/hooks/useDebounce"
+import { genId } from "~/lib/nanoid"
+import { timestampToCleanTime } from "~/lib/transformers"
 
 interface Props {
   refId: string
@@ -21,23 +21,23 @@ interface Props {
 
 export function CommentForm({ refId, type, openModal }: Props) {
   const { data } = useViewerQuery()
-  const [text, setText] = React.useState('')
+  const [text, setText] = React.useState("")
   const [error, setError] = React.useState(null)
 
   const [handleAddComment] = useAddCommentMutation({
     optimisticResponse: {
-      __typename: 'Mutation',
+      __typename: "Mutation",
       addComment: {
-        __typename: 'Comment',
+        __typename: "Comment",
         id: genId(),
         text,
-        createdAt: timestampToCleanTime({ month: 'short' }).formatted,
-        updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
+        createdAt: timestampToCleanTime({ month: "short" }).formatted,
+        updatedAt: timestampToCleanTime({ month: "short" }).formatted,
         viewerCanDelete: false,
         viewerCanEdit: false,
         author: {
-          __typename: 'User',
-          id: data?.viewer?.id,
+          __typename: "User",
+          id: genId(),
           name: data?.viewer?.name,
           image: data?.viewer?.image,
           role: data?.viewer?.role,
@@ -64,12 +64,15 @@ export function CommentForm({ refId, type, openModal }: Props) {
   function onSubmit(e) {
     e.preventDefault()
 
+    // not signed in, save to localstorage
     if (!data?.viewer) {
+      // persist everything to local storage so we don't lose it
       localStorage.setItem(refId, text)
+      // pop the sign in modal
       return openModal()
     }
 
-    setText('')
+    setText("")
     localStorage.removeItem(refId)
     return handleAddComment({
       variables: { refId, type, text },
@@ -112,7 +115,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
             value={text}
             onChange={handleChange}
             onKeyDown={onKeyDown}
-            style={{ paddingRight: '48px' }}
+            style={{ paddingRight: "48px" }}
           />
 
           <div className="absolute bottom-1 right-1">

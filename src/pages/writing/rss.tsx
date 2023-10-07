@@ -1,7 +1,7 @@
-import { getContext } from '~/graphql/context'
-import { GET_POSTS } from '~/graphql/queries/posts'
-import { initApolloClient } from '~/lib/apollo'
-import { generateRSS } from '~/lib/rss'
+import { getContext } from "~/graphql/context"
+import { GET_POSTS } from "~/graphql/queries/posts"
+import { initApolloClient } from "~/lib/apollo"
+import { generateRSS } from "~/lib/rss"
 
 const RSSFeed: React.FC = () => null
 
@@ -17,7 +17,7 @@ export async function getServerSideProps({ req, res }) {
   const { rss } = await generateRSS(posts)
 
   if (res) {
-    res.setHeader('Content-Type', 'text/xml')
+    res.setHeader("Content-Type", "text/xml")
     res.write(rss)
     res.end()
   }

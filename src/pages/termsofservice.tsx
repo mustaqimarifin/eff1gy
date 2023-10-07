@@ -1,8 +1,8 @@
-import TOS from '~/components/Home/TOS'
-import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/Providers/withProviders'
-import routes from '~/config/routes'
-import { NextSeo } from 'next-seo'
+import TOS from "~/components/Home/TOS"
+import { ListDetailView, SiteLayout } from "~/components/Layouts"
+import { withProviders } from "~/components/Providers/withProviders"
+import routes from "~/config/routes"
+import { NextSeo } from "next-seo"
 
 function Terms() {
   return (

@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
-import { QuestionDetailFragment } from '../fragments/question'
+import { QuestionDetailFragment } from "../fragments/question"
 
 export const EDIT_QUESTION = gql`
   mutation editQuestion($id: ID!, $data: EditQuestionInput!) {

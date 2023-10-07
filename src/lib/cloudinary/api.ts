@@ -1,9 +1,9 @@
-import { UploadSignatureMetadata } from '~/types/Upload'
-import { UploadApiResponse } from 'cloudinary'
+import { type UploadSignatureMetadata } from "~/types/Upload"
+import { type UploadApiResponse } from "cloudinary"
 
 export const signUpload = async (): Promise<UploadSignatureMetadata> => {
   const response = await fetch(`/api/images/sign`, {
-    method: 'POST',
+    method: "POST",
   })
   if (!response.ok) throw new Error(response.statusText)
 
@@ -19,17 +19,17 @@ export async function uploadToCloudinary(
   const url = `https://api.cloudinary.com/v1_1/mstqmarfn/video/upload`
   const formData = new FormData()
 
-  formData.append('file', blob)
-  formData.append('folder', folder)
-  formData.append('signature', signature)
-  formData.append('timestamp', timestamp)
-  formData.append('api_key', '742773636552889')
-  formData.append('upload_preset', 'ml_default')
+  formData.append("file", blob)
+  formData.append("folder", folder)
+  formData.append("signature", signature)
+  formData.append("timestamp", timestamp)
+  formData.append("api_key", "742773636552889")
+  formData.append("upload_preset", "ml_default")
   // If recorded on Chrome which currently only supports .webm recording
   // This parameter will tell cloudinary to transform to mp4 for cross browser compatibility
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     body: formData,
   })
 

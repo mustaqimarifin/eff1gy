@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
-import { GhostButton } from '~/components/Button'
+import * as React from "react"
+import { useRouter } from "next/router"
+import { AddBookmarkDialog } from "~/components/Bookmarks/AddBookmarkDialog"
+import { GhostButton } from "~/components/Button"
 import {
   AMAIcon,
   AppDissectionIcon,
@@ -22,11 +22,11 @@ import {
   TwitterIcon,
   WritingIcon,
   YouTubeIcon,
-} from '~/components/Icon'
-import { useViewerQuery } from '~/graphql/typeSlut'
-import { Plus } from 'lucide-react'
+} from "~/components/Icon"
+import { useViewerQuery } from "~/graphql/typeSlut"
+import { Plus } from "lucide-react"
 
-import { NavigationLink } from './NavigationLink'
+import { NavigationLink } from "./NavigationLink"
 
 function ThisAddBookmarkDialog() {
   return (
@@ -48,68 +48,76 @@ export function SidebarNavigation() {
       label: null,
       items: [
         {
-          href: '/',
-          label: 'Home',
+          href: "/",
+          label: "Home",
           icon: HomeIcon,
           trailingAccessory: null,
-          isActive: router.asPath === '/',
+          isActive: router.asPath === "/",
           trailingAction: null,
           isExternal: false,
         },
-
         {
-          href: '/writing',
-          label: 'Writing',
+          href: "/blog",
+          label: "Posts",
           icon: WritingIcon,
           trailingAccessory: null,
-          isActive: router.asPath.indexOf('/writing') >= 0,
+          isActive: router.asPath.indexOf("/blog") >= 0,
+          trailingAction: null,
+          isExternal: false,
+        },
+        {
+          href: "/writing",
+          label: "Writing",
+          icon: WritingIcon,
+          trailingAccessory: null,
+          isActive: router.asPath.indexOf("/writing") >= 0,
           trailingAction: null,
           isExternal: false,
         },
       ],
     },
     {
-      label: 'Me',
+      label: "Me",
       items: [
         {
-          href: '/bookmarks',
-          label: 'Bookmarks',
+          href: "/bookmarks",
+          label: "Bookmarks",
           icon: BookmarksIcon,
           trailingAccessory: null,
-          isActive: router.asPath.indexOf('/bookmarks') >= 0,
+          isActive: router.asPath.indexOf("/bookmarks") >= 0,
           trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
           isExternal: false,
         },
 
         {
-          href: '/ama',
-          label: 'AMA',
+          href: "/ama",
+          label: "AMA",
           icon: AMAIcon,
           trailingAccessory: null,
           isActive:
-            router.asPath.indexOf('/ama') >= 0 &&
-            !router.asPath.startsWith('/ama/pending'),
+            router.asPath.indexOf("/ama") >= 0 &&
+            !router.asPath.startsWith("/ama/pending"),
           trailingAction: null,
           isExternal: false,
         },
 
         {
-          href: '/stack',
-          label: 'Stack',
+          href: "/stack",
+          label: "Stack",
           icon: StackIcon,
           trailingAccessory: null,
-          isActive: router.asPath.indexOf('/stack') >= 0,
+          isActive: router.asPath.indexOf("/stack") >= 0,
           trailingAction: null,
           isExternal: false,
         },
       ],
     },
     {
-      label: 'Projects',
+      label: "Projects",
       items: [
         {
-          href: 'https://campsite.design',
-          label: 'Campsite',
+          href: "https://campsite.design",
+          label: "Campsite",
           icon: CampsiteIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
@@ -179,11 +187,11 @@ export function SidebarNavigation() {
       ],
     },
     {
-      label: 'Online',
+      label: "Online",
       items: [
         {
-          href: 'https://twitter.com/vmprmyth',
-          label: 'Twitter',
+          href: "https://twitter.com/vmprmyth",
+          label: "Twitter",
           icon: TwitterIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
@@ -192,8 +200,8 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://open.spotify.com/artist/6bBbUUix7BfttiaHCDkcEI',
-          label: 'Spotify',
+          href: "https://open.spotify.com/artist/6bBbUUix7BfttiaHCDkcEI",
+          label: "Spotify",
           icon: Spotify,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
@@ -202,8 +210,8 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://github.com/mustaqimarifin',
-          label: 'GitHub',
+          href: "https://github.com/mustaqimarifin",
+          label: "GitHub",
           icon: GitHubIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,
@@ -212,8 +220,8 @@ export function SidebarNavigation() {
         },
 
         {
-          href: 'https://soundcloud.com/vmprmyth',
-          label: 'SoundCloud',
+          href: "https://soundcloud.com/vmprmyth",
+          label: "SoundCloud",
           icon: SoundcloudIcon,
           trailingAccessory: ExternalLinkIcon,
           isActive: false,

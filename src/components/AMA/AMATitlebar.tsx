@@ -1,13 +1,13 @@
-import * as React from 'react'
-import { GhostButton } from '~/components/Button'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { SignInDialog } from '~/components/SignInDialog'
-import { useViewerQuery } from '~/graphql/typeSlut'
-import { Plus } from 'lucide-react'
+import * as React from "react"
+import { GhostButton } from "~/components/Button"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { SignInDialog } from "~/components/SignInDialog"
+import { useViewerQuery } from "~/graphql/typeSlut"
+import { Plus } from "lucide-react"
 
-import SegmentedControl from '../SegmentedController'
-import { AddQuestionDialog } from './AddQuestionDialog'
-import { QuestionsContext } from './QuestionsList'
+import SegmentedControl from "../SegmentedController"
+import { AddQuestionDialog } from "./AddQuestionDialog"
+import { QuestionsContext } from "./QuestionsList"
 
 export function AMATitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()
@@ -55,10 +55,10 @@ export function AMATitlebar({ scrollContainerRef }) {
         <div className="pb-1 pt-2">
           <SegmentedControl
             onSetActiveItem={() => setFilterPending(!filterPending)}
-            active={filterPending ? 'pending' : 'answered'}
+            active={filterPending ? "pending" : "answered"}
             items={[
-              { id: 'answered', label: 'Answered' },
-              { id: 'pending', label: 'Pending' },
+              { id: "answered", label: "Answered" },
+              { id: "pending", label: "Pending" },
             ]}
           />
         </div>

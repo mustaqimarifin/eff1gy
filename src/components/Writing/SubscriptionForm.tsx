@@ -1,34 +1,34 @@
-import * as React from 'react'
-import { ErrorAlert, SuccessAlert } from '~/components/Alert'
-import { PrimaryButton } from '~/components/Button'
-import { Input } from '~/components/Input'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { validEmail } from '~/lib/validators'
+import * as React from "react"
+import { ErrorAlert, SuccessAlert } from "~/components/Alert"
+import { PrimaryButton } from "~/components/Button"
+import { Input } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { validEmail } from "~/lib/validators"
 
-export function WritingSubscriptionForm({ defaultValue = '' }) {
+export function WritingSubscriptionForm({ defaultValue = "" }) {
   const [email, setEmail] = React.useState(defaultValue)
-  const [status, setStatus] = React.useState('default')
+  const [status, setStatus] = React.useState("default")
 
   function onChange(e) {
-    setStatus('default')
+    setStatus("default")
     return setEmail(e.target.value.trim())
   }
 
   async function submit(e) {
     e.preventDefault()
-    setStatus('saving')
+    setStatus("saving")
 
     if (!validEmail(email)) {
-      setStatus('saving')
-      return setStatus('invalid-email')
+      setStatus("saving")
+      return setStatus("invalid-email")
     }
 
     await fetch(`/api/newsletter`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({ email }),
     }).then((res) => res.json())
 
-    setStatus('success')
+    setStatus("success")
   }
 
   return (
@@ -48,7 +48,7 @@ export function WritingSubscriptionForm({ defaultValue = '' }) {
             <span className="sr-only">Email address</span>
             <Input
               value={email}
-              disabled={status === 'loading'}
+              disabled={status === "loading"}
               onChange={onChange}
               placeholder="Email address"
               type="email"
@@ -57,14 +57,14 @@ export function WritingSubscriptionForm({ defaultValue = '' }) {
           </label>
           <PrimaryButton
             onClick={submit}
-            disabled={status === 'saving' || !email}
+            disabled={status === "saving" || !email}
             type="submit"
           >
-            {status === 'saving' ? <LoadingSpinner /> : 'Subscribe'}
+            {status === "saving" ? <LoadingSpinner /> : "Subscribe"}
           </PrimaryButton>
         </form>
         <p className="text-quaternary text-sm">
-          Unsubscribe at any time. Powered by{' '}
+          Unsubscribe at any time. Powered by{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -75,10 +75,10 @@ export function WritingSubscriptionForm({ defaultValue = '' }) {
           </a>
           .
         </p>
-        {status === 'invalid-email' && (
+        {status === "invalid-email" && (
           <ErrorAlert>That email doesn’t look valid, try another?</ErrorAlert>
         )}
-        {status === 'success' && (
+        {status === "success" && (
           <SuccessAlert>
             A confirmation email was sent to {email} — go click the link!
           </SuccessAlert>

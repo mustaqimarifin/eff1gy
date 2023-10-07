@@ -1,16 +1,16 @@
-import { baseEmail } from '~/config/seo'
-import { CLIENT_URL, IS_PROD } from '~/graphql/constants'
-import { Context } from '~/graphql/context'
-import { MutationEditUserArgs } from '~/graphql/typeSlut'
-import { emailRX, nameRX } from '~/lib/functions'
-import { GraphQLError } from 'graphql'
-import jwt from 'jsonwebtoken'
+import { baseEmail } from "~/config/seo"
+import { CLIENT_URL, IS_PROD } from "~/graphql/constants"
+import { type Context } from "~/graphql/context"
+import { type MutationEditUserArgs } from "~/graphql/typeSlut"
+import { emailRX, nameRX } from "~/lib/functions"
+import { GraphQLError } from "graphql"
+import jwt from "jsonwebtoken"
 
 export async function deleteUser(_, __, ctx: Context) {
   const { prisma, viewer } = ctx
 
   if (viewer.isAdmin) {
-    throw new GraphQLError('Admins can’t be deleted')
+    throw new GraphQLError("Admins can’t be deleted")
   }
 
   await prisma.user.findUnique({ where: { id: viewer.id } })
@@ -29,7 +29,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
 
   if (name) {
     if (!nameRX(name)) {
-      throw new GraphQLError('Usernames can be 16 characters long')
+      throw new GraphQLError("Usernames can be 16 characters long")
     }
 
     const user = await prisma.user.findUnique({
@@ -37,7 +37,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
     })
 
     if (user && user.id !== viewer.id) {
-      throw new GraphQLError('That name is taken')
+      throw new GraphQLError("That name is taken")
     }
 
     return await prisma.user.update({
@@ -48,7 +48,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
 
   if (email) {
     if (!emailRX(email)) {
-      throw new GraphQLError('That email is not valid')
+      throw new GraphQLError("That email is not valid")
     }
 
     const userByEmail = await prisma.user.findUnique({
@@ -56,7 +56,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
     })
 
     if (userByEmail && userByEmail.id !== viewer.id) {
-      throw new GraphQLError('That email is taken')
+      throw new GraphQLError("That email is taken")
     }
 
     // the user is updating their email to be the same thing
@@ -74,7 +74,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
     const url = `${CLIENT_URL}/api/email/confirm?token=${token}`
 
     if (IS_PROD) {
-      console.log('Sending confirmation email', {
+      console.log("Sending confirmation email", {
         From: baseEmail,
         To: email,
         TemplateId: 25539089,

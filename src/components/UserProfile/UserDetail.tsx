@@ -1,8 +1,8 @@
-import React from 'react'
-import Button from '~/components/Button'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetUserQuery } from '~/graphql/typeSlut'
+import React from "react"
+import Button from "~/components/Button"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { useGetUserQuery } from "~/graphql/typeSlut"
 
 export function UserDetail({ id }) {
   const scrollContainerRef = React.useRef(null)

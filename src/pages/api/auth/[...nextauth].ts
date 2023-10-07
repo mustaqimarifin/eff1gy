@@ -1,9 +1,9 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { prisma } from '~/lib/prisma'
-import NextAuth, { getServerSession, NextAuthOptions } from 'next-auth'
-import GithubProvider from 'next-auth/providers/github'
-import GoogleProvider from 'next-auth/providers/google'
-import TwitterProvider from 'next-auth/providers/twitter'
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { prisma } from "~/lib/prisma"
+import NextAuth, { getServerSession, type NextAuthOptions } from "next-auth"
+import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google"
+import TwitterProvider from "next-auth/providers/twitter"
 
 export const authOptions: NextAuthOptions = {
   //debug: process.env.NEXTAUTH_DEBUG === 'true',
@@ -12,7 +12,7 @@ export const authOptions: NextAuthOptions = {
     TwitterProvider({
       clientId: process.env.TWITTER_ID,
       clientSecret: process.env.TWITTER_SECRET,
-      version: '2.0', // opt-in to Twitter OAuth 2.0
+      version: "2.0", // opt-in to Twitter OAuth 2.0
     }),
     GithubProvider({
       clientId: process.env.GITHUB_ID,

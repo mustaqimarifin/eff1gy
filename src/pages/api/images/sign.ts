@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import cloudinary from '~/lib/cloudinary'
+import { type NextApiRequest, type NextApiResponse } from "next"
+import cloudinary from "~/lib/cloudinary"
 
-import { getSession } from '../auth/[...nextauth]'
+import { getSession } from "../auth/[...nextauth]"
 
 export default async function handle(
   req: NextApiRequest,
@@ -31,12 +31,12 @@ function signUploadRequest(timestamp: number, folder: string) {
   const signature = cloudinary.v2.utils.api_sign_request(
     {
       // Sign upload request with transformation to mp4 for cross-browser playing compatibility
-      format: 'mp4',
+      format: "mp4",
       timestamp,
       upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
       folder,
     },
-    process.env.CLOUDINARY_API_SECRET as string
+    process.env.CLOUDINARY_API_SECRET
   )
 
   return { signature, folder, timestamp }

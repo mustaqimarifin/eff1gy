@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { GhostButton } from '~/components/Button'
-import { useGetTagsQuery } from '~/graphql/typeSlut'
-import { CheckIcon } from 'lucide-react'
+import * as React from "react"
+import { Menu, Transition } from "@headlessui/react"
+import { GhostButton } from "~/components/Button"
+import { useGetTagsQuery } from "~/graphql/typeSlut"
+import { CheckIcon } from "lucide-react"
 
-import { BookmarksContext } from './BookmarksList'
+import { BookmarksContext } from "./BookmarksList"
 
 export function BookmarksFilterMenu() {
   const { data, loading } = useGetTagsQuery()
@@ -14,7 +14,7 @@ export function BookmarksFilterMenu() {
 
   const { tags } = data
 
-  const allowedTags = ['web', 'lol', 'portfolio', 'art']
+  const allowedTags = ["web", "lol", "portfolio", "art"]
 
   const filtered = tags.filter((t) => allowedTags.indexOf(t.name) >= 0)
 
@@ -66,8 +66,8 @@ export function BookmarksFilterMenu() {
                           onClick={() => setTag(null)}
                           className={`${
                             active
-                              ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
-                              : 'text-gray-900 dark:text-gray-200'
+                              ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+                              : "text-gray-900 dark:text-gray-200"
                           } text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm`}
                         >
                           All bookmarks
@@ -83,8 +83,8 @@ export function BookmarksFilterMenu() {
                             onClick={() => setTag(t.name)}
                             className={`${
                               active
-                                ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
-                                : 'text-gray-900 dark:text-gray-200'
+                                ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+                                : "text-gray-900 dark:text-gray-200"
                             } text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm capitalize`}
                           >
                             {tag === t.name ? (

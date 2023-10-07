@@ -6,13 +6,13 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("SQL3")
+  url      = env("SQL2")
 }
 
 model Account {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
-  userId            String  @db.Uuid
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -31,7 +31,7 @@ model Account {
 
 model Session {
   sessionToken String   @unique
-  userId       String   @db.Uuid
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -39,7 +39,7 @@ model Session {
 }
 
 model User {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt     DateTime   @default(now())
   name          String
@@ -50,10 +50,11 @@ model User {
   emailVerified DateTime?
   pendingEmail  String?
   description   String?    @db.VarChar(256)
-  location      String?    @db.VarChar(32)
+  location      String?
   twitterId     String?    @unique
   accounts      Account[]
   comments      Comment[]
+  blogs         Blog[]
   posts         Post[]
   questions     Question[]
   reactions     Reaction[]
@@ -70,7 +71,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -89,7 +90,7 @@ model Bookmark {
 }
 
 model Question {
-  id          String     @id @default(uuid()) @db.Uuid
+  id          String     @id @default(uuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
@@ -97,7 +98,7 @@ model Question {
   waveform    Json?
   audioUrl    String?
   description String?
-  userId      String     @db.Uuid
+  userId      String
   comments    Comment[]
   author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   reactions   Reaction[]
@@ -106,44 +107,59 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
-  userId     String    @db.Uuid
-  bookmarkId String?   @db.Uuid
-  questionId String?   @db.Uuid
-  stackId    String?   @db.Uuid
-  postId     String?   @db.Uuid
+  userId     String?
+  bookmarkId String?
+  questionId String?
+  stackId    String?
+  postId     String?
   audio      Audio?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  author     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog       Blog?     @relation(fields: [blogId], references: [id])
+  blogId     String?
 
   @@index([bookmarkId])
   @@index([questionId])
   @@index([postId])
+  @@index([blogId])
   @@index([stackId])
   @@index([userId])
 }
 
 model Audio {
-  id            String   @id @default(uuid()) @db.Uuid
+  id            String   @id @default(uuid())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
   waveform      Json
   url           String
   transcription String
-  commentId     String   @unique @db.Uuid
+  commentId     String   @unique
   comment       Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
 
+model Blog {
+  id        String     @id
+  date      DateTime?
+  slug      String?    @unique
+  comments  Comment[]
+  reactions Reaction[]
+  author    User?      @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@index([date])
+}
+
 model Post {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
@@ -153,7 +169,7 @@ model Post {
   text         String
   excerpt      String
   featureImage String?
-  userId       String     @db.Uuid
+  userId       String
   comments     Comment[]
   author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
@@ -164,21 +180,21 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt    DateTime @default(now())
   text         String
   title        String
   excerpt      String
   featureImage String?
-  postId       String?  @db.Uuid
+  postId       String?
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
 }
 
 model Tag {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   name      String     @unique
   bookmarks Bookmark[] @relation("BookmarkToTag")
@@ -186,7 +202,7 @@ model Tag {
 }
 
 model Stack {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -202,29 +218,32 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt  DateTime  @default(now())
-  userId     String    @db.Uuid
-  bookmarkId String?   @db.Uuid
-  questionId String?   @db.Uuid
-  stackId    String?   @db.Uuid
-  postId     String?   @db.Uuid
+  userId     String
+  bookmarkId String?
+  questionId String?
+  stackId    String?
+  postId     String?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog       Blog?     @relation(fields: [blogId], references: [id])
+  blogId     String?
 
   @@index([bookmarkId])
   @@index([questionId])
   @@index([postId])
+  @@index([blogId])
   @@index([stackId])
   @@index([userId])
 }
 
 model PageView {
-  id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid())
 
   lastSeen  DateTime @default(now())
   viewCount Int?     @default(0)

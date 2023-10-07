@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
-import { BookmarkDetailFragment } from '../fragments/bookmark'
+import { BookmarkDetailFragment } from "../fragments/bookmark"
 
 export const EDIT_BOOKMARK = gql`
   mutation editBookmark($id: ID!, $data: EditBookmarkInput!) {

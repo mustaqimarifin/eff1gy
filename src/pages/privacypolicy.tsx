@@ -1,8 +1,8 @@
-import PP from '~/components/Home/PP'
-import { ListDetailView, SiteLayout } from '~/components/Layouts'
-import { withProviders } from '~/components/Providers/withProviders'
-import routes from '~/config/routes'
-import { NextSeo } from 'next-seo'
+import PP from "~/components/Home/PP"
+import { ListDetailView, SiteLayout } from "~/components/Layouts"
+import { withProviders } from "~/components/Providers/withProviders"
+import routes from "~/config/routes"
+import { NextSeo } from "next-seo"
 
 function Privacy() {
   return (

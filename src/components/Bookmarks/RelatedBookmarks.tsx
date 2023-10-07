@@ -1,6 +1,6 @@
-import * as React from 'react'
-import Link from 'next/link'
-import { useGetBookmarksQuery } from '~/graphql/typeSlut'
+import * as React from "react"
+import Link from "next/link"
+import { useGetBookmarksQuery } from "~/graphql/typeSlut"
 
 export function RelatedBookmarks({ bookmark }) {
   const { data, loading } = useGetBookmarksQuery({
@@ -21,7 +21,7 @@ export function RelatedBookmarks({ bookmark }) {
     if (e.metaKey) {
       e.preventDefault()
       e.stopPropagation()
-      window.open(bookmark.url, '_blank').focus()
+      window.open(bookmark.url, "_blank").focus()
     }
   }
 

@@ -1,20 +1,20 @@
-import * as React from 'react'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { useGetPostQuery } from '~/graphql/typeSlut'
+import * as React from "react"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { useGetPostQuery } from "~/graphql/typeSlut"
 
-import { PostEditorActions } from './PostEditorActions'
-import { PostEditorComposer } from './PostEditorComposer'
-import { PostEditorMetaSidebar } from './PostEditorMetaSidebar'
-import { PostEditorPreview } from './PostEditorPreview'
-import { PreviewSwitch } from './PreviewSwitch'
+import { PostEditorActions } from "./PostEditorActions"
+import { PostEditorComposer } from "./PostEditorComposer"
+import { PostEditorMetaSidebar } from "./PostEditorMetaSidebar"
+import { PostEditorPreview } from "./PostEditorPreview"
+import { PreviewSwitch } from "./PreviewSwitch"
 
 export const PostEditorContext = React.createContext({
   draftState: {
-    title: '',
-    text: '',
-    slug: '',
-    excerpt: '',
+    title: "",
+    text: "",
+    slug: "",
+    excerpt: "",
   },
   setDraftState: (draftObj: unknown) => {},
   existingPost: null,
@@ -29,15 +29,15 @@ type PEditor = {
   slug?: any
 }
 
-export function PostEditor({ children, slug: propsSlug = '' }: PEditor) {
+export function PostEditor({ children, slug: propsSlug = "" }: PEditor) {
   const scrollContainerRef = React.useRef(null)
   const { data } = useGetPostQuery({ variables: { slug: propsSlug } })
 
   const defaultDraftState = {
-    title: data?.post?.title || '',
-    text: data?.post?.text || '',
-    slug: data?.post?.slug || '',
-    excerpt: data?.post?.excerpt || '',
+    title: data?.post?.title || "",
+    text: data?.post?.text || "",
+    slug: data?.post?.slug || "",
+    excerpt: data?.post?.excerpt || "",
   }
 
   const [draftState, setDraftState] = React.useState(defaultDraftState)
@@ -68,7 +68,7 @@ export function PostEditor({ children, slug: propsSlug = '' }: PEditor) {
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={'/writing'}
+          backButtonHref={"/writing"}
           scrollContainerRef={scrollContainerRef}
           title=""
           trailingAccessory={<PostEditorActions />}

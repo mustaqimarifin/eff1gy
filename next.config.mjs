@@ -21,6 +21,10 @@ export default {
       "github.githubassets.com",
       "lh3.googleusercontent.com",
       "wallpaperaccess.com",
+      "cdn.sanity.io",
+      "m.media-amazon.com",
+      "i.ytimg.com",
     ],
+    dangerouslyAllowSVG: true,
   },
 }

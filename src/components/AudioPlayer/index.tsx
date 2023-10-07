@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react'
+import React, { useCallback } from "react"
 
-import HiddenAudioPlayer from './HiddenAudioPlayer'
-import PlayPauseButton from './PlayPauseButton'
-import ProgressOverlay from './ProgressOverlay'
-import Waveform from './Waveform'
+import HiddenAudioPlayer from "./HiddenAudioPlayer"
+import PlayPauseButton from "./PlayPauseButton"
+import ProgressOverlay from "./ProgressOverlay"
+import Waveform from "./Waveform"
 
 interface Props {
   src: string
@@ -35,14 +35,14 @@ export default function AudioPlayer({
 
     resetProgressOverlay()
 
-    audioRef.current.addEventListener('play', onAudioElementPlay)
-    audioRef.current.addEventListener('pause', onAudioElementPause)
-    audioRef.current.addEventListener('ended', onAudioElementEnded)
+    audioRef.current.addEventListener("play", onAudioElementPlay)
+    audioRef.current.addEventListener("pause", onAudioElementPause)
+    audioRef.current.addEventListener("ended", onAudioElementEnded)
 
     return function cleanupListeners() {
-      audioRef?.current?.removeEventListener('play', onAudioElementPlay)
-      audioRef?.current?.removeEventListener('pause', onAudioElementPause)
-      audioRef?.current?.removeEventListener('ended', onAudioElementEnded)
+      audioRef?.current?.removeEventListener("play", onAudioElementPlay)
+      audioRef?.current?.removeEventListener("pause", onAudioElementPause)
+      audioRef?.current?.removeEventListener("ended", onAudioElementEnded)
     }
   }, [src, audioRef])
 
@@ -94,7 +94,7 @@ export default function AudioPlayer({
 
   function togglePlay() {
     // pause all other audio players
-    const audios = document.querySelectorAll('audio')
+    const audios = document.querySelectorAll("audio")
     audios.forEach((audio) => audio.pause())
 
     // pause or play this audio player
@@ -134,9 +134,9 @@ export default function AudioPlayer({
   }
 
   function resetProgressOverlay() {
-    progressOverlayRef.current.style.transitionProperty = 'transform'
-    progressOverlayRef.current.style.transitionDuration = '0s'
-    progressOverlayRef.current.style.transitionTimingFunction = 'linear'
+    progressOverlayRef.current.style.transitionProperty = "transform"
+    progressOverlayRef.current.style.transitionDuration = "0s"
+    progressOverlayRef.current.style.transitionTimingFunction = "linear"
     setProgressOverlayScale(0)
   }
 

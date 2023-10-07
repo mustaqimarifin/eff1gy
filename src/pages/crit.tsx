@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { Crit } from '~/components/Crit'
-import { ListDetailView } from '~/components/Layouts'
-import routes from '~/config/routes'
-import { NextSeo } from 'next-seo'
+import * as React from "react"
+import { Crit } from "~/components/Crit"
+import { ListDetailView } from "~/components/Layouts"
+import routes from "~/config/routes"
+import { NextSeo } from "next-seo"
 
 export default function CritPage() {
   return (

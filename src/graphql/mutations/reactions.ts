@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
 export const TOGGLE_REACTION = gql`
   mutation toggleReaction($refId: ID!, $type: ReactionType!) {
@@ -20,6 +20,11 @@ export const TOGGLE_REACTION = gql`
         viewerHasReacted
       }
       ... on Post {
+        id
+        reactionCount
+        viewerHasReacted
+      }
+      ... on Blog {
         id
         reactionCount
         viewerHasReacted

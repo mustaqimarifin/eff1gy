@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
-import { UserInfoFragment } from './user'
+import { UserInfoFragment } from "./user"
 
 export const QuestionCoreFragment = gql`
   fragment QuestionCore on Question {

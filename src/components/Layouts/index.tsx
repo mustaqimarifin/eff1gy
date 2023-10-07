@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { Sidebar } from '~/components/Sidebar'
+import * as React from "react"
+import { Sidebar } from "~/components/Sidebar"
 
 interface Props {
   list: React.ReactElement | null
@@ -14,7 +14,7 @@ export function ListDetailView({ list, detail, hasDetail = false }: Props) {
         <div
           id="list"
           className={`bg-dots ${
-            hasDetail ? 'hidden lg:flex' : 'min-h-screen w-full'
+            hasDetail ? "hidden lg:flex" : "min-h-screen w-full"
           }`}
         >
           {list}

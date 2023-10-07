@@ -1,20 +1,20 @@
-import * as React from 'react'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { SignInDialog } from '~/components/SignInDialog'
-import { CommentType, useGetCommentsQuery } from '~/graphql/typeSlut'
-import { useWindowFocus } from '~/hooks/useWindowFocus'
-import { motion } from 'framer-motion'
-import { GhostIcon } from 'lucide-react'
+import * as React from "react"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { SignInDialog } from "~/components/SignInDialog"
+import { useGetCommentsQuery, type CommentType } from "~/graphql/typeSlut"
+import { useWindowFocus } from "~/hooks/useWindowFocus"
+import { motion } from "framer-motion"
+import { GhostIcon } from "lucide-react"
 
-import { Comment } from './Comment'
-import { CommentForm } from './CommentForm'
+import { Comment } from "./Comment"
+import { CommentForm } from "./CommentForm"
 
 interface Props {
   refId: string
   type: CommentType
 }
 
-export function Comments({ refId, type }: Props) {
+export default function Comments({ refId, type }: Props) {
   const messagesEndRef: React.RefObject<HTMLDivElement> = React.useRef(null)
 
   const { data, loading, error, refetch } = useGetCommentsQuery({

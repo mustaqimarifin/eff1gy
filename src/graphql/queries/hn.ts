@@ -1,9 +1,9 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client"
 
 import {
   HackerNewsListItemInfoFragment,
   HackerNewsPostInfoFragment,
-} from '../fragments/hn'
+} from "../fragments/hn"
 
 export const GET_HACKER_NEWS_POSTS = gql`
   query getHackerNewsPosts {

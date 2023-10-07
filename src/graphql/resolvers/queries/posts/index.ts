@@ -1,8 +1,8 @@
-import { Context } from '~/graphql/context'
+import { type Context } from "~/graphql/context"
 import {
-  GetPostQueryVariables,
-  GetPostsQueryVariables,
-} from '~/graphql/typeSlut'
+  type GetPostQueryVariables,
+  type GetPostsQueryVariables,
+} from "~/graphql/typeSlut"
 
 export async function getPosts(_, args: GetPostsQueryVariables, ctx: Context) {
   const { filter } = args
@@ -10,7 +10,7 @@ export async function getPosts(_, args: GetPostsQueryVariables, ctx: Context) {
   const published = filter?.published
 
   return await prisma.post.findMany({
-    orderBy: published ? { publishedAt: 'desc' } : { createdAt: 'desc' },
+    orderBy: published ? { publishedAt: "desc" } : { createdAt: "desc" },
     where: {
       publishedAt:
         !published && viewer?.isAdmin ? { equals: null } : { not: null },
