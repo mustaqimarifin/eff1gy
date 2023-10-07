@@ -1,20 +1,20 @@
-import * as React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { PrimaryButton } from "~/components/Button"
-import { Comments } from "~/components/Comments"
-import { Detail } from "~/components/ListDetail/Detail"
-import { TitleBar } from "~/components/ListDetail/TitleBar"
-import { Tags } from "~/components/Tag"
-import routes from "~/config/routes"
-import { CommentType, useGetStackQuery } from "~/graphql/typeSlut"
-import { Link2Icon } from "lucide-react"
-import { NextSeo } from "next-seo"
+import * as React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { PrimaryButton } from '~/components/Button'
+import Comments from '~/components/Comments'
+import { Detail } from '~/components/ListDetail/Detail'
+import { TitleBar } from '~/components/ListDetail/TitleBar'
+import { Tags } from '~/components/Tag'
+import routes from '~/config/routes'
+import { CommentType, useGetStackQuery } from '~/graphql/typeSlut'
+import { Link2Icon } from 'lucide-react'
+import { NextSeo } from 'next-seo'
 
-import { MarkdownRenderer } from "../MarkdownRenderer"
-import { SignInDialog } from "../SignInDialog"
-import { StackActions } from "./StackActions"
-import { StackUsedBy } from "./StackUsedBy"
+import { MarkdownRenderer } from '../MarkdownRenderer'
+import { SignInDialog } from '../SignInDialog'
+import { StackActions } from './StackActions'
+import { StackUsedBy } from './StackUsedBy'
 
 export function StackDetail({ slug }) {
   const scrollContainerRef = React.useRef(null)
@@ -54,7 +54,7 @@ export function StackDetail({ slug }) {
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={"/stack"}
+          backButtonHref={'/stack'}
           magicTitle
           title={stack.name}
           titleRef={titleRef}
@@ -73,7 +73,7 @@ export function StackDetail({ slug }) {
                   width={60}
                   height={60}
                   alt={`${stack.name} icon`}
-                  className={"rounded-md object-cover"}
+                  className={'rounded-md object-cover'}
                 />
               </Link>
               <div className="flex flex-col space-y-1">

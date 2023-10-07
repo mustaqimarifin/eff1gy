@@ -1,7 +1,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { Avatar } from "~/components/Avatar"
-import { Comments } from "~/components/Comments"
+import Comments from "~/components/Comments"
 import { Detail } from "~/components/ListDetail/Detail"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 import routes from "~/config/routes"
