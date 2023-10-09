@@ -1,11 +1,11 @@
-import React from "react"
-import { signUpload } from "~/lib/cloudinary/api"
-import { UploadSignatureMetadata } from "~/types/Upload"
-import { type UploadApiResponse } from "cloudinary"
-import { useDropzone } from "react-dropzone"
+import React from 'react'
+import { signUpload } from '~/lib/cloudinary/api'
+import { UploadSignatureMetadata } from '~/types/Upload'
+import { type UploadApiResponse } from 'cloudinary'
+import { useDropzone } from 'react-dropzone'
 
 //import { CLOUDFLARE_IMAGE_DELIVERY_BASE_URL } from '~/lib/cloudinary'
-import { ActiveDropzone } from "./ActiveDropzone"
+import { ActiveDropzone } from './ActiveDropzone'
 
 interface DropzoneProps {
   children: React.ReactNode
@@ -23,17 +23,17 @@ export const upCloud = async (file: File): Promise<UploadApiResponse> => {
   //const { signature, folder, timestamp } = await signUpload()
   const url = `https://api.cloudinary.com/v1_1/mstqmarfn/image/upload`
   const formData = new FormData()
-  formData.append("file", file)
+  formData.append('file', file)
   //formData.append('folder', folder)
   //formData.append('signature', signature)
   //formData.append('timestamp', timestamp)
   //formData.append('api_key', '742773636552889')
-  formData.append("upload_preset", "ml_default")
+  formData.append('upload_preset', 'ml_default')
   // If recorded on Chrome which currently only supports .webm recording
   // This parameter will tell cloudinary to transform to mp4 for cross browser compatibility
 
   const res = await fetch(url, {
-    method: "POST",
+    method: 'POST',
     body: formData,
   })
   return res.json()
@@ -65,7 +65,7 @@ export function Dropzone(props: DropzoneProps) {
 
     if (!file) {
       onUploadFailed()
-      return console.error("No signed url")
+      return console.error('No signed url')
     }
     const res = await upCloud(file)
     const url = res.secure_url
@@ -74,7 +74,7 @@ export function Dropzone(props: DropzoneProps) {
   }, [])
 
   function onDropRejected() {
-    alert("File rejected")
+    alert('File rejected')
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -85,7 +85,7 @@ export function Dropzone(props: DropzoneProps) {
     noClick: true,
     maxSize: 1000 * 1000 * 3, // 3mb
     accept: {
-      "image/*": [],
+      'image/*': [],
     },
   })
 

@@ -1,14 +1,14 @@
-import * as React from "react"
-import Button from "~/components/Button"
-import { GET_STACK } from "~/graphql/queries/stack"
+import * as React from 'react'
+import Button from '~/components/Button'
+import { GET_STACK } from '~/graphql/queries/stack'
 import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from "~/graphql/typeSlut"
+} from '~/graphql/typeSlut'
 
-import { ReactionButton } from "../Button/ReactionButton"
-import { EditStackDialog } from "./EditStackDialog"
+import { ReactionButton } from '../Button/ReactionButton'
+import { EditStackDialog } from './EditStackDialog'
 
 function getEditButton(stack) {
   const { data } = useViewerQuery()
@@ -29,9 +29,9 @@ function getReactionButton(stack) {
         type: ReactionType.Stack,
       },
       optimisticResponse: {
-        __typename: "Mutation",
+        __typename: 'Mutation',
         toggleReaction: {
-          __typename: "Stack",
+          __typename: 'Stack',
           ...stack,
           reactionCount: stack.viewerHasReacted
             ? stack.reactionCount - 1

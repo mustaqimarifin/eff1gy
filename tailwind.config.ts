@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", ...fontFamily.sans],
+        sans: ["Roboto", ...fontFamily.sans],
+        serif: ["Ivar", ...fontFamily.sans],
         mono: ["Sohn", ...fontFamily.mono],
       },
       colors: {

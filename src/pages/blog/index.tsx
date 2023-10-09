@@ -1,11 +1,11 @@
-import { ListDetailView, SiteLayout } from "~/components/Layouts"
-import { type Post } from "~/components/Posts/BlogDetail"
-import { PostsList } from "~/components/Posts/PostsList"
-import { withProviders } from "~/components/Providers/withProviders"
-import routes from "~/config/routes"
-import { indexQuery } from "~/lib/sanity/queries"
-import { getClient } from "~/lib/sanity/server"
-import { NextSeo } from "next-seo"
+import { ListDetailView, SiteLayout } from '~/components/Layouts'
+import { type Post } from '~/components/Posts/BlogDetail'
+import { PostsList } from '~/components/Posts/PostsList'
+import { withProviders } from '~/components/Providers/withProviders'
+import routes from '~/config/routes'
+import { indexQuery } from '~/lib/sanity/queries'
+import { getClient } from '~/lib/sanity/server'
+import { NextSeo } from 'next-seo'
 
 function PostIndex() {
   return (

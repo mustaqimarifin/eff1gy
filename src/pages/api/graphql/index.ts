@@ -1,18 +1,10 @@
-import { type NextApiRequest, type NextApiResponse } from "next"
-import { ApolloServer } from "@apollo/server"
-import responseCachePlugin from "@apollo/server-plugin-response-cache"
-import { ApolloServerPluginCacheControl } from "@apollo/server/plugin/cacheControl"
-import {
-  ApolloServerPluginLandingPageLocalDefault,
-  ApolloServerPluginLandingPageProductionDefault,
-} from "@apollo/server/plugin/landingPage/default"
-import { KeyvAdapter } from "@apollo/utils.keyvadapter"
-import { ErrorsAreMissesCache } from "@apollo/utils.keyvaluecache"
-//import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
-import { startServerAndCreateNextHandler } from "@as-integrations/next"
-import { getViewer, type Context } from "~/graphql/context"
-import { schema } from "~/graphql/schema"
-import { prisma } from "~/lib/prisma"
+import { type NextApiRequest, type NextApiResponse } from 'next'
+import { ApolloServer } from '@apollo/server'
+
+import { startServerAndCreateNextHandler } from '@as-integrations/next'
+import { getViewer, type Context } from '~/graphql/context'
+import { schema } from '~/graphql/schema'
+import { prisma } from '~/lib/prisma'
 
 const server = new ApolloServer<Context>({
   schema,
@@ -28,13 +20,6 @@ const server = new ApolloServer<Context>({
     }),
     responseCachePlugin(), */
     //responseCachePlugin(),
-    process.env.NODE_ENV === "production"
-      ? ApolloServerPluginLandingPageProductionDefault({
-          graphRef: "my-graph-id@my-graph-variant",
-          footer: false,
-          embed: true,
-        })
-      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
   ],
 })
 

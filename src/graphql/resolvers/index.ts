@@ -1,16 +1,12 @@
-import { type Context } from "~/graphql/context"
-import Mutation from "~/graphql/resolvers/mutations"
-import Query from "~/graphql/resolvers/queries"
-import { getCommentAuthor } from "~/graphql/resolvers/queries/comments"
-import { getQuestionAuthor } from "~/graphql/resolvers/queries/questions"
-import {
-  EmailSubscriptionType,
-  QuestionStatus,
-  UserRole,
-} from "~/graphql/typeSlut"
-import GraphQLJSON from "graphql-type-json"
+import { type Context } from '~/graphql/context'
+import Mutation from '~/graphql/resolvers/mutations'
+import Query from '~/graphql/resolvers/queries'
+import { getCommentAuthor } from '~/graphql/resolvers/queries/comments'
+import { getQuestionAuthor } from '~/graphql/resolvers/queries/questions'
+import { QuestionStatus, UserRole } from '~/graphql/typeSlut'
+import GraphQLJSON from 'graphql-type-json'
 
-import { DateQL } from "../scalars"
+import { DateQL } from '../scalars'
 
 const resolvers = {
   Date: DateQL,
@@ -20,16 +16,16 @@ const resolvers = {
   Reactable: {
     __resolveType(obj) {
       switch (obj.reactableType) {
-        case "question":
-          return "Question"
-        case "stack":
-          return "Stack"
-        case "post":
-          return "Post"
-        case "bookmark":
-          return "Bookmark"
-        case "blog":
-          return "Blog"
+        case 'question':
+          return 'Question'
+        case 'stack':
+          return 'Stack'
+        case 'post':
+          return 'Post'
+        case 'bookmark':
+          return 'Bookmark'
+        case 'blog':
+          return 'Blog'
         default:
           return null
       }
@@ -98,39 +94,6 @@ const resolvers = {
     },
     pendingEmail: ({ id }, _, { viewer }: Context) => {
       return viewer && viewer.id === id ? viewer.pendingEmail : null
-    },
-
-    emailSubscriptions: async ({ id }, _, { viewer, prisma }: Context) => {
-      if (!viewer || !viewer.email || viewer.id !== id)
-        return [
-          {
-            type: EmailSubscriptionType.HackerNews,
-            subscribed: false,
-          },
-        ]
-
-      const [hn] = await Promise.all([
-        prisma.emailSubscription.findUnique({
-          where: {
-            emailAndType: {
-              email: viewer.email,
-              type: EmailSubscriptionType.HackerNews,
-            },
-          },
-        }),
-        // revue.getSubscriber({ email: viewer.email }),
-      ])
-
-      return [
-        // {
-        //   type: EmailSubscriptionType.Newsletter,
-        //   subscribed: !!newsletter,
-        // },
-        {
-          type: EmailSubscriptionType.HackerNews,
-          subscribed: !!hn,
-        },
-      ]
     },
   },
   Bookmark: {

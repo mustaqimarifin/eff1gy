@@ -1,21 +1,21 @@
-import { GRAPHCDN_PURGE_ENDPOINT, IS_PROD } from "~/graphql/constants"
+import { GRAPHCDN_PURGE_ENDPOINT, IS_PROD } from '~/graphql/constants'
 
 async function handleFetch(query) {
   if (!IS_PROD) {
-    return console.log("Purging GraphCDN cache: ", query)
+    return console.log('Purging GraphCDN cache: ', query)
   }
 
   return await fetch(GRAPHCDN_PURGE_ENDPOINT, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      "graphcdn-token": process.env.GRAPHCDN_PURGE_KEY,
+      'Content-Type': 'application/json',
+      'graphcdn-token': process.env.GRAPHCDN_PURGE_KEY,
     },
     body: JSON.stringify({
       query,
     }),
   }).catch((e) => {
-    console.error("Error purging GraphCDN cache: ", e)
+    console.error('Error purging GraphCDN cache: ', e)
   })
 }
 

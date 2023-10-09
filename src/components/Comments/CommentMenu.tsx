@@ -1,7 +1,7 @@
-import * as React from "react"
-import { Menu, Transition } from "@headlessui/react"
-import { GhostButton } from "~/components/Button"
-import { MoreHorizontal } from "lucide-react"
+import * as React from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { GhostButton } from '~/components/Button'
+import { MoreHorizontal } from 'lucide-react'
 
 export function CommentMenu({ handleDelete, handleEdit, comment }) {
   return (
@@ -40,8 +40,8 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
                             onClick={handleEdit}
                             className={`${
                               active
-                                ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
-                                : "text-gray-900 dark:text-gray-200"
+                                ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
+                                : 'text-gray-900 dark:text-gray-200'
                             } flex w-full cursor-pointer justify-between px-4 py-2 text-left text-sm leading-5`}
                           >
                             Edit
@@ -59,8 +59,8 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
                             onClick={handleDelete}
                             className={`${
                               active
-                                ? "bg-red-50 text-red-500 dark:bg-red-500 dark:bg-opacity-10 dark:text-red-500"
-                                : "text-red-500 dark:text-red-500"
+                                ? 'bg-red-50 text-red-500 dark:bg-red-500 dark:bg-opacity-10 dark:text-red-500'
+                                : 'text-red-500 dark:text-red-500'
                             } flex w-full cursor-pointer justify-between px-4 py-2 text-left text-sm leading-5`}
                           >
                             Delete

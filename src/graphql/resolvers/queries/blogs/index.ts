@@ -1,14 +1,14 @@
-import { type Context } from "~/graphql/context"
+import { type Context } from '~/graphql/context'
 import {
   type GetBlogQueryVariables,
   type GetBlogsQueryVariables,
-} from "~/graphql/typeSlut"
+} from '~/graphql/typeSlut'
 
 export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
   const { prisma, viewer } = ctx
 
   return await prisma.blog.findMany({
-    orderBy: { date: "desc" },
+    orderBy: { date: 'desc' },
     where: {
       date: viewer?.isAdmin ? { equals: null } : { not: null },
     },

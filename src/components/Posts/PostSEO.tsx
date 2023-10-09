@@ -1,8 +1,8 @@
-import * as React from "react"
-import { baseUrl } from "~/config/seo"
-import { NextSeo } from "next-seo"
+import * as React from 'react'
+import { baseUrl } from '~/config/seo'
+import { NextSeo } from 'next-seo'
 
-import { type Post } from "./BlogDetail"
+import { type Post } from './BlogDetail'
 
 type Props = {
   post: Post
@@ -26,7 +26,7 @@ export function PostSEO({ post }: Props) {
         ],
       }}
       twitter={{
-        cardType: "summary_large_image",
+        cardType: 'summary_large_image',
       }}
     />
   )

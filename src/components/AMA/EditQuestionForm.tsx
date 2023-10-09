@@ -1,40 +1,40 @@
-import * as React from "react"
-import { useRouter } from "next/router"
-import { DeleteButton, PrimaryButton } from "~/components/Button"
-import { Input, Textarea } from "~/components/Input"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { GET_QUESTION, GET_QUESTIONS } from "~/graphql/queries/questions"
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import { DeleteButton, PrimaryButton } from '~/components/Button'
+import { Input, Textarea } from '~/components/Input'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { GET_QUESTION, GET_QUESTIONS } from '~/graphql/queries/questions'
 import {
   useDeleteQuestionMutation,
   useEditQuestionMutation,
-} from "~/graphql/typeSlut"
+} from '~/graphql/typeSlut'
 
 export function EditQuestionForm({ closeModal, question }) {
   const router = useRouter()
 
   const initialState = {
-    error: "",
+    error: '',
     title: question.title || question.url,
-    description: question.description || "",
+    description: question.description || '',
   }
 
   function reducer(state, action) {
     switch (action.type) {
-      case "edit-title": {
+      case 'edit-title': {
         return {
           ...state,
-          error: "",
+          error: '',
           title: action.value,
         }
       }
-      case "edit-description": {
+      case 'edit-description': {
         return {
           ...state,
-          error: "",
+          error: '',
           description: action.value,
         }
       }
-      case "error": {
+      case 'error': {
         return {
           ...state,
           error: action.value,
@@ -56,24 +56,24 @@ export function EditQuestionForm({ closeModal, question }) {
       },
     },
     optimisticResponse: {
-      __typename: "Mutation",
+      __typename: 'Mutation',
       editQuestion: {
-        __typename: "Question",
+        __typename: 'Question',
         ...question,
         title: state.title,
         description: state.description,
       },
     },
     onError({ message }) {
-      const value = message.replace("GraphQL error:", "")
-      dispatch({ type: "error", value })
+      const value = message.replace('GraphQL error:', '')
+      dispatch({ type: 'error', value })
     },
   })
 
   const [handleDelete] = useDeleteQuestionMutation({
     variables: { id: question.id },
     optimisticResponse: {
-      __typename: "Mutation",
+      __typename: 'Mutation',
       deleteQuestion: true,
     },
     update(cache) {
@@ -116,7 +116,7 @@ export function EditQuestionForm({ closeModal, question }) {
     e.preventDefault()
 
     if (!state.title || state.title.length === 0) {
-      return dispatch({ type: "error", value: "Gotta have a question" })
+      return dispatch({ type: 'error', value: 'Gotta have a question' })
     }
 
     editQuestion()
@@ -124,7 +124,7 @@ export function EditQuestionForm({ closeModal, question }) {
   }
 
   function onTitleChange(e) {
-    return dispatch({ type: "edit-title", value: e.target.value })
+    return dispatch({ type: 'edit-title', value: e.target.value })
   }
 
   function onKeyDown(e) {
@@ -134,7 +134,7 @@ export function EditQuestionForm({ closeModal, question }) {
   }
 
   function onDescriptionChange(e) {
-    return dispatch({ type: "edit-description", value: e.target.value })
+    return dispatch({ type: 'edit-description', value: e.target.value })
   }
 
   return (
@@ -153,7 +153,7 @@ export function EditQuestionForm({ closeModal, question }) {
           defaultValue={question.description}
           onChange={onDescriptionChange}
           onKeyDown={onKeyDown}
-          placeholder={"Add optional details"}
+          placeholder={'Add optional details'}
         />
       </form>
       <div className="flex justify-between pt-3">
@@ -170,7 +170,7 @@ export function EditQuestionForm({ closeModal, question }) {
             disabled={loading || state.title.trim().length === 0}
             onClick={handleSave}
           >
-            {loading ? <LoadingSpinner /> : "Save"}
+            {loading ? <LoadingSpinner /> : 'Save'}
           </PrimaryButton>
         </div>
       </div>

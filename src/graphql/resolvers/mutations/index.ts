@@ -1,5 +1,5 @@
-import { requiresAdmin } from "~/graphql/helpers/requiresAdmin"
-import { requiresUser } from "~/graphql/helpers/requiresUser"
+import { requiresAdmin } from '~/graphql/helpers/requiresAdmin'
+import { requiresUser } from '~/graphql/helpers/requiresUser'
 /* import {
   addBlog,
   deleteBlog,
@@ -9,31 +9,30 @@ import {
   addBookmark,
   deleteBookmark,
   editBookmark,
-} from "~/graphql/resolvers/mutations/bookmarks"
+} from '~/graphql/resolvers/mutations/bookmarks'
 import {
   addComment,
   deleteComment,
   editComment,
-} from "~/graphql/resolvers/mutations/comment"
-import { editEmailSubscription } from "~/graphql/resolvers/mutations/emailSubscription"
+} from '~/graphql/resolvers/mutations/comment'
 import {
   addPost,
   deletePost,
   editPost,
-} from "~/graphql/resolvers/mutations/post"
+} from '~/graphql/resolvers/mutations/post'
 import {
   addQuestion,
   deleteQuestion,
   editQuestion,
-} from "~/graphql/resolvers/mutations/questions"
-import { toggleReaction } from "~/graphql/resolvers/mutations/reactions"
+} from '~/graphql/resolvers/mutations/questions'
+import { toggleReaction } from '~/graphql/resolvers/mutations/reactions'
 import {
   addStack,
   deleteStack,
   editStack,
   toggleStackUser,
-} from "~/graphql/resolvers/mutations/stack"
-import { deleteUser, editUser } from "~/graphql/resolvers/mutations/user"
+} from '~/graphql/resolvers/mutations/stack'
+import { deleteUser, editUser } from '~/graphql/resolvers/mutations/user'
 
 export default {
   addBookmark: requiresAdmin(addBookmark),
@@ -51,7 +50,6 @@ export default {
   deleteComment: requiresUser(deleteComment),
   deleteUser: requiresUser(deleteUser),
   editUser: requiresUser(editUser),
-  editEmailSubscription: editEmailSubscription,
   addPost: requiresAdmin(addPost),
   editPost: requiresAdmin(editPost),
   deletePost: requiresAdmin(deletePost),

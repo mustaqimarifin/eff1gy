@@ -1,15 +1,15 @@
-import * as React from "react"
-import { Detail } from "~/components/ListDetail/Detail"
-import { TitleBar } from "~/components/ListDetail/TitleBar"
+import * as React from 'react'
+import { Detail } from '~/components/ListDetail/Detail'
+import { TitleBar } from '~/components/ListDetail/TitleBar'
 
-import { SignInDialogContent } from "../SignInDialog/SignInDialogContent"
+import { SignInDialogContent } from '../SignInDialog/SignInDialogContent'
 
 export function SignedOut() {
   return (
     <Detail.Container>
       <TitleBar title="Settings" />
       <div className="flex flex-1 flex-col items-center justify-center">
-        {" "}
+        {' '}
         <SignInDialogContent />
       </div>
 

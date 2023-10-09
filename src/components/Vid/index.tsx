@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from 'next/image'
 
 const Buffoon = () => {
   return (
@@ -8,7 +8,7 @@ const Buffoon = () => {
           width={300}
           height={300}
           src="/../../../static/clip/vmp-banner.webp"
-          alt={""}
+          alt={''}
         ></Image>
       </div>
     </>

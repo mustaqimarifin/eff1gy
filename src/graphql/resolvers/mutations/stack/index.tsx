@@ -1,12 +1,12 @@
-import { type Context } from "~/graphql/context"
+import { type Context } from '~/graphql/context'
 import {
   type MutationAddStackArgs,
   type MutationDeleteStackArgs,
   type MutationEditStackArgs,
   type MutationToggleStackUserArgs,
-} from "~/graphql/typeSlut"
-import { slugify, urlRX } from "~/lib/functions"
-import { GraphQLError } from "graphql"
+} from '~/graphql/typeSlut'
+import { slugify, urlRX } from '~/lib/functions'
+import { GraphQLError } from 'graphql'
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   const { id, data } = args
@@ -14,9 +14,9 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   const { prisma } = ctx
 
   if (!name || name.length === 0)
-    throw new GraphQLError("Stack must have a name")
+    throw new GraphQLError('Stack must have a name')
 
-  if (!url || url.length === 0) throw new GraphQLError("Stack must have a URL")
+  if (!url || url.length === 0) throw new GraphQLError('Stack must have a URL')
 
   /*
     Keep our image storage somewhat clean by deleting unused images
@@ -27,12 +27,12 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
     try {
       const url = new URL(old.image)
       if (urlRX(url)) {
-        const [, , imageId] = url.pathname.split("/")
+        const [, , imageId] = url.pathname.split('/')
 
         await fetch(
           `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1/${imageId}`,
           {
-            method: "DELETE",
+            method: 'DELETE',
             headers: {
               Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_KEY}`,
             },
@@ -80,7 +80,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to edit stack")
+      throw new GraphQLError('Unable to edit stack')
     })
 }
 
@@ -89,7 +89,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
   const { url, name, description, image, tag } = data
   const { prisma } = ctx
 
-  if (!urlRX(url)) throw new GraphQLError("URL was invalid")
+  if (!urlRX(url)) throw new GraphQLError('URL was invalid')
 
   const tags = tag
     ? {
@@ -118,7 +118,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to add stack")
+      throw new GraphQLError('Unable to add stack')
     })
 }
 
@@ -134,12 +134,12 @@ export async function deleteStack(
 
   try {
     const url = new URL(old.image)
-    const [, , imageId] = url.pathname.split("/")
+    const [, , imageId] = url.pathname.split('/')
     if (urlRX(url)) {
       await fetch(
         `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1/${imageId}`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
             Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_KEY}`,
           },
@@ -160,7 +160,7 @@ export async function deleteStack(
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to delete stack")
+      throw new GraphQLError('Unable to delete stack')
     })
 }
 

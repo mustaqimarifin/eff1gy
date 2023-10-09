@@ -1,113 +1,113 @@
-import React from "react"
-import Link from "next/link"
-import { Detail } from "~/components/ListDetail/Detail"
-import { TitleBar } from "~/components/ListDetail/TitleBar"
-import routes from "~/config/routes"
-import { baseEmail } from "~/config/seo"
+import React from 'react'
+import Link from 'next/link'
+import { Detail } from '~/components/ListDetail/Detail'
+import { TitleBar } from '~/components/ListDetail/TitleBar'
+import routes from '~/config/routes'
+import { baseEmail } from '~/config/seo'
 
-import Button, { PrimaryButton } from "../Button"
-import { Testimonial } from "./Testimonial"
+import Button, { PrimaryButton } from '../Button'
+import { Testimonial } from './Testimonial'
 
 const testimonials = [
   {
-    avatarSrc: "/static/img/crit/tmcw.jpg",
-    name: "Tom MacWright",
-    quoteSrc: "https://twitter.com/tmcw/status/1487905310761263109",
-    productSrc: "https://placemark.io",
-    productName: "Placemark",
-    productLogo: "/static/img/crit/placemark.jpg",
+    avatarSrc: '/static/img/crit/tmcw.jpg',
+    name: 'Tom MacWright',
+    quoteSrc: 'https://twitter.com/tmcw/status/1487905310761263109',
+    productSrc: 'https://placemark.io',
+    productName: 'Placemark',
+    productLogo: '/static/img/crit/placemark.jpg',
     reportSrc:
-      "https://brianlovin.notion.site/Crit-Placemark-ebe780d4707f436b9663f5f296d1bfc7",
-    youtube: "https://www.youtube.com/embed/reWeNx9KA_E",
+      'https://brianlovin.notion.site/Crit-Placemark-ebe780d4707f436b9663f5f296d1bfc7',
+    youtube: 'https://www.youtube.com/embed/reWeNx9KA_E',
     quote:
-      "Designing Placemark has often felt like wandering through a dungeon, this design crit process felt like someone popping up and showing me the dungeon map and showing me a whole bunch of secret shortcuts.",
+      'Designing Placemark has often felt like wandering through a dungeon, this design crit process felt like someone popping up and showing me the dungeon map and showing me a whole bunch of secret shortcuts.',
   },
   {
-    avatarSrc: "/static/img/crit/jmduke.jpg",
-    name: "Justin M. Duke",
-    quoteSrc: "https://twitter.com/jmduke/status/1488376005827842049",
-    productSrc: "https://buttondown.email",
-    productName: "Buttondown",
-    productLogo: "/static/img/crit/buttondown.jpg",
+    avatarSrc: '/static/img/crit/jmduke.jpg',
+    name: 'Justin M. Duke',
+    quoteSrc: 'https://twitter.com/jmduke/status/1488376005827842049',
+    productSrc: 'https://buttondown.email',
+    productName: 'Buttondown',
+    productLogo: '/static/img/crit/buttondown.jpg',
     reportSrc:
-      "https://brianlovin.notion.site/Crit-Buttondown-e9f46bd7995c4d53ae0dd2eb2ff86fab",
-    youtube: "https://www.youtube.com/embed/PxufnL7shIc",
+      'https://brianlovin.notion.site/Crit-Buttondown-e9f46bd7995c4d53ae0dd2eb2ff86fab',
+    youtube: 'https://www.youtube.com/embed/PxufnL7shIc',
     quote:
-      "I was lucky enough to get Brian to take a look at Buttondown and, uh, holy smokes — that was the best money I’ve poured into the business in a long, long time. Trust me: book some time with him. Easiest investment you can make in your product",
+      'I was lucky enough to get Brian to take a look at Buttondown and, uh, holy smokes — that was the best money I’ve poured into the business in a long, long time. Trust me: book some time with him. Easiest investment you can make in your product',
   },
   {
-    avatarSrc: "/static/img/crit/jeff_weinstein.jpg",
-    name: "Jeff Weinstein",
-    quoteSrc: "https://twitter.com/jeff_weinstein/status/1490918876112392196",
-    productSrc: "https://stripe.com/atlas",
-    productName: "Stripe Atlas",
-    productLogo: "/static/img/crit/stripe.jpg",
+    avatarSrc: '/static/img/crit/jeff_weinstein.jpg',
+    name: 'Jeff Weinstein',
+    quoteSrc: 'https://twitter.com/jeff_weinstein/status/1490918876112392196',
+    productSrc: 'https://stripe.com/atlas',
+    productName: 'Stripe Atlas',
+    productLogo: '/static/img/crit/stripe.jpg',
     reportSrc: null,
     youtube: null,
     quote:
-      "Brian’s critiques are a balanced alchemy of macro and micro. He identifies the few, most important things to structurally improve the user experience as well as a litany dump of smaller, straightforward changes to brighten fit and finish.",
+      'Brian’s critiques are a balanced alchemy of macro and micro. He identifies the few, most important things to structurally improve the user experience as well as a litany dump of smaller, straightforward changes to brighten fit and finish.',
   },
   {
-    avatarSrc: "/static/img/crit/meredithneyrand.jpeg",
-    name: "Meredith Neyrand",
-    quoteSrc: "https://twitter.com/MeredithNeyrand/status/1493343761337753600",
-    productSrc: "https://stripe.com/payments/payment-links",
-    productName: "Stripe Payment Links",
-    productLogo: "/static/img/crit/stripe.jpg",
+    avatarSrc: '/static/img/crit/meredithneyrand.jpeg',
+    name: 'Meredith Neyrand',
+    quoteSrc: 'https://twitter.com/MeredithNeyrand/status/1493343761337753600',
+    productSrc: 'https://stripe.com/payments/payment-links',
+    productName: 'Stripe Payment Links',
+    productLogo: '/static/img/crit/stripe.jpg',
     reportSrc: null,
     youtube: null,
     quote:
-      "Money well spent! Thanks for the super detailed write-up and feedback on the Payment Links experience @vmprmyth. Incredibly valuable to get an unbiased outside opinion like that.",
+      'Money well spent! Thanks for the super detailed write-up and feedback on the Payment Links experience @vmprmyth. Incredibly valuable to get an unbiased outside opinion like that.',
   },
   {
-    avatarSrc: "/static/img/crit/tommoor.png",
-    name: "Tom Moor",
-    quoteSrc: "https://twitter.com/tommoor/status/1492653348230627332?s=21",
-    productSrc: "https://getoutline.com",
-    productName: "Outline",
-    productLogo: "/static/img/crit/outline.png",
+    avatarSrc: '/static/img/crit/tommoor.png',
+    name: 'Tom Moor',
+    quoteSrc: 'https://twitter.com/tommoor/status/1492653348230627332?s=21',
+    productSrc: 'https://getoutline.com',
+    productName: 'Outline',
+    productLogo: '/static/img/crit/outline.png',
     reportSrc:
-      "https://brianlovin.notion.site/Outline-3947b9c3b5ff44a38af8e6146e6eb0fa",
-    youtube: "https://www.youtube.com/embed/UjG4lB2u-r4",
+      'https://brianlovin.notion.site/Outline-3947b9c3b5ff44a38af8e6146e6eb0fa',
+    youtube: 'https://www.youtube.com/embed/UjG4lB2u-r4',
     quote:
-      "We’ve all been stewing in our own designs for toooo long, a professional second set of eyes is a blessing 🙏",
+      'We’ve all been stewing in our own designs for toooo long, a professional second set of eyes is a blessing 🙏',
   },
   {
-    avatarSrc: "/static/img/crit/tylermking.jpeg",
-    name: "Tyler King",
-    quoteSrc: "https://twitter.com/TylerMKing",
-    productSrc: "https://lessannoyingcrm.com",
-    productName: "Less Annoying CRM",
-    productLogo: "/static/img/crit/lacrm.png",
-    reportSrc: "https://www.youtube.com/watch?v=x9KMAudQBjE",
-    youtube: "https://www.youtube.com/embed/x9KMAudQBjE",
+    avatarSrc: '/static/img/crit/tylermking.jpeg',
+    name: 'Tyler King',
+    quoteSrc: 'https://twitter.com/TylerMKing',
+    productSrc: 'https://lessannoyingcrm.com',
+    productName: 'Less Annoying CRM',
+    productLogo: '/static/img/crit/lacrm.png',
+    reportSrc: 'https://www.youtube.com/watch?v=x9KMAudQBjE',
+    youtube: 'https://www.youtube.com/embed/x9KMAudQBjE',
     quote:
-      "Brian’s Crit was like a cheat code. We’re a small company without much design expertise, but with just a few pointers here and there from Brian, our design has been elevated to a new level of polish and profesionalism. He also taught me quite a bit throughout the process so that I can maintain this higher standard in the future.",
+      'Brian’s Crit was like a cheat code. We’re a small company without much design expertise, but with just a few pointers here and there from Brian, our design has been elevated to a new level of polish and profesionalism. He also taught me quite a bit throughout the process so that I can maintain this higher standard in the future.',
   },
   {
-    avatarSrc: "/static/img/crit/kitze.jpg",
-    name: "Kitze",
-    quoteSrc: "https://twitter.com/thekitze",
-    productSrc: "https://sizzy.co",
-    productName: "Sizzy",
-    productLogo: "/static/img/crit/sizzy.jpeg",
-    reportSrc: "https://www.youtube.com/watch?v=WggOnKLnFe4",
-    youtube: "https://www.youtube.com/embed/WggOnKLnFe4",
+    avatarSrc: '/static/img/crit/kitze.jpg',
+    name: 'Kitze',
+    quoteSrc: 'https://twitter.com/thekitze',
+    productSrc: 'https://sizzy.co',
+    productName: 'Sizzy',
+    productLogo: '/static/img/crit/sizzy.jpeg',
+    reportSrc: 'https://www.youtube.com/watch?v=WggOnKLnFe4',
+    youtube: 'https://www.youtube.com/embed/WggOnKLnFe4',
     quote:
-      "After 2 years of randomly cramming buttons in random places, Brian’s super clean redesign felt like a breath of fresh air. Can’t wait to implement the changes!",
+      'After 2 years of randomly cramming buttons in random places, Brian’s super clean redesign felt like a breath of fresh air. Can’t wait to implement the changes!',
   },
 ]
 
 export function Crit() {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
-  const stripePaymentUrl = "https://buy.stripe.com/14keVCgDw4fN2KAeUX"
+  const stripePaymentUrl = 'https://buy.stripe.com/14keVCgDw4fN2KAeUX'
 
   return (
     <Detail.Container ref={scrollContainerRef}>
       <TitleBar
         magicTitle
-        title={"Crit"}
+        title={'Crit'}
         titleRef={titleRef}
         scrollContainerRef={scrollContainerRef}
       />
@@ -128,31 +128,31 @@ export function Crit() {
               with actionable suggestions for improvement.
             </p>
             <p>
-              See past health reports:{" "}
+              See past health reports:{' '}
               <a
                 href="https://brianlovin.notion.site/Crit-Placemark-ebe780d4707f436b9663f5f296d1bfc7"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Placemark
-              </a>{" "}
-              <span className="text-gray-300 dark:text-gray-800">/</span>{" "}
+              </a>{' '}
+              <span className="text-gray-300 dark:text-gray-800">/</span>{' '}
               <a
                 href="https://brianlovin.notion.site/Crit-Buttondown-e9f46bd7995c4d53ae0dd2eb2ff86fab"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Buttondown
-              </a>{" "}
-              <span className="text-gray-300 dark:text-gray-800">/</span>{" "}
+              </a>{' '}
+              <span className="text-gray-300 dark:text-gray-800">/</span>{' '}
               <a
                 href="https://brianlovin.notion.site/Outline-3947b9c3b5ff44a38af8e6146e6eb0fa"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Outline
-              </a>{" "}
-              <span className="text-gray-300 dark:text-gray-800">/</span>{" "}
+              </a>{' '}
+              <span className="text-gray-300 dark:text-gray-800">/</span>{' '}
               <a
                 href="https://www.youtube.com/watch?v=x9KMAudQBjE"
                 target="_blank"
@@ -196,9 +196,9 @@ export function Crit() {
             <h5>Who are you?</h5>
             <p>
               Hey! I'm Brian, I'm a product designer at GitHub, startup founder,
-              and side-project tinkerer. You can learn more about me{" "}
+              and side-project tinkerer. You can learn more about me{' '}
               <Link href="/">here</Link>
-              {", "}
+              {', '}
               or poke around the other pages on this site to get a feel for my
               work.
             </p>
@@ -266,14 +266,14 @@ export function Crit() {
                 to do this work.
               </li>
               <li>
-                I won’t implement any changes in code. See an{" "}
+                I won’t implement any changes in code. See an{' '}
                 <a
                   href="https://brianlovin.notion.site/Crit-Placemark-ebe780d4707f436b9663f5f296d1bfc7"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   example health report
-                </a>{" "}
+                </a>{' '}
                 for a more clear expectation of what you’ll receive.
               </li>
             </ul>

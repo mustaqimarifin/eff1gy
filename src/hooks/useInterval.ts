@@ -1,6 +1,6 @@
 // From https://github.com/donavon/use-interval/blob/master/src/index.tsx
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from 'react'
 
 type Delay = number | null
 type TimerHandler = (...args: any[]) => void

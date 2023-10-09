@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
-import { PostDetailFragment } from "../fragments/post"
+import { PostDetailFragment } from '../fragments/post'
 
 export const EDIT_POST = gql`
   mutation editPost($id: ID!, $data: EditPostInput!) {

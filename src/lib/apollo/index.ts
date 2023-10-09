@@ -1,6 +1,5 @@
-//import isEqual from 'lodash/isEqual'
-//import { isEqual } from 'lodash-es'
-import { useMemo } from "react"
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { useMemo } from 'react'
 import {
   ApolloClient,
   ApolloLink,
@@ -9,58 +8,37 @@ import {
   type Context,
   type NormalizedCacheObject,
   type ServerError,
-} from "@apollo/client"
-import { onError } from "@apollo/client/link/error"
-import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
-import { SchemaLink } from "@apollo/client/link/schema"
-import { relayStylePagination } from "@apollo/client/utilities"
-import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from "~/graphql/constants"
-import { schema } from "~/graphql/schema"
-import { type StrictTypedTypePolicies } from "~/graphql/typeSlut"
-import { sha256 } from "crypto-hash"
-import deepMerge from "deepmerge"
-import isEqual from "lodash-es/isEqual"
-import toast from "react-hot-toast"
-
-//import { deepmergeArray } from '../functions'
+} from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
+import { SchemaLink } from '@apollo/client/link/schema'
+import { relayStylePagination } from '@apollo/client/utilities'
+import { APOLLO_STATE_PROP_NAME, GRAPHQL_ENDPOINT } from '~/graphql/constants'
+import { schema } from '~/graphql/schema'
+import { type StrictTypedTypePolicies } from '~/graphql/typeSlut'
+import deepmerge from 'deepmerge'
+import isEqual from 'lodash-es/isEqual'
+import toast from 'react-hot-toast'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
-export const ssrMode = typeof window === "undefined"
+export const ssrMode = typeof window === 'undefined'
 
 function createIsomorphLink({ context }: Context) {
   if (ssrMode) {
     return new SchemaLink({ schema, context })
   } else {
     return new HttpLink({
-      uri: GRAPHQL_ENDPOINT || "/api/graphql",
-      credentials: "include",
+      uri: GRAPHQL_ENDPOINT || '/api/graphql',
+      credentials: 'include',
     })
   }
 }
-/* function createIsomorphLink({ context }: Context) {
-  if (ssrMode) {
-    return new SchemaLink({ schema, context })
-  } else {
-    return LinkChain
-  }
-}
-const LinkChain = createPersistedQueryLink({
-  sha256,
-  useGETForHashedQueries: true,
-}).concat(
-  new HttpLink({
-    uri: GRAPHQL_ENDPOINT || '/api/graphql',
-    credentials: 'include',
-    useGETForQueries: true,
-  })
-) */
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message }) => {
       try {
         toast.error(message, {
-          icon: "👹",
+          icon: '👹',
         })
       } catch {
         console.error({ message })
@@ -71,8 +49,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) {
     const err = networkError as ServerError
     try {
-      toast.error("error", {
-        icon: "👹",
+      toast.error('error', {
+        icon: '👹',
       })
     } catch {
       console.error({ err })
@@ -85,13 +63,13 @@ export function createClient({ initialState, context = {} }) {
   const typePolicies: StrictTypedTypePolicies = {
     Query: {
       fields: {
-        bookmarks: relayStylePagination(["filter"]),
-        questions: relayStylePagination(["filter"]),
+        bookmarks: relayStylePagination(['filter']),
+        questions: relayStylePagination(['filter']),
         stacks: relayStylePagination(),
       },
     },
     Comment: {
-      keyFields: ["id"],
+      keyFields: ['id'],
       fields: {
         id: {
           merge: false,
@@ -99,7 +77,7 @@ export function createClient({ initialState, context = {} }) {
       },
     },
     Bookmark: {
-      keyFields: ["id", "url"],
+      keyFields: ['id', 'url'],
       fields: {
         id: {
           merge: false,
@@ -120,13 +98,12 @@ export function createClient({ initialState, context = {} }) {
   })
 }
 
-export function initApolloClient({ initialState = null, context = {} }) {
+export async function initApolloClient({ initialState = null, context = {} }) {
   const _apolloClient = apolloClient ?? createClient({ initialState, context })
   if (initialState) {
     const existingCache = _apolloClient.extract()
 
-    //const merge = require('@fastify/deepmerge')({ mergeArray: deepmergeArray })
-    const data = deepMerge(initialState, existingCache, {
+    const data = deepmerge(initialState, existingCache, {
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
         ...destinationArray.filter((d) =>
@@ -138,7 +115,7 @@ export function initApolloClient({ initialState = null, context = {} }) {
     _apolloClient.cache.restore(data)
   }
 
-  if (typeof window === "undefined") return _apolloClient
+  if (typeof window === 'undefined') return _apolloClient
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient

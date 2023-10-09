@@ -1,19 +1,19 @@
-import * as React from "react"
-import Button from "~/components/Button"
-import { Input } from "~/components/Input"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
+import * as React from 'react'
+import Button from '~/components/Button'
+import { Input } from '~/components/Input'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
 import {
   useEditUserMutation,
   useGetViewerWithSettingsQuery,
   type GetViewerWithSettingsQuery,
-} from "~/graphql/typeSlut"
-import { nameRX } from "~/lib/functions"
+} from '~/graphql/typeSlut'
+import { nameRX } from '~/lib/functions'
 
 export function UsernameForm(props: {
-  viewer: GetViewerWithSettingsQuery["viewer"]
+  viewer: GetViewerWithSettingsQuery['viewer']
 }) {
   const { viewer } = props
-  const [name, setUsername] = React.useState("")
+  const [name, setUsername] = React.useState('')
   const [isEditing, setIsEditing] = React.useState(false)
   const [error, setError] = React.useState(null)
 
@@ -57,7 +57,7 @@ export function UsernameForm(props: {
             className="text-active cursor-pointer font-medium"
             onClick={() => setIsEditing(!isEditing)}
           >
-            {isEditing ? "Cancel" : "Edit"}
+            {isEditing ? 'Cancel' : 'Edit'}
           </button>
         </div>
       )}
@@ -66,7 +66,7 @@ export function UsernameForm(props: {
         <form className="space-y-2" onSubmit={onSubmit}>
           <Input
             type="text"
-            placeholder={"Choose a name"}
+            placeholder={'Choose a name'}
             value={name}
             autoFocus
             onChange={handleUsernameChange}
@@ -83,7 +83,7 @@ export function UsernameForm(props: {
           </p>
           <div className="flex justify-between">
             <Button type="submit">
-              {editUserResponse.loading ? <LoadingSpinner /> : "Save name"}
+              {editUserResponse.loading ? <LoadingSpinner /> : 'Save name'}
             </Button>
           </div>
         </form>

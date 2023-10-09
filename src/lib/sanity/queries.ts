@@ -1,4 +1,4 @@
-import { groq } from "next-sanity"
+import { groq } from 'next-sanity'
 
 const postFields = groq`
   "id": _id,
@@ -6,6 +6,16 @@ const postFields = groq`
   date,
   excerpt,
   "name" : author->name,
+  "tags": tags[]->title,
+  "caption" : coverImage.caption,
+  "slug": slug.current
+`
+
+const designFields = groq`
+  "id": _id,
+  title,
+  date,
+  overview,
   "tags": tags[]->title,
   "caption" : coverImage.caption,
   "slug": slug.current
@@ -24,6 +34,12 @@ export const settingsQuery = groq`*[_type == "settings"][0]`
 export const indexQuery = groq`
 *[_type == "post"] | order(priority desc, _updatedAt desc) {
 'id': _id, title, date, 'slug': slug.current
+}`
+
+export const designIndexQuery = groq`
+*[_type == "case-study"] | order(priority desc, _updatedAt desc) {
+'id': _id, title, date,  "caption" : coverImage.caption,
+ 'slug': slug.current
 }`
 
 export const pathquery = groq`
@@ -47,13 +63,30 @@ export const postQuery = groq`
   }
 `
 
+export const caseQuery = groq` 
+*[_type == "case-study" && slug.current == $slug] | order(_updatedAt desc) [0] {
+    ...,
+    ${designFields}
+  }
+`
+
 export const postSlugsQuery = groq`
 *[_type == "post" && defined(slug.current)][].slug.current
+`
+
+export const caseSlugsQuery = groq`
+*[_type == "case-study" && defined(slug.current)][].slug.current
 `
 
 export const postBySlugQuery = groq`
 *[_type == "post" && slug.current == $slug][0] {
   ${postFields}
+}
+`
+
+export const designBySlugQuery = groq`
+*[_type == "case-study" && slug.current == $slug][0] {
+  ${designFields}
 }
 `
 

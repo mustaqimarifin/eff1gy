@@ -1,6 +1,6 @@
-import { definePreview } from "next-sanity/preview"
+import { definePreview } from 'next-sanity/preview'
 
-import { dataset, projectId } from "./config"
+import { dataset, projectId } from './config'
 
 let alerted = false
 export const usePreview = definePreview({
@@ -11,7 +11,7 @@ export const usePreview = definePreview({
     // https://reactjs.org/docs/error-boundaries.html
     if (!alerted) {
       // eslint-disable-next-line no-alert
-      alert("You are not logged in. You will only see public data.")
+      alert('You are not logged in. You will only see public data.')
       alerted = true
     }
   },

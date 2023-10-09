@@ -1,6 +1,6 @@
-import React from "react"
-import { Detail } from "~/components/ListDetail/Detail"
-import { TitleBar } from "~/components/ListDetail/TitleBar"
+import React from 'react'
+import { Detail } from '~/components/ListDetail/Detail'
+import { TitleBar } from '~/components/ListDetail/TitleBar'
 
 export default function TOS() {
   const scrollContainerRef = React.useRef(null)
@@ -88,7 +88,7 @@ export default function TOS() {
                   &quot;Terms&quot;) mean these Terms and Conditions that form
                   the entire agreement between You and the Company regarding the
                   use of the Service. This Terms and Conditions agreement has
-                  been created with the help of the{" "}
+                  been created with the help of the{' '}
                   <a
                     href="https://www.privacypolicies.com/terms-conditions-generator/"
                     target="_blank"
@@ -110,7 +110,7 @@ export default function TOS() {
               <li>
                 <p>
                   <strong>Website</strong> refers to Mustaqim Arifin, accessible
-                  from{" "}
+                  from{' '}
                   <a
                     href="https://eff1gy.vercel.app"
                     rel="external nofollow noopener noreferrer"
@@ -338,7 +338,7 @@ export default function TOS() {
                 className="text-green-500"
                 href="mailto:mustaqim.arifin@gmail.com"
               >
-                {" "}
+                {' '}
                 Mustaqim Arifin
               </a>
             </p>

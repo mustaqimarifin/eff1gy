@@ -1,13 +1,13 @@
-import * as React from "react"
-import Link from "next/link"
-import { Avatar } from "~/components/Avatar"
-import { GhostButton } from "~/components/Button"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { useViewerQuery } from "~/graphql/typeSlut"
-import { Settings } from "lucide-react"
-import { signIn } from "next-auth/react"
+import * as React from 'react'
+import Link from 'next/link'
+import { Avatar } from '~/components/Avatar'
+import { GhostButton } from '~/components/Button'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { useViewerQuery } from '~/graphql/typeSlut'
+import { Settings } from 'lucide-react'
+import { signIn } from 'next-auth/react'
 
-import { GlobalNavigationContext } from "../Providers"
+import { GlobalNavigationContext } from '../Providers'
 
 function Container(props) {
   return (
@@ -31,7 +31,7 @@ export function UserFooter() {
           e.preventDefault()
           signIn()
         }}
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
       >
         Sign in
       </GhostButton>

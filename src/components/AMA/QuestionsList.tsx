@@ -1,13 +1,13 @@
-import * as React from "react"
-import { useRouter } from "next/router"
-import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { QuestionStatus, useGetQuestionsQuery } from "~/graphql/typeSlut"
-import { LayoutGroup, motion } from "framer-motion"
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import { ListContainer } from '~/components/ListDetail/ListContainer'
+import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/typeSlut'
+import { LayoutGroup, motion } from 'framer-motion'
 
-import { ListLoadMore } from "../ListDetail/ListLoadMore"
-import { LoadingSpinner } from "../LoadingSpinner"
-import { AMATitlebar } from "./AMATitlebar"
-import { QuestionListItem } from "./QuestionListItem"
+import { ListLoadMore } from '../ListDetail/ListLoadMore'
+import { LoadingSpinner } from '../LoadingSpinner'
+import { AMATitlebar } from './AMATitlebar'
+import { QuestionListItem } from './QuestionListItem'
 
 export const QuestionsContext = React.createContext({
   filterPending: false,

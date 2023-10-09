@@ -1,14 +1,14 @@
-import * as React from "react"
-import { Dropzone } from "~/components/Dropzone"
-import { Textarea } from "~/components/Input"
-import { Detail } from "~/components/ListDetail/Detail"
+import * as React from 'react'
+import { Dropzone } from '~/components/Dropzone'
+import { Textarea } from '~/components/Input'
+import { Detail } from '~/components/ListDetail/Detail'
 
-import { PostEditorContext } from "./PostEditor"
+import { PostEditorContext } from './PostEditor'
 
 export function PostEditorComposer() {
   const context = React.useContext(PostEditorContext)
   const { draftState, setDraftState } = context
-  const uploadingImagePlaceholder = "![](Uploading...)"
+  const uploadingImagePlaceholder = '![](Uploading...)'
 
   function handleTitleChange(e) {
     setDraftState((draft) => ({ ...draft, title: e.target.value }))
@@ -29,7 +29,7 @@ export function PostEditorComposer() {
   function onUploadFailed() {
     setDraftState((draft) => ({
       ...draft,
-      text: draft.text.replace(uploadingImagePlaceholder, ""),
+      text: draft.text.replace(uploadingImagePlaceholder, ''),
     }))
   }
 
@@ -52,7 +52,7 @@ export function PostEditorComposer() {
             rows={1}
             value={draftState.title}
             onChange={handleTitleChange}
-            placeholder={"Post title"}
+            placeholder={'Post title'}
             className="composer text-primary block w-full border-none p-0 text-2xl font-bold focus:border-0 focus:outline-none focus:ring-0 dark:bg-black md:text-3xl"
           />
           <Textarea
@@ -60,7 +60,7 @@ export function PostEditorComposer() {
             maxRows={2000}
             value={draftState.text}
             onChange={handleTextChange}
-            placeholder={"Write a post..."}
+            placeholder={'Write a post...'}
             className="composer text-primary prose block w-full border-none p-0 pt-5 text-lg font-normal focus:border-0 focus:outline-none focus:ring-0 dark:bg-black"
           />
         </Detail.Header>

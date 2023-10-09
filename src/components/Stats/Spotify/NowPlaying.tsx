@@ -1,14 +1,14 @@
-import * as React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Spotify } from "~/components/Icon"
-import { ketchup } from "~/lib/functions"
-import { type SpotifyData } from "~/types/site"
-import clsx from "clsx"
-import useSWR from "swr"
+import * as React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Spotify } from '~/components/Icon'
+import { ketchup } from '~/lib/functions'
+import { type SpotifyData } from '~/types/site'
+import clsx from 'clsx'
+import useSWR from 'swr'
 
 export default function NowPlaying({ className, ...rest }) {
-  const { data } = useSWR<SpotifyData>("/api/stats/now-playing", ketchup)
+  const { data } = useSWR<SpotifyData>('/api/stats/now-playing', ketchup)
 
   return data?.isPlaying ? (
     <figure className={className} data-cy="spotify">
@@ -16,11 +16,11 @@ export default function NowPlaying({ className, ...rest }) {
         {...rest}
         href={data.songUrl}
         className={clsx(
-          "relative flex items-center gap-4 p-3",
-          "border dark:border-gray-600",
-          "border-thin w-56 rounded-md",
-          "shadow-sm dark:shadow-none",
-          "focus-visible:ring-primary-300 focus:outline-none focus-visible:ring"
+          'relative flex items-center gap-4 p-3',
+          'border dark:border-gray-600',
+          'border-thin w-56 rounded-md',
+          'shadow-sm dark:shadow-none',
+          'focus-visible:ring-primary-300 focus:outline-none focus-visible:ring'
         )}
       >
         <Image
@@ -45,11 +45,11 @@ export default function NowPlaying({ className, ...rest }) {
     <>
       <div
         className={clsx(
-          "relative m-8 flex items-center gap-4 p-3",
-          "border dark:border-gray-600",
-          "border-thin w-56 rounded-md",
-          "shadow-sm dark:shadow-none",
-          "focus-visible:ring-primary-300 focus:outline-none focus-visible:ring"
+          'relative m-8 flex items-center gap-4 p-3',
+          'border dark:border-gray-600',
+          'border-thin w-56 rounded-md',
+          'shadow-sm dark:shadow-none',
+          'focus-visible:ring-primary-300 focus:outline-none focus-visible:ring'
         )}
       >
         <div className="absolute left-1.5 p-2  opacity-30">

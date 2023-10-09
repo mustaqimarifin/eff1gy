@@ -1,16 +1,15 @@
-import * as React from "react"
-import dynamic from "next/dynamic"
-import { CommentType } from "~/graphql/typeSlut"
-import { timestampToCleanTime } from "~/lib/transformers"
+import * as React from 'react'
+import dynamic from 'next/dynamic'
+import { CommentType } from '~/graphql/typeSlut'
+import { timestampToCleanTime } from '~/lib/transformers'
 
-import { CoverImage } from "../Image"
-import { Detail } from "../ListDetail/Detail"
-import { TitleBar } from "../ListDetail/TitleBar"
-import { LoadingSpinner } from "../LoadingSpinner"
-import ViewCounter from "../Stats/ViewCounter"
-import { BlogActions } from "./BlogActions"
-import PageTitle from "./PageTitle"
-import { PostSEO } from "./PostSEO"
+import { CoverImage } from '../Image'
+import { Detail } from '../ListDetail/Detail'
+import { TitleBar } from '../ListDetail/TitleBar'
+import { LoadingSpinner } from '../LoadingSpinner'
+import { BlogActions } from './BlogActions'
+import PageTitle from './PageTitle'
+import { PostSEO } from './PostSEO'
 
 export type Post = {
   id: string
@@ -27,12 +26,25 @@ export type Post = {
   tags?: string[]
 }
 
+export type CaseStudy = {
+  id: string
+  slug: string
+  name: string
+  content: string
+  title: string
+  date: string
+  caption: string
+  overview: string
+  coverImage: string
+  orientation?: 'landscape'
+}
+
 type Props = {
   children: React.ReactNode
   post: Post
 }
 
-const Comments = dynamic(() => import("../Comments"), {
+const Comments = dynamic(() => import('../Comments'), {
   ssr: false,
 })
 export function BlogDetail({ children, post }: Props) {
@@ -67,7 +79,7 @@ export function BlogDetail({ children, post }: Props) {
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={"/blog"}
+          backButtonHref={'/blog'}
           magicTitle
           title={post.title}
           //@ts-ignore
@@ -91,7 +103,7 @@ export function BlogDetail({ children, post }: Props) {
               {publishedAt.formatted}
               {` • `}
               {/*                 <ViewCounter slug={post.slug} />
-               */}{" "}
+               */}{' '}
               {` • `}
               <div className="flex space-x-2">
                 {post.tags?.length &&
@@ -104,7 +116,9 @@ export function BlogDetail({ children, post }: Props) {
             </div>
           </div>
 
-          <div className="dark:prose-dark prose mt-8 ">{children}</div>
+          <div className="dark:prose-dark mx-auto mt-8 w-full max-w-4xl lg:prose lg:text-lg ">
+            {children}
+          </div>
 
           <div className="py-6" />
           <React.Suspense fallback={<LoadingSpinner />}>

@@ -1,8 +1,8 @@
-import * as React from "react"
-import { ListItem } from "~/components/ListDetail/ListItem"
-import { type BookmarkListItemFragment } from "~/graphql/typeSlut"
-import { Link2Icon } from "lucide-react"
-import ReactVisibilitySensor from "react-visibility-sensor"
+import * as React from 'react'
+import { ListItem } from '~/components/ListDetail/ListItem'
+import { type BookmarkListItemFragment } from '~/graphql/typeSlut'
+import { Link2Icon } from 'lucide-react'
+import ReactVisibilitySensor from 'react-visibility-sensor'
 
 interface Props {
   bookmark: BookmarkListItemFragment
@@ -16,7 +16,7 @@ export const BookmarksListItem = React.memo<Props>(({ bookmark, active }) => {
     if (e.metaKey) {
       e.preventDefault()
       e.stopPropagation()
-      window.open(bookmark.url, "_blank").focus()
+      window.open(bookmark.url, '_blank').focus()
     }
   }
 

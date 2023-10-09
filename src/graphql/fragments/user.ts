@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
 export const UserInfoFragment = gql`
   fragment UserInfo on User {
@@ -6,7 +6,6 @@ export const UserInfoFragment = gql`
     id
     name
     image
-    role
     isViewer
     isAdmin
   }
@@ -16,9 +15,5 @@ export const UserSettingsFragment = gql`
   fragment UserSettings on User {
     email
     pendingEmail
-    emailSubscriptions {
-      type
-      subscribed
-    }
   }
 `

@@ -1,14 +1,14 @@
-import * as React from "react"
-import { useRouter } from "next/router"
-import Button from "~/components/Button"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { useAddPostMutation, useEditPostMutation } from "~/graphql/typeSlut"
-import { slugify } from "~/lib/functions"
-import { Sidebar } from "lucide-react"
-import toast from "react-hot-toast"
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import Button from '~/components/Button'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { useAddPostMutation, useEditPostMutation } from '~/graphql/typeSlut'
+import { slugify } from '~/lib/functions'
+import { Sidebar } from 'lucide-react'
+import toast from 'react-hot-toast'
 
-import { PostEditorContext } from "./PostEditor"
-import { PostEditorAutoSave } from "./PostEditorAutoSave"
+import { PostEditorContext } from './PostEditor'
+import { PostEditorAutoSave } from './PostEditorAutoSave'
 
 export function PostEditorActions() {
   const router = useRouter()
@@ -24,9 +24,9 @@ export function PostEditorActions() {
 
   const [addPost, { loading: creatingPost }] = useAddPostMutation({
     onCompleted({ addPost }) {
-      toast.success("Draft created")
+      toast.success('Draft created')
       router.push({
-        pathname: "/writing/[slug]/edit",
+        pathname: '/writing/[slug]/edit',
         query: { slug: addPost.slug },
       })
     },
@@ -63,8 +63,8 @@ export function PostEditorActions() {
           <LoadingSpinner />
         ) : (
           <>
-            <PostEditorAutoSave />{" "}
-            <span>{existingPost?.publishedAt ? "Update" : "Save draft"}</span>
+            <PostEditorAutoSave />{' '}
+            <span>{existingPost?.publishedAt ? 'Update' : 'Save draft'}</span>
           </>
         )}
       </Button>

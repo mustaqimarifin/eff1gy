@@ -1,19 +1,19 @@
-import * as React from "react"
-import { useRouter } from "next/router"
-import Button from "~/components/Button"
-import { Input } from "~/components/Input"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { TagPicker } from "~/components/Tag/TagPicker"
-import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks"
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import Button from '~/components/Button'
+import { Input } from '~/components/Input'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { TagPicker } from '~/components/Tag/TagPicker'
+import { GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import {
   useAddBookmarkMutation,
   useGetBookmarksQuery,
-} from "~/graphql/typeSlut"
-import toast from "react-hot-toast"
+} from '~/graphql/typeSlut'
+import toast from 'react-hot-toast'
 
 export function AddBookmarkForm({ closeModal }) {
-  const [url, setUrl] = React.useState("")
-  const [tag, setTag] = React.useState("web")
+  const [url, setUrl] = React.useState('')
+  const [tag, setTag] = React.useState('web')
   const router = useRouter()
 
   const query = GET_BOOKMARKS
@@ -40,7 +40,7 @@ export function AddBookmarkForm({ closeModal }) {
               ...bookmarks,
               edges: [
                 {
-                  __typename: "BookmarkEdge",
+                  __typename: 'BookmarkEdge',
                   cursor: addBookmark.id,
                   node: addBookmark,
                 },
@@ -64,11 +64,11 @@ export function AddBookmarkForm({ closeModal }) {
         // if I'm already viewing bookmarks, push me to the one I just created.
         // otherwise, this was triggered from the sidebar shortcut and
         // don't redirect
-        if (router.asPath.indexOf("/bookmarks") >= 0) {
+        if (router.asPath.indexOf('/bookmarks') >= 0) {
           return router.push(`/bookmarks/${id}`)
         } else {
-          toast("Bookmark created!", {
-            icon: "🙀 ",
+          toast('Bookmark created!', {
+            icon: '🙀 ',
           })
         }
       }
@@ -86,7 +86,7 @@ export function AddBookmarkForm({ closeModal }) {
   }
 
   const tagFilter = (t) => {
-    const allowedBookmarkTags = ["web", "lol", "portfolio"]
+    const allowedBookmarkTags = ['web', 'lol', 'portfolio']
     return allowedBookmarkTags.indexOf(t.name) >= 0
   }
 
@@ -104,7 +104,7 @@ export function AddBookmarkForm({ closeModal }) {
 
       <div className="flex justify-end pt-24">
         <Button disabled={!url || loading} onClick={onSubmit}>
-          {loading ? <LoadingSpinner /> : "Save"}
+          {loading ? <LoadingSpinner /> : 'Save'}
         </Button>
       </div>
     </form>

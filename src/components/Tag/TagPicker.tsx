@@ -1,9 +1,9 @@
-import * as React from "react"
-import { Listbox } from "@headlessui/react"
-import { useGetTagsQuery } from "~/graphql/typeSlut"
-import { ChevronDown } from "lucide-react"
+import * as React from 'react'
+import { Listbox } from '@headlessui/react'
+import { useGetTagsQuery } from '~/graphql/typeSlut'
+import { ChevronDown } from 'lucide-react'
 
-import { Tag } from "."
+import { Tag } from '.'
 
 export function TagPicker({ filter, onChange, defaultValue = undefined }) {
   const { data, loading } = useGetTagsQuery()
@@ -21,10 +21,10 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
       <div className="relative z-10 mt-1">
         <Listbox.Button
           className={`relative w-full cursor-pointer rounded-md border border-gray-200 bg-white bg-opacity-5 py-2.5 pl-4 pr-10 text-left shadow-sm dark:border-gray-700 dark:bg-white ${
-            selected ? "text-primary" : "text-quaternary"
+            selected ? 'text-primary' : 'text-quaternary'
           }`}
         >
-          {selected ? <>{selected}</> : "Choose a tag..."}
+          {selected ? <>{selected}</> : 'Choose a tag...'}
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronDown size={16} aria-hidden="true" />
           </span>
@@ -48,7 +48,7 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
               className={`text-primary relative flex flex-none cursor-pointer select-none p-1`}
               value={null}
             >
-              <Tag name={"__clear_tag_picker"} />
+              <Tag name={'__clear_tag_picker'} />
             </Listbox.Option>
           </div>
         </Listbox.Options>

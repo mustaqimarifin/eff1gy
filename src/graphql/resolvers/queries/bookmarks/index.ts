@@ -1,6 +1,6 @@
-import { PAGINATION_AMOUNT } from "~/graphql/constants"
-import { type Context } from "~/graphql/context"
-import { type GetBookmarksQueryVariables } from "~/graphql/typeSlut"
+import { PAGINATION_AMOUNT } from '~/graphql/constants'
+import { type Context } from '~/graphql/context'
+import { type GetBookmarksQueryVariables } from '~/graphql/typeSlut'
 
 export async function getBookmarks(
   _,
@@ -53,7 +53,7 @@ export async function getBookmarks(
       skip,
       cursor,
       where,
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       include: {
         tags: true,
         _count: {

@@ -1,7 +1,7 @@
-import * as React from "react"
-import Head from "next/head"
-import { baseUrl, defaultSEO } from "~/config/seo"
-import { DefaultSeo } from "next-seo"
+import * as React from 'react'
+import Head from 'next/head'
+import { baseUrl, defaultSEO } from '~/config/seo'
+import { DefaultSeo } from 'next-seo'
 
 export function SEO() {
   return (

@@ -1,7 +1,7 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
-import { StackCoreFragment, StackDetailFragment } from "../fragments/stack"
-import { UserInfoFragment } from "../fragments/user"
+import { StackCoreFragment, StackDetailFragment } from '../fragments/stack'
+import { UserInfoFragment } from '../fragments/user'
 
 export const EDIT_STACK = gql`
   mutation editStack($id: ID!, $data: EditStackInput!) {

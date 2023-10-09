@@ -1,17 +1,11 @@
-import React from "react"
-import Image from "next/image"
+import React from 'react'
+import Image from 'next/image'
 
 const DickPics = (props) => {
-  const { src, alt, blurDataURL } = props
+  const { src } = props
   return (
-    <div className="drop-shadow-sm filter">
-      <Image
-        src={require(`public/static/img/${src}`)}
-        alt={alt}
-        blurDataURL={blurDataURL}
-        placeholder={"blur" ?? "empty"}
-        className="rounded-lg"
-      />
+    <div className="aspect-square overflow-hidden drop-shadow-sm filter">
+      <Image src={src} alt="" width={300} height={300} className="rounded-lg" />
     </div>
   )
 }

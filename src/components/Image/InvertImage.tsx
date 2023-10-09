@@ -1,5 +1,5 @@
-import Image from "next/image"
-import { useTheme } from "next-themes"
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
 
 export default function InvertImage(props) {
   const { theme } = useTheme()
@@ -7,7 +7,7 @@ export default function InvertImage(props) {
   return (
     <Image
       alt={props.alt}
-      src={theme === "light" ? props.light : props.dark}
+      src={theme === 'light' ? props.light : props.dark}
       {...props}
     />
   )

@@ -1,13 +1,13 @@
-import { type Context } from "~/graphql/context"
+import { type Context } from '~/graphql/context'
 import {
   type MutationAddBookmarkArgs,
   type MutationDeleteBookmarkArgs,
   type MutationEditBookmarkArgs,
-} from "~/graphql/typeSlut"
-import { urlRX } from "~/lib/functions"
-import { GraphQLError } from "graphql"
+} from '~/graphql/typeSlut'
+import { urlRX } from '~/lib/functions'
+import { GraphQLError } from 'graphql'
 
-import getBookmarkMetaData from "./getBookmarkMetaData"
+import getBookmarkMetaData from './getBookmarkMetaData'
 
 export async function editBookmark(
   _,
@@ -19,7 +19,7 @@ export async function editBookmark(
   const { prisma } = ctx
 
   if (!title || title.length === 0)
-    throw new GraphQLError("Bookmark must have a title")
+    throw new GraphQLError('Bookmark must have a title')
 
   // reset tags
   await prisma.bookmark.update({
@@ -54,7 +54,7 @@ export async function editBookmark(
     }) */
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to edit bookmark")
+      throw new GraphQLError('Unable to edit bookmark')
     })
 }
 
@@ -67,7 +67,7 @@ export async function addBookmark(
   const { url, tag } = data
   const { prisma } = ctx
 
-  if (!urlRX(url)) throw new GraphQLError("URL was invalid")
+  if (!urlRX(url)) throw new GraphQLError('URL was invalid')
 
   const metadata = await getBookmarkMetaData(url)
   const { host, title, image, description, faviconUrl } = metadata
@@ -101,7 +101,7 @@ export async function addBookmark(
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to create bookmark")
+      throw new GraphQLError('Unable to create bookmark')
     })
 }
 
@@ -123,6 +123,6 @@ export async function deleteBookmark(
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to delete bookmark")
+      throw new GraphQLError('Unable to delete bookmark')
     })
 }

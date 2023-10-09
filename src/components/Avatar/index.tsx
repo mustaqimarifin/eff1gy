@@ -1,8 +1,8 @@
-import * as React from "react"
-import Image from "next/image"
+import * as React from 'react'
+import Image from 'next/image'
 
 export function Avatar({ user, src, ...props }) {
-  const fallbackUrl = "/static/img/fallback-avatar.png"
+  const fallbackUrl = '/static/img/fallback-avatar.png'
   const [srcState, setSrcState] = React.useState(src || fallbackUrl)
 
   // forces avatars to update if the component is in the same place between

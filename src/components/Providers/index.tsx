@@ -1,11 +1,11 @@
-import * as React from "react"
-import { type NextPageContext } from "next"
-import { ApolloProvider } from "@apollo/client"
-import { useApollo } from "~/lib/apollo"
-import { ThemeProvider } from "next-themes"
+import * as React from 'react'
+import { type NextPageContext } from 'next'
+import { ApolloProvider } from '@apollo/client/react/context/ApolloProvider'
+import { useApollo } from '~/lib/apollo'
+import { ThemeProvider } from 'next-themes'
 
-import { SEO } from "./SEO"
-import { Toast } from "./Toaster"
+import { SEO } from './SEO'
+import { Toast } from './Toaster'
 
 interface Props {
   children?: React.ReactNode

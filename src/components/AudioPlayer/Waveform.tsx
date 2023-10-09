@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 
 interface Props {
   src: string
@@ -69,7 +69,7 @@ export default function Waveform({
           return (
             <span
               key={i}
-              style={{ height, minWidth: "2px", minHeight: "2px" }}
+              style={{ height, minWidth: '2px', minHeight: '2px' }}
               className="w-full rounded-md bg-gray-800 dark:bg-gray-200"
             />
           )

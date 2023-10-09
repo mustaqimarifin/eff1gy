@@ -1,12 +1,12 @@
-import * as React from "react"
-import Button from "~/components/Button"
-import { ReactionButton } from "~/components/Button/ReactionButton"
-import { GET_POST } from "~/graphql/queries/posts"
+import * as React from 'react'
+import Button from '~/components/Button'
+import { ReactionButton } from '~/components/Button/ReactionButton'
+import { GET_POST } from '~/graphql/queries/posts'
 import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from "~/graphql/typeSlut"
+} from '~/graphql/typeSlut'
 
 function getReactionButton(post) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
@@ -19,9 +19,9 @@ function getReactionButton(post) {
         type: ReactionType.Post,
       },
       optimisticResponse: {
-        __typename: "Mutation",
+        __typename: 'Mutation',
         toggleReaction: {
-          __typename: "Post",
+          __typename: 'Post',
           ...post,
           reactionCount: post.viewerHasReacted
             ? post.reactionCount - 1

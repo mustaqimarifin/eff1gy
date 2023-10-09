@@ -1,12 +1,12 @@
-import { getBlog, getBlogs } from "./blogs"
-import { getBookmark, getBookmarks } from "./bookmarks"
-import { getComment, getComments } from "./comments"
-import { getPost, getPosts } from "./posts"
-import { getQuestion, getQuestions } from "./questions"
-import { getStack, getStacks } from "./stack"
-import { getTags } from "./tags"
-import { getUser } from "./user"
-import { viewer } from "./viewer"
+import { getBlog, getBlogs } from './blogs'
+import { getBookmark, getBookmarks } from './bookmarks'
+import { getComment, getComments } from './comments'
+import { getPost, getPosts } from './posts'
+import { getQuestion, getQuestions } from './questions'
+import { getStack, getStacks } from './stack'
+import { getTags } from './tags'
+import { getUser } from './user'
+import { viewer } from './viewer'
 
 export default {
   viewer: viewer,

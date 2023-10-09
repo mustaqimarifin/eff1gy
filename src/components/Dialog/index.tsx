@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Fragment, useState } from "react"
-import { Dialog, Transition } from "@headlessui/react"
-import { GhostButton } from "~/components/Button"
-import { X } from "lucide-react"
+import * as React from 'react'
+import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { GhostButton } from '~/components/Button'
+import { X } from 'lucide-react'
 
 interface DialogProps {
   trigger?: React.ReactElement
@@ -64,7 +64,7 @@ export function DialogComponent({
             </Transition.Child>
 
             <Transition.Child
-              as={"div"}
+              as={'div'}
               enter="ease-out duration-100"
               enterFrom="opacity-0 scale-30"
               enterTo="opacity-100 scale-100"

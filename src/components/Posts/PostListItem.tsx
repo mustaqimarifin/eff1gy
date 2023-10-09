@@ -1,7 +1,7 @@
-import * as React from "react"
-import { timestampToCleanTime } from "~/lib/transformers"
+import * as React from 'react'
+import { timestampToCleanTime } from '~/lib/transformers'
 
-import { ListItem } from "../ListDetail/ListItem"
+import { ListItem } from '../ListDetail/ListItem'
 
 export type PostPage = {
   id: string
@@ -24,7 +24,7 @@ export const PostListItem = React.memo<Props>(({ post, active }) => {
       href="/blog/[slug]"
       as={`/blog/${post.slug}`}
       title={post.title}
-      byline={post.date ? publishedAt.formatted : "Draft"}
+      byline={post.date ? publishedAt.formatted : 'Draft'}
       active={active}
     />
   )

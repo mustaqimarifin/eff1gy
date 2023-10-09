@@ -1,9 +1,9 @@
-import * as React from "react"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { useEditPostMutation } from "~/graphql/typeSlut"
-import useInterval from "~/hooks/useInterval"
+import * as React from 'react'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { useEditPostMutation } from '~/graphql/typeSlut'
+import useInterval from '~/hooks/useInterval'
 
-import { PostEditorContext } from "./PostEditor"
+import { PostEditorContext } from './PostEditor'
 
 export function PostEditorAutoSave() {
   const context = React.useContext(PostEditorContext)

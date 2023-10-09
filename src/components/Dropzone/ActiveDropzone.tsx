@@ -1,5 +1,5 @@
-import React from "react"
-import { Upload } from "lucide-react"
+import React from 'react'
+import { Upload } from 'lucide-react'
 
 export function ActiveDropzone() {
   return (

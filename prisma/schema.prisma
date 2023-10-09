@@ -1,7 +1,5 @@
 generator client {
-  provider         = "prisma-client-js"
-  precountFeatures = "(array)"
-  relationMode     = "foreignKeys"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -10,8 +8,7 @@ datasource db {
 }
 
 model Account {
-  id String @id @default(uuid())
-
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -39,19 +36,18 @@ model Session {
 }
 
 model User {
-  id String @id @default(uuid())
-
-  createdAt     DateTime   @default(now())
+  id            String        @id @default(cuid())
+  createdAt     DateTime      @default(now())
   name          String
   image         String?
-  email         String?    @unique
-  role          Role       @default(USER)
-  isAdmin       Boolean    @default(false)
+  email         String?       @unique
+  role          Role          @default(USER)
+  isAdmin       Boolean       @default(false)
   emailVerified DateTime?
   pendingEmail  String?
-  description   String?    @db.VarChar(256)
+  description   String?       @db.VarChar(256)
   location      String?
-  twitterId     String?    @unique
+  twitterId     String?       @unique
   accounts      Account[]
   comments      Comment[]
   blogs         Blog[]
@@ -59,7 +55,9 @@ model User {
   questions     Question[]
   reactions     Reaction[]
   sessions      Session[]
-  stacks        Stack[]    @relation("StackToUser")
+  stacks        Stack[]       @relation("StackToUser")
+  postComments  PostComment[]
+  likes         Like[]
 }
 
 model VerificationToken {
@@ -71,8 +69,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(uuid())
-
+  id            String     @id @default(cuid())
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   url           String     @unique
@@ -90,7 +87,7 @@ model Bookmark {
 }
 
 model Question {
-  id          String     @id @default(uuid())
+  id          String     @id @default(cuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
@@ -107,8 +104,7 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(uuid())
-
+  id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
@@ -135,7 +131,7 @@ model Comment {
 }
 
 model Audio {
-  id            String   @id @default(uuid())
+  id            String   @id @default(cuid())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
@@ -147,40 +143,42 @@ model Audio {
 }
 
 model Blog {
-  id        String     @id
-  date      DateTime?
-  slug      String?    @unique
-  comments  Comment[]
-  reactions Reaction[]
-  author    User?      @relation(fields: [userId], references: [id])
-  userId    String?
+  id           String        @id
+  date         DateTime?
+  slug         String?       @unique
+  comments     Comment[]
+  postComments PostComment[]
+  reactions    Reaction[]
+  author       User?         @relation(fields: [userId], references: [id])
+  userId       String?
 
   @@index([date])
 }
 
 model Post {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   publishedAt  DateTime?
-  slug         String     @unique
+  slug         String        @unique
   title        String
   text         String
   excerpt      String
   featureImage String?
   userId       String
   comments     Comment[]
-  author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
   reactions    Reaction[]
+  postComments PostComment[]
 
   @@index([publishedAt])
   @@index([userId])
 }
 
 model PostEdit {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   createdAt    DateTime @default(now())
   text         String
@@ -194,15 +192,13 @@ model PostEdit {
 }
 
 model Tag {
-  id String @id @default(uuid())
-
-  name      String     @unique
+  name      String     @id
   bookmarks Bookmark[] @relation("BookmarkToTag")
   stacks    Stack[]    @relation("StackToTag")
 }
 
 model Stack {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -218,7 +214,7 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
 
   createdAt  DateTime  @default(now())
   userId     String
@@ -243,12 +239,37 @@ model Reaction {
 }
 
 model PageView {
-  id String @id @default(uuid())
-
+  slug      String   @id
   lastSeen  DateTime @default(now())
-  viewCount Int?     @default(0)
-  catID     String   @unique
-  sessionID String?  @unique
+  viewCount Int?     @default(1)
+}
+
+model PostComment {
+  id        String        @id @default(nanoid())
+  text      String
+  createdAt DateTime
+  updatedAt DateTime?
+  userId    String?
+  parentId  String?
+  slug      String?
+  parent    PostComment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   PostComment[] @relation("ParentChild")
+  post      Post?         @relation(fields: [slug], references: [slug], onDelete: Cascade)
+  user      User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     Like[]
+  blog      Blog?         @relation(fields: [blogId], references: [id])
+  blogId    String?
+
+  @@index([userId, slug, createdAt])
+}
+
+model Like {
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postComment   PostComment @relation(fields: [postCommentId], references: [id])
+  postCommentId String
+
+  @@id([userId, postCommentId])
 }
 
 model EmailSubscription {

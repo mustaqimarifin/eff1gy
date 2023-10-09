@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Detail } from "~/components/ListDetail/Detail"
-import { MarkdownRenderer } from "~/components/MarkdownRenderer"
+import * as React from 'react'
+import { Detail } from '~/components/ListDetail/Detail'
+import { MarkdownRenderer } from '~/components/MarkdownRenderer'
 
-import { PostEditorContext } from "./PostEditor"
+import { PostEditorContext } from './PostEditor'
 
 export function PostEditorPreview({
   children,

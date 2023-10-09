@@ -1,11 +1,11 @@
-import { baseUrl } from "~/config/seo"
-import { type Context } from "~/graphql/context"
+import { baseUrl } from '~/config/seo'
+import { type Context } from '~/graphql/context'
 import {
   type MutationAddQuestionArgs,
   type MutationDeleteQuestionArgs,
   type MutationEditQuestionArgs,
-} from "~/graphql/typeSlut"
-import { GraphQLError } from "graphql"
+} from '~/graphql/typeSlut'
+import { GraphQLError } from 'graphql'
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
@@ -15,14 +15,13 @@ export async function editQuestion(
   args: MutationEditQuestionArgs,
   ctx: Context
 ) {
-  const { data } = args
+  const { data, id } = args
   const { audioUrl, waveform } = data
-  const { id } = args
   const { prisma, viewer } = ctx
 
   const question = await prisma.question.findUnique({ where: { id } })
   if (!question) {
-    throw new GraphQLError("Question doesn’t exist")
+    throw new GraphQLError('Question doesn’t exist')
   }
 
   if (viewer.isAdmin || viewer.id === question.userId) {
@@ -47,11 +46,11 @@ export async function editQuestion(
       }) */
       .catch((err) => {
         console.error({ err })
-        throw new GraphQLError("Unable to edit question")
+        throw new GraphQLError('Unable to edit question')
       })
   }
 
-  throw new GraphQLError("No permission to delete this question")
+  throw new GraphQLError('No permission to delete this question')
 }
 
 export async function addQuestion(
@@ -84,7 +83,7 @@ export async function addQuestion(
     })
     .catch((err) => {
       console.error({ err })
-      throw new GraphQLError("Unable to add question")
+      throw new GraphQLError('Unable to add question')
     })
 
   return question
@@ -110,9 +109,9 @@ export async function deleteQuestion(
       })
       .catch((err) => {
         console.error({ err })
-        throw new GraphQLError("Unable to delete question")
+        throw new GraphQLError('Unable to delete question')
       })
   }
 
-  throw new GraphQLError("No permission to delete this question")
+  throw new GraphQLError('No permission to delete this question')
 }

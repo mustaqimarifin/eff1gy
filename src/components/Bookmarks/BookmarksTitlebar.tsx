@@ -1,11 +1,11 @@
-import * as React from "react"
-import { GhostButton } from "~/components/Button"
-import { TitleBar } from "~/components/ListDetail/TitleBar"
-import { useViewerQuery } from "~/graphql/typeSlut"
-import { PlusIcon } from "lucide-react"
+import * as React from 'react'
+import { GhostButton } from '~/components/Button'
+import { TitleBar } from '~/components/ListDetail/TitleBar'
+import { useViewerQuery } from '~/graphql/typeSlut'
+import { PlusIcon } from 'lucide-react'
 
-import { AddBookmarkDialog } from "./AddBookmarkDialog"
-import { BookmarksFilterMenu } from "./FilterMenu"
+import { AddBookmarkDialog } from './AddBookmarkDialog'
+import { BookmarksFilterMenu } from './FilterMenu'
 
 export function BookmarksTitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()

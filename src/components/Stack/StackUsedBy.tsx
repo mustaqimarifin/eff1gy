@@ -1,14 +1,14 @@
-import * as React from "react"
-import Link from "next/link"
-import { Avatar } from "~/components/Avatar"
-import { Tooltip } from "~/components/Tooltip"
-import { GET_STACK } from "~/graphql/queries/stack"
+import * as React from 'react'
+import Link from 'next/link'
+import { Avatar } from '~/components/Avatar'
+import { Tooltip } from '~/components/Tooltip'
+import { GET_STACK } from '~/graphql/queries/stack'
 import {
   useGetStackQuery,
   useToggleStackUserMutation,
   useViewerQuery,
-} from "~/graphql/typeSlut"
-import { useWindowFocus } from "~/hooks/useWindowFocus"
+} from '~/graphql/typeSlut'
+import { useWindowFocus } from '~/hooks/useWindowFocus'
 
 export function StackUsedBy(props) {
   const { triggerSignIn } = props
@@ -34,9 +34,9 @@ export function StackUsedBy(props) {
         id: props.stack.id,
       },
       optimisticResponse: {
-        __typename: "Mutation",
+        __typename: 'Mutation',
         toggleStackUser: {
-          __typename: "Stack",
+          __typename: 'Stack',
           ...props.stack,
           usedByViewer: !data?.stack?.usedByViewer,
           usedBy: data?.stack?.usedByViewer
@@ -90,7 +90,7 @@ export function StackUsedBy(props) {
           </p>
         ) : (
           <p className="text-quaternary text-sm font-medium">
-            Also used by{" "}
+            Also used by{' '}
             {data?.stack?.usedBy.length === 1
               ? `${data?.stack?.usedBy.length} person`
               : `${data?.stack?.usedBy.length} people`}

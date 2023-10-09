@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
 export default gql`
   scalar Date
@@ -74,6 +74,12 @@ export default gql`
     hitRate: Int
   }
 
+  enum UserRole {
+    BLOCKED
+    USER
+    ADMIN
+  }
+
   enum CommentType {
     BOOKMARK
     QUESTION
@@ -118,32 +124,14 @@ export default gql`
     hitRate: Int
   }
 
-  enum UserRole {
-    BLOCKED
-    USER
-    ADMIN
-  }
-
-  enum EmailSubscriptionType {
-    HACKER_NEWS
-    NEWSLETTER
-  }
-
-  type EmailSubscription {
-    type: EmailSubscriptionType
-    subscribed: Boolean
-  }
-
   type User {
     id: ID!
     createdAt: Date
-    role: UserRole
     name: String!
     image: String
     pendingEmail: String
     isViewer: Boolean
     email: String
-    emailSubscriptions: [EmailSubscription]
     isAdmin: Boolean
   }
 
@@ -280,12 +268,6 @@ export default gql`
     email: String
   }
 
-  input EmailSubscriptionInput {
-    type: EmailSubscriptionType!
-    subscribed: Boolean!
-    email: String
-  }
-
   input AddStackInput {
     name: String!
     url: String!
@@ -367,7 +349,6 @@ export default gql`
 
     editUser(data: EditUserInput): User
     deleteUser: Boolean
-    editEmailSubscription(data: EmailSubscriptionInput): User
     addPost(data: AddPostInput!): Post
 
     editPost(id: ID!, data: EditPostInput!): Post

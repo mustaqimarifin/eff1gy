@@ -1,13 +1,13 @@
-import * as React from "react"
-import { ListDetailView, SiteLayout } from "~/components/Layouts"
-import { withProviders } from "~/components/Providers/withProviders"
-import { StackList } from "~/components/Stack/StackList"
-import routes from "~/config/routes"
-import { getContext } from "~/graphql/context"
-import { GET_STACKS } from "~/graphql/queries/stack"
-import { GET_VIEWER } from "~/graphql/queries/viewer"
-import { addApolloState, initApolloClient } from "~/lib/apollo"
-import { NextSeo } from "next-seo"
+import * as React from 'react'
+import { ListDetailView, SiteLayout } from '~/components/Layouts'
+import { withProviders } from '~/components/Providers/withProviders'
+import { StackList } from '~/components/Stack/StackList'
+import routes from '~/config/routes'
+import { getContext } from '~/graphql/context'
+import { GET_STACKS } from '~/graphql/queries/stack'
+import { GET_VIEWER } from '~/graphql/queries/viewer'
+import { addApolloState, initApolloClient } from '~/lib/apollo'
+import { NextSeo } from 'next-seo'
 
 function StackPage() {
   return (

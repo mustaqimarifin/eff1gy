@@ -1,9 +1,9 @@
-import * as React from "react"
+import * as React from 'react'
 //import Image from 'next/image'
-import Link from "next/link"
-import { signIn } from "next-auth/react"
+import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 
-import { GoogleButton, TwitterButton } from "../Button"
+import { GoogleButton, TwitterButton } from '../Button'
 
 export function SignInDialogContent() {
   return (
@@ -85,9 +85,9 @@ export function SignInDialogContent() {
           <GoogleButton
             onClick={(e) => {
               e.preventDefault()
-              signIn("google")
+              signIn('google')
             }}
-            style={{ flex: "1" }}
+            style={{ flex: '1' }}
             size="large"
           >
             <svg
@@ -106,9 +106,9 @@ export function SignInDialogContent() {
           <TwitterButton
             onClick={(e) => {
               e.preventDefault()
-              signIn("twitter")
+              signIn('twitter')
             }}
-            style={{ flex: "1" }}
+            style={{ flex: '1' }}
             size="large"
           >
             <svg

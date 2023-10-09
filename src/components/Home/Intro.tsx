@@ -1,10 +1,10 @@
-import * as React from "react"
-import Image from "next/image"
-import { Akhyla, MapIcon, Muse2 } from "~/components/Icon"
-import { Detail } from "~/components/ListDetail/Detail"
-import { TitleBar } from "~/components/ListDetail/TitleBar"
+import * as React from 'react'
+import Image from 'next/image'
+import { Akhyla, MapIcon, Muse2 } from '~/components/Icon'
+import { Detail } from '~/components/ListDetail/Detail'
+import { TitleBar } from '~/components/ListDetail/TitleBar'
 
-import { TraceImage } from "../Image"
+import { TraceImage } from '../Image'
 
 function SectionTitle(props) {
   return (
@@ -172,16 +172,16 @@ export function Intro() {
           <div className="space-y-8 pb-24 md:space-y-16">
             <article className="layout w-full p-2 lg:max-w-3xl">
               <h2 className="mb-6 pt-4 font-serif text-2xl font-medium drop-shadow-sm md:text-4xl">
-                Greetings! I'm the{" "}
+                Greetings! I'm the{' '}
                 <span className="dark:text-active font-serif font-normal text-twitter">
                   marketing manager&nbsp;
                 </span>
-                and{" "}
+                and{' '}
                 <span className="dark:text-active font-serif font-normal text-twitter">
                   creative lead&nbsp;
                 </span>
                 at{` `}
-                <Muse2 className="inline h-12 items-center dark:invert" />,{" "}
+                <Muse2 className="inline h-12 items-center dark:invert" />,{' '}
                 <span>focusing on&nbsp;</span>
                 <span className="text-coyRed font-serif">
                   large-scale events tech
@@ -189,7 +189,7 @@ export function Intro() {
                 , and&nbsp;
                 <span className="text-coyRed font-serif">
                   optimization.&nbsp;
-                </span>{" "}
+                </span>{' '}
               </h2>
 
               <div className="float-right m-4 w-[120px] filter sm:w-[190px] ">
@@ -208,12 +208,12 @@ export function Intro() {
                   <span className="text-orange-400 dark:text-hacker-news">
                     audio engineer&nbsp;
                   </span>
-                  and{" "}
+                  and{' '}
                   <span className="text-orange-400 dark:text-hacker-news">
                     music producer
                   </span>
-                  . In 2014, I co-founded{" "}
-                  <Akhyla className="mb-1 inline h-8 w-8 items-center text-red-400" />{" "}
+                  . In 2014, I co-founded{' '}
+                  <Akhyla className="mb-1 inline h-8 w-8 items-center text-red-400" />{' '}
                   Akhyla - a platform to electronic musicians to learn,
                   collaborate and make records.And in between that time was
                   Music Director for Infinity Games working on MMORPG, Heroes of
@@ -225,10 +225,10 @@ export function Intro() {
                   catalog the things I discover online.
                 </p>
                 <p className="dark:prose-dark prose py-4 leading-loose md:prose-lg">
-                  Thanks for stopping by!{" "}
+                  Thanks for stopping by!{' '}
                 </p>
                 <p className="dark:prose-dark prose py-4 leading-loose md:prose-lg">
-                  Mustaqim Arifin{" "}
+                  Mustaqim Arifin{' '}
                 </p>
               </div>
             </article>

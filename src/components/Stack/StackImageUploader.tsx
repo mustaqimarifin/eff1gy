@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react"
-import Image from "next/image"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { TrashIcon, UploadIcon } from "lucide-react"
-import { useDropzone } from "react-dropzone"
+import React, { useCallback, useState } from 'react'
+import Image from 'next/image'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { TrashIcon, UploadIcon } from 'lucide-react'
+import { useDropzone } from 'react-dropzone'
 
 //import { url } from '~/lib/cloudinary/api'
 
@@ -12,15 +12,15 @@ export function StackImageUploader({ stack, onImageUploaded }) {
   const [previewImage, setPreviewImage] = useState(null)
 
   async function getSignedUrl() {
-    const data = await fetch("/api/images/sign").then((res) => res.json())
+    const data = await fetch('/api/images/sign').then((res) => res.json())
     return data?.uploadURL
   }
 
   async function uploadFile({ file, signedUrl }) {
     const data = new FormData()
-    data.append("file", file)
+    data.append('file', file)
     const upload = await fetch(signedUrl, {
-      method: "POST",
+      method: 'POST',
       body: data,
     }).then((r) => r.json())
     return upload?.result?.id
@@ -33,13 +33,13 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 
     if (!signedUrl) {
       setLoading(false)
-      return console.error("No signed url")
+      return console.error('No signed url')
     }
 
     const id = await uploadFile({ file, signedUrl })
     if (!id) {
       setLoading(false)
-      return console.error("Upload failed")
+      return console.error('Upload failed')
     }
 
     setLoading(false)
@@ -51,7 +51,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
     onDrop,
     maxSize: 1000 * 1000, // 1mb,
     accept: {
-      "image/*": [],
+      'image/*': [],
     },
     /*     accept: {
       'image/*': ['.jpeg', '.png', '.webp', '.svg', '.gif'],

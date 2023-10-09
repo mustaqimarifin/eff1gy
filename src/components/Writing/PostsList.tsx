@@ -1,24 +1,24 @@
-import * as React from "react"
-import { useRouter } from "next/router"
-import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { useGetPostsQuery } from "~/graphql/typeSlut"
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import { ListContainer } from '~/components/ListDetail/ListContainer'
+import { useGetPostsQuery } from '~/graphql/typeSlut'
 
-import { LoadingSpinner } from "../LoadingSpinner"
-import { PostListItem } from "./PostListItem"
-import { WritingTitlebar } from "./WritingTitlebar"
+import { LoadingSpinner } from '../LoadingSpinner'
+import { PostListItem } from './PostListItem'
+import { WritingTitlebar } from './WritingTitlebar'
 
 export const WritingContext = React.createContext({
-  filter: "published",
+  filter: 'published',
   setFilter: (filter: string) => {},
 })
 
 export function PostsList() {
   const router = useRouter()
-  const [filter, setFilter] = React.useState("published")
+  const [filter, setFilter] = React.useState('published')
   const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 
   const variables =
-    filter === "published"
+    filter === 'published'
       ? { filter: { published: true } }
       : { filter: { published: false } }
 

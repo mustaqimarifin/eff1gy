@@ -1,14 +1,14 @@
-import * as React from "react"
-import { EditBookmarkDialog } from "~/components/Bookmarks/EditBookmarkDialog"
-import Button from "~/components/Button"
-import { GET_BOOKMARK } from "~/graphql/queries/bookmarks"
+import * as React from 'react'
+import { EditBookmarkDialog } from '~/components/Bookmarks/EditBookmarkDialog'
+import Button from '~/components/Button'
+import { GET_BOOKMARK } from '~/graphql/queries/bookmarks'
 import {
   ReactionType,
   useToggleReactionMutation,
   useViewerQuery,
-} from "~/graphql/typeSlut"
+} from '~/graphql/typeSlut'
 
-import { ReactionButton } from "../Button/ReactionButton"
+import { ReactionButton } from '../Button/ReactionButton'
 
 //import ViewCounter from '../Stats/ViewCounter'
 
@@ -24,9 +24,9 @@ function getReactionButton(bookmark) {
         type: ReactionType.Bookmark,
       },
       optimisticResponse: {
-        __typename: "Mutation",
+        __typename: 'Mutation',
         toggleReaction: {
-          __typename: "Bookmark",
+          __typename: 'Bookmark',
           ...bookmark,
           reactionCount: bookmark.viewerHasReacted
             ? bookmark.reactionCount - 1

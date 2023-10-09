@@ -1,9 +1,9 @@
-import { baseUrl } from "~/config/seo"
-import { IS_PROD } from "~/graphql/constants"
-import { useLocalFiles } from "~/graphql/helpers/useLocalFiles"
+import { baseUrl } from '~/config/seo'
+import { IS_PROD } from '~/graphql/constants'
+import { useLocalFiles } from '~/graphql/helpers/useLocalFiles'
 
-const TOP_BASE_URL = "https://hacker-news.firebaseio.com/v0"
-const ITEM_BASE_URL = "https://api.hnpwa.com/v0"
+const TOP_BASE_URL = 'https://hacker-news.firebaseio.com/v0'
+const ITEM_BASE_URL = 'https://api.hnpwa.com/v0'
 
 export async function getPostIds(sort) {
   async function getData() {
@@ -94,7 +94,7 @@ export async function getHNPostsForDigest(sort) {
   const dayAgo = now - 60 * 60 * 24
 
   // don't return jobs or polls
-  const links = posts.filter((post) => post.type === "link")
+  const links = posts.filter((post) => post.type === 'link')
   const withinLastDay = links.filter((post) => post.time > dayAgo)
   const sorted = withinLastDay.sort((a, b) => b.points - a.points)
   return sorted.slice(0, 16)

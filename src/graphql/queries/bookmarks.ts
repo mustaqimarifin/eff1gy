@@ -1,9 +1,9 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
 import {
   BookmarkDetailFragment,
   BookmarksConnectionFragment,
-} from "../fragments/bookmark"
+} from '../fragments/bookmark'
 
 export const GET_BOOKMARKS = gql`
   query getBookmarks($first: Int, $after: String, $filter: BookmarkFilter) {

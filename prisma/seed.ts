@@ -46,6 +46,14 @@ async function seed() {
 }
 
 seed()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
 
 /*   const blog2 = await prisma.blog.create({
     data: {

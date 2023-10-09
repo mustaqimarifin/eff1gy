@@ -1,21 +1,21 @@
-import * as React from "react"
-import Link from "next/link"
-import { Avatar } from "~/components/Avatar"
-import Button, { PrimaryButton } from "~/components/Button"
-import { Textarea } from "~/components/Input"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { GET_COMMENTS } from "~/graphql/queries/comments"
+import * as React from 'react'
+import Link from 'next/link'
+import { Avatar } from '~/components/Avatar'
+import Button, { PrimaryButton } from '~/components/Button'
+import { Textarea } from '~/components/Input'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { GET_COMMENTS } from '~/graphql/queries/comments'
 import {
   useDeleteCommentMutation,
   useEditCommentMutation,
   type Comment as CommentProp,
   type CommentType,
   type GetCommentsQuery,
-} from "~/graphql/typeSlut"
-import { timestampToCleanTime } from "~/lib/transformers"
+} from '~/graphql/typeSlut'
+import { timestampToCleanTime } from '~/lib/transformers'
 
-import { MarkdownRenderer } from "../MarkdownRenderer"
-import { CommentMenu } from "./CommentMenu"
+import { MarkdownRenderer } from '../MarkdownRenderer'
+import { CommentMenu } from './CommentMenu'
 
 interface Props {
   comment: CommentProp
@@ -35,7 +35,7 @@ export const Comment = React.memo(function MemoComment({
   const [deleteComment] = useDeleteCommentMutation({
     variables: { id: comment.id },
     optimisticResponse: {
-      __typename: "Mutation",
+      __typename: 'Mutation',
       deleteComment: true,
     },
     update(cache) {
@@ -58,14 +58,14 @@ export const Comment = React.memo(function MemoComment({
   const [editComment] = useEditCommentMutation({
     variables: { id: comment.id, text: editText },
     optimisticResponse: {
-      __typename: "Mutation",
+      __typename: 'Mutation',
       editComment: {
-        __typename: "Comment",
+        __typename: 'Comment',
         ...comment,
         text: editText,
         author: {
           ...comment.author,
-          __typename: "User",
+          __typename: 'User',
         },
       },
     },
@@ -89,7 +89,7 @@ export const Comment = React.memo(function MemoComment({
       if (editText.trim().length === 0 || isSavingEdit) return
       return handleSaveEdit()
     }
-    if (e.keyCode === 27 || e.key === "Escape") {
+    if (e.keyCode === 27 || e.key === 'Escape') {
       setIsEditing(false)
       setEditText(comment.text)
     }
@@ -101,7 +101,7 @@ export const Comment = React.memo(function MemoComment({
   }
 
   const createdAt = timestampToCleanTime({
-    month: "short",
+    month: 'short',
     timestamp: comment.createdAt,
   })
 
@@ -161,7 +161,7 @@ export const Comment = React.memo(function MemoComment({
               disabled={editText.trim().length === 0 || isSavingEdit}
               onClick={handleSaveEdit}
             >
-              {isSavingEdit ? <LoadingSpinner /> : "Save"}
+              {isSavingEdit ? <LoadingSpinner /> : 'Save'}
             </PrimaryButton>
           </div>
         </div>

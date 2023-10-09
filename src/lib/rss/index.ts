@@ -1,12 +1,12 @@
-import routes from "~/config/routes"
-import { baseEmail, baseUrl } from "~/config/seo"
-import { Feed } from "feed"
+import routes from '~/config/routes'
+import { baseEmail, baseUrl } from '~/config/seo'
+import { Feed } from 'feed'
 
 export async function generateRSS(posts) {
   const date = new Date()
   const updated = new Date(posts[0].publishedAt)
   const author = {
-    name: "Mustaqim Arifin",
+    name: 'Mustaqim Arifin',
     email: baseEmail,
     link: baseUrl,
   }
@@ -16,7 +16,7 @@ export async function generateRSS(posts) {
     description: routes.writing.seo.description,
     id: baseUrl,
     link: baseUrl,
-    language: "en",
+    language: 'en',
     image: `${baseUrl}/static/meta/icon-512.png`,
     favicon: `${baseUrl}/static/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, Mustaqim Arifin`,

@@ -1,17 +1,17 @@
-import * as React from "react"
-import { useRouter } from "next/router"
-import yespls from "~/lib/functions/yespls"
-import useSWR from "swr"
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import yespls from '~/lib/functions/yespls'
+import useSWR from 'swr'
 
-import { ListContainer } from "../ListDetail/ListContainer"
-import { TitleBar } from "../ListDetail/TitleBar"
-import { type Post } from "./BlogDetail"
+import { ListContainer } from '../ListDetail/ListContainer'
+import { TitleBar } from '../ListDetail/TitleBar'
+import { type Post } from './BlogDetail'
 //import useSWR from 'swr';
 //import LoadingSpinner from '../LoadingSpinner';
-import { PostListItem, type PostPage } from "./PostListItem"
+import { PostListItem, type PostPage } from './PostListItem'
 
 export type PostPageGroup = {
-  map(arg0: (post: PostPage) => JSX.Element): import("react").ReactNode
+  map(arg0: (post: PostPage) => JSX.Element): import('react').ReactNode
   posts: Array<PostPage>
 }
 export const PostsList = () => {
@@ -28,7 +28,7 @@ export const PostsList = () => {
     }
     fetchPosts();
   }, [setPosts]); */
-  const { data: posts } = useSWR<Post[]>("/api/posts", yespls)
+  const { data: posts } = useSWR<Post[]>('/api/posts', yespls)
 
   /*   const { data: posts } = useQuery<PostPageGroup>({
     queryKey: ['posts'],

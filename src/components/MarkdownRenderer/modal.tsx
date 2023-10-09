@@ -1,6 +1,6 @@
-import { Fragment, useRef, useState } from "react"
-import Image from "next/image"
-import { Dialog, Transition } from "@headlessui/react"
+import { Fragment, useRef, useState } from 'react'
+import Image from 'next/image'
+import { Dialog, Transition } from '@headlessui/react'
 
 export default function Modal() {
   const [open, setOpen] = useState(true)

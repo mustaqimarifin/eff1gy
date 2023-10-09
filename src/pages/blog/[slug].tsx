@@ -1,14 +1,14 @@
-import { ListDetailView, SiteLayout } from "~/components/Layouts"
-import { Detail } from "~/components/ListDetail/Detail"
-import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { MDSEX } from "~/components/MarkdownRenderer"
-import { mdxToCode } from "~/components/MarkdownRenderer/Mdx"
-import { BlogDetail, type Post } from "~/components/Posts/BlogDetail"
-import { PostsList } from "~/components/Posts/PostsList"
-import { withProviders } from "~/components/Providers/withProviders"
-import { postSlugsQuery } from "~/lib/sanity/queries"
-import { getPostBySlug } from "~/lib/sanity/sanity.client"
-import { sanityClient } from "~/lib/sanity/server"
+import { ListDetailView, SiteLayout } from '~/components/Layouts'
+import { Detail } from '~/components/ListDetail/Detail'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { MDSEX } from '~/components/MarkdownRenderer'
+import { mdxToCode } from '~/components/MarkdownRenderer/Mdx'
+import { BlogDetail, type Post } from '~/components/Posts/BlogDetail'
+import { PostsList } from '~/components/Posts/PostsList'
+import { withProviders } from '~/components/Providers/withProviders'
+import { postSlugsQuery } from '~/lib/sanity/queries'
+import { getPostBySlug } from '~/lib/sanity/sanity.client'
+import { sanityClient } from '~/lib/sanity/server'
 
 type PPage = {
   post: Post
@@ -30,8 +30,8 @@ function BlogPage({ post, loading }: PPage) {
 export async function getStaticPaths() {
   const paths = await sanityClient.fetch(postSlugsQuery)
   return {
-    paths: paths.map((slug: any) => ({ params: { slug } })),
-    fallback: "blocking",
+    paths: paths.map((slug: string) => ({ params: { slug } })),
+    fallback: 'blocking',
   }
 }
 
@@ -53,7 +53,7 @@ export async function getStaticProps({ params, preview = false }) {
         readingTime,
       },
 
-      revalidate: 60 * 60,
+      revalidate: 120,
     },
   }
 }

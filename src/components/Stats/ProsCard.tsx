@@ -44,7 +44,7 @@ export default function ProsCard({ title, pros }) {
         {pros.map((pro) => (
           <div key={pro} className="mb-2 flex items-baseline font-medium">
             <div className="mr-2 h-4 w-4">
-              <GreenTick className={""} />
+              <GreenTick className={''} />
             </div>
             <span>{pro}</span>
           </div>

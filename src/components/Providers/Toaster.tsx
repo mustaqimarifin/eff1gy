@@ -1,4 +1,4 @@
-import { Toaster } from "react-hot-toast"
+import { Toaster } from 'react-hot-toast'
 
 export function Toast() {
   return (
@@ -10,20 +10,20 @@ export function Toast() {
       containerStyle={{}}
       toastOptions={{
         // Define default options
-        className: "bg-white dark:bg-gray-700 text-primary",
+        className: 'bg-white dark:bg-gray-700 text-primary',
         duration: 2000,
         success: {
           duration: 2000,
           iconTheme: {
-            primary: "green",
-            secondary: "black",
+            primary: 'green',
+            secondary: 'black',
           },
         },
         error: {
           duration: 2000,
           iconTheme: {
-            primary: "red",
-            secondary: "white",
+            primary: 'red',
+            secondary: 'white',
           },
         },
       }}

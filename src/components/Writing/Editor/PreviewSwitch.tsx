@@ -1,7 +1,7 @@
-import * as React from "react"
-import { Switch } from "~/components/Switch"
+import * as React from 'react'
+import { Switch } from '~/components/Switch'
 
-import { PostEditorContext } from "./PostEditor"
+import { PostEditorContext } from './PostEditor'
 
 export function PreviewSwitch() {
   const context = React.useContext(PostEditorContext)
@@ -9,7 +9,7 @@ export function PreviewSwitch() {
 
   return (
     <Switch
-      label={"Preview"}
+      label={'Preview'}
       defaultEnabled={isPreviewing}
       onChange={(val) => setIsPreviewing(val)}
     />

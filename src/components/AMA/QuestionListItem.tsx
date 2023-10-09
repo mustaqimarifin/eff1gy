@@ -1,7 +1,7 @@
-import * as React from "react"
-import { Avatar } from "~/components/Avatar"
-import { ListItem } from "~/components/ListDetail/ListItem"
-import { type Question } from "~/graphql/typeSlut"
+import * as React from 'react'
+import { Avatar } from '~/components/Avatar'
+import { ListItem } from '~/components/ListDetail/ListItem'
+import { type Question } from '~/graphql/typeSlut'
 
 interface Props {
   question: Question
@@ -11,7 +11,7 @@ interface Props {
 export const QuestionListItem = React.memo<Props>(({ question, active }) => {
   return (
     <ListItem
-      href={"/ama/[id]"}
+      href={'/ama/[id]'}
       as={`/ama/${question.id}`}
       title={question.title}
       description={null}
@@ -22,9 +22,9 @@ export const QuestionListItem = React.memo<Props>(({ question, active }) => {
             src={question.author.image}
             width={16}
             height={16}
-            layout={"fixed"}
+            layout={'fixed'}
             className="rounded-full"
-          />{" "}
+          />{' '}
           <span>{question.author.name}</span>
         </div>
       }

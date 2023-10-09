@@ -1,6 +1,6 @@
-import { useState } from "react"
-import Image from "next/image"
-import clsx from "clsx"
+import { useState } from 'react'
+import Image from 'next/image'
+import clsx from 'clsx'
 
 export default function CoverImage({ src }) {
   const [isLoading, setLoading] = useState(true)
@@ -9,14 +9,14 @@ export default function CoverImage({ src }) {
     <div className="mb-6  max-w-3xl content-center justify-center overflow-hidden md:rounded-lg   ">
       <Image
         src={src}
-        alt={""}
+        alt={''}
         width={680}
         height={503}
         className={clsx(
-          " mx-auto flex aspect-[21/9] w-full items-center justify-center object-cover object-top duration-700 ease-in-out group-hover:opacity-75 lg:max-w-7xl",
+          ' mx-auto flex aspect-[21/9] w-full items-center justify-center object-cover object-top duration-700 ease-in-out group-hover:opacity-75 lg:max-w-7xl',
           isLoading
-            ? "scale-110 blur-2xl grayscale"
-            : "scale-100 blur-0 grayscale-0"
+            ? 'scale-110 blur-2xl grayscale'
+            : 'scale-100 blur-0 grayscale-0'
         )}
         onLoadingComplete={() => setLoading(false)}
         //blurDataURL={blurDataUrl}
