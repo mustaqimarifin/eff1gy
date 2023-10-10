@@ -2,8 +2,8 @@ import { Suspense } from 'react'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { MDSEX } from '~/components/MarkdownRenderer'
-import { mdxToCode } from '~/components/MarkdownRenderer/Mdx'
+import MDX from '~/components/MDX'
+import { mdxToCode } from '~/components/MDX/Mdx'
 import { withProviders } from '~/components/Providers/withProviders'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
 import { PostDetail } from '~/components/Writing/PostDetail'
@@ -23,7 +23,7 @@ const WritingPostPage = ({ post, slug }) => {
 
   return (
     <PostDetail slug={slug}>
-      <MDSEX mdx={post.text} />
+      <MDX code={post.text} />
     </PostDetail>
   )
 }

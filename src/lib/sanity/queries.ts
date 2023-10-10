@@ -105,7 +105,7 @@ export const allSnippetsQuery = `
   ${snippetFields}
 }`
 
-export const snippetsQuery = `
+export const snippetsQuery = groq`
 {
   "snippet": *[_type == "snippet" && slug.current == $slug] | order(_updatedAt desc) [0] {
     content,
@@ -117,7 +117,7 @@ export const snippetSlugsQuery = groq`
 *[_type == "snippet" && defined(slug.current)][].slug.current
 `
 
-export const snippetBySlugQuery = `
+export const snippetBySlugQuery = groq`
 *[_type == "snippet" && slug.current == $slug][0] {
   ${snippetFields}
 }

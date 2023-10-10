@@ -1,11 +1,11 @@
 import { join } from 'path'
 import { cwd } from 'process'
-import { remarkCodeHike } from '@code-hike/mdx'
 import { bundleMDX } from 'mdx-bundler'
 import readingTime from 'reading-time'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
+import linkifyRegex from 'remark-linkify-regex'
 
 //import moonlight from '~/styles/nord.json'
 import imageMetadata from './image-metadata'
@@ -32,12 +32,13 @@ export async function mdxToCode(text: string) {
 
   const { code } = await bundleMDX({
     source: text,
-    cwd: join(root, 'components'),
+    //cwd: join(root, 'components'),
     mdxOptions(options) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         remarkGfm,
-        [
+        linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
+        /*         [
           remarkCodeHike,
           {
             autoImport: false,
@@ -45,21 +46,13 @@ export async function mdxToCode(text: string) {
             showCopyButton: true,
             theme: 'poimandres',
           },
-        ],
+        ], */
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         imageMetadata,
         rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          { behavior: 'wrap' },
-          {
-            properties: {
-              className: ['anchor'],
-            },
-          },
-        ],
+        [rehypeAutolinkHeadings, { behavior: 'wrap' }],
       ]
 
       return options

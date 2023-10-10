@@ -1,6 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { ApolloServer } from '@apollo/server'
-
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { getViewer, type Context } from '~/graphql/context'
 import { schema } from '~/graphql/schema'

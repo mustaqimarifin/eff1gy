@@ -1,10 +1,10 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
-import { type PrismaClient } from '@prisma/client'
+import { Role, type PrismaClient } from '@prisma/client'
 import { prisma } from '~/lib/prisma'
 import { authOptions } from '~/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 
-import { UserRole, type User } from '../typeSlut'
+import { type User } from '../typeSlut'
 
 export async function getViewer(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
@@ -16,7 +16,7 @@ export async function getViewer(req: NextApiRequest, res: NextApiResponse) {
     return viewer
       ? {
           ...viewer,
-          isAdmin: viewer?.role === UserRole.Admin,
+          isAdmin: viewer?.role === Role.ADMIN,
         }
       : null
   }

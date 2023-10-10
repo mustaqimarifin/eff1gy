@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { useMemo } from 'react'
 import {
   ApolloClient,
@@ -98,7 +97,7 @@ export function createClient({ initialState, context = {} }) {
   })
 }
 
-export async function initApolloClient({ initialState = null, context = {} }) {
+export function initApolloClient({ initialState = null, context = {} }) {
   const _apolloClient = apolloClient ?? createClient({ initialState, context })
   if (initialState) {
     const existingCache = _apolloClient.extract()

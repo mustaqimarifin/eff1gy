@@ -3,12 +3,11 @@ import { AppDissectionDetail } from '~/components/AppDissection/AppDissectionDet
 import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
-import { MDSEX } from '~/components/MarkdownRenderer'
-import { mdxToCode } from '~/components/MarkdownRenderer/Mdx'
+import MDX from '~/components/MDX'
+import { mdxToCode } from '~/components/MDX/Mdx'
 import { CaseStudy } from '~/components/Posts/BlogDetail'
 import { withProviders } from '~/components/Providers/withProviders'
 import { baseUrl } from '~/config/seo'
-import designDetailsPosts, { DesignDetailsPost } from '~/data/appDissections'
 import { caseSlugsQuery, designIndexQuery } from '~/lib/sanity/queries'
 import { getAllCaseStudy, getCaseBySlug } from '~/lib/sanity/sanity.client'
 import { sanityClient } from '~/lib/sanity/server'
@@ -43,7 +42,7 @@ function AppDissectionPage({ casestudy }: Props) {
         />
 
         <AppDissectionDetail casestudy={casestudy}>
-          <MDSEX mdx={casestudy.content} />
+          <MDX code={casestudy.content} />
         </AppDissectionDetail>
       </>
     )
@@ -75,6 +74,7 @@ export async function getStaticProps({ params, preview = false }) {
         ...casestudy,
         content: mdx,
       },
+      revalidate: 120,
     },
   }
 }

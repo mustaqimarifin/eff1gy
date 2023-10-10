@@ -11,7 +11,7 @@ type ImageNode = {
     height?: number
     width?: number
     blurDataURL?: string
-    placeholder?: 'blur' | 'empty'
+    placeholder?: 'blur'
   }
 }
 

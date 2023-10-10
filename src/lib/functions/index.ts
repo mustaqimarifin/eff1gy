@@ -594,28 +594,3 @@ export const transformValues = (obj, callback) => {
     }
   }, {})
 }
-
-export function deepmergeArray(options) {
-  const deepmerge = options.deepmerge
-  const clone = options.clone
-  return function (target, source) {
-    let i = 0
-    const tl = target.length
-    const sl = source.length
-    const il = Math.max(target.length, source.length)
-    const result = new Array(il)
-    for (i = 0; i < il; ++i) {
-      if (i < sl) {
-        result[i] = deepmerge(target[i], source[i])
-      } else {
-        result[i] = clone(target[i])
-      }
-    }
-    return result
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-export const deepmerge = require('@fastify/deepmerge')({
-  mergeArray: deepmergeArray,
-})

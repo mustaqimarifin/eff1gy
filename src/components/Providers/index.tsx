@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { type NextPageContext } from 'next'
-import { ApolloProvider } from '@apollo/client/react/context/ApolloProvider'
+import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '~/lib/apollo'
 import { ThemeProvider } from 'next-themes'
 
@@ -40,11 +40,9 @@ export function Providers({ children, pageProps }: Props) {
       <SEO />
       <Toast />
       <ThemeProvider attribute="class">
-        <ApolloProvider client={apolloClient}>
-          <GlobalNavigationContext.Provider value={state}>
-            {children}
-          </GlobalNavigationContext.Provider>
-        </ApolloProvider>
+        <GlobalNavigationContext.Provider value={state}>
+          <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
+        </GlobalNavigationContext.Provider>
       </ThemeProvider>
     </>
   )

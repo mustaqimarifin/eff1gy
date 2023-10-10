@@ -1,8 +1,8 @@
 import { ListDetailView, SiteLayout } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { MDSEX } from '~/components/MarkdownRenderer'
-import { mdxToCode } from '~/components/MarkdownRenderer/Mdx'
+import MDX from '~/components/MDX'
+import { mdxToCode } from '~/components/MDX/Mdx'
 import { BlogDetail, type Post } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
 import { withProviders } from '~/components/Providers/withProviders'
@@ -20,9 +20,8 @@ function BlogPage({ post, loading }: PPage) {
   if (loading) return <LoadingSpinner />
 
   return (
-    //@ts-ignore
     <BlogDetail post={post}>
-      <MDSEX mdx={post.content} />
+      <MDX code={post.content} />
     </BlogDetail>
   )
 }

@@ -15,8 +15,8 @@ export const authOptions: NextAuthOptions = {
       version: '2.0', // opt-in to Twitter OAuth 2.0
     }),
     GithubProvider({
-      clientId: process.env.GIT_LOCAL,
-      clientSecret: process.env.GIT_LOCAL_SECRET,
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,

@@ -9,7 +9,11 @@ import { signIn } from 'next-auth/react'
 
 import { GlobalNavigationContext } from '../Providers'
 
-function Container(props) {
+function Container(
+  props: React.JSX.IntrinsicAttributes &
+    React.ClassAttributes<HTMLDivElement> &
+    React.HTMLAttributes<HTMLDivElement>
+) {
   return (
     <div
       data-cy="sign-in-button"

@@ -8,7 +8,7 @@ const config: CodegenConfig = {
     afterOneFileWrite: ["eslint --fix", "prettier --write"],
   },
   generates: {
-    "./src/graphql/typeSlut.ts": {
+    "./src/graphql/typeSlut.tsx": {
       plugins: [
         "typescript",
         "typescript-operations",
