@@ -8,6 +8,8 @@ import {
   useViewerQuery,
 } from '~/graphql/typeSlut'
 
+import { PageViews } from '../Stats/ViewCounter'
+
 function getReactionButton(post) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
   function handleClick() {
@@ -70,6 +72,7 @@ function getEditButton(post) {
 export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
+      <PageViews id={post.slug} trackView />
       {getReactionButton(post)}
       {getEditButton(post)}
     </div>

@@ -1,46 +1,63 @@
-import { useEffect } from 'react'
-import Button from '~/components/Button'
-import { cacheOnly, ketchup } from '~/lib/functions'
-import { Eye } from 'lucide-react'
+import { Suspense, useEffect } from 'react'
+import { LucideEye } from 'lucide-react'
 import useSWR from 'swr'
 
-import { LoadingSpinner } from '../LoadingSpinner'
+import Button, { ViewButton } from '../Button'
 
-export type Views = {
-  total: number
+export type CounterProps = {
+  id?: string
+  total?: number
+  trackView: boolean
 }
 
-export default function ViewCounter({ catID }) {
-  const { data, isLoading } = useSWR<Views>(
-    `/api/page/${catID}`,
-    ketchup,
-    cacheOnly
+export async function fetcher<JSON = any>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<JSON> {
+  const res = await fetch(input, init)
+  return res.json()
+}
+
+export const PageViews = ({ id, trackView }: CounterProps) => {
+  const { data } = useSWR<CounterProps>(
+    `/api/views/${id}`,
+    fetcher /* , {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  } */
   )
-  const views = new Number(data?.total)
 
   useEffect(() => {
     const registerView = () =>
-      fetch(`/api/page/${catID}`, {
+      fetch(`/api/views/${id}`, {
         method: 'POST',
       })
+    if (trackView) {
+      registerView()
+    }
+  }, [])
 
-    registerView()
-  }, [catID])
-
-  const load = () => {
-    return <LoadingSpinner />
-  }
-
-  return (
-    <>
-      <div className="cursor-none">
-        <Button aria-label="Views">
-          <span className="font-mono text-gray-500 hover:text-rose-300 ">
-            <Eye />{' '}
+  if (!data) return null
+  else
+    return (
+      <div className="select-none">
+        <ViewButton
+          aria-label="Views"
+          style={{ maxHeight: '32px', overflow: 'hidden' }}
+        >
+          <span className=" text-gray-500	">
+            <LucideEye size={18} />
           </span>
-          <span>{isLoading ? load() : views.toLocaleString()}</span>
-        </Button>
+          <span>{data?.total}</span>
+        </ViewButton>
       </div>
-    </>
-  )
+    )
 }
+
+/* export const TotalViews = () => {
+  const { data } = useSWR<CounterProps>(`/api/posts`, fetcher)
+  if (!data) return null
+  else return <p className="text-xs">{`${data?.total} views`}</p>
+}
+ */

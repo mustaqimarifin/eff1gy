@@ -93,7 +93,7 @@ export const MDXComponents = {
 }
 
 export default function MDX({ code }: { code: string }) {
-  const Component = getMDXComponent(code)
+  const Component = React.useMemo(() => getMDXComponent(code), [code])
 
   return (
     <article className="prose-quoteless prose prose-neutral dark:prose-invert">

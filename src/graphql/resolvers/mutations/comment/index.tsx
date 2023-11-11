@@ -54,7 +54,7 @@ export async function addComment(
   args: MutationAddCommentArgs,
   ctx: Context
 ) {
-  const { refId, type, text } = args
+  const { refId, type, text, parentId } = args
   const { viewer, prisma } = ctx
 
   const trimmedText = text.trim()
@@ -111,6 +111,7 @@ export async function addComment(
     prisma.comment.create({
       data: {
         text,
+        parentId,
         userId: viewer.id,
         [field]: refId,
       },

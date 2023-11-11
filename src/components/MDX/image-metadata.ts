@@ -42,8 +42,7 @@ async function addProps(node: ImageNode): Promise<void> {
 
   if (!ext_img) {
     result = await lqip(local_img)
-  }
-  if (ext_img) {
+  } else {
     const body = await fetch(url).then(async (res) =>
       Buffer.from(await res.arrayBuffer())
     )

@@ -120,6 +120,7 @@ export type Comment = {
   author: User
   createdAt: Scalars['Date']['output']
   id: Scalars['ID']['output']
+  parentId?: Maybe<Scalars['String']['output']>
   text?: Maybe<Scalars['String']['output']>
   updatedAt?: Maybe<Scalars['Date']['output']>
   viewerCanDelete?: Maybe<Scalars['Boolean']['output']>
@@ -242,6 +243,7 @@ export type MutationAddBookmarkArgs = {
 }
 
 export type MutationAddCommentArgs = {
+  parentId?: InputMaybe<Scalars['String']['input']>
   refId: Scalars['ID']['input']
   text: Scalars['String']['input']
   type: CommentType
@@ -576,6 +578,7 @@ export type BookmarkCoreFragment = {
 
 export type CommentInfoFragment = {
   id: string
+  parentId?: string | null
   createdAt: any
   updatedAt?: any | null
   text?: string | null
@@ -973,6 +976,7 @@ export type AddBookmarkMutation = {
 
 export type AddCommentMutationVariables = Exact<{
   refId: Scalars['ID']['input']
+  parentId?: InputMaybe<Scalars['String']['input']>
   type: CommentType
   text: Scalars['String']['input']
 }>
@@ -981,6 +985,7 @@ export type AddCommentMutation = {
   addComment?:
     | ({
         id: string
+        parentId?: string | null
         createdAt: any
         updatedAt?: any | null
         text?: string | null
@@ -1006,6 +1011,7 @@ export type EditCommentMutation = {
   editComment?:
     | ({
         id: string
+        parentId?: string | null
         createdAt: any
         updatedAt?: any | null
         text?: string | null
@@ -1393,6 +1399,7 @@ export type GetCommentsQuery = {
   comments: Array<
     | ({
         id: string
+        parentId?: string | null
         createdAt: any
         updatedAt?: any | null
         text?: string | null
@@ -1801,6 +1808,7 @@ export const CommentInfoFragmentDoc = gql`
   fragment CommentInfo on Comment {
     __typename
     id
+    parentId
     createdAt
     updatedAt
     text
@@ -2141,8 +2149,13 @@ export type AddBookmarkMutationOptions = Apollo.BaseMutationOptions<
   AddBookmarkMutationVariables
 >
 export const AddCommentDocument = gql`
-  mutation addComment($refId: ID!, $type: CommentType!, $text: String!) {
-    addComment(refId: $refId, type: $type, text: $text) {
+  mutation addComment(
+    $refId: ID!
+    $parentId: String
+    $type: CommentType!
+    $text: String!
+  ) {
+    addComment(refId: $refId, parentId: $parentId, type: $type, text: $text) {
       ...CommentInfo
     }
   }
@@ -2167,6 +2180,7 @@ export type AddCommentMutationFn = Apollo.MutationFunction<
  * const [addCommentMutation, { data, loading, error }] = useAddCommentMutation({
  *   variables: {
  *      refId: // value for 'refId'
+ *      parentId: // value for 'parentId'
  *      type: // value for 'type'
  *      text: // value for 'text'
  *   },
@@ -3004,9 +3018,24 @@ export function useGetBlogsLazyQuery(
     options
   )
 }
+export function useGetBlogsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetBlogsQuery,
+    GetBlogsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetBlogsQuery, GetBlogsQueryVariables>(
+    GetBlogsDocument,
+    options
+  )
+}
 export type GetBlogsQueryHookResult = ReturnType<typeof useGetBlogsQuery>
 export type GetBlogsLazyQueryHookResult = ReturnType<
   typeof useGetBlogsLazyQuery
+>
+export type GetBlogsSuspenseQueryHookResult = ReturnType<
+  typeof useGetBlogsSuspenseQuery
 >
 export type GetBlogsQueryResult = Apollo.QueryResult<
   GetBlogsQuery,
@@ -3055,8 +3084,23 @@ export function useGetBlogLazyQuery(
     options
   )
 }
+export function useGetBlogSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetBlogQuery,
+    GetBlogQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetBlogQuery, GetBlogQueryVariables>(
+    GetBlogDocument,
+    options
+  )
+}
 export type GetBlogQueryHookResult = ReturnType<typeof useGetBlogQuery>
 export type GetBlogLazyQueryHookResult = ReturnType<typeof useGetBlogLazyQuery>
+export type GetBlogSuspenseQueryHookResult = ReturnType<
+  typeof useGetBlogSuspenseQuery
+>
 export type GetBlogQueryResult = Apollo.QueryResult<
   GetBlogQuery,
   GetBlogQueryVariables
@@ -3112,11 +3156,26 @@ export function useGetBookmarksLazyQuery(
     options
   )
 }
+export function useGetBookmarksSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetBookmarksQuery,
+    GetBookmarksQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(
+    GetBookmarksDocument,
+    options
+  )
+}
 export type GetBookmarksQueryHookResult = ReturnType<
   typeof useGetBookmarksQuery
 >
 export type GetBookmarksLazyQueryHookResult = ReturnType<
   typeof useGetBookmarksLazyQuery
+>
+export type GetBookmarksSuspenseQueryHookResult = ReturnType<
+  typeof useGetBookmarksSuspenseQuery
 >
 export type GetBookmarksQueryResult = Apollo.QueryResult<
   GetBookmarksQuery,
@@ -3171,9 +3230,24 @@ export function useGetBookmarkLazyQuery(
     options
   )
 }
+export function useGetBookmarkSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetBookmarkQuery,
+    GetBookmarkQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(
+    GetBookmarkDocument,
+    options
+  )
+}
 export type GetBookmarkQueryHookResult = ReturnType<typeof useGetBookmarkQuery>
 export type GetBookmarkLazyQueryHookResult = ReturnType<
   typeof useGetBookmarkLazyQuery
+>
+export type GetBookmarkSuspenseQueryHookResult = ReturnType<
+  typeof useGetBookmarkSuspenseQuery
 >
 export type GetBookmarkQueryResult = Apollo.QueryResult<
   GetBookmarkQuery,
@@ -3229,9 +3303,24 @@ export function useGetCommentsLazyQuery(
     options
   )
 }
+export function useGetCommentsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetCommentsQuery,
+    GetCommentsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetCommentsQuery, GetCommentsQueryVariables>(
+    GetCommentsDocument,
+    options
+  )
+}
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>
 export type GetCommentsLazyQueryHookResult = ReturnType<
   typeof useGetCommentsLazyQuery
+>
+export type GetCommentsSuspenseQueryHookResult = ReturnType<
+  typeof useGetCommentsSuspenseQuery
 >
 export type GetCommentsQueryResult = Apollo.QueryResult<
   GetCommentsQuery,
@@ -3285,11 +3374,26 @@ export function useGetHackerNewsPostsLazyQuery(
     GetHackerNewsPostsQueryVariables
   >(GetHackerNewsPostsDocument, options)
 }
+export function useGetHackerNewsPostsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetHackerNewsPostsQuery,
+    GetHackerNewsPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    GetHackerNewsPostsQuery,
+    GetHackerNewsPostsQueryVariables
+  >(GetHackerNewsPostsDocument, options)
+}
 export type GetHackerNewsPostsQueryHookResult = ReturnType<
   typeof useGetHackerNewsPostsQuery
 >
 export type GetHackerNewsPostsLazyQueryHookResult = ReturnType<
   typeof useGetHackerNewsPostsLazyQuery
+>
+export type GetHackerNewsPostsSuspenseQueryHookResult = ReturnType<
+  typeof useGetHackerNewsPostsSuspenseQuery
 >
 export type GetHackerNewsPostsQueryResult = Apollo.QueryResult<
   GetHackerNewsPostsQuery,
@@ -3344,11 +3448,26 @@ export function useGetHackerNewsPostLazyQuery(
     GetHackerNewsPostQueryVariables
   >(GetHackerNewsPostDocument, options)
 }
+export function useGetHackerNewsPostSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetHackerNewsPostQuery,
+    GetHackerNewsPostQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    GetHackerNewsPostQuery,
+    GetHackerNewsPostQueryVariables
+  >(GetHackerNewsPostDocument, options)
+}
 export type GetHackerNewsPostQueryHookResult = ReturnType<
   typeof useGetHackerNewsPostQuery
 >
 export type GetHackerNewsPostLazyQueryHookResult = ReturnType<
   typeof useGetHackerNewsPostLazyQuery
+>
+export type GetHackerNewsPostSuspenseQueryHookResult = ReturnType<
+  typeof useGetHackerNewsPostSuspenseQuery
 >
 export type GetHackerNewsPostQueryResult = Apollo.QueryResult<
   GetHackerNewsPostQuery,
@@ -3400,9 +3519,24 @@ export function useGetPostsLazyQuery(
     options
   )
 }
+export function useGetPostsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetPostsQuery,
+    GetPostsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetPostsQuery, GetPostsQueryVariables>(
+    GetPostsDocument,
+    options
+  )
+}
 export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>
 export type GetPostsLazyQueryHookResult = ReturnType<
   typeof useGetPostsLazyQuery
+>
+export type GetPostsSuspenseQueryHookResult = ReturnType<
+  typeof useGetPostsSuspenseQuery
 >
 export type GetPostsQueryResult = Apollo.QueryResult<
   GetPostsQuery,
@@ -3451,8 +3585,23 @@ export function useGetPostLazyQuery(
     options
   )
 }
+export function useGetPostSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetPostQuery,
+    GetPostQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetPostQuery, GetPostQueryVariables>(
+    GetPostDocument,
+    options
+  )
+}
 export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>
 export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>
+export type GetPostSuspenseQueryHookResult = ReturnType<
+  typeof useGetPostSuspenseQuery
+>
 export type GetPostQueryResult = Apollo.QueryResult<
   GetPostQuery,
   GetPostQueryVariables
@@ -3508,11 +3657,26 @@ export function useGetQuestionsLazyQuery(
     options
   )
 }
+export function useGetQuestionsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetQuestionsQuery,
+    GetQuestionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(
+    GetQuestionsDocument,
+    options
+  )
+}
 export type GetQuestionsQueryHookResult = ReturnType<
   typeof useGetQuestionsQuery
 >
 export type GetQuestionsLazyQueryHookResult = ReturnType<
   typeof useGetQuestionsLazyQuery
+>
+export type GetQuestionsSuspenseQueryHookResult = ReturnType<
+  typeof useGetQuestionsSuspenseQuery
 >
 export type GetQuestionsQueryResult = Apollo.QueryResult<
   GetQuestionsQuery,
@@ -3567,9 +3731,24 @@ export function useGetQuestionLazyQuery(
     options
   )
 }
+export function useGetQuestionSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetQuestionQuery,
+    GetQuestionQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetQuestionQuery, GetQuestionQueryVariables>(
+    GetQuestionDocument,
+    options
+  )
+}
 export type GetQuestionQueryHookResult = ReturnType<typeof useGetQuestionQuery>
 export type GetQuestionLazyQueryHookResult = ReturnType<
   typeof useGetQuestionLazyQuery
+>
+export type GetQuestionSuspenseQueryHookResult = ReturnType<
+  typeof useGetQuestionSuspenseQuery
 >
 export type GetQuestionQueryResult = Apollo.QueryResult<
   GetQuestionQuery,
@@ -3622,9 +3801,24 @@ export function useGetStacksLazyQuery(
     options
   )
 }
+export function useGetStacksSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetStacksQuery,
+    GetStacksQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetStacksQuery, GetStacksQueryVariables>(
+    GetStacksDocument,
+    options
+  )
+}
 export type GetStacksQueryHookResult = ReturnType<typeof useGetStacksQuery>
 export type GetStacksLazyQueryHookResult = ReturnType<
   typeof useGetStacksLazyQuery
+>
+export type GetStacksSuspenseQueryHookResult = ReturnType<
+  typeof useGetStacksSuspenseQuery
 >
 export type GetStacksQueryResult = Apollo.QueryResult<
   GetStacksQuery,
@@ -3676,9 +3870,24 @@ export function useGetStackLazyQuery(
     options
   )
 }
+export function useGetStackSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetStackQuery,
+    GetStackQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetStackQuery, GetStackQueryVariables>(
+    GetStackDocument,
+    options
+  )
+}
 export type GetStackQueryHookResult = ReturnType<typeof useGetStackQuery>
 export type GetStackLazyQueryHookResult = ReturnType<
   typeof useGetStackLazyQuery
+>
+export type GetStackSuspenseQueryHookResult = ReturnType<
+  typeof useGetStackSuspenseQuery
 >
 export type GetStackQueryResult = Apollo.QueryResult<
   GetStackQuery,
@@ -3725,8 +3934,23 @@ export function useGetTagsLazyQuery(
     options
   )
 }
+export function useGetTagsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetTagsQuery,
+    GetTagsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetTagsQuery, GetTagsQueryVariables>(
+    GetTagsDocument,
+    options
+  )
+}
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>
+export type GetTagsSuspenseQueryHookResult = ReturnType<
+  typeof useGetTagsSuspenseQuery
+>
 export type GetTagsQueryResult = Apollo.QueryResult<
   GetTagsQuery,
   GetTagsQueryVariables
@@ -3774,8 +3998,23 @@ export function useGetUserLazyQuery(
     options
   )
 }
+export function useGetUserSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetUserQuery,
+    GetUserQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(
+    GetUserDocument,
+    options
+  )
+}
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>
+export type GetUserSuspenseQueryHookResult = ReturnType<
+  typeof useGetUserSuspenseQuery
+>
 export type GetUserQueryResult = Apollo.QueryResult<
   GetUserQuery,
   GetUserQueryVariables
@@ -3822,8 +4061,23 @@ export function useViewerLazyQuery(
     options
   )
 }
+export function useViewerSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    ViewerQuery,
+    ViewerQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<ViewerQuery, ViewerQueryVariables>(
+    ViewerDocument,
+    options
+  )
+}
 export type ViewerQueryHookResult = ReturnType<typeof useViewerQuery>
 export type ViewerLazyQueryHookResult = ReturnType<typeof useViewerLazyQuery>
+export type ViewerSuspenseQueryHookResult = ReturnType<
+  typeof useViewerSuspenseQuery
+>
 export type ViewerQueryResult = Apollo.QueryResult<
   ViewerQuery,
   ViewerQueryVariables
@@ -3878,11 +4132,26 @@ export function useGetViewerWithSettingsLazyQuery(
     GetViewerWithSettingsQueryVariables
   >(GetViewerWithSettingsDocument, options)
 }
+export function useGetViewerWithSettingsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetViewerWithSettingsQuery,
+    GetViewerWithSettingsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    GetViewerWithSettingsQuery,
+    GetViewerWithSettingsQueryVariables
+  >(GetViewerWithSettingsDocument, options)
+}
 export type GetViewerWithSettingsQueryHookResult = ReturnType<
   typeof useGetViewerWithSettingsQuery
 >
 export type GetViewerWithSettingsLazyQueryHookResult = ReturnType<
   typeof useGetViewerWithSettingsLazyQuery
+>
+export type GetViewerWithSettingsSuspenseQueryHookResult = ReturnType<
+  typeof useGetViewerWithSettingsSuspenseQuery
 >
 export type GetViewerWithSettingsQueryResult = Apollo.QueryResult<
   GetViewerWithSettingsQuery,
@@ -3958,6 +4227,7 @@ export type CommentKeySpecifier = (
   | 'author'
   | 'createdAt'
   | 'id'
+  | 'parentId'
   | 'text'
   | 'updatedAt'
   | 'viewerCanDelete'
@@ -3968,6 +4238,7 @@ export type CommentFieldPolicy = {
   author?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
+  parentId?: FieldPolicy<any> | FieldReadFunction<any>
   text?: FieldPolicy<any> | FieldReadFunction<any>
   updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
   viewerCanDelete?: FieldPolicy<any> | FieldReadFunction<any>

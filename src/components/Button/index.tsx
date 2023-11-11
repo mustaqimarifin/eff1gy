@@ -79,6 +79,14 @@ export const Button = React.forwardRef((props: ButtonProps, ref) => {
   const composed = `${baseClasses} ${size} ${opacity} ${radius} ${classes}`
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
+export const ViewButton = React.forwardRef((props: ButtonProps, ref) => {
+  const classes = `text-gray-700  shadow-xs bg-white border border-gray-400 border-opacity-30 dark:border-gray-700  dark:bg-white dark:bg-opacity-10 dark:text-gray-200 dark:hover:text-white select-none hover:shadow-sm`
+  const size = composer.getSize(props.size)
+  const opacity = composer.getOpacity(props.disabled)
+  const radius = composer.getRadius(props.size)
+  const composed = `${baseClasses} ${size} ${opacity} ${radius} ${classes}`
+  return <BaseButton forwardedRef={ref} className={composed} {...props} />
+})
 
 export default Button
 
@@ -122,9 +130,9 @@ export const GhostButton = React.forwardRef((props: ButtonProps, ref) => {
 export const CommentButton = React.forwardRef((props: ButtonProps, ref) => {
   const classes = `${
     props.disabled
-      ? 'text-gray-500 border-gray-400 bg-white dark:border-gray-700'
-      : 'border-blue-600 bg-blue-500 dark:bg-opacity-100 text-white hover:bg-blue-600 dark:border-blue-400'
-  } shadow-xs bg-white border border-opacity-30 dark:bg-opacity-10 hover:border-opacity-50 hover:shadow-sm w-8 rounded`
+      ? 'text-gray-500 border-gray-400 bg-opacity-50 dark:border-gray-700'
+      : 'border-blue-600 bg-blue-500 dark:bg-opacity-100 text-gray-600 hover:bg-blue-600 dark:border-blue-400'
+  } shadow-xs bg-white  border border-opacity-30 dark:bg-opacity-10 hover:text-gray-100 hover:border-opacity-50 hover:shadow-sm w-8 rounded`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
   const radius = composer.getRadius(props.size)

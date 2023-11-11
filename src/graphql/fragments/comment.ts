@@ -6,6 +6,7 @@ export const CommentInfoFragment = gql`
   fragment CommentInfo on Comment {
     __typename
     id
+    parentId
     createdAt
     updatedAt
     text

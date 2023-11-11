@@ -6,15 +6,17 @@ import { Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import {
+  Comment as CommentProp,
+  CommentType,
+  GetCommentsQuery,
   useDeleteCommentMutation,
   useEditCommentMutation,
-  type Comment as CommentProp,
-  type CommentType,
-  type GetCommentsQuery,
+  useViewerQuery,
 } from '~/graphql/typeSlut'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { cx, timestampToCleanTime } from '~/lib/transformers'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
+import { CommentForm } from './CommentForm'
 import { CommentMenu } from './CommentMenu'
 
 interface Props {
@@ -31,6 +33,7 @@ export const Comment = React.memo(function MemoComment({
   const [isEditing, setIsEditing] = React.useState(false)
   const [editText, setEditText] = React.useState(comment.text)
   const [isSavingEdit, setIsSavingEdit] = React.useState(false)
+  const [showReplyForm, setShowReplyForm] = React.useState(false)
 
   const [deleteComment] = useDeleteCommentMutation({
     variables: { id: comment.id },
@@ -105,73 +108,129 @@ export const Comment = React.memo(function MemoComment({
     timestamp: comment.createdAt,
   })
 
-  return (
-    <div className="group flex flex-col space-y-0">
-      <div className="flex items-center justify-between space-x-4">
-        <div className="flex items-center space-x-4">
-          <Link href={`/u/${comment.author.name}`} className="inline-flex">
-            <Avatar
-              user={comment.author}
-              src={comment.author.image}
-              width={40}
-              height={40}
-              quality={100}
-              className="rounded-full"
-            />
-          </Link>
+  const { data } = useViewerQuery()
 
-          <div className="flex space-x-1">
-            <Link
-              href={`/u/${comment.author.name}`}
-              className="text-primary font-semibold leading-snug"
-            >
-              <div className="line-clamp-1 flex break-all">
-                {comment.author.name}
-              </div>
+  return (
+    <>
+      <div className="group flex flex-col space-y-0">
+        <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center space-x-4">
+            <Link href={`/u/${comment.author.name}`} className="inline-flex">
+              <Avatar
+                user={comment.author}
+                src={comment.author.image}
+                width={40}
+                height={40}
+                quality={100}
+                className="rounded-full"
+              />
             </Link>
-            <p className="text-quaternary leading-snug">·</p>
-            <p
-              className="text-quaternary line-clamp-1 leading-snug"
-              title={createdAt.raw}
-            >
-              {createdAt.formatted}
-            </p>
+
+            <div className="flex space-x-1">
+              <Link
+                href={`/u/${comment.author.name}`}
+                className="text-primary font-semibold leading-snug"
+              >
+                <div className="line-clamp-1 flex break-all">
+                  {comment.author.name}
+                </div>
+              </Link>
+              <p className="text-quaternary leading-snug">·</p>
+              <p
+                className="text-quaternary line-clamp-1 leading-snug"
+                title={createdAt.raw}
+              >
+                {createdAt.formatted}
+              </p>
+            </div>
           </div>
+
+          {(comment.viewerCanDelete || comment.viewerCanEdit) && (
+            <CommentMenu
+              comment={comment}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
+          )}
         </div>
 
-        {(comment.viewerCanDelete || comment.viewerCanEdit) && (
-          <CommentMenu
-            comment={comment}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
+        {isEditing ? (
+          <div className="flex flex-col space-y-3 pl-14">
+            <Textarea
+              onChange={(e) => setEditText(e.target.value)}
+              value={editText}
+              onKeyDown={onKeyDown}
+            />
+            <div className="flex justify-between">
+              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+              <PrimaryButton
+                disabled={editText.trim().length === 0 || isSavingEdit}
+                onClick={handleSaveEdit}
+              >
+                {isSavingEdit ? <LoadingSpinner /> : 'Save'}
+              </PrimaryButton>
+            </div>
+          </div>
+        ) : (
+          <MarkdownRenderer
+            children={comment.text}
+            className="comment prose flex-grow pl-14 leading-normal"
+            variant="comment"
           />
         )}
-      </div>
-
-      {isEditing ? (
-        <div className="flex flex-col space-y-3 pl-14">
-          <Textarea
-            onChange={(e) => setEditText(e.target.value)}
-            value={editText}
-            onKeyDown={onKeyDown}
-          />
-          <div className="flex justify-between">
-            <Button onClick={() => setIsEditing(false)}>Cancel</Button>
-            <PrimaryButton
-              disabled={editText.trim().length === 0 || isSavingEdit}
-              onClick={handleSaveEdit}
+        {data?.viewer && (
+          <div className="grid transform auto-cols-min grid-flow-col justify-start gap-x-3">
+            <span
+              className="flex items-center border-none text-xs text-gray-600 dark:text-gray-100"
+              onClick={() => setShowReplyForm(!showReplyForm)}
+              aria-label={
+                showReplyForm
+                  ? `Hide reply form`
+                  : `Reply to comment by ${comment.author}`
+              }
             >
-              {isSavingEdit ? <LoadingSpinner /> : 'Save'}
-            </PrimaryButton>
+              {showReplyForm ? (
+                <button className="text-gray-500 hover:text-red-300 dark:text-gray-200">
+                  Cancel&nbsp;&nbsp;
+                </button>
+              ) : (
+                <button className="text-gray-500 hover:text-indigo-300 dark:text-gray-200">
+                  Reply&nbsp;&nbsp;
+                </button>
+              )}
+            </span>
           </div>
-        </div>
-      ) : (
-        <MarkdownRenderer
-          children={comment.text}
-          className="comment prose flex-grow pl-14 leading-normal"
-          variant="comment"
-        />
-      )}
-    </div>
+        )}
+      </div>
+      {/* <div
+        className={cx(
+          'row-span-2 row-start-4 -mr-2 -translate-x-2 transform rounded-md',
+          {
+            hidden,
+          }
+        )}
+      >
+        {showReplyForm && (
+          <div className="divide-pink-200 ">
+            <CommentForm
+              autoFocus
+              submitLabel="Reply"
+              onSubmit={handleReply}
+              handleResetCallback={() => setShowReplyForm(false)}
+            />
+          </div>
+        )}
+        {replies &&
+          replies.sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          ) &&
+          replies?.length > 0 && (
+            <div className={cx('space-y-5 pt-2')}>
+              <CommentList comments={replies} />
+            </div>
+          )}
+      </div> */}
+    </>
   )
 })

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 async function seed() {
@@ -34,13 +34,13 @@ async function seed() {
   }) */
   await prisma.tag.createMany({
     data: [
-      { name: "lol" },
-      { name: "web" },
-      { name: "portfolio" },
-      { name: "software" },
-      { name: "art" },
-      { name: "plugins" },
-      { name: "music" },
+      { name: 'lol' },
+      { name: 'web' },
+      { name: 'portfolio' },
+      { name: 'software' },
+      { name: 'art' },
+      { name: 'plugins' },
+      { name: 'music' },
     ],
   })
 }

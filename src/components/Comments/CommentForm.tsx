@@ -17,6 +17,12 @@ interface Props {
   refId: string
   type: CommentType
   openModal: () => void
+  autoFocus?: boolean
+  parentId?: string
+  placeholder?: string
+  submitLabel?: string
+  handleResetCallback?: () => void
+  hideEarlyCallback?: () => void
 }
 
 export function CommentForm({ refId, type, openModal }: Props) {

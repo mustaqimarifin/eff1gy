@@ -2,8 +2,13 @@ import { gql } from '@apollo/client'
 import { CommentInfoFragment } from '~/graphql/fragments/comment'
 
 export const ADD_COMMENT = gql`
-  mutation addComment($refId: ID!, $type: CommentType!, $text: String!) {
-    addComment(refId: $refId, type: $type, text: $text) {
+  mutation addComment(
+    $refId: ID!
+    $parentId: String
+    $type: CommentType!
+    $text: String!
+  ) {
+    addComment(refId: $refId, parentId: $parentId, type: $type, text: $text) {
       ...CommentInfo
     }
   }

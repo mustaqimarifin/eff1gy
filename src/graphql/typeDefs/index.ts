@@ -137,6 +137,7 @@ export default gql`
 
   type Comment {
     id: ID!
+    parentId: String
     createdAt: Date!
     updatedAt: Date
     text: String
@@ -338,8 +339,12 @@ export default gql`
     addQuestion(data: AddQuestionInput!): Question
     editQuestion(id: ID!, data: EditQuestionInput!): Question
     deleteQuestion(id: ID!): Boolean
-
-    addComment(refId: ID!, type: CommentType!, text: String!): Comment
+    addComment(
+      refId: ID!
+      parentId: String
+      type: CommentType!
+      text: String!
+    ): Comment
     editComment(id: ID!, text: String): Comment
     deleteComment(id: ID!): Boolean
 

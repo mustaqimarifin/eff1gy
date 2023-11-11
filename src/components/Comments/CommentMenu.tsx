@@ -10,7 +10,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
         <Menu>
           {({ open }) => (
             <>
-              <Menu.Button as="div" className="z-0 inline-flex">
+              <Menu.Button as="div" className="z-3 inline-block">
                 <GhostButton
                   aria-label="Open comment actions menu"
                   size="small-square"
@@ -29,7 +29,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items
-                  static
+                  //static
                   className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
                 >
                   {comment.viewerCanEdit && (
