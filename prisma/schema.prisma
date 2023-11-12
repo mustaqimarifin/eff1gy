@@ -1,14 +1,15 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("SQL3")
+  provider   = "postgresql"
+  url        = env("SQL3")
 }
 
 model Account {
-  id            String    @id @default(dbgenerated("nanoid()"))
+    id                String  @id @default(dbgenerated("concat('acc', xid())")) @db.Char(23)
+
   userId            String
   type              String
   provider          String
@@ -36,7 +37,8 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('usr', xid())")) @db.Char(23)
+
   createdAt     DateTime      @default(now())
   name          String
   image         String?
@@ -69,7 +71,8 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('bmk', xid())")) @db.Char(23)
+
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   url           String     @unique
@@ -87,7 +90,8 @@ model Bookmark {
 }
 
 model Question {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('qst', xid())")) @db.Char(23)
+
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
@@ -104,7 +108,8 @@ model Question {
 }
 
 model Comment {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('cmt', xid())")) @db.Char(23)
+
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
@@ -135,7 +140,8 @@ model Comment {
 }
 
 model Audio {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('aud', xid())")) @db.Char(23)
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   plays         Int
@@ -160,7 +166,8 @@ model Blog {
 }
 
 model Post {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('pst', xid())")) @db.Char(23)
+
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -182,7 +189,8 @@ model Post {
 }
 
 model PostEdit {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('ped', xid())")) @db.Char(23)
+
 
   createdAt    DateTime @default(now())
   text         String
@@ -202,7 +210,8 @@ model Tag {
 }
 
 model Stack {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('stk', xid())")) @db.Char(23)
+
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -218,7 +227,8 @@ model Stack {
 }
 
 model Reaction {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('rct', xid())")) @db.Char(23)
+
 
   createdAt  DateTime  @default(now())
   userId     String
@@ -249,7 +259,7 @@ model PageView {
 }
 
 model PostComment {
-  id            String    @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(dbgenerated("concat('pct', xid())")) @db.Char(23)
   text      String
   createdAt DateTime
   updatedAt DateTime?

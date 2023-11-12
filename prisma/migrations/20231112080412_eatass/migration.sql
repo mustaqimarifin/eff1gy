@@ -6,7 +6,7 @@ CREATE TYPE "EmailSubscriptionType" AS ENUM ('HACKER_NEWS');
 
 -- CreateTable
 CREATE TABLE "Account" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('acc', xid()),
     "userId" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
@@ -26,12 +26,14 @@ CREATE TABLE "Account" (
 CREATE TABLE "Session" (
     "sessionToken" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Session_pkey" PRIMARY KEY ("sessionToken")
 );
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('usr', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
     "image" TEXT,
@@ -56,7 +58,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('bmk', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT NOT NULL,
@@ -72,7 +74,7 @@ CREATE TABLE "Bookmark" (
 
 -- CreateTable
 CREATE TABLE "Question" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('qst', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
@@ -87,7 +89,7 @@ CREATE TABLE "Question" (
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('cmt', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
@@ -96,6 +98,8 @@ CREATE TABLE "Comment" (
     "questionId" TEXT,
     "stackId" TEXT,
     "postId" TEXT,
+    "parentId" TEXT,
+    "slug" TEXT,
     "blogId" TEXT,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
@@ -103,7 +107,7 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Audio" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('aud', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "plays" INTEGER NOT NULL,
@@ -127,7 +131,7 @@ CREATE TABLE "Blog" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('pst', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "publishedAt" TIMESTAMP(3),
@@ -143,7 +147,7 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "PostEdit" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('ped', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "text" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -163,7 +167,7 @@ CREATE TABLE "Tag" (
 
 -- CreateTable
 CREATE TABLE "Stack" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('stk', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
@@ -177,7 +181,7 @@ CREATE TABLE "Stack" (
 
 -- CreateTable
 CREATE TABLE "Reaction" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('rct', xid()),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
     "bookmarkId" TEXT,
@@ -191,16 +195,16 @@ CREATE TABLE "Reaction" (
 
 -- CreateTable
 CREATE TABLE "PageView" (
-    "slug" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
     "lastSeen" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "viewCount" INTEGER DEFAULT 1,
 
-    CONSTRAINT "PageView_pkey" PRIMARY KEY ("slug")
+    CONSTRAINT "PageView_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "PostComment" (
-    "id" TEXT NOT NULL,
+    "id" CHAR(23) NOT NULL DEFAULT concat('pct', xid()),
     "text" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3),
@@ -228,20 +232,20 @@ CREATE TABLE "EmailSubscription" (
 
 -- CreateTable
 CREATE TABLE "_BookmarkToTag" (
-    "A" TEXT NOT NULL,
+    "A" CHAR(23) NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_StackToTag" (
-    "A" TEXT NOT NULL,
+    "A" CHAR(23) NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_StackToUser" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
+    "A" CHAR(23) NOT NULL,
+    "B" CHAR(23) NOT NULL
 );
 
 -- CreateIndex
@@ -338,6 +342,9 @@ CREATE INDEX "Reaction_stackId_idx" ON "Reaction"("stackId");
 CREATE INDEX "Reaction_userId_idx" ON "Reaction"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "PageView_id_key" ON "PageView"("id");
+
+-- CreateIndex
 CREATE INDEX "PostComment_userId_slug_createdAt_idx" ON "PostComment"("userId", "slug", "createdAt");
 
 -- CreateIndex
@@ -374,6 +381,9 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_bookmarkId_fkey" FOREIGN KEY ("bookmarkId") REFERENCES "Bookmark"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -389,7 +399,7 @@ ALTER TABLE "Comment" ADD CONSTRAINT "Comment_stackId_fkey" FOREIGN KEY ("stackI
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Audio" ADD CONSTRAINT "Audio_commentId_fkey" FOREIGN KEY ("commentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -98,7 +98,48 @@ function getComponentsForVariant(variant) {
     case 'longform': {
       return {
         a: LinkRenderer,
-        img: Image,
+        p: (paragraph: { children?: any; node?: any }) => {
+          const { node } = paragraph
+          if (node.children[0].tagName === 'img') {
+            const image = node.children[0]
+            const metastring = image.properties.alt
+            const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
+            const metaWidth = metastring.match(/{([^}]+)x/)
+            const metaHeight = metastring.match(/x([^}]+)}/)
+            const width = metaWidth ? metaWidth[1] : 768
+            const height = metaHeight ? metaHeight[1] : 432
+            const isPriority = metastring?.toLowerCase().match('{priority}')
+            const hasCaption = metastring?.toLowerCase().includes('{caption:')
+            const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
+
+            return (
+              <div className="mx-auto">
+                <NextImage
+                  src={image.properties.src}
+                  width={768}
+                  height={462}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
+                  // blurDataURL={previewImage.dataURIBase64}
+                  blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
+                  className="object-cover"
+                  alt={alt}
+                  priority={isPriority}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
+                />
+                {hasCaption ? (
+                  <div className="prose-sm" aria-label={caption}>
+                    {caption}
+                  </div>
+                ) : null}
+              </div>
+            )
+          }
+          return <p>{paragraph.children}</p>
+        },
         //h2: H2,
         //h3: H3,
         Callout,
@@ -179,8 +220,9 @@ const rgbDataURL = (r: number, g: number, b: number) =>
     triplet(0, r, g) + triplet(b, 255, 255)
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
 
-const MDImage = (paragraph: { children?: any; node?: any }) => {
+const MDXImage = (paragraph: { children?: boolean; node?: any }) => {
   const { node } = paragraph
+
   if (node.children[0].tagName === 'img') {
     const image = node.children[0]
     const metastring = image.properties.alt
@@ -194,22 +236,14 @@ const MDImage = (paragraph: { children?: any; node?: any }) => {
     const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
 
     return (
-      <div className="mx-auto">
-        <NextImage
+      <div className="postImgWrapper">
+        <Image
           src={image.properties.src}
           width={width}
           height={height}
-          placeholder="blur"
-          sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-          // blurDataURL={previewImage.dataURIBase64}
-          blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
-          className="object-cover"
+          className="postImg"
           alt={alt}
           priority={isPriority}
-          style={{
-            maxWidth: '100%',
-            height: 'auto',
-          }}
         />
         {hasCaption ? (
           <div className="caption" aria-label={caption}>
@@ -245,33 +279,7 @@ function Callout(props) {
     </div>
   )
 }
-export const components = {
-  img: Image,
-  a: CustomLink,
-  CH,
-  Callout,
-  ProsCard,
-  ConsCard,
-  DesignDetailMedia,
-  DickPics,
-}
 
-interface Props {
-  mdx: string
-  [key: string]: unknown
-}
-
-export const MDSEX = ({ mdx, ...rest }: Props) => {
-  const MDXLayout = React.useMemo(
-    (): React.FunctionComponent<MDXContentProps> => getMDXComponent(mdx),
-    [mdx]
-  )
-  return (
-    <article className="prose-quoteless prose prose-neutral dark:prose-invert">
-      <MDXLayout components={components} />
-    </article>
-  )
-}
 export function MarkdownRenderer(props: any) {
   // variant = 'longform' | 'comment'
   const { children, variant = 'longform', ...rest } = props
@@ -288,17 +296,19 @@ export function MarkdownRenderer(props: any) {
   const components = getComponentsForVariant(variant)
 
   return (
-    <Markdown
-      {...rest}
-      remarkPlugins={[remarkGfm, linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
-      rehypePlugins={[
-        [rehypeSanitize, schema],
-        rehypeSlug,
-        [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-      ]}
-      components={components}
-    >
-      {children}
-    </Markdown>
+    <article className="prose-quoteless prose prose-neutral dark:prose-invert">
+      <Markdown
+        {...rest}
+        remarkPlugins={[remarkGfm, linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
+        rehypePlugins={[
+          [rehypeSanitize, schema],
+          rehypeSlug,
+          [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+        ]}
+        components={components}
+      >
+        {children}
+      </Markdown>
+    </article>
   )
 }
