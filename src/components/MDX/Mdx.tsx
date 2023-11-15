@@ -1,6 +1,8 @@
 import { join } from 'path'
 import { cwd } from 'process'
-import { bundleMDX } from 'mdx-bundler'
+import { remarkCodeHike } from '@code-hike/mdx'
+import { serialize } from 'next-mdx-remote/serialize'
+//import { bundleMDX } from 'mdx-bundler'
 import readingTime from 'reading-time'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
@@ -30,7 +32,7 @@ export async function mdxToCode(text: string) {
     )
   }
 
-  const { code } = await bundleMDX({
+  /* const { code } = await bundleMDX({
     source: text,
     //cwd: join(root, 'components'),
     mdxOptions(options) {
@@ -38,15 +40,7 @@ export async function mdxToCode(text: string) {
         ...(options.remarkPlugins ?? []),
         remarkGfm,
         linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
-        /*         [
-          remarkCodeHike,
-          {
-            autoImport: false,
-            lineNumbers: false,
-            showCopyButton: true,
-            theme: 'poimandres',
-          },
-        ], */
+
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
@@ -57,8 +51,8 @@ export async function mdxToCode(text: string) {
 
       return options
     },
-  })
-  /* const source = await serialize(text, {
+  }) */
+  const source = await serialize(text, {
     mdxOptions: {
       useDynamicImport: true,
       remarkPlugins: [
@@ -68,17 +62,14 @@ export async function mdxToCode(text: string) {
           remarkCodeHike,
           {
             autoImport: false,
-            theme: theme2,
-            lineNumbers: true,
+            lineNumbers: false,
             showCopyButton: true,
             skipLanguages: false,
           },
         ],
       ],
       rehypePlugins: [
-        rehypePresetMinify,
-                 [rehypePrettyCode, options],
-         rehypeSlug,
+        rehypeSlug,
         [
           rehypeAutolinkHeadings,
           { behavior: 'wrap' },
@@ -88,15 +79,15 @@ export async function mdxToCode(text: string) {
             },
           },
         ],
+        imageMetadata,
       ],
       format: 'mdx',
     },
   })
-   */
 
   //const { compiledSource } = source
   return {
-    mdx: code,
+    mdx: source,
     wordCount: text.split(/\s+/gu).length,
     readingTime: readingTime(text).text,
   }

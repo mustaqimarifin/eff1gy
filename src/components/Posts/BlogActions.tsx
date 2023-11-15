@@ -58,7 +58,7 @@ function getReactionButton(blog) {
   )
 }
 
-export function BlogActions({ blog }: { blog: Post }) {
+export function BlogActions({ blog }) {
   return (
     <div className="flex items-center space-x-2">
       <PageViews id={blog.slug} trackView />

@@ -16,6 +16,8 @@ export function Avatar({ user, src, ...props }) {
     <Image
       alt={`${user.name || user.name}'s profile photo`}
       src={srcState}
+      width={24}
+      height={24}
       {...props}
       onError={() => {
         setSrcState(fallbackUrl)

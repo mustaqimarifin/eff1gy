@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { type NextPageContext } from 'next'
 import { ApolloProvider } from '@apollo/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useApollo } from '~/lib/apollo'
 import { ThemeProvider } from 'next-themes'
 
@@ -23,6 +24,7 @@ export const GlobalNavigationContext = React.createContext(
 
 export function Providers({ children, pageProps }: Props) {
   const apolloClient = useApollo(pageProps)
+  const queryClient = new QueryClient()
 
   const initialState = {
     isOpen: false,
@@ -40,9 +42,11 @@ export function Providers({ children, pageProps }: Props) {
       <SEO />
       <Toast />
       <ThemeProvider attribute="class">
-        <GlobalNavigationContext.Provider value={state}>
-          <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
-        </GlobalNavigationContext.Provider>
+        <QueryClientProvider client={queryClient}>
+          <GlobalNavigationContext.Provider value={state}>
+            <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
+          </GlobalNavigationContext.Provider>
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   )

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import dynamic from 'next/dynamic'
-import { CommentType } from '~/graphql/typeSlut'
+import { CommentType, useGetBlogQuery } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 import { CoverImage } from '../Image'
@@ -42,14 +42,25 @@ export type CaseStudy = {
 type Props = {
   children: React.ReactNode
   post: Post
+  slug: string
 }
 
 const Comments = dynamic(() => import('../Comments'), {
   ssr: false,
 })
-export function BlogDetail({ children, post }: Props) {
+export function BlogDetail({ children, post, slug }: Props) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
+  const { data, error, loading } = useGetBlogQuery({ variables: { slug } })
+
+  if (loading) {
+    return <Detail.Loading />
+  }
+
+  if (!data?.blog || error) {
+    return <Detail.Null />
+  }
+  const { blog } = data
   //if (error) return <div>failed to load</div>;
   // if (!post) return <div>loading...</div>;
   /*   React.useEffect(() => {
@@ -86,7 +97,7 @@ export function BlogDetail({ children, post }: Props) {
           titleRef={titleRef}
           //@ts-ignore
           scrollContainerRef={scrollContainerRef}
-          trailingAccessory={<BlogActions blog={post} />}
+          trailingAccessory={<BlogActions blog={blog} />}
         />
 
         <Detail.ContentContainer>
@@ -122,7 +133,7 @@ export function BlogDetail({ children, post }: Props) {
 
           <div className="py-6" />
           <React.Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={post.id} type={CommentType.Blog} />
+            <Comments refId={blog.id} type={CommentType.Blog} />
           </React.Suspense>
         </Detail.ContentContainer>
       </Detail.Container>

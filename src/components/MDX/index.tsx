@@ -1,7 +1,10 @@
 import * as React from 'react'
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
-import { getMDXComponent } from 'mdx-bundler/client'
+import { CH } from '@code-hike/mdx/components'
+import { MDXRemote, type MDXRemoteSerializeResult } from 'next-mdx-remote'
+
+//import { getMDXComponent } from 'mdx-bundler/client'
 
 function ProsCard({ title, pros }) {
   return (
@@ -90,14 +93,19 @@ export const MDXComponents = {
   Callout,
   ProsCard,
   ConsCard,
+  CH,
 }
 
-export default function MDX({ code }: { code: string }) {
-  const Component = React.useMemo(() => getMDXComponent(code), [code])
+interface Props {
+  source: MDXRemoteSerializeResult
+}
+
+export default function MDX({ source }: Props) {
+  //const Component = React.useMemo(() => getMDXComponent(code), [code])
 
   return (
     <article className="prose-quoteless prose prose-neutral dark:prose-invert">
-      <Component components={{ ...MDXComponents }} />
+      <MDXRemote {...source} components={{ ...MDXComponents }} />
     </article>
   )
 }

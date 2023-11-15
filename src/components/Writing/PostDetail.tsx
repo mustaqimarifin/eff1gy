@@ -8,6 +8,7 @@ import { CommentType, useGetPostQuery } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 import { PageViews } from '../Stats/ViewCounter'
+import TRPComments from '../TRPComments'
 import { PostActions } from './PostActions'
 import { PostSEO } from './PostSEO'
 
@@ -55,11 +56,11 @@ export function PostDetail({ children, slug }: PD) {
               {publishedAt.formatted}
             </span>
           </Detail.Header>
-          {/*  <div className="xl:prose-lg lg:max-w-3xl">{children}</div> */}
-          <MarkdownRenderer
+          <div className="xl:prose-lg lg:max-w-3xl">{children}</div>
+          {/*           <MarkdownRenderer
             children={post.text}
             className="mt-8 xl:prose-lg lg:max-w-3xl"
-          />
+          /> */}
 
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />

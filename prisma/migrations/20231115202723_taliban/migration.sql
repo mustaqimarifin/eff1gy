@@ -6,8 +6,8 @@ CREATE TYPE "EmailSubscriptionType" AS ENUM ('HACKER_NEWS');
 
 -- CreateTable
 CREATE TABLE "Account" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('acc', xid()),
-    "userId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "userId" UUID NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE "Account" (
 -- CreateTable
 CREATE TABLE "Session" (
     "sessionToken" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Session_pkey" PRIMARY KEY ("sessionToken")
@@ -33,7 +33,7 @@ CREATE TABLE "Session" (
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('usr', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
     "image" TEXT,
@@ -42,7 +42,7 @@ CREATE TABLE "User" (
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "emailVerified" TIMESTAMP(3),
     "pendingEmail" TEXT,
-    "description" VARCHAR(256),
+    "description" TEXT,
     "location" TEXT,
     "twitterId" TEXT,
 
@@ -58,7 +58,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('bmk', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE "Bookmark" (
 
 -- CreateTable
 CREATE TABLE "Question" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('qst', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
@@ -82,56 +82,55 @@ CREATE TABLE "Question" (
     "waveform" JSONB,
     "audioUrl" TEXT,
     "description" TEXT,
-    "userId" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('cmt', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
-    "userId" TEXT,
-    "bookmarkId" TEXT,
-    "questionId" TEXT,
-    "stackId" TEXT,
-    "postId" TEXT,
-    "parentId" TEXT,
+    "userId" UUID,
+    "bookmarkId" UUID,
+    "questionId" UUID,
+    "stackId" UUID,
+    "postId" UUID,
+    "parentId" UUID,
     "slug" TEXT,
-    "blogId" TEXT,
+    "blogId" UUID,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Audio" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('aud', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "plays" INTEGER NOT NULL,
     "waveform" JSONB NOT NULL,
     "url" TEXT NOT NULL,
     "transcription" TEXT NOT NULL,
-    "commentId" TEXT NOT NULL,
 
     CONSTRAINT "Audio_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Blog" (
-    "id" TEXT NOT NULL,
-    "date" TIMESTAMP(3),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "slug" TEXT,
-    "userId" TEXT,
+    "userId" UUID,
 
     CONSTRAINT "Blog_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('pst', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "publishedAt" TIMESTAMP(3),
@@ -140,20 +139,20 @@ CREATE TABLE "Post" (
     "text" TEXT NOT NULL,
     "excerpt" TEXT NOT NULL,
     "featureImage" TEXT,
-    "userId" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "PostEdit" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('ped', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "text" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "excerpt" TEXT NOT NULL,
     "featureImage" TEXT,
-    "postId" TEXT,
+    "postId" UUID,
 
     CONSTRAINT "PostEdit_pkey" PRIMARY KEY ("id")
 );
@@ -167,7 +166,7 @@ CREATE TABLE "Tag" (
 
 -- CreateTable
 CREATE TABLE "Stack" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('stk', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
@@ -181,14 +180,14 @@ CREATE TABLE "Stack" (
 
 -- CreateTable
 CREATE TABLE "Reaction" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('rct', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT NOT NULL,
-    "bookmarkId" TEXT,
-    "questionId" TEXT,
-    "stackId" TEXT,
-    "postId" TEXT,
-    "blogId" TEXT,
+    "userId" UUID NOT NULL,
+    "bookmarkId" UUID,
+    "questionId" UUID,
+    "stackId" UUID,
+    "postId" UUID,
+    "blogId" UUID,
 
     CONSTRAINT "Reaction_pkey" PRIMARY KEY ("id")
 );
@@ -204,24 +203,24 @@ CREATE TABLE "PageView" (
 
 -- CreateTable
 CREATE TABLE "PostComment" (
-    "id" CHAR(23) NOT NULL DEFAULT concat('pct', xid()),
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "text" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3),
-    "userId" TEXT,
-    "parentId" TEXT,
+    "userId" UUID,
+    "parentId" UUID,
     "slug" TEXT,
-    "blogId" TEXT,
+    "blogId" UUID,
 
     CONSTRAINT "PostComment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Like" (
-    "userId" TEXT NOT NULL,
-    "postCommentId" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
+    "commentId" UUID NOT NULL,
 
-    CONSTRAINT "Like_pkey" PRIMARY KEY ("userId","postCommentId")
+    CONSTRAINT "Like_pkey" PRIMARY KEY ("userId","commentId")
 );
 
 -- CreateTable
@@ -232,20 +231,20 @@ CREATE TABLE "EmailSubscription" (
 
 -- CreateTable
 CREATE TABLE "_BookmarkToTag" (
-    "A" CHAR(23) NOT NULL,
+    "A" UUID NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_StackToTag" (
-    "A" CHAR(23) NOT NULL,
+    "A" UUID NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_StackToUser" (
-    "A" CHAR(23) NOT NULL,
-    "B" CHAR(23) NOT NULL
+    "A" UUID NOT NULL,
+    "B" UUID NOT NULL
 );
 
 -- CreateIndex
@@ -298,9 +297,6 @@ CREATE INDEX "Comment_stackId_idx" ON "Comment"("stackId");
 
 -- CreateIndex
 CREATE INDEX "Comment_userId_idx" ON "Comment"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Audio_commentId_key" ON "Audio"("commentId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Blog_slug_key" ON "Blog"("slug");
@@ -381,6 +377,9 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_slug_fkey" FOREIGN KEY ("slug") REFERENCES "PageView"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -400,9 +399,6 @@ ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Audio" ADD CONSTRAINT "Audio_commentId_fkey" FOREIGN KEY ("commentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Blog" ADD CONSTRAINT "Blog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -444,10 +440,10 @@ ALTER TABLE "PostComment" ADD CONSTRAINT "PostComment_userId_fkey" FOREIGN KEY (
 ALTER TABLE "PostComment" ADD CONSTRAINT "PostComment_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Like" ADD CONSTRAINT "Like_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Like" ADD CONSTRAINT "Like_commentId_fkey" FOREIGN KEY ("commentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Like" ADD CONSTRAINT "Like_postCommentId_fkey" FOREIGN KEY ("postCommentId") REFERENCES "PostComment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Like" ADD CONSTRAINT "Like_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_BookmarkToTag" ADD CONSTRAINT "_BookmarkToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Bookmark"("id") ON DELETE CASCADE ON UPDATE CASCADE;

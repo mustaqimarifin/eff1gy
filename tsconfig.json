@@ -27,6 +27,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "prettier.config.mjs",
-    "next.config.mjs"
+    "next.config.mjs",
+    "prisma/seed.mts"
   ]
 }

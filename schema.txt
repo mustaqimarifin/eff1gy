@@ -1,16 +1,18 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("SQL2")
+  provider   = "postgresql"
+  url        = env("SQL2")
+  extensions = [pgcrypto]
 }
 
 model Account {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('acc_', nanoid())")) @db.Text
 
-  userId            String  @db.Uuid
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -29,7 +31,7 @@ model Account {
 
 model Session {
   sessionToken String   @id @unique
-  userId       String   @db.Uuid
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -37,7 +39,7 @@ model Session {
 }
 
 model User {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('usr_', nanoid())")) @db.Text
 
   createdAt     DateTime      @default(now())
   name          String
@@ -71,7 +73,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('bmk_', nanoid())")) @db.Text
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -90,7 +92,7 @@ model Bookmark {
 }
 
 model Question {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('qst_', nanoid())")) @db.Text
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -99,7 +101,7 @@ model Question {
   waveform    Json?
   audioUrl    String?
   description String?
-  userId      String     @db.Uuid
+  userId      String
   comments    Comment[]
   author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   reactions   Reaction[]
@@ -108,30 +110,29 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String    @id @default(dbgenerated("concat('cmt_', nanoid())")) @db.Text
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   text       String
-  userId     String?  @db.Uuid
-  bookmarkId String?  @db.Uuid
-  questionId String?  @db.Uuid
-  stackId    String?  @db.Uuid
-  postId     String?  @db.Uuid
-
-  parentId String?   @db.Uuid
-  slug     String?
-  pageView PageView? @relation(fields: [slug], references: [id], onDelete: Cascade)
-  parent   Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  replies  Comment[] @relation("ParentChild")
-  bookmark Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  post     Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId   String?   @db.Uuid
-  likes    Like[]
+  userId     String?
+  bookmarkId String?
+  questionId String?
+  stackId    String?
+  postId     String?
+  audio      Audio?
+  parentId   String?
+  slug       String?
+  pageView   PageView? @relation(fields: [slug], references: [id], onDelete: Cascade)
+  parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  replies    Comment[] @relation("ParentChild")
+  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  author     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog       Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  blogId     String?
+  likes      Like[]
 
   @@index([bookmarkId])
   @@index([questionId])
@@ -142,7 +143,7 @@ model Comment {
 }
 
 model Audio {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('aud_', nanoid())")) @db.Text
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -150,23 +151,25 @@ model Audio {
   waveform      Json
   url           String
   transcription String
+  commentId     String   @unique
+  comment       Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
 
 model Blog {
-  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id           String        @id @default(dbgenerated("concat('blg_', nanoid())")) @db.Text
   date         DateTime      @default(now())
   slug         String?       @unique
   comments     Comment[]
   postComments PostComment[]
   reactions    Reaction[]
   author       User?         @relation(fields: [userId], references: [id])
-  userId       String?       @db.Uuid
+  userId       String?
 
   @@index([date])
 }
 
 model Post {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('pst_', nanoid())")) @db.Text
 
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -176,7 +179,7 @@ model Post {
   text         String
   excerpt      String
   featureImage String?
-  userId       String        @db.Uuid
+  userId       String
   comments     Comment[]
   author       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
@@ -188,14 +191,14 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('ped_', nanoid())")) @db.Text
 
   createdAt    DateTime @default(now())
   text         String
   title        String
   excerpt      String
   featureImage String?
-  postId       String?  @db.Uuid
+  postId       String?
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
@@ -208,7 +211,7 @@ model Tag {
 }
 
 model Stack {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('stk_', nanoid())")) @db.Text
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -224,21 +227,21 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("concat('rct_', nanoid())")) @db.Text
 
   createdAt  DateTime  @default(now())
-  userId     String    @db.Uuid
-  bookmarkId String?   @db.Uuid
-  questionId String?   @db.Uuid
-  stackId    String?   @db.Uuid
-  postId     String?   @db.Uuid
+  userId     String
+  bookmarkId String?
+  questionId String?
+  stackId    String?
+  postId     String?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog       Blog?     @relation(fields: [blogId], references: [id])
-  blogId     String?   @db.Uuid
+  blogId     String?
 
   @@index([bookmarkId])
   @@index([questionId])
@@ -256,13 +259,12 @@ model PageView {
 }
 
 model PostComment {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-
+  id        String        @id @default(dbgenerated("concat('pct_', nanoid())")) @db.Text
   text      String
   createdAt DateTime
   updatedAt DateTime?
-  userId    String?       @db.Uuid
-  parentId  String?       @db.Uuid
+  userId    String?
+  parentId  String?
   slug      String?
   parent    PostComment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   replies   PostComment[] @relation("ParentChild")
@@ -270,14 +272,14 @@ model PostComment {
   user      User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   blog   Blog?   @relation(fields: [blogId], references: [id])
-  blogId String? @db.Uuid
+  blogId String?
 
   @@index([userId, slug, createdAt])
 }
 
 model Like {
-  userId    String  @db.Uuid
-  commentId String  @db.Uuid
+  userId    String
+  commentId String
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 

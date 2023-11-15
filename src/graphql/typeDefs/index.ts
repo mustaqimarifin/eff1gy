@@ -144,6 +144,7 @@ export default gql`
     author: User!
     viewerCanEdit: Boolean
     viewerCanDelete: Boolean
+    replies: [Comment]
   }
 
   type Hit {

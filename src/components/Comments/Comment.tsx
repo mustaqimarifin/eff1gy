@@ -9,24 +9,29 @@ import {
   Comment as CommentProp,
   CommentType,
   GetCommentsQuery,
+  useAddCommentMutation,
   useDeleteCommentMutation,
   useEditCommentMutation,
   useViewerQuery,
 } from '~/graphql/typeSlut'
+import { genId } from '~/lib/nanoid'
 import { cx, timestampToCleanTime } from '~/lib/transformers'
 
+import Comments from '.'
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentForm } from './CommentForm'
 import { CommentMenu } from './CommentMenu'
 
 interface Props {
   comment: CommentProp
+  parentId?: string
   refId: string
   type: CommentType
 }
 
 export const Comment = React.memo(function MemoComment({
   comment,
+  parentId,
   refId,
   type,
 }: Props) {
@@ -34,6 +39,47 @@ export const Comment = React.memo(function MemoComment({
   const [editText, setEditText] = React.useState(comment.text)
   const [isSavingEdit, setIsSavingEdit] = React.useState(false)
   const [showReplyForm, setShowReplyForm] = React.useState(false)
+  const replyId = comment.parentId ? comment.parentId : comment.id
+  const [hidden, setHidden] = React.useState(false)
+  const { data } = useViewerQuery()
+  const [text, setText] = React.useState('')
+
+  const [handleAddReply] = useAddCommentMutation({
+    optimisticResponse: {
+      __typename: 'Mutation',
+      addComment: {
+        __typename: 'Comment',
+        id: genId(),
+        text,
+        parentId: comment.id,
+        createdAt: timestampToCleanTime({ month: 'short' }).formatted,
+        updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
+        viewerCanDelete: false,
+        viewerCanEdit: false,
+        author: {
+          __typename: 'User',
+          id: genId(),
+          name: data?.viewer?.name,
+          image: data?.viewer?.image,
+          isViewer: true,
+        },
+      },
+    },
+    update(cache, { data: { addComment } }) {
+      const { comments } = cache.readQuery<GetCommentsQuery>({
+        query: GET_COMMENTS,
+        variables: { refId, type, parentId },
+      })
+
+      cache.writeQuery({
+        query: GET_COMMENTS,
+        variables: { refId, type, parentId },
+        data: {
+          comments: [...comments, addComment],
+        },
+      })
+    },
+  })
 
   const [deleteComment] = useDeleteCommentMutation({
     variables: { id: comment.id },
@@ -87,6 +133,11 @@ export const Comment = React.memo(function MemoComment({
     setIsEditing(true)
   }
 
+  function handleReply() {
+    handleAddReply()
+    setShowReplyForm(false)
+  }
+
   function onKeyDown(e) {
     if (e.keyCode === 13 && e.metaKey) {
       if (editText.trim().length === 0 || isSavingEdit) return
@@ -107,8 +158,6 @@ export const Comment = React.memo(function MemoComment({
     month: 'short',
     timestamp: comment.createdAt,
   })
-
-  const { data } = useViewerQuery()
 
   return (
     <>
@@ -202,7 +251,7 @@ export const Comment = React.memo(function MemoComment({
           </div>
         )}
       </div>
-      {/* <div
+      <div
         className={cx(
           'row-span-2 row-start-4 -mr-2 -translate-x-2 transform rounded-md',
           {
@@ -216,21 +265,22 @@ export const Comment = React.memo(function MemoComment({
               autoFocus
               submitLabel="Reply"
               onSubmit={handleReply}
+              parentId={replyId}
               handleResetCallback={() => setShowReplyForm(false)}
             />
           </div>
         )}
-        {replies &&
-          replies.sort(
+        {comment.replies &&
+          comment.replies.sort(
             (a, b) =>
               new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
           ) &&
-          replies?.length > 0 && (
+          comment.replies?.length > 0 && (
             <div className={cx('space-y-5 pt-2')}>
-              <CommentList comments={replies} />
+              <Comment comment={comment} refId={refId} type={type} />
             </div>
           )}
-      </div> */}
+      </div>
     </>
   )
 })

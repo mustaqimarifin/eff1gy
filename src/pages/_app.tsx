@@ -3,31 +3,48 @@ import '~/styles/prose-styles.css'
 import '@code-hike/mdx/dist/index.css'
 
 import * as React from 'react'
+import type { AppProps } from 'next/dist/shared/lib/router/router'
+import type { AppType } from 'next/dist/shared/lib/utils'
 import Head from 'next/head'
+import type { NextPage } from 'next/types'
 import { SiteLayout } from '~/components/Layouts'
 import { LoginErrorToast } from '~/components/LoginErrorToast'
 import { Providers } from '~/components/Providers'
-import { cx } from '~/lib/transformers'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import { api } from '~/server10/_api'
 
-export default function App({ Component, pageProps }) {
+export type NextPageWithLayout<
+  TProps = Record<string, unknown>,
+  TInitialProps = TProps,
+> = NextPage<TProps, TInitialProps> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout =
-    Component.getLayout ||
+    Component.getLayout ??
     ((page) => (
       <>
         <Head>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
-          />{' '}
+          />
         </Head>
         <Providers pageProps={pageProps}>
-          <LoginErrorToast />
           <SiteLayout>{page}</SiteLayout>
         </Providers>
       </>
     ))
 
-  return getLayout(<Component {...pageProps} />)
-}
+  return getLayout(
+    <>
+      <Component {...pageProps} />
+    </>
+  )
+}) as AppType
+
+export default api.withTRPC(MyApp)

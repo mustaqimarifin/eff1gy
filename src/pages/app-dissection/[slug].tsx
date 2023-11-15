@@ -11,14 +11,16 @@ import { baseUrl } from '~/config/seo'
 import { caseSlugsQuery, designIndexQuery } from '~/lib/sanity/queries'
 import { getAllCaseStudy, getCaseBySlug } from '~/lib/sanity/sanity.client'
 import { sanityClient } from '~/lib/sanity/server'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { NextSeo } from 'next-seo'
 import removeMd from 'remove-markdown'
 
 interface Props {
   casestudy: CaseStudy
+  mdx: MDXRemoteSerializeResult
 }
 
-function AppDissectionPage({ casestudy }: Props) {
+function AppDissectionPage({ mdx, casestudy }: Props) {
   if (!casestudy) return <Detail.Null />
 
   if (casestudy) {
@@ -42,7 +44,7 @@ function AppDissectionPage({ casestudy }: Props) {
         />
 
         <AppDissectionDetail casestudy={casestudy}>
-          <MDX code={casestudy.content} />
+          <MDX source={mdx} />
         </AppDissectionDetail>
       </>
     )
@@ -70,10 +72,8 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: {
-      casestudy: {
-        ...casestudy,
-        content: mdx,
-      },
+      casestudy,
+      mdx,
       revalidate: 120,
     },
   }

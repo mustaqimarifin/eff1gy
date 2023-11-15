@@ -14,9 +14,10 @@ import { genId } from '~/lib/nanoid'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 interface Props {
-  refId: string
-  type: CommentType
-  openModal: () => void
+  refId?: string
+  type?: CommentType
+  openModal?: () => void
+  onSubmit?: () => void
   autoFocus?: boolean
   parentId?: string
   placeholder?: string
@@ -25,7 +26,7 @@ interface Props {
   hideEarlyCallback?: () => void
 }
 
-export function CommentForm({ refId, type, openModal }: Props) {
+export function CommentForm({ refId, type, openModal, parentId }: Props) {
   const { data } = useViewerQuery()
   const [text, setText] = React.useState('')
   const [error, setError] = React.useState(null)
@@ -37,6 +38,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
         __typename: 'Comment',
         id: genId(),
         text,
+        parentId,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
         viewerCanDelete: false,
