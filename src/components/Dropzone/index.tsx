@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { type UploadApiResponse } from 'cloudinary'
 import { useDropzone } from 'react-dropzone'
 

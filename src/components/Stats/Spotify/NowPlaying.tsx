@@ -2,10 +2,10 @@ import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Spotify } from '~/components/Icon'
+import { fetcher } from '~/lib/functions'
 import { type SpotifyData } from '~/types/site'
 import clsx from 'clsx'
 import useSWR from 'swr'
-import { fetcher } from '~/lib/functions'
 
 export default function NowPlaying({ className, ...rest }) {
   const { data } = useSWR<SpotifyData>('/api/stats/now-playing', fetcher)

@@ -7,7 +7,6 @@ export function Toast() {
       toastOptions={{
         // Define default options
         duration: 2000,
-       
       }}
     />
   )
