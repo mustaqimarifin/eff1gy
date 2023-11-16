@@ -6,25 +6,32 @@ export default {
     ignoreDuringBuilds: true,
   },
   transpilePackages: ["react-tweet"],
-
   images: {
     formats: ["image/avif", "image/webp"],
-    domains: [
-      "i.scdn.co", //$ Spotify Album Art
-      "pbs.twimg.com",
-      "i.postimg.cc",
-      "abs.twimg.com",
-      "overthought.ghost.io",
-      "imagedelivery.net",
-      "res.cloudinary.com",
-      "ik.imagekit.io",
-      "avatars.githubusercontent.com",
-      "github.githubassets.com",
-      "lh3.googleusercontent.com",
-      "wallpaperaccess.com",
-      "cdn.sanity.io",
-      "m.media-amazon.com",
-      "i.ytimg.com",
+    remotePatterns: [
+      { protocol: "https", hostname: "*.twimg.com", pathname: "/**" },
+      { protocol: "https", hostname: "beebom.com", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowSVG: true,
   },

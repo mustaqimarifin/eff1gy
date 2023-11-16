@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from '~/components/Button'
+import Button, { ViewButton } from '~/components/Button'
 import { ReactionButton } from '~/components/Button/ReactionButton'
 import { GET_POST } from '~/graphql/queries/posts'
 import {
@@ -7,6 +7,7 @@ import {
   useToggleReactionMutation,
   useViewerQuery,
 } from '~/graphql/typeSlut'
+import { LucideEye } from 'lucide-react'
 
 import { PageViews } from '../Stats/ViewCounter'
 
@@ -68,11 +69,23 @@ function getEditButton(post) {
     </Button>
   )
 }
-
+function viewButton(post) {
+  return (
+    <ViewButton
+      aria-label="Views"
+      style={{ maxHeight: '32px', overflow: 'hidden' }}
+    >
+      <span className=" text-gray-500	">
+        <LucideEye size={18} />
+      </span>
+      <PageViews id={post.slug} trackView />
+    </ViewButton>
+  )
+}
 export function PostActions({ post }) {
   return (
     <div className="flex items-center space-x-2">
-      <PageViews id={post.slug} trackView />
+      {viewButton(post)}
       {getReactionButton(post)}
       {getEditButton(post)}
     </div>

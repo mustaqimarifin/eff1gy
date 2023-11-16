@@ -1,84 +1,361 @@
-[NeuBible](https://http://www.neubible.co/) is, well, a Bible-reading app. Built by Kory Westerhold, Aaron Martin, and Zach Whelchel, NeuBible is a masterfully-executed product overflowing with fun details.
+# DONGFATHA
 
-Visually, the app is one of the cleanest, most well-composed apps I've downloaded. In terms of navigation, usability, and readability, the app invites an emotional attachment that many other products could only dream of (more on this later). By tastefully combining stock and non-stock UI elements, NeuBible has created something entirely new and interesting.
+This package is a Rehype plugin that provides beautiful code blocks for your
+MD/MDX docs. It has advantages over other solutions such as Prism.
+[View on GitHub](https://github.com/atomiks/rehype-pretty-code).
 
-Below are some of my favorite design details in **NeuBible for iOS**.
+### VS Code's highlighting
 
-### Launch
+Leverage the accuracy of VS Code's syntax highlighting engine and the popularity
+of its themes ecosystem, powered by [Shiki](https://github.com/shikijs/shiki).
+No missing tokens or unexpected broken syntax highlighting.
 
-There's something magic that happens when you download an app and it opens to the thing you actually care about. This happens in about 0.1% of all apps; social sign-ins, tedious walkthroughs, or long-winded intro videos have become the norm. It's a shame because it seems that most apps could very realistically offer a very complete and valuable signed-out experience for people who are curious and need more signal.
+```js
+import Document, { Head, Html, Main, NextScript } from "next/document"
 
-I'm happy to see NeuBible just work. No fuss, no signup, no over-the-top splash view. Nope, just the content you downloaded the app for in the first place.
+// 🔥 Super granular and accurate highlighting
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx)
+    return { ...initialProps }
+  }
 
-<DickPics src="https://i.postimg.cc/sXBdnGtD/suss.webp" />
-### Reading This is one of the better reading experiences I've seen in an app. I'd
-argue that the left and right margins are a tad too large, but otherwise the vertical
-rhythm of the entire app is seamless. I love the snap-to-chapter interaction whenever
-you scroll past the current section; it feels great to use and has enough rubber-band
-tension to make it super obvious that you've transitioned to a new chapter.
+  render() {
+    return (
+      <Html>
+        <Head />
+        <body className="bg-zinc-800 text-zinc-200">
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+}
+```
 
-<DickPics src="https://i.postimg.cc/sXBdnGtD/suss.webp" />
+> The theme is [Moonlight II](https://github.com/atomiks/moonlight-vscode-theme)
+> with a custom background color.
 
-### Navigation
+### There's no runtime or bundle size cost
 
-This is such a great example of product thinking: after you close the content view, there's never any question about where you left off. It's the digital equivalent of propping your book on a bedside table, making for an even faster navigation than bookmarking.
+Shiki does its highlighting at build-time — there's no perf hit caused by
+runtime syntax highlighting or kilobytes of library code sent over the wire on
+the client. Your docs will be lightning fast.
 
-<DickPics src="https://i.postimg.cc/sXBdnGtD/suss.webp" />
+### Line numbers and line highlighting are supported
 
-### Highlighting
+```js {4}
+import { useFloating } from "@floating-ui/react-dom"
 
-The app doesn't let you manually highlight text to copy/paste or save to your highlights. Instead it defaults to selecting a single verse at a time. Pressing and dragging will let you select multiple verses at a time. This is a logical reason to break the default pattern of text selection on the OS: verses are the atomic unit in this context, not words.
+function MyComponent() {
+  const { x, y, reference, floating } = useFloating()
 
-<DickPics src="https://i.postimg.cc/sXBdnGtD/suss.webp" />
+  return (
+    <>
+      <div ref={reference} />
+      <div ref={floating} />
+    </>
+  )
+}
+```
 
-### Customize
+![Bitch](https://m.media-amazon.com/images/M/MV5BZDJlYTYyZmYtNzA2MS00YTlmLThlNTEtNGVjZDFjOTMzZTQzXkEyXkFqcGdeQXVyMzM4MjM0Nzg@._V1_UY1200_CR94,0,630,1200_AL_.jpg)
 
-This is one of the best interactions in NeuBible. When you tap on the reading settings icon it returns you to the place in the text where you left off. In that way you can see, live, how your reading experience will be changed with each tweak of the settings.
+### Word highlighting too
 
-<DickPics src="https://i.postimg.cc/sXBdnGtD/suss.webp" />
+```js /reference/
+import { useFloating } from "@floating-ui/react-dom"
 
-This is smart product thinking and a delightful experience; I appreciate how simple the customizations are and how opinionated the creators are about what makes for a good reading experience. There aren't dozens of typeface options. No, just four that the creators think are good. Opinionated design like this is great because it gives us a glimpse into the mind of the designer in a way that generalized systems never will.
+function MyComponent() {
+  const { x, y, reference, floating } = useFloating()
 
-### Search
+  return (
+    <>
+      <div ref={reference} />
+      <div ref={floating} />
+    </>
+  )
+}
+```
 
-One of the four primary navigation elements is search. Tapping it brings down a skinned search bar to match the look and feel of the reading experience. It's simple and snappy, not overcomplicated and easy to find.
+### Even inline code!
 
-There is a hidden trick though: if you double tap anywhere while reading content, the search bar will appear. This is useful for quickly jumping between sections of content without having to use the app's primary navigation structures.
+The result of `[1, 2, 3].join('-'){:js}` is `'1-2-3'{:js}`.
 
-### Chapters
+#### Context-aware inline code
 
-Jumping straight to chapters in a book is one of the less-discoverable bits of UI in NeuBible. I don't fully understand the use case here, so it might very well be a subdued interaction for a reason. My initial reaction was that being able to jump to a specific chapter might be a higher intent user goal, and having to swipe to filter by chapter wasn't immediately obvious.
+For instance, if you had the following code block:
 
-Regardless, this is probably the first time I've ever seen a table cell swipe interaction be used as a navigation element rather than an action trigger (think: swipe to delete in Mail.app).
+```js
+function getStringLength(str) {
+  return str.length
+}
+```
 
-I discovered later that you can also swipe left from the reading view to find a chapter navigation. Again, not that discoverable albeit beautifully executed at the visual level.
+When we refer to `getStringLength{:.entity.name.function}` as a plain variable,
+we can color it as a function. Same with `function{:.keyword}`, or
+`str{:.variable.parameter}` vs. `str{:.variable.other.object}`, etc. This allows
+you to semantically tie inline code with the nearest code block it's referring
+to.
 
-### Highlights
+### Code blocks are unstyled
 
-I love the timeline structure of the highlights view. It builds a reverse-chronological history of your favorite verses and passages. Ordering highlights by the date of creation, rather than by location in the overall text, is an interesting decision. I agree with it, however, because it gives the feeling of curating ideas and discovery over time, rather than a feeling of finding needles in a haystack of text.
+No need to fight CSS rules, build the look from scratch. We recommend the
+following styles as a base though:
 
-I would also suppose that the highlights ordering lends to this subtle, emotional feeling of this app is my own. The small customizations and tweaks that happen in the system all add up to an app that will never feel the same between any two people, even if the underlying content remains untouched.
+```css
+pre > code {
+  display: grid;
+}
+```
 
-### Settings
+This allows line highlighting to span the width of a horizontally-scrollable
+code block on small viewport widths.
 
-Even the settings view is gorgeous. Settings is usually an overlooked dark-corner of the apps we use – rarely seen, utilitarian in nature and not deserving of visual polish. I respect that NeuBible treats settings like a core piece of the experience, carrying theme colors, type, and more into the view.
+## Installation
 
-### Themes
+Install via your terminal:
 
-Swiping up and down along the left sidebar of settings (or tapping the arrows) changes the app's color scheme. I love that the color scheme informs the toggle tint, the link colors and more (it also tints your highlights in the text). Watching it happen live is fun and makes you feel like the app is your own – it's no longer a stock Bible that millions of other people see. No, this is your space finely tuned to your own aesthetic and reading style.
+```shell
+npm install rehype-pretty-code shiki
+```
 
-Building this emotional connection to an app or service isn't easy or straightforward. Somehow these small customizations can begin to build that bridge, helping users feel like they own their experience and craft it in a way that can more closely reflect their personality.
+## Usage
 
-### Reminders
+The following example shows how to use this package with Next.js and MDX (this
+website's stack).
 
-Setting a reading reminder initiates a beautiful blend of custom and stock UI. Selecting days and times is understandable and clear. It's also nice that this is the only time the app prompts for permissions – when they're needed, and not a moment sooner.
+```js
+const rehypePrettyCode = require("rehype-pretty-code")
+const fs = require("fs")
 
-### Translations
+const options = {
+  // Use one of Shiki's packaged themes
+  theme: "one-dark-pro",
+  // Or your own JSON theme
+  theme: JSON.parse(
+    fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
+  ),
+  onVisitLine(node) {
+    // Prevent lines from collapsing in `display: grid` mode, and
+    // allow empty lines to be copy/pasted
+    if (node.children.length === 0) {
+      node.children = [{ type: "text", value: " " }]
+    }
+  },
+  // Feel free to add classNames that suit your docs
+  onVisitHighlightedLine(node) {
+    node.properties.className.push("highlighted")
+  },
+  onVisitHighlightedWord(node) {
+    node.properties.className = ["word"]
+  },
+}
 
-This just goes above and beyond what I've come to expect from most apps. There's no stock list-view here. No, changing the translation of the app brings us back to the days where coverflow was one of the most visually-striking design patterns that existed on iOS. In this case, the large images are readable and add more context to the translation itself.
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [[rehypePrettyCode, options]],
+  },
+})
+```
 
-<DickPics src="https://i.postimg.cc/sXBdnGtD/suss.webp" />
+### Meta strings
 
-### Dark corners
+Code blocks are configured via the meta string on the top codeblock fence.
 
-Often tucked away in the deepest corner of a settings view, things like the about page and colophon are often afterthoughts, rarely seen by people. In NueBible's case these pages receive a first-class treatment, respecting (most of) a person's reading settings (in this case, the night mode UI).
+#### Highlight lines
+
+Place a numeric range inside `{}`.
+
+````md
+```js {1-3,4}
+
+```
+````
+
+#### Highlight words
+
+Literal text, like a regex. Note regex itself is not yet supported.
+
+````md
+```js /carrot/
+
+```
+````
+
+Highlight only the third to fifth instances of `carrot`. Any numeric range can
+be placed after the last `/`.
+
+````md
+```js /carrot/3-5
+
+```
+````
+
+#### Highlight inline code
+
+Append `{:lang}‎` (e.g. `{:js}‎`) to the end of inline code to highlight it like
+a regular code block.
+
+```md
+This is an array `[1, 2, 3]{:js}` of numbers 1 through 3.
+```
+
+#### Highlight plain text
+
+Append `{:.token}‎` to the end of the inline code to highlight it based on a
+token specified in your VS Code theme. Tokens start with a `.` to differentiate
+them from a language.
+
+```md
+The name of the function is `getStringLength{:.entity.name.function}`.
+```
+
+You can create a map of tokens to shorten this usage throughout your docs:
+
+```js
+const options = {
+  tokensMap: {
+    fn: "entity.name.function",
+  },
+}
+```
+
+```md
+The name of the function is `getStringLength{:.fn}`.
+```
+
+#### Titles
+
+Add a file title to your code block, with text inside double quotes (`""`):
+
+````md
+```js title="..."
+
+```
+````
+
+### Line numbers
+
+CSS counters can be used to add line numbers.
+
+```css
+code {
+  counter-reset: line;
+}
+
+code > .line::before {
+  counter-increment: line;
+  content: counter(line);
+
+  /* Other styling */
+  display: inline-block;
+  width: 1rem;
+  margin-right: 2rem;
+  text-align: right;
+  color: gray;
+}
+```
+
+If you want to conditionally show them, use `showLineNumbers`:
+
+````md
+```js showLineNumbers
+// <code> will have a `data-line-numbers` attribute
+```
+````
+
+![Bitch](https://m.media-amazon.com/images/I/61PCaI0d6vL._AC_SX522_.jpg)
+
+### Multiple themes (dark/light mode)
+
+Because Shiki generates themes at build time, client-side theme switching
+support is not built in. There are two popular options for supporting something
+like Dark Mode with Shiki. See the
+[Shiki docs](https://github.com/shikijs/shiki/blob/main/docs/themes.md#dark-mode-support)
+for more info.
+
+Pass your themes to `theme{:.meta.object-literal.key}`, where the keys represent
+the color mode:
+
+```js
+const options = {
+  theme: {
+    dark: JSON.parse(
+      fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
+    ),
+    light: JSON.parse(
+      fs.readFileSync(require.resolve("./themes/light.json"), "utf-8")
+    ),
+  },
+}
+```
+
+The `<code>{:html}` and `<pre>{:html}` element will have a data attribute `data-theme="[key]"`, e.g
+`data-theme="light"`.
+
+Now, you can use CSS to display the desired theme:
+
+```css
+@media (prefers-color-scheme: dark) {
+  pre[data-theme="light"],
+  code[data-theme="light"] {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+  pre[data-theme="dark"],
+  code[data-theme="dark"] {
+    display: none;
+  }
+}
+```
+
+### Custom highlighter
+
+To completely configure the highlighter, use the
+`getHighlighter{:.entity.name.function}` option to provide a Shiki highlighter
+instance.
+
+In order to support light and dark modes, Rehype Pretty Code provides an
+`options{:.constant.language}` object for you to extend. The
+`theme{:.meta.object-literal.key}` property is preconfigured with the light or
+dark theme based on your theme options.
+
+This is helpful if you'd like to configure other Shiki options, such as
+`langs{:.meta.object-literal.key}`.
+
+```js
+const { getHighlighter, BUNDLED_LANGUAGES } = require("shiki")
+
+const options = {
+  theme: {
+    dark: JSON.parse(
+      fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
+    ),
+    light: JSON.parse(
+      fs.readFileSync(require.resolve("./themes/light.json"), "utf-8")
+    ),
+  },
+  getHighlighter: (options) =>
+    getHighlighter({
+      ...options,
+      langs: [
+        ...BUNDLED_LANGUAGES,
+        {
+          id: "groq",
+          scopeName: "source.groq",
+          path: "./langs/vscode-sanity/grammars/groq.json",
+        },
+      ],
+    }),
+}
+```
+
+## License
+
+MIT • [View on GitHub](https://github.com/atomiks/rehype-pretty-code)

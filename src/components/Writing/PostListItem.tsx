@@ -3,6 +3,8 @@ import { ListItem } from '~/components/ListDetail/ListItem'
 import { type Post } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
+import { PageViews } from '../Stats/ViewCounter'
+
 interface Props {
   post: Post
   active: boolean

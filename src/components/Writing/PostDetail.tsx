@@ -43,8 +43,8 @@ export function PostDetail({ children, slug }: PD) {
 
         <Detail.ContentContainer>
           <Detail.Header>
-            <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
-
+            {/*             <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
+             */}
             <span
               title={publishedAt.raw}
               className="text-tertiary inline-block leading-snug"

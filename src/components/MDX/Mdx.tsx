@@ -7,6 +7,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
+import remarkRehype from 'remark-rehype'
 
 //import moonlight from '~/styles/nord.json'
 import imageMetadata from './image-metadata'
@@ -56,7 +57,7 @@ export async function mdxToCode(text: string) {
       useDynamicImport: true,
       remarkPlugins: [
         remarkGfm,
-        linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
+        //linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
         [
           remarkCodeHike,
           {
@@ -67,6 +68,7 @@ export async function mdxToCode(text: string) {
             theme: 'one-dark-pro',
           },
         ],
+        //remarkRehype,
       ],
       rehypePlugins: [
         rehypeSlug,

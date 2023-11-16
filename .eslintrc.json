@@ -32,6 +32,7 @@
     "@next/next/no-img-element": "off",
     "@next/next/no-html-link-for-pages": "off"
   },
+  "overrides": [{ "files": ["*.mdx"], "extends": "plugin:mdx/recommended" }],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "tsconfigRootDir": "__dirname",

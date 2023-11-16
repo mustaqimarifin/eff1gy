@@ -10,7 +10,6 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
-
 import { CodeBlock } from './CodeBlock'
 
 function LinkRenderer({ href, ...rest }: any) {
@@ -34,9 +33,6 @@ function LinkRenderer({ href, ...rest }: any) {
     return <a target="_blank" rel="noopener" href={href} {...rest} />
   }
 }
-
-
-
 
 function getComponentsForVariant(variant) {
   // Blog posts

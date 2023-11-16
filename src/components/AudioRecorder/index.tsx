@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
 import { TrashIcon } from 'lucide-react'
+import useSWR from 'swr'
 
 import { ErrorAlert } from '../Alert'
 import AudioPlayer from '../AudioPlayer'
 import Button, { DeleteButton, RecordingButton } from '../Button'
 import { LoadingSpinner } from '../LoadingSpinner'
-import useSWR from 'swr'
 
 interface Props {
   id: string

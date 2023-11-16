@@ -35,15 +35,15 @@ export const PageViews = ({ id, trackView }: CounterProps) => {
   else
     return (
       <div className="select-none">
-        <ViewButton
+        {/*         <ViewButton
           aria-label="Views"
           style={{ maxHeight: '32px', overflow: 'hidden' }}
         >
           <span className=" text-gray-500	">
             <LucideEye size={18} />
           </span>
-          <span>{data?.total}</span>
-        </ViewButton>
+c        </ViewButton> */}
+        <span>{data?.total}</span>
       </div>
     )
 }
