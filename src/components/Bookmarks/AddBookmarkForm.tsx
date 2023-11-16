@@ -9,7 +9,7 @@ import {
   useAddBookmarkMutation,
   useGetBookmarksQuery,
 } from '~/graphql/typeSlut'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export function AddBookmarkForm({ closeModal }) {
   const [url, setUrl] = React.useState('')

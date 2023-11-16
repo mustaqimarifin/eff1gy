@@ -1,11 +1,11 @@
-import { ketchup } from '~/lib/functions'
+import { fetcher } from '~/lib/functions'
 import { type TopTracks } from '~/types/site'
 import useSWR from 'swr'
 
 import Track from './Track'
 
 export default function Tracks() {
-  const { data } = useSWR<TopTracks>('/api/stats/top-tracks', ketchup)
+  const { data } = useSWR<TopTracks>('/api/stats/top-tracks', fetcher)
 
   if (!data) {
     return null

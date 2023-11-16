@@ -3,12 +3,12 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 async function main() {
-  const blogs = await prisma.blog.createMany({
+  await prisma.blog.createMany({
     data: [
       {
         //id: 'dd09feac-5b22-4ab1-8119-24657e8517bb',
         //date: '2022-10-04T10:43:00.000Z',
-        slug: "the-saus",
+        slug: "ass",
       },
       {
         //id: 'f2cd4774-4c75-42c8-b405-a32cef4d3b7c',
@@ -32,7 +32,7 @@ async function main() {
       },
     ],
   })
-  const tags = await prisma.tag.createMany({
+  await prisma.tag.createMany({
     data: [
       { name: "lol" },
       { name: "web" },
@@ -43,7 +43,7 @@ async function main() {
       { name: "music" },
     ],
   })
-  console.log({ blogs, tags })
+  console.log({})
 }
 main()
   .then(async () => {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 export function LoginErrorToast() {
   const router = useRouter()
@@ -9,7 +9,7 @@ export function LoginErrorToast() {
   useEffect(() => {
     if (errorCode) {
       if (errorCode === 'access_denied') {
-        toast.error('Sign in failed. Try again?')
+        toast.warning('Sign in failed. Try again?')
       } else {
         toast.error('Sorry, something went wrong.')
       }

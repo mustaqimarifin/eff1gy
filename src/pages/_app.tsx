@@ -10,7 +10,6 @@ import type { NextPage } from 'next/types'
 import { SiteLayout } from '~/components/Layouts'
 import { LoginErrorToast } from '~/components/LoginErrorToast'
 import { Providers } from '~/components/Providers'
-import { api } from '~/server10/_api'
 
 export type NextPageWithLayout<
   TProps = Record<string, unknown>,
@@ -47,4 +46,4 @@ const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
   )
 }) as AppType
 
-export default api.withTRPC(MyApp)
+export default MyApp

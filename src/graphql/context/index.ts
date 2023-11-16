@@ -2,14 +2,12 @@ import { type NextApiRequest, type NextApiResponse } from 'next'
 import { Role, type PrismaClient } from '@prisma/client'
 import { prisma } from '~/lib/prisma'
 import { authOptions } from '~/pages/api/auth/[...nextauth]'
-import { getServerSession } from 'next-auth'
-
-import { type User } from '../typeSlut'
+import { getServerSession, User } from 'next-auth'
 
 export async function getViewer(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
   const user = session?.user
-  let viewer = null
+  let viewer: User = null
   if (user) {
     viewer = await prisma.user.findUnique({ where: { id: session.userId } })
 

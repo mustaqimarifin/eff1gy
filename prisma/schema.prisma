@@ -8,9 +8,9 @@ datasource db {
 }
 
 model Account {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
-  userId            String  @db.Uuid
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -29,7 +29,7 @@ model Account {
 
 model Session {
   sessionToken String   @id @unique
-  userId       String   @db.Uuid
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -37,19 +37,19 @@ model Session {
 }
 
 model User {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
-  createdAt     DateTime      @default(now())
+  createdAt     DateTime   @default(now())
   name          String
   image         String?
-  email         String?       @unique
-  role          Role          @default(USER)
-  isAdmin       Boolean       @default(false)
+  email         String?    @unique
+  role          Role       @default(USER)
+  isAdmin       Boolean    @default(false)
   emailVerified DateTime?
   pendingEmail  String?
   description   String?
   location      String?
-  twitterId     String?       @unique
+  twitterId     String?    @unique
   accounts      Account[]
   comments      Comment[]
   blogs         Blog[]
@@ -57,8 +57,7 @@ model User {
   questions     Question[]
   reactions     Reaction[]
   sessions      Session[]
-  stacks        Stack[]       @relation("StackToUser")
-  postComments  PostComment[]
+  stacks        Stack[]    @relation("StackToUser")
   likes         Like[]
 }
 
@@ -71,7 +70,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -90,7 +89,7 @@ model Bookmark {
 }
 
 model Question {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -99,7 +98,7 @@ model Question {
   waveform    Json?
   audioUrl    String?
   description String?
-  userId      String     @db.Uuid
+  userId      String
   comments    Comment[]
   author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   reactions   Reaction[]
@@ -108,18 +107,18 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   text       String
-  userId     String?  @db.Uuid
-  bookmarkId String?  @db.Uuid
-  questionId String?  @db.Uuid
-  stackId    String?  @db.Uuid
-  postId     String?  @db.Uuid
+  userId     String?
+  bookmarkId String?
+  questionId String?
+  stackId    String?
+  postId     String?
 
-  parentId String?   @db.Uuid
+  parentId String?
   slug     String?
   pageView PageView? @relation(fields: [slug], references: [id], onDelete: Cascade)
   parent   Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
@@ -130,7 +129,7 @@ model Comment {
   stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId   String?   @db.Uuid
+  blogId   String?
   likes    Like[]
 
   @@index([bookmarkId])
@@ -142,7 +141,7 @@ model Comment {
 }
 
 model Audio {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -153,49 +152,47 @@ model Audio {
 }
 
 model Blog {
-  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  date         DateTime      @default(now())
-  slug         String?       @unique
-  comments     Comment[]
-  postComments PostComment[]
-  reactions    Reaction[]
-  author       User?         @relation(fields: [userId], references: [id])
-  userId       String?       @db.Uuid
+  id        String     @id @default(uuid())
+  date      DateTime   @default(now())
+  slug      String?    @unique
+  comments  Comment[]
+  reactions Reaction[]
+  author    User?      @relation(fields: [userId], references: [id])
+  userId    String?
 
   @@index([date])
 }
 
 model Post {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   publishedAt  DateTime?
-  slug         String        @unique
+  slug         String     @unique
   title        String
   text         String
   excerpt      String
   featureImage String?
-  userId       String        @db.Uuid
+  userId       String
   comments     Comment[]
-  author       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   history      PostEdit[]
   reactions    Reaction[]
-  postComments PostComment[]
 
   @@index([publishedAt])
   @@index([userId])
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt    DateTime @default(now())
   text         String
   title        String
   excerpt      String
   featureImage String?
-  postId       String?  @db.Uuid
+  postId       String?
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
@@ -208,7 +205,7 @@ model Tag {
 }
 
 model Stack {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -224,21 +221,21 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(uuid())
 
   createdAt  DateTime  @default(now())
-  userId     String    @db.Uuid
-  bookmarkId String?   @db.Uuid
-  questionId String?   @db.Uuid
-  stackId    String?   @db.Uuid
-  postId     String?   @db.Uuid
+  userId     String
+  bookmarkId String?
+  questionId String?
+  stackId    String?
+  postId     String?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog       Blog?     @relation(fields: [blogId], references: [id])
-  blogId     String?   @db.Uuid
+  blogId     String?
 
   @@index([bookmarkId])
   @@index([questionId])
@@ -255,29 +252,9 @@ model PageView {
   comments  Comment[]
 }
 
-model PostComment {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-
-  text      String
-  createdAt DateTime
-  updatedAt DateTime?
-  userId    String?       @db.Uuid
-  parentId  String?       @db.Uuid
-  slug      String?
-  parent    PostComment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  replies   PostComment[] @relation("ParentChild")
-  post      Post?         @relation(fields: [slug], references: [slug], onDelete: Cascade)
-  user      User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  blog   Blog?   @relation(fields: [blogId], references: [id])
-  blogId String? @db.Uuid
-
-  @@index([userId, slug, createdAt])
-}
-
 model Like {
-  userId    String  @db.Uuid
-  commentId String  @db.Uuid
+  userId    String
+  commentId String
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 

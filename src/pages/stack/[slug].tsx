@@ -7,7 +7,7 @@ import { getContext } from '~/graphql/context'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_STACK, GET_STACKS } from '~/graphql/queries/stack'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-import { CommentType } from '~/graphql/typeSlut'
+import { CommentType, GetStackQuery } from '~/graphql/typeSlut'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 function StackDetailPage({ slug }) {
@@ -18,7 +18,7 @@ export async function getServerSideProps({ params: { slug }, req, res }) {
   const context = await getContext(req, res)
   const client = initApolloClient({ context })
 
-  const { data } = await client.query({
+  const { data } = await client.query<GetStackQuery>({
     query: GET_STACK,
     variables: { slug },
   })

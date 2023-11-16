@@ -2,13 +2,13 @@ import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Spotify } from '~/components/Icon'
-import { ketchup } from '~/lib/functions'
 import { type SpotifyData } from '~/types/site'
 import clsx from 'clsx'
 import useSWR from 'swr'
+import { fetcher } from '~/lib/functions'
 
 export default function NowPlaying({ className, ...rest }) {
-  const { data } = useSWR<SpotifyData>('/api/stats/now-playing', ketchup)
+  const { data } = useSWR<SpotifyData>('/api/stats/now-playing', fetcher)
 
   return data?.isPlaying ? (
     <figure className={className} data-cy="spotify">

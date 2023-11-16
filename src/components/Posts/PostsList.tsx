@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import yespls from '~/lib/functions/yespls'
+import { fetcher } from '~/lib/functions'
 import useSWR from 'swr'
 
 import { ListContainer } from '../ListDetail/ListContainer'
@@ -28,7 +28,7 @@ export const PostsList = () => {
     }
     fetchPosts();
   }, [setPosts]); */
-  const { data: posts } = useSWR<Post[]>('/api/posts', yespls)
+  const { data: posts } = useSWR<Post[]>('/api/posts', fetcher)
 
   /*   const { data: posts } = useQuery<PostPageGroup>({
     queryKey: ['posts'],

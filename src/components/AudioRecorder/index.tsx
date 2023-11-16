@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useMutation } from '@tanstack/react-query'
 import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
 import { TrashIcon } from 'lucide-react'
 
@@ -7,6 +6,7 @@ import { ErrorAlert } from '../Alert'
 import AudioPlayer from '../AudioPlayer'
 import Button, { DeleteButton, RecordingButton } from '../Button'
 import { LoadingSpinner } from '../LoadingSpinner'
+import useSWR from 'swr'
 
 interface Props {
   id: string
@@ -208,7 +208,7 @@ export default function AudioRecorder({
     signUploadMutation.mutate()
   }
 
-  const signUploadMutation = useMutation(signUpload, {
+  const signUploadMutation = useSWR(signUpload, {
     onSuccess: async (data, variables, context) => {
       const upload = await uploadToCloudinary(
         state.audioBlob,

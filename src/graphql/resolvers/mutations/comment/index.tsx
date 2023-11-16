@@ -7,7 +7,7 @@ import {
   type MutationEditCommentArgs,
 } from '~/graphql/typeSlut'
 import { GraphQLError } from 'graphql'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'

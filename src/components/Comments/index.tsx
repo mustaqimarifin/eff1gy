@@ -4,10 +4,10 @@ import { SignInDialog } from '~/components/SignInDialog'
 import { useGetCommentsQuery, type CommentType } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks/useWindowFocus'
 import { motion } from 'framer-motion'
-import { GhostIcon } from 'lucide-react'
 
 import { Comment } from './Comment'
 import { CommentForm } from './CommentForm'
+import { GhostIcon } from '../Icon'
 
 interface Props {
   refId: string

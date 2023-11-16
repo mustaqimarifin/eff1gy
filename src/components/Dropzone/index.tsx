@@ -1,6 +1,5 @@
 import React from 'react'
-import { signUpload } from '~/lib/cloudinary/api'
-import { UploadSignatureMetadata } from '~/types/Upload'
+
 import { type UploadApiResponse } from 'cloudinary'
 import { useDropzone } from 'react-dropzone'
 

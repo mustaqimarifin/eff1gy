@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import yespls from '~/lib/functions/yespls'
+import { fetcher } from '~/lib/functions'
 import useSWR from 'swr'
 
 import { CaseStudy } from '../Posts/BlogDetail'
@@ -11,7 +11,7 @@ import { AppDissectionListItem } from './AppDissectionListItem'
 export const AppDissectionList = React.memo(() => {
   const router = useRouter()
   const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
-  const { data: casestudies } = useSWR<CaseStudy[]>(`/api/casestudy`, yespls)
+  const { data: casestudies } = useSWR<CaseStudy[]>(`/api/casestudy`, fetcher)
 
   return (
     <ListContainer data-cy="apps-list" onRef={setScrollContainerRef}>

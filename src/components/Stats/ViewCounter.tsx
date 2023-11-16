@@ -1,4 +1,5 @@
 import { Suspense, useEffect } from 'react'
+import { fetcher } from '~/lib/functions'
 import { LucideEye } from 'lucide-react'
 import useSWR from 'swr'
 
@@ -8,14 +9,6 @@ export type CounterProps = {
   id?: string
   total?: number
   trackView: boolean
-}
-
-export async function fetcher<JSON = any>(
-  input: RequestInfo,
-  init?: RequestInit
-): Promise<JSON> {
-  const res = await fetch(input, init)
-  return res.json()
 }
 
 export const PageViews = ({ id, trackView }: CounterProps) => {

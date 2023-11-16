@@ -1,6 +1,5 @@
 import { useViewerQuery } from '~/graphql/typeSlut'
-import clsx from 'clsx'
-import { useSession } from 'next-auth/react'
+import { cx } from '~/lib/transformers'
 
 type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element
 
@@ -14,13 +13,13 @@ export interface IconButtonProps {
 }
 
 export const IconButton = (props: IconButtonProps) => {
-  const { data, loading } = useViewerQuery()
+  const { data } = useViewerQuery()
 
   const { Icon, isActive, color, children, hoverbg } = props
 
   return (
     <button
-      className={clsx(
+      className={cx(
         'flex items-center rounded bg-none p-1 focus:outline-purple-400',
         color,
         hoverbg,
@@ -30,7 +29,7 @@ export const IconButton = (props: IconButtonProps) => {
       {...props}
     >
       <Icon
-        className={clsx(
+        className={cx(
           'h-4 w-4',
           !isActive && color,
           isActive && 'text-black',

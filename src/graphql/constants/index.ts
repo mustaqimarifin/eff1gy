@@ -15,8 +15,8 @@ const PREVIEW_URL = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL
 export const GRAPHQL_ENDPOINT = IS_DEV
   ? '/api/graphql'
   : IS_PREVIEW
-  ? `https://${PREVIEW_URL}/api/graphql`
-  : '/api/graphql'
+    ? `https://${PREVIEW_URL}/api/graphql`
+    : '/api/graphql'
 
 export const PAGINATION_AMOUNT = 24
 

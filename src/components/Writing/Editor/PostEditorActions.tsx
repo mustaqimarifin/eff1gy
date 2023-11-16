@@ -5,7 +5,7 @@ import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { useAddPostMutation, useEditPostMutation } from '~/graphql/typeSlut'
 import { slugify } from '~/lib/functions'
 import { Sidebar } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 import { PostEditorContext } from './PostEditor'
 import { PostEditorAutoSave } from './PostEditorAutoSave'

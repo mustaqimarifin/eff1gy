@@ -1,5 +1,4 @@
 import { join } from 'path'
-import { cwd } from 'process'
 import { remarkCodeHike } from '@code-hike/mdx'
 import { serialize } from 'next-mdx-remote/serialize'
 //import { bundleMDX } from 'mdx-bundler'
@@ -17,14 +16,14 @@ const root = process.cwd()
 export async function mdxToCode(text: string) {
   if (process.platform === 'win32') {
     process.env.ESBUILD_BINARY_PATH = join(
-      cwd(),
+      root,
       'node_modules',
       'esbuild',
       'esbuild.exe'
     )
   } else {
     process.env.ESBUILD_BINARY_PATH = join(
-      cwd(),
+      root,
       'node_modules',
       'esbuild',
       'bin',
@@ -65,6 +64,7 @@ export async function mdxToCode(text: string) {
             lineNumbers: false,
             showCopyButton: true,
             skipLanguages: false,
+            theme: 'one-dark-pro',
           },
         ],
       ],

@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import ky from 'ky'
 
 type Props = {
   timestamp?: number | string
@@ -45,11 +46,12 @@ export function cleanTime({
   }
 }
 
-export async function ketchup<JSON = any>(
+//export const fetcher = url => ky.get(url).then(res => res.json())
+export async function fetcher<JSON = any>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<JSON> {
-  const res = await fetch(input, init)
+  const res = await ky(input, init)
   return res.json()
 }
 

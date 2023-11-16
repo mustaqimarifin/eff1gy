@@ -16,7 +16,7 @@ import { schema } from '~/graphql/schema'
 import { type StrictTypedTypePolicies } from '~/graphql/typeSlut'
 import deepmerge from 'deepmerge'
 import isEqual from 'lodash-es/isEqual'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 export const ssrMode = typeof window === 'undefined'
