@@ -1,224 +1,229 @@
-import * as React from 'react'
+'use client'
+import { Link2Icon } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import * as React from 'react'
+
 import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
 import {
-  useDeleteBookmarkMutation,
-  useEditBookmarkMutation,
+    GetBookmarkQuery,
+    GetBookmarksQuery,
+    useDeleteBookmarkMutation,
+    useEditBookmarkMutation,
 } from '~/graphql/typeSlut'
-import { Link2Icon } from 'lucide-react'
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
-  const router = useRouter()
-
-  const initialState = {
-    error: '',
-    title: bookmark.title || bookmark.url,
-    description: bookmark.description || '',
-    tag: bookmark.tags[0]?.name || 'reading',
-    faviconUrl: bookmark.faviconUrl,
-  }
-
-  function reducer(state, action) {
-    switch (action.type) {
-      case 'edit-title': {
-        return {
-          ...state,
-          error: '',
-          title: action.value,
-        }
-      }
-      case 'edit-favicon': {
-        return {
-          ...state,
-          error: '',
-          faviconUrl: action.value,
-        }
-      }
-      case 'edit-description': {
-        return {
-          ...state,
-          error: '',
-          description: action.value,
-        }
-      }
-      case 'edit-tag': {
-        return {
-          ...state,
-          error: '',
-          tag: action.value,
-        }
-      }
-      case 'error': {
-        return {
-          ...state,
-          error: action.value,
-        }
-      }
-      default:
-        throw new Error()
+    const initialState = {
+        error: '',
+        title: bookmark.title || bookmark.url,
+        description: bookmark.description || '',
+        tag: bookmark.tags[0]?.name || 'reading',
+        faviconUrl: bookmark.faviconUrl,
     }
-  }
 
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+    function reducer(state, action) {
+        switch (action.type) {
+            case 'edit-title': {
+                return {
+                    ...state,
+                    error: '',
+                    title: action.value,
+                }
+            }
+            case 'edit-favicon': {
+                return {
+                    ...state,
+                    error: '',
+                    faviconUrl: action.value,
+                }
+            }
+            case 'edit-description': {
+                return {
+                    ...state,
+                    error: '',
+                    description: action.value,
+                }
+            }
+            case 'edit-tag': {
+                return {
+                    ...state,
+                    error: '',
+                    tag: action.value,
+                }
+            }
+            case 'error': {
+                return {
+                    ...state,
+                    error: action.value,
+                }
+            }
+            default:
+                throw new Error()
+        }
+    }
 
-  const [editBookmark] = useEditBookmarkMutation({
-    variables: {
-      id: bookmark.id,
-      data: {
-        title: state.title,
-        description: state.description,
-        tag: state.tag,
-        faviconUrl: state.faviconUrl,
-      },
-    },
-    optimisticResponse: {
-      __typename: 'Mutation',
-      editBookmark: {
-        __typename: 'Bookmark',
-        ...bookmark,
-        title: state.title,
-        description: state.description,
-        tags: [{ name: state.tag }],
-        faviconUrl: state.faviconUrl,
-      },
-    },
-    onError({ message }) {
-      const value = message.replace('GraphQL error:', '')
-      dispatch({ type: 'error', value })
-    },
-  })
+    const [state, dispatch] = React.useReducer(reducer, initialState)
 
-  const [handleDelete] = useDeleteBookmarkMutation({
-    variables: { id: bookmark.id },
-    optimisticResponse: {
-      __typename: 'Mutation',
-      deleteBookmark: true,
-    },
-    update(cache) {
-      //@ts-ignore
-      const { bookmarks } = cache.readQuery({
-        query: GET_BOOKMARKS,
-      })
-
-      cache.writeQuery({
-        query: GET_BOOKMARK,
-        variables: { id: bookmark.id },
-        data: {
-          bookmark: null,
-        },
-      })
-
-      if (bookmarks) {
-        cache.writeQuery({
-          query: GET_BOOKMARKS,
-          data: {
-            bookmarks: {
-              ...bookmarks,
-              edges: bookmarks.edges.filter((o) => o.node.id !== bookmark.id),
+    const [editBookmark] = useEditBookmarkMutation({
+        variables: {
+            id: bookmark.id,
+            data: {
+                title: state.title,
+                description: state.description,
+                tag: state.tag,
+                faviconUrl: state.faviconUrl,
             },
-          },
-        })
-      }
-    },
-  })
+        },
+        optimisticResponse: {
+            __typename: 'Mutation',
+            editBookmark: {
+                __typename: 'Bookmark',
+                ...bookmark,
+                title: state.title,
+                description: state.description,
+                tags: [{ name: state.tag }],
+                faviconUrl: state.faviconUrl,
+            },
+        },
+        onError({ message }) {
+            const value = message.replace('GraphQL error:', '')
+            dispatch({ type: 'error', value })
+        },
+    })
 
-  function handleSave(e) {
-    e.preventDefault()
+    const [handleDelete] = useDeleteBookmarkMutation({
+        variables: { id: bookmark.id },
+        optimisticResponse: {
+            __typename: 'Mutation',
+            deleteBookmark: true,
+        },
+        update(cache) {
+            const { bookmarks } = cache.readQuery<GetBookmarksQuery>({
+                query: GET_BOOKMARKS,
+            })
 
-    if (!state.title || state.title.length === 0) {
-      return dispatch({ type: 'error', value: 'Bookmark must have a title' })
+            cache.writeQuery({
+                query: GET_BOOKMARK,
+                variables: { id: bookmark.id },
+                data: {
+                    bookmark: null,
+                },
+            })
+
+            if (bookmarks) {
+                cache.writeQuery({
+                    query: GET_BOOKMARKS,
+                    data: {
+                        bookmarks: {
+                            ...bookmarks,
+                            edges: bookmarks.edges.filter(
+                                (o) => o.node.id !== bookmark.id
+                            ),
+                        },
+                    },
+                })
+            }
+        },
+    })
+
+    function handleSave(e) {
+        e.preventDefault()
+
+        if (!state.title || state.title.length === 0) {
+            return dispatch({
+                type: 'error',
+                value: 'Bookmark must have a title',
+            })
+        }
+
+        editBookmark()
+        return closeModal()
     }
 
-    editBookmark()
-    return closeModal()
-  }
-
-  function onTitleChange(e) {
-    return dispatch({ type: 'edit-title', value: e.target.value })
-  }
-
-  function onFaviconChange(e) {
-    return dispatch({ type: 'edit-favicon', value: e.target.value })
-  }
-
-  function onKeyDown(e) {
-    if (e.keyCode === 13 && e.metaKey) {
-      return handleSave(e)
+    function onTitleChange(e) {
+        return dispatch({ type: 'edit-title', value: e.target.value })
     }
-  }
 
-  function onDescriptionChange(e) {
-    return dispatch({ type: 'edit-description', value: e.target.value })
-  }
+    function onFaviconChange(e) {
+        return dispatch({ type: 'edit-favicon', value: e.target.value })
+    }
 
-  function onTagChange(val) {
-    dispatch({ type: 'edit-tag', value: val })
-  }
+    function onKeyDown(e) {
+        if (e.keyCode === 13 && e.metaKey) {
+            return handleSave(e)
+        }
+    }
 
-  const tagFilter = (t) => {
-    const allowedBookmarkTags = ['website', 'reading', 'portfolio']
-    return allowedBookmarkTags.indexOf(t.name) >= 0
-  }
+    function onDescriptionChange(e) {
+        return dispatch({ type: 'edit-description', value: e.target.value })
+    }
 
-  return (
-    <div className="p-4">
-      <form className="space-y-3" onSubmit={handleSave}>
-        <Input
-          placeholder="Title"
-          defaultValue={state.title}
-          onChange={onTitleChange}
-          onKeyDown={onKeyDown}
-        />
-        {state.error && <p className="text-red-500">{state.error}</p>}
-        <Link
-          passHref
-          href={bookmark.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-secondary inline-flex items-center space-x-2 pb-2 text-sm opacity-70 hover:opacity-100"
-        >
-          <Link2Icon className="flex-none" />
-          <span className="line-clamp-1">{bookmark.url}</span>
-        </Link>
+    function onTagChange(val) {
+        dispatch({ type: 'edit-tag', value: val })
+    }
 
-        <TagPicker
-          filter={tagFilter}
-          defaultValue={initialState.tag}
-          onChange={onTagChange}
-        />
+    const tagFilter = (t) => {
+        const allowedBookmarkTags = ['website', 'reading', 'portfolio']
+        return allowedBookmarkTags.indexOf(t.name) >= 0
+    }
 
-        <Textarea
-          rows={4}
-          defaultValue={bookmark.description}
-          onChange={onDescriptionChange}
-          onKeyDown={onKeyDown}
-          placeholder={'Description...'}
-        />
+    return (
+        <div className="p-4">
+            <form className="space-y-3" onSubmit={handleSave}>
+                <Input
+                    placeholder="Title"
+                    defaultValue={state.title}
+                    onChange={onTitleChange}
+                    onKeyDown={onKeyDown}
+                />
+                {state.error && <p className="text-red-500">{state.error}</p>}
+                <Link
+                    passHref
+                    href={bookmark.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary inline-flex items-center space-x-2 pb-2 text-sm opacity-70 hover:opacity-100"
+                >
+                    <Link2Icon className="flex-none" />
+                    <span className="line-clamp-1">{bookmark.url}</span>
+                </Link>
 
-        <Input
-          placeholder="Favicon URL"
-          defaultValue={state.faviconUrl}
-          onChange={onFaviconChange}
-          onKeyDown={onKeyDown}
-        />
-      </form>
-      <div className="flex justify-between pt-24">
-        <DeleteButton
-          onClick={() => {
-            closeModal()
-            handleDelete()
-          }}
-        >
-          Delete
-        </DeleteButton>
-        <div className="flex space-x-3">
-          <Button onClick={handleSave}>Save</Button>
+                <TagPicker
+                    filter={tagFilter}
+                    defaultValue={initialState.tag}
+                    onChange={onTagChange}
+                />
+
+                <Textarea
+                    rows={4}
+                    defaultValue={bookmark.description}
+                    onChange={onDescriptionChange}
+                    onKeyDown={onKeyDown}
+                    placeholder={'Description...'}
+                />
+
+                <Input
+                    placeholder="Favicon URL"
+                    defaultValue={state.faviconUrl}
+                    onChange={onFaviconChange}
+                    onKeyDown={onKeyDown}
+                />
+            </form>
+            <div className="flex justify-between pt-24">
+                <DeleteButton
+                    onClick={() => {
+                        closeModal()
+                        handleDelete()
+                    }}
+                >
+                    Delete
+                </DeleteButton>
+                <div className="flex space-x-3">
+                    <Button onClick={handleSave}>Save</Button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }

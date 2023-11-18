@@ -6,55 +6,55 @@ import { requiresUser } from '~/graphql/helpers/requiresUser'
   editBlog,
 } from '~/graphql/resolvers/mutations/blog' */
 import {
-  addBookmark,
-  deleteBookmark,
-  editBookmark,
+    addBookmark,
+    deleteBookmark,
+    editBookmark,
 } from '~/graphql/resolvers/mutations/bookmarks'
 import {
-  addComment,
-  deleteComment,
-  editComment,
+    addComment,
+    deleteComment,
+    editComment,
 } from '~/graphql/resolvers/mutations/comment'
 import {
-  addPost,
-  deletePost,
-  editPost,
+    addPost,
+    deletePost,
+    editPost,
 } from '~/graphql/resolvers/mutations/post'
 import {
-  addQuestion,
-  deleteQuestion,
-  editQuestion,
+    addQuestion,
+    deleteQuestion,
+    editQuestion,
 } from '~/graphql/resolvers/mutations/questions'
 import { toggleReaction } from '~/graphql/resolvers/mutations/reactions'
 import {
-  addStack,
-  deleteStack,
-  editStack,
-  toggleStackUser,
+    addStack,
+    deleteStack,
+    editStack,
+    toggleStackUser,
 } from '~/graphql/resolvers/mutations/stack'
 import { deleteUser, editUser } from '~/graphql/resolvers/mutations/user'
 
 export default {
-  addBookmark: requiresAdmin(addBookmark),
-  editBookmark: requiresAdmin(editBookmark),
-  deleteBookmark: requiresAdmin(deleteBookmark),
-  addStack: requiresAdmin(addStack),
-  editStack: requiresAdmin(editStack),
-  deleteStack: requiresAdmin(deleteStack),
-  toggleStackUser: requiresUser(toggleStackUser),
-  addQuestion: requiresUser(addQuestion),
-  editQuestion: requiresUser(editQuestion),
-  deleteQuestion: requiresUser(deleteQuestion),
-  addComment: requiresUser(addComment),
-  editComment: requiresUser(editComment),
-  deleteComment: requiresUser(deleteComment),
-  deleteUser: requiresUser(deleteUser),
-  editUser: requiresUser(editUser),
-  addPost: requiresAdmin(addPost),
-  editPost: requiresAdmin(editPost),
-  deletePost: requiresAdmin(deletePost),
-  /*   addBlog: requiresAdmin(addBlog),
+    addBookmark: requiresAdmin(addBookmark),
+    editBookmark: requiresAdmin(editBookmark),
+    deleteBookmark: requiresAdmin(deleteBookmark),
+    addStack: requiresAdmin(addStack),
+    editStack: requiresAdmin(editStack),
+    deleteStack: requiresAdmin(deleteStack),
+    toggleStackUser: requiresUser(toggleStackUser),
+    addQuestion: requiresUser(addQuestion),
+    editQuestion: requiresUser(editQuestion),
+    deleteQuestion: requiresUser(deleteQuestion),
+    addComment: requiresUser(addComment),
+    editComment: requiresUser(editComment),
+    deleteComment: requiresUser(deleteComment),
+    deleteUser: requiresUser(deleteUser),
+    editUser: requiresUser(editUser),
+    addPost: requiresAdmin(addPost),
+    editPost: requiresAdmin(editPost),
+    deletePost: requiresAdmin(deletePost),
+    /*   addBlog: requiresAdmin(addBlog),
   editBlog: requiresAdmin(editBlog),
   deleteBlog: requiresAdmin(deleteBlog), */
-  toggleReaction: requiresUser(toggleReaction),
+    toggleReaction: requiresUser(toggleReaction),
 }

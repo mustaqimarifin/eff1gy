@@ -3,15 +3,15 @@
  * utilities we use on the client side, we are able to tree-shake (remove)
  * code that is not used on the client side.
  */
-import { createClient } from 'next-sanity'
+import { createClient, SanityClient } from 'next-sanity'
 
 import { sanityConfig } from './config'
 
 export const sanityClient = createClient(sanityConfig)
 
 export const previewClient = createClient({
-  ...sanityConfig,
+    ...sanityConfig,
 })
 
-export const getClient = (preview: any) =>
-  preview ? previewClient : sanityClient
+export const getClient = (preview?: SanityClient) =>
+    preview ? previewClient : sanityClient

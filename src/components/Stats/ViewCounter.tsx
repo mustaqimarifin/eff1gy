@@ -1,41 +1,42 @@
-import { Suspense, useEffect } from 'react'
-import { fetcher } from '~/lib/functions'
 import { LucideEye } from 'lucide-react'
+import { Suspense, useEffect } from 'react'
 import useSWR from 'swr'
+
+import { fetcher } from '~/lib/functions'
 
 import Button, { ViewButton } from '../Button'
 
 export type CounterProps = {
-  id?: string
-  total?: number
-  trackView: boolean
+    id?: string
+    total?: number
+    trackView: boolean
 }
 
 export const PageViews = ({ id, trackView }: CounterProps) => {
-  const { data } = useSWR<CounterProps>(
-    `/api/views/${id}`,
-    fetcher /* , {
+    const { data } = useSWR<CounterProps>(
+        `/api/views/${id}`,
+        fetcher /* , {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   } */
-  )
+    )
 
-  useEffect(() => {
-    const registerView = () =>
-      fetch(`/api/views/${id}`, {
-        method: 'POST',
-      })
-    if (trackView) {
-      registerView()
-    }
-  }, [])
+    useEffect(() => {
+        const registerView = () =>
+            fetch(`/api/views/${id}`, {
+                method: 'POST',
+            })
+        if (trackView) {
+            registerView()
+        }
+    }, [])
 
-  if (!data) return null
-  else
-    return (
-      <div className="select-none">
-        {/*         <ViewButton
+    if (!data) return null
+    else
+        return (
+            <div className="select-none">
+                {/*         <ViewButton
           aria-label="Views"
           style={{ maxHeight: '32px', overflow: 'hidden' }}
         >
@@ -43,9 +44,9 @@ export const PageViews = ({ id, trackView }: CounterProps) => {
             <LucideEye size={18} />
           </span>
 c        </ViewButton> */}
-        <span>{data?.total}</span>
-      </div>
-    )
+                <span>{data?.total}</span>
+            </div>
+        )
 }
 
 /* export const TotalViews = () => {

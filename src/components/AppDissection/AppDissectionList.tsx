@@ -1,38 +1,59 @@
+'use client'
+
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import * as React from 'react'
-import { useRouter } from 'next/router'
+import useSWR from 'swr'
+
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { fetcher } from '~/lib/functions'
-import useSWR from 'swr'
 
+import { LoadingSpinner } from '../LoadingSpinner'
 import { CaseStudy } from '../Posts/BlogDetail'
 import { AppDissectionListItem } from './AppDissectionListItem'
 
-export const AppDissectionList = React.memo(() => {
-  const router = useRouter()
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
-  const { data: casestudies } = useSWR<CaseStudy[]>(`/api/casestudy`, fetcher)
+export const AppDissectionList = ({ cases }) => {
+    const path = usePathname()
+    const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+    /*     const { data, isLoading } = useSWR<CaseStudy[]>(
+        'http://localhost:3000/api/casestudy',
+        fetcher
+    )
+ */
+    if (!cases) {
+        return (
+            <ListContainer onRef={setScrollContainerRef}>
+                <TitleBar
+                    scrollContainerRef={scrollContainerRef}
+                    title="Case Study"
+                />
+                <div className="flex flex-1 items-center justify-center">
+                    <LoadingSpinner />
+                </div>
+            </ListContainer>
+        )
+    }
 
-  return (
-    <ListContainer data-cy="apps-list" onRef={setScrollContainerRef}>
-      <TitleBar
-        scrollContainerRef={scrollContainerRef}
-        title="App Dissection"
-      />
+    return (
+        <ListContainer data-cy="case-list" onRef={setScrollContainerRef}>
+            <TitleBar
+                scrollContainerRef={scrollContainerRef}
+                title="Case Study"
+            />
 
-      <div className="lg:space-y-1 lg:p-3">
-        {casestudies &&
-          casestudies?.map((casestudy) => {
-            const active = router.query.slug === casestudy.slug
-            return (
-              <AppDissectionListItem
-                key={casestudy.slug}
-                casestudy={casestudy}
-                active={active}
-              />
-            )
-          })}
-      </div>
-    </ListContainer>
-  )
-})
+            <div className="lg:space-y-1 lg:p-3">
+                {cases &&
+                    cases?.map((casestudy) => {
+                        const active = path === casestudy.slug
+                        return (
+                            <AppDissectionListItem
+                                key={casestudy.slug}
+                                casestudy={casestudy}
+                                active={active}
+                            />
+                        )
+                    })}
+            </div>
+        </ListContainer>
+    )
+}

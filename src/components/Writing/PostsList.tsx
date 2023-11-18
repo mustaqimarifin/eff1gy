@@ -1,72 +1,87 @@
+'use client'
+
+import { usePathname, useRouter } from 'next/navigation'
 import * as React from 'react'
-import { useRouter } from 'next/router'
+
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { useGetPostsQuery } from '~/graphql/typeSlut'
+import {
+    GetPostQuery,
+    GetPostsQuery,
+    useGetPostsQuery,
+} from '~/graphql/typeSlut'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 import { PostListItem } from './PostListItem'
 import { WritingTitlebar } from './WritingTitlebar'
 
 export const WritingContext = React.createContext({
-  filter: 'published',
-  setFilter: (filter: string) => {},
+    filter: 'published',
+    setFilter: (filter: string) => {},
 })
 
 export function PostsList() {
-  const router = useRouter()
-  const [filter, setFilter] = React.useState('published')
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+    // const router = useRouter()
+    const path = usePathname()
 
-  const variables =
-    filter === 'published'
-      ? { filter: { published: true } }
-      : { filter: { published: false } }
+    const [filter, setFilter] = React.useState('published')
+    const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 
-  const { data, error, loading, refetch } = useGetPostsQuery({ variables })
+    const variables =
+        filter === 'published'
+            ? { filter: { published: true } }
+            : { filter: { published: false } }
 
-  React.useEffect(() => {
-    refetch()
-  }, [filter])
+    const { data, error, loading, refetch } = useGetPostsQuery({ variables })
 
-  if (error) {
+    React.useEffect(() => {
+        refetch()
+    }, [filter])
+
+    if (error) {
+        return (
+            <ListContainer onRef={setScrollContainerRef}>
+                <div />
+            </ListContainer>
+        )
+    }
+
+    if (loading && !data?.posts) {
+        return (
+            <ListContainer onRef={setScrollContainerRef}>
+                <WritingTitlebar scrollContainerRef={scrollContainerRef} />
+                <div className="flex flex-1 items-center justify-center">
+                    <LoadingSpinner />
+                </div>
+            </ListContainer>
+        )
+    }
+
+    const { posts } = data
+
+    const defaultContextValue = {
+        filter,
+        setFilter,
+    }
+
     return (
-      <ListContainer onRef={setScrollContainerRef}>
-        <div />
-      </ListContainer>
+        <WritingContext.Provider value={defaultContextValue}>
+            <ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
+                <WritingTitlebar scrollContainerRef={scrollContainerRef} />
+
+                <div className="lg:space-y-1 lg:p-3">
+                    {posts.map((post) => {
+                        const active = path === post.slug
+
+                        return (
+                            <PostListItem
+                                key={post.id}
+                                post={post}
+                                active={active}
+                            />
+                        )
+                    })}
+                </div>
+            </ListContainer>
+        </WritingContext.Provider>
     )
-  }
-
-  if (loading && !data?.posts) {
-    return (
-      <ListContainer onRef={setScrollContainerRef}>
-        <WritingTitlebar scrollContainerRef={scrollContainerRef} />
-        <div className="flex flex-1 items-center justify-center">
-          <LoadingSpinner />
-        </div>
-      </ListContainer>
-    )
-  }
-
-  const { posts } = data
-
-  const defaultContextValue = {
-    filter,
-    setFilter,
-  }
-
-  return (
-    <WritingContext.Provider value={defaultContextValue}>
-      <ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
-        <WritingTitlebar scrollContainerRef={scrollContainerRef} />
-
-        <div className="lg:space-y-1 lg:p-3">
-          {posts.map((post) => {
-            const active = router.query?.slug === post.slug
-
-            return <PostListItem key={post.id} post={post} active={active} />
-          })}
-        </div>
-      </ListContainer>
-    </WritingContext.Provider>
-  )
 }

@@ -1,23 +1,26 @@
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { toast } from 'sonner'
 
 export function LoginErrorToast() {
-  const router = useRouter()
-  const errorCode = router.query['error_code']
+    const router = useRouter()
+    const path = usePathname()
+    const searchParams = useSearchParams()
 
-  useEffect(() => {
-    if (errorCode) {
-      if (errorCode === 'access_denied') {
-        toast.warning('Sign in failed. Try again?')
-      } else {
-        toast.error('Sorry, something went wrong.')
-      }
+    const errorCode = searchParams.get('error_code')
 
-      // Remove the query parameter from the visible URL.
-      router.replace(router.pathname)
-    }
-  }, [errorCode])
+    useEffect(() => {
+        if (errorCode) {
+            if (errorCode === 'access_denied') {
+                toast.warning('Sign in failed. Try again?')
+            } else {
+                toast.error('Sorry, something went wrong.')
+            }
 
-  return null
+            // Remove the query parameter from the visible URL.
+            router.replace(path)
+        }
+    }, [errorCode])
+
+    return null
 }

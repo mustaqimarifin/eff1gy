@@ -1,5 +1,5 @@
 export type UploadSignatureMetadata = {
-  timestamp: number
-  folder: string
-  signature: string
+    timestamp: number
+    folder: string
+    signature: string
 }

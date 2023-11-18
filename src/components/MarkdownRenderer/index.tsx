@@ -1,8 +1,7 @@
 /* eslint-disable no-unsafe-optional-chaining */
-import * as React from 'react'
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
-import deepmerge from 'deepmerge'
+import * as React from 'react'
 import Markdown from 'react-markdown'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
@@ -10,247 +9,247 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import linkifyRegex from 'remark-linkify-regex'
 
+import { deepMerge } from '~/lib/transformers'
+
 import { CodeBlock } from './CodeBlock'
 
 function LinkRenderer({ href, ...rest }: any) {
-  // auto-link headings
-  if (href.startsWith('#')) {
-    return <a href={href} {...rest} />
-  }
-
-  if (href.startsWith('@')) {
-    // link to a mention
-    return <Link href={`/u/${href.slice(1)}`} {...rest} />
-  }
-  try {
-    const url = new URL(href)
-    if (url.origin === 'https://eff1gy.vercel.app') {
-      return <Link href={href} {...rest} />
+    // auto-link headings
+    if (href.startsWith('#')) {
+        return <a href={href} {...rest} />
     }
-    return <a target="_blank" rel="noopener" href={href} {...rest} />
-  } catch (e) {
-    console.error(e)
-    return <a target="_blank" rel="noopener" href={href} {...rest} />
-  }
+
+    if (href.startsWith('@')) {
+        // link to a mention
+        return <Link href={`/u/${href.slice(1)}`} {...rest} />
+    }
+    try {
+        const url = new URL(href)
+        if (url.origin === 'https://eff1gy.vercel.app') {
+            return <Link href={href} {...rest} />
+        }
+        return <a target="_blank" rel="noopener" href={href} {...rest} />
+    } catch (e) {
+        console.error(e)
+        return <a target="_blank" rel="noopener" href={href} {...rest} />
+    }
 }
 
 function getComponentsForVariant(variant) {
-  // Blog posts
-  switch (variant) {
-    case 'longform': {
-      return {
-        a: LinkRenderer,
-        p: (paragraph: { children?: any; node?: any }) => {
-          const { node } = paragraph
-          if (node.children[0].tagName === 'img') {
-            const image = node.children[0]
-            const metastring = image.properties.alt
-            const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
-            const metaWidth = metastring.match(/{([^}]+)x/)
-            const metaHeight = metastring.match(/x([^}]+)}/)
-            const width = metaWidth ? metaWidth[1] : 768
-            const height = metaHeight ? metaHeight[1] : 432
-            const isPriority = metastring?.toLowerCase().match('{priority}')
-            const hasCaption = metastring?.toLowerCase().includes('{caption:')
-            const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
+    // Blog posts
+    switch (variant) {
+        case 'longform': {
+            return {
+                a: LinkRenderer,
+                p: (paragraph: { children?: any; node?: any }) => {
+                    const { node } = paragraph
+                    if (node.children[0].tagName === 'img') {
+                        const image = node.children[0]
+                        const metastring = image.properties.alt
+                        const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
+                        const metaWidth = metastring.match(/{([^}]+)x/)
+                        const metaHeight = metastring.match(/x([^}]+)}/)
+                        const width = metaWidth ? metaWidth[1] : 768
+                        const height = metaHeight ? metaHeight[1] : 432
+                        const isPriority = metastring
+                            ?.toLowerCase()
+                            .match('{priority}')
+                        const hasCaption = metastring
+                            ?.toLowerCase()
+                            .includes('{caption:')
+                        const caption = metastring
+                            ?.match(/{caption: (.*?)}/)
+                            ?.pop()
 
-            return (
-              <div className="mx-auto">
-                <NextImage
-                  src={image.properties.src}
-                  width={768}
-                  height={462}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-                  // blurDataURL={previewImage.dataURIBase64}
-                  blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
-                  className="object-cover"
-                  alt={alt}
-                  priority={isPriority}
-                  style={{
-                    maxWidth: '100%',
-                    height: 'auto',
-                  }}
-                />
-                {hasCaption ? (
-                  <div className="prose-sm" aria-label={caption}>
-                    {caption}
-                  </div>
-                ) : null}
-              </div>
-            )
-          }
-          return <p>{paragraph.children}</p>
-        },
-        //h2: H2,
-        //h3: H3,
-        Callout,
-        pre({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
-            <CodeBlock
-              text={String(children).replace(/\n$/, '')}
-              language={language}
-              {...props}
-            />
-          ) : (
-            <>{children}</>
-          )
-        },
-        code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
-            <CodeBlock
-              text={String(children).replace(/\n$/, '')}
-              language={language}
-              {...props}
-            />
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
-          )
-        },
-      }
+                        return (
+                            <div className="mx-auto">
+                                <NextImage
+                                    src={image.properties.src}
+                                    width={768}
+                                    height={462}
+                                    placeholder="blur"
+                                    sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
+                                    // blurDataURL={previewImage.dataURIBase64}
+                                    blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
+                                    className="object-cover"
+                                    alt={alt}
+                                    priority={isPriority}
+                                    style={{
+                                        maxWidth: '100%',
+                                        height: 'auto',
+                                    }}
+                                />
+                                {hasCaption ? (
+                                    <div
+                                        className="prose-sm"
+                                        aria-label={caption}
+                                    >
+                                        {caption}
+                                    </div>
+                                ) : null}
+                            </div>
+                        )
+                    }
+                    return <p>{paragraph.children}</p>
+                },
+                //h2: H2,
+                //h3: H3,
+                Callout,
+                pre({ node, inline, className, children, ...props }) {
+                    const language = /language-(\w+)/.exec(className || '')?.[1]
+                    return !inline && language ? (
+                        <CodeBlock
+                            text={String(children).replace(/\n$/, '')}
+                            language={language}
+                            {...props}
+                        />
+                    ) : (
+                        <>{children}</>
+                    )
+                },
+                code({ node, inline, className, children, ...props }) {
+                    const language = /language-(\w+)/.exec(className || '')?.[1]
+                    return !inline && language ? (
+                        <CodeBlock
+                            text={String(children).replace(/\n$/, '')}
+                            language={language}
+                            {...props}
+                        />
+                    ) : (
+                        <code className={className} {...props}>
+                            {children}
+                        </code>
+                    )
+                },
+            }
+        }
+        // Questions, comments, descriptions on bookmarks, etc.
+        case 'comment': {
+            return {
+                a: LinkRenderer,
+                h1: 'p',
+                h2: 'p',
+                h3: 'p',
+                h4: 'p',
+                h5: 'p',
+                h6: 'p',
+                pre({ children }) {
+                    return <>{children}</>
+                },
+                code({ node, inline, className, children, ...props }) {
+                    const language = /language-(\w+)/.exec(className || '')?.[1]
+                    return !inline && language ? (
+                        <CodeBlock
+                            text={String(children).replace(/\n$/, '')}
+                            language={language}
+                            {...props}
+                        />
+                    ) : (
+                        <code className={className} {...props}>
+                            {children}
+                        </code>
+                    )
+                },
+            }
+        }
     }
-    // Questions, comments, descriptions on bookmarks, etc.
-    case 'comment': {
-      return {
-        a: LinkRenderer,
-        h1: 'p',
-        h2: 'p',
-        h3: 'p',
-        h4: 'p',
-        h5: 'p',
-        h6: 'p',
-        pre({ children }) {
-          return <>{children}</>
-        },
-        code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
-            <CodeBlock
-              text={String(children).replace(/\n$/, '')}
-              language={language}
-              {...props}
-            />
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
-          )
-        },
-      }
-    }
-  }
 }
 function Image(props) {
-  return <NextImage {...props} quality={75} className="mdx-image rounded-md" />
+    return (
+        <NextImage {...props} quality={75} className="mdx-image rounded-md" />
+    )
 }
 
 const keyStr =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 
 const triplet = (e1: number, e2: number, e3: number) =>
-  keyStr.charAt(e1 >> 2) +
-  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
-  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
-  keyStr.charAt(e3 & 63)
+    keyStr.charAt(e1 >> 2) +
+    keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+    keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+    keyStr.charAt(e3 & 63)
 
 const rgbDataURL = (r: number, g: number, b: number) =>
-  `data:image/gif;base64,R0lGODlhAQABAPAA${
-    triplet(0, r, g) + triplet(b, 255, 255)
-  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
+    `data:image/gif;base64,R0lGODlhAQABAPAA${
+        triplet(0, r, g) + triplet(b, 255, 255)
+    }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
 
 const MDXImage = (paragraph: { children?: boolean; node?: any }) => {
-  const { node } = paragraph
+    const { node } = paragraph
 
-  if (node.children[0].tagName === 'img') {
-    const image = node.children[0]
-    const metastring = image.properties.alt
-    const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
-    const metaWidth = metastring.match(/{([^}]+)x/)
-    const metaHeight = metastring.match(/x([^}]+)}/)
-    const width = metaWidth ? metaWidth[1] : '768'
-    const height = metaHeight ? metaHeight[1] : '432'
-    const isPriority = metastring?.toLowerCase().match('{priority}')
-    const hasCaption = metastring?.toLowerCase().includes('{caption:')
-    const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
+    if (node.children[0].tagName === 'img') {
+        const image = node.children[0]
+        const metastring = image.properties.alt
+        const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
+        const metaWidth = metastring.match(/{([^}]+)x/)
+        const metaHeight = metastring.match(/x([^}]+)}/)
+        const width = metaWidth ? metaWidth[1] : '768'
+        const height = metaHeight ? metaHeight[1] : '432'
+        const isPriority = metastring?.toLowerCase().match('{priority}')
+        const hasCaption = metastring?.toLowerCase().includes('{caption:')
+        const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
 
-    return (
-      <div className="postImgWrapper">
-        <Image
-          src={image.properties.src}
-          width={width}
-          height={height}
-          className="postImg"
-          alt={alt}
-          priority={isPriority}
-        />
-        {hasCaption ? (
-          <div className="caption" aria-label={caption}>
-            {caption}
-          </div>
-        ) : null}
-      </div>
-    )
-  }
-  return <p>{paragraph.children}</p>
-}
-
-const CustomLink = (props) => {
-  const href = props.href
-  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))
-
-  if (isInternalLink) {
-    return (
-      <Link href={href} {...props}>
-        {props.children}
-      </Link>
-    )
-  }
-
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+        return (
+            <div className="postImgWrapper">
+                <Image
+                    src={image.properties.src}
+                    width={width}
+                    height={height}
+                    className="postImg"
+                    alt={alt}
+                    priority={isPriority}
+                />
+                {hasCaption ? (
+                    <div className="caption" aria-label={caption}>
+                        {caption}
+                    </div>
+                ) : null}
+            </div>
+        )
+    }
+    return <p>{paragraph.children}</p>
 }
 
 function Callout(props) {
-  return (
-    <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
-      <div className="mr-4 flex w-4 items-center">{props.emoji}</div>
-      <div className="callout w-full">{props.children}</div>
-    </div>
-  )
+    return (
+        <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
+            <div className="mr-4 flex w-4 items-center">{props.emoji}</div>
+            <div className="callout w-full">{props.children}</div>
+        </div>
+    )
 }
 
 export function MarkdownRenderer(props: any) {
-  // variant = 'longform' | 'comment'
-  const { children, variant = 'longform', ...rest } = props
+    const { children, variant = 'longform', ...rest } = props
 
-  const schema = deepmerge(defaultSchema, {
-    tagNames: [...defaultSchema?.tagNames, 'sup', 'sub', 'section'],
-    attributes: {
-      '*': ['className'],
-    },
-    clobberPrefix: '',
-    clobber: ['name', 'id'],
-  })
+    const schema = deepMerge(defaultSchema, {
+        tagNames: [...defaultSchema?.tagNames, 'sup', 'sub', 'section'],
+        attributes: {
+            '*': ['className'],
+        },
+        clobberPrefix: '',
+        clobber: ['name', 'id'],
+    })
 
-  const components = getComponentsForVariant(variant)
+    const components = getComponentsForVariant(variant)
 
-  return (
-    <article className="prose-quoteless prose prose-neutral dark:prose-invert">
-      <Markdown
-        {...rest}
-        remarkPlugins={[remarkGfm, linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
-        rehypePlugins={[
-          [rehypeSanitize, schema],
-          rehypeSlug,
-          [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-        ]}
-        components={components}
-      >
-        {children}
-      </Markdown>
-    </article>
-  )
+    return (
+        <article className="prose-quoteless prose prose-neutral dark:prose-invert">
+            <Markdown
+                {...rest}
+                remarkPlugins={[
+                    remarkGfm,
+                    linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i),
+                ]}
+                rehypePlugins={[
+                    [rehypeSanitize, schema],
+                    rehypeSlug,
+                    [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+                ]}
+                components={components}
+            >
+                {children}
+            </Markdown>
+        </article>
+    )
 }

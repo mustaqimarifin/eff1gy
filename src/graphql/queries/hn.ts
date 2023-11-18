@@ -1,24 +1,24 @@
 import { gql } from '@apollo/client'
 
 import {
-  HackerNewsListItemInfoFragment,
-  HackerNewsPostInfoFragment,
+    HackerNewsListItemInfoFragment,
+    HackerNewsPostInfoFragment,
 } from '../fragments/hn'
 
 export const GET_HACKER_NEWS_POSTS = gql`
-  query getHackerNewsPosts {
-    hackerNewsPosts {
-      ...HackerNewsListItemInfo
+    query getHackerNewsPosts {
+        hackerNewsPosts {
+            ...HackerNewsListItemInfo
+        }
     }
-  }
-  ${HackerNewsListItemInfoFragment}
+    ${HackerNewsListItemInfoFragment}
 `
 
 export const GET_HACKER_NEWS_POST = gql`
-  query getHackerNewsPost($id: ID!) {
-    hackerNewsPost(id: $id) {
-      ...HackerNewsPostInfo
+    query getHackerNewsPost($id: ID!) {
+        hackerNewsPost(id: $id) {
+            ...HackerNewsPostInfo
+        }
     }
-  }
-  ${HackerNewsPostInfoFragment}
+    ${HackerNewsPostInfoFragment}
 `

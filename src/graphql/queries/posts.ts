@@ -1,23 +1,24 @@
 import { gql } from '@apollo/client'
+
 import {
-  PostDetailFragment,
-  PostListItemFragment,
+    PostDetailFragment,
+    PostListItemFragment,
 } from '~/graphql/fragments/post'
 
 export const GET_POSTS = gql`
-  query getPosts($filter: WritingFilter) {
-    posts(filter: $filter) {
-      ...PostListItem
+    query getPosts($filter: WritingFilter) {
+        posts(filter: $filter) {
+            ...PostListItem
+        }
     }
-  }
-  ${PostListItemFragment}
+    ${PostListItemFragment}
 `
 
 export const GET_POST = gql`
-  query getPost($slug: String!) {
-    post(slug: $slug) {
-      ...PostDetail
+    query getPost($slug: String!) {
+        post(slug: $slug) {
+            ...PostDetail
+        }
     }
-  }
-  ${PostDetailFragment}
+    ${PostDetailFragment}
 `

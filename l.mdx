@@ -11,26 +11,26 @@ of its themes ecosystem, powered by [Shiki](https://github.com/shikijs/shiki).
 No missing tokens or unexpected broken syntax highlighting.
 
 ```js
-import Document, { Head, Html, Main, NextScript } from "next/document"
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 // 🔥 Super granular and accurate highlighting
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
-  }
+    static async getInitialProps(ctx) {
+        const initialProps = await Document.getInitialProps(ctx)
+        return { ...initialProps }
+    }
 
-  render() {
-    return (
-      <Html>
-        <Head />
-        <body className="bg-zinc-800 text-zinc-200">
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+    render() {
+        return (
+            <Html>
+                <Head />
+                <body className="bg-zinc-800 text-zinc-200">
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        )
+    }
 }
 ```
 
@@ -46,17 +46,17 @@ the client. Your docs will be lightning fast.
 ### Line numbers and line highlighting are supported
 
 ```js {4}
-import { useFloating } from "@floating-ui/react-dom"
+import { useFloating } from '@floating-ui/react-dom'
 
 function MyComponent() {
-  const { x, y, reference, floating } = useFloating()
+    const { x, y, reference, floating } = useFloating()
 
-  return (
-    <>
-      <div ref={reference} />
-      <div ref={floating} />
-    </>
-  )
+    return (
+        <>
+            <div ref={reference} />
+            <div ref={floating} />
+        </>
+    )
 }
 ```
 
@@ -65,17 +65,17 @@ function MyComponent() {
 ### Word highlighting too
 
 ```js /reference/
-import { useFloating } from "@floating-ui/react-dom"
+import { useFloating } from '@floating-ui/react-dom'
 
 function MyComponent() {
-  const { x, y, reference, floating } = useFloating()
+    const { x, y, reference, floating } = useFloating()
 
-  return (
-    <>
-      <div ref={reference} />
-      <div ref={floating} />
-    </>
-  )
+    return (
+        <>
+            <div ref={reference} />
+            <div ref={floating} />
+        </>
+    )
 }
 ```
 
@@ -89,7 +89,7 @@ For instance, if you had the following code block:
 
 ```js
 function getStringLength(str) {
-  return str.length
+    return str.length
 }
 ```
 
@@ -106,7 +106,7 @@ following styles as a base though:
 
 ```css
 pre > code {
-  display: grid;
+    display: grid;
 }
 ```
 
@@ -127,38 +127,38 @@ The following example shows how to use this package with Next.js and MDX (this
 website's stack).
 
 ```js
-const rehypePrettyCode = require("rehype-pretty-code")
-const fs = require("fs")
+const rehypePrettyCode = require('rehype-pretty-code')
+const fs = require('fs')
 
 const options = {
-  // Use one of Shiki's packaged themes
-  theme: "one-dark-pro",
-  // Or your own JSON theme
-  theme: JSON.parse(
-    fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
-  ),
-  onVisitLine(node) {
-    // Prevent lines from collapsing in `display: grid` mode, and
-    // allow empty lines to be copy/pasted
-    if (node.children.length === 0) {
-      node.children = [{ type: "text", value: " " }]
-    }
-  },
-  // Feel free to add classNames that suit your docs
-  onVisitHighlightedLine(node) {
-    node.properties.className.push("highlighted")
-  },
-  onVisitHighlightedWord(node) {
-    node.properties.className = ["word"]
-  },
+    // Use one of Shiki's packaged themes
+    theme: 'one-dark-pro',
+    // Or your own JSON theme
+    theme: JSON.parse(
+        fs.readFileSync(require.resolve('./themes/dark.json'), 'utf-8')
+    ),
+    onVisitLine(node) {
+        // Prevent lines from collapsing in `display: grid` mode, and
+        // allow empty lines to be copy/pasted
+        if (node.children.length === 0) {
+            node.children = [{ type: 'text', value: ' ' }]
+        }
+    },
+    // Feel free to add classNames that suit your docs
+    onVisitHighlightedLine(node) {
+        node.properties.className.push('highlighted')
+    },
+    onVisitHighlightedWord(node) {
+        node.properties.className = ['word']
+    },
 }
 
-const withMDX = require("@next/mdx")({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [[rehypePrettyCode, options]],
-  },
+const withMDX = require('@next/mdx')({
+    extension: /\.mdx?$/,
+    options: {
+        remarkPlugins: [],
+        rehypePlugins: [[rehypePrettyCode, options]],
+    },
 })
 ```
 
@@ -218,9 +218,9 @@ You can create a map of tokens to shorten this usage throughout your docs:
 
 ```js
 const options = {
-  tokensMap: {
-    fn: "entity.name.function",
-  },
+    tokensMap: {
+        fn: 'entity.name.function',
+    },
 }
 ```
 
@@ -244,19 +244,19 @@ CSS counters can be used to add line numbers.
 
 ```css
 code {
-  counter-reset: line;
+    counter-reset: line;
 }
 
 code > .line::before {
-  counter-increment: line;
-  content: counter(line);
+    counter-increment: line;
+    content: counter(line);
 
-  /* Other styling */
-  display: inline-block;
-  width: 1rem;
-  margin-right: 2rem;
-  text-align: right;
-  color: gray;
+    /* Other styling */
+    display: inline-block;
+    width: 1rem;
+    margin-right: 2rem;
+    text-align: right;
+    color: gray;
 }
 ```
 
@@ -283,14 +283,14 @@ the color mode:
 
 ```js
 const options = {
-  theme: {
-    dark: JSON.parse(
-      fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
-    ),
-    light: JSON.parse(
-      fs.readFileSync(require.resolve("./themes/light.json"), "utf-8")
-    ),
-  },
+    theme: {
+        dark: JSON.parse(
+            fs.readFileSync(require.resolve('./themes/dark.json'), 'utf-8')
+        ),
+        light: JSON.parse(
+            fs.readFileSync(require.resolve('./themes/light.json'), 'utf-8')
+        ),
+    },
 }
 ```
 
@@ -301,17 +301,17 @@ Now, you can use CSS to display the desired theme:
 
 ```css
 @media (prefers-color-scheme: dark) {
-  pre[data-theme="light"],
-  code[data-theme="light"] {
-    display: none;
-  }
+    pre[data-theme='light'],
+    code[data-theme='light'] {
+        display: none;
+    }
 }
 
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-  pre[data-theme="dark"],
-  code[data-theme="dark"] {
-    display: none;
-  }
+    pre[data-theme='dark'],
+    code[data-theme='dark'] {
+        display: none;
+    }
 }
 ```
 
@@ -330,29 +330,29 @@ This is helpful if you'd like to configure other Shiki options, such as
 `langs{:.meta.object-literal.key}`.
 
 ```js
-const { getHighlighter, BUNDLED_LANGUAGES } = require("shiki")
+const { getHighlighter, BUNDLED_LANGUAGES } = require('shiki')
 
 const options = {
-  theme: {
-    dark: JSON.parse(
-      fs.readFileSync(require.resolve("./themes/dark.json"), "utf-8")
-    ),
-    light: JSON.parse(
-      fs.readFileSync(require.resolve("./themes/light.json"), "utf-8")
-    ),
-  },
-  getHighlighter: (options) =>
-    getHighlighter({
-      ...options,
-      langs: [
-        ...BUNDLED_LANGUAGES,
-        {
-          id: "groq",
-          scopeName: "source.groq",
-          path: "./langs/vscode-sanity/grammars/groq.json",
-        },
-      ],
-    }),
+    theme: {
+        dark: JSON.parse(
+            fs.readFileSync(require.resolve('./themes/dark.json'), 'utf-8')
+        ),
+        light: JSON.parse(
+            fs.readFileSync(require.resolve('./themes/light.json'), 'utf-8')
+        ),
+    },
+    getHighlighter: (options) =>
+        getHighlighter({
+            ...options,
+            langs: [
+                ...BUNDLED_LANGUAGES,
+                {
+                    id: 'groq',
+                    scopeName: 'source.groq',
+                    path: './langs/vscode-sanity/grammars/groq.json',
+                },
+            ],
+        }),
 }
 ```
 
