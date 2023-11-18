@@ -18,8 +18,8 @@ export const useCdn = true
 export const previewSecretId: `${string}.${string}` = 'preview.secret'
 
 export const sanityConfig = {
-    dataset,
-    projectId,
-    useCdn,
-    apiVersion,
+  dataset,
+  projectId,
+  useCdn,
+  apiVersion,
 }

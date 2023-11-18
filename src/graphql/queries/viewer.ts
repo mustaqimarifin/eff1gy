@@ -5,21 +5,21 @@ import { UserInfoFragment } from '~/graphql/fragments/user'
 import { UserSettingsFragment } from '../fragments/user'
 
 export const GET_VIEWER = gql`
-    query viewer {
-        viewer {
-            ...UserInfo
-        }
+  query viewer {
+    viewer {
+      ...UserInfo
     }
-    ${UserInfoFragment}
+  }
+  ${UserInfoFragment}
 `
 
 export const GET_VIEWER_SETTINGS = gql`
-    query getViewerWithSettings {
-        viewer {
-            ...UserInfo
-            ...UserSettings
-        }
+  query getViewerWithSettings {
+    viewer {
+      ...UserInfo
+      ...UserSettings
     }
-    ${UserInfoFragment}
-    ${UserSettingsFragment}
+  }
+  ${UserInfoFragment}
+  ${UserSettingsFragment}
 `

@@ -13,99 +13,87 @@ import { MarkdownRenderer } from '../MarkdownRenderer'
 import { QuestionActions } from './QuestionActions'
 
 export function QuestionDetail({ id }: { id: string }) {
-    const scrollContainerRef = React.useRef(null)
-    const titleRef = React.useRef(null)
-    const { data, loading, error } = useGetQuestionQuery({
-        variables: { id },
-    })
+  const scrollContainerRef = React.useRef(null)
+  const titleRef = React.useRef(null)
+  const { data, loading, error } = useGetQuestionQuery({
+    variables: { id },
+  })
 
-    if (loading) {
-        return <Detail.Loading />
-    }
+  if (loading) {
+    return <Detail.Loading />
+  }
 
-    if (!data?.question || error) {
-        return <Detail.Null />
-    }
+  if (!data?.question || error) {
+    return <Detail.Null />
+  }
 
-    const { question } = data
-    const createdAt = timestampToCleanTime({
-        month: 'short',
-        timestamp: question?.createdAt,
-    })
+  const { question } = data
+  const createdAt = timestampToCleanTime({
+    month: 'short',
+    timestamp: question?.createdAt,
+  })
 
-    return (
-        <>
-            <Detail.Container
-                data-cy="question-detail"
-                ref={scrollContainerRef}
-            >
-                <TitleBar
-                    backButton
-                    globalMenu={false}
-                    backButtonHref={'/ama'}
-                    magicTitle
-                    title={question.title}
-                    titleRef={titleRef}
-                    scrollContainerRef={scrollContainerRef}
-                    trailingAccessory={<QuestionActions question={question} />}
+  return (
+    <>
+      <Detail.Container data-cy="question-detail" ref={scrollContainerRef}>
+        <TitleBar
+          backButton
+          globalMenu={false}
+          backButtonHref={'/ama'}
+          magicTitle
+          title={question.title}
+          titleRef={titleRef}
+          scrollContainerRef={scrollContainerRef}
+          trailingAccessory={<QuestionActions question={question} />}
+        />
+
+        <Detail.ContentContainer>
+          <Detail.Header>
+            <div className="flex items-center space-x-4 pb-2">
+              <Link href={`/u/${question.author.name}`} className="inline-flex">
+                <Avatar
+                  user={question.author}
+                  src={question.author.image}
+                  width={32}
+                  height={32}
+                  quality={100}
+                  className="rounded-full"
                 />
+              </Link>
+              <div className="flex space-x-1">
+                <Link
+                  href={`/u/${question.author.name}`}
+                  className="inline-flex space-x-1">
+                  <span className="text-primary whitespace-nowrap font-semibold leading-snug">
+                    {question.author.name}
+                  </span>
+                  <span className="text-tertiary line-clamp-1 inline-flex font-normal leading-snug">
+                    @{question.author.name}
+                  </span>
+                </Link>
+                <p className="text-quaternary leading-snug">·</p>
+                <p
+                  className="text-quaternary line-clamp-1 leading-snug"
+                  title={createdAt.raw}>
+                  {createdAt.formatted}
+                </p>
+              </div>
+            </div>
+            <Detail.Title ref={titleRef}>{question.title}</Detail.Title>
+            {question.description && (
+              <MarkdownRenderer
+                children={question.description}
+                className="comment prose leading-normal"
+                variant="comment"
+              />
+            )}
+          </Detail.Header>
+        </Detail.ContentContainer>
 
-                <Detail.ContentContainer>
-                    <Detail.Header>
-                        <div className="flex items-center space-x-4 pb-2">
-                            <Link
-                                href={`/u/${question.author.name}`}
-                                className="inline-flex"
-                            >
-                                <Avatar
-                                    user={question.author}
-                                    src={question.author.image}
-                                    width={32}
-                                    height={32}
-                                    quality={100}
-                                    className="rounded-full"
-                                />
-                            </Link>
-                            <div className="flex space-x-1">
-                                <Link
-                                    href={`/u/${question.author.name}`}
-                                    className="inline-flex space-x-1"
-                                >
-                                    <span className="text-primary whitespace-nowrap font-semibold leading-snug">
-                                        {question.author.name}
-                                    </span>
-                                    <span className="text-tertiary line-clamp-1 inline-flex font-normal leading-snug">
-                                        @{question.author.name}
-                                    </span>
-                                </Link>
-                                <p className="text-quaternary leading-snug">
-                                    ·
-                                </p>
-                                <p
-                                    className="text-quaternary line-clamp-1 leading-snug"
-                                    title={createdAt.raw}
-                                >
-                                    {createdAt.formatted}
-                                </p>
-                            </div>
-                        </div>
-                        <Detail.Title ref={titleRef}>
-                            {question.title}
-                        </Detail.Title>
-                        {question.description && (
-                            <MarkdownRenderer
-                                children={question.description}
-                                className="comment prose leading-normal"
-                                variant="comment"
-                            />
-                        )}
-                    </Detail.Header>
-                </Detail.ContentContainer>
-
-                {question.viewerCanComment && (
-                    <Comments refId={question.id} type={CommentType.Question} />
-                )}
-            </Detail.Container>
-        </>
-    )
+        {question.viewerCanComment && (
+          <Comments refId={question.id} type={CommentType.Question} />
+        )}
+      </Detail.Container>
+    </>
+  )
 }

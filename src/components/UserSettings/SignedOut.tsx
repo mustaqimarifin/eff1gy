@@ -6,15 +6,15 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { SignInDialogContent } from '../SignInDialog/SignInDialogContent'
 
 export function SignedOut() {
-    return (
-        <Detail.Container>
-            <TitleBar title="Settings" />
-            <div className="flex flex-1 flex-col items-center justify-center">
-                {' '}
-                <SignInDialogContent />
-            </div>
+  return (
+    <Detail.Container>
+      <TitleBar title="Settings" />
+      <div className="flex flex-1 flex-col items-center justify-center">
+        {' '}
+        <SignInDialogContent />
+      </div>
 
-            {/* <div className="flex flex-1 flex-col items-center justify-center">
+      {/* <div className="flex flex-1 flex-col items-center justify-center">
         <a href="/api/auth/signin">
           <TwitterButton size="large">
             <svg
@@ -30,6 +30,6 @@ export function SignedOut() {
           </TwitterButton>
         </a>
       </div> */}
-        </Detail.Container>
-    )
+    </Detail.Container>
+  )
 }

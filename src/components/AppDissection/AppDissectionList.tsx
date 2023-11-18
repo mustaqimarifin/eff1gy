@@ -13,47 +13,41 @@ import { CaseStudy } from '../Posts/BlogDetail'
 import { AppDissectionListItem } from './AppDissectionListItem'
 
 export const AppDissectionList = ({ cases }) => {
-    const path = usePathname()
-    const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
-    /*     const { data, isLoading } = useSWR<CaseStudy[]>(
+  const path = usePathname()
+  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  /*     const { data, isLoading } = useSWR<CaseStudy[]>(
         'http://localhost:3000/api/casestudy',
         fetcher
     )
  */
-    if (!cases) {
-        return (
-            <ListContainer onRef={setScrollContainerRef}>
-                <TitleBar
-                    scrollContainerRef={scrollContainerRef}
-                    title="Case Study"
-                />
-                <div className="flex flex-1 items-center justify-center">
-                    <LoadingSpinner />
-                </div>
-            </ListContainer>
-        )
-    }
-
+  if (!cases) {
     return (
-        <ListContainer data-cy="case-list" onRef={setScrollContainerRef}>
-            <TitleBar
-                scrollContainerRef={scrollContainerRef}
-                title="Case Study"
-            />
-
-            <div className="lg:space-y-1 lg:p-3">
-                {cases &&
-                    cases?.map((casestudy) => {
-                        const active = path === casestudy.slug
-                        return (
-                            <AppDissectionListItem
-                                key={casestudy.slug}
-                                casestudy={casestudy}
-                                active={active}
-                            />
-                        )
-                    })}
-            </div>
-        </ListContainer>
+      <ListContainer onRef={setScrollContainerRef}>
+        <TitleBar scrollContainerRef={scrollContainerRef} title="Case Study" />
+        <div className="flex flex-1 items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      </ListContainer>
     )
+  }
+
+  return (
+    <ListContainer data-cy="case-list" onRef={setScrollContainerRef}>
+      <TitleBar scrollContainerRef={scrollContainerRef} title="Case Study" />
+
+      <div className="lg:space-y-1 lg:p-3">
+        {cases &&
+          cases?.map((casestudy) => {
+            const active = path === casestudy.slug
+            return (
+              <AppDissectionListItem
+                key={casestudy.slug}
+                casestudy={casestudy}
+                active={active}
+              />
+            )
+          })}
+      </div>
+    </ListContainer>
+  )
 }

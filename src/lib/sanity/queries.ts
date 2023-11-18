@@ -124,9 +124,9 @@ export const snippetBySlugQuery = groq`
 `
 
 export interface Settings {
+  title?: string
+  description?: any[]
+  ogImage?: {
     title?: string
-    description?: any[]
-    ogImage?: {
-        title?: string
-    }
+  }
 }

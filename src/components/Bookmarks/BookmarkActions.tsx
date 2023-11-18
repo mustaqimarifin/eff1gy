@@ -4,78 +4,74 @@ import { EditBookmarkDialog } from '~/components/Bookmarks/EditBookmarkDialog'
 import Button from '~/components/Button'
 import { GET_BOOKMARK } from '~/graphql/queries/bookmarks'
 import {
-    ReactionType,
-    useToggleReactionMutation,
-    useViewerQuery,
+  ReactionType,
+  useToggleReactionMutation,
+  useViewerQuery,
 } from '~/graphql/typeSlut'
 
 import { ReactionButton } from '../Button/ReactionButton'
 
 function getReactionButton(bookmark) {
-    const [toggleReaction, { loading }] = useToggleReactionMutation()
+  const [toggleReaction, { loading }] = useToggleReactionMutation()
 
-    function handleClick() {
-        if (loading) return
+  function handleClick() {
+    if (loading) return
 
-        toggleReaction({
-            variables: {
-                refId: bookmark.id,
-                type: ReactionType.Bookmark,
+    toggleReaction({
+      variables: {
+        refId: bookmark.id,
+        type: ReactionType.Bookmark,
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        toggleReaction: {
+          __typename: 'Bookmark',
+          ...bookmark,
+          reactionCount: bookmark.viewerHasReacted
+            ? bookmark.reactionCount - 1
+            : bookmark.reactionCount + 1,
+          viewerHasReacted: !bookmark.viewerHasReacted,
+        },
+      },
+      update(cache, { data: { toggleReaction } }) {
+        cache.writeQuery({
+          query: GET_BOOKMARK,
+          variables: { id: bookmark.id },
+          data: {
+            bookmark: {
+              ...bookmark,
+              ...toggleReaction,
             },
-            optimisticResponse: {
-                __typename: 'Mutation',
-                toggleReaction: {
-                    __typename: 'Bookmark',
-                    ...bookmark,
-                    reactionCount: bookmark.viewerHasReacted
-                        ? bookmark.reactionCount - 1
-                        : bookmark.reactionCount + 1,
-                    viewerHasReacted: !bookmark.viewerHasReacted,
-                },
-            },
-            update(cache, { data: { toggleReaction } }) {
-                cache.writeQuery({
-                    query: GET_BOOKMARK,
-                    variables: { id: bookmark.id },
-                    data: {
-                        bookmark: {
-                            ...bookmark,
-                            ...toggleReaction,
-                        },
-                    },
-                })
-            },
+          },
         })
-    }
+      },
+    })
+  }
 
-    return (
-        <ReactionButton
-            id={bookmark.id}
-            loading={loading}
-            count={bookmark.reactionCount}
-            hasReacted={bookmark.viewerHasReacted}
-            onClick={handleClick}
-        />
-    )
+  return (
+    <ReactionButton
+      id={bookmark.id}
+      loading={loading}
+      count={bookmark.reactionCount}
+      hasReacted={bookmark.viewerHasReacted}
+      onClick={handleClick}
+    />
+  )
 }
 
 export function BookmarkActions({ bookmark }) {
-    const { data } = useViewerQuery()
-    return (
-        <div className="flex items-center space-x-2">
-            {getReactionButton(bookmark)}
-            {/*     <ViewCounter catID={bookmark.id} /> */}
+  const { data } = useViewerQuery()
+  return (
+    <div className="flex items-center space-x-2">
+      {getReactionButton(bookmark)}
+      {/*     <ViewCounter catID={bookmark.id} /> */}
 
-            {data?.viewer?.isAdmin && (
-                <EditBookmarkDialog
-                    bookmark={bookmark}
-                    trigger={
-                        <Button data-cy="open-edit-bookmark-dialog">
-                            Edit
-                        </Button>
-                    }
-                />
-            )}
-        </div>
-    )
+      {data?.viewer?.isAdmin && (
+        <EditBookmarkDialog
+          bookmark={bookmark}
+          trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>}
+        />
+      )}
+    </div>
+  )
 }

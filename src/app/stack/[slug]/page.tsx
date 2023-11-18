@@ -13,41 +13,41 @@ import { CommentType, GetStackQuery } from '~/graphql/typeSlut'
 export const dynamic = 'force-static'
 
 export default async function BookmarkPage({ params: { slug } }) {
-    const client = getClient()
-    const { data, loading, error } = await client.query<GetStackQuery>({
-        query: GET_STACK,
-        variables: { slug },
-    })
+  const client = getClient()
+  const { data, loading, error } = await client.query<GetStackQuery>({
+    query: GET_STACK,
+    variables: { slug },
+  })
 
-    await Promise.allSettled([
-        client.query({ query: GET_VIEWER }),
+  await Promise.allSettled([
+    client.query({ query: GET_VIEWER }),
 
-        client.query({
-            query: GET_STACKS,
-        }),
+    client.query({
+      query: GET_STACKS,
+    }),
 
-        data?.stack &&
-            client.query({
-                query: GET_COMMENTS,
-                variables: { refId: data.stack.id, type: CommentType.Stack },
-            }),
-    ])
+    data?.stack &&
+      client.query({
+        query: GET_COMMENTS,
+        variables: { refId: data.stack.id, type: CommentType.Stack },
+      }),
+  ])
 
-    if (loading) {
-        return <Detail.Loading />
-    }
+  if (loading) {
+    return <Detail.Loading />
+  }
 
-    if (!data?.stack || error) {
-        return <Detail.Null />
-    }
+  if (!data?.stack || error) {
+    return <Detail.Null />
+  }
 
-    const { stack } = data
+  const { stack } = data
 
-    return (
-        <ListDetailView
-            list={<StackList />}
-            hasDetail
-            detail={<StackDetail stack={stack} />}
-        />
-    )
+  return (
+    <ListDetailView
+      list={<StackList />}
+      hasDetail
+      detail={<StackDetail stack={stack} />}
+    />
+  )
 }

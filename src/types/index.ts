@@ -9,20 +9,20 @@ declare global {
 }
  */
 export type Comment = {
+  id: string
+  text: string
+  slug: string
+  createdAt: Date
+  parentId: string | null
+  author: {
     id: string
-    text: string
-    slug: string
-    createdAt: Date
-    parentId: string | null
-    author: {
-        id: string
-        name: string
-        image: string
-    }
-    likeCount: number
-    likedByMe: boolean
-    commentId?: string
-    highlight?: boolean
-    isDeleted?: boolean
-    replies?: Comment[]
+    name: string
+    image: string
+  }
+  likeCount: number
+  likedByMe: boolean
+  commentId?: string
+  highlight?: boolean
+  isDeleted?: boolean
+  replies?: Comment[]
 }

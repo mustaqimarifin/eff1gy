@@ -11,45 +11,45 @@ import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { getBookmark } from '~/graphql/resolvers/queries/bookmarks'
 import { getTags } from '~/graphql/resolvers/queries/tags'
 import {
-    CommentType,
-    GetBookmarkDocument,
-    GetBookmarkQuery,
-    GetBookmarksDocument,
-    GetCommentsDocument,
-    GetTagsDocument,
-    GetViewerWithSettingsDocument,
+  CommentType,
+  GetBookmarkDocument,
+  GetBookmarkQuery,
+  GetBookmarksDocument,
+  GetCommentsDocument,
+  GetTagsDocument,
+  GetViewerWithSettingsDocument,
 } from '~/graphql/typeSlut'
 
 export const dynamic = 'force-static'
 
 export default async function BookmarkPage({ params: { id } }) {
-    const client = getClient()
+  const client = getClient()
 
-    await Promise.all([
-        client.query({ query: GetViewerWithSettingsDocument }),
-        client.query({ query: GetBookmarksDocument }),
-        client.query({ query: GetTagsDocument }),
+  await Promise.all([
+    client.query({ query: GetViewerWithSettingsDocument }),
+    client.query({ query: GetBookmarksDocument }),
+    client.query({ query: GetTagsDocument }),
 
-        client.query<GetBookmarkQuery>({
-            query: GetBookmarkDocument,
-            variables: { id },
-        }),
+    client.query<GetBookmarkQuery>({
+      query: GetBookmarkDocument,
+      variables: { id },
+    }),
 
-        client.query({
-            query: GetCommentsDocument,
-            variables: { refId: id, type: CommentType.Bookmark },
-        }),
-    ])
+    client.query({
+      query: GetCommentsDocument,
+      variables: { refId: id, type: CommentType.Bookmark },
+    }),
+  ])
 
-    return (
-        <ListDetailView
-            list={<BookmarksList />}
-            hasDetail
-            detail={
-                <React.Suspense fallback={<>Loading...</>}>
-                    <BookmarkDetail id={id} />
-                </React.Suspense>
-            }
-        />
-    )
+  return (
+    <ListDetailView
+      list={<BookmarksList />}
+      hasDetail
+      detail={
+        <React.Suspense fallback={<>Loading...</>}>
+          <BookmarkDetail id={id} />
+        </React.Suspense>
+      }
+    />
+  )
 }

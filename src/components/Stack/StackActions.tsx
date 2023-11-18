@@ -4,9 +4,9 @@ import * as React from 'react'
 import Button from '~/components/Button'
 import { GET_STACK } from '~/graphql/queries/stack'
 import {
-    ReactionType,
-    useToggleReactionMutation,
-    useViewerQuery,
+  ReactionType,
+  useToggleReactionMutation,
+  useViewerQuery,
 } from '~/graphql/typeSlut'
 
 import { ReactionButton } from '../Button/ReactionButton'
@@ -14,67 +14,67 @@ import { PageViews } from '../Stats/ViewCounter'
 import { EditStackDialog } from './EditStackDialog'
 
 function getEditButton(stack) {
-    const { data } = useViewerQuery()
-    if (data?.viewer?.isAdmin) {
-        return <EditStackDialog stack={stack} trigger={<Button>Edit</Button>} />
-    }
-    return null
+  const { data } = useViewerQuery()
+  if (data?.viewer?.isAdmin) {
+    return <EditStackDialog stack={stack} trigger={<Button>Edit</Button>} />
+  }
+  return null
 }
 
 function getReactionButton(stack) {
-    const [toggleReaction, { loading }] = useToggleReactionMutation()
-    function handleClick() {
-        if (loading) return
+  const [toggleReaction, { loading }] = useToggleReactionMutation()
+  function handleClick() {
+    if (loading) return
 
-        toggleReaction({
-            variables: {
-                refId: stack.id,
-                type: ReactionType.Stack,
+    toggleReaction({
+      variables: {
+        refId: stack.id,
+        type: ReactionType.Stack,
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        toggleReaction: {
+          __typename: 'Stack',
+          ...stack,
+          reactionCount: stack.viewerHasReacted
+            ? stack.reactionCount - 1
+            : stack.reactionCount + 1,
+          viewerHasReacted: !stack.viewerHasReacted,
+        },
+      },
+      update(cache, { data: { toggleReaction } }) {
+        cache.writeQuery({
+          query: GET_STACK,
+          variables: { slug: stack.slug },
+          data: {
+            stack: {
+              ...stack,
+              ...toggleReaction,
             },
-            optimisticResponse: {
-                __typename: 'Mutation',
-                toggleReaction: {
-                    __typename: 'Stack',
-                    ...stack,
-                    reactionCount: stack.viewerHasReacted
-                        ? stack.reactionCount - 1
-                        : stack.reactionCount + 1,
-                    viewerHasReacted: !stack.viewerHasReacted,
-                },
-            },
-            update(cache, { data: { toggleReaction } }) {
-                cache.writeQuery({
-                    query: GET_STACK,
-                    variables: { slug: stack.slug },
-                    data: {
-                        stack: {
-                            ...stack,
-                            ...toggleReaction,
-                        },
-                    },
-                })
-            },
+          },
         })
-    }
+      },
+    })
+  }
 
-    return (
-        <ReactionButton
-            id={stack.id}
-            loading={loading}
-            count={stack.reactionCount}
-            hasReacted={stack.viewerHasReacted}
-            onClick={handleClick}
-        />
-    )
+  return (
+    <ReactionButton
+      id={stack.id}
+      loading={loading}
+      count={stack.reactionCount}
+      hasReacted={stack.viewerHasReacted}
+      onClick={handleClick}
+    />
+  )
 }
 
 export function StackActions({ stack }) {
-    return (
-        <div className="flex items-center space-x-2">
-            <PageViews id={stack.id} trackView />
+  return (
+    <div className="flex items-center space-x-2">
+      <PageViews id={stack.id} trackView />
 
-            {getReactionButton(stack)}
-            {getEditButton(stack)}
-        </div>
-    )
+      {getReactionButton(stack)}
+      {getEditButton(stack)}
+    </div>
+  )
 }

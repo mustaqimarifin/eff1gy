@@ -4,5 +4,5 @@ import { UserSettings } from '~/components/UserSettings'
 export const dynamic = 'force-dynamic'
 
 export default function Settings() {
-    return <UserSettings />
+  return <UserSettings />
 }

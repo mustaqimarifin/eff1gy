@@ -7,11 +7,7 @@ import { PostsList } from '~/components/Writing/PostsList'
 export const dynamic = 'force-dynamic'
 
 export default function NewPostPage() {
-    return (
-        <ListDetailView
-            list={<PostsList />}
-            hasDetail
-            detail={<PostEditor />}
-        />
-    )
+  return (
+    <ListDetailView list={<PostsList />} hasDetail detail={<PostEditor />} />
+  )
 }

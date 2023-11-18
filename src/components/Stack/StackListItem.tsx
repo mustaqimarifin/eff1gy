@@ -6,38 +6,38 @@ import { type StackListItemFragment } from '~/graphql/typeSlut'
 
 // TODO: Figure out how to get this dynamically
 interface Props {
-    stack: StackListItemFragment
-    active: boolean
+  stack: StackListItemFragment
+  active: boolean
 }
 
 export const StackListItem = React.memo<Props>(({ stack, active }) => {
-    function handleClick(e, stack) {
-        if (e.metaKey) {
-            e.preventDefault()
-            e.stopPropagation()
-            window.open(stack.url, '_blank').focus()
-        }
+  function handleClick(e, stack) {
+    if (e.metaKey) {
+      e.preventDefault()
+      e.stopPropagation()
+      window.open(stack.url, '_blank').focus()
     }
+  }
 
-    return (
-        <ListItem
-            key={stack.id}
-            href="/stack/[slug]"
-            as={`/stack/${stack.slug}`}
-            title={stack.name}
-            description={null}
-            byline={null}
-            leadingAccessory={
-                <Image
-                    src={stack.image}
-                    width={48}
-                    height={48}
-                    alt={`${stack.name} icon`}
-                    className="rounded-xl "
-                />
-            }
-            active={active}
-            onClick={(e) => handleClick(e, stack)}
+  return (
+    <ListItem
+      key={stack.id}
+      href="/stack/[slug]"
+      as={`/stack/${stack.slug}`}
+      title={stack.name}
+      description={null}
+      byline={null}
+      leadingAccessory={
+        <Image
+          src={stack.image}
+          width={48}
+          height={48}
+          alt={`${stack.name} icon`}
+          className="rounded-xl "
         />
-    )
+      }
+      active={active}
+      onClick={(e) => handleClick(e, stack)}
+    />
+  )
 })

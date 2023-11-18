@@ -7,13 +7,13 @@ import { DialogComponent } from '~/components/Dialog'
 import { AddStackForm } from './AddStackForm'
 
 export function AddStackDialog({ trigger }) {
-    return (
-        <DialogComponent
-            trigger={trigger}
-            title={'New stack'}
-            modalContent={({ closeModal }) => (
-                <AddStackForm closeModal={closeModal} />
-            )}
-        />
-    )
+  return (
+    <DialogComponent
+      trigger={trigger}
+      title={'New stack'}
+      modalContent={({ closeModal }) => (
+        <AddStackForm closeModal={closeModal} />
+      )}
+    />
+  )
 }

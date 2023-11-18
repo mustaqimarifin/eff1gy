@@ -8,23 +8,19 @@ import { GET_VIEWER } from '~/graphql/queries/viewer'
 //export const dynamic = 'force-dynamic'
 
 export const metadata = {
-    title: 'Bookmarks',
+  title: 'Bookmarks',
 }
 
 export default async function BookIndex() {
-    const client = getClient()
-    await Promise.all([
-        client.query({ query: GET_VIEWER }),
-        client.query({ query: GET_BOOKMARKS }),
-        client.query({ query: GET_TAGS }),
-    ])
-    return (
-        <ListDetailView
-            list={<BookmarksList />}
-            hasDetail={false}
-            detail={null}
-        />
-    )
+  const client = getClient()
+  await Promise.all([
+    client.query({ query: GET_VIEWER }),
+    client.query({ query: GET_BOOKMARKS }),
+    client.query({ query: GET_TAGS }),
+  ])
+  return (
+    <ListDetailView list={<BookmarksList />} hasDetail={false} detail={null} />
+  )
 }
 /* export default function BookIndex() {
     return (

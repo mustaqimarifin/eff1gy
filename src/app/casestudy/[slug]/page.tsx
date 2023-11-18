@@ -1,46 +1,39 @@
-import * as React from 'react'
-
+import Mdx from '~/app/mdxrsc'
 import { AppDissectionDetail } from '~/components/AppDissection/AppDissectionDetail'
 import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
 import { ListDetailView } from '~/components/Layouts'
-import { Mdx } from '~/components/MDX'
-import { mdxToCode } from '~/components/MDX/Mdx'
 import { CaseStudy } from '~/components/Posts/BlogDetail'
-import { designIndexQuery } from '~/lib/sanity/queries'
-import { getCaseBySlug } from '~/lib/sanity/sanity.client'
-import { getClient } from '~/lib/sanity/server'
+import { getAllCaseStudy, getCaseBySlug } from '~/lib/sanity/sanity.client'
 
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-    const cases: CaseStudy[] = await getClient().fetch(designIndexQuery)
+  const cases: CaseStudy[] = await getAllCaseStudy()
 
-    return cases.map((post) => ({
-        slug: post.slug,
-    }))
+  return cases.map((post) => ({
+    slug: post.slug,
+  }))
 }
 
 export default async function CaseStudy({ params: { slug } }) {
-    const cases: CaseStudy[] = await getClient().fetch(designIndexQuery)
+  const cases: CaseStudy[] = await getAllCaseStudy()
 
-    const casestudy: CaseStudy = await getCaseBySlug(slug)
+  const casestudy: CaseStudy = await getCaseBySlug(slug)
 
-    if (!casestudy) {
-        return { notFound: true }
-    }
-    const { mdx } = await mdxToCode(casestudy.content)
+  if (!casestudy) {
+    return { notFound: true }
+  }
+  //const { mdx } = await mdxToCode(casestudy.content)
 
-    return (
-        <ListDetailView
-            list={<AppDissectionList cases={cases} />}
-            hasDetail
-            detail={
-                <AppDissectionDetail casestudy={casestudy}>
-                    <React.Suspense>
-                        <Mdx code={mdx} />{' '}
-                    </React.Suspense>
-                </AppDissectionDetail>
-            }
-        />
-    )
+  return (
+    <ListDetailView
+      list={<AppDissectionList cases={cases} />}
+      hasDetail
+      detail={
+        <AppDissectionDetail casestudy={casestudy}>
+          <Mdx source={casestudy.content} />{' '}
+        </AppDissectionDetail>
+      }
+    />
+  )
 }

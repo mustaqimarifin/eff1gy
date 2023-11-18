@@ -1,46 +1,37 @@
-import * as React from 'react'
-
+import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
-import { Mdx } from '~/components/MDX'
-import { mdxToCode } from '~/components/MDX/Mdx'
-import { BlogDetail, CaseStudy, Post } from '~/components/Posts/BlogDetail'
+import { BlogDetail, Post } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
-import { indexQuery } from '~/lib/sanity/queries'
-import { getPostBySlug } from '~/lib/sanity/sanity.client'
-import { sanityClient } from '~/lib/sanity/server'
-
-export const dynamic = 'force-static'
+import { getAllPosts, getPostBySlug } from '~/lib/sanity/sanity.client'
 
 export async function generateStaticParams() {
-    const posts = await sanityClient.fetch(indexQuery)
+  const posts: Post[] = await getAllPosts()
 
-    return posts.map((post) => ({
-        slug: post.slug,
-    }))
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
 }
 
 export default async function Blog({ params: { slug } }) {
-    const posts = await sanityClient.fetch(indexQuery)
+  const posts: Post[] = await getAllPosts()
 
-    const post: Post = await getPostBySlug(slug)
+  const post: Post = await getPostBySlug(slug)
 
-    if (!post) {
-        return { notFound: true }
-    }
+  if (!post) {
+    return { notFound: true }
+  }
 
-    const { mdx } = await mdxToCode(post.content)
+  //const { mdx } = await mdxToCode(post.content)
 
-    return (
-        <ListDetailView
-            list={<PostsList posts={posts} />}
-            hasDetail
-            detail={
-                <BlogDetail post={post} slug={slug}>
-                    <React.Suspense>
-                        <Mdx code={mdx} />
-                    </React.Suspense>
-                </BlogDetail>
-            }
-        />
-    )
+  return (
+    <ListDetailView
+      list={<PostsList posts={posts} />}
+      hasDetail
+      detail={
+        <BlogDetail post={post} slug={slug}>
+          <Mdx source={post?.content} />
+        </BlogDetail>
+      }
+    />
+  )
 }

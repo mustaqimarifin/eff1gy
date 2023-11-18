@@ -1,33 +1,34 @@
 {
-    "compilerOptions": {
-        "target": "es2022",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "strict": false,
-        "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "jsx": "preserve",
-        "isolatedModules": true,
-        "baseUrl": ".",
-        "paths": { "~/*": ["./src/*"] },
-        "incremental": true,
-        "plugins": [{ "name": "next" }],
-        "strictNullChecks": false
-    },
-    "exclude": ["node_modules"],
-    "include": [
-        "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts",
-        "prettier.config.mjs",
-        "next.config.mjs",
-        "prisma/seed.mts"
-    ]
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": { "~/*": ["./src/*"] },
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "strictNullChecks": false
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "prettier.config.mjs",
+    "next.config.mjs",
+    "prisma/seed.mts"
+  ]
 }

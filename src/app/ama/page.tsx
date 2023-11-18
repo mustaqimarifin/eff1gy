@@ -10,27 +10,23 @@ import { QuestionStatus } from '~/graphql/typeSlut'
 //export const dynamic = 'force-dynamic'
 
 export const metadata = {
-    title: 'AMA',
+  title: 'AMA',
 }
 
 export default async function QuestionIndex() {
-    const client = getClient()
-    await Promise.all([
-        client.query({ query: GET_VIEWER }),
+  const client = getClient()
+  await Promise.all([
+    client.query({ query: GET_VIEWER }),
 
-        client.query({
-            query: GET_QUESTIONS,
-            variables: {
-                filter: { status: QuestionStatus.Answered },
-            },
-        }),
-    ])
+    client.query({
+      query: GET_QUESTIONS,
+      variables: {
+        filter: { status: QuestionStatus.Answered },
+      },
+    }),
+  ])
 
-    return (
-        <ListDetailView
-            list={<QuestionsList />}
-            hasDetail={false}
-            detail={null}
-        />
-    )
+  return (
+    <ListDetailView list={<QuestionsList />} hasDetail={false} detail={null} />
+  )
 }
