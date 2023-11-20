@@ -24,7 +24,7 @@ const config = {
     'no-extra-semi': 0,
     'react-hooks/rules-of-hooks': 0,
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/consistent-type-imports': 0,
+    '@typescript-eslint/consistent-type-imports': 'error',
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
     'prettier/prettier': [

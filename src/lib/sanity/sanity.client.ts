@@ -1,6 +1,6 @@
 import { createClient } from 'next-sanity'
 
-import { CaseStudy, Post } from '~/components/Posts/BlogDetail'
+import type { CaseStudy, Post } from '~/components/Posts/BlogDetail'
 
 import { apiVersion, dataset, projectId, useCdn } from './config'
 import {

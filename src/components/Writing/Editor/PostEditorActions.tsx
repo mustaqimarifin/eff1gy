@@ -1,5 +1,5 @@
 import { Sidebar } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import * as React from 'react'
 
 import Button from '~/components/Button'
@@ -13,7 +13,7 @@ import { PostEditorAutoSave } from './PostEditorAutoSave'
 
 export function PostEditorActions() {
   const router = useRouter()
-  const params = useParams()
+  const path = usePathname()
   const context = React.useContext(PostEditorContext)
   const {
     draftState,
@@ -27,12 +27,7 @@ export function PostEditorActions() {
   const [addPost, { loading: creatingPost }] = useAddPostMutation({
     onCompleted({ addPost }) {
       nuts.success('Draft created')
-      router.push('/writing/[slug]/edit')
-      /*  return addPost({
-        variables: {
-          data: params.slug === addPost.slug,
-        },
-      }) */
+      router.push('/writing/[slug]/edit', { slug: addPost.slug })
     },
   })
 

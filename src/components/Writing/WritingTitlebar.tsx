@@ -1,16 +1,14 @@
 'use client'
 
-import { Plus, Radio } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useContext } from 'react'
 
-import Button, { GhostButton } from '~/components/Button'
+import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { useViewerQuery } from '~/graphql/typeSlut'
 
-import { DialogComponent } from '../Dialog'
 import SegmentedControl from '../SegmentedController'
 import { WritingContext } from './PostsList'
-import { WritingSubscriptionForm } from './SubscriptionForm'
 
 export function WritingTitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()
@@ -28,22 +26,6 @@ export function WritingTitlebar({ scrollContainerRef }) {
       )
     }
     return null
-  }
-
-  function getSubscribeButton() {
-    if (data?.viewer?.isAdmin) return null
-    return (
-      <DialogComponent
-        title="Newsletter"
-        trigger={
-          <Button data-cy="open-subscribe-hn-dialog" size="small">
-            <Radio size={16} />
-            <span>Subscribe</span>
-          </Button>
-        }
-        modalContent={() => <WritingSubscriptionForm />}
-      />
-    )
   }
 
   function trailingAccessory() {

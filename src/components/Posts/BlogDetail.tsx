@@ -47,9 +47,12 @@ type Props = {
   slug: string
 }
 
-const Comments = dynamic(() => import('../Comments'), {
-  ssr: false,
-})
+const Comments = dynamic(
+  () => import('../Comments/index').then((x) => x.Comments),
+  {
+    ssr: false,
+  }
+)
 export function BlogDetail({ children, post, slug }: Props) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
@@ -128,7 +131,9 @@ export function BlogDetail({ children, post, slug }: Props) {
           </div>
 
           <div className="dark:prose-dark mx-auto mt-8 w-full max-w-4xl lg:prose lg:text-lg ">
-            {children}
+            <React.Suspense fallback={<LoadingSpinner />}>
+              {children}
+            </React.Suspense>
           </div>
 
           <div className="py-6" />

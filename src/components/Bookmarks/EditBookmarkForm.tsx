@@ -7,9 +7,8 @@ import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
 import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
+import type { GetBookmarksQuery } from '~/graphql/typeSlut'
 import {
-  GetBookmarkQuery,
-  GetBookmarksQuery,
   useDeleteBookmarkMutation,
   useEditBookmarkMutation,
 } from '~/graphql/typeSlut'

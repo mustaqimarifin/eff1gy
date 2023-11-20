@@ -4,10 +4,10 @@ import useSWR from 'swr'
 
 import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
 
-import { ErrorAlert } from '../Alert'
 import AudioPlayer from '../AudioPlayer'
 import Button, { DeleteButton, RecordingButton } from '../Button'
 import { LoadingSpinner } from '../LoadingSpinner'
+import { nuts } from '../Provider/Toaster'
 
 interface Props {
   id: string
@@ -274,7 +274,7 @@ export default function AudioRecorder({
         </div>
       )}
 
-      {state.error && <ErrorAlert>{state.error}</ErrorAlert>}
+      {state.error && nuts.error(state.error)}
 
       {state.status === 'uploading' && (
         <div className="flex items-center justify-center">

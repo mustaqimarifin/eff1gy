@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
-import {
+import type {
   FieldPolicy,
   FieldReadFunction,
   TypePolicies,
@@ -168,32 +168,6 @@ export type EditStackInput = {
 export type EditUserInput = {
   email?: InputMaybe<Scalars['String']['input']>
   name?: InputMaybe<Scalars['String']['input']>
-}
-
-export type HackerNewsComment = {
-  __typename?: 'HackerNewsComment'
-  comments?: Maybe<Array<Maybe<HackerNewsComment>>>
-  comments_count?: Maybe<Scalars['String']['output']>
-  content?: Maybe<Scalars['String']['output']>
-  id?: Maybe<Scalars['ID']['output']>
-  level?: Maybe<Scalars['Int']['output']>
-  time?: Maybe<Scalars['Int']['output']>
-  time_ago?: Maybe<Scalars['String']['output']>
-  user?: Maybe<Scalars['String']['output']>
-}
-
-export type HackerNewsPost = {
-  __typename?: 'HackerNewsPost'
-  comments?: Maybe<Array<Maybe<HackerNewsComment>>>
-  comments_count?: Maybe<Scalars['String']['output']>
-  content?: Maybe<Scalars['String']['output']>
-  domain?: Maybe<Scalars['String']['output']>
-  id?: Maybe<Scalars['ID']['output']>
-  time?: Maybe<Scalars['Int']['output']>
-  time_ago?: Maybe<Scalars['String']['output']>
-  title?: Maybe<Scalars['String']['output']>
-  url?: Maybe<Scalars['String']['output']>
-  user?: Maybe<Scalars['String']['output']>
 }
 
 export type Hit = {
@@ -365,8 +339,6 @@ export type Query = {
   bookmarks: BookmarksConnection
   comment?: Maybe<Comment>
   comments: Array<Maybe<Comment>>
-  hackerNewsPost?: Maybe<HackerNewsPost>
-  hackerNewsPosts: Array<Maybe<HackerNewsPost>>
   hit?: Maybe<Hit>
   hits: Array<Maybe<Hit>>
   post?: Maybe<Post>
@@ -401,10 +373,6 @@ export type QueryCommentArgs = {
 export type QueryCommentsArgs = {
   refId: Scalars['ID']['input']
   type: CommentType
-}
-
-export type QueryHackerNewsPostArgs = {
-  id: Scalars['ID']['input']
 }
 
 export type QueryHitArgs = {
@@ -540,8 +508,10 @@ export type User = {
   image?: Maybe<Scalars['String']['output']>
   isAdmin?: Maybe<Scalars['Boolean']['output']>
   isViewer?: Maybe<Scalars['Boolean']['output']>
-  name: Scalars['String']['output']
+  name?: Maybe<Scalars['String']['output']>
   pendingEmail?: Maybe<Scalars['String']['output']>
+  role?: Maybe<UserRole>
+  username?: Maybe<Scalars['String']['output']>
 }
 
 export enum UserRole {
@@ -586,8 +556,10 @@ export type CommentInfoFragment = {
   viewerCanDelete?: boolean | null
   author: {
     id: string
-    name: string
+    username?: string | null
     image?: string | null
+    name?: string | null
+    role?: UserRole | null
     isViewer?: boolean | null
     isAdmin?: boolean | null
   } & { __typename: 'User' }
@@ -595,8 +567,10 @@ export type CommentInfoFragment = {
 
 export type UserInfoFragment = {
   id: string
-  name: string
+  username?: string | null
   image?: string | null
+  name?: string | null
+  role?: UserRole | null
   isViewer?: boolean | null
   isAdmin?: boolean | null
 } & { __typename: 'User' }
@@ -638,8 +612,10 @@ export type QuestionDetailFragment = {
   author?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -655,8 +631,10 @@ export type QuestionCoreFragment = {
   author?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -678,8 +656,10 @@ export type StackDetailFragment = {
   usedBy: Array<
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -754,80 +734,6 @@ export type BookmarkListItemFragment = {
   faviconUrl?: string | null
 } & { __typename: 'Bookmark' }
 
-export type HackerNewsListItemInfoFragment = {
-  id?: string | null
-  title?: string | null
-  domain?: string | null
-  url?: string | null
-} & { __typename?: 'HackerNewsPost' }
-
-export type HackerNewsPostInfoFragment = {
-  user?: string | null
-  time?: number | null
-  time_ago?: string | null
-  comments_count?: string | null
-  url?: string | null
-  domain?: string | null
-  content?: string | null
-  id?: string | null
-  title?: string | null
-  comments?: Array<
-    | ({
-        id?: string | null
-        user?: string | null
-        comments_count?: string | null
-        time_ago?: string | null
-        level?: number | null
-        content?: string | null
-        comments?: Array<
-          | ({
-              id?: string | null
-              user?: string | null
-              comments_count?: string | null
-              time_ago?: string | null
-              level?: number | null
-              content?: string | null
-              comments?: Array<
-                | ({
-                    id?: string | null
-                    user?: string | null
-                    comments_count?: string | null
-                    time_ago?: string | null
-                    level?: number | null
-                    content?: string | null
-                    comments?: Array<
-                      | ({
-                          id?: string | null
-                          user?: string | null
-                          comments_count?: string | null
-                          time_ago?: string | null
-                          level?: number | null
-                          content?: string | null
-                        } & {
-                          __typename?: 'HackerNewsComment'
-                        })
-                      | null
-                    > | null
-                  } & { __typename?: 'HackerNewsComment' })
-                | null
-              > | null
-            } & { __typename?: 'HackerNewsComment' })
-          | null
-        > | null
-      } & { __typename?: 'HackerNewsComment' })
-    | null
-  > | null
-} & { __typename?: 'HackerNewsPost' }
-
-export type HackerNewsCommentInfoFragment = {
-  id?: string | null
-  user?: string | null
-  comments_count?: string | null
-  time_ago?: string | null
-  level?: number | null
-  content?: string | null
-} & { __typename?: 'HackerNewsComment' }
-
 export type PostListItemFragment = {
   id: string
   publishedAt?: any | null
@@ -857,8 +763,10 @@ export type QuestionsConnectionFragment = {
               author?:
                 | ({
                     id: string
-                    name: string
+                    username?: string | null
                     image?: string | null
+                    name?: string | null
+                    role?: UserRole | null
                     isViewer?: boolean | null
                     isAdmin?: boolean | null
                   } & { __typename: 'User' })
@@ -879,8 +787,10 @@ export type QuestionListItemFragment = {
   author?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -995,8 +905,10 @@ export type AddCommentMutation = {
         viewerCanDelete?: boolean | null
         author: {
           id: string
-          name: string
+          username?: string | null
           image?: string | null
+          name?: string | null
+          role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
         } & { __typename: 'User' }
@@ -1021,8 +933,10 @@ export type EditCommentMutation = {
         viewerCanDelete?: boolean | null
         author: {
           id: string
-          name: string
+          username?: string | null
           image?: string | null
+          name?: string | null
+          role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
         } & { __typename: 'User' }
@@ -1112,8 +1026,10 @@ export type EditQuestionMutation = {
         author?:
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1152,8 +1068,10 @@ export type AddQuestionMutation = {
         author?:
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1205,8 +1123,10 @@ export type EditStackMutation = {
         usedBy: Array<
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1246,8 +1166,10 @@ export type AddStackMutation = {
         usedBy: Array<
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1273,8 +1195,10 @@ export type ToggleStackUserMutation = {
         usedBy: Array<
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1298,8 +1222,10 @@ export type EditUserMutation = {
   editUser?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -1409,96 +1335,16 @@ export type GetCommentsQuery = {
         viewerCanDelete?: boolean | null
         author: {
           id: string
-          name: string
+          username?: string | null
           image?: string | null
+          name?: string | null
+          role?: UserRole | null
           isViewer?: boolean | null
           isAdmin?: boolean | null
         } & { __typename: 'User' }
       } & { __typename: 'Comment' })
     | null
   >
-} & { __typename?: 'Query' }
-
-export type GetHackerNewsPostsQueryVariables = Exact<{ [key: string]: never }>
-
-export type GetHackerNewsPostsQuery = {
-  hackerNewsPosts: Array<
-    | ({
-        id?: string | null
-        title?: string | null
-        domain?: string | null
-        url?: string | null
-      } & { __typename?: 'HackerNewsPost' })
-    | null
-  >
-} & { __typename?: 'Query' }
-
-export type GetHackerNewsPostQueryVariables = Exact<{
-  id: Scalars['ID']['input']
-}>
-
-export type GetHackerNewsPostQuery = {
-  hackerNewsPost?:
-    | ({
-        id?: string | null
-        title?: string | null
-        domain?: string | null
-        url?: string | null
-        user?: string | null
-        time?: number | null
-        time_ago?: string | null
-        comments_count?: string | null
-        content?: string | null
-        comments?: Array<
-          | ({
-              id?: string | null
-              user?: string | null
-              comments_count?: string | null
-              time_ago?: string | null
-              level?: number | null
-              content?: string | null
-              comments?: Array<
-                | ({
-                    id?: string | null
-                    user?: string | null
-                    comments_count?: string | null
-                    time_ago?: string | null
-                    level?: number | null
-                    content?: string | null
-                    comments?: Array<
-                      | ({
-                          id?: string | null
-                          user?: string | null
-                          comments_count?: string | null
-                          time_ago?: string | null
-                          level?: number | null
-                          content?: string | null
-                          comments?: Array<
-                            | ({
-                                id?: string | null
-                                user?: string | null
-                                comments_count?: string | null
-                                time_ago?: string | null
-                                level?: number | null
-                                content?: string | null
-                              } & {
-                                __typename?: 'HackerNewsComment'
-                              })
-                            | null
-                          > | null
-                        } & {
-                          __typename?: 'HackerNewsComment'
-                        })
-                      | null
-                    > | null
-                  } & { __typename?: 'HackerNewsComment' })
-                | null
-              > | null
-            } & { __typename?: 'HackerNewsComment' })
-          | null
-        > | null
-      } & { __typename?: 'HackerNewsPost' })
-    | null
 } & { __typename?: 'Query' }
 
 export type GetPostsQueryVariables = Exact<{
@@ -1567,8 +1413,10 @@ export type GetQuestionsQuery = {
                 author?:
                   | ({
                       id: string
-                      name: string
+                      username?: string | null
                       image?: string | null
+                      name?: string | null
+                      role?: UserRole | null
                       isViewer?: boolean | null
                       isAdmin?: boolean | null
                     } & { __typename: 'User' })
@@ -1603,8 +1451,10 @@ export type GetQuestionQuery = {
         author?:
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1666,8 +1516,10 @@ export type GetStackQuery = {
         usedBy: Array<
           | ({
               id: string
-              name: string
+              username?: string | null
               image?: string | null
+              name?: string | null
+              role?: UserRole | null
               isViewer?: boolean | null
               isAdmin?: boolean | null
             } & { __typename: 'User' })
@@ -1692,8 +1544,10 @@ export type GetUserQuery = {
   user?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -1706,8 +1560,10 @@ export type ViewerQuery = {
   viewer?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
       } & { __typename: 'User' })
@@ -1722,8 +1578,10 @@ export type GetViewerWithSettingsQuery = {
   viewer?:
     | ({
         id: string
-        name: string
+        username?: string | null
         image?: string | null
+        name?: string | null
+        role?: UserRole | null
         isViewer?: boolean | null
         isAdmin?: boolean | null
         email?: string | null
@@ -1804,8 +1662,10 @@ export const UserInfoFragmentDoc = gql`
   fragment UserInfo on User {
     __typename
     id
-    name
+    username
     image
+    name
+    role
     isViewer
     isAdmin
   }
@@ -1825,50 +1685,6 @@ export const CommentInfoFragmentDoc = gql`
     }
   }
   ${UserInfoFragmentDoc}
-`
-export const HackerNewsListItemInfoFragmentDoc = gql`
-  fragment HackerNewsListItemInfo on HackerNewsPost {
-    id
-    title
-    domain
-    url
-  }
-`
-export const HackerNewsCommentInfoFragmentDoc = gql`
-  fragment HackerNewsCommentInfo on HackerNewsComment {
-    id
-    user
-    comments_count
-    time_ago
-    level
-    content
-  }
-`
-export const HackerNewsPostInfoFragmentDoc = gql`
-  fragment HackerNewsPostInfo on HackerNewsPost {
-    ...HackerNewsListItemInfo
-    user
-    time
-    time_ago
-    comments_count
-    url
-    domain
-    content
-    comments {
-      ...HackerNewsCommentInfo
-      comments {
-        ...HackerNewsCommentInfo
-        comments {
-          ...HackerNewsCommentInfo
-          comments {
-            ...HackerNewsCommentInfo
-          }
-        }
-      }
-    }
-  }
-  ${HackerNewsListItemInfoFragmentDoc}
-  ${HackerNewsCommentInfoFragmentDoc}
 `
 export const PostCoreFragmentDoc = gql`
   fragment PostCore on Post {
@@ -3332,153 +3148,6 @@ export type GetCommentsQueryResult = Apollo.QueryResult<
   GetCommentsQuery,
   GetCommentsQueryVariables
 >
-export const GetHackerNewsPostsDocument = gql`
-  query getHackerNewsPosts {
-    hackerNewsPosts {
-      ...HackerNewsListItemInfo
-    }
-  }
-  ${HackerNewsListItemInfoFragmentDoc}
-`
-
-/**
- * __useGetHackerNewsPostsQuery__
- *
- * To run a query within a React component, call `useGetHackerNewsPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetHackerNewsPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetHackerNewsPostsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetHackerNewsPostsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetHackerNewsPostsQuery,
-    GetHackerNewsPostsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<
-    GetHackerNewsPostsQuery,
-    GetHackerNewsPostsQueryVariables
-  >(GetHackerNewsPostsDocument, options)
-}
-export function useGetHackerNewsPostsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetHackerNewsPostsQuery,
-    GetHackerNewsPostsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<
-    GetHackerNewsPostsQuery,
-    GetHackerNewsPostsQueryVariables
-  >(GetHackerNewsPostsDocument, options)
-}
-export function useGetHackerNewsPostsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetHackerNewsPostsQuery,
-    GetHackerNewsPostsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSuspenseQuery<
-    GetHackerNewsPostsQuery,
-    GetHackerNewsPostsQueryVariables
-  >(GetHackerNewsPostsDocument, options)
-}
-export type GetHackerNewsPostsQueryHookResult = ReturnType<
-  typeof useGetHackerNewsPostsQuery
->
-export type GetHackerNewsPostsLazyQueryHookResult = ReturnType<
-  typeof useGetHackerNewsPostsLazyQuery
->
-export type GetHackerNewsPostsSuspenseQueryHookResult = ReturnType<
-  typeof useGetHackerNewsPostsSuspenseQuery
->
-export type GetHackerNewsPostsQueryResult = Apollo.QueryResult<
-  GetHackerNewsPostsQuery,
-  GetHackerNewsPostsQueryVariables
->
-export const GetHackerNewsPostDocument = gql`
-  query getHackerNewsPost($id: ID!) {
-    hackerNewsPost(id: $id) {
-      ...HackerNewsPostInfo
-    }
-  }
-  ${HackerNewsPostInfoFragmentDoc}
-`
-
-/**
- * __useGetHackerNewsPostQuery__
- *
- * To run a query within a React component, call `useGetHackerNewsPostQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetHackerNewsPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetHackerNewsPostQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetHackerNewsPostQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetHackerNewsPostQuery,
-    GetHackerNewsPostQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<
-    GetHackerNewsPostQuery,
-    GetHackerNewsPostQueryVariables
-  >(GetHackerNewsPostDocument, options)
-}
-export function useGetHackerNewsPostLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetHackerNewsPostQuery,
-    GetHackerNewsPostQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<
-    GetHackerNewsPostQuery,
-    GetHackerNewsPostQueryVariables
-  >(GetHackerNewsPostDocument, options)
-}
-export function useGetHackerNewsPostSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetHackerNewsPostQuery,
-    GetHackerNewsPostQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSuspenseQuery<
-    GetHackerNewsPostQuery,
-    GetHackerNewsPostQueryVariables
-  >(GetHackerNewsPostDocument, options)
-}
-export type GetHackerNewsPostQueryHookResult = ReturnType<
-  typeof useGetHackerNewsPostQuery
->
-export type GetHackerNewsPostLazyQueryHookResult = ReturnType<
-  typeof useGetHackerNewsPostLazyQuery
->
-export type GetHackerNewsPostSuspenseQueryHookResult = ReturnType<
-  typeof useGetHackerNewsPostSuspenseQuery
->
-export type GetHackerNewsPostQueryResult = Apollo.QueryResult<
-  GetHackerNewsPostQuery,
-  GetHackerNewsPostQueryVariables
->
 export const GetPostsDocument = gql`
   query getPosts($filter: WritingFilter) {
     posts(filter: $filter) {
@@ -4252,52 +3921,6 @@ export type CommentFieldPolicy = {
   viewerCanDelete?: FieldPolicy<any> | FieldReadFunction<any>
   viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type HackerNewsCommentKeySpecifier = (
-  | 'comments'
-  | 'comments_count'
-  | 'content'
-  | 'id'
-  | 'level'
-  | 'time'
-  | 'time_ago'
-  | 'user'
-  | HackerNewsCommentKeySpecifier
-)[]
-export type HackerNewsCommentFieldPolicy = {
-  comments?: FieldPolicy<any> | FieldReadFunction<any>
-  comments_count?: FieldPolicy<any> | FieldReadFunction<any>
-  content?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  level?: FieldPolicy<any> | FieldReadFunction<any>
-  time?: FieldPolicy<any> | FieldReadFunction<any>
-  time_ago?: FieldPolicy<any> | FieldReadFunction<any>
-  user?: FieldPolicy<any> | FieldReadFunction<any>
-}
-export type HackerNewsPostKeySpecifier = (
-  | 'comments'
-  | 'comments_count'
-  | 'content'
-  | 'domain'
-  | 'id'
-  | 'time'
-  | 'time_ago'
-  | 'title'
-  | 'url'
-  | 'user'
-  | HackerNewsPostKeySpecifier
-)[]
-export type HackerNewsPostFieldPolicy = {
-  comments?: FieldPolicy<any> | FieldReadFunction<any>
-  comments_count?: FieldPolicy<any> | FieldReadFunction<any>
-  content?: FieldPolicy<any> | FieldReadFunction<any>
-  domain?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  time?: FieldPolicy<any> | FieldReadFunction<any>
-  time_ago?: FieldPolicy<any> | FieldReadFunction<any>
-  title?: FieldPolicy<any> | FieldReadFunction<any>
-  url?: FieldPolicy<any> | FieldReadFunction<any>
-  user?: FieldPolicy<any> | FieldReadFunction<any>
-}
 export type HitKeySpecifier = (
   | 'catID'
   | 'createdAt'
@@ -4411,8 +4034,6 @@ export type QueryKeySpecifier = (
   | 'bookmarks'
   | 'comment'
   | 'comments'
-  | 'hackerNewsPost'
-  | 'hackerNewsPosts'
   | 'hit'
   | 'hits'
   | 'post'
@@ -4433,8 +4054,6 @@ export type QueryFieldPolicy = {
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>
   comment?: FieldPolicy<any> | FieldReadFunction<any>
   comments?: FieldPolicy<any> | FieldReadFunction<any>
-  hackerNewsPost?: FieldPolicy<any> | FieldReadFunction<any>
-  hackerNewsPosts?: FieldPolicy<any> | FieldReadFunction<any>
   hit?: FieldPolicy<any> | FieldReadFunction<any>
   hits?: FieldPolicy<any> | FieldReadFunction<any>
   post?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4564,6 +4183,8 @@ export type UserKeySpecifier = (
   | 'isViewer'
   | 'name'
   | 'pendingEmail'
+  | 'role'
+  | 'username'
   | UserKeySpecifier
 )[]
 export type UserFieldPolicy = {
@@ -4575,6 +4196,8 @@ export type UserFieldPolicy = {
   isViewer?: FieldPolicy<any> | FieldReadFunction<any>
   name?: FieldPolicy<any> | FieldReadFunction<any>
   pendingEmail?: FieldPolicy<any> | FieldReadFunction<any>
+  role?: FieldPolicy<any> | FieldReadFunction<any>
+  username?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StrictTypedTypePolicies = {
   Blog?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
@@ -4608,20 +4231,6 @@ export type StrictTypedTypePolicies = {
       | CommentKeySpecifier
       | (() => undefined | CommentKeySpecifier)
     fields?: CommentFieldPolicy
-  }
-  HackerNewsComment?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | HackerNewsCommentKeySpecifier
-      | (() => undefined | HackerNewsCommentKeySpecifier)
-    fields?: HackerNewsCommentFieldPolicy
-  }
-  HackerNewsPost?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?:
-      | false
-      | HackerNewsPostKeySpecifier
-      | (() => undefined | HackerNewsPostKeySpecifier)
-    fields?: HackerNewsPostFieldPolicy
   }
   Hit?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
     keyFields?: false | HitKeySpecifier | (() => undefined | HitKeySpecifier)
@@ -4711,8 +4320,6 @@ export const ListAllOperations = {
     getBookmarks: 'getBookmarks',
     getBookmark: 'getBookmark',
     getComments: 'getComments',
-    getHackerNewsPosts: 'getHackerNewsPosts',
-    getHackerNewsPost: 'getHackerNewsPost',
     getPosts: 'getPosts',
     getPost: 'getPost',
     getQuestions: 'getQuestions',
@@ -4754,9 +4361,6 @@ export const ListAllOperations = {
     BookmarkDetail: 'BookmarkDetail',
     BookmarksConnection: 'BookmarksConnection',
     CommentInfo: 'CommentInfo',
-    HackerNewsListItemInfo: 'HackerNewsListItemInfo',
-    HackerNewsCommentInfo: 'HackerNewsCommentInfo',
-    HackerNewsPostInfo: 'HackerNewsPostInfo',
     PostCore: 'PostCore',
     PostListItem: 'PostListItem',
     PostDetail: 'PostDetail',

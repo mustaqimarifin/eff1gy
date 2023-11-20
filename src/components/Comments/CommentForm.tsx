@@ -1,14 +1,10 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
-import {
-  CommentType,
-  GetCommentsQuery,
-  useAddCommentMutation,
-  useViewerQuery,
-} from '~/graphql/typeSlut'
+import type { CommentType, GetCommentsQuery } from '~/graphql/typeSlut'
+import { useAddCommentMutation, useViewerQuery } from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks'
 import { genId } from '~/lib/nanoid'
 import { timestampToCleanTime } from '~/lib/transformers'
@@ -16,22 +12,15 @@ import { timestampToCleanTime } from '~/lib/transformers'
 import { nuts } from '../Provider/Toaster'
 
 interface Props {
-  refId?: string
-  type?: CommentType
-  openModal?: () => void
-  onSubmit?: () => void
-  autoFocus?: boolean
-  parentId?: string
-  placeholder?: string
-  submitLabel?: string
-  handleResetCallback?: () => void
-  hideEarlyCallback?: () => void
+  refId: string
+  type: CommentType
+  openModal: () => void
 }
 
-export function CommentForm({ refId, type, openModal, parentId }: Props) {
+export function CommentForm({ refId, type, openModal }: Props) {
   const { data } = useViewerQuery()
-  const [text, setText] = React.useState('')
-  const [error, setError] = React.useState(null)
+  const [text, setText] = useState('')
+  const [error, setError] = useState(null)
 
   const [handleAddComment] = useAddCommentMutation({
     optimisticResponse: {
@@ -40,7 +29,6 @@ export function CommentForm({ refId, type, openModal, parentId }: Props) {
         __typename: 'Comment',
         id: genId(),
         text,
-        parentId,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
         viewerCanDelete: false,
@@ -94,7 +82,7 @@ export function CommentForm({ refId, type, openModal, parentId }: Props) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const localText = localStorage.getItem(refId)
     if (localText) {
       setText(localText)
@@ -103,20 +91,20 @@ export function CommentForm({ refId, type, openModal, parentId }: Props) {
 
   const debouncedText = useDebounce(text, 500)
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(refId, debouncedText)
-  }, [debouncedText, refId])
+  }, [debouncedText])
 
   function handleChange(e) {
     return setText(e.target.value)
   }
 
   return (
-    <div className="filter-blur sticky bottom-0 flex flex-col border-t border-gray-150 bg-white bg-opacity-90 pb-10 dark:border-gray-800 dark:bg-gray-900 sm:pb-0">
+    <div className="sticky bottom-0 flex flex-col pb-10 bg-white border-t filter-blur border-gray-150 bg-opacity-90 dark:border-gray-800 dark:bg-gray-900 sm:pb-0">
       <form
-        className="mx-auto flex w-full max-w-3xl flex-none items-center space-x-4 px-4 py-4 md:px-6"
+        className="flex items-center flex-none w-full max-w-3xl px-4 py-4 mx-auto space-x-4 md:px-6"
         onSubmit={onSubmit}>
-        <div className="relative flex w-full flex-none">
+        <div className="relative flex flex-none w-full">
           <Textarea
             data-cy="comment-form-textarea"
             placeholder="Write a comment..."

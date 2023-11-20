@@ -1,8 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
-import Image from 'next/image'
+import Link from 'next/link'
 import { Fragment, useRef, useState } from 'react'
 
-export default function Modal() {
+import { signIn } from '~/lib/auth'
+
+import { GoogleButton } from '../Button'
+
+export default function Example() {
   const [open, setOpen] = useState(true)
 
   const cancelButtonRef = useRef(null)
@@ -25,7 +29,7 @@ export default function Modal() {
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
@@ -38,21 +42,17 @@ export default function Modal() {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <Image
-                        src={`/static/clip/brickluke.webp`}
-                        alt="bullshit"
-                      />
-                    </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900">
-                        BUSTED BITCH!
+                        Deactivate account
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          We know you were watching porn when wifey was away
+                          Are you sure you want to deactivate your account? All
+                          of your data will be permanently removed. This action
+                          cannot be undone.
                         </p>
                       </div>
                     </div>
@@ -63,7 +63,7 @@ export default function Modal() {
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                     onClick={() => setOpen(false)}>
-                    Admit Defeat
+                    Deactivate
                   </button>
                   <button
                     type="button"

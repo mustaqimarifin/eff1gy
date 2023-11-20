@@ -4,8 +4,8 @@ import * as React from 'react'
 import { Avatar } from '~/components/Avatar'
 import { Tooltip } from '~/components/Tooltip'
 import { GET_STACK } from '~/graphql/queries/stack'
+import type { GetStackQuery } from '~/graphql/typeSlut'
 import {
-  GetStackQuery,
   GetStacksQuery,
   useGetStackQuery,
   useToggleStackUserMutation,

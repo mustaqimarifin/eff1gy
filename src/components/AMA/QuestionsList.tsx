@@ -1,17 +1,12 @@
 'use client'
-
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { LayoutGroup, motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import {
-  GetQuestionsDocument,
-  GetQuestionsQuery,
-  QuestionStatus,
-  useGetQuestionsQuery,
-} from '~/graphql/typeSlut'
+import { GET_QUESTIONS } from '~/graphql/queries/questions'
+import { QuestionStatus } from '~/graphql/typeSlut'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -25,6 +20,7 @@ export const QuestionsContext = React.createContext({
 
 export function QuestionsList() {
   const path = usePathname()
+
   const [filterPending, setFilterPending] = React.useState(false)
   const [isVisible, setIsVisible] = React.useState(false)
   const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
@@ -33,14 +29,9 @@ export function QuestionsList() {
     ? QuestionStatus.Pending
     : QuestionStatus.Answered
 
-  /*    const { data, error, loading, fetchMore, refetch } = useGetQuestionsQuery({
-        variables: { filter: { status } },
-    }) */
-
-  const { error, data, fetchMore, refetch } =
-    useSuspenseQuery<GetQuestionsQuery>(GetQuestionsDocument, {
-      variables: { filter: { status } },
-    })
+  const { data, error, loading, fetchMore, refetch } = useQuery(GET_QUESTIONS, {
+    variables: { filter: { status } },
+  })
 
   // refetch questions whenever I toggle back and forth between answered/unanswered
   React.useEffect(() => {
@@ -60,7 +51,7 @@ export function QuestionsList() {
     if (isVisible) handleFetchMore()
   }, [isVisible])
 
-  if (!data?.questions) {
+  if (loading && !data?.questions) {
     return (
       <ListContainer onRef={setScrollContainerRef}>
         <AMATitlebar scrollContainerRef={scrollContainerRef} />

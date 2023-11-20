@@ -1,6 +1,7 @@
 import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
-import { BlogDetail, Post } from '~/components/Posts/BlogDetail'
+import type { Post } from '~/components/Posts/BlogDetail'
+import { BlogDetail } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
 import { getAllPosts, getPostBySlug } from '~/lib/sanity/sanity.client'
 

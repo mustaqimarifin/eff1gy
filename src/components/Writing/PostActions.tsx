@@ -11,7 +11,6 @@ import {
 } from '~/graphql/typeSlut'
 
 import { PageViews } from '../Stats/ViewCounter'
-
 function getReactionButton(post) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
   function handleClick() {

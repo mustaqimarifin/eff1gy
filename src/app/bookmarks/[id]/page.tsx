@@ -10,10 +10,10 @@ import { GET_TAGS } from '~/graphql/queries/tags'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { getBookmark } from '~/graphql/resolvers/queries/bookmarks'
 import { getTags } from '~/graphql/resolvers/queries/tags'
+import type { GetBookmarkQuery } from '~/graphql/typeSlut'
 import {
   CommentType,
   GetBookmarkDocument,
-  GetBookmarkQuery,
   GetBookmarksDocument,
   GetCommentsDocument,
   GetTagsDocument,

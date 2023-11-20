@@ -1,5 +1,5 @@
 import { ListDetailView } from '~/components/Layouts'
-import { Post } from '~/components/Posts/BlogDetail'
+import type { Post } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
 import { getAllPosts } from '~/lib/sanity/sanity.client'
 

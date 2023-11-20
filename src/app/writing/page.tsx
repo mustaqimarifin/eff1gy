@@ -8,6 +8,8 @@ export const metadata = {
   title: 'Writing',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function WritingPage() {
   const client = getClient()
 

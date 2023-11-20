@@ -127,11 +127,13 @@ export default gql`
   type User {
     id: ID!
     createdAt: Date
-    name: String!
+    role: UserRole
+    username: String
     image: String
-    pendingEmail: String
+    name: String
     isViewer: Boolean
     email: String
+    pendingEmail: String
     isAdmin: Boolean
   }
 

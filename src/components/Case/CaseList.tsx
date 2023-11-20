@@ -9,10 +9,9 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { fetcher } from '~/lib/functions'
 
 import { LoadingSpinner } from '../LoadingSpinner'
-import { CaseStudy } from '../Posts/BlogDetail'
-import { AppDissectionListItem } from './AppDissectionListItem'
+import { CaseListItem } from './CaseItem'
 
-export const AppDissectionList = ({ cases }) => {
+export const CaseList = ({ cases }) => {
   const path = usePathname()
   const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
   /*     const { data, isLoading } = useSWR<CaseStudy[]>(
@@ -40,7 +39,7 @@ export const AppDissectionList = ({ cases }) => {
           cases?.map((casestudy) => {
             const active = path === casestudy.slug
             return (
-              <AppDissectionListItem
+              <CaseListItem
                 key={casestudy.slug}
                 casestudy={casestudy}
                 active={active}

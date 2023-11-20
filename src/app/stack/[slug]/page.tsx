@@ -8,7 +8,8 @@ import { StackList } from '~/components/Stack/StackList'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_STACK, GET_STACKS } from '~/graphql/queries/stack'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-import { CommentType, GetStackQuery } from '~/graphql/typeSlut'
+import type { GetStackQuery } from '~/graphql/typeSlut'
+import { CommentType } from '~/graphql/typeSlut'
 
 export const dynamic = 'force-static'
 

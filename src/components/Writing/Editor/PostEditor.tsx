@@ -29,7 +29,7 @@ export const PostEditorContext = React.createContext({
 
 type PEditor = {
   children?: React.ReactNode
-  slug?: any
+  slug?: string
 }
 
 export function PostEditor({ children, slug: propsSlug = '' }: PEditor) {

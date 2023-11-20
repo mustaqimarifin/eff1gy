@@ -1,17 +1,16 @@
 import { Menu, Transition } from '@headlessui/react'
 import { MoreHorizontal } from 'lucide-react'
-import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'
 
 export function CommentMenu({ handleDelete, handleEdit, comment }) {
   return (
     <div className="flex items-center justify-center opacity-0 group-hover:opacity-100">
-      <div className="relative block text-left">
+      <div className="relative inline-block text-left">
         <Menu>
           {({ open }) => (
             <>
-              <Menu.Button as="div" className="z-3 inline-block">
+              <Menu.Button as="div" className="z-0 inline-flex">
                 <GhostButton
                   aria-label="Open comment actions menu"
                   size="small-square">
@@ -28,7 +27,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95">
                 <Menu.Items
-                  //static
+                  static
                   className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
                   {comment.viewerCanEdit && (
                     <div className="py-1">

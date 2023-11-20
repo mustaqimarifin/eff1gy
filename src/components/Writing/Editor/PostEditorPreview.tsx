@@ -21,17 +21,17 @@ export function PostEditorPreview({
       <Detail.Header>
         <Detail.Title>{title}</Detail.Title>
       </Detail.Header>
-      <div
-        className="dark:prose-dark prose mt-8 xl:prose-lg lg:max-w-3xl"
+      {/*       <div
+        className="mt-8 xl:prose-md lg:max-w-3xl"
         //children={text}
       >
         {text}
-      </div>
-      {/*       <MarkdownRenderer
+      </div> */}
+      <MarkdownRenderer
         children={text}
-        className="dark:prose-dark prose mt-8 xl:prose-lg lg:max-w-3xl"
+        className=" mt-8 xl:prose-md lg:max-w-3xl"
       />
- */}
+
       {/* bottom padding to give space between post content and comments */}
       <div className="py-6" />
     </Detail.ContentContainer>

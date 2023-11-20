@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
 import { prisma } from '~/lib/prisma'
 
@@ -13,6 +14,8 @@ export async function POST(req: NextRequest) {
       const url = new URL(req.url)
       id = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
     }
+
+    //const { refId, type, text, parentId } = args
 
     const newOrUpdatedViews = await prisma.pageView.upsert({
       where: { id },

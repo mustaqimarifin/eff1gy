@@ -12,7 +12,7 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr'
 
 import { HELLSQL } from '~/graphql/constants'
-import { StrictTypedTypePolicies } from '~/graphql/typeSlut'
+import type { StrictTypedTypePolicies } from '~/graphql/typeSlut'
 import { sha256 } from '~/lib/functions'
 
 export const persistLink = createPersistedQueryLink({ sha256 })

@@ -1,12 +1,12 @@
 import { Settings } from 'lucide-react'
 import Link from 'next/link'
-import { signIn } from 'next-auth/react'
 import * as React from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import { GhostButton } from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { useViewerQuery } from '~/graphql/typeSlut'
+import { signIn } from '~/lib/auth'
 
 import { GlobalNavigationContext } from '../Provider'
 

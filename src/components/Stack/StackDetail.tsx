@@ -6,7 +6,7 @@ import Link from 'next/link'
 import * as React from 'react'
 
 import { PrimaryButton } from '~/components/Button'
-import Comments from '~/components/Comments'
+import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'

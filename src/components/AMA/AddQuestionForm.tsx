@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { PrimaryButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -11,9 +11,9 @@ import { nuts } from '../Provider/Toaster'
 
 export function AddQuestionForm({ closeModal }) {
   const { data } = useViewerQuery()
-  const [title, setTitle] = React.useState('')
-  const [description, setDescription] = React.useState('')
-  const [, setError] = React.useState('')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [, setError] = useState('')
   const router = useRouter()
 
   const [handleAddQuestion, { loading, error }] = useAddQuestionMutation({

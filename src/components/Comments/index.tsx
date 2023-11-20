@@ -1,22 +1,20 @@
-import { motion } from 'framer-motion'
-import * as React from 'react'
+import { MessageCircle } from 'lucide-react'
+import { type RefObject, useRef } from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { SignInDialog } from '~/components/SignInDialog'
-import { type CommentType, useGetCommentsQuery } from '~/graphql/typeSlut'
+import type { CommentType } from '~/graphql/typeSlut'
+import { useGetCommentsQuery } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks'
 
-import { GhostIcon } from '../Icon'
 import { Comment } from './Comment'
-import { CommentForm } from './CommentForm'
 
 interface Props {
   refId: string
   type: CommentType
 }
 
-export default function Comments({ refId, type }: Props) {
-  const messagesEndRef: React.RefObject<HTMLDivElement> = React.useRef(null)
+export function Comments({ refId, type }: Props) {
+  const messagesEndRef: RefObject<HTMLDivElement> = useRef(null)
 
   const { data, loading, error, refetch } = useGetCommentsQuery({
     variables: {
@@ -45,11 +43,11 @@ export default function Comments({ refId, type }: Props) {
 
   return (
     <div className="relative flex flex-1 flex-col border-t border-gray-150 dark:border-gray-800">
-      <div className="text-quaternary absolute -top-5 left-1/2 -translate-x-1/2 transform px-8 py-2 ">
-        <GhostIcon />
+      <div className="text-quaternary absolute left-1/2 -top-5 -translate-x-1/2 transform bg-white px-8 py-2 dark:bg-black">
+        <MessageCircle />
       </div>
-      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pb-4 pt-8 md:px-8">
-        <motion.div layout className="flex flex-col space-y-3">
+      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pt-8 pb-4 md:px-8">
+        <div className="flex flex-col space-y-3">
           {comments?.length > 0 &&
             comments.map((comment) => (
               <Comment
@@ -60,19 +58,13 @@ export default function Comments({ refId, type }: Props) {
               />
             ))}
           {comments?.length === 0 && (
-            <p className="text-quaternary block pb-16 pt-12 text-center">
+            <p className="text-quaternary block pt-12 pb-16 text-center">
               No comments yet...
             </p>
           )}
-        </motion.div>
+        </div>
       </div>
       <div ref={messagesEndRef} />
-
-      <SignInDialog>
-        {({ openModal }) => (
-          <CommentForm refId={refId} type={type} openModal={openModal} />
-        )}
-      </SignInDialog>
     </div>
   )
 }

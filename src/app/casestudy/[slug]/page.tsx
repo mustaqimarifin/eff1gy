@@ -1,8 +1,8 @@
 import Mdx from '~/app/mdxrsc'
-import { AppDissectionDetail } from '~/components/AppDissection/AppDissectionDetail'
-import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
+import { CaseDetail } from '~/components/Case/CaseDetail'
+import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
-import { CaseStudy } from '~/components/Posts/BlogDetail'
+import type { CaseStudy } from '~/components/Posts/BlogDetail'
 import { getAllCaseStudy, getCaseBySlug } from '~/lib/sanity/sanity.client'
 
 export const dynamic = 'force-static'
@@ -27,12 +27,12 @@ export default async function CaseStudy({ params: { slug } }) {
 
   return (
     <ListDetailView
-      list={<AppDissectionList cases={cases} />}
+      list={<CaseList cases={cases} />}
       hasDetail
       detail={
-        <AppDissectionDetail casestudy={casestudy}>
+        <CaseDetail casestudy={casestudy}>
           <Mdx source={casestudy.content} />{' '}
-        </AppDissectionDetail>
+        </CaseDetail>
       }
     />
   )

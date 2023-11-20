@@ -1,19 +1,16 @@
-import { Metadata } from 'next'
-import { env } from 'process'
+import type { Metadata } from 'next'
 
 import { QuestionDetail } from '~/components/AMA/QuestionDetail'
 import { QuestionsList } from '~/components/AMA/QuestionsList'
 import { ListDetailView } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { getClient } from '~/components/Provider/ApolloClient'
+import { CLIENT_URL } from '~/graphql/constants'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_QUESTION, GET_QUESTIONS } from '~/graphql/queries/questions'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
-import {
-  CommentType,
-  GetQuestionQuery,
-  QuestionStatus,
-} from '~/graphql/typeSlut'
+import type { GetQuestionQuery } from '~/graphql/typeSlut'
+import { CommentType, QuestionStatus } from '~/graphql/typeSlut'
 import { absoluteUrl } from '~/lib/validators'
 
 interface QProps {
@@ -36,7 +33,7 @@ export async function generateMetadata({ params }: QProps): Promise<Metadata> {
 
   const { title, description, id } = f.data.question
 
-  const url = env.NEXT_PUBLIC_APP_URL
+  const url = CLIENT_URL
 
   const ogUrl = new URL(`${url}/api/og`)
   ogUrl.searchParams.set('heading', title)

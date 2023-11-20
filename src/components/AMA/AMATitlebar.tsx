@@ -5,10 +5,10 @@ import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { SignInDialog } from '~/components/SignInDialog'
 import { useViewerQuery } from '~/graphql/typeSlut'
 
 import SegmentedControl from '../SegmentedController'
+import { SignInDialog } from '../SignInDialog'
 import { AddQuestionDialog } from './AddQuestionDialog'
 import { QuestionsContext } from './QuestionsList'
 

@@ -1,6 +1,10 @@
 import { type UploadApiResponse } from 'cloudinary'
 
-import { type UploadSignatureMetadata } from '~/types/Upload'
+type UploadSignatureMetadata = {
+  timestamp: number
+  folder: string
+  signature: string
+}
 
 export const signUpload = async (): Promise<UploadSignatureMetadata> => {
   const response = await fetch(`/api/images/sign`, {

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-import { CritContent } from '~/app/(utils)/crit/Content'
+import { CritContent } from '~/app/(misc)/crit/Content'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import routes from '~/config/routes'

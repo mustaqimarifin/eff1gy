@@ -6,8 +6,8 @@ import { Input } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { TagPicker } from '~/components/Tag/TagPicker'
 import { GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
+import type { GetBookmarksQuery } from '~/graphql/typeSlut'
 import {
-  GetBookmarksQuery,
   useAddBookmarkMutation,
   useGetBookmarksQuery,
 } from '~/graphql/typeSlut'

@@ -2,26 +2,33 @@
 
 import * as React from 'react'
 
-import Comments from '~/components/Comments'
+import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { CommentType, Post, useGetPostQuery } from '~/graphql/typeSlut'
+import type { Post } from '~/graphql/typeSlut'
+import {
+  CommentType,
+  useGetPostQuery,
+  useGetPostSuspenseQuery,
+} from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
-//import { MarkdownRenderer } from '../MarkdownRenderer'
+import { MarkdownRenderer } from '../MarkdownRenderer'
 import { PostActions } from './PostActions'
 
 interface PD {
   children?: React.ReactNode
-  //slug: string
-  post: Post
+  slug?: string
+  post?: Post
 }
-export function PostDetail({ children, post }: PD) {
+export function PostDetail({ children, slug }: PD) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
-  //const { data, error, loading } = useGetPostQuery({ variables: { slug } })
+  const { data } = useGetPostSuspenseQuery({ variables: { slug } })
 
-  const publishedAt = timestampToCleanTime({ timestamp: post.publishedAt })
+  const publishedAt = timestampToCleanTime({
+    timestamp: data?.post.publishedAt,
+  })
   return (
     <>
       <Detail.Container data-cy="post-detail" ref={scrollContainerRef}>
@@ -30,15 +37,15 @@ export function PostDetail({ children, post }: PD) {
           globalMenu={false}
           backButtonHref={'/writing'}
           magicTitle
-          title={post.title}
+          title={data.post.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
-          trailingAccessory={<PostActions post={post} />}
+          trailingAccessory={<PostActions post={data.post} />}
         />
 
         <Detail.ContentContainer>
           <Detail.Header>
-            <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
+            <Detail.Title ref={titleRef}>{data.post.title}</Detail.Title>
 
             <span
               title={publishedAt.raw}
@@ -46,17 +53,17 @@ export function PostDetail({ children, post }: PD) {
               {publishedAt.formatted}
             </span>
           </Detail.Header>
-          <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div>
-          {/*           <MarkdownRenderer
-            children={post.text}
-            className="mt-8 xl:prose-lg lg:max-w-3xl"
-          /> */}
+          {/*     <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div> */}
 
+          <MarkdownRenderer
+            children={data?.post.text}
+            className="mt-8 xl:prose-md lg:max-w-3xl"
+          />
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />
         </Detail.ContentContainer>
 
-        <Comments refId={post.id} type={CommentType.Post} />
+        <Comments refId={data?.post.id} type={CommentType.Post} />
       </Detail.Container>
     </>
   )

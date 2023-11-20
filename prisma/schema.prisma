@@ -70,7 +70,8 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
+  viewCount Int?   @default(1)
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -159,12 +160,14 @@ model Blog {
   reactions Reaction[]
   author    User?      @relation(fields: [userId], references: [id])
   userId    String?
+  viewCount Int?       @default(1)
 
   @@index([date])
 }
 
 model Post {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
+  viewCount Int?   @default(1)
 
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
@@ -205,7 +208,8 @@ model Tag {
 }
 
 model Stack {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
+  viewCount Int?   @default(1)
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt

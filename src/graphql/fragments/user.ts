@@ -4,8 +4,10 @@ export const UserInfoFragment = gql`
   fragment UserInfo on User {
     __typename
     id
-    name
+    username
     image
+    name
+    role
     isViewer
     isAdmin
   }

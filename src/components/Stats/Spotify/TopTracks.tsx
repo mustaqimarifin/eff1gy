@@ -1,9 +1,13 @@
 import useSWR from 'swr'
 
 import { fetcher } from '~/lib/functions'
-import { type TopTracks } from '~/types/site'
 
+import type { TrackType } from './Track'
 import Track from './Track'
+
+type TopTracks = {
+  tracks: TrackType[]
+}
 
 export default function Tracks() {
   const { data } = useSWR<TopTracks>('/api/stats/top-tracks', fetcher)

@@ -4,12 +4,8 @@ import * as React from 'react'
 
 import { ReactionButton } from '~/components/Button/ReactionButton'
 import { GET_BLOG } from '~/graphql/queries/blogs'
-import {
-  Blog,
-  ReactionType,
-  useToggleReactionMutation,
-  useViewerQuery,
-} from '~/graphql/typeSlut'
+import type { Blog } from '~/graphql/typeSlut'
+import { ReactionType, useToggleReactionMutation } from '~/graphql/typeSlut'
 
 import { PageViews } from '../Stats/ViewCounter'
 

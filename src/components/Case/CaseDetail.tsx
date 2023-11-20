@@ -7,14 +7,14 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { timestampToCleanTime } from '~/lib/transformers'
 
-import { CaseStudy } from '../Posts/BlogDetail'
+import type { CaseStudy } from '../Posts/BlogDetail'
 
 interface Props {
   children: React.ReactNode
   casestudy: CaseStudy
 }
 
-export function AppDissectionDetail({ casestudy, children }: Props) {
+export function CaseDetail({ casestudy, children }: Props) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
 

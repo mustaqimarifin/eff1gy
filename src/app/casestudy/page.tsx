@@ -1,6 +1,6 @@
-import { AppDissectionList } from '~/components/AppDissection/AppDissectionList'
+import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
-import { CaseStudy } from '~/components/Posts/BlogDetail'
+import type { CaseStudy } from '~/components/Posts/BlogDetail'
 import { getAllCaseStudy } from '~/lib/sanity/sanity.client'
 
 export default async function CaseIndex() {
@@ -12,7 +12,7 @@ export default async function CaseIndex() {
 
   return (
     <ListDetailView
-      list={<AppDissectionList cases={cases} />}
+      list={<CaseList cases={cases} />}
       hasDetail={false}
       detail={null}
     />

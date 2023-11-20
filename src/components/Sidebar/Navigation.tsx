@@ -7,9 +7,9 @@ import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
 import { GhostButton } from '~/components/Button'
 import {
   AMAIcon,
-  AppDissectionIcon,
   BookmarksIcon,
   CampsiteIcon,
+  CaseIcon,
   CritIcon,
   ExternalLinkIcon,
   FigmaIcon,
@@ -180,7 +180,7 @@ export function SidebarNavigation() {
         {
           href: '/casestudy',
           label: 'Case Studies',
-          icon: AppDissectionIcon,
+          icon: CaseIcon,
           trailingAccessory: null,
           isActive: path.indexOf('/casestudy') >= 0,
           trailingAction: null,

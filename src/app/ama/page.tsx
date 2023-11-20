@@ -7,7 +7,7 @@ import { GET_QUESTIONS } from '~/graphql/queries/questions'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import { QuestionStatus } from '~/graphql/typeSlut'
 
-//export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'AMA',

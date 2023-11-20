@@ -1,8 +1,10 @@
-import { type PrismaClient, Role } from '@prisma/client'
-import { User } from 'next-auth'
+import { type PrismaClient } from '@prisma/client'
+import type { User } from 'next-auth'
 
 import { auth } from '~/lib/auth'
 import { prisma } from '~/lib/prisma'
+
+import { UserRole } from '../typeSlut'
 
 export async function getViewer(req, res) {
   const session = await auth()
@@ -14,9 +16,18 @@ export async function getViewer(req, res) {
     return viewer
       ? {
           ...viewer,
-          isAdmin: viewer?.role === Role.ADMIN,
+          isAdmin: viewer?.role === UserRole.Admin,
         }
       : null
+  }
+}
+
+export async function getContext(req, res) {
+  const viewer = await getViewer(req, res)
+
+  return {
+    viewer,
+    prisma,
   }
 }
 

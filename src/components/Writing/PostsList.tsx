@@ -1,14 +1,12 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import {
-  GetPostQuery,
-  GetPostsQuery,
-  useGetPostsQuery,
-} from '~/graphql/typeSlut'
+import { GET_POSTS } from '~/graphql/queries/posts'
+import type { GetPostsQuery } from '~/graphql/typeSlut'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 import { PostListItem } from './PostListItem'
@@ -20,7 +18,6 @@ export const WritingContext = React.createContext({
 })
 
 export function PostsList() {
-  // const router = useRouter()
   const path = usePathname()
 
   const [filter, setFilter] = React.useState('published')
@@ -31,7 +28,9 @@ export function PostsList() {
       ? { filter: { published: true } }
       : { filter: { published: false } }
 
-  const { data, error, loading, refetch } = useGetPostsQuery({ variables })
+  const { error, data, refetch, loading } = useQuery<GetPostsQuery>(GET_POSTS, {
+    variables,
+  })
 
   React.useEffect(() => {
     refetch()

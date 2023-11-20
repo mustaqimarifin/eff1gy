@@ -5,7 +5,7 @@ import rehypeSlug from 'rehype-slug'
 import { components } from '~/components/MDX'
 import META3 from '~/components/MDX/meta3'
 
-export default async function Mdx({ source }) {
+export default function Mdx({ source }) {
   //const Component = React.useMemo(() => getMDXComponent(code), [code])
 
   return (

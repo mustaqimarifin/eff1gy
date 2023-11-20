@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { ListDetailView } from '~/components/Layouts'
 import { getClient } from '~/components/Provider/ApolloClient'
 import { UserDetail } from '~/components/UserProfile/UserDetail'
@@ -8,7 +6,7 @@ import { GET_VIEWER } from '~/graphql/queries/viewer'
 
 export default async function UserPage({ params: { id } }) {
   const client = getClient()
-  await Promise.allSettled([
+  await Promise.all([
     client.query({ query: GET_VIEWER }),
 
     client.query({

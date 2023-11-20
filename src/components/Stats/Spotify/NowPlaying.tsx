@@ -6,7 +6,15 @@ import useSWR from 'swr'
 
 import { Spotify } from '~/components/Icon'
 import { fetcher } from '~/lib/functions'
-import { type SpotifyData } from '~/types/site'
+
+type SpotifyData = {
+  isPlaying: boolean
+  songUrl: string
+  albumImageUrl: string
+  album: string
+  title: string
+  artist: string
+}
 
 export default function NowPlaying({ className, ...rest }) {
   const { data } = useSWR<SpotifyData>('/api/stats/now-playing', fetcher)

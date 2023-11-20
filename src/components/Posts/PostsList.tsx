@@ -11,12 +11,8 @@ import { TitleBar } from '../ListDetail/TitleBar'
 import { type Post } from './BlogDetail'
 //import useSWR from 'swr';
 //import LoadingSpinner from '../LoadingSpinner';
-import { PostListItem, type PostPage } from './PostListItem'
+import { PostListItem } from './PostListItem'
 
-export type PostPageGroup = {
-  map(arg0: (post: PostPage) => JSX.Element): import('react').ReactNode
-  posts: Array<PostPage>
-}
 export const PostsList = ({ posts }) => {
   const path = usePathname()
   const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
@@ -31,10 +27,10 @@ export const PostsList = ({ posts }) => {
     }
     fetchPosts();
   }, [setPosts]); */
-  /*     const { data: posts } = useSWR<Post[]>(
-        'http://localhost:3000/api/posts',
-        fetcher
-    )
+  /*   const { data: posts } = useSWR<Post[]>(
+    'http://localhost:3000/api/posts',
+    fetcher
+  )
  */
   /*   const { data: posts } = useQuery<PostPageGroup>({
     queryKey: ['posts'],

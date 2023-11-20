@@ -36,6 +36,7 @@ async function main() {
     data: [
       { name: 'lol' },
       { name: 'web' },
+      { name: 'gear' },
       { name: 'portfolio' },
       { name: 'software' },
       { name: 'art' },

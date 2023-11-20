@@ -8,11 +8,8 @@ import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
-import {
-  GetStacksDocument,
-  GetStacksQuery,
-  useGetStacksQuery,
-} from '~/graphql/typeSlut'
+import type { GetStacksQuery } from '~/graphql/typeSlut'
+import { GetStacksDocument, useGetStacksQuery } from '~/graphql/typeSlut'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'

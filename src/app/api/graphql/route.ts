@@ -1,17 +1,24 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { NextRequest, NextResponse } from 'next/server'
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import type { NextRequest } from 'next/server'
 
 import { getViewer } from '~/graphql/context'
-import { schema } from '~/graphql/schema'
+import resolvers from '~/graphql/resolvers'
+import typeDefs from '~/graphql/typeDefs'
 import { prisma } from '~/lib/prisma'
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+})
 
 const server = new ApolloServer({
   schema,
 })
 
-const hitler = startServerAndCreateNextHandler<NextRequest>(server, {
-  context: async (req: NextRequest, res: NextResponse) => {
+const handleRequest = startServerAndCreateNextHandler<NextRequest>(server, {
+  context: async (req: NextRequest, res: Response) => {
     const viewer = await getViewer(req, res)
     return {
       viewer,
@@ -19,4 +26,27 @@ const hitler = startServerAndCreateNextHandler<NextRequest>(server, {
     }
   },
 })
-export { hitler as GET, hitler as POST }
+
+/* const { handleRequest } = createYoga<
+  {
+    req: Request
+    res: Response
+  },
+  {
+    viewer: User
+  }
+>({
+  context: async ({ req, res }) => {
+    const viewer = await getViewer(req, res)
+
+    return {
+      viewer,
+      prisma,
+    }
+  },
+  schema,
+  graphqlEndpoint: '/api/graphql',
+  fetchAPI: { Response },
+})
+ */
+export { handleRequest as GET, handleRequest as POST }

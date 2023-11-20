@@ -1,18 +1,14 @@
 'use client'
 
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { LayoutGroup, motion } from 'framer-motion'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import * as React from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { PAGINATION_AMOUNT } from '~/graphql/constants'
-import {
-  GetBookmarksDocument,
-  GetBookmarksQuery,
-  useGetBookmarksLazyQuery,
-  useGetBookmarksQuery,
-} from '~/graphql/typeSlut'
+import { GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
+import type { GetBookmarksQuery } from '~/graphql/typeSlut'
 
 import { ListLoadMore } from '../ListDetail/ListLoadMore'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -39,8 +35,8 @@ export function BookmarksList() {
         filter: { tag: tag },
       }
     : null
-  const { error, data, fetchMore } = useSuspenseQuery<GetBookmarksQuery>(
-    GetBookmarksDocument,
+  const { error, data, fetchMore, loading } = useQuery<GetBookmarksQuery>(
+    GET_BOOKMARKS,
     {
       variables,
     }
@@ -74,7 +70,7 @@ export function BookmarksList() {
     if (tagQuery) router.push(path)
   }, [tagQuery])
 
-  if (!data?.bookmarks) {
+  if (loading && !data?.bookmarks) {
     return (
       <ListContainer onRef={setScrollContainerRef}>
         <BookmarksTitlebar scrollContainerRef={scrollContainerRef} />

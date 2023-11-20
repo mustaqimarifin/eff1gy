@@ -26,7 +26,7 @@ export const authConfig = {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role
-        token.id = user.id
+        token.sub = user.id
       }
 
       return token
