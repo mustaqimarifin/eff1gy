@@ -1,7 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 
 import { getViewer } from '~/graphql/context'
-import { auth } from '~/lib/auth'
 import cloudinary from '~/lib/cloudinary'
 
 export default async function handle(

@@ -1,9 +1,9 @@
 'use client'
 import { GithubIcon, Twitter } from 'lucide-react'
+import { signIn } from 'next-auth/react'
 import * as React from 'react'
 
-import { signIn } from '~/lib/auth'
-
+import { GhostButton } from '../Button'
 import { Google } from '../Icon'
 
 export function SignInDialogContent() {
@@ -19,7 +19,8 @@ export function SignInDialogContent() {
       </p>
       <div>
         <div>
-          <button
+          <GhostButton
+            href={`/api/auth/signin/github`}
             className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
             onClick={(e) => {
               e.preventDefault()
@@ -30,8 +31,9 @@ export function SignInDialogContent() {
             <span className="ml-2 text-sm leading-none dark:text-gray-200">
               Sign in with GitHub
             </span>
-          </button>
-          <button
+          </GhostButton>
+          <GhostButton
+            href={`/api/auth/signin/google`}
             className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
             onClick={(e) => {
               e.preventDefault()
@@ -42,8 +44,9 @@ export function SignInDialogContent() {
             <span className="ml-2 text-sm leading-none dark:text-gray-200">
               Sign in with Google
             </span>
-          </button>
-          <button
+          </GhostButton>
+          <GhostButton
+            href={`/api/auth/signin/twitter`}
             className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
             onClick={(e) => {
               e.preventDefault()
@@ -54,7 +57,7 @@ export function SignInDialogContent() {
             <span className="ml-2 text-sm leading-none dark:text-gray-200">
               Sign in with Twitter
             </span>
-          </button>
+          </GhostButton>
         </div>
       </div>
     </div>

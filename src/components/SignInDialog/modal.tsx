@@ -1,8 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 import { Fragment, useRef, useState } from 'react'
-
-import { signIn } from '~/lib/auth'
 
 import { GoogleButton } from '../Button'
 

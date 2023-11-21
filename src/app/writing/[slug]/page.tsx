@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 
+import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
@@ -31,6 +32,7 @@ export default async function PostPage({ params: { slug } }) {
       client.query({
         query: GET_COMMENTS,
         variables: { refId: data.post.id, type: CommentType.Post },
+        //context: { fetchOptions: { cache: 'force-dynamic' } },
       }),
   ])
 
@@ -50,7 +52,9 @@ export default async function PostPage({ params: { slug } }) {
       hasDetail
       detail={
         <Suspense fallback={<LoadingSpinner />}>
-          <PostDetail slug={slug} />
+          <PostDetail slug={slug}>
+            <Mdx source={data?.post.text} />
+          </PostDetail>
         </Suspense>
       }
     />

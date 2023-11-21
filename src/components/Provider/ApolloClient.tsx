@@ -7,7 +7,7 @@ export const { getClient } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-      fetchOptions: { cache: 'no-store' },
+      //fetchOptions: { cache: 'no-store' },
       uri: HELLSQL,
     }),
   })

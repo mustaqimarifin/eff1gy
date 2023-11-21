@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -7,6 +6,7 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import type { CommentType, GetCommentsQuery } from '~/graphql/typeSlut'
 import { useAddCommentMutation, useViewerQuery } from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks'
+import { genId } from '~/lib/nanoid'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 import { nuts } from '../Provider/Toaster'
@@ -27,7 +27,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
       __typename: 'Mutation',
       addComment: {
         __typename: 'Comment',
-        id: uuidv4(),
+        id: genId(),
         text,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
@@ -35,7 +35,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: uuidv4(),
+          id: genId(),
           username: data?.viewer?.username,
           image: data?.viewer?.image,
           name: data?.viewer?.name,
