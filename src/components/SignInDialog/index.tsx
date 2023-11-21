@@ -1,8 +1,8 @@
 'use client'
+import { signIn } from 'next-auth/react'
 import * as React from 'react'
 
 import { DialogComponent } from '~/components/Dialog'
-import { signIn } from '~/lib/auth'
 
 import { GhostButton } from '../Button'
 import { SignInDialogContent } from './SignInDialogContent'

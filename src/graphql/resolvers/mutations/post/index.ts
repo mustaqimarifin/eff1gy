@@ -63,7 +63,7 @@ export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
         slug,
         excerpt,
         author: {
-          connect: { id: viewer.id },
+          connect: { id: viewer?.id },
         },
       },
     })

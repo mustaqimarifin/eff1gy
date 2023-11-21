@@ -14,7 +14,7 @@ export const metadata = {
 export default async function StackIndex() {
   const client = getClient()
   await Promise.allSettled([
-    client.query({ query: GET_VIEWER }),
+    //client.query({ query: GET_VIEWER }),
     client.query({ query: GET_STACKS }),
   ])
   return <ListDetailView list={<StackList />} hasDetail={false} detail={null} />

@@ -34,6 +34,7 @@ export const authConfig = {
     async session({ session, user }) {
       session.user.role = user.role
       session.userId = user.id
+      session.user.isAdmin = user.isAdmin
       return session
     },
   },

@@ -55,7 +55,7 @@ export async function toggleReaction(
     prisma.reaction.findMany({
       where: {
         [field]: refId,
-        userId: viewer.id,
+        userId: viewer?.id,
       },
     }),
   ])
@@ -76,7 +76,7 @@ export async function toggleReaction(
     fn = () =>
       prisma.reaction.create({
         data: {
-          userId: viewer.id,
+          userId: viewer?.id,
           [field]: String(refId),
         },
       })

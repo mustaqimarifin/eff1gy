@@ -33,14 +33,14 @@ const handleRequest = startServerAndCreateNextHandler<NextRequest>(server, {
     res: Response
   },
   {
-    viewer: User
+    session
   }
 >({
   context: async ({ req, res }) => {
-    const viewer = await getViewer(req, res)
+    const session = await getViewer(req, res)
 
     return {
-      viewer,
+      session,
       prisma,
     }
   },

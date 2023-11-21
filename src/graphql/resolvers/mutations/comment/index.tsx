@@ -115,7 +115,7 @@ export async function addComment(
       data: {
         text,
         parentId,
-        userId: viewer.id,
+        userId: viewer?.id,
         [field]: refId,
       },
     }),

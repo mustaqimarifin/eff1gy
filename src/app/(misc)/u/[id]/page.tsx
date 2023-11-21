@@ -5,7 +5,7 @@ import { GET_USER } from '~/graphql/queries/user'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 
 export default async function UserPage({ params: { id } }) {
-  const client = getClient()
+  /*   const client = getClient()
   await Promise.all([
     client.query({ query: GET_VIEWER }),
 
@@ -14,8 +14,6 @@ export default async function UserPage({ params: { id } }) {
       variables: { id },
     }),
   ])
-
-  return (
-    <ListDetailView list={null} hasDetail detail={<UserDetail id={id} />} />
-  )
+ */
+  return <UserDetail id={id} />
 }

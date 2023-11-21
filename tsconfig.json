@@ -29,6 +29,7 @@
     ".next/types/**/*.ts",
     "prettier.config.mjs",
     "next.config.mjs",
-    "prisma/seed.mts"
+    "prisma/seed.mts",
+    "src/app/page copy.tt"
   ]
 }

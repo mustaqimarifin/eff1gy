@@ -1,6 +1,3 @@
-import fs from 'node:fs/promises'
-
-import path from 'path'
 import { getPlaiceholder, type GetPlaiceholderReturn } from 'plaiceholder'
 import { cwd } from 'process'
 import { visit } from 'unist-util-visit'
@@ -33,6 +30,39 @@ function isImageNode(node) {
   )
 }
 
+import fs from 'node:fs/promises'
+import path from 'node:path'
+
+/* const getImage = async (src: string) => {
+  const buffer = await fs.readFile(path.join('./public', src))
+
+  const {
+    metadata: { height, width },
+    ...plaiceholder
+  } = await getPlaiceholder(buffer, { size: 10 })
+
+  return {
+    ...plaiceholder,
+    img: { src, height, width },
+  }
+}
+
+const getRemoteImage = async (src: string) => {
+  const buffer = await fetch(src).then(async (res) =>
+    Buffer.from(await res.arrayBuffer())
+  )
+
+  const {
+    metadata: { height, width },
+    ...plaiceholder
+  } = await getPlaiceholder(buffer, { size: 10 })
+
+  return {
+    ...plaiceholder,
+    img: { src, height, width },
+  }
+} */
+
 async function createPreviewImage(node) {
   /*   try {
     const cachedPreviewImage = await redis.hgetall(cacheKey)
@@ -43,13 +73,11 @@ async function createPreviewImage(node) {
     // ignore redis errors
     console.warn(`redis error get "${cacheKey}"`, err)
   } */
-  let result: GetPlaiceholderReturn
   const url = node.properties.src
   console.log(url)
   //const id = sha256(url)
   const ext_img = url.startsWith('http')
-  const local_img = path.join(cwd(), './public', url)
-
+  let result: GetPlaiceholderReturn
   // if (!ext_img) {
   //result = await lqip(local_img);
   //   result = await getPlaiceholder(file, { size: 10 });
@@ -58,9 +86,8 @@ async function createPreviewImage(node) {
   /*       const body = await fetch(url).then(async (res) =>
         Buffer.from(await res.arrayBuffer()),
       ); */
-
   if (!ext_img) {
-    const file = await fs.readFile(local_img)
+    const file = await fs.readFile(url)
 
     result = await getPlaiceholder(file, { format: ['webp'] })
   } else {

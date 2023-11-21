@@ -25,7 +25,7 @@ export async function editQuestion(
     throw new GraphQLError('Question doesn’t exist')
   }
 
-  if (viewer.isAdmin || viewer.id === question.userId) {
+  if (viewer?.isAdmin || viewer?.id === question?.userId) {
     return await prisma.question
       .update({
         where: { id },
@@ -68,7 +68,7 @@ export async function addQuestion(
       data: {
         title,
         description,
-        userId: viewer.id,
+        userId: viewer?.id,
       },
       include: {
         _count: {
@@ -101,7 +101,7 @@ export async function deleteQuestion(
   const question = await prisma.question.findUnique({ where: { id } })
   if (!question) return true
 
-  if (viewer.isAdmin || viewer.id === question.userId) {
+  if (viewer?.isAdmin || viewer?.id === question.userId) {
     return await prisma.question
       .delete({ where: { id } })
       .then(() => {

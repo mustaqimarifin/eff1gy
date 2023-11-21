@@ -1,5 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 
+import { getViewer } from '~/graphql/context'
 import { auth } from '~/lib/auth'
 import cloudinary from '~/lib/cloudinary'
 
@@ -12,8 +13,8 @@ export default async function handle(
   //   return
   // }
   try {
-    const session = await auth()
-    if (!session.isAdmin) {
+    const viewer = await getViewer(req, res)
+    if (!viewer.isAdmin) {
       return res.status(401).end()
     }
     const timeNow = new Date().getTime()

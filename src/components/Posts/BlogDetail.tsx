@@ -138,7 +138,7 @@ export function BlogDetail({ children, post, slug }: Props) {
 
           <div className="py-6" />
           <React.Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={blog.id} type={CommentType.Blog} />
+            <Comments refId={slug} type={CommentType.Blog} />
           </React.Suspense>
         </Detail.ContentContainer>
       </Detail.Container>

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import React from 'react'
 
 import { PrimaryButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -11,9 +11,9 @@ import { nuts } from '../Provider/Toaster'
 
 export function AddQuestionForm({ closeModal }) {
   const { data } = useViewerQuery()
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [, setError] = useState('')
+  const [title, setTitle] = React.useState('')
+  const [description, setDescription] = React.useState('')
+  const [, setError] = React.useState('')
   const router = useRouter()
 
   const [handleAddQuestion, { loading, error }] = useAddQuestionMutation({
@@ -30,7 +30,7 @@ export function AddQuestionForm({ closeModal }) {
   function onSubmit(e) {
     e.preventDefault()
     if (title.trim().length === 0) {
-      nuts.warning('Question can’t be blank')
+      setError('Question can’t be blank')
       return
     }
 
@@ -68,7 +68,7 @@ export function AddQuestionForm({ closeModal }) {
         <div className="pt-0.5">
           <Avatar
             user={viewer}
-            src={viewer.image}
+            src={viewer?.image}
             width={40}
             height={40}
             className="rounded-full"

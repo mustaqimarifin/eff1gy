@@ -3,7 +3,8 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 
 import { components } from '~/components/MDX'
-import META3 from '~/components/MDX/meta3'
+import imageMetadata from '~/components/MDX/Meta2'
+//import META3 from '~/components/MDX/meta3'
 
 export default function Mdx({ source }) {
   //const Component = React.useMemo(() => getMDXComponent(code), [code])
@@ -14,10 +15,9 @@ export default function Mdx({ source }) {
         source={source}
         options={{
           mdxOptions: {
-            useDynamicImport: true,
+            //useDynamicImport: true,
             remarkPlugins: [],
             rehypePlugins: [
-              META3,
               rehypeSlug,
 
               [
@@ -29,6 +29,8 @@ export default function Mdx({ source }) {
                   },
                 },
               ],
+              //META3,
+              imageMetadata,
             ],
             format: 'mdx',
           },

@@ -1,9 +1,12 @@
 import { Suspense } from 'react'
 
+import { ListDetailView } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { getClient } from '~/components/Provider/ApolloClient'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
 import { PostDetail } from '~/components/Writing/PostDetail'
+import { PostsList } from '~/components/Writing/PostsList'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_POST, GET_POSTS } from '~/graphql/queries/posts'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
@@ -40,15 +43,16 @@ export default async function PostPage({ params: { slug } }) {
   }
   ///const { mdx } = await mdxToCode(post.text)
 
-  if (data?.post && !data?.post.publishedAt)
-    return (
-      <Suspense fallback={<Detail.Loading />}>
-        <PostEditor slug={slug} />
-      </Suspense>
-    )
+  if (data?.post && !data?.post.publishedAt) return <PostEditor slug={slug} />
   return (
-    <Suspense fallback={<Detail.Loading />}>
-      <PostDetail slug={slug} />
-    </Suspense>
+    <ListDetailView
+      list={<PostsList />}
+      hasDetail
+      detail={
+        <Suspense fallback={<LoadingSpinner />}>
+          <PostDetail slug={slug} />
+        </Suspense>
+      }
+    />
   )
 }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import * as React from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -6,7 +7,6 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import type { CommentType, GetCommentsQuery } from '~/graphql/typeSlut'
 import { useAddCommentMutation, useViewerQuery } from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks'
-import { genId } from '~/lib/nanoid'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 import { nuts } from '../Provider/Toaster'
@@ -19,15 +19,15 @@ interface Props {
 
 export function CommentForm({ refId, type, openModal }: Props) {
   const { data } = useViewerQuery()
-  const [text, setText] = useState('')
-  const [error, setError] = useState(null)
+  const [text, setText] = React.useState('')
+  const [error, setError] = React.useState(null)
 
   const [handleAddComment] = useAddCommentMutation({
     optimisticResponse: {
       __typename: 'Mutation',
       addComment: {
         __typename: 'Comment',
-        id: genId(),
+        id: uuidv4(),
         text,
         createdAt: timestampToCleanTime({ month: 'short' }).formatted,
         updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
@@ -35,9 +35,11 @@ export function CommentForm({ refId, type, openModal }: Props) {
         viewerCanEdit: false,
         author: {
           __typename: 'User',
-          id: genId(),
-          name: data?.viewer?.name,
+          id: uuidv4(),
+          username: data?.viewer?.username,
           image: data?.viewer?.image,
+          name: data?.viewer?.name,
+          role: data?.viewer?.role,
           isViewer: true,
         },
       },
@@ -82,7 +84,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
     }
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     const localText = localStorage.getItem(refId)
     if (localText) {
       setText(localText)
@@ -91,7 +93,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
 
   const debouncedText = useDebounce(text, 500)
 
-  useEffect(() => {
+  React.useEffect(() => {
     localStorage.setItem(refId, debouncedText)
   }, [debouncedText])
 
@@ -100,11 +102,11 @@ export function CommentForm({ refId, type, openModal }: Props) {
   }
 
   return (
-    <div className="sticky bottom-0 flex flex-col pb-10 bg-white border-t filter-blur border-gray-150 bg-opacity-90 dark:border-gray-800 dark:bg-gray-900 sm:pb-0">
+    <div className="filter-blur sticky bottom-0 flex flex-col border-t border-gray-150 bg-white bg-opacity-90 pb-10 dark:border-gray-800 dark:bg-gray-900 sm:pb-0">
       <form
-        className="flex items-center flex-none w-full max-w-3xl px-4 py-4 mx-auto space-x-4 md:px-6"
+        className="mx-auto flex w-full max-w-3xl flex-none items-center space-x-4 px-4 py-4 md:px-6"
         onSubmit={onSubmit}>
-        <div className="relative flex flex-none w-full">
+        <div className="relative flex w-full flex-none">
           <Textarea
             data-cy="comment-form-textarea"
             placeholder="Write a comment..."

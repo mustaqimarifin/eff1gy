@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
+import React from 'react'
 
 import { QuestionDetail } from '~/components/AMA/QuestionDetail'
 import { QuestionsList } from '~/components/AMA/QuestionsList'
 import { ListDetailView } from '~/components/Layouts'
 import { Detail } from '~/components/ListDetail/Detail'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { getClient } from '~/components/Provider/ApolloClient'
 import { CLIENT_URL } from '~/graphql/constants'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
@@ -21,7 +23,7 @@ interface QProps {
 
 //export const dynamic = 'force-static'
 
-export async function generateMetadata({ params }: QProps): Promise<Metadata> {
+/* export async function generateMetadata({ params }: QProps): Promise<Metadata> {
   const client = getClient()
 
   const f = await client.query<GetQuestionQuery>({
@@ -65,9 +67,9 @@ export async function generateMetadata({ params }: QProps): Promise<Metadata> {
     },
   }
 }
-
+ */
 export default async function QuestionPage({ params: { id } }) {
-  const client = getClient()
+  /*   const client = getClient()
 
   const { data, loading, error } = await client.query<GetQuestionQuery>({
     query: GET_QUESTION,
@@ -96,13 +98,16 @@ export default async function QuestionPage({ params: { id } }) {
   if (!data?.question || error) {
     return <Detail.Null />
   }
-
-  const { question } = data
+ */
   return (
     <ListDetailView
       list={<QuestionsList />}
       hasDetail
-      detail={<QuestionDetail id={id} />}
+      detail={
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <QuestionDetail id={id} />
+        </React.Suspense>
+      }
     />
   )
 }

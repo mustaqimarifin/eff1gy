@@ -59,7 +59,7 @@ function ConsCard({ title, cons }) {
 }
 
 function Image(props) {
-  return <NextImage {...props} quality={75} className="mdx-image rounded-md" />
+  return <NextImage {...props} quality={75} className=" rounded-md" />
 }
 
 const CustomLink = (props) => {

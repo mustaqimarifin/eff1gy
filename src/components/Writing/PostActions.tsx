@@ -18,7 +18,7 @@ function getReactionButton(post) {
 
     toggleReaction({
       variables: {
-        refId: post.id,
+        refId: post?.id,
         type: ReactionType.Post,
       },
       optimisticResponse: {
@@ -26,16 +26,16 @@ function getReactionButton(post) {
         toggleReaction: {
           __typename: 'Post',
           ...post,
-          reactionCount: post.viewerHasReacted
-            ? post.reactionCount - 1
-            : post.reactionCount + 1,
-          viewerHasReacted: !post.viewerHasReacted,
+          reactionCount: post?.viewerHasReacted
+            ? post?.reactionCount - 1
+            : post?.reactionCount + 1,
+          viewerHasReacted: !post?.viewerHasReacted,
         },
       },
       update(cache, { data: { toggleReaction } }) {
         cache.writeQuery({
           query: GET_POST,
-          variables: { id: post.id },
+          variables: { id: post?.id },
           data: {
             post: {
               ...post,
@@ -49,10 +49,10 @@ function getReactionButton(post) {
 
   return (
     <ReactionButton
-      id={post.id}
+      id={post?.id}
       loading={loading}
-      count={post.reactionCount}
-      hasReacted={post.viewerHasReacted}
+      count={post?.reactionCount}
+      hasReacted={post?.viewerHasReacted}
       onClick={handleClick}
     />
   )
@@ -64,7 +64,7 @@ function getEditButton(post) {
   if (!data?.viewer?.isAdmin) return null
 
   return (
-    <Button href="/writing/[slug]/edit" as={`/writing/${post.slug}/edit`}>
+    <Button href="/writing/[slug]/edit" as={`/writing/${post?.slug}/edit`}>
       Edit
     </Button>
   )
@@ -77,7 +77,7 @@ function viewButton(post) {
       <span className=" text-gray-500	">
         <LucideEye size={18} />
       </span>
-      <PageViews id={post.slug} trackView />
+      <PageViews id={post?.slug} trackView />
     </ViewButton>
   )
 }

@@ -1,7 +1,8 @@
 //import * as React from 'react'
 
+import { signOut } from 'next-auth/react'
+
 import Button, { DeleteButton } from '~/components/Button'
-import { signOut } from '~/lib/auth'
 
 import { DeleteUserDialog } from './DeleteUserDialog'
 

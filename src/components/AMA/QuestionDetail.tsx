@@ -41,7 +41,7 @@ export function QuestionDetail({ id }: { id: string }) {
           globalMenu={false}
           backButtonHref={'/ama'}
           magicTitle
-          title={question.title}
+          title={question?.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
           trailingAccessory={<QuestionActions question={question} />}
@@ -50,7 +50,9 @@ export function QuestionDetail({ id }: { id: string }) {
         <Detail.ContentContainer>
           <Detail.Header>
             <div className="flex items-center space-x-4 pb-2">
-              <Link href={`/u/${question.author.name}`} className="inline-flex">
+              <Link
+                href={`/u/${question?.author.name}`}
+                className="inline-flex">
                 <Avatar
                   user={question.author}
                   src={question.author.image}
@@ -79,10 +81,10 @@ export function QuestionDetail({ id }: { id: string }) {
                 </p>
               </div>
             </div>
-            <Detail.Title ref={titleRef}>{question.title}</Detail.Title>
-            {question.description && (
+            <Detail.Title ref={titleRef}>{question?.title}</Detail.Title>
+            {question?.description && (
               <MarkdownRenderer
-                children={question.description}
+                children={question?.description}
                 className="comment prose leading-normal"
                 variant="comment"
               />
@@ -91,7 +93,7 @@ export function QuestionDetail({ id }: { id: string }) {
         </Detail.ContentContainer>
 
         {question.viewerCanComment && (
-          <Comments refId={question.id} type={CommentType.Question} />
+          <Comments refId={question?.id} type={CommentType.Question} />
         )}
       </Detail.Container>
     </>

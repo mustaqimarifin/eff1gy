@@ -6,7 +6,6 @@ import { Tooltip } from '~/components/Tooltip'
 import { GET_STACK } from '~/graphql/queries/stack'
 import type { GetStackQuery } from '~/graphql/typeSlut'
 import {
-  GetStacksQuery,
   useGetStackQuery,
   useToggleStackUserMutation,
   useViewerQuery,

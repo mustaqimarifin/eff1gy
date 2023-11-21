@@ -1,12 +1,14 @@
 import { MessageCircle } from 'lucide-react'
-import { type RefObject, useRef } from 'react'
+import * as React from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { SignInDialog } from '~/components/SignInDialog'
 import type { CommentType } from '~/graphql/typeSlut'
 import { useGetCommentsQuery } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks'
 
 import { Comment } from './Comment'
+import { CommentForm } from './CommentForm'
 
 interface Props {
   refId: string
@@ -14,7 +16,7 @@ interface Props {
 }
 
 export function Comments({ refId, type }: Props) {
-  const messagesEndRef: RefObject<HTMLDivElement> = useRef(null)
+  const messagesEndRef: React.RefObject<HTMLDivElement> = React.useRef(null)
 
   const { data, loading, error, refetch } = useGetCommentsQuery({
     variables: {
@@ -65,6 +67,12 @@ export function Comments({ refId, type }: Props) {
         </div>
       </div>
       <div ref={messagesEndRef} />
+
+      <SignInDialog>
+        {({ openModal }) => (
+          <CommentForm refId={refId} type={type} openModal={openModal} />
+        )}
+      </SignInDialog>
     </div>
   )
 }

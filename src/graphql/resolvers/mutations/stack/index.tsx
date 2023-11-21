@@ -178,12 +178,12 @@ export async function toggleStackUser(
     include: { users: true },
   })
 
-  if (stackUsers.users.find((s) => s.id === viewer.id)) {
+  if (stackUsers.users.find((s) => s.id === viewer?.id)) {
     const data = await prisma.stack.update({
       where: { id },
       data: {
         users: {
-          disconnect: { id: viewer.id },
+          disconnect: { id: viewer?.id },
         },
       },
       include: { users: true },
@@ -191,7 +191,7 @@ export async function toggleStackUser(
 
     const usedBy = data.users
     const usedByViewer =
-      viewer?.id && data.users.some((s) => s.id === viewer.id)
+      viewer?.id && data.users.some((s) => s.id === viewer?.id)
 
     return {
       ...data,
@@ -203,7 +203,7 @@ export async function toggleStackUser(
       where: { id },
       data: {
         users: {
-          connect: { id: viewer.id },
+          connect: { id: viewer?.id },
         },
       },
       include: { users: true },
@@ -211,7 +211,7 @@ export async function toggleStackUser(
 
     const usedBy = data.users
     const usedByViewer =
-      viewer?.id && data.users.some((s) => s.id === viewer.id)
+      viewer?.id && data.users.some((s) => s.id === viewer?.id)
 
     return {
       ...data,

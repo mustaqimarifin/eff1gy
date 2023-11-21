@@ -53,8 +53,4 @@ export default {
   addPost: requiresAdmin(addPost),
   editPost: requiresAdmin(editPost),
   deletePost: requiresAdmin(deletePost),
-  /*   addBlog: requiresAdmin(addBlog),
-  editBlog: requiresAdmin(editBlog),
-  deleteBlog: requiresAdmin(deleteBlog), */
-  toggleReaction: requiresUser(toggleReaction),
 }

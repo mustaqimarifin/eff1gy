@@ -11,8 +11,9 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 const linkifyRegex = require('remark-linkify-regex')
+import deepmerge from 'deepmerge'
+
 import { CLIENT_URL } from '~/graphql/constants'
-import { deepMerge } from '~/lib/transformers'
 
 import { CodeBlock } from './CodeBlock'
 
@@ -214,7 +215,7 @@ function Callout(props) {
 export function MarkdownRenderer(props: any) {
   const { children, variant = 'longform', ...rest } = props
 
-  const schema = deepMerge(defaultSchema, {
+  const schema = deepmerge(defaultSchema, {
     tagNames: [...defaultSchema?.tagNames, 'sup', 'sub', 'section'],
     attributes: {
       '*': ['className'],

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { memo, useState } from 'react'
+import * as React from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import Button, { PrimaryButton } from '~/components/Button'
@@ -7,7 +7,7 @@ import { Textarea } from '~/components/Input'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { GET_COMMENTS } from '~/graphql/queries/comments'
 import type {
-  Comment as CP,
+  Comment as CommentProp,
   CommentType,
   GetCommentsQuery,
 } from '~/graphql/typeSlut'
@@ -21,19 +21,19 @@ import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentMenu } from './CommentMenu'
 
 interface Props {
-  comment: CP
+  comment: CommentProp
   refId: string
   type: CommentType
 }
 
-export const Comment = memo(function MemoComment({
+export const Comment = React.memo(function MemoComment({
   comment,
   refId,
   type,
 }: Props) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [editText, setEditText] = useState(comment.text)
-  const [isSavingEdit, setIsSavingEdit] = useState(false)
+  const [isEditing, setIsEditing] = React.useState(false)
+  const [editText, setEditText] = React.useState(comment.text)
+  const [isSavingEdit, setIsSavingEdit] = React.useState(false)
 
   const [deleteComment] = useDeleteCommentMutation({
     variables: { id: comment.id },
@@ -109,32 +109,34 @@ export const Comment = memo(function MemoComment({
   })
 
   return (
-    <div className="flex flex-col space-y-0 group">
+    <div className="group flex flex-col space-y-0">
       <div className="flex items-center justify-between space-x-4">
         <div className="flex items-center space-x-4">
-          <Link href={`/u/${comment.author.username}`} className="inline-flex">
-            <Avatar
-              user={comment.author}
-              src={comment.author.image}
-              width={40}
-              height={40}
-              quality={100}
-              layout="fixed"
-              className="rounded-full"
-            />
+          <Link href={`/u/${comment.author.username}`}>
+            <a className="inline-flex">
+              <Avatar
+                user={comment.author}
+                src={comment.author.image}
+                width={40}
+                height={40}
+                quality={100}
+                layout="fixed"
+                className="rounded-full"
+              />
+            </a>
           </Link>
 
           <div className="flex space-x-1">
-            <Link
-              href={`/u/${comment.author.username}`}
-              className="font-semibold leading-snug text-primary">
-              <div className="flex break-all line-clamp-1">
-                {comment.author.name}
-              </div>
+            <Link href={`/u/${comment.author.username}`}>
+              <a className="text-primary font-semibold leading-snug">
+                <div className="flex break-all line-clamp-1">
+                  {comment.author.name}
+                </div>
+              </a>
             </Link>
-            <p className="leading-snug text-quaternary">·</p>
+            <p className="text-quaternary leading-snug">·</p>
             <p
-              className="leading-snug text-quaternary line-clamp-1"
+              className="text-quaternary leading-snug line-clamp-1"
               title={createdAt.raw}>
               {createdAt.formatted}
             </p>
@@ -169,7 +171,7 @@ export const Comment = memo(function MemoComment({
       ) : (
         <MarkdownRenderer
           children={comment.text}
-          className="flex-grow leading-normal prose comment pl-14"
+          className="comment prose flex-grow pl-14 leading-normal"
           variant="comment"
         />
       )}

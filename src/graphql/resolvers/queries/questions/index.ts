@@ -32,7 +32,7 @@ export async function getQuestion(_, { id }: QueryQuestionArgs, ctx: Context) {
   // question hasn't been answered, show it to admin or asker
   if (!viewer) return null
 
-  if (question.userId === viewer.id || viewer.isAdmin) {
+  if (question.userId === viewer?.id || viewer.isAdmin) {
     return question
   }
 

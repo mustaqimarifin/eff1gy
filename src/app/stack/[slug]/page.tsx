@@ -13,7 +13,7 @@ import { CommentType } from '~/graphql/typeSlut'
 
 export const dynamic = 'force-static'
 
-export default async function BookmarkPage({ params: { slug } }) {
+export default async function StackPage({ params: { slug } }) {
   const client = getClient()
   const { data, loading, error } = await client.query<GetStackQuery>({
     query: GET_STACK,
@@ -21,7 +21,7 @@ export default async function BookmarkPage({ params: { slug } }) {
   })
 
   await Promise.allSettled([
-    client.query({ query: GET_VIEWER }),
+    //client.query({ query: GET_VIEWER }),
 
     client.query({
       query: GET_STACKS,
