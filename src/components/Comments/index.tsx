@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function Comments({ refId, type }: Props) {
-  const messagesEndRef: React.RefObject<HTMLDivElement> = React.useRef(null)
+  const messagesEndRef = React.useRef(null)
 
   const { data, loading, error, refetch } = useGetCommentsQuery({
     variables: {

@@ -85,8 +85,6 @@ function getComponentsForVariant(variant) {
           }
           return <p>{paragraph.children}</p>
         },
-        //h2: H2,
-        //h3: H3,
         Callout,
         code: Code,
       }

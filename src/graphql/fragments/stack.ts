@@ -26,7 +26,6 @@ export const StackDetailFragment = gql`
     createdAt
     description
     reactionCount
-    hitRate
 
     viewerHasReacted
     usedByViewer

@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import * as React from 'react'
 
-import { Akhyla, MapIcon, Muse2 } from '~/components/Icon'
+import { Akhyla, Muse2 } from '~/components/Icon'
 import { Detail } from '~/components/ListDetail/Detail'
 
-import { TraceImage } from '../Image'
+//import { TraceImage } from '../Image'
 
 function SectionTitle(props) {
   return (
@@ -236,7 +236,7 @@ export function IntroDetail() {
           <SectionContainer>
             <SectionTitle>Where</SectionTitle>
             <SectionContent>
-              <div className="">
+              {/*               <div className="">
                 <TraceImage
                   imgSrc="/site/home/map.jpg"
                   imgTrace="/site/home/map-trace.png"
@@ -250,7 +250,7 @@ export function IntroDetail() {
               <p className="text-quaternary flex items-center justify-end space-x-2 pt-2 text-sm md:text-right">
                 <MapIcon className="h-4 w-4" />
                 <span>Kuala Lumpur, WP</span>
-              </p>
+              </p> */}
             </SectionContent>
           </SectionContainer>
 

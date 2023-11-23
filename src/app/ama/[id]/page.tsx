@@ -6,7 +6,11 @@ import { QuestionsList } from '~/components/AMA/QuestionsList'
 import { ListDetailView } from '~/components/Layouts'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 
-export default async function QuestionPage({ params: { id } }) {
+export default async function QuestionPage({
+  params: { id },
+}: {
+  params: { id: string }
+}) {
   return (
     <ListDetailView
       list={<QuestionsList />}

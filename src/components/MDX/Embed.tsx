@@ -1,5 +1,5 @@
 'use client'
-import LiteYouTubeEmbed from 'react-lite-youtube-embed'
+import LiteYouTubeEmbed from './Lite'
 
 const youtubeDomains = new Set([
   'youtu.be',

@@ -22,7 +22,6 @@ import {
 } from '~/components/Icon'
 import { useViewerQuery } from '~/graphql/typeSlut'
 import { fetcher } from '~/lib/functions'
-import type { PLAY } from '~/pages/api/stats/now-playing'
 
 import Marquee from '../Marquee'
 import { NavigationLink } from './NavigationLink'

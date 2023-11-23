@@ -37,7 +37,6 @@ export default gql`
     featureImage: String
     reactionCount: Int
     viewerHasReacted: Boolean
-    hitRate: Int
   }
 
   type Bookmark {
@@ -53,7 +52,6 @@ export default gql`
     tags: [Tag]!
     reactionCount: Int
     viewerHasReacted: Boolean
-    hitRate: Int
   }
 
   type Question {
@@ -71,7 +69,6 @@ export default gql`
     viewerCanComment: Boolean
     reactionCount: Int
     viewerHasReacted: Boolean
-    hitRate: Int
   }
 
   enum UserRole {
@@ -121,7 +118,6 @@ export default gql`
     usedByViewer: Boolean
     reactionCount: Int
     viewerHasReacted: Boolean
-    hitRate: Int
   }
 
   type User {
@@ -154,7 +150,6 @@ export default gql`
     createdAt: Date!
     updatedAt: Date
     catID: String
-    hitRate: Int
   }
 
   input BookmarkFilter {
@@ -224,8 +219,6 @@ export default gql`
     stacks(first: Int, after: String): StacksConnection!
     comment(id: ID!): Comment
     comments(refId: ID!, type: CommentType!): [Comment]!
-    hit(id: ID!): Hit
-    hits(pageId: ID!, type: HitType!): [Hit]!
     posts(filter: WritingFilter): [Post]!
     post(slug: String!): Post
     blogs: [Blog]!
@@ -323,10 +316,6 @@ export default gql`
     ): Comment
     editComment(id: ID!, text: String): Comment
     deleteComment(id: ID!): Boolean
-
-    addHit(pageId: ID!, type: HitType!): Hit
-    editHit(id: ID!, text: String): Hit
-    deleteHit(id: ID!): Boolean
 
     editUser(data: EditUserInput): User
     deleteUser: Boolean

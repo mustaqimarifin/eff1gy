@@ -5,7 +5,6 @@ import * as React from 'react'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { GlobalNavigationContext } from '~/components/Provider'
 
-import SunMoon from '../Button/Theme'
 import { SidebarNavigation } from './Navigation'
 import { SidebarOverlay } from './Overlay'
 import { UserFooter } from './UserFooter'
@@ -25,8 +24,8 @@ export function Sidebar() {
         <TitleBar
           scrollContainerRef={scrollContainerRef}
           leadingAccessory={null}
-          trailingAccessory={<SunMoon />}
-          title="Mustaqim Arifin"
+          trailingAccessory={null}
+          title="[Mustaqim Arifin]"
         />
         <SidebarNavigation />
         <UserFooter />

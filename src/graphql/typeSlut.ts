@@ -80,7 +80,6 @@ export type Bookmark = {
   createdAt: Scalars['Date']['output']
   description?: Maybe<Scalars['String']['output']>
   faviconUrl?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
   host: Scalars['String']['output']
   id: Scalars['ID']['output']
   image?: Maybe<Scalars['String']['output']>
@@ -174,7 +173,6 @@ export type Hit = {
   __typename?: 'Hit'
   catID?: Maybe<Scalars['String']['output']>
   createdAt: Scalars['Date']['output']
-  hitRate?: Maybe<Scalars['Int']['output']>
   id: Scalars['ID']['output']
   updatedAt?: Maybe<Scalars['Date']['output']>
 }
@@ -190,20 +188,17 @@ export type Mutation = {
   __typename?: 'Mutation'
   addBookmark?: Maybe<Bookmark>
   addComment?: Maybe<Comment>
-  addHit?: Maybe<Hit>
   addPost?: Maybe<Post>
   addQuestion?: Maybe<Question>
   addStack?: Maybe<Stack>
   deleteBookmark?: Maybe<Scalars['Boolean']['output']>
   deleteComment?: Maybe<Scalars['Boolean']['output']>
-  deleteHit?: Maybe<Scalars['Boolean']['output']>
   deletePost?: Maybe<Scalars['Boolean']['output']>
   deleteQuestion?: Maybe<Scalars['Boolean']['output']>
   deleteStack?: Maybe<Scalars['Boolean']['output']>
   deleteUser?: Maybe<Scalars['Boolean']['output']>
   editBookmark?: Maybe<Bookmark>
   editComment?: Maybe<Comment>
-  editHit?: Maybe<Hit>
   editPost?: Maybe<Post>
   editQuestion?: Maybe<Question>
   editStack?: Maybe<Stack>
@@ -221,11 +216,6 @@ export type MutationAddCommentArgs = {
   refId: Scalars['ID']['input']
   text: Scalars['String']['input']
   type: CommentType
-}
-
-export type MutationAddHitArgs = {
-  pageId: Scalars['ID']['input']
-  type: HitType
 }
 
 export type MutationAddPostArgs = {
@@ -248,10 +238,6 @@ export type MutationDeleteCommentArgs = {
   id: Scalars['ID']['input']
 }
 
-export type MutationDeleteHitArgs = {
-  id: Scalars['ID']['input']
-}
-
 export type MutationDeletePostArgs = {
   id: Scalars['ID']['input']
 }
@@ -270,11 +256,6 @@ export type MutationEditBookmarkArgs = {
 }
 
 export type MutationEditCommentArgs = {
-  id: Scalars['ID']['input']
-  text?: InputMaybe<Scalars['String']['input']>
-}
-
-export type MutationEditHitArgs = {
   id: Scalars['ID']['input']
   text?: InputMaybe<Scalars['String']['input']>
 }
@@ -320,7 +301,6 @@ export type Post = {
   createdAt?: Maybe<Scalars['Date']['output']>
   excerpt?: Maybe<Scalars['String']['output']>
   featureImage?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
   id: Scalars['ID']['output']
   publishedAt?: Maybe<Scalars['Date']['output']>
   reactionCount?: Maybe<Scalars['Int']['output']>
@@ -339,8 +319,6 @@ export type Query = {
   bookmarks: BookmarksConnection
   comment?: Maybe<Comment>
   comments: Array<Maybe<Comment>>
-  hit?: Maybe<Hit>
-  hits: Array<Maybe<Hit>>
   post?: Maybe<Post>
   posts: Array<Maybe<Post>>
   question?: Maybe<Question>
@@ -373,15 +351,6 @@ export type QueryCommentArgs = {
 export type QueryCommentsArgs = {
   refId: Scalars['ID']['input']
   type: CommentType
-}
-
-export type QueryHitArgs = {
-  id: Scalars['ID']['input']
-}
-
-export type QueryHitsArgs = {
-  pageId: Scalars['ID']['input']
-  type: HitType
 }
 
 export type QueryPostArgs = {
@@ -421,7 +390,6 @@ export type Question = {
   author?: Maybe<User>
   createdAt: Scalars['Date']['output']
   description?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
   id: Scalars['ID']['output']
   playCount?: Maybe<Scalars['Int']['output']>
   reactionCount?: Maybe<Scalars['Int']['output']>
@@ -469,7 +437,6 @@ export type Stack = {
   __typename?: 'Stack'
   createdAt: Scalars['Date']['output']
   description?: Maybe<Scalars['String']['output']>
-  hitRate?: Maybe<Scalars['Int']['output']>
   id: Scalars['ID']['output']
   image?: Maybe<Scalars['String']['output']>
   name: Scalars['String']['output']
@@ -526,7 +493,6 @@ export type WritingFilter = {
 
 export type BookmarkDetailFragment = {
   reactionCount?: number | null
-  hitRate?: number | null
   viewerHasReacted?: boolean | null
   id: string
   url: string
@@ -579,7 +545,6 @@ export type PostDetailFragment = {
   text?: string | null
   featureImage?: string | null
   reactionCount?: number | null
-  hitRate?: number | null
   viewerHasReacted?: boolean | null
   id: string
   publishedAt?: any | null
@@ -602,7 +567,6 @@ export type QuestionDetailFragment = {
   viewerCanEdit?: boolean | null
   viewerCanComment?: boolean | null
   reactionCount?: number | null
-  hitRate?: number | null
   viewerHasReacted?: boolean | null
   id: string
   title: string
@@ -645,7 +609,6 @@ export type StackDetailFragment = {
   createdAt: any
   description?: string | null
   reactionCount?: number | null
-  hitRate?: number | null
   viewerHasReacted?: boolean | null
   usedByViewer?: boolean | null
   id: string
@@ -850,7 +813,6 @@ export type EditBookmarkMutation = {
         description?: string | null
         faviconUrl?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
       } & { __typename: 'Bookmark' })
@@ -879,7 +841,6 @@ export type AddBookmarkMutation = {
         description?: string | null
         faviconUrl?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
       } & { __typename: 'Bookmark' })
@@ -968,7 +929,6 @@ export type EditPostMutation = {
         text?: string | null
         featureImage?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
       } & { __typename: 'Post' })
     | null
@@ -997,7 +957,6 @@ export type AddPostMutation = {
         text?: string | null
         featureImage?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
       } & { __typename: 'Post' })
     | null
@@ -1021,7 +980,6 @@ export type EditQuestionMutation = {
         viewerCanEdit?: boolean | null
         viewerCanComment?: boolean | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         author?:
           | ({
@@ -1063,7 +1021,6 @@ export type AddQuestionMutation = {
         viewerCanEdit?: boolean | null
         viewerCanComment?: boolean | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         author?:
           | ({
@@ -1117,7 +1074,6 @@ export type EditStackMutation = {
         createdAt: any
         description?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         usedByViewer?: boolean | null
         usedBy: Array<
@@ -1160,7 +1116,6 @@ export type AddStackMutation = {
         createdAt: any
         description?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         usedByViewer?: boolean | null
         usedBy: Array<
@@ -1311,7 +1266,6 @@ export type GetBookmarkQuery = {
         description?: string | null
         faviconUrl?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
       } & { __typename: 'Bookmark' })
@@ -1379,7 +1333,6 @@ export type GetPostQuery = {
         text?: string | null
         featureImage?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
       } & { __typename: 'Post' })
     | null
@@ -1446,7 +1399,6 @@ export type GetQuestionQuery = {
         viewerCanEdit?: boolean | null
         viewerCanComment?: boolean | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         author?:
           | ({
@@ -1510,7 +1462,6 @@ export type GetStackQuery = {
         createdAt: any
         description?: string | null
         reactionCount?: number | null
-        hitRate?: number | null
         viewerHasReacted?: boolean | null
         usedByViewer?: boolean | null
         usedBy: Array<
@@ -1628,7 +1579,6 @@ export const BookmarkDetailFragmentDoc = /*#__PURE__*/ gql`
   fragment BookmarkDetail on Bookmark {
     ...BookmarkCore
     reactionCount
-    hitRate
     viewerHasReacted
     tags {
       name
@@ -1708,7 +1658,6 @@ export const PostDetailFragmentDoc = /*#__PURE__*/ gql`
     text
     featureImage
     reactionCount
-    hitRate
     viewerHasReacted
   }
   ${PostCoreFragmentDoc}
@@ -1735,7 +1684,6 @@ export const QuestionDetailFragmentDoc = /*#__PURE__*/ gql`
     viewerCanEdit
     viewerCanComment
     reactionCount
-    hitRate
     viewerHasReacted
   }
   ${QuestionCoreFragmentDoc}
@@ -1778,7 +1726,6 @@ export const StackDetailFragmentDoc = /*#__PURE__*/ gql`
     createdAt
     description
     reactionCount
-    hitRate
     viewerHasReacted
     usedByViewer
     usedBy {
@@ -3853,7 +3800,6 @@ export type BookmarkKeySpecifier = (
   | 'createdAt'
   | 'description'
   | 'faviconUrl'
-  | 'hitRate'
   | 'host'
   | 'id'
   | 'image'
@@ -3869,7 +3815,6 @@ export type BookmarkFieldPolicy = {
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   description?: FieldPolicy<any> | FieldReadFunction<any>
   faviconUrl?: FieldPolicy<any> | FieldReadFunction<any>
-  hitRate?: FieldPolicy<any> | FieldReadFunction<any>
   host?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
   image?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3924,7 +3869,6 @@ export type CommentFieldPolicy = {
 export type HitKeySpecifier = (
   | 'catID'
   | 'createdAt'
-  | 'hitRate'
   | 'id'
   | 'updatedAt'
   | HitKeySpecifier
@@ -3932,27 +3876,23 @@ export type HitKeySpecifier = (
 export type HitFieldPolicy = {
   catID?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  hitRate?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
   updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type MutationKeySpecifier = (
   | 'addBookmark'
   | 'addComment'
-  | 'addHit'
   | 'addPost'
   | 'addQuestion'
   | 'addStack'
   | 'deleteBookmark'
   | 'deleteComment'
-  | 'deleteHit'
   | 'deletePost'
   | 'deleteQuestion'
   | 'deleteStack'
   | 'deleteUser'
   | 'editBookmark'
   | 'editComment'
-  | 'editHit'
   | 'editPost'
   | 'editQuestion'
   | 'editStack'
@@ -3964,20 +3904,17 @@ export type MutationKeySpecifier = (
 export type MutationFieldPolicy = {
   addBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   addComment?: FieldPolicy<any> | FieldReadFunction<any>
-  addHit?: FieldPolicy<any> | FieldReadFunction<any>
   addPost?: FieldPolicy<any> | FieldReadFunction<any>
   addQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   addStack?: FieldPolicy<any> | FieldReadFunction<any>
   deleteBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   deleteComment?: FieldPolicy<any> | FieldReadFunction<any>
-  deleteHit?: FieldPolicy<any> | FieldReadFunction<any>
   deletePost?: FieldPolicy<any> | FieldReadFunction<any>
   deleteQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   deleteStack?: FieldPolicy<any> | FieldReadFunction<any>
   deleteUser?: FieldPolicy<any> | FieldReadFunction<any>
   editBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   editComment?: FieldPolicy<any> | FieldReadFunction<any>
-  editHit?: FieldPolicy<any> | FieldReadFunction<any>
   editPost?: FieldPolicy<any> | FieldReadFunction<any>
   editQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   editStack?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4001,7 +3938,6 @@ export type PostKeySpecifier = (
   | 'createdAt'
   | 'excerpt'
   | 'featureImage'
-  | 'hitRate'
   | 'id'
   | 'publishedAt'
   | 'reactionCount'
@@ -4017,7 +3953,6 @@ export type PostFieldPolicy = {
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   excerpt?: FieldPolicy<any> | FieldReadFunction<any>
   featureImage?: FieldPolicy<any> | FieldReadFunction<any>
-  hitRate?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
   publishedAt?: FieldPolicy<any> | FieldReadFunction<any>
   reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4034,8 +3969,6 @@ export type QueryKeySpecifier = (
   | 'bookmarks'
   | 'comment'
   | 'comments'
-  | 'hit'
-  | 'hits'
   | 'post'
   | 'posts'
   | 'question'
@@ -4054,8 +3987,6 @@ export type QueryFieldPolicy = {
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>
   comment?: FieldPolicy<any> | FieldReadFunction<any>
   comments?: FieldPolicy<any> | FieldReadFunction<any>
-  hit?: FieldPolicy<any> | FieldReadFunction<any>
-  hits?: FieldPolicy<any> | FieldReadFunction<any>
   post?: FieldPolicy<any> | FieldReadFunction<any>
   posts?: FieldPolicy<any> | FieldReadFunction<any>
   question?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4071,7 +4002,6 @@ export type QuestionKeySpecifier = (
   | 'author'
   | 'createdAt'
   | 'description'
-  | 'hitRate'
   | 'id'
   | 'playCount'
   | 'reactionCount'
@@ -4089,7 +4019,6 @@ export type QuestionFieldPolicy = {
   author?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   description?: FieldPolicy<any> | FieldReadFunction<any>
-  hitRate?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
   playCount?: FieldPolicy<any> | FieldReadFunction<any>
   reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4122,7 +4051,6 @@ export type QuestionsConnectionFieldPolicy = {
 export type StackKeySpecifier = (
   | 'createdAt'
   | 'description'
-  | 'hitRate'
   | 'id'
   | 'image'
   | 'name'
@@ -4139,7 +4067,6 @@ export type StackKeySpecifier = (
 export type StackFieldPolicy = {
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   description?: FieldPolicy<any> | FieldReadFunction<any>
-  hitRate?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
   image?: FieldPolicy<any> | FieldReadFunction<any>
   name?: FieldPolicy<any> | FieldReadFunction<any>

@@ -3,13 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("SQL3")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL")
 }
 
 model Account {
-  id String @id @default(uuid())
-
+  id                String  @id @default(dbgenerated("nanoid()"))
   userId            String
   type              String
   provider          String
@@ -37,7 +37,7 @@ model Session {
 }
 
 model User {
-  id String @id @default(uuid())
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt     DateTime   @default(now())
   name          String
@@ -58,7 +58,6 @@ model User {
   reactions     Reaction[]
   sessions      Session[]
   stacks        Stack[]    @relation("StackToUser")
-  likes         Like[]
 }
 
 model VerificationToken {
@@ -70,7 +69,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id        String @id @default(uuid())
+  id        String @id @default(dbgenerated("nanoid()"))
   viewCount Int?   @default(1)
 
   createdAt     DateTime   @default(now())
@@ -90,7 +89,7 @@ model Bookmark {
 }
 
 model Question {
-  id String @id @default(uuid())
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -108,7 +107,7 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(uuid())
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -131,7 +130,6 @@ model Comment {
   author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
   blogId   String?
-  likes    Like[]
 
   @@index([bookmarkId])
   @@index([questionId])
@@ -142,7 +140,7 @@ model Comment {
 }
 
 model Audio {
-  id String @id @default(uuid())
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -153,7 +151,7 @@ model Audio {
 }
 
 model Blog {
-  id        String     @id
+  id        String     @id @default(dbgenerated("nanoid()"))
   slug      String     @unique
   title     String
   date      DateTime   @default(now())
@@ -167,7 +165,7 @@ model Blog {
 }
 
 model Post {
-  id        String @id @default(uuid())
+  id        String @id @default(dbgenerated("nanoid()"))
   viewCount Int?   @default(1)
 
   createdAt    DateTime   @default(now())
@@ -189,7 +187,7 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(uuid())
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt    DateTime @default(now())
   text         String
@@ -209,7 +207,7 @@ model Tag {
 }
 
 model Stack {
-  id        String @id @default(uuid())
+  id        String @id @default(dbgenerated("nanoid()"))
   viewCount Int?   @default(1)
 
   createdAt   DateTime   @default(now())
@@ -226,7 +224,7 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(uuid())
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt  DateTime  @default(now())
   userId     String?
@@ -257,29 +255,8 @@ model PageView {
   comments  Comment[]
 }
 
-model Like {
-  userId    String
-  commentId String
-  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, commentId])
-}
-
-model EmailSubscription {
-  email String
-  type  EmailSubscriptionType
-
-  @@unique([email, type], name: "emailAndType")
-  @@index([email])
-}
-
 enum Role {
   BLOCKED
   USER
   ADMIN
-}
-
-enum EmailSubscriptionType {
-  HACKER_NEWS
 }

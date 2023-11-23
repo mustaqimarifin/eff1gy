@@ -1,6 +1,5 @@
 'use client'
 
-import { ThemeProvider } from 'next-themes'
 import * as React from 'react'
 
 import { ApolloWrapper } from './ApolloWrapper'
@@ -19,8 +18,6 @@ export const GlobalNavigationContext = React.createContext(
 )
 
 export function Providers({ children }: Props) {
-  //const apolloClient = useApollo(pageProps)
-
   const initialState = {
     isOpen: false,
     setIsOpen,
@@ -34,11 +31,9 @@ export function Providers({ children }: Props) {
 
   return (
     <>
-      <ThemeProvider attribute="class">
-        <GlobalNavigationContext.Provider value={state}>
-          <ApolloWrapper>{children}</ApolloWrapper>
-        </GlobalNavigationContext.Provider>
-      </ThemeProvider>
+      <GlobalNavigationContext.Provider value={state}>
+        <ApolloWrapper>{children}</ApolloWrapper>
+      </GlobalNavigationContext.Provider>
     </>
   )
 }

@@ -16,8 +16,8 @@ import { BookmarkActions } from './BookmarkActions'
 import { RelatedBookmarks } from './RelatedBookmarks'
 
 export function BookmarkDetail({ id }: { id: string }) {
-  const scrollContainerRef: React.RefObject<HTMLDivElement> = React.useRef(null)
-  const titleRef: React.RefObject<HTMLHeadingElement> = React.useRef(null)
+  const scrollContainerRef = React.useRef(null)
+  const titleRef = React.useRef(null)
   const { data, loading, error } = useGetBookmarkQuery({
     variables: { id },
   })

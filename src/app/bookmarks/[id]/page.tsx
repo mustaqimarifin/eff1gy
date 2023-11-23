@@ -19,7 +19,9 @@ export default async function BookmarkPage({ params: { id } }) {
 
   await Promise.all([
     client.query({ query: GET_VIEWER }),
-    client.query({ query: GET_BOOKMARKS }),
+    client.query({
+      query: GET_BOOKMARKS,
+    }),
     client.query({ query: GET_TAGS }),
 
     client.query<GetBookmarkQuery>({

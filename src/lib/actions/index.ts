@@ -1,5 +1,4 @@
 'use server'
-import { auth, youtube } from '@googleapis/youtube'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -7,7 +6,7 @@ import {
 import querystring from 'querystring'
 
 import { prisma } from '../prisma'
-
+/* 
 const googleAuth = new auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -20,7 +19,7 @@ const yt = youtube({
   version: 'v3',
   auth: googleAuth,
 })
-
+ */
 export const addView = async (id) => {
   noStore()
   const total = await prisma.pageView.upsert({
@@ -45,7 +44,7 @@ export const addView = async (id) => {
       },
     })
 }
-export const getAkhylaYouTubeSubs = cache(
+/* export const getAkhylaYouTubeSubs = cache(
   async () => {
     const response = await yt.channels.list({
       id: ['UCorhlPuflkGbA2sRylUldbQ'],
@@ -60,7 +59,7 @@ export const getAkhylaYouTubeSubs = cache(
     revalidate: 3600,
   }
 )
-
+ */
 const client_id = process.env.SPOTIFY_CLIENT_ID
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
 const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN
@@ -107,3 +106,32 @@ export const getTopTracks = async () => {
     next: { revalidate: 3600 },
   })
 }
+
+/* 
+
+{
+  "id": "ikkFeLTCltA",
+  "publishedAt": "2014-01-12T21:38:22Z",
+  "channelId": "UCd-pjthLQYLYVdN7GNwJgyA",
+  "title": "Amir Meludah - Igauan Si Laknat",
+  "description": "Igauan Si Laknat by Amir Meludah © 2014 MythLab Produced by VMPRMYTH & JSTN PWRS ...",
+  "thumbnail": "https://i.ytimg.com/vi/ikkFeLTCltA/hqdefault.jpg"
+}
+https://www.youtube.com/watch?v=FeLb0IPHGZQ
+https://api.socialcounts.org/youtube-live-subscriber-count/UCd-pjthLQYLYVdN7GNwJgyA
+
+
+{
+  "est_sub": 571,
+  "API_sub": 571,
+  "table": [
+    {
+      "name": "Channel Views",
+      "count": 121388
+    },
+    {
+      "name": "Videos",
+      "count": 65
+    }
+  ]
+} */
