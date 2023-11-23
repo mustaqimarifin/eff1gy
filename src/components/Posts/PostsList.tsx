@@ -13,7 +13,7 @@ import { type Post } from './BlogDetail'
 //import LoadingSpinner from '../LoadingSpinner';
 import { PostListItem } from './PostListItem'
 
-export const PostsList = ({ posts }) => {
+export const PostsList = ({ posts }: { posts: Post[] }) => {
   const path = usePathname()
   const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 

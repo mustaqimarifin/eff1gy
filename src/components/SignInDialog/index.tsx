@@ -5,6 +5,7 @@ import * as React from 'react'
 import { DialogComponent } from '~/components/Dialog'
 
 import { GhostButton } from '../Button'
+import SignIn2 from './modal'
 import { SignInDialogContent } from './SignInDialogContent'
 
 export function SignInDialog({

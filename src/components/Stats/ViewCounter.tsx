@@ -2,25 +2,26 @@ import { LucideEye } from 'lucide-react'
 import { Suspense, useEffect } from 'react'
 import useSWR from 'swr'
 
+import { useViewerQuery } from '~/graphql/typeSlut'
 import { fetcher } from '~/lib/functions'
+import { cx } from '~/lib/transformers'
 
 import Button, { ViewButton } from '../Button'
 
 export type CounterProps = {
   id?: string
   total?: number
-  trackView: boolean
+  trackView?: boolean
 }
 
 export const PageViews = ({ id, trackView }: CounterProps) => {
-  const { data } = useSWR<CounterProps>(
-    `/api/views/${id}`,
-    fetcher /* , {
+  const { data: abuser } = useViewerQuery()
+
+  const { data } = useSWR<CounterProps>(`/api/views/${id}`, fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
-  } */
-  )
+  })
 
   useEffect(() => {
     const registerView = () =>
@@ -35,16 +36,15 @@ export const PageViews = ({ id, trackView }: CounterProps) => {
   if (!data) return null
   else
     return (
-      <div className="select-none">
-        {/*         <ViewButton
+      <div className={cx(!abuser?.viewer?.isAdmin ?? 'hidden')}>
+        <ViewButton
           aria-label="Views"
-          style={{ maxHeight: '32px', overflow: 'hidden' }}
-        >
+          style={{ maxHeight: '32px', overflow: 'hidden' }}>
           <span className=" text-gray-500	">
-            <LucideEye size={18} />
+            <LucideEye size={16} />
           </span>
-c        </ViewButton> */}
-        <span>{data?.total}</span>
+          <span>{data?.total}</span>
+        </ViewButton>
       </div>
     )
 }

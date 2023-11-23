@@ -17,9 +17,9 @@ export default gql`
 
   type Blog {
     id: ID!
-    date: Date
     title: String
-    slug: String!
+    date: Date
+    slug: String
     reactionCount: Int
     viewerHasReacted: Boolean
   }

@@ -1,8 +1,11 @@
+import { useMutation } from '@apollo/client'
 import * as React from 'react'
 
 import { EditBookmarkDialog } from '~/components/Bookmarks/EditBookmarkDialog'
 import Button from '~/components/Button'
+import { TOGGLE_REACTION } from '~/graphql/mutations/reactions'
 import { GET_BOOKMARK } from '~/graphql/queries/bookmarks'
+import type { Bookmark } from '~/graphql/typeSlut'
 import {
   ReactionType,
   useToggleReactionMutation,
@@ -10,9 +13,10 @@ import {
 } from '~/graphql/typeSlut'
 
 import { ReactionButton } from '../Button/ReactionButton'
+import { PageViews } from '../Stats/ViewCounter'
 
-function getReactionButton(bookmark) {
-  const [toggleReaction, { loading }] = useToggleReactionMutation()
+function getReactionButton(bookmark: Bookmark) {
+  const [toggleReaction, { loading }] = useMutation(TOGGLE_REACTION)
 
   function handleClick() {
     if (loading) return
@@ -64,13 +68,15 @@ export function BookmarkActions({ bookmark }) {
   return (
     <div className="flex items-center space-x-2">
       {getReactionButton(bookmark)}
-      {/*     <ViewCounter catID={bookmark.id} /> */}
+      <PageViews id={bookmark.id} trackView />
 
       {data?.viewer?.isAdmin && (
-        <EditBookmarkDialog
-          bookmark={bookmark}
-          trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>}
-        />
+        <>
+          <EditBookmarkDialog
+            bookmark={bookmark}
+            trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>}
+          />
+        </>
       )}
     </div>
   )

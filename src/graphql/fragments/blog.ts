@@ -4,8 +4,8 @@ export const BlogCoreFragment = gql`
   fragment BlogCore on Blog {
     __typename
     id
-    date
     title
+    date
     slug
   }
 `

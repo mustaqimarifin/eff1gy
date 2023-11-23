@@ -32,7 +32,11 @@ export default async function PostPage({ params: { slug } }) {
       client.query({
         query: GET_COMMENTS,
         variables: { refId: data.post.id, type: CommentType.Post },
-        //context: { fetchOptions: { cache: 'force-dynamic' } },
+        context: {
+          fetchOptions: {
+            next: { revalidate: 5 },
+          },
+        },
       }),
   ])
 
@@ -45,7 +49,20 @@ export default async function PostPage({ params: { slug } }) {
   }
   ///const { mdx } = await mdxToCode(post.text)
 
-  if (data?.post && !data?.post.publishedAt) return <PostEditor slug={slug} />
+  if (data?.post && !data?.post.publishedAt)
+    return (
+      <ListDetailView
+        list={<PostsList />}
+        hasDetail
+        detail={
+          <Suspense fallback={<LoadingSpinner />}>
+            <PostEditor slug={slug}>
+              <Mdx source={data?.post.text} />
+            </PostEditor>
+          </Suspense>
+        }
+      />
+    )
   return (
     <ListDetailView
       list={<PostsList />}

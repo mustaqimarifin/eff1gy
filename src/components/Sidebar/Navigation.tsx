@@ -1,33 +1,30 @@
 'use client'
-import { Plus } from 'lucide-react'
+import { CassetteTape, ListMusicIcon, Plus } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
+import useSWR from 'swr'
 
+import type { TrackType } from '~/app/(misc)/dash/Track'
 import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
 import { GhostButton } from '~/components/Button'
 import {
   AMAIcon,
   BookmarksIcon,
-  CampsiteIcon,
   CaseIcon,
-  CritIcon,
   ExternalLinkIcon,
-  FigmaIcon,
   GitHubIcon,
-  HackerNewsIcon,
   HomeIcon,
-  PodcastIcon,
-  SecurityChecklistIcon,
   SoundcloudIcon,
   Spotify,
   StackIcon,
-  StaffDesignIcon,
   TwitterIcon,
   WritingIcon,
-  YouTubeIcon,
 } from '~/components/Icon'
 import { useViewerQuery } from '~/graphql/typeSlut'
+import { fetcher } from '~/lib/functions'
+import type { PLAY } from '~/pages/api/stats/now-playing'
 
+import Marquee from '../Marquee'
 import { NavigationLink } from './NavigationLink'
 
 function ThisAddBookmarkDialog() {
@@ -42,7 +39,17 @@ function ThisAddBookmarkDialog() {
   )
 }
 
+function Player(track: TrackType) {
+  return (
+    <Marquee speed={25} pauseOnHover delay={2} gradient>
+      <div className="pr-2">{` ${track.title} - ${track.artist} `}</div>
+    </Marquee>
+  )
+}
+
 export function SidebarNavigation() {
+  const { data: track } = useSWR<TrackType>(`/api/stats/now-playing`, fetcher)
+  console.log(track)
   const path = usePathname()
   const { data } = useViewerQuery()
   const sections = [
@@ -67,15 +74,6 @@ export function SidebarNavigation() {
           trailingAction: null,
           isExternal: false,
         },
-        {
-          href: '/writing',
-          label: 'Writing',
-          icon: WritingIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/writing') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
       ],
     },
     {
@@ -88,6 +86,15 @@ export function SidebarNavigation() {
           trailingAccessory: null,
           isActive: path.indexOf('/bookmarks') >= 0,
           trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
+          isExternal: false,
+        },
+        {
+          href: '/dash',
+          label: 'Dashboard',
+          icon: ListMusicIcon,
+          trailingAccessory: null,
+          isActive: path.indexOf('/dash') >= 0,
+          trailingAction: null,
           isExternal: false,
         },
 
@@ -116,16 +123,6 @@ export function SidebarNavigation() {
     {
       label: 'Projects',
       items: [
-        {
-          href: 'https://campsite.design',
-          label: 'Campsite',
-          icon: CampsiteIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true,
-        },
-
         /*         {
           href: 'https://designdetails.fm',
           label: 'Design Details',
@@ -191,6 +188,15 @@ export function SidebarNavigation() {
     {
       label: 'Online',
       items: [
+        {
+          href: '/dash',
+          label: track && track.isPlaying ? Player(track) : 'AUDIO FEED',
+          icon: CassetteTape,
+          trailingAccessory: null,
+          isActive: false,
+          trailingAction: null,
+          isExternal: true,
+        },
         {
           href: 'https://twitter.com/vmprmyth',
           label: 'Twitter',

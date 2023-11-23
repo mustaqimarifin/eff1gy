@@ -1,52 +1,12 @@
+/* eslint-disable no-useless-escape */
 import crypto from 'crypto'
 //import ky from 'ky'
-
-type Props = {
-  timestamp?: number | string
-  locale?: string
-  year?: 'numeric' | '2-digit'
-  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
-  day?: 'numeric' | '2-digit'
-}
-
-export const cacheOnly = {
-  dedupingInterval: 2000,
-  revalidateOnFocus: false,
-  /* revalidateOnMount: false,
-  revalidateOnReconnect: false,
-  refreshWhenOffline: false,
-  refreshWhenHidden: false,
-  refreshInterval: 0, */
-}
 
 export const sha256 = (
   x: WithImplicitCoercion<ArrayBuffer | SharedArrayBuffer>
 ) => {
   const buffer = Buffer.isBuffer(x) ? x : Buffer.from(x)
   return crypto.createHash('sha256').update(buffer).digest('base64')
-}
-
-export function cleanTime({
-  timestamp = null,
-  locale = 'en-us',
-  year = 'numeric',
-  month = 'short',
-  day = 'numeric',
-}: Props) {
-  const date = timestamp ? new Date(timestamp) : new Date()
-
-  const formatted = date.toLocaleDateString(locale, {
-    year,
-    month,
-    day,
-  })
-
-  const raw = date.toISOString()
-
-  return {
-    formatted,
-    raw,
-  }
 }
 
 //export const fetcher = url => ky.get(url).then(res => res.json())
@@ -182,20 +142,17 @@ export const throttleV2 = (func, limit) => {
   return [wrappedFunc, cleanUp]
 }
 
-export const slugify = (str = '') => {
-  let slug = str
+export function slugify(str) {
+  return str
+    .toString()
     .toLowerCase()
-    .replace(/\s/g, '-')
-    .replace(/[^a-zA-Z0-9-]/g, '')
-
-  // If the value starts with a number, swap it out!
-  // Doing this in a dumb way for now.
-  if (slug.match(/^[\d]{1,2}/)) {
-    slug = slug.replace(/^[\d]{1,2}/, 'digit')
-  }
-
-  return slug
+    .trim() // Remove whitespace from both ends of a string
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
+    .replace(/--+/g, '-') // Replace multiple - with single -
 }
+
 export const isEmpty = (obj) => Object.keys(obj).length === 0
 
 export const sortBy = (arr, key, direction = 'asc', comparator) => {

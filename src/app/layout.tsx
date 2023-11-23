@@ -8,11 +8,11 @@ import type { Metadata } from 'next'
 import { SiteLayout } from '~/components/Layouts'
 import { Providers } from '~/components/Provider'
 import { Toast } from '~/components/Provider/Toaster'
-import { HELLSQL } from '~/graphql/constants'
+import { CLIENT_URL } from '~/graphql/constants'
 import { cx } from '~/lib/transformers'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(HELLSQL),
+  metadataBase: new URL(CLIENT_URL),
   title: {
     default: 'Mustaqim Arifin',
     template: '%s | Mustaqim Arifin',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Mustaqim Arifin',
     description: 'Developer, writer, and musician.',
-    url: HELLSQL,
+    url: CLIENT_URL,
     siteName: 'Mustaqim Arifin',
     locale: 'en_US',
     type: 'website',
@@ -63,8 +63,8 @@ export default function RootLayout({
           <span>(if available)</span>
         </span>
         <main>
+          <Toast />
           <Providers>
-            <Toast />
             <SiteLayout>{children}</SiteLayout>
           </Providers>
         </main>

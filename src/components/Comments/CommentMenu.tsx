@@ -11,7 +11,7 @@ export function CommentMenu({ handleDelete, handleEdit, comment }) {
         <Menu>
           {({ open }) => (
             <>
-              <Menu.Button as="div" className="z-0 inline-flex">
+              <Menu.Button as="div" className="z-50 inline-flex">
                 <GhostButton
                   aria-label="Open comment actions menu"
                   size="small-square">

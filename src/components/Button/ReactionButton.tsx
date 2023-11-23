@@ -75,7 +75,7 @@ export function ReactionButton(props: Props) {
       {hasReactedState ? (
         <span className="relative text-red-500">
           {ping && (
-            <span className="absolute left-0 top-0 animate-ping">
+            <span className="absolute top-0 left-0 animate-ping">
               <HeartFillIcon />
             </span>
           )}

@@ -6,29 +6,34 @@ async function main() {
   await prisma.blog.createMany({
     data: [
       {
-        //id: 'dd09feac-5b22-4ab1-8119-24657e8517bb',
-        //date: '2022-10-04T10:43:00.000Z',
-        slug: 'ass',
+        id: 'b134a546-cd3b-47ae-8eba-3aba2df93a84',
+        title: 'VICE',
+        slug: 'vice',
       },
       {
-        //id: 'f2cd4774-4c75-42c8-b405-a32cef4d3b7c',
-        //date: '2022-10-27T02:37:23.446Z',
-        slug: 'anal',
+        id: 'd6b20993-49d1-4e5b-add3-902a0955c07b',
+        title: 'Multi Unfathomable',
+        slug: 'multi-unfathomable',
       },
       {
-        //id: 'dd09feac-5b22-4ab1-8119-24657e8517bb',
-        // date: '2022-10-04T10:43:00.000Z',
+        id: 'dd09feac-5b22-4ab1-8119-24657e8517bb',
+        title: 'the saus',
         slug: 'the-saus',
       },
       {
-        // id: '19cf1230-f1ab-45c0-84f5-59381d48bbe9',
-        //  date: '2022-10-08T08:01:00.000Z',
-        slug: 'new-mdx',
+        id: '58ed33dc-3375-4b9e-bc81-1d93f6988c8a',
+        title: 'Ass',
+        slug: 'ass',
       },
       {
-        //id: 'd6b20993-49d1-4e5b-add3-902a0955c07b',
-        //date: '2022-10-05T12:43:00.000Z',
-        slug: 'multi-unfathomable',
+        id: 'f2cd4774-4c75-42c8-b405-a32cef4d3b7c',
+        title: 'Anal',
+        slug: 'anal',
+      },
+      {
+        id: '19cf1230-f1ab-45c0-84f5-59381d48bbe9',
+        title: 'New MDX',
+        slug: 'new-mdx',
       },
     ],
   })

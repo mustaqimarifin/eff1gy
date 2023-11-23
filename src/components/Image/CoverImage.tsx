@@ -1,6 +1,7 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import { useState } from 'react'
+
+import { cx } from '~/lib/transformers'
 
 export default function CoverImage({ src }) {
   const [isLoading, setLoading] = useState(true)
@@ -12,7 +13,7 @@ export default function CoverImage({ src }) {
         alt={''}
         width={680}
         height={503}
-        className={clsx(
+        className={cx(
           ' mx-auto flex aspect-[21/9] w-full items-center justify-center object-cover object-top duration-700 ease-in-out group-hover:opacity-75 lg:max-w-7xl',
           isLoading
             ? 'scale-110 blur-2xl grayscale'

@@ -1,11 +1,10 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 import { CommentType, useGetBlogQuery } from '~/graphql/typeSlut'
-import { timestampToCleanTime } from '~/lib/transformers'
 
+import { Comments } from '../Comments'
 import { CoverImage } from '../Image'
 import { Detail } from '../ListDetail/Detail'
 import { TitleBar } from '../ListDetail/TitleBar'
@@ -47,12 +46,12 @@ type Props = {
   slug: string
 }
 
-const Comments = dynamic(
+/* const Comments = dynamic(
   () => import('../Comments/index').then((x) => x.Comments),
   {
     ssr: false,
   }
-)
+) */
 export function BlogDetail({ children, post, slug }: Props) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
@@ -85,7 +84,7 @@ export function BlogDetail({ children, post, slug }: Props) {
   } */
   // const { post } = data;
   //  const publishedAt = timestampToCleanTime({ timestamp: post.publishedAt });
-  const publishedAt = timestampToCleanTime({ timestamp: post.date })
+  //const publishedAt = timestampToCleanTime({ timestamp: post.date })
 
   return (
     <>
@@ -96,9 +95,7 @@ export function BlogDetail({ children, post, slug }: Props) {
           backButtonHref={'/blog'}
           magicTitle
           title={post.title}
-          //@ts-ignore
           titleRef={titleRef}
-          //@ts-ignore
           scrollContainerRef={scrollContainerRef}
           trailingAccessory={<BlogActions blog={blog} />}
         />
@@ -106,39 +103,14 @@ export function BlogDetail({ children, post, slug }: Props) {
         <Detail.ContentContainer>
           <Detail.Header>
             <CoverImage src={post.caption} />
-
             <Detail.Title ref={titleRef}>
               <PageTitle>{post.title}</PageTitle>
             </Detail.Title>
           </Detail.Header>
-
-          <div className="mb-16 mt-2 flex w-full flex-col items-start justify-between  text-center font-semibold uppercase md:flex-row md:items-center">
-            <div className="mt-2 flex  items-center gap-2 text-sm text-gray-600 dark:text-gray-400  md:mt-0">
-              {publishedAt.formatted}
-              {` • `}
-              {/*                 <ViewCounter slug={post.slug} />
-               */}{' '}
-              {` • `}
-              <div className="flex space-x-2">
-                {post.tags?.length &&
-                  post.tags
-                    .slice(0)
-                    .map((tag: any, index: any) => (
-                      <div key={index}>{tag}</div>
-                    ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="dark:prose-dark mx-auto mt-8 w-full max-w-4xl lg:prose lg:text-lg ">
-            <React.Suspense fallback={<LoadingSpinner />}>
-              {children}
-            </React.Suspense>
-          </div>
-
+          {children}
           <div className="py-6" />
           <React.Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={slug} type={CommentType.Blog} />
+            <Comments refId={data.blog.id} type={CommentType.Blog} />
           </React.Suspense>
         </Detail.ContentContainer>
       </Detail.Container>

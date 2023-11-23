@@ -13,7 +13,6 @@ export const GRAPHCDN_PURGE_ENDPOINT = process.env.GRAPHCDN_PURGE_ENDPOINT
 export const CLIENT_URL = IS_PROD ? baseUrl : devUrl
 
 export const HELLSQL = CLIENT_URL + GQL
-
 const PREVIEW_URL = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL
 
 export const GRAPHQL_ENDPOINT = IS_DEV
@@ -23,8 +22,3 @@ export const GRAPHQL_ENDPOINT = IS_DEV
     : '/api/graphql'
 
 export const PAGINATION_AMOUNT = 24
-
-export const RATE_LIMIT_REQUEST_AMOUNT = 1024
-export const RATE_LIMIT_REQUEST_DURATION = 10 * 1000 // 10 seconds
-
-export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'

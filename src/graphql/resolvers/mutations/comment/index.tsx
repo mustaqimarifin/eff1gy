@@ -110,7 +110,7 @@ export async function addComment(
     throw new GraphQLError('Commenting on something that doesn’t exist')
   }
 
-  const [comment] = await Promise.allSettled([
+  const [comment] = await Promise.all([
     prisma.comment.create({
       data: {
         text,

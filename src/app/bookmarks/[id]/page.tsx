@@ -12,7 +12,7 @@ import { GET_VIEWER } from '~/graphql/queries/viewer'
 import type { GetBookmarkQuery } from '~/graphql/typeSlut'
 import { CommentType } from '~/graphql/typeSlut'
 
-//export const dynamic = 'force-static'
+//export const dynamic = 'force-dynamic'
 
 export default async function BookmarkPage({ params: { id } }) {
   const client = getClient()
@@ -25,11 +25,13 @@ export default async function BookmarkPage({ params: { id } }) {
     client.query<GetBookmarkQuery>({
       query: GET_BOOKMARK,
       variables: { id },
+      context: { fetchOptions: { cache: 'no-store' } },
     }),
 
     client.query({
       query: GET_COMMENTS,
       variables: { refId: id, type: CommentType.Bookmark },
+      context: { fetchOptions: { cache: 'no-store' } },
     }),
   ])
 

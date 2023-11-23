@@ -17,6 +17,7 @@ export function QuestionDetail({ id }: { id: string }) {
   const titleRef = React.useRef(null)
   const { data, loading, error } = useGetQuestionQuery({
     variables: { id },
+    context: { fetchOptions: { cache: 'force-cache' } },
   })
 
   if (loading) {

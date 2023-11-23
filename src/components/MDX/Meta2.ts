@@ -70,9 +70,9 @@ async function createPreviewImage(node: ImageNode) {
     //console.log('lqip', { ...result.metadata, cacheKey });
 
     if (!result) throw Error(`Invalid image with src "${url}"`)
-    ;(node.properties.width = result.metadata.originalWidth || 768),
-      (node.properties.height = result.metadata.originalHeight || 432),
-      (node.properties.blurDataURL = result.metadata.dataURIBase64),
+    ;(node.properties.width = previewImage.width || 768),
+      (node.properties.height = previewImage.height || 432),
+      (node.properties.blurDataURL = previewImage.base64),
       (node.properties.placeholder = 'blur'),
       console.log('lqip', { result, url })
     /*  try {

@@ -19,7 +19,7 @@ interface PD {
   slug?: string
   post?: Post
 }
-export function PostDetail({ slug }: PD) {
+export function PostDetail({ children, slug }: PD) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
   const { data, loading, error } = useQuery(GET_POST, {
@@ -65,12 +65,12 @@ export function PostDetail({ slug }: PD) {
               {publishedAt.formatted}
             </span>
           </Detail.Header>
-          {/*     <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div> */}
+          <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div>
 
-          <MarkdownRenderer
+          {/*  <MarkdownRenderer
             children={post.text}
             className="mt-8 xl:prose-md lg:max-w-3xl"
-          />
+          /> */}
           {/* bottom padding to give space between post content and comments */}
           <div className="py-6" />
         </Detail.ContentContainer>

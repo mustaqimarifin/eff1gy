@@ -26,8 +26,10 @@ export function PostEditorActions() {
 
   const [addPost, { loading: creatingPost }] = useAddPostMutation({
     onCompleted({ addPost }) {
-      nuts.success('Draft created')
-      router.push('/writing/[slug]/edit', { slug: addPost.slug })
+      nuts.success('Draft Created', {
+        icon: '🙀',
+      }),
+        router.push('/writing/[slug]/edit', { slug: addPost.slug })
     },
   })
 

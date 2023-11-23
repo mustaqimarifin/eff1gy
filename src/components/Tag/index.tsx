@@ -1,5 +1,4 @@
 import { XCircleIcon } from 'lucide-react'
-import * as React from 'react'
 
 export function Tags({ tags }) {
   if (!tags || tags.length === 0) return null

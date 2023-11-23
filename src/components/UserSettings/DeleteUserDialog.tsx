@@ -1,6 +1,4 @@
 import { useApolloClient } from '@apollo/client'
-import { useRouter } from 'next/navigation'
-import * as React from 'react'
 
 import { DeleteButton } from '~/components/Button'
 import { DialogComponent } from '~/components/Dialog'
@@ -9,7 +7,6 @@ import { useDeleteUserMutation } from '~/graphql/typeSlut'
 import { LoadingSpinner } from '../LoadingSpinner'
 
 export function DeleteUserDialog({ trigger }) {
-  const router = useRouter()
   const apolloClient = useApolloClient()
   const [handleDelete, { loading }] = useDeleteUserMutation()
 

@@ -28,10 +28,12 @@ export async function getBlog(
   ctx: Context
 ) {
   const { prisma, viewer } = ctx
+
   const [blogBySlug, blogById] = await Promise.all([
     prisma.blog.findUnique({
       where: { slug },
       include: {
+        comments: true,
         _count: {
           select: {
             reactions: true,
@@ -42,6 +44,7 @@ export async function getBlog(
     prisma.blog.findUnique({
       where: { slug },
       include: {
+        comments: true,
         _count: {
           select: {
             reactions: true,
@@ -53,9 +56,9 @@ export async function getBlog(
 
   const blog = blogBySlug || blogById
 
-  if (!blog.date && !viewer?.isAdmin) {
+  /*   if (!blog.date && !viewer?.isAdmin) {
     return null
   }
-
+ */
   return blog
 }

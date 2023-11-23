@@ -23,7 +23,6 @@ export default async function CaseStudy({ params: { slug } }) {
   if (!casestudy) {
     return { notFound: true }
   }
-  //const { mdx } = await mdxToCode(casestudy.content)
 
   return (
     <ListDetailView

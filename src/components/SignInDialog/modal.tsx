@@ -1,11 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
-import Link from 'next/link'
+import { GithubIcon } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { Fragment, useRef, useState } from 'react'
 
-import { GoogleButton } from '../Button'
+import { GhostButton, GoogleButton } from '../Button'
 
-export default function Example() {
+export default function SignIn2() {
   const [open, setOpen] = useState(true)
 
   const cancelButtonRef = useRef(null)
@@ -41,6 +41,7 @@ export default function Example() {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
+                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"></div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h3"
@@ -48,11 +49,19 @@ export default function Example() {
                         Deactivate account
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
-                          cannot be undone.
-                        </p>
+                        <GhostButton
+                          href={`/api/auth/signin/github`}
+                          className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            signIn('github')
+                          }}
+                          aria-label="Sign in with GitHub">
+                          <GithubIcon className="w-5 h-5 dark:text-white " />
+                          <span className="ml-2 text-sm leading-none dark:text-gray-200">
+                            Sign in with GitHub
+                          </span>
+                        </GhostButton>
                       </div>
                     </div>
                   </div>

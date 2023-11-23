@@ -20,8 +20,8 @@ export default async function StackPage({ params: { slug } }) {
     variables: { slug },
   })
 
-  await Promise.allSettled([
-    //client.query({ query: GET_VIEWER }),
+  await Promise.all([
+    client.query({ query: GET_VIEWER }),
 
     client.query({
       query: GET_STACKS,
@@ -31,6 +31,7 @@ export default async function StackPage({ params: { slug } }) {
       client.query({
         query: GET_COMMENTS,
         variables: { refId: data.stack.id, type: CommentType.Stack },
+        context: { fetchOptions: { cache: 'no-store' } },
       }),
   ])
 

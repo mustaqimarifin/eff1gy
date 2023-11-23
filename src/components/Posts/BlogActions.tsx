@@ -59,7 +59,7 @@ function getReactionButton(blog: Blog) {
 export function BlogActions({ blog }: { blog: Blog }) {
   return (
     <div className="flex items-center space-x-2">
-      <PageViews id={blog.slug} trackView />
+      {/*  <PageViews id={blog.slug} trackView /> */}
       {getReactionButton(blog)}
     </div>
   )

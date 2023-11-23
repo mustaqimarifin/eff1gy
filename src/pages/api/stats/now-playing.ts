@@ -1,6 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { getNowPlaying } from '~/lib/spotify'
+import type { TrackType } from '~/app/(misc)/dash/Track'
+import { getNowPlaying } from '~/lib/actions'
+
+type Artist = {
+  name: string
+}
+
+export type PLAY = {
+  is_playing: boolean
+  item: {
+    name: string
+    external_urls: {
+      spotify: string
+    }
+    artists: Artist[]
+    album: {
+      name: string
+      images: {
+        url: string
+      }
+    }
+  }
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,10 +42,11 @@ export default async function handler(
 
   const isPlaying = song.is_playing
   const title = song.item.name
-  const artist = song.item.artists.map((_artist) => _artist.name).join(', ')
+  const artist = song.item.artists.map((artist) => artist.name).join(', ')
   const album = song.item.album.name
   const albumImageUrl = song.item.album.images[0].url
   const songUrl = song.item.external_urls.spotify
+  console.log(songUrl)
 
   res.setHeader(
     'Cache-Control',

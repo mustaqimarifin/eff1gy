@@ -30,6 +30,7 @@
     "prettier.config.mjs",
     "next.config.mjs",
     "prisma/seed.mts",
-    "src/app/page copy.tt"
+    "src/app/page copy.tt",
+    "src/lib/transformers/merge.js"
   ]
 }

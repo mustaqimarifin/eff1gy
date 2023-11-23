@@ -30,7 +30,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
     <div className="relative flex h-full min-h-screen w-full">
       <Sidebar />
 
-      <div className="flex flex-1">{children}</div>
+      <div className="flex flex-[2_2_0%]">{children}</div>
     </div>
   )
 }

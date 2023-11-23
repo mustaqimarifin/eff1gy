@@ -14,6 +14,7 @@ declare module 'next-auth' {
       isAdmin: boolean
     } & DefaultSession['user']
     userId: string
+    isAdmin: boolean
   }
 
   interface User extends PrismaUser {}

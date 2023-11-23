@@ -1,7 +1,6 @@
-import { ApolloServer } from '@apollo/server'
-import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import type { NextRequest } from 'next/server'
+import { createYoga } from 'graphql-yoga'
+import type { User } from 'next-auth'
 
 import { getViewer } from '~/graphql/context'
 import resolvers from '~/graphql/resolvers'
@@ -13,34 +12,20 @@ const schema = makeExecutableSchema({
   resolvers,
 })
 
-const server = new ApolloServer({
-  schema,
-})
-
-const handleRequest = startServerAndCreateNextHandler<NextRequest>(server, {
-  context: async (req: NextRequest, res: Response) => {
-    const viewer = await getViewer(req, res)
-    return {
-      viewer,
-      prisma,
-    }
-  },
-})
-
-/* const { handleRequest } = createYoga<
+const { handleRequest } = createYoga<
   {
     req: Request
     res: Response
   },
   {
-    session
+    viewer: User | null
   }
 >({
   context: async ({ req, res }) => {
-    const session = await getViewer(req, res)
+    const viewer = await getViewer(req, res)
 
     return {
-      session,
+      viewer,
       prisma,
     }
   },
@@ -48,5 +33,5 @@ const handleRequest = startServerAndCreateNextHandler<NextRequest>(server, {
   graphqlEndpoint: '/api/graphql',
   fetchAPI: { Response },
 })
- */
+
 export { handleRequest as GET, handleRequest as POST }

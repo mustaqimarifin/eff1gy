@@ -1,11 +1,7 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 
-//import { useInView } from 'react-intersection-observer';
-
 export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
-  //const { ref, inView, entry } = useInView()
-
   const [isLoaded, setLoaded] = useState(false)
 
   return (

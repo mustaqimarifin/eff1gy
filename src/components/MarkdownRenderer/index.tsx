@@ -2,29 +2,21 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-unsafe-optional-chaining */
 
+import Markdown from 'markdown-to-jsx'
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
 import * as React from 'react'
-import Markdown from 'react-markdown'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
-const linkifyRegex = require('remark-linkify-regex')
-import deepmerge from 'deepmerge'
 
 import { CLIENT_URL } from '~/graphql/constants'
 
-import { CodeBlock } from './CodeBlock'
+import { Code, createHeading } from '../MDX'
 
 function LinkRenderer({ href, ...rest }: any) {
-  // auto-link headings
   if (href.startsWith('#')) {
     return <a href={href} {...rest} />
   }
 
   if (href.startsWith('@')) {
-    // link to a mention
     return <Link href={`/u/${href.slice(1)}`} {...rest} />
   }
   try {
@@ -44,6 +36,12 @@ function getComponentsForVariant(variant) {
   switch (variant) {
     case 'longform': {
       return {
+        h1: createHeading(1),
+        h2: createHeading(2),
+        h3: createHeading(3),
+        h4: createHeading(4),
+        h5: createHeading(5),
+        h6: createHeading(6),
         a: LinkRenderer,
         p: (paragraph: { children?: any; node?: any }) => {
           const { node } = paragraph
@@ -90,32 +88,7 @@ function getComponentsForVariant(variant) {
         //h2: H2,
         //h3: H3,
         Callout,
-        pre({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
-            <CodeBlock
-              text={String(children).replace(/\n$/, '')}
-              language={language}
-              {...props}
-            />
-          ) : (
-            <>{children}</>
-          )
-        },
-        code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
-            <CodeBlock
-              text={String(children).replace(/\n$/, '')}
-              language={language}
-              {...props}
-            />
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
-          )
-        },
+        code: Code,
       }
     }
     // Questions, comments, descriptions on bookmarks, etc.
@@ -128,23 +101,7 @@ function getComponentsForVariant(variant) {
         h4: 'p',
         h5: 'p',
         h6: 'p',
-        pre({ children }) {
-          return <>{children}</>
-        },
-        code({ node, inline, className, children, ...props }) {
-          const language = /language-(\w+)/.exec(className || '')?.[1]
-          return !inline && language ? (
-            <CodeBlock
-              text={String(children).replace(/\n$/, '')}
-              language={language}
-              {...props}
-            />
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
-          )
-        },
+        code: Code,
       }
     }
   }
@@ -212,33 +169,19 @@ function Callout(props) {
   )
 }
 
-export function MarkdownRenderer(props: any) {
+export function MarkdownRenderer(props) {
   const { children, variant = 'longform', ...rest } = props
-
-  const schema = deepmerge(defaultSchema, {
-    tagNames: [...defaultSchema?.tagNames, 'sup', 'sub', 'section'],
-    attributes: {
-      '*': ['className'],
-    },
-    clobberPrefix: '',
-    clobber: ['name', 'id'],
-  })
 
   const components = getComponentsForVariant(variant)
 
   return (
     <article className="prose-quoteless prose prose-neutral dark:prose-invert">
       <Markdown
-        {...rest}
-        remarkPlugins={[remarkGfm, linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
-        rehypePlugins={[
-          [rehypeSanitize, schema],
-          rehypeSlug,
-          [rehypeAutolinkHeadings, { behavior: 'wrap' }],
-        ]}
-        components={components}>
-        {children}
-      </Markdown>
+        {...props}
+        options={{
+          overrides: components,
+        }}
+      />
     </article>
   )
 }

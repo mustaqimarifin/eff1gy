@@ -1,7 +1,8 @@
 'use client'
 
-import { LayoutGroup, motion } from 'framer-motion'
 import { useState } from 'react'
+
+import { LayoutGroup } from '../Bookmarks/BookmarksList'
 
 type Item = {
   id: string
@@ -13,12 +14,14 @@ type SegmentedControlProps = {
   items: Array<Item>
   active: string
 }
-
+const spring = { stiffness: 100, damping: 10 }
 const SegmentedControl = ({
   onSetActiveItem,
   items,
   active,
 }: SegmentedControlProps): JSX.Element => {
+  const order = items.map((item) => item.id)
+
   const [activeItem, setActiveitem] = useState(active)
 
   function onChange(i) {
@@ -27,16 +30,13 @@ const SegmentedControl = ({
   }
 
   return (
-    <LayoutGroup id="sc">
+    <LayoutGroup>
       <ol
         className={`flex list-none rounded-md bg-black bg-opacity-5 p-1 dark:bg-white dark:bg-opacity-5`}>
         {items.map((item, i) => {
           const isActive = items[i].id === activeItem
           return (
-            <motion.li
-              className="relative flex-1 leading-none"
-              whileTap={isActive ? { scale: 0.95 } : { opacity: 0.6 }}
-              key={item.id}>
+            <li id="bl" className="relative flex-1 leading-none" key={item.id}>
               <button
                 onClick={() => onChange(i)}
                 type="button"
@@ -46,14 +46,14 @@ const SegmentedControl = ({
                     : `text-black text-opacity-60 hover:text-opacity-100 dark:text-white`
                 }`}>
                 {isActive && (
-                  <motion.div
-                    layoutId="SegmentedControlActive"
+                  <div
+                    id="SegmentedControlActive"
                     className="z-1 absolute bottom-0 left-0 right-0 top-0 rounded bg-white shadow-sm content-none dark:bg-gray-700"
                   />
                 )}
                 <span className="z-2 relative">{item.label}</span>
               </button>
-            </motion.li>
+            </li>
           )
         })}
       </ol>

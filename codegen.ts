@@ -22,7 +22,7 @@ const config: CodegenConfig = {
         identifierName: 'ListAllOperations',
       },
     }, */
-    './src/graphql/typeSlut.tsx': {
+    './src/graphql/typeSlut.ts': {
       plugins: [
         'typescript',
         'typescript-operations',
@@ -33,13 +33,15 @@ const config: CodegenConfig = {
       config: {
         withHOC: false,
         withHooks: true,
-        withComponent: false,
         reactApolloVersion: 3,
         preResolveTypes: true,
         identifierName: 'ListAllOperations',
         flattenGeneratedTypes: true,
         flattenGeneratedTypesIncludeFragments: true,
         mergeFragmentTypes: true,
+        useTypeImports: true,
+        dedupeOperationSuffix: true,
+        pureMagicComment: true,
       },
     },
   },

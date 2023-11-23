@@ -1,6 +1,5 @@
 'use client'
 import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { LayoutGroup, motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
@@ -73,23 +72,21 @@ export function QuestionsList() {
       <ListContainer data-cy="questions-list" onRef={setScrollContainerRef}>
         <AMATitlebar scrollContainerRef={scrollContainerRef} />
 
-        <LayoutGroup>
-          <div className="lg:space-y-1 lg:p-3">
-            {questions.edges.map((question) => {
-              const active = path === question.node.id.toString() // post ids are numbers
+        <div className="lg:space-y-1 lg:p-3">
+          {questions.edges.map((question) => {
+            const active = path === question.node.id.toString() // post ids are numbers
 
-              return (
-                <motion.div layout key={question.node.id}>
-                  <QuestionListItem question={question.node} active={active} />
-                </motion.div>
-              )
-            })}
+            return (
+              <animate key={question.node.id}>
+                <QuestionListItem question={question.node} active={active} />
+              </animate>
+            )
+          })}
 
-            {data.questions.pageInfo.hasNextPage && (
-              <ListLoadMore setIsVisible={setIsVisible} />
-            )}
-          </div>
-        </LayoutGroup>
+          {data.questions.pageInfo.hasNextPage && (
+            <ListLoadMore setIsVisible={setIsVisible} />
+          )}
+        </div>
       </ListContainer>
     </QuestionsContext.Provider>
   )

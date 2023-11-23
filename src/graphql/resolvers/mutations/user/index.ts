@@ -1,8 +1,5 @@
 import { GraphQLError } from 'graphql'
-import jwt from 'jsonwebtoken'
 
-import { baseEmail } from '~/config/seo'
-import { CLIENT_URL, IS_PROD } from '~/graphql/constants'
 import { type Context } from '~/graphql/context'
 import { type MutationEditUserArgs } from '~/graphql/typeSlut'
 import { emailRX, nameRX } from '~/lib/functions'
@@ -65,22 +62,6 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
       if (userByEmail.email === email) {
         return userByEmail
       }
-    }
-
-    const token = jwt.sign(
-      { userId: viewer.id, email },
-      process.env.JWT_SIGNING_KEY
-    )
-
-    const url = `${CLIENT_URL}/api/email/confirm?token=${token}`
-
-    if (IS_PROD) {
-      console.log('Sending confirmation email', {
-        From: baseEmail,
-        To: email,
-        TemplateId: 25539089,
-        TemplateModel: { url },
-      })
     }
 
     return await prisma.user.update({

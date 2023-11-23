@@ -4,6 +4,13 @@ const config = {
     es2021: true,
     node: true,
   },
+  ignorePatterns: [
+    '.github',
+    '.next',
+    'node_modules/**',
+    'src/components/Marquee/m.js',
+  ],
+
   root: true,
   extends: [
     'plugin:prettier/recommended',
