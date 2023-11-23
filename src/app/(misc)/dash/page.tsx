@@ -20,14 +20,12 @@ export default async function Dashboard() {
       <SectionContent>
         <div className="w-full justify-center items-start max-w-3xl mx-auto mb-16 px-8">
           <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
-            Dashboard
+            Spotify Picks
           </h1>
           <div className="mb-8"></div>
           <div className="flex flex-col w-full"></div>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full"></div>
-          <h2 className="font-bold text-3xl tracking-tight mb-4 mt-16 text-black dark:text-white">
-            Top Tracks
-          </h2>
+          <h2 className="font-bold text-3xl tracking-tight mb-4 mt-16 text-black dark:text-white"></h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             Top tracks I grab courtesy of Spotify's WEB API -- updated daily!
           </p>

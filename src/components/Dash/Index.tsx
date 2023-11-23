@@ -31,12 +31,15 @@ export function DashPage({ children }) {
   const titleRef = React.useRef(null)
 
   return (
-    <Detail.Container data-cy="dash" ref={scrollContainerRef}>
+    <Detail.Container data-cy="dash-detail" ref={scrollContainerRef}>
       <TitleBar
+        backButton
+        globalMenu={false}
+        backButtonHref={'/dash'}
         magicTitle
+        title={`Dashboard`}
         titleRef={titleRef}
         scrollContainerRef={scrollContainerRef}
-        title="Dashboard"
       />
 
       {/* Keep this div to trigger the magic scroll */}

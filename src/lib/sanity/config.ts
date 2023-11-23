@@ -29,5 +29,3 @@ export const sanityConfig = {
 const query = encodeURI(
   `https://${projectId}.api.sanity.io/v2023-05-03/data/query/production?query=${indexQuery}`
 )
-
-console.log(query)

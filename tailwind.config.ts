@@ -1,10 +1,12 @@
 import forms from '@tailwindcss/forms'
 import typo from '@tailwindcss/typography'
+import type { Config } from 'tailwindcss'
 import colors from 'tailwindcss/colors'
 import { fontFamily } from 'tailwindcss/defaultTheme'
 
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'media',
   theme: {
     extend: {
       fontFamily: {
@@ -39,11 +41,11 @@ export default {
       keyframes: {
         'modal-enter': {
           '0%': {
-            opacity: 0,
+            opacity: '0',
             transform: 'translate(-50%, -50%) scale(.96)',
           },
           '100%': {
-            opacity: 1,
+            opacity: '1',
             transform: 'translate(-50%, -50%) scale(1)',
           },
         },
@@ -51,4 +53,4 @@ export default {
     },
   },
   plugins: [typo, forms],
-}
+} satisfies Config

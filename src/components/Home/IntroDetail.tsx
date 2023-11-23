@@ -156,13 +156,13 @@ export function IntroDetail() {
       <Detail.ContentContainer>
         <div className="space-y-8 pb-24 md:space-y-16">
           <article className="layout w-full p-2 lg:max-w-3xl">
-            <h2 className="mb-6 pt-4 font-serif text-2xl font-medium drop-shadow-sm md:text-4xl">
+            <h2 className="mb-6 pt-4 font-serif text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-4xl">
               Greetings! I'm the{' '}
-              <span className="dark:text-active font-serif font-normal text-twitter">
+              <span className="dark:text-active font-serif font-normal text-blue-400">
                 marketing manager&nbsp;
               </span>
               and{' '}
-              <span className="dark:text-active font-serif font-normal text-twitter">
+              <span className="dark:text-active font-serif font-normal text-blue-400">
                 creative lead&nbsp;
               </span>
               at{` `}
@@ -234,7 +234,6 @@ export function IntroDetail() {
           </SectionContainer>
 
           <SectionContainer>
-            <SectionTitle>Where</SectionTitle>
             <SectionContent>
               {/*               <div className="">
                 <TraceImage
