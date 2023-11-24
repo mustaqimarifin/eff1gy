@@ -1,9 +1,11 @@
 import cloudinary from 'cloudinary'
 
+import { cloudinaryAPI, cloudinaryKEY } from '~/graphql/constants'
+
 cloudinary.v2.config({
   cloud_name: 'mstqmarfn',
-  api_key: '742773636552889',
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  api_key: cloudinaryAPI,
+  api_secret: cloudinaryKEY,
   secure: true,
 })
 

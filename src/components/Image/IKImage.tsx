@@ -18,7 +18,7 @@ const IKImage = (props) => {
     <Image
       loader={imageKitLoader}
       src={props.src}
-      alt="Sample image"
+      alt={props}
       width={400}
       height={400}
       className="object-cover"

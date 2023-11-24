@@ -1,15 +1,15 @@
-import { GRAPHCDN_PURGE_ENDPOINT, IS_PROD } from '~/graphql/constants'
+import { IS_PROD, stellateKEY, stellateURL } from '~/graphql/constants'
 
 async function handleFetch(query) {
   if (!IS_PROD) {
     return console.log('Purging GraphCDN cache: ', query)
   }
 
-  return await fetch(GRAPHCDN_PURGE_ENDPOINT, {
+  return await fetch(stellateURL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'graphcdn-token': process.env.GRAPHCDN_PURGE_KEY,
+      'graphcdn-token': stellateKEY,
     },
     body: JSON.stringify({
       query,

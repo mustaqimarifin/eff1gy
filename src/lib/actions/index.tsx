@@ -4,6 +4,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import querystring from 'querystring'
+import { Suspense } from 'react'
 
 import { prisma } from '../prisma'
 /* 
@@ -43,6 +44,33 @@ export const addView = async (id) => {
         viewCount: true,
       },
     })
+}
+
+export async function Counter({ id }) {
+  const views = await addView(id)
+  return <Suspense>{`${views.viewCount} - views`}</Suspense>
+}
+
+export async function HiddenCounter({ id }) {
+  const views = await addView(id)
+  return (
+    <Suspense>
+      <div className="hidden">{`${views.viewCount} - views`}</div>
+    </Suspense>
+  )
+}
+
+export const getView = async (id) => {
+  noStore()
+  const total = await prisma.pageView.findMany({
+    where: {
+      id,
+    },
+    select: {
+      viewCount: true,
+    },
+  })
+  return total
 }
 /* export const getAkhylaYouTubeSubs = cache(
   async () => {

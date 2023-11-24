@@ -4,22 +4,31 @@ import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 import Twitter from 'next-auth/providers/twitter'
 
+import {
+  gitID,
+  gitKEY,
+  googleID,
+  googleKEY,
+  twitterID,
+  twitterKEY,
+} from '~/graphql/constants'
+
 import { prisma } from './prisma'
 
 export const authConfig = {
   adapter: PrismaAdapter(prisma),
   providers: [
     Twitter({
-      clientId: process.env.TWITTER_ID,
-      clientSecret: process.env.TWITTER_SECRET,
+      clientId: twitterID,
+      clientSecret: twitterKEY,
     }),
     GitHub({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: gitID,
+      clientSecret: gitKEY,
     }),
     Google({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: googleID,
+      clientSecret: googleKEY,
     }),
   ],
   callbacks: {

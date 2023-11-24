@@ -12,12 +12,13 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
 import { CommentType, useGetStackQuery } from '~/graphql/typeSlut'
 
+import { IKImage } from '../Image'
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { SignInDialog } from '../SignInDialog'
 import { StackActions } from './StackActions'
 import { StackUsedBy } from './StackUsedBy'
 
-export function StackDetail({ stack }) {
+export function StackDetail({ children, stack }) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
 
@@ -44,7 +45,7 @@ export function StackDetail({ stack }) {
           <Detail.Header>
             <div className="flex items-center space-x-6">
               <Link href={stack.url} passHref className="inline-block ">
-                <Image
+                <IKImage
                   priority
                   //src={`/static/img/stack/${stack.image}`}
                   src={stack.image}
@@ -62,6 +63,7 @@ export function StackDetail({ stack }) {
                   <Tags tags={stack.tags} />
                 )}
               </div>
+              {children}
             </div>
 
             <MarkdownRenderer

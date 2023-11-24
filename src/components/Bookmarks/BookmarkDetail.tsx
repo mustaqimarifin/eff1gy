@@ -2,6 +2,7 @@
 
 import { LinkIcon } from 'lucide-react'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 import * as React from 'react'
 
 import { PrimaryButton } from '~/components/Button'
@@ -15,7 +16,13 @@ import { MarkdownRenderer } from '../MarkdownRenderer'
 import { BookmarkActions } from './BookmarkActions'
 import { RelatedBookmarks } from './RelatedBookmarks'
 
-export function BookmarkDetail({ id }: { id: string }) {
+export function BookmarkDetail({
+  children,
+  id,
+}: {
+  children: ReactNode
+  id: string
+}) {
   const scrollContainerRef = React.useRef(null)
   const titleRef = React.useRef(null)
   const { data, loading, error } = useGetBookmarkQuery({
@@ -74,6 +81,7 @@ export function BookmarkDetail({ id }: { id: string }) {
               )}
               <span>{bookmark.host}</span>
             </Link>
+            {children}
             {bookmark.description && (
               <MarkdownRenderer
                 className="prose italic opacity-70"

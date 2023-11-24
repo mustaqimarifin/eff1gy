@@ -1,12 +1,8 @@
 'use client'
 
 import { Dialog, Transition } from '@headlessui/react'
-import { GithubIcon, X } from 'lucide-react'
-import { signIn } from 'next-auth/react'
 import * as React from 'react'
 import { Fragment, useState } from 'react'
-
-import { GhostButton } from '~/components/Button'
 
 interface DialogProps {
   trigger?: React.ReactElement
