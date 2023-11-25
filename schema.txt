@@ -1,19 +1,4 @@
-{
-  "name": "eff1gy",
-  "version": "2.0.0",
-  "scripts": {
-    "dev": "next dev",
-    "build": " next build",
-    "start": "next start",
-    "format": "pnpm dlx prettier --write . --ignore-path .gitignore",
-    "lint": "next lint -- --ignore-path .gitignore",
-    "postinstall": "prisma generate && pnpm generate",
-    "lint:fix": "pnpm format && pnpm lint --fix",
-    "generate": "graphql-codegen-esm --config codegen.ts",
-    "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'",
-    "prod:db:seed": "dotenv -- sh -c 'SUPABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma db seed'",
-    "analyze": "ANALYZE=true next build"
-  },
+
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
