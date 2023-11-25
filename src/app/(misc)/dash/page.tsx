@@ -3,7 +3,7 @@ import { getTopTracks, HiddenCounter } from '~/lib/actions'
 
 import Track from './Track'
 
-export const runtime = 'edge'
+//export const runtime = 'edge'
 export default async function Dashboard() {
   const response = await getTopTracks()
   const { items } = await response.json()
