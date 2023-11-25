@@ -1,9 +1,9 @@
-import * as React from 'react'
+import { useEffect, useRef } from 'react'
 
 export function ListContainer({ children, onRef, ...rest }) {
-  const scrollContainerRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     onRef(scrollContainerRef)
   }, [scrollContainerRef])
 

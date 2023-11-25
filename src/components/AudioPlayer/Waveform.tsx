@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   src: string
@@ -13,16 +13,16 @@ export default function Waveform({
   waveform = [],
   isRecorder,
 }: Props) {
-  const [audioContext, setAudioContext] = React.useState(null)
-  const [hasDrawnAudio, setHasDrawnAudio] = React.useState(false)
-  const [bars, setBars] = React.useState(waveform)
+  const [audioContext, setAudioContext] = useState(null)
+  const [hasDrawnAudio, setHasDrawnAudio] = useState(false)
+  const [bars, setBars] = useState(waveform)
 
   const draw = (normalizeData) => {
     setWaveformData && setWaveformData(normalizeData)
     return setBars(normalizeData)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const context = new AudioContext()
 
     setAudioContext(context)
@@ -34,7 +34,7 @@ export default function Waveform({
     }
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const drawAudio = (url: RequestInfo | URL, sampleCount: number) => {
       fetch(url)
         .then((response) => response.arrayBuffer())

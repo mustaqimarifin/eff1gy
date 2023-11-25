@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 
 import Button from '~/components/Button'
 import { Input } from '~/components/Input'
@@ -14,9 +14,9 @@ export function UsernameForm(props: {
   viewer: GetViewerWithSettingsQuery['viewer']
 }) {
   const { viewer } = props
-  const [name, setUsername] = React.useState('')
-  const [isEditing, setIsEditing] = React.useState(false)
-  const [error, setError] = React.useState(null)
+  const [name, setUsername] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
+  const [error, setError] = useState(null)
 
   const [editUser, editUserResponse] = useEditUserMutation({
     variables: {

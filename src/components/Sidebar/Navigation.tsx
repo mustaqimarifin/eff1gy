@@ -1,7 +1,6 @@
 'use client'
 import { CassetteTape, ListMusicIcon, Plus } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import * as React from 'react'
 import useSWR from 'swr'
 
 import type { TrackType } from '~/app/(misc)/dash/Track'
@@ -47,8 +46,8 @@ function Player(track: TrackType) {
 }
 
 export function SidebarNavigation() {
-  const { data: track } = useSWR<TrackType>(`/api/stats/now-playing`, fetcher)
-  console.log(track)
+  const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher)
+  //console.log(track)
   const path = usePathname()
   const { data } = useViewerQuery()
   const sections = [

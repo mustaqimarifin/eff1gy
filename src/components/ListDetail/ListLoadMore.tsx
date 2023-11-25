@@ -1,6 +1,4 @@
 'use client'
-
-import * as React from 'react'
 import ReactVisibilitySensor from 'react-visibility-sensor'
 
 import { LoadingSpinner } from '../LoadingSpinner'

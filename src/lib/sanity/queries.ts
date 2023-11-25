@@ -4,6 +4,7 @@ const postFields = groq`
   "id": _id,
   title,
   date,
+"updatedAt": _updatedAt,
   excerpt,
   "name" : author->name,
   "tags": tags[]->title,
@@ -11,10 +12,11 @@ const postFields = groq`
   "slug": slug.current
 `
 
-const designFields = groq`
+const caseFields = groq`
   "id": _id,
   title,
   date,
+"updatedAt": _updatedAt,
   overview,
   "tags": tags[]->title,
   "caption" : coverImage.caption,
@@ -31,28 +33,20 @@ const pathFields = groq`
 
 export const settingsQuery = groq`*[_type == "settings"][0]`
 
-export const indexQuery = groq`
+export const postsQuery = groq`
 *[_type == "post"] | order(priority desc, _updatedAt desc) {
 'id': _id, title, date, 'slug': slug.current
 }`
 
-export const designIndexQuery = groq`
+export const casesQuery = groq`
 *[_type == "case-study"] | order(priority desc, _updatedAt desc) {
-'id': _id, title, date,  "caption" : coverImage.caption,
+'id': _id, title, date, "updatedAt": _updatedAt,
+  "caption" : coverImage.caption,
  'slug': slug.current
 }`
 
 export const pathquery = groq`
 *[_type == "post"] { 'id': _id, title, date, 'slug': slug.current,
-}
-`
-
-export const postquery = groq`
-*[_type == "post"] | order(_createdAt desc) {
-  ...,
-    "caption" : coverImage.caption,
-  author->,
-  tags[]->
 }
 `
 
@@ -66,7 +60,7 @@ export const postQuery = groq`
 export const caseQuery = groq` 
 *[_type == "case-study" && slug.current == $slug] | order(_updatedAt desc) [0] {
     ...,
-    ${designFields}
+    ${caseFields}
   }
 `
 
@@ -81,12 +75,6 @@ export const caseSlugsQuery = groq`
 export const postBySlugQuery = groq`
 *[_type == "post" && slug.current == $slug][0] {
   ${postFields}
-}
-`
-
-export const designBySlugQuery = groq`
-*[_type == "case-study" && slug.current == $slug][0] {
-  ${designFields}
 }
 `
 

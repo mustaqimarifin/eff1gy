@@ -43,7 +43,7 @@ async function createPreviewImage(node: ImageNode) {
   } */
   let result: LqipResult
   const url = node.properties.src
-  console.log(url)
+  // console.log(url)
   //const id = sha256(url)
   const ext_img = url.startsWith('http')
   const local_img = path.join(cwd(), './public', url)
@@ -73,8 +73,8 @@ async function createPreviewImage(node: ImageNode) {
     ;(node.properties.width = previewImage.width || 768),
       (node.properties.height = previewImage.height || 432),
       (node.properties.blurDataURL = previewImage.base64),
-      (node.properties.placeholder = 'blur'),
-      console.log('lqip', { result, url })
+      (node.properties.placeholder = 'blur')
+    //console.log('lqip', { result, url })
     /*  try {
       await redis.hsetnx(cacheKey, JSON.stringify(previewImage), 30)
       //console.log(cacheKey);
@@ -86,7 +86,7 @@ async function createPreviewImage(node: ImageNode) {
     return previewImage
     */
   } catch (err) {
-    console.warn('failed to create preview image', url, err)
+    //console.warn('failed to create preview image', url, err)
     return null
   }
 }

@@ -3,7 +3,7 @@
 import { Link2Icon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { PrimaryButton } from '~/components/Button'
 import { Comments } from '~/components/Comments'
@@ -19,8 +19,8 @@ import { StackActions } from './StackActions'
 import { StackUsedBy } from './StackUsedBy'
 
 export function StackDetail({ children, stack }) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
 
   /*     const { data, loading, error } = useGetStackQuery({
         variables: { slug },

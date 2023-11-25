@@ -1,14 +1,14 @@
 import Link from 'next/link'
-import * as React from 'react'
+import type { ReactElement } from 'react'
 
 interface Props {
   title: string
   active: boolean
   href: string
   as: string
-  description?: string | React.ReactElement
-  byline?: string | React.ReactElement
-  leadingAccessory?: React.ReactElement
+  description?: string | ReactElement
+  byline?: string | ReactElement
+  leadingAccessory?: ReactElement
   onClick?: (e: any) => void
 }
 

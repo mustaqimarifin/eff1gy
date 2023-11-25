@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import type { TrackType } from '~/app/(misc)/dash/Track'
 import { getNowPlaying } from '~/lib/actions'
 
 type Artist = {

@@ -1,7 +1,7 @@
 'use client'
 import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { usePathname } from 'next/navigation'
-import * as React from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { GET_QUESTIONS } from '~/graphql/queries/questions'
@@ -12,7 +12,7 @@ import { LoadingSpinner } from '../LoadingSpinner'
 import { AMATitlebar } from './AMATitlebar'
 import { QuestionListItem } from './QuestionListItem'
 
-export const QuestionsContext = React.createContext({
+export const QuestionsContext = createContext({
   filterPending: false,
   setFilterPending: (bool: boolean) => {},
 })
@@ -20,9 +20,9 @@ export const QuestionsContext = React.createContext({
 export function QuestionsList() {
   const path = usePathname()
 
-  const [filterPending, setFilterPending] = React.useState(false)
-  const [isVisible, setIsVisible] = React.useState(false)
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [filterPending, setFilterPending] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
   const status = filterPending
     ? QuestionStatus.Pending
@@ -33,7 +33,7 @@ export function QuestionsList() {
   })
 
   // refetch questions whenever I toggle back and forth between answered/unanswered
-  React.useEffect(() => {
+  useEffect(() => {
     refetch()
   }, [status])
 
@@ -46,7 +46,7 @@ export function QuestionsList() {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isVisible) handleFetchMore()
   }, [isVisible])
 
@@ -91,3 +91,56 @@ export function QuestionsList() {
     </QuestionsContext.Provider>
   )
 }
+
+// const [showLoadMore, setShowLoadMore] =useState(true)
+// const [loading, setLoading] =useState(false)
+
+// pre-populate data from the cache, but check for any new ones after
+// the page loads
+// const { data, fetchMore, error } = useGetAmaQuestionsQuery({
+//   variables: { status: AmaStatus.Answered },
+// })
+
+// this can happen if the route is navigated to from the client or if the
+// cache fails to populate for whatever reason
+// if (!data || !data.amaQuestions) return <FullscreenLoading />
+// if (error) return null
+
+//useEffect(() => {
+//   if (questions.length < PAGINATION_AMOUNT) {
+//     setShowLoadMore(false)
+//   }
+// }, [questions])
+
+// function handleLoadMore() {
+//   if (loading) return
+
+//   setLoading(true)
+
+//   try {
+//     fetchMore({
+//       variables: {
+//         skip: questions.length,
+//       },
+//       updateQuery: (prev, { fetchMoreResult }) => {
+//         setLoading(false)
+
+//         if (!fetchMoreResult) return prev
+
+//         if (fetchMoreResult.amaQuestions.length < PAGINATION_AMOUNT) {
+//           // at the end of the list
+//           setShowLoadMore(false)
+//         }
+
+//         return Object.assign({}, prev, {
+//           amaQuestions: [
+//             ...prev.amaQuestions,
+//             ...fetchMoreResult.amaQuestions,
+//           ],
+//         })
+//       },
+//     })
+//   } catch (err) {
+//     setLoading(false)
+//   }
+// }

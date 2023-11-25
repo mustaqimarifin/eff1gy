@@ -29,33 +29,33 @@ export const addView = async (id) => {
       id,
     },
     update: {
-      viewCount: {
+      counter: {
         increment: 1,
       },
     },
   })
-  if (total?.viewCount < 1) return null
+  if (total?.counter < 1) return null
   else
     return await prisma.pageView.findUnique({
       where: {
         id,
       },
       select: {
-        viewCount: true,
+        counter: true,
       },
     })
 }
 
 export async function Counter({ id }) {
   const views = await addView(id)
-  return <Suspense>{`${views.viewCount} - views`}</Suspense>
+  return <Suspense>{`${views.counter} - views`}</Suspense>
 }
 
 export async function HiddenCounter({ id }) {
   const views = await addView(id)
   return (
     <Suspense>
-      <div className="hidden">{`${views.viewCount} - views`}</div>
+      <div className="hidden">{`${views.counter} - views`}</div>
     </Suspense>
   )
 }
@@ -67,7 +67,7 @@ export const getView = async (id) => {
       id,
     },
     select: {
-      viewCount: true,
+      counter: true,
     },
   })
   return total

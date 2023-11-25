@@ -1,10 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import * as React from 'react'
-import useSWR from 'swr'
-
-import { fetcher } from '~/lib/functions'
+import { useState } from 'react'
 
 import { ListContainer } from '../ListDetail/ListContainer'
 import { TitleBar } from '../ListDetail/TitleBar'
@@ -15,7 +12,7 @@ import { PostListItem } from './PostListItem'
 
 export const PostsList = ({ posts }: { posts: Post[] }) => {
   const path = usePathname()
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
   //** Fetch directly from Sanity Studio through API route */
   /*   const [posts, setPosts] = useState([]);

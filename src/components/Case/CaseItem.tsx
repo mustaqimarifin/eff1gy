@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import * as React from 'react'
+import { memo } from 'react'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 
@@ -12,7 +12,7 @@ interface Props {
   active: boolean
 }
 
-export const CaseListItem = React.memo<Props>(({ casestudy, active }) => {
+export const CaseListItem = memo<Props>(({ casestudy, active }) => {
   return (
     <ListItem
       key={casestudy.slug}

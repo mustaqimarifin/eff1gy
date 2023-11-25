@@ -1,5 +1,5 @@
 'use client'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { Detail } from '../ListDetail/Detail'
 import { TitleBar } from '../ListDetail/TitleBar'
@@ -27,8 +27,8 @@ function SectionContainer(props) {
 }
 
 export function DashPage({ children }) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
 
   return (
     <Detail.Container data-cy="dash-detail" ref={scrollContainerRef}>

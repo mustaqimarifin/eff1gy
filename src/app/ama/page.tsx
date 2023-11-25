@@ -1,6 +1,4 @@
 'use client'
-import * as React from 'react'
-
 import { QuestionsList } from '~/components/AMA/QuestionsList'
 import { ListDetailView } from '~/components/Layouts'
 

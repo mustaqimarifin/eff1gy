@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import * as React from 'react'
+import { useReducer } from 'react'
 
 import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
@@ -74,7 +74,7 @@ export function EditStackForm({ closeModal, stack }) {
     }
   }
 
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const [editStack] = useEditStackMutation()
 

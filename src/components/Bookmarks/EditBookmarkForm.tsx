@@ -1,7 +1,7 @@
 'use client'
 import { Link2Icon } from 'lucide-react'
 import Link from 'next/link'
-import * as React from 'react'
+import { useReducer } from 'react'
 
 import Button, { DeleteButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
@@ -63,7 +63,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
     }
   }
 
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const [editBookmark] = useEditBookmarkMutation({
     variables: {

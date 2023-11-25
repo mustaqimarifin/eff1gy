@@ -1,6 +1,6 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
-const ProgressOverlay = React.forwardRef<HTMLDivElement>((_, ref) => {
+const ProgressOverlay = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       ref={ref}

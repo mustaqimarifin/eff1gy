@@ -3,7 +3,7 @@
  * Importing other npm packages here could lead to needlessly increasing the client bundle size, or end up in a server-only function that don't need it.
  */
 
-import { indexQuery } from './queries'
+//import { indexQuery } from './queries'
 
 export const projectId = 'do33z8xq'
 export const dataset = 'production'
@@ -26,6 +26,7 @@ export const sanityConfig = {
   apiVersion,
 }
 
-const query = encodeURI(
+/* const query = encodeURI(
   `https://${projectId}.api.sanity.io/v2023-05-03/data/query/production?query=${indexQuery}`
 )
+ */

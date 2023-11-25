@@ -1,7 +1,4 @@
 'use client'
-
-import * as React from 'react'
-
 import { DialogComponent } from '~/components/Dialog'
 
 import { AddStackForm } from './AddStackForm'

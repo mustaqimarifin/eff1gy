@@ -1,11 +1,11 @@
 'use client'
 
 import { Dialog, Transition } from '@headlessui/react'
-import * as React from 'react'
-import { Fragment, useState } from 'react'
+import type { ReactElement } from 'react'
+import { Fragment, useRef, useState } from 'react'
 
 interface DialogProps {
-  trigger?: React.ReactElement
+  trigger?: ReactElement
   children?: Function
   title: String
   modalContent: Function
@@ -18,7 +18,7 @@ export function DialogComponent({
   modalContent,
 }: DialogProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const closeButtonRef = React.useRef(null)
+  const closeButtonRef = useRef(null)
 
   function closeModal() {
     setIsOpen(false)

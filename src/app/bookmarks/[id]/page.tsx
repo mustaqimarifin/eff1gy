@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Suspense } from 'react'
 
 import { BookmarkDetail } from '~/components/Bookmarks/BookmarkDetail'
 import { BookmarksList } from '~/components/Bookmarks/BookmarksList'
@@ -43,11 +43,11 @@ export default async function BookmarkPage({ params: { id } }) {
       list={<BookmarksList />}
       hasDetail
       detail={
-        <React.Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <BookmarkDetail id={id}>
             <HiddenCounter id={id} />
           </BookmarkDetail>
-        </React.Suspense>
+        </Suspense>
       }
     />
   )

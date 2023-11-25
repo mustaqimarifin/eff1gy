@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 export default function PlayPauseButton({ isPlaying, onClick }) {
   return (
     <button

@@ -1,13 +1,8 @@
 'use client'
-
-import * as React from 'react'
-
 import { ReactionButton } from '~/components/Button/ReactionButton'
 import { GET_BLOG } from '~/graphql/queries/blogs'
 import type { Blog } from '~/graphql/typeSlut'
 import { ReactionType, useToggleReactionMutation } from '~/graphql/typeSlut'
-
-import { PageViews } from '../Stats/ViewCounter'
 
 function getReactionButton(blog: Blog) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
@@ -58,9 +53,6 @@ function getReactionButton(blog: Blog) {
 
 export function BlogActions({ blog }: { blog: Blog }) {
   return (
-    <div className="flex items-center space-x-2">
-      {/*  <PageViews id={blog.slug} trackView /> */}
-      {getReactionButton(blog)}
-    </div>
+    <div className="flex items-center space-x-2">{getReactionButton(blog)}</div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import * as React from 'react'
+import { type ReactNode, useRef } from 'react'
 
 import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
@@ -15,13 +15,13 @@ import { MarkdownRenderer } from '../MarkdownRenderer'
 import { PostActions } from './PostActions'
 
 interface PD {
-  children?: React.ReactNode
+  children?: ReactNode
   slug?: string
   post?: Post
 }
 export function PostDetail({ children, slug }: PD) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
   const { data, loading, error } = useQuery(GET_POST, {
     variables: { slug },
     context: { fetchOptions: { cache: 'force-cache' } },

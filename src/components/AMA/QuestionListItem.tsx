@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { memo } from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import { ListItem } from '~/components/ListDetail/ListItem'
@@ -9,24 +9,24 @@ interface Props {
   active: boolean
 }
 
-export const QuestionListItem = React.memo<Props>(({ question, active }) => {
+export const QuestionListItem = memo<Props>(({ question, active }) => {
   return (
     <ListItem
       href={'/ama/[id]'}
-      as={`/ama/${question.id}`}
-      title={question.title}
+      as={`/ama/${question?.id}`}
+      title={question?.title}
       description={null}
       byline={
         <div className="flex items-center space-x-2">
           <Avatar
-            user={question.author}
-            src={question.author.image}
+            user={question?.author}
+            src={question?.author?.image}
             width={16}
             height={16}
             layout={'fixed'}
             className="rounded-full"
           />{' '}
-          <span>{question.author.name}</span>
+          <span>{question?.author?.name}</span>
         </div>
       }
       active={active}

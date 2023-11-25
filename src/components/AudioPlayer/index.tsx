@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import HiddenAudioPlayer from './HiddenAudioPlayer'
 import PlayPauseButton from './PlayPauseButton'
@@ -20,14 +20,14 @@ export default function AudioPlayer({
   id,
   isRecorder = false,
 }: Props) {
-  const [isPlaying, setIsPlaying] = React.useState(false)
-  const audioRef = React.useRef<HTMLAudioElement>(null)
-  const scrubbableRef = React.useRef(null)
-  const progressOverlayRef = React.useRef(null)
-  const [hasPlayedOnce, setHasPlayedOnce] = React.useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const scrubbableRef = useRef(null)
+  const progressOverlayRef = useRef(null)
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false)
   // TODO: Add mutation to increment play count
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Ensure that new audio is loaded if the url changes after saving new recording
     if (isRecorder != null) {
       audioRef.current.load()

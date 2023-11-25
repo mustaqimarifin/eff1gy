@@ -1,5 +1,4 @@
-import type { Metadata } from 'next'
-import React from 'react'
+import { Suspense } from 'react'
 
 import { QuestionDetail } from '~/components/AMA/QuestionDetail'
 import { QuestionsList } from '~/components/AMA/QuestionsList'
@@ -16,9 +15,9 @@ export default async function QuestionPage({
       list={<QuestionsList />}
       hasDetail
       detail={
-        <React.Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <QuestionDetail id={id} />
-        </React.Suspense>
+        </Suspense>
       }
     />
   )

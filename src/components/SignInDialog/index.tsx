@@ -1,6 +1,5 @@
 'use client'
 import { signIn } from 'next-auth/react'
-import * as React from 'react'
 
 import { DialogComponent } from '~/components/Dialog'
 

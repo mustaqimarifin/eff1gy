@@ -5,7 +5,7 @@ import {
   useSuspenseQuery,
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { usePathname } from 'next/navigation'
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import type { GetStacksQuery } from '~/graphql/typeSlut'
@@ -18,8 +18,8 @@ import { StackTitlebar } from './StackTitlebar'
 
 export function StackList() {
   const path = usePathname()
-  const [isVisible, setIsVisible] = React.useState(false)
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
   //const { data, loading, fetchMore } = useGetStacksQuery()
   const { error, data, fetchMore, loading } =
@@ -33,7 +33,7 @@ export function StackList() {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isVisible) handleFetchMore()
   }, [isVisible])
 

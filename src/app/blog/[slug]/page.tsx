@@ -1,18 +1,15 @@
-import React, { Suspense } from 'react'
-
 import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
-import type { Post } from '~/components/Posts/BlogDetail'
 import { BlogDetail } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
-import { addView, Counter } from '~/lib/actions'
-import { getAllPosts, getPostBySlug } from '~/lib/sanity/sanity.client'
+import { Counter } from '~/lib/actions'
+import { getPost, getPosts } from '~/lib/sanity/sanity.client'
 import { timestampToCleanTime } from '~/lib/transformers'
 
 export const revalidate = 60
 
 export async function generateStaticParams() {
-  const posts: Post[] = await getAllPosts()
+  const posts = await getPosts()
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -20,8 +17,8 @@ export async function generateStaticParams() {
 }
 
 export default async function Blog({ params: { slug } }) {
-  const posts: Post[] = await getAllPosts()
-  const post: Post = await getPostBySlug(slug)
+  const posts = await getPosts()
+  const post = await getPost(slug)
 
   if (!post) {
     return { notFound: true }
@@ -35,13 +32,14 @@ export default async function Blog({ params: { slug } }) {
       hasDetail
       detail={
         <BlogDetail post={post} slug={slug}>
-          <div className="mb-16 mt-2 flex w-full flex-col items-start justify-between  text-center font-semibold uppercase md:flex-row md:items-center">
-            <div className="mt-2 flex  items-center gap-2 text-sm text-gray-600 dark:text-gray-400  md:mt-0">
+          <div className="mb-16 flex flex-col items-start uppercase text-center font-semibold  justify-between w-full mt-2 md:flex-row md:items-center">
+            <div className="flex gap-2  items-center mt-2 text-sm text-gray-600 dark:text-gray-400  md:mt-0">
+              {publishedAt?.formatted}
+              {` • `}
+
+              <Counter id={post.slug} />
+              {` • `}
               <div className="flex space-x-2">
-                {publishedAt?.formatted}
-                {` • `}
-                <Counter id={post.slug} />
-                {` • `}
                 {post.tags?.length &&
                   post.tags
                     .slice(0)
@@ -51,6 +49,7 @@ export default async function Blog({ params: { slug } }) {
               </div>
             </div>
           </div>
+
           <Mdx source={post?.content} />
         </BlogDetail>
       }

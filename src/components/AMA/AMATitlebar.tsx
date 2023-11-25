@@ -1,7 +1,7 @@
 'use client'
 
 import { Plus } from 'lucide-react'
-import * as React from 'react'
+import { useContext } from 'react'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -14,7 +14,7 @@ import { QuestionsContext } from './QuestionsList'
 
 export function AMATitlebar({ scrollContainerRef }) {
   const { data } = useViewerQuery()
-  const { setFilterPending, filterPending } = React.useContext(QuestionsContext)
+  const { setFilterPending, filterPending } = useContext(QuestionsContext)
 
   function getAddButton() {
     if (!data?.viewer) {

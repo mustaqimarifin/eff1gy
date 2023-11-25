@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { LayoutGroup } from '../Bookmarks/BookmarksList'
+//import { LayoutGroup } from '../Bookmarks/BookmarksList'
 
 type Item = {
   id: string
@@ -30,7 +30,7 @@ const SegmentedControl = ({
   }
 
   return (
-    <LayoutGroup>
+    <div>
       <ol
         className={`flex list-none rounded-md bg-black bg-opacity-5 p-1 dark:bg-white dark:bg-opacity-5`}>
         {items.map((item, i) => {
@@ -57,7 +57,7 @@ const SegmentedControl = ({
           )
         })}
       </ol>
-    </LayoutGroup>
+    </div>
   )
 }
 

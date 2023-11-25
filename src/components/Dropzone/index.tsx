@@ -1,12 +1,13 @@
 import { type UploadApiResponse } from 'cloudinary'
-import React from 'react'
+import type { ReactNode } from 'react'
+import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
 //import { CLOUDFLARE_IMAGE_DELIVERY_BASE_URL } from '~/lib/cloudinary'
 import { ActiveDropzone } from './ActiveDropzone'
 
 interface DropzoneProps {
-  children: React.ReactNode
+  children: ReactNode
   onUploadStarted: () => void
   onUploadComplete: (url?: string) => void
   onUploadFailed: () => void
@@ -55,7 +56,7 @@ export function Dropzone(props: DropzoneProps) {
     return upload?.result?.id
   } */
 
-  const onDropAccepted = React.useCallback(async (acceptedFiles: File[]) => {
+  const onDropAccepted = useCallback(async (acceptedFiles: File[]) => {
     onUploadStarted()
 
     const file = acceptedFiles[0]

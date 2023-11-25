@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import { GraphQLError } from 'graphql'
 
 import { baseUrl } from '~/config/seo'
@@ -17,21 +18,26 @@ export async function editQuestion(
   ctx: Context
 ) {
   const { data, id } = args
-  const { audioUrl, waveform } = data
+
   const { prisma, viewer } = ctx
 
-  const question = await prisma.question.findUnique({ where: { id } })
-  if (!question) {
+  const ama = await prisma.question.findUnique({ where: { id } })
+  if (!ama) {
     throw new GraphQLError('Question doesn’t exist')
   }
 
-  if (viewer?.isAdmin || viewer?.id === question?.userId) {
+  if (viewer?.isAdmin || viewer?.id === ama?.userId) {
     return await prisma.question
       .update({
         where: { id },
         data: {
-          audioUrl,
-          waveform,
+          description: data.description,
+          title: data.title,
+          //  status: ama.status,
+          audioUrl: data.audioUrl ?? null,
+          waveform: Array.isArray(data.waveform)
+            ? data.waveform
+            : Prisma.DbNull,
         },
         include: {
           _count: {
@@ -78,10 +84,10 @@ export async function addQuestion(
         },
       },
     })
-    .then((question) => {
-      //graphcdn.purgeList('questions')
+    /*     .then((question) => {
+      graphcdn.purgeList('questions')
       return question
-    })
+    }) */
     .catch((err) => {
       console.error({ err })
       throw new GraphQLError('Unable to add question')
@@ -104,10 +110,10 @@ export async function deleteQuestion(
   if (viewer?.isAdmin || viewer?.id === question.userId) {
     return await prisma.question
       .delete({ where: { id } })
-      .then(() => {
-        //graphcdn.purgeList('questions')
+      /*       .then(() => {
+        graphcdn.purgeList('questions')
         return true
-      })
+      }) */
       .catch((err) => {
         console.error({ err })
         throw new GraphQLError('Unable to delete question')

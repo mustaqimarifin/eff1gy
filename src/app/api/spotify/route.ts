@@ -3,8 +3,7 @@ import { NextResponse } from 'next/server'
 import { getNowPlaying } from '~/lib/actions'
 
 //export const runtime = 'edge'
-//export const revalidate = 60
-
+export const dynamic = 'force-dynamic'
 export async function GET() {
   const response = await getNowPlaying()
 

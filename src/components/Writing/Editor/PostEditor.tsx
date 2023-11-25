@@ -1,6 +1,7 @@
 'use client'
 
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { createContext, useEffect, useRef, useState } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -12,7 +13,7 @@ import { PostEditorMetaSidebar } from './PostEditorMetaSidebar'
 import { PostEditorPreview } from './PostEditorPreview'
 import { PreviewSwitch } from './PreviewSwitch'
 
-export const PostEditorContext = React.createContext({
+export const PostEditorContext = createContext({
   draftState: {
     title: '',
     text: '',
@@ -28,12 +29,12 @@ export const PostEditorContext = React.createContext({
 })
 
 type PEditor = {
-  children?: React.ReactNode
+  children?: ReactNode
   slug?: string
 }
 
 export function PostEditor({ children, slug: propsSlug = '' }: PEditor) {
-  const scrollContainerRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
   const { data } = useGetPostQuery({ variables: { slug: propsSlug } })
 
   const defaultDraftState = {
@@ -43,13 +44,13 @@ export function PostEditor({ children, slug: propsSlug = '' }: PEditor) {
     excerpt: data?.post?.excerpt || '',
   }
 
-  const [draftState, setDraftState] = React.useState(defaultDraftState)
-  const [isPreviewing, setIsPreviewing] = React.useState(false)
+  const [draftState, setDraftState] = useState(defaultDraftState)
+  const [isPreviewing, setIsPreviewing] = useState(false)
 
   const existingPost = data?.post
-  const [sidebarIsOpen, setSidebarIsOpen] = React.useState(false)
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     // if navigating between drafts, reset the state each time with the correct
     // post data
     setDraftState(defaultDraftState)

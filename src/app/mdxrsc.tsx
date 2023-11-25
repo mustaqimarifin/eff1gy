@@ -15,7 +15,7 @@ export default async function Mdx({ source }) {
             format: 'mdx',
           },
         }}
-        components={{ ...components }}
+        components={{ ...(components || {}) }}
       />
     </article>
   )

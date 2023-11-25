@@ -4,6 +4,7 @@ import '~/app/style2.css'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 
 import { SiteLayout } from '~/components/Layouts'
 import { Providers } from '~/components/Provider'
@@ -43,11 +44,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={cx(GeistSans.variable, GeistMono.variable)}>
       <body>

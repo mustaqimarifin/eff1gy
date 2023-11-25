@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import * as React from 'react'
+import { memo, useState } from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import Button, { PrimaryButton } from '~/components/Button'
@@ -26,14 +26,14 @@ interface Props {
   type: CommentType
 }
 
-export const Comment = React.memo(function MemoComment({
+export const Comment = memo(function MemoComment({
   comment,
   refId,
   type,
 }: Props) {
-  const [isEditing, setIsEditing] = React.useState(false)
-  const [editText, setEditText] = React.useState(comment.text)
-  const [isSavingEdit, setIsSavingEdit] = React.useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editText, setEditText] = useState(comment.text)
+  const [isSavingEdit, setIsSavingEdit] = useState(false)
 
   const [deleteComment] = useDeleteCommentMutation({
     variables: { id: comment.id },

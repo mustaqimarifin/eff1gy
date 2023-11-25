@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import * as React from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import { Tooltip } from '~/components/Tooltip'

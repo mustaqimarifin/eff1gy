@@ -1,7 +1,6 @@
 'use client'
 import { GithubIcon, Twitter } from 'lucide-react'
 import { signIn } from 'next-auth/react'
-import * as React from 'react'
 
 import { GhostButton } from '../Button'
 import { Google } from '../Icon'

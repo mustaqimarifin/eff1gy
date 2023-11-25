@@ -1,11 +1,7 @@
-import { Post } from '~/components/Posts/BlogDetail'
-import { indexQuery } from '~/lib/sanity/queries'
-import { getClient, sanityClient } from '~/lib/sanity/server'
+import { getPosts } from '~/lib/sanity/sanity.client'
 export async function GET() {
   try {
-    const res = await getClient().fetch(indexQuery)
-
-    //const data = await res
+    const res = await getPosts()
 
     return Response.json({ res })
   } catch (e) {

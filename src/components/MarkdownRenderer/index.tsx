@@ -5,7 +5,6 @@
 import Markdown from 'markdown-to-jsx'
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
-import * as React from 'react'
 
 import { CLIENT_URL } from '~/graphql/constants'
 

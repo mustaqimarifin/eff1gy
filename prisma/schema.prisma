@@ -3,9 +3,19 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  //url      = env("SQL_WSL") // uses connection pooling
+  //shadowDatabaseUrl = env("SQL_SHADOW")
+}
+
+model Visitor {
+  id       String   @id @default(dbgenerated("nanoid()"))
+  lastSeen DateTime @default(now())
+  geo      Json?    @db.JsonB
+
+  @@index([lastSeen])
 }
 
 model Account {
@@ -39,25 +49,26 @@ model Session {
 model User {
   id String @id @default(dbgenerated("nanoid()"))
 
-  createdAt     DateTime   @default(now())
+  createdAt     DateTime  @default(now())
   name          String
   image         String?
-  email         String?    @unique
-  role          Role       @default(USER)
-  isAdmin       Boolean    @default(false)
+  email         String?   @unique
+  role          Role      @default(USER)
+  isAdmin       Boolean   @default(false)
   emailVerified DateTime?
-  pendingEmail  String?
-  description   String?
-  location      String?
-  twitterId     String?    @unique
-  accounts      Account[]
-  comments      Comment[]
-  blogs         Blog[]
-  posts         Post[]
-  questions     Question[]
-  reactions     Reaction[]
-  sessions      Session[]
-  stacks        Stack[]    @relation("StackToUser")
+
+  description String?
+  location    String?
+  username    String?    @unique
+  accounts    Account[]
+  comments    Comment[]
+  blogs       Blog[]
+  posts       Post[]
+  questions   Question[]
+  reactions   Reaction[]
+  sessions    Session[]
+  stacks      Stack[]    @relation("StackToUser")
+  Bookmark    Bookmark[]
 }
 
 model VerificationToken {
@@ -69,8 +80,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id        String @id @default(dbgenerated("nanoid()"))
-  viewCount Int?   @default(1)
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -80,6 +90,7 @@ model Bookmark {
   image         String?
   description   String?
   twitterHandle String?
+  author        User?      @relation(fields: [twitterHandle], references: [username])
   faviconUrl    String?
   comments      Comment[]
   reactions     Reaction[]
@@ -88,48 +99,53 @@ model Bookmark {
   @@index([host])
 }
 
-model Question {
-  id String @id @default(dbgenerated("nanoid()"))
+enum Status {
+  ANSWERED
+  PENDING
+}
 
+model Question {
+  id          String     @id @default(dbgenerated("nanoid()"))
+  status      Status     @default(PENDING)
+  hearts      Int?        @default(0)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
-  plays       Int        @default(0)
-  waveform    Json?
+  plays       Int?       @default(0)
+  waveform    Json?      @db.JsonB
   audioUrl    String?
   description String?
-  userId      String
+  answer      String?
+  userId      String?
   comments    Comment[]
-  author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   reactions   Reaction[]
 
-  @@index([userId])
+  @@index([userId, status])
 }
 
 model Comment {
   id String @id @default(dbgenerated("nanoid()"))
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   text       String
   userId     String?
   bookmarkId String?
   questionId String?
   stackId    String?
   postId     String?
-
-  parentId String?
-  slug     String?
-  pageView PageView? @relation(fields: [slug], references: [id], onDelete: Cascade)
-  parent   Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  replies  Comment[] @relation("ParentChild")
-  bookmark Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  post     Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId   String?
+  slug       String?
+  parentId   String?
+  parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  replies    Comment[] @relation("ParentChild")
+  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  author     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog       Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  blogId     String?
 
   @@index([bookmarkId])
   @@index([questionId])
@@ -137,17 +153,6 @@ model Comment {
   @@index([blogId])
   @@index([stackId])
   @@index([userId])
-}
-
-model Audio {
-  id String @id @default(dbgenerated("nanoid()"))
-
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  plays         Int
-  waveform      Json
-  url           String
-  transcription String
 }
 
 model Blog {
@@ -159,28 +164,26 @@ model Blog {
   reactions Reaction[]
   author    User?      @relation(fields: [userId], references: [id])
   userId    String?
-  viewCount Int?       @default(1)
 
-  @@index([id])
+  @@index([slug])
 }
 
 model Post {
-  id        String @id @default(dbgenerated("nanoid()"))
-  viewCount Int?   @default(1)
+  id String @id @default(dbgenerated("nanoid()"))
 
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  publishedAt  DateTime?
-  slug         String     @unique
-  title        String
-  text         String
-  excerpt      String
-  featureImage String?
-  userId       String
-  comments     Comment[]
-  author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  history      PostEdit[]
-  reactions    Reaction[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  publishedAt DateTime?
+  slug        String     @unique
+  title       String
+  text        String
+  excerpt     String
+  cover       String?
+  userId      String
+  comments    Comment[]
+  author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  history     PostEdit[]
+  reactions   Reaction[]
 
   @@index([publishedAt])
   @@index([userId])
@@ -189,13 +192,13 @@ model Post {
 model PostEdit {
   id String @id @default(dbgenerated("nanoid()"))
 
-  createdAt    DateTime @default(now())
-  text         String
-  title        String
-  excerpt      String
-  featureImage String?
-  postId       String?
-  post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  text      String
+  title     String
+  excerpt   String
+  cover     String?
+  postId    String?
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
 }
@@ -207,8 +210,7 @@ model Tag {
 }
 
 model Stack {
-  id        String @id @default(dbgenerated("nanoid()"))
-  viewCount Int?   @default(1)
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -249,10 +251,8 @@ model Reaction {
 }
 
 model PageView {
-  id        String    @id @unique
-  lastSeen  DateTime  @default(now())
-  viewCount Int?      @default(1)
-  comments  Comment[]
+  id      String @id @unique
+  counter Int?   @default(1)
 }
 
 enum Role {

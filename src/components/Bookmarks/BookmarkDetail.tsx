@@ -3,7 +3,7 @@
 import { LinkIcon } from 'lucide-react'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { PrimaryButton } from '~/components/Button'
 import { Comments } from '~/components/Comments'
@@ -23,8 +23,8 @@ export function BookmarkDetail({
   children: ReactNode
   id: string
 }) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
   const { data, loading, error } = useGetBookmarkQuery({
     variables: { id },
   })
@@ -54,16 +54,16 @@ export function BookmarkDetail({
         />
 
         <Detail.ContentContainer>
+          <Link
+            passHref
+            href={bookmark.url}
+            target="_blank"
+            rel="noopener"
+            className="block">
+            <Detail.Title ref={titleRef}>{bookmark.title}</Detail.Title>
+          </Link>
           <Detail.Header>
             <Tags tags={bookmark.tags} />
-            <Link
-              passHref
-              href={bookmark.url}
-              target="_blank"
-              rel="noopener"
-              className="block">
-              <Detail.Title ref={titleRef}>{bookmark.title}</Detail.Title>
-            </Link>
             <Link
               passHref
               href={bookmark.url}

@@ -2,7 +2,7 @@
 
 import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import { usePathname } from 'next/navigation'
-import * as React from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { GET_POSTS } from '~/graphql/queries/posts'
@@ -12,7 +12,7 @@ import { LoadingSpinner } from '../LoadingSpinner'
 import { PostListItem } from './PostListItem'
 import { WritingTitlebar } from './WritingTitlebar'
 
-export const WritingContext = React.createContext({
+export const WritingContext = createContext({
   filter: 'published',
   setFilter: (filter: string) => {},
 })
@@ -20,8 +20,8 @@ export const WritingContext = React.createContext({
 export function PostsList() {
   const path = usePathname()
 
-  const [filter, setFilter] = React.useState('published')
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [filter, setFilter] = useState('published')
+  const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
   const variables =
     filter === 'published'
@@ -32,7 +32,7 @@ export function PostsList() {
     variables,
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     refetch()
   }, [filter])
 

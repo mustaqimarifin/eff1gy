@@ -1,7 +1,11 @@
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-
-
+-- The `nanoid()` function generates a compact, URL-friendly unique identifier.
+-- Based on the given size and alphabet, iat creates a randomized string that's ideal for
+-- use-cases requiring small, unpredictable IDs (e.g., URL shorteners, generated file names, etc.).
+-- While it comes with a default configuration, the function is designed to be flexible,
+-- allowing for customization to meet specific needs.
 DROP FUNCTION IF EXISTS nanoid(int, text, float);
 CREATE OR REPLACE FUNCTION nanoid(
     size int DEFAULT 6, -- The number of symbols in the NanoId String. Must be greater than 0.
@@ -89,8 +93,19 @@ END
 $$;
 
 -- CreateEnum
+CREATE TYPE "Status" AS ENUM ('ANSWERED', 'PENDING');
 
+-- CreateEnum
 CREATE TYPE "Role" AS ENUM ('BLOCKED', 'USER', 'ADMIN');
+
+-- CreateTable
+CREATE TABLE "Visitor" (
+    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "lastSeen" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "geo" JSONB,
+
+    CONSTRAINT "Visitor_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -129,10 +144,9 @@ CREATE TABLE "User" (
     "role" "Role" NOT NULL DEFAULT 'USER',
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "emailVerified" TIMESTAMP(3),
-    "pendingEmail" TEXT,
     "description" TEXT,
     "location" TEXT,
-    "twitterId" TEXT,
+    "username" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -147,7 +161,6 @@ CREATE TABLE "VerificationToken" (
 -- CreateTable
 CREATE TABLE "Bookmark" (
     "id" TEXT NOT NULL DEFAULT nanoid(),
-    "viewCount" INTEGER DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT NOT NULL,
@@ -164,14 +177,17 @@ CREATE TABLE "Bookmark" (
 -- CreateTable
 CREATE TABLE "Question" (
     "id" TEXT NOT NULL DEFAULT nanoid(),
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
+    "hearts" INTEGER DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
-    "plays" INTEGER NOT NULL DEFAULT 0,
+    "plays" INTEGER DEFAULT 0,
     "waveform" JSONB,
     "audioUrl" TEXT,
     "description" TEXT,
-    "userId" TEXT NOT NULL,
+    "answer" TEXT,
+    "userId" TEXT,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
@@ -187,24 +203,11 @@ CREATE TABLE "Comment" (
     "questionId" TEXT,
     "stackId" TEXT,
     "postId" TEXT,
-    "parentId" TEXT,
     "slug" TEXT,
+    "parentId" TEXT,
     "blogId" TEXT,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Audio" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "plays" INTEGER NOT NULL,
-    "waveform" JSONB NOT NULL,
-    "url" TEXT NOT NULL,
-    "transcription" TEXT NOT NULL,
-
-    CONSTRAINT "Audio_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -214,7 +217,6 @@ CREATE TABLE "Blog" (
     "title" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT,
-    "viewCount" INTEGER DEFAULT 1,
 
     CONSTRAINT "Blog_pkey" PRIMARY KEY ("id")
 );
@@ -222,7 +224,6 @@ CREATE TABLE "Blog" (
 -- CreateTable
 CREATE TABLE "Post" (
     "id" TEXT NOT NULL DEFAULT nanoid(),
-    "viewCount" INTEGER DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "publishedAt" TIMESTAMP(3),
@@ -230,7 +231,7 @@ CREATE TABLE "Post" (
     "title" TEXT NOT NULL,
     "text" TEXT NOT NULL,
     "excerpt" TEXT NOT NULL,
-    "featureImage" TEXT,
+    "cover" TEXT,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
@@ -243,7 +244,7 @@ CREATE TABLE "PostEdit" (
     "text" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "excerpt" TEXT NOT NULL,
-    "featureImage" TEXT,
+    "cover" TEXT,
     "postId" TEXT,
 
     CONSTRAINT "PostEdit_pkey" PRIMARY KEY ("id")
@@ -259,7 +260,6 @@ CREATE TABLE "Tag" (
 -- CreateTable
 CREATE TABLE "Stack" (
     "id" TEXT NOT NULL DEFAULT nanoid(),
-    "viewCount" INTEGER DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
@@ -288,8 +288,7 @@ CREATE TABLE "Reaction" (
 -- CreateTable
 CREATE TABLE "PageView" (
     "id" TEXT NOT NULL,
-    "lastSeen" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "viewCount" INTEGER DEFAULT 1,
+    "counter" INTEGER DEFAULT 1,
 
     CONSTRAINT "PageView_pkey" PRIMARY KEY ("id")
 );
@@ -313,6 +312,9 @@ CREATE TABLE "_StackToUser" (
 );
 
 -- CreateIndex
+CREATE INDEX "Visitor_lastSeen_idx" ON "Visitor"("lastSeen");
+
+-- CreateIndex
 CREATE INDEX "Account_userId_idx" ON "Account"("userId");
 
 -- CreateIndex
@@ -328,7 +330,7 @@ CREATE INDEX "Session_userId_idx" ON "Session"("userId");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_twitterId_key" ON "User"("twitterId");
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
@@ -343,7 +345,7 @@ CREATE UNIQUE INDEX "Bookmark_url_key" ON "Bookmark"("url");
 CREATE INDEX "Bookmark_host_idx" ON "Bookmark"("host");
 
 -- CreateIndex
-CREATE INDEX "Question_userId_idx" ON "Question"("userId");
+CREATE INDEX "Question_userId_status_idx" ON "Question"("userId", "status");
 
 -- CreateIndex
 CREATE INDEX "Comment_bookmarkId_idx" ON "Comment"("bookmarkId");
@@ -367,7 +369,7 @@ CREATE INDEX "Comment_userId_idx" ON "Comment"("userId");
 CREATE UNIQUE INDEX "Blog_slug_key" ON "Blog"("slug");
 
 -- CreateIndex
-CREATE INDEX "Blog_id_idx" ON "Blog"("id");
+CREATE INDEX "Blog_slug_idx" ON "Blog"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Post_slug_key" ON "Post"("slug");
@@ -430,10 +432,10 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_twitterHandle_fkey" FOREIGN KEY ("twitterHandle") REFERENCES "User"("username") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_slug_fkey" FOREIGN KEY ("slug") REFERENCES "PageView"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;

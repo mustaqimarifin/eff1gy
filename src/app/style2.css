@@ -173,15 +173,15 @@
   @apply whitespace-pre-wrap text-sm font-medium;
   word-break: break-word;
 }
-
+*/
 .prose pre > code {
-  @apply bg-gray-800 text-gray-200;
+  @apply bg-gray-100 dark:bg-gray-600;
 }
 
 .prose pre {
-  @apply bg-gray-800 text-gray-100;
+  @apply bg-gray-100 dark:bg-gray-600;
 }
- */
+
 .prose sup {
   @apply text-sm text-blue-500 dark:text-gray-400;
   vertical-align: super;
@@ -190,14 +190,14 @@
   scroll-margin-top: 4rem;
 }
 
-/* .prose :where(code):not(:where([class~='not-prose'] *))::before {
+.prose :where(code):not(:where([class~='not-prose'] *))::before {
   content: none;
 }
 
 .prose :where(code):not(:where([class~='not-prose'] *))::after {
   content: none;
 }
- */
+
 /* [data-rehype-pretty-code-fragment] code {
   @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm text-black;
   counter-reset: line;

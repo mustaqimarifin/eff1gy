@@ -1,7 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { useRef } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -10,13 +11,13 @@ import { timestampToCleanTime } from '~/lib/transformers'
 import type { CaseStudy } from '../Posts/BlogDetail'
 
 interface Props {
-  children: React.ReactNode
+  children: ReactNode
   casestudy: CaseStudy
 }
 
 export function CaseDetail({ casestudy, children }: Props) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
 
   const date = timestampToCleanTime({ timestamp: casestudy.date })
 

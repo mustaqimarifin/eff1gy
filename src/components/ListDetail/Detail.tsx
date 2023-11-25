@@ -1,5 +1,6 @@
 import { Compass } from 'lucide-react'
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { forwardRef } from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 
@@ -25,10 +26,10 @@ function ContentContainer(props) {
 }
 
 interface DetailContainerProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const Container = React.forwardRef<HTMLDivElement, DetailContainerProps>(
+const Container = forwardRef<HTMLDivElement, DetailContainerProps>(
   (props, ref) => {
     return (
       <div
@@ -46,10 +47,10 @@ function Header(props) {
 }
 
 interface TitleProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const Title = React.forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
+const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
   return (
     <h1
       ref={ref}

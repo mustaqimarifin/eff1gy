@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import * as React from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 
 interface BaseButtonProps {
   [key: string]: unknown
@@ -7,11 +8,9 @@ interface BaseButtonProps {
   disabled?: boolean
 }
 
-type ButtonAsButton = BaseButtonProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+type ButtonAsButton = BaseButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-type ButtonAsLink = BaseButtonProps &
-  React.AnchorHTMLAttributes<HTMLAnchorElement>
+type ButtonAsLink = BaseButtonProps & AnchorHTMLAttributes<HTMLAnchorElement>
 
 type ButtonProps = ButtonAsButton | ButtonAsLink
 
@@ -71,7 +70,7 @@ const composer = {
   getRadius,
 }
 
-export const Button = React.forwardRef((props: ButtonProps, ref) => {
+export const Button = forwardRef((props: ButtonProps, ref) => {
   const classes = `text-gray-700 hover:text-gray-1000 shadow-xs bg-white border border-gray-400 border-opacity-30 dark:border-gray-700 dark:hover:border-gray-600 dark:bg-white dark:bg-opacity-10 dark:text-gray-200 dark:hover:text-white hover:border-opacity-50 hover:shadow-sm`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -79,7 +78,7 @@ export const Button = React.forwardRef((props: ButtonProps, ref) => {
   const composed = `${baseClasses} ${size} ${opacity} ${radius} ${classes}`
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
-export const ViewButton = React.forwardRef((props: ButtonProps, ref) => {
+export const ViewButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `text-gray-700  shadow-xs bg-white border border-gray-400 border-opacity-30 dark:border-gray-700  dark:bg-white dark:bg-opacity-10 dark:text-gray-200 dark:hover:text-white select-none hover:shadow-sm`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -90,7 +89,7 @@ export const ViewButton = React.forwardRef((props: ButtonProps, ref) => {
 
 export default Button
 
-export const PrimaryButton = React.forwardRef((props: ButtonProps, ref) => {
+export const PrimaryButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `text-white hover:text-white shadow-xs bg-blue-500 border border-blue-600 dark:border-blue-400 dark:border-opacity-50 hover:shadow-sm`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -99,7 +98,7 @@ export const PrimaryButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
 
-export const DeleteButton = React.forwardRef((props: ButtonProps, ref) => {
+export const DeleteButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `bg-white border border-gray-200 dark:border-red-500 dark:hover:border-red-500  dark:bg-red-500 dark:border-opacity-20 dark:bg-opacity-10 text-red-500 hover:border-red-500 hover:text-white hover:bg-red-600 focus:bg-red-600 dark:focus:text-white`
 
   const size = composer.getSize(props.size)
@@ -109,7 +108,7 @@ export const DeleteButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
 
-export const RecordingButton = React.forwardRef((props: ButtonProps, ref) => {
+export const RecordingButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `bg-green-500 border border-green-600 dark:border-green-500 dark:hover:border-green-500 dark:bg-green-500 dark:border-opacity-20 dark:bg-opacity-10  text-white hover:bg-green-600`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -118,7 +117,7 @@ export const RecordingButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
 
-export const GhostButton = React.forwardRef((props: ButtonProps, ref) => {
+export const GhostButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `text-gray-700 hover:text-gray-1000 bg-gray-200 bg-opacity-0 hover:bg-opacity-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:text-white`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -127,7 +126,7 @@ export const GhostButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
 
-export const CommentButton = React.forwardRef((props: ButtonProps, ref) => {
+export const CommentButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `${
     props.disabled
       ? 'text-gray-500 border-gray-400 bg-opacity-50 dark:border-gray-700'
@@ -140,7 +139,7 @@ export const CommentButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton className={composed} forwardedRef={ref} {...props} />
 })
 
-export const TwitterButton = React.forwardRef((props: ButtonProps, ref) => {
+export const TwitterButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `bg-twitter text-white space-x-4 items-center`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -149,7 +148,7 @@ export const TwitterButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
 
-export const GoogleButton = React.forwardRef((props: ButtonProps, ref) => {
+export const GoogleButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `bg-pink-600 text-white space-x-4 items-center`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)
@@ -158,7 +157,7 @@ export const GoogleButton = React.forwardRef((props: ButtonProps, ref) => {
   return <BaseButton forwardedRef={ref} className={composed} {...props} />
 })
 
-export const GithubButton = React.forwardRef((props: ButtonProps, ref) => {
+export const GithubButton = forwardRef((props: ButtonProps, ref) => {
   const classes = `bg-accent text-white space-x-4 items-center`
   const size = composer.getSize(props.size)
   const opacity = composer.getOpacity(props.disabled)

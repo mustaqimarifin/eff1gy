@@ -1,10 +1,10 @@
-import * as React from 'react'
+import type { ReactElement, ReactNode } from 'react'
 
 import { Sidebar } from '~/components/Sidebar'
 
 interface Props {
-  list: React.ReactElement | null
-  detail: React.ReactElement | null
+  list: ReactElement | null
+  detail: ReactElement | null
   hasDetail?: boolean
 }
 
@@ -25,7 +25,7 @@ export function ListDetailView({ list, detail, hasDetail = false }: Props) {
   )
 }
 
-export function SiteLayout({ children }: { children: React.ReactNode }) {
+export function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex h-full min-h-screen w-full">
       <Sidebar />

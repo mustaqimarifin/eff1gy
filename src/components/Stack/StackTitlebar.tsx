@@ -1,7 +1,5 @@
 'use client'
-
 import { PlusIcon } from 'lucide-react'
-import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'
 import { TitleBar } from '~/components/ListDetail/TitleBar'

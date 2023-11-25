@@ -1,5 +1,5 @@
 import { TrashIcon } from 'lucide-react'
-import * as React from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import useSWR from 'swr'
 
 import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
@@ -132,11 +132,11 @@ export default function AudioRecorder({
     }
   }
 
-  const [state, dispatch] = React.useReducer(reducer, initialState)
-  const [audioChunks, setAudioChunks] = React.useState([])
-  const [mediaRecorder, setMediaRecorder] = React.useState(null)
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const [audioChunks, setAudioChunks] = useState([])
+  const [mediaRecorder, setMediaRecorder] = useState(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function handleMediaSetup() {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -166,7 +166,7 @@ export default function AudioRecorder({
     }
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (mediaRecorder) {
       mediaRecorder.ondataavailable = (e) => {
         if (e.data && e.data.size > 0) {
@@ -215,7 +215,7 @@ export default function AudioRecorder({
   }
 
   const signUploadMutation = useSWR(signUpload, {
-    onSuccess: async (data, variables, context) => {
+    onSuccess: async (data) => {
       const upload = await uploadToCloudinary(
         state.audioBlob,
         data.folder,

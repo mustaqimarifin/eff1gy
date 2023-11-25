@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import * as React from 'react'
+import { useContext } from 'react'
 
 import { GlobalNavigationContext } from '~/components/Provider'
 
@@ -14,7 +14,7 @@ export function NavigationLink({
     isExternal,
   },
 }) {
-  const { setIsOpen } = React.useContext(GlobalNavigationContext)
+  const { setIsOpen } = useContext(GlobalNavigationContext)
   return (
     <li
       className="flex items-stretch space-x-1"

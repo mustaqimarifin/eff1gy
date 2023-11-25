@@ -1,9 +1,8 @@
 'use client'
 
 import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { animate, glide, inView } from 'motion'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import * as React from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { PAGINATION_AMOUNT } from '~/graphql/constants'
@@ -15,15 +14,15 @@ import { LoadingSpinner } from '../LoadingSpinner'
 import { BookmarksListItem } from './BookmarkListItem'
 import { BookmarksTitlebar } from './BookmarksTitlebar'
 
-export function LayoutGroup({ children }) {
-  React.useEffect(() => {
+/* export function LayoutGroup({ children }) {
+  useEffect(() => {
     animate('#bl', { x: 0 }, { easing: glide({ velocity: -500 }) })
   }, [])
 
   return <div id="bl">{children}</div>
-}
-export function PGroup({ children }) {
-  React.useEffect(() => {
+} */
+/* export function PGroup({ children }) {
+  useEffect(() => {
     inView('section', ({ target }) => {
       animate(
         target.querySelector('span'),
@@ -36,8 +35,8 @@ export function PGroup({ children }) {
 
   return <div id="section">{children}</div>
 }
-
-export const BookmarksContext = React.createContext({
+ */
+export const BookmarksContext = createContext({
   tag: null,
   setTag: (tag: string) => undefined,
 })
@@ -46,9 +45,9 @@ export function BookmarksList() {
   const router = useRouter()
   const path = usePathname()
   const { tagQuery } = useParams()
-  const [tag, setTag] = React.useState<string | string[]>(tagQuery)
-  const [isVisible, setIsVisible] = React.useState(false)
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [tag, setTag] = useState<string | string[]>(tagQuery)
+  const [isVisible, setIsVisible] = useState(false)
+  const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
   const variables: any = tag
     ? {
@@ -79,16 +78,16 @@ export function BookmarksList() {
   }
 
   // scroll to the top of the list whenever the filters are changed
-  React.useEffect(() => {
+  useEffect(() => {
     if (scrollContainerRef?.current) scrollContainerRef.current.scrollTo(0, 0)
   }, [tag])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isVisible) handleFetchMore()
   }, [isVisible])
 
   // if a user is linked to /bookmarks?tag=foo, clear the query filter but stay on the same page
-  React.useEffect(() => {
+  useEffect(() => {
     if (tagQuery) router.push(path)
   }, [tagQuery])
 
@@ -110,14 +109,14 @@ export function BookmarksList() {
     <BookmarksContext.Provider value={defaultContextValue}>
       <ListContainer data-cy="bookmarks-list" onRef={setScrollContainerRef}>
         <BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
-        <PGroup>
+        <div>
           <div className="lg:space-y-1 lg:p-3">
             {bookmarks.edges.map((bookmark) => {
               const active = path === bookmark.node.id
               return (
-                <PGroup key={bookmark.node.id}>
+                <div key={bookmark.node.id}>
                   <BookmarksListItem active={active} bookmark={bookmark.node} />
-                </PGroup>
+                </div>
               )
             })}
           </div>
@@ -125,7 +124,7 @@ export function BookmarksList() {
           {bookmarks.pageInfo.hasNextPage && (
             <ListLoadMore setIsVisible={setIsVisible} />
           )}
-        </PGroup>
+        </div>
       </ListContainer>
     </BookmarksContext.Provider>
   )

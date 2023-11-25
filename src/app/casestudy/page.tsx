@@ -1,10 +1,9 @@
 import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
-import type { CaseStudy } from '~/components/Posts/BlogDetail'
-import { getAllCaseStudy } from '~/lib/sanity/sanity.client'
+import { getCases } from '~/lib/sanity/sanity.client'
 
 export default async function CaseIndex() {
-  const cases: CaseStudy[] = await getAllCaseStudy()
+  const cases = await getCases()
 
   if (!cases) {
     return { notFound: true }

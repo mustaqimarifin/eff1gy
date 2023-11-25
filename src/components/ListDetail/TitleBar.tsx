@@ -2,7 +2,8 @@
 
 import { ArrowLeft, Menu, X } from 'lucide-react'
 import Link from 'next/link'
-import * as React from 'react'
+import type { MutableRefObject, ReactNode } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { GlobalNavigationContext } from '~/components/Provider'
 
@@ -12,11 +13,11 @@ interface Props {
   backButton?: boolean
   backButtonHref?: string
   magicTitle?: boolean
-  titleRef?: React.MutableRefObject<HTMLParagraphElement>
-  scrollContainerRef?: React.MutableRefObject<HTMLDivElement>
-  children?: React.ReactNode
-  leadingAccessory?: React.ReactNode
-  trailingAccessory?: React.ReactNode
+  titleRef?: MutableRefObject<HTMLParagraphElement>
+  scrollContainerRef?: MutableRefObject<HTMLDivElement>
+  children?: ReactNode
+  leadingAccessory?: ReactNode
+  trailingAccessory?: ReactNode
 }
 
 export function TitleBar({
@@ -31,36 +32,36 @@ export function TitleBar({
   trailingAccessory = null,
   children,
 }: Props) {
-  const { isOpen, setIsOpen } = React.useContext(GlobalNavigationContext)
-  const [darkMode, setDarkMode] = React.useState(false)
-  const [offset, setOffset] = React.useState(200)
-  const [opacity, _setOpacity] = React.useState(0)
-  const [currentScrollOffset, _setCurrentScrollOffset] = React.useState(0)
+  const { isOpen, setIsOpen } = useContext(GlobalNavigationContext)
+  const [darkMode, setDarkMode] = useState(false)
+  const [offset, setOffset] = useState(200)
+  const [opacity, _setOpacity] = useState(0)
+  const [currentScrollOffset, _setCurrentScrollOffset] = useState(0)
 
-  const [initialTitleOffsets, _setInitialTitleOffsets] = React.useState({
+  const [initialTitleOffsets, _setInitialTitleOffsets] = useState({
     top: 0,
     bottom: 0,
   })
 
-  const initialTitleOffsetsRef = React.useRef(initialTitleOffsets)
+  const initialTitleOffsetsRef = useRef(initialTitleOffsets)
   const setInitialTitleOffsets = (data) => {
     initialTitleOffsetsRef.current = data
     _setInitialTitleOffsets(data)
   }
 
-  const opacityRef = React.useRef(opacity)
+  const opacityRef = useRef(opacity)
   const setOpacity = (data) => {
     opacityRef.current = data
     _setOpacity(data)
   }
 
-  const currentScrollOffsetRef = React.useRef(currentScrollOffset)
+  const currentScrollOffsetRef = useRef(currentScrollOffset)
   const setCurrentScrollOffset = (data) => {
     currentScrollOffsetRef.current = data
     _setCurrentScrollOffset(data)
   }
 
-  const handler = React.useCallback(() => {
+  const handler = useCallback(() => {
     const shadowOpacity = scrollContainerRef.current.scrollTop / 200
     setCurrentScrollOffset(shadowOpacity > 0.12 ? 0.12 : shadowOpacity)
 
@@ -80,13 +81,13 @@ export function TitleBar({
     setOpacity(opacityOffset)
   }, [title, titleRef, scrollContainerRef])
 
-  React.useEffect(() => {
+  useEffect(() => {
     scrollContainerRef?.current?.addEventListener('scroll', handler)
     return () =>
       scrollContainerRef?.current?.removeEventListener('scroll', handler)
   }, [title, titleRef, scrollContainerRef])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!titleRef?.current || !scrollContainerRef?.current) return
     scrollContainerRef.current.scrollTop = 0
     setOpacity(0)
@@ -96,7 +97,7 @@ export function TitleBar({
     })
   }, [title, titleRef, scrollContainerRef])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isDarkMode =
       window?.matchMedia &&
       window?.matchMedia('(prefers-color-scheme: dark)').matches

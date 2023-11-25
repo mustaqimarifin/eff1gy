@@ -1,5 +1,4 @@
 import { LucideEye } from 'lucide-react'
-import * as React from 'react'
 
 import Button, { ViewButton } from '~/components/Button'
 import { ReactionButton } from '~/components/Button/ReactionButton'
@@ -10,7 +9,6 @@ import {
   useViewerQuery,
 } from '~/graphql/typeSlut'
 
-import { PageViews } from '../Stats/ViewCounter'
 function getReactionButton(post) {
   const [toggleReaction, { loading }] = useToggleReactionMutation()
   function handleClick() {
@@ -77,7 +75,6 @@ function viewButton(post) {
       <span className=" text-gray-500	">
         <LucideEye size={18} />
       </span>
-      <PageViews id={post?.slug} trackView />
     </ViewButton>
   )
 }

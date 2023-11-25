@@ -1,6 +1,5 @@
 import { Menu, Transition } from '@headlessui/react'
 import { MoreHorizontal } from 'lucide-react'
-import * as React from 'react'
 
 import { GhostButton } from '~/components/Button'
 

@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import { Comments } from '~/components/Comments'
@@ -9,12 +9,13 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { CommentType, useGetQuestionQuery } from '~/graphql/typeSlut'
 import { timestampToCleanTime } from '~/lib/transformers'
 
+import AudioPlayer from '../AudioPlayer'
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { QuestionActions } from './QuestionActions'
 
 export function QuestionDetail({ id }: { id: string }) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
   const { data, loading, error } = useGetQuestionQuery({
     variables: { id },
     context: { fetchOptions: { cache: 'force-cache' } },
@@ -52,11 +53,11 @@ export function QuestionDetail({ id }: { id: string }) {
           <Detail.Header>
             <div className="flex items-center space-x-4 pb-2">
               <Link
-                href={`/u/${question?.author.name}`}
+                href={`/u/${question?.author?.name}`}
                 className="inline-flex">
                 <Avatar
-                  user={question.author}
-                  src={question.author.image}
+                  user={question?.author}
+                  src={question?.author?.image}
                   width={32}
                   height={32}
                   quality={100}
@@ -65,13 +66,13 @@ export function QuestionDetail({ id }: { id: string }) {
               </Link>
               <div className="flex space-x-1">
                 <Link
-                  href={`/u/${question.author.name}`}
+                  href={`/u/${question.author?.name}`}
                   className="inline-flex space-x-1">
                   <span className="text-primary whitespace-nowrap font-semibold leading-snug">
-                    {question.author.name}
+                    {question.author?.name}
                   </span>
                   <span className="text-tertiary line-clamp-1 inline-flex font-normal leading-snug">
-                    @{question.author.name}
+                    @{question.author?.username}
                   </span>
                 </Link>
                 <p className="text-quaternary leading-snug">·</p>
@@ -83,6 +84,18 @@ export function QuestionDetail({ id }: { id: string }) {
               </div>
             </div>
             <Detail.Title ref={titleRef}>{question?.title}</Detail.Title>
+            {question.audioUrl && (
+              <>
+                <div className="py-4">
+                  <AudioPlayer
+                    src={question?.audioUrl}
+                    isRecorder={false}
+                    id={question.id}
+                    waveform={question?.waveform}
+                  />
+                </div>
+              </>
+            )}
             {question?.description && (
               <MarkdownRenderer
                 children={question?.description}

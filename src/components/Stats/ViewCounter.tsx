@@ -1,12 +1,12 @@
 import { LucideEye } from 'lucide-react'
-import { Suspense, useEffect } from 'react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 
 import { useViewerQuery } from '~/graphql/typeSlut'
 import { fetcher } from '~/lib/functions'
 import { cx } from '~/lib/transformers'
 
-import Button, { ViewButton } from '../Button'
+import { ViewButton } from '../Button'
 
 export type CounterProps = {
   id?: string

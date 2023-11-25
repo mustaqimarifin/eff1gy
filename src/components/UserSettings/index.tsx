@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -15,8 +15,8 @@ export function UserSettings() {
     fetchPolicy: 'network-only',
   })
 
-  const titleRef = React.useRef(null)
-  const scrollContainerRef = React.useRef(null)
+  const titleRef = useRef(null)
+  const scrollContainerRef = useRef(null)
 
   if (!data?.viewer && loading) {
     return <Detail.Loading />

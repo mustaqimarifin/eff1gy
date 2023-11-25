@@ -1,37 +1,9 @@
 'use client'
 
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-
-import { IntroDetail } from './IntroDetail'
-
-interface TableRowProps {
-  href: string
-  title: string
-  date: string
-  subtitle?: string
-}
-
-function TableRow({ href, title, subtitle, date }: TableRowProps) {
-  return (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      href={href}
-      className="group flex items-center space-x-4">
-      <strong className="flex-none font-medium text-gray-900 group-hover:text-blue-600 group-hover:underline dark:text-gray-100 dark:group-hover:text-blue-500">
-        {title}
-      </strong>
-      <span className="w-full shrink border-t border-dashed border-gray-300 dark:border-gray-800" />
-      {subtitle && <span className="text-tertiary flex-none">{subtitle}</span>}
-      {date && (
-        <span className="text-quaternary flex-none font-mono">{date}</span>
-      )}
-    </a>
-  )
-}
 
 /* const workHistory = [
   {
@@ -129,23 +101,26 @@ const speakingData = [
   },
 ]
  */
-export function Intro() {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+export function Intro({ children }) {
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
 
   return (
     <>
       <Detail.Container data-cy="home-intro" ref={scrollContainerRef}>
         <TitleBar
+          backButton
+          globalMenu={false}
+          backButtonHref={'/bookmarks'}
           magicTitle
+          title="Home"
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
-          title="Home"
         />
 
         {/* Keep this div to trigger the magic scroll */}
         <div className="p-4" ref={titleRef} />
-        <IntroDetail />
+        {children}
       </Detail.Container>
     </>
   )

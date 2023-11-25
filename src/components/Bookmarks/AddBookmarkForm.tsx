@@ -1,5 +1,5 @@
 import { usePathname, useRouter } from 'next/navigation'
-import * as React from 'react'
+import { useState } from 'react'
 
 import Button from '~/components/Button'
 import { Input } from '~/components/Input'
@@ -15,8 +15,8 @@ import {
 import { nuts } from '../Provider/Toaster'
 
 export function AddBookmarkForm({ closeModal }) {
-  const [url, setUrl] = React.useState('')
-  const [tag, setTag] = React.useState('web')
+  const [url, setUrl] = useState('')
+  const [tag, setTag] = useState('web')
   const router = useRouter()
   const path = usePathname()
 

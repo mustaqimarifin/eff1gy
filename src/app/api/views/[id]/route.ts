@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         id,
       },
       update: {
-        viewCount: {
+        counter: {
           increment: 1,
         },
       },
@@ -31,10 +31,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       status: 200,
-      total: newOrUpdatedViews.viewCount.toString(),
+      total: newOrUpdatedViews.counter.toString(),
     })
   } catch (e) {
-    console.log(`${e}`)
+    //console.log(`${e}`)
     return new Response(`Failed to increment page`, {
       status: 500,
     })
@@ -57,9 +57,9 @@ export async function GET(req: Request) {
       },
     })
 
-    return NextResponse.json({ total: views?.viewCount.toString() || null })
+    return NextResponse.json({ total: views?.counter.toString() || null })
   } catch (e) {
-    console.log(`${e}`)
+    //console.log(`${e}`)
     return new Response(`Failed to increment page`, {
       status: 500,
     })

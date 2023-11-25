@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react'
 import { ChevronDown } from 'lucide-react'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { useGetTagsQuery } from '~/graphql/typeSlut'
 
@@ -8,7 +8,7 @@ import { Tag } from '.'
 
 export function TagPicker({ filter, onChange, defaultValue = undefined }) {
   const { data, loading } = useGetTagsQuery()
-  const [selected, setSelected] = React.useState(defaultValue)
+  const [selected, setSelected] = useState(defaultValue)
 
   if (loading) return null
 

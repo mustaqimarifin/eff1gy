@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react'
+import { useContext } from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { useEditPostMutation } from '~/graphql/typeSlut'
@@ -9,7 +9,7 @@ import { useInterval } from '~/hooks'
 import { PostEditorContext } from './PostEditor'
 
 export function PostEditorAutoSave() {
-  const context = React.useContext(PostEditorContext)
+  const context = useContext(PostEditorContext)
   const { draftState, existingPost } = context
   const { title, text, slug, excerpt } = draftState
   const [editPost, { loading }] = useEditPostMutation()

@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { ListDetailView } from '~/components/Layouts'
 import { getClient } from '~/components/Provider/ApolloClient'
 import { StackList } from '~/components/Stack/StackList'

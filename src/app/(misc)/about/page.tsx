@@ -1,8 +1,7 @@
-import * as React from 'react'
+import Home from '../page'
 
-import { Intro } from '~/components/Home/Intro'
 export const dynamic = 'force-static'
 
 export default function About() {
-  return <Intro />
+  return <Home />
 }

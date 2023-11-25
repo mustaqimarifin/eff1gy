@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-escape */
-import crypto from 'crypto'
 //import ky from 'ky'
 export function slugify(str) {
   return str
@@ -12,13 +11,13 @@ export function slugify(str) {
     .replace(/--+/g, '-') // Replace multiple - with single -
 }
 
-export const sha256 = (
+/* export const sha256 = (
   x: WithImplicitCoercion<ArrayBuffer | SharedArrayBuffer>
 ) => {
   const buffer = Buffer.isBuffer(x) ? x : Buffer.from(x)
-  return crypto.createHash('sha256').update(buffer).digest('base64')
+  return createHash('sha256').update(buffer).digest('base64')
 }
-
+ */
 //export const fetcher = url => ky.get(url).then(res => res.json())
 export async function fetcher<JSON = any>(
   input: RequestInfo,

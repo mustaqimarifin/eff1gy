@@ -1,6 +1,6 @@
 import { Sidebar } from 'lucide-react'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import * as React from 'react'
+import { useContext } from 'react'
 
 import Button from '~/components/Button'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
@@ -14,7 +14,7 @@ import { PostEditorAutoSave } from './PostEditorAutoSave'
 export function PostEditorActions() {
   const router = useRouter()
   const path = usePathname()
-  const context = React.useContext(PostEditorContext)
+  const context = useContext(PostEditorContext)
   const {
     draftState,
     existingPost,

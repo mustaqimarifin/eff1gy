@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useContext } from 'react'
 
 import { GhostButton } from '~/components/Button'
 import { QuestionStatus, useGetQuestionsQuery } from '~/graphql/typeSlut'
@@ -7,7 +7,7 @@ import { LoadingSpinner } from '../LoadingSpinner'
 import { QuestionsContext } from './QuestionsList'
 
 export function QuestionsFilterButton() {
-  const { setFilterPending, filterPending } = React.useContext(QuestionsContext)
+  const { setFilterPending, filterPending } = useContext(QuestionsContext)
   const { data, loading } = useGetQuestionsQuery({
     variables: {
       filter: { status: QuestionStatus.Pending },

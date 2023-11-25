@@ -1,5 +1,5 @@
 import { Link2Icon } from 'lucide-react'
-import * as React from 'react'
+import { memo, useState } from 'react'
 import ReactVisibilitySensor from 'react-visibility-sensor'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
@@ -10,8 +10,8 @@ interface Props {
   active: boolean
 }
 
-export const BookmarksListItem = React.memo<Props>(({ bookmark, active }) => {
-  const [isVisible, setIsVisible] = React.useState(false)
+export const BookmarksListItem = memo<Props>(({ bookmark, active }) => {
+  const [isVisible, setIsVisible] = useState(false)
 
   function handleClick(e, bookmark) {
     if (e.metaKey) {

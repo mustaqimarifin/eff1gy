@@ -1,11 +1,13 @@
+import type { ComponentProps, ReactNode } from 'react'
+
 import { useViewerQuery } from '~/graphql/typeSlut'
 import { cx } from '~/lib/transformers'
 
-type HeroIcon = (props: React.ComponentProps<'svg'>) => JSX.Element
+type HeroIcon = (props: ComponentProps<'svg'>) => JSX.Element
 
 export interface IconButtonProps {
   Icon: HeroIcon
-  children?: React.ReactNode
+  children?: ReactNode
   color: string
   hoverbg?: string
   isActive?: boolean

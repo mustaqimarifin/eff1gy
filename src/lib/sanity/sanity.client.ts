@@ -5,19 +5,13 @@ import type { CaseStudy, Post } from '~/components/Posts/BlogDetail'
 import { apiVersion, dataset, projectId, useCdn } from './config'
 import {
   caseQuery,
-  designBySlugQuery,
-  designIndexQuery,
-  indexQuery,
-  postBySlugQuery,
+  casesQuery,
   postQuery,
-  postSlugsQuery,
+  postsQuery,
   type Settings,
   settingsQuery,
 } from './queries'
 
-/**
- * Checks if it's safe to create a client instance, as `@sanity/client` will throw an error if `projectId` is false
- */
 const client = projectId
   ? createClient({ projectId, dataset, apiVersion, useCdn })
   : null
@@ -29,35 +23,27 @@ export async function getSettings(): Promise<Settings> {
   return {}
 }
 
-export async function getAllPosts(): Promise<Post[]> {
+export async function getPosts(): Promise<Post[]> {
   if (client) {
-    return (await client.fetch(indexQuery)) || []
+    return (await client.fetch(postsQuery)) || []
   }
   return []
 }
-export async function getAllCaseStudy(): Promise<CaseStudy[]> {
+export async function getCases(): Promise<CaseStudy[]> {
   if (client) {
-    return (await client.fetch(designIndexQuery)) || []
+    return (await client.fetch(casesQuery)) || []
   }
   return []
 }
 
-/* export async function getAllPostsSlugs(): Promise<Pick<Post, "slug">[]> {
-  if (client) {
-    const slugs = (await client.fetch<string[]>(postSlugsQuery)) || []
-    return slugs.map((slug) => ({ slug }))
-  }
-  return []
-}
- */
-export async function getCaseBySlug(slug: string): Promise<CaseStudy> {
+export async function getCase(slug: string): Promise<CaseStudy> {
   if (client) {
     return (await client.fetch(caseQuery, { slug })) || ({} as any)
   }
   return {} as any
 }
 
-export async function getPostBySlug(slug: string): Promise<Post> {
+export async function getPost(slug: string): Promise<Post> {
   if (client) {
     return (await client.fetch(postQuery, { slug })) || ({} as any)
   }

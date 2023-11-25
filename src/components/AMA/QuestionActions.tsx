@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { EditQuestionDialog } from '~/components/AMA/EditQuestionDialog'
 import Button from '~/components/Button'
 import { GET_QUESTION } from '~/graphql/queries/questions'

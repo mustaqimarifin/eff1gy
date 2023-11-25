@@ -169,21 +169,6 @@ export type EditUserInput = {
   name?: InputMaybe<Scalars['String']['input']>
 }
 
-export type Hit = {
-  __typename?: 'Hit'
-  catID?: Maybe<Scalars['String']['output']>
-  createdAt: Scalars['Date']['output']
-  id: Scalars['ID']['output']
-  updatedAt?: Maybe<Scalars['Date']['output']>
-}
-
-export enum HitType {
-  Bookmark = 'BOOKMARK',
-  Post = 'POST',
-  Question = 'QUESTION',
-  Stack = 'STACK',
-}
-
 export type Mutation = {
   __typename?: 'Mutation'
   addBookmark?: Maybe<Bookmark>
@@ -476,7 +461,6 @@ export type User = {
   isAdmin?: Maybe<Scalars['Boolean']['output']>
   isViewer?: Maybe<Scalars['Boolean']['output']>
   name?: Maybe<Scalars['String']['output']>
-  pendingEmail?: Maybe<Scalars['String']['output']>
   role?: Maybe<UserRole>
   username?: Maybe<Scalars['String']['output']>
 }
@@ -793,10 +777,9 @@ export type StackListItemFragment = {
   slug: string
 } & { __typename: 'Stack' }
 
-export type UserSettingsFragment = {
-  email?: string | null
-  pendingEmail?: string | null
-} & { __typename?: 'User' }
+export type UserSettingsFragment = { email?: string | null } & {
+  __typename?: 'User'
+}
 
 export type EditBookmarkMutationVariables = Exact<{
   id: Scalars['ID']['input']
@@ -1536,7 +1519,6 @@ export type GetViewerWithSettingsQuery = {
         isViewer?: boolean | null
         isAdmin?: boolean | null
         email?: string | null
-        pendingEmail?: string | null
       } & { __typename: 'User' })
     | null
 } & { __typename?: 'Query' }
@@ -1763,7 +1745,6 @@ export const StacksConnectionFragmentDoc = /*#__PURE__*/ gql`
 export const UserSettingsFragmentDoc = /*#__PURE__*/ gql`
   fragment UserSettings on User {
     email
-    pendingEmail
   }
 `
 export const EditBookmarkDocument = /*#__PURE__*/ gql`
@@ -3866,19 +3847,6 @@ export type CommentFieldPolicy = {
   viewerCanDelete?: FieldPolicy<any> | FieldReadFunction<any>
   viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type HitKeySpecifier = (
-  | 'catID'
-  | 'createdAt'
-  | 'id'
-  | 'updatedAt'
-  | HitKeySpecifier
-)[]
-export type HitFieldPolicy = {
-  catID?: FieldPolicy<any> | FieldReadFunction<any>
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-}
 export type MutationKeySpecifier = (
   | 'addBookmark'
   | 'addComment'
@@ -4109,7 +4077,6 @@ export type UserKeySpecifier = (
   | 'isAdmin'
   | 'isViewer'
   | 'name'
-  | 'pendingEmail'
   | 'role'
   | 'username'
   | UserKeySpecifier
@@ -4122,7 +4089,6 @@ export type UserFieldPolicy = {
   isAdmin?: FieldPolicy<any> | FieldReadFunction<any>
   isViewer?: FieldPolicy<any> | FieldReadFunction<any>
   name?: FieldPolicy<any> | FieldReadFunction<any>
-  pendingEmail?: FieldPolicy<any> | FieldReadFunction<any>
   role?: FieldPolicy<any> | FieldReadFunction<any>
   username?: FieldPolicy<any> | FieldReadFunction<any>
 }
@@ -4158,10 +4124,6 @@ export type StrictTypedTypePolicies = {
       | CommentKeySpecifier
       | (() => undefined | CommentKeySpecifier)
     fields?: CommentFieldPolicy
-  }
-  Hit?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?: false | HitKeySpecifier | (() => undefined | HitKeySpecifier)
-    fields?: HitFieldPolicy
   }
   Mutation?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
     keyFields?:

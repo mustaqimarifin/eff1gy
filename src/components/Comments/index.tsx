@@ -1,5 +1,5 @@
 import { MessageCircle } from 'lucide-react'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { SignInDialog } from '~/components/SignInDialog'
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function Comments({ refId, type }: Props) {
-  const messagesEndRef = React.useRef(null)
+  const messagesEndRef = useRef(null)
 
   const { data, loading, error, refetch } = useGetCommentsQuery({
     variables: {

@@ -1,19 +1,17 @@
 'use client'
 
-import { useParams, usePathname, useRouter } from 'next/navigation'
-import * as React from 'react'
-import useSWR from 'swr'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { fetcher } from '~/lib/functions'
 
 import { LoadingSpinner } from '../LoadingSpinner'
 import { CaseListItem } from './CaseItem'
 
 export const CaseList = ({ cases }) => {
   const path = usePathname()
-  const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  const [scrollContainerRef, setScrollContainerRef] = useState(null)
   /*     const { data, isLoading } = useSWR<CaseStudy[]>(
         'http://localhost:3000/api/casestudy',
         fetcher

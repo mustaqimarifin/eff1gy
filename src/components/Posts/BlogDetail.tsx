@@ -1,6 +1,7 @@
 'use client'
 
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { Suspense, useRef } from 'react'
 
 import { CommentType, useGetBlogQuery } from '~/graphql/typeSlut'
 
@@ -41,7 +42,7 @@ export type CaseStudy = {
 }
 
 type Props = {
-  children: React.ReactNode
+  children: ReactNode
   post: Post
   slug: string
 }
@@ -53,8 +54,8 @@ type Props = {
   }
 ) */
 export function BlogDetail({ children, post, slug }: Props) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
   const { data, error, loading } = useGetBlogQuery({ variables: { slug } })
 
   if (loading) {
@@ -67,7 +68,7 @@ export function BlogDetail({ children, post, slug }: Props) {
   const { blog } = data
   //if (error) return <div>failed to load</div>;
   // if (!post) return <div>loading...</div>;
-  /*   React.useEffect(() => {
+  /*  useEffect(() => {
     async function fetchPost() {
       const response =  await fetch(`/api/blog/${post.slug}`;
       const fetchedPost = await response.json();
@@ -109,9 +110,9 @@ export function BlogDetail({ children, post, slug }: Props) {
           </Detail.Header>
           {children}
           <div className="py-6" />
-          <React.Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingSpinner />}>
             <Comments refId={data.blog.id} type={CommentType.Blog} />
-          </React.Suspense>
+          </Suspense>
         </Detail.ContentContainer>
       </Detail.Container>
     </>

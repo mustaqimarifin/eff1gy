@@ -5,7 +5,7 @@ import type {
   ReactNode,
   RefAttributes,
 } from 'react'
-import React, {
+import {
   Children,
   forwardRef,
   Fragment,

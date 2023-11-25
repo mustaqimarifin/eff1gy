@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
   const [isLoaded, setLoaded] = useState(false)

@@ -1,7 +1,7 @@
 'use client'
 import { Menu, Transition } from '@headlessui/react'
 import { CheckIcon } from 'lucide-react'
-import * as React from 'react'
+import { useContext } from 'react'
 
 import { GhostButton } from '~/components/Button'
 import { useGetTagsQuery } from '~/graphql/typeSlut'
@@ -10,7 +10,7 @@ import { BookmarksContext } from './BookmarksList'
 
 export function BookmarksFilterMenu() {
   const { data, loading } = useGetTagsQuery()
-  const { tag, setTag } = React.useContext(BookmarksContext)
+  const { tag, setTag } = useContext(BookmarksContext)
 
   if (loading) return null
 

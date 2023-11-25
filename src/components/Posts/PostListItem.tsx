@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { memo } from 'react'
 
 import { timestampToCleanTime } from '~/lib/transformers'
 
@@ -18,7 +18,7 @@ interface Props {
   active: boolean
 }
 
-export const PostListItem = React.memo<Props>(({ post, active }) => {
+export const PostListItem = memo<Props>(({ post, active }) => {
   const publishedAt = timestampToCleanTime({ timestamp: post.date })
   return (
     <ListItem

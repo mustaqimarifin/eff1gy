@@ -1,11 +1,12 @@
 'use client'
 
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { createContext, useState } from 'react'
 
 import { ApolloWrapper } from './ApolloWrapper'
 
 interface Props {
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 const globalNavigationContext = {
@@ -13,9 +14,7 @@ const globalNavigationContext = {
   setIsOpen: (val: boolean) => {},
 }
 
-export const GlobalNavigationContext = React.createContext(
-  globalNavigationContext
-)
+export const GlobalNavigationContext = createContext(globalNavigationContext)
 
 export function Providers({ children }: Props) {
   const initialState = {
@@ -23,7 +22,7 @@ export function Providers({ children }: Props) {
     setIsOpen,
   }
 
-  const [state, setState] = React.useState(initialState)
+  const [state, setState] = useState(initialState)
 
   function setIsOpen(isOpen: boolean) {
     return setState({ ...state, isOpen })

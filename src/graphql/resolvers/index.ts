@@ -93,9 +93,6 @@ const resolvers = {
     email: ({ id }, _, { viewer }: Context) => {
       return viewer && viewer.id === id ? viewer.email : null
     },
-    pendingEmail: ({ id }, _, { viewer }: Context) => {
-      return viewer && viewer.id === id ? viewer.pendingEmail : null
-    },
   },
   Bookmark: {
     viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {

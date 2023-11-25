@@ -1,8 +1,6 @@
 'use client'
 
-// ^ this file needs the "use client" pragma
 import { ApolloLink, HttpLink } from '@apollo/client'
-import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { relayStylePagination } from '@apollo/client/utilities'
 import {
   ApolloNextAppProvider,
@@ -10,12 +8,10 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr'
+import type { PropsWithChildren } from 'react'
 
 import { HELLSQL } from '~/graphql/constants'
 import type { StrictTypedTypePolicies } from '~/graphql/typeSlut'
-import { sha256 } from '~/lib/functions'
-
-export const persistLink = createPersistedQueryLink({ sha256 })
 
 const ssr = typeof window === 'undefined'
 function makeClient() {
@@ -31,7 +27,6 @@ function makeClient() {
     // const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
   })
 
-  //const pLink = persistLink.concat(httpLink)
   const typePolicies: StrictTypedTypePolicies = {
     Query: {
       fields: {
@@ -62,13 +57,9 @@ function makeClient() {
   }
 
   return new NextSSRApolloClient({
-    // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
     cache: new NextSSRInMemoryCache({ typePolicies }),
     link: ssr
       ? ApolloLink.from([
-          // in a SSR environment, if you use multipart features like
-          // @defer, you need to decide how to handle these.
-          // This strips all interfaces with a `@defer` directive from your queries.
           new SSRMultipartLink({
             stripDefer: true,
           }),
@@ -77,9 +68,7 @@ function makeClient() {
       : httpLink,
   })
 }
-
-// you need to create a component to wrap your app in
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+export function ApolloWrapper({ children }: PropsWithChildren) {
   return (
     <ApolloNextAppProvider makeClient={makeClient}>
       {children}

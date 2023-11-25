@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -19,8 +19,8 @@ interface Props {
 
 export function CommentForm({ refId, type, openModal }: Props) {
   const { data } = useViewerQuery()
-  const [text, setText] = React.useState('')
-  const [error, setError] = React.useState(null)
+  const [text, setText] = useState('')
+  const [error, setError] = useState(null)
 
   const [handleAddComment] = useAddCommentMutation({
     optimisticResponse: {
@@ -84,7 +84,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const localText = localStorage.getItem(refId)
     if (localText) {
       setText(localText)
@@ -93,7 +93,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
 
   const debouncedText = useDebounce(text, 500)
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(refId, debouncedText)
   }, [debouncedText])
 

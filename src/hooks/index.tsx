@@ -1,9 +1,9 @@
-import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function useDebounce(value: string, delay: number) {
-  const [debouncedValue, setDebouncedValue] = React.useState(value)
+  const [debouncedValue, setDebouncedValue] = useState(value)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => setDebouncedValue(value), delay)
 
     return () => {
@@ -18,13 +18,13 @@ type Delay = number | null
 type TimerHandler = (...args: any[]) => void
 
 export const useInterval = (callback: TimerHandler, delay: Delay) => {
-  const savedCallbackRef = React.useRef<TimerHandler>()
+  const savedCallbackRef = useRef<TimerHandler>()
 
-  React.useEffect(() => {
+  useEffect(() => {
     savedCallbackRef.current = callback
   }, [callback])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = (...args: any[]) => savedCallbackRef.current(...args)
 
     if (delay !== null) {
@@ -42,9 +42,9 @@ interface Props {
 }
 
 export function useWindowFocus({ onFocus, onBlur }: Props) {
-  const [focused, setFocused] = React.useState(hasFocus) // Focus for first render
+  const [focused, setFocused] = useState(hasFocus) // Focus for first render
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFocused(hasFocus()) // Focus for additional renders
 
     const onFocus = () => setFocused(true)

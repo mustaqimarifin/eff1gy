@@ -2,7 +2,7 @@
 import { Settings } from 'lucide-react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
-import * as React from 'react'
+import { useContext } from 'react'
 
 import { Avatar } from '~/components/Avatar'
 import { GhostButton } from '~/components/Button'
@@ -11,11 +11,7 @@ import { useViewerQuery } from '~/graphql/typeSlut'
 
 import { GlobalNavigationContext } from '../Provider'
 
-function Container(
-  props: React.JSX.IntrinsicAttributes &
-    React.ClassAttributes<HTMLDivElement> &
-    React.HTMLAttributes<HTMLDivElement>
-) {
+function Container(props) {
   return (
     <div
       data-cy="sign-in-button"
@@ -27,7 +23,7 @@ function Container(
 
 export function UserFooter() {
   const { data, loading, error } = useViewerQuery()
-  const { setIsOpen } = React.useContext(GlobalNavigationContext)
+  const { setIsOpen } = useContext(GlobalNavigationContext)
 
   function signInButton() {
     return (

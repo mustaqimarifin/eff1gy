@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import Button from '~/components/Button'
 import { useViewerQuery } from '~/graphql/typeSlut'
@@ -18,21 +18,21 @@ export function ReactionButton(props: Props) {
   const { id, onClick, hasReacted, count, loading } = props
 
   const { data } = useViewerQuery()
-  const [hasReactedState, setHasReactedState] = React.useState(hasReacted)
+  const [hasReactedState, setHasReactedState] = useState(hasReacted)
   let currCount = count
   let nextCount = hasReactedState ? count - 1 : count + 1
-  const [currTranslate, setCurrTranslate] = React.useState(
+  const [currTranslate, setCurrTranslate] = useState(
     hasReactedState ? '-translate-y-4' : 'translate-y-0'
   )
-  const [nextTranslate, setNextTranslate] = React.useState(
+  const [nextTranslate, setNextTranslate] = useState(
     hasReactedState ? 'translate-y-0' : '-translate-y-4'
   )
   const currOpacity = 'opacity-100'
   const nextOpacity = 'opacity-0'
-  const [ping, setPing] = React.useState(false)
+  const [ping, setPing] = useState(false)
 
   // reset all the states as people navigate between different reactable pages
-  React.useEffect(() => {
+  useEffect(() => {
     setHasReactedState(hasReacted)
     currCount = count
     nextCount = hasReacted ? count - 1 : count + 1

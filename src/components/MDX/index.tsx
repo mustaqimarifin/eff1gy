@@ -1,6 +1,6 @@
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
-import * as React from 'react'
+import { createElement } from 'react'
 import { highlight } from 'sugar-high'
 
 import { slugify } from '~/lib/functions'
@@ -116,11 +116,11 @@ function Table({ data }) {
 export function createHeading(level) {
   return ({ children }) => {
     const slug = slugify(children)
-    return React.createElement(
+    return createElement(
       `h${level}`,
       { id: slug },
       [
-        React.createElement('a', {
+        createElement('a', {
           href: `#${slug}`,
           key: `link-${slug}`,
           className: 'anchor',

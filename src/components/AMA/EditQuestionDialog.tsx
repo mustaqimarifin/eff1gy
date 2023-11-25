@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { DialogComponent } from '~/components/Dialog'
 
 import { EditQuestionForm } from './EditQuestionForm'

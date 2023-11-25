@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 interface Props {
   src: string
@@ -6,7 +6,7 @@ interface Props {
   preload: boolean
 }
 
-const HiddenAudioPlayer = React.forwardRef<HTMLAudioElement, Props>(
+const HiddenAudioPlayer = forwardRef<HTMLAudioElement, Props>(
   ({ src, preload }: Props, ref) => {
     return (
       <audio

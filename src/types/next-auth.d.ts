@@ -10,11 +10,11 @@ declare module 'next-auth' {
     user: {
       /** HOKAGE */
       id: string
+      username?: string
       role: UserRole
       isAdmin: boolean
     } & DefaultSession['user']
     userId: string
-    isAdmin: boolean
   }
 
   interface User extends PrismaUser {}

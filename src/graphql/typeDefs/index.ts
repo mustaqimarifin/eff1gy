@@ -93,13 +93,6 @@ export default gql`
     BLOG
   }
 
-  enum HitType {
-    BOOKMARK
-    QUESTION
-    STACK
-    POST
-  }
-
   type Tag @cacheControl(maxAge: 3600) {
     name: String!
   }
@@ -129,7 +122,6 @@ export default gql`
     name: String
     isViewer: Boolean
     email: String
-    pendingEmail: String
     isAdmin: Boolean
   }
 
@@ -143,13 +135,6 @@ export default gql`
     viewerCanEdit: Boolean
     viewerCanDelete: Boolean
     replies: [Comment]
-  }
-
-  type Hit {
-    id: ID!
-    createdAt: Date!
-    updatedAt: Date
-    catID: String
   }
 
   input BookmarkFilter {

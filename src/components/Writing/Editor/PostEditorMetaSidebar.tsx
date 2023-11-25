@@ -1,7 +1,7 @@
 'use client'
 
 import { X } from 'lucide-react'
-import * as React from 'react'
+import { useContext, useRef } from 'react'
 
 import Button, { GhostButton, PrimaryButton } from '~/components/Button'
 import { Input, Textarea } from '~/components/Input'
@@ -13,7 +13,7 @@ import { useEditPostMutation, useGetPostsQuery } from '~/graphql/typeSlut'
 import { PostEditorContext } from './PostEditor'
 
 export function PostEditorMetaSidebar() {
-  const context = React.useContext(PostEditorContext)
+  const context = useContext(PostEditorContext)
   const {
     draftState,
     existingPost,
@@ -21,7 +21,7 @@ export function PostEditorMetaSidebar() {
     sidebarIsOpen,
     setSidebarIsOpen,
   } = context
-  const scrollContainerRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
 
   const [editPost, { loading: editingPost }] = useEditPostMutation()
 

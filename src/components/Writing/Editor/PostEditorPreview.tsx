@@ -1,18 +1,15 @@
 'use client'
 
-import * as React from 'react'
+import type { ReactNode } from 'react'
+import { useContext } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 
 //import { MarkdownRenderer } from '~/components/MarkdownRenderer'
 import { PostEditorContext } from './PostEditor'
 
-export function PostEditorPreview({
-  children,
-}: {
-  children?: React.ReactNode
-}) {
-  const context = React.useContext(PostEditorContext)
+export function PostEditorPreview({ children }: { children?: ReactNode }) {
+  const context = useContext(PostEditorContext)
   const { draftState } = context
   const { title, text } = draftState
 

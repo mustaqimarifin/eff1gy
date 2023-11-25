@@ -1,6 +1,6 @@
 import { TrashIcon, UploadIcon } from 'lucide-react'
 import Image from 'next/image'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
 import { LoadingSpinner } from '~/components/LoadingSpinner'

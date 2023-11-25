@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react'
+import { useRef } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 
 export default function TOS() {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
   return (
     <Detail.Container data-cy="pp" ref={scrollContainerRef}>
       <Detail.ContentContainer>

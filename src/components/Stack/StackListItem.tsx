@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import * as React from 'react'
+import { memo } from 'react'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 import { type StackListItemFragment } from '~/graphql/typeSlut'
@@ -10,7 +10,7 @@ interface Props {
   active: boolean
 }
 
-export const StackListItem = React.memo<Props>(({ stack, active }) => {
+export const StackListItem = memo<Props>(({ stack, active }) => {
   function handleClick(e, stack) {
     if (e.metaKey) {
       e.preventDefault()
