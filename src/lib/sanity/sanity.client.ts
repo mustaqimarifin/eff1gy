@@ -2,7 +2,7 @@ import { createClient } from 'next-sanity'
 
 import type { CaseStudy, Post } from '~/components/Posts/BlogDetail'
 
-import { apiVersion, dataset, projectId, useCdn } from './config'
+import { projectId, sanityConfig } from './config'
 import {
   caseQuery,
   casesQuery,
@@ -12,9 +12,7 @@ import {
   settingsQuery,
 } from './queries'
 
-const client = projectId
-  ? createClient({ projectId, dataset, apiVersion, useCdn })
-  : null
+const client = projectId ? createClient(sanityConfig) : null
 
 export async function getSettings(): Promise<Settings> {
   if (client) {

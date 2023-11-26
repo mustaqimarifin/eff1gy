@@ -2,7 +2,7 @@ import { TrashIcon } from 'lucide-react'
 import { useEffect, useReducer, useState } from 'react'
 import useSWR from 'swr'
 
-import { signUpload, uploadToCloudinary } from '~/lib/cloudinary/api'
+import { uploadToCloudinary } from '~/lib/cloudinary/api'
 
 import AudioPlayer from '../AudioPlayer'
 import Button, { DeleteButton, RecordingButton } from '../Button'
@@ -211,10 +211,10 @@ export default function AudioRecorder({
 
   function handleUpload() {
     dispatch({ type: 'start-uploading' })
-    signUploadMutation.mutate()
+    mutate()
   }
 
-  const signUploadMutation = useSWR(signUpload, {
+  const { mutate } = useSWR(`/api/sign`, {
     onSuccess: async (data) => {
       const upload = await uploadToCloudinary(
         state.audioBlob,

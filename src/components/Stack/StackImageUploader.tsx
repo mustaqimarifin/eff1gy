@@ -13,7 +13,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
   const [previewImage, setPreviewImage] = useState(null)
 
   async function getSignedUrl() {
-    const data = await fetch('/api/images/sign').then((res) => res.json())
+    const data = await fetch('/api/sign').then((res) => res.json())
     return data?.uploadURL
   }
 

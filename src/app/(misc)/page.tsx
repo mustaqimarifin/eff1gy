@@ -192,7 +192,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="drop-shadow-sm">
-                  <p className="dark:prose-dark prose max-w-none break-words py-4 md:prose-lg">
+                  <p className="dark:prose-invert prose max-w-none break-words py-4 md:prose-lg">
                     A sizable portion of my career involves my work as an&nbsp;
                     <span className="text-orange-400 dark:text-hacker-news">
                       audio engineer&nbsp;
@@ -208,15 +208,15 @@ export default function Home() {
                     Music Director for Infinity Games working on MMORPG, Heroes
                     of War.
                   </p>
-                  <p className="dark:prose-dark prose py-4 leading-loose md:prose-lg">
+                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
                     This website is my home on the web to share my thoughts,
                     test my web development skills, keep a record of my work,
                     and catalog the things I discover online.
                   </p>
-                  <p className="dark:prose-dark prose py-4 leading-loose md:prose-lg">
+                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
                     Thanks for stopping by!{' '}
                   </p>
-                  <p className="dark:prose-dark prose py-4 leading-loose md:prose-lg">
+                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
                     Mustaqim Arifin{' '}
                   </p>
                 </div>

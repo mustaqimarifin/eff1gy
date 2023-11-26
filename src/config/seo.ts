@@ -1,6 +1,6 @@
 export const baseUrl =
   process.env.NODE_ENV === 'production' ? 'https://eff1gy.vercel.app' : ''
-export const baseEmail = 'hi@brianlovin.com'
+export const baseEmail = 'mstmarfn@gmail.com'
 
 export const defaultSEO = {
   title: 'Mustaqim Arifin',

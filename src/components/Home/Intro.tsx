@@ -109,15 +109,11 @@ export function Intro({ children }) {
     <>
       <Detail.Container data-cy="home-intro" ref={scrollContainerRef}>
         <TitleBar
-          backButton
-          globalMenu={false}
-          backButtonHref={'/bookmarks'}
           magicTitle
-          title="Home"
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
+          title="Home"
         />
-
         {/* Keep this div to trigger the magic scroll */}
         <div className="p-4" ref={titleRef} />
         {children}

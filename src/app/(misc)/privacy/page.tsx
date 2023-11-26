@@ -8,7 +8,7 @@ export default function Privacy() {
       <Detail.ContentContainer>
         <div className="space-y-8 pb-24 md:space-y-16">
           <>
-            <div className="dark:prose-dark prose mx-auto flex max-w-2xl flex-col items-start justify-start border-gray-200 pb-16 text-left text-gray-600 prose-headings:font-bold dark:border-gray-700 dark:text-gray-300">
+            <div className="dark:prose-invert prose mx-auto flex max-w-2xl flex-col items-start justify-start border-gray-200 pb-16 text-left text-gray-600 prose-headings:font-bold dark:border-gray-700 dark:text-gray-300">
               <h1 className="mt-8 flex h-6 leading-7 transition-all">
                 Privacy Policy
                 <svg

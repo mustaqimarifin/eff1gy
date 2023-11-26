@@ -9,7 +9,7 @@ import { UserRole } from '../typeSlut'
 export async function getViewer(req, res) {
   const session = await auth()
   const user = session?.user
-  let viewer: User = null
+  let viewer = null
   if (user) {
     viewer = await prisma.user.findUnique({ where: { id: session.userId } })
 
