@@ -5,7 +5,7 @@ import type {
   ReactNode,
   RefAttributes,
 } from 'react'
-import {
+import React, {
   Children,
   forwardRef,
   Fragment,
@@ -15,7 +15,6 @@ import {
   useRef,
   useState,
 } from 'react'
-//import "./Marquee.scss";
 
 type MarqueeProps = {
   /**

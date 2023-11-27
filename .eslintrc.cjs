@@ -27,6 +27,7 @@ const config = {
   },
   plugins: ['@typescript-eslint', 'simple-import-sort', 'react'],
   rules: {
+    'prefer-const': 0,
     'no-unused-vars': 'off',
     'no-extra-semi': 0,
     'react-hooks/rules-of-hooks': 0,

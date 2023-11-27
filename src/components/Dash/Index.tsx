@@ -33,15 +33,11 @@ export function DashPage({ children }) {
   return (
     <Detail.Container data-cy="dash-detail" ref={scrollContainerRef}>
       <TitleBar
-        backButton
-        globalMenu={false}
-        backButtonHref={'/dash'}
         magicTitle
-        title={`Dashboard`}
         titleRef={titleRef}
         scrollContainerRef={scrollContainerRef}
+        title="Dashboard"
       />
-
       {/* Keep this div to trigger the magic scroll */}
       <div className="p-4" ref={titleRef} />
 
@@ -53,7 +49,6 @@ export function DashPage({ children }) {
           </SectionContainer>
         </div>
       </Detail.ContentContainer>
-      <div className="py-6 px-8 "></div>
     </Detail.Container>
   )
 }

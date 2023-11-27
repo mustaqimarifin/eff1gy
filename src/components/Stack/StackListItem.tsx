@@ -1,8 +1,9 @@
-import Image from 'next/image'
 import { memo } from 'react'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 import { type StackListItemFragment } from '~/graphql/typeSlut'
+
+import { IKImage } from '../Image'
 
 // TODO: Figure out how to get this dynamically
 interface Props {
@@ -28,13 +29,15 @@ export const StackListItem = memo<Props>(({ stack, active }) => {
       description={null}
       byline={null}
       leadingAccessory={
-        <Image
-          src={stack.image}
-          width={48}
-          height={48}
-          alt={`${stack.name} icon`}
-          className="rounded-xl "
-        />
+        <div className="w-12 h-12">
+          <IKImage
+            src={stack.image}
+            width={48}
+            height={48}
+            alt={`${stack.name} icon`}
+            className="rounded-xl "
+          />
+        </div>
       }
       active={active}
       onClick={(e) => handleClick(e, stack)}

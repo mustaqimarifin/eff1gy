@@ -1,7 +1,6 @@
 'use client'
 
 import { Link2Icon } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 
@@ -10,7 +9,7 @@ import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
-import { CommentType, useGetStackQuery } from '~/graphql/typeSlut'
+import { CommentType } from '~/graphql/typeSlut'
 
 import { IKImage } from '../Image'
 import { MarkdownRenderer } from '../MarkdownRenderer'
@@ -44,16 +43,18 @@ export function StackDetail({ children, stack }) {
         <Detail.ContentContainer>
           <Detail.Header>
             <div className="flex items-center space-x-6">
-              <Link href={stack.url} passHref className="inline-block ">
-                <IKImage
-                  priority
-                  //src={`/static/img/stack/${stack.image}`}
-                  src={stack.image}
-                  width={60}
-                  height={60}
-                  alt={`${stack.name} icon`}
-                  className={'rounded-md object-cover'}
-                />
+              <Link href={stack.url} passHref className="inline-block">
+                <div className="w-12 h-12">
+                  <IKImage
+                    priority
+                    //src={`/static/img/stack/${stack.image}`}
+                    src={stack.image}
+                    width={60}
+                    height={60}
+                    alt={`${stack.name} icon`}
+                    className={'rounded-md object-cover'}
+                  />
+                </div>
               </Link>
               <div className="flex flex-col space-y-1">
                 <Link href={stack.url} passHref className="block">

@@ -2,8 +2,6 @@
 
 import { useState } from 'react'
 
-//import { LayoutGroup } from '../Bookmarks/BookmarksList'
-
 type Item = {
   id: string
   label: string
@@ -14,14 +12,11 @@ type SegmentedControlProps = {
   items: Array<Item>
   active: string
 }
-const spring = { stiffness: 100, damping: 10 }
 const SegmentedControl = ({
   onSetActiveItem,
   items,
   active,
 }: SegmentedControlProps): JSX.Element => {
-  const order = items.map((item) => item.id)
-
   const [activeItem, setActiveitem] = useState(active)
 
   function onChange(i) {

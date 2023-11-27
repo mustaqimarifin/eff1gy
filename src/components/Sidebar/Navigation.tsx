@@ -22,7 +22,7 @@ import {
 import { useViewerQuery } from '~/graphql/typeSlut'
 import { fetcher } from '~/lib/functions'
 
-import Marquee from '../Marquee'
+import Marquee from '../MDX/Marquee'
 import { NavigationLink } from './NavigationLink'
 
 function ThisAddBookmarkDialog() {

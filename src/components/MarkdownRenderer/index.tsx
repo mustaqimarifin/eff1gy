@@ -10,9 +10,9 @@ import { CLIENT_URL } from '~/graphql/constants'
 
 import { Code, createHeading } from '../MDX'
 
-function LinkRenderer({ href, ...rest }: any) {
+export function LinkRenderer({ href, ...rest }: any) {
   if (href.startsWith('#')) {
-    return <a href={href} {...rest} />
+    return <Link href={href} {...rest} />
   }
 
   if (href.startsWith('@')) {

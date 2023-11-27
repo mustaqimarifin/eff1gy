@@ -108,17 +108,17 @@ export function TitleBar({
     <>
       <div
         style={{
-          /*           background: `rgba(${darkMode ? '18,18,18' : '50,50,50'},${
-          currentScrollOffset === 0
-            ? currentScrollOffset
-            : darkMode
-            ? currentScrollOffset + 0.5
-            : currentScrollOffset + 0.8
-        })`, */
+          /* background: `rgba(${darkMode ? '50,50,50' : '255,255,255'},${
+            currentScrollOffset === 0
+              ? currentScrollOffset
+              : darkMode
+                ? currentScrollOffset + 1
+                : currentScrollOffset + 0
+          })`, */
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
           minHeight: '48px',
         }}
-        className={`filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}>
+        className={`filter-blur dark:bg-gray-900 sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}>
         <div className="flex flex-none items-center justify-between">
           <span className="flex items-center space-x-3">
             {globalMenu && (
@@ -152,7 +152,7 @@ export function TitleBar({
                     }
                   : {}
               }
-              className="text-primary line-clamp-1 transform-gpu text-sm font-bold">
+              className="text-primary line-clamp-1  text-sm font-bold">
               {title}
             </h2>
           </span>

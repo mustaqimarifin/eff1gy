@@ -4,7 +4,7 @@ import { BlogDetail } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
 import { Counter } from '~/lib/actions'
 import { getPost, getPosts } from '~/lib/sanity/sanity.client'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { formatDate } from '~/lib/transformers'
 
 export const revalidate = 60
 
@@ -24,19 +24,16 @@ export default async function Blog({ params: { slug } }) {
     return { notFound: true }
   }
 
-  const publishedAt = timestampToCleanTime({ timestamp: post?.date })
-
   return (
     <ListDetailView
       list={<PostsList posts={posts} />}
       hasDetail
       detail={
         <BlogDetail post={post} slug={slug}>
-          <div className="mb-16 flex flex-col items-start uppercase text-center font-semibold  justify-between w-full mt-2 md:flex-row md:items-center">
-            <div className="flex gap-2  items-center mt-2 text-sm text-gray-600 dark:text-gray-400  md:mt-0">
-              {publishedAt?.formatted}
+          <div className="mb-16 flex flex-col items-start uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
+            <div className="flex gap-2  items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
+              {formatDate(post?.date)}
               {` • `}
-
               <Counter id={post.slug} />
               {` • `}
               <div className="flex space-x-2">

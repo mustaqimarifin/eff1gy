@@ -2,11 +2,11 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 
 import { components } from '~/components/MDX'
 import imageMetadata from '~/components/MDX/Meta2'
-export default async function Mdx({ source }) {
+export default async function Mdx(props) {
   return (
     <article className="prose prose-quoteless prose-neutral dark:prose-invert">
       <MDXRemote
-        source={source}
+        {...props}
         options={{
           mdxOptions: {
             useDynamicImport: true,
@@ -15,7 +15,7 @@ export default async function Mdx({ source }) {
             format: 'mdx',
           },
         }}
-        components={{ ...(components || {}) }}
+        components={{ ...components, ...(props.components || {}) }}
       />
     </article>
   )

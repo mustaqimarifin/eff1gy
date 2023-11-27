@@ -1,11 +1,30 @@
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
-import { createElement } from 'react'
+import React from 'react'
 import { highlight } from 'sugar-high'
 
 import { slugify } from '~/lib/functions'
 
+import { LinkRenderer } from '../MarkdownRenderer'
 import { YoutubeEmbed } from './Embed'
+
+function CustomLink(props) {
+  let href = props.href
+
+  if (href.startsWith('/')) {
+    return (
+      <Link href={href} {...props}>
+        {props.children}
+      </Link>
+    )
+  }
+
+  if (href.startsWith('#')) {
+    return <a {...props} />
+  }
+
+  return <a target="_blank" rel="noopener noreferrer" {...props} />
+}
 
 function ProsCard({ title, pros }) {
   return (
@@ -63,21 +82,6 @@ function Image(props) {
   return <NextImage {...props} quality={75} className=" rounded-md" />
 }
 
-const CustomLink = (props) => {
-  const href = props.href
-  const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'))
-
-  if (isInternalLink) {
-    return (
-      <Link href={href} {...props}>
-        {props.children}
-      </Link>
-    )
-  }
-
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
-}
-
 function Callout(props) {
   return (
     <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
@@ -115,12 +119,12 @@ function Table({ data }) {
 }
 export function createHeading(level) {
   return ({ children }) => {
-    const slug = slugify(children)
-    return createElement(
+    let slug = slugify(children)
+    return React.createElement(
       `h${level}`,
       { id: slug },
       [
-        createElement('a', {
+        React.createElement('a', {
           href: `#${slug}`,
           key: `link-${slug}`,
           className: 'anchor',

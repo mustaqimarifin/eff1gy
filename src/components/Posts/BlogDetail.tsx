@@ -1,12 +1,12 @@
 'use client'
 
+import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { Suspense, useRef } from 'react'
 
 import { CommentType, useGetBlogQuery } from '~/graphql/typeSlut'
 
 import { Comments } from '../Comments'
-import { CoverImage } from '../Image'
 import { Detail } from '../ListDetail/Detail'
 import { TitleBar } from '../ListDetail/TitleBar'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -103,10 +103,18 @@ export function BlogDetail({ children, post, slug }: Props) {
 
         <Detail.ContentContainer>
           <Detail.Header>
-            <CoverImage src={post.caption} />
-            <Detail.Title ref={titleRef}>
-              <PageTitle>{post.title}</PageTitle>
-            </Detail.Title>
+            <div className="full-cover max-h-60 overflow-hidden object-center ">
+              <Image
+                src={post.caption}
+                alt={post.title}
+                width={1200}
+                height={400}
+              />
+            </div>
+
+            <div className="text-3xl font-bold capitalize text-black dark:text-white">
+              {post.title}
+            </div>
           </Detail.Header>
           {children}
           <div className="py-6" />

@@ -22,7 +22,6 @@ export function Tooltip(props: Props) {
           {content}
         </span>
       }
-      // https://github.com/FezVrasta/popper.js/issues/535
       popperOptions={{
         modifiers: [
           {

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 
 import { Avatar } from '~/components/Avatar'
-import { Tooltip } from '~/components/Tooltip'
 import { GET_STACK } from '~/graphql/queries/stack'
 import type { GetStackQuery } from '~/graphql/typeSlut'
 import {
@@ -10,6 +9,8 @@ import {
   useViewerQuery,
 } from '~/graphql/typeSlut'
 import { useWindowFocus } from '~/hooks'
+
+import { Tooltip } from '../UI/Tooltip'
 
 export function StackUsedBy(props) {
   const { triggerSignIn } = props

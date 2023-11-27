@@ -15,6 +15,11 @@ const config = {
       { protocol: 'https', hostname: 'i.scdn.co', pathname: '/**' },
       {
         protocol: 'https',
+        hostname: 'ik.imagekit.io/mstqmarfn',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
         pathname: '/**',
       },

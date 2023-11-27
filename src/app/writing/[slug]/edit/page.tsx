@@ -2,14 +2,12 @@ import { Suspense } from 'react'
 
 import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
-import { Detail } from '~/components/ListDetail/Detail'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { getClient } from '~/components/Provider/ApolloClient'
 import { PostEditor } from '~/components/Writing/Editor/PostEditor'
 import { PostsList } from '~/components/Writing/PostsList'
 import { GET_POST } from '~/graphql/queries/posts'
 import type { GetPostQuery } from '~/graphql/typeSlut'
-import { useGetPostQuery, useViewerQuery } from '~/graphql/typeSlut'
 
 export const dynamic = 'force-dynamic'
 
