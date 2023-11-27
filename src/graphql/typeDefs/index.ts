@@ -24,21 +24,6 @@ export default gql`
     viewerHasReacted: Boolean
   }
 
-  type Post {
-    id: ID!
-    createdAt: Date
-    updatedAt: Date
-    publishedAt: Date
-    author: User
-    title: String
-    slug: String
-    text: String
-    excerpt: String
-    featureImage: String
-    reactionCount: Int
-    viewerHasReacted: Boolean
-  }
-
   type Bookmark {
     id: ID!
     createdAt: Date!
@@ -81,7 +66,6 @@ export default gql`
     BOOKMARK
     QUESTION
     STACK
-    POST
     BLOG
   }
 
@@ -89,7 +73,6 @@ export default gql`
     BOOKMARK
     QUESTION
     STACK
-    POST
     BLOG
   }
 
@@ -147,10 +130,6 @@ export default gql`
     PENDING
   }
 
-  input WritingFilter {
-    published: Boolean
-  }
-
   input QuestionFilter {
     status: QuestionStatus
   }
@@ -204,8 +183,6 @@ export default gql`
     stacks(first: Int, after: String): StacksConnection!
     comment(id: ID!): Comment
     comments(refId: ID!, type: CommentType!): [Comment]!
-    posts(filter: WritingFilter): [Post]!
-    post(slug: String!): Post
     blogs: [Blog]!
     blog(slug: String!): Blog
     question(id: ID!): Question
@@ -265,22 +242,7 @@ export default gql`
     waveform: JSON
   }
 
-  input AddPostInput {
-    title: String!
-    text: String!
-    slug: String!
-    excerpt: String
-  }
-
-  input EditPostInput {
-    title: String!
-    text: String!
-    slug: String!
-    excerpt: String
-    published: Boolean
-  }
-
-  union Reactable = Bookmark | Question | Post | Stack | Blog
+  union Reactable = Bookmark | Question | Stack | Blog
 
   type Mutation {
     addBookmark(data: AddBookmarkInput!): Bookmark
@@ -304,10 +266,6 @@ export default gql`
 
     editUser(data: EditUserInput): User
     deleteUser: Boolean
-    addPost(data: AddPostInput!): Post
-
-    editPost(id: ID!, data: EditPostInput!): Post
-    deletePost(id: ID!): Boolean
     toggleReaction(refId: ID!, type: ReactionType!): Reactable
   }
 `

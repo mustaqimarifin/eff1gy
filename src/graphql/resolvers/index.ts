@@ -21,8 +21,6 @@ const resolvers = {
           return 'Question'
         case 'stack':
           return 'Stack'
-        case 'post':
-          return 'Post'
         case 'bookmark':
           return 'Bookmark'
         case 'blog':
@@ -110,30 +108,6 @@ const resolvers = {
       if (_count?.reactions) return _count.reactions
 
       const reactions = await prisma.bookmark
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
-
-      return reactions.length
-    },
-  },
-  Post: {
-    viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {
-      if (!viewer) return false
-
-      const reactions = await prisma.post
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
-
-      return reactions.some(({ userId }) => userId === viewer.id)
-    },
-    reactionCount: async ({ id, _count }, _, { prisma }: Context) => {
-      if (_count?.reactions) return _count.reactions
-
-      const reactions = await prisma.post
         .findUnique({
           where: { id },
         })

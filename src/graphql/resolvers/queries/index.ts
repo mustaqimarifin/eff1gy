@@ -1,7 +1,6 @@
 import { getBlog, getBlogs } from './blogs'
 import { getBookmark, getBookmarks } from './bookmarks'
 import { getComment, getComments } from './comments'
-import { getPost, getPosts } from './posts'
 import { getQuestion, getQuestions } from './questions'
 import { getStack, getStacks } from './stack'
 import { getTags } from './tags'
@@ -13,8 +12,6 @@ export default {
   user: getUser,
   bookmark: getBookmark,
   bookmarks: getBookmarks,
-  posts: getPosts,
-  post: getPost,
   blogs: getBlogs,
   blog: getBlog,
   question: getQuestion,

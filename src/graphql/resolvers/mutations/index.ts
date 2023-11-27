@@ -16,11 +16,6 @@ import {
   editComment,
 } from '~/graphql/resolvers/mutations/comment'
 import {
-  addPost,
-  deletePost,
-  editPost,
-} from '~/graphql/resolvers/mutations/post'
-import {
   addQuestion,
   deleteQuestion,
   editQuestion,
@@ -50,9 +45,6 @@ export default {
   deleteComment: requiresUser(deleteComment),
   deleteUser: requiresUser(deleteUser),
   editUser: requiresUser(editUser),
-  addPost: requiresAdmin(addPost),
-  editPost: requiresAdmin(editPost),
-  deletePost: requiresAdmin(deletePost),
   //addBlog: requiresAdmin(addBlog),
   //editBlog: requiresAdmin(editBlog),
   //deleteBlog: requiresAdmin(deleteBlog),
