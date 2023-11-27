@@ -1,11 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -62,7 +62,6 @@ model User {
   accounts    Account[]
   comments    Comment[]
   blogs       Blog[]
-  posts       Post[]
   questions   Question[]
   reactions   Reaction[]
   sessions    Session[]
@@ -106,7 +105,7 @@ enum Status {
 model Question {
   id          String     @id @default(dbgenerated("nanoid()"))
   status      Status     @default(PENDING)
-  hearts      Int?        @default(0)
+  hearts      Int?       @default(0)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String
@@ -133,22 +132,20 @@ model Comment {
   bookmarkId String?
   questionId String?
   stackId    String?
-  postId     String?
   slug       String?
   parentId   String?
   parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   replies    Comment[] @relation("ParentChild")
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  author     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog       Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId     String?
+
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  blogId   String?
 
   @@index([bookmarkId])
   @@index([questionId])
-  @@index([postId])
   @@index([blogId])
   @@index([stackId])
   @@index([userId])
@@ -165,41 +162,6 @@ model Blog {
   userId    String?
 
   @@index([slug])
-}
-
-model Post {
-  id String @id @default(dbgenerated("nanoid()"))
-
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  publishedAt DateTime?
-  slug        String     @unique
-  title       String
-  text        String
-  excerpt     String
-  cover       String?
-  userId      String
-  comments    Comment[]
-  author      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  history     PostEdit[]
-  reactions   Reaction[]
-
-  @@index([publishedAt])
-  @@index([userId])
-}
-
-model PostEdit {
-  id String @id @default(dbgenerated("nanoid()"))
-
-  createdAt DateTime @default(now())
-  text      String
-  title     String
-  excerpt   String
-  cover     String?
-  postId    String?
-  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  @@index([postId])
 }
 
 model Tag {
@@ -234,16 +196,15 @@ model Reaction {
   stackId    String?
   postId     String?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog       Blog?     @relation(fields: [blogId], references: [id])
-  blogId     String?
+
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog     Blog?     @relation(fields: [blogId], references: [id])
+  blogId   String?
 
   @@index([bookmarkId])
   @@index([questionId])
-  @@index([postId])
   @@index([blogId])
   @@index([stackId])
   @@index([userId])

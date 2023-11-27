@@ -43,13 +43,6 @@ export type AddBookmarkInput = {
   url: Scalars['String']['input']
 }
 
-export type AddPostInput = {
-  excerpt?: InputMaybe<Scalars['String']['input']>
-  slug: Scalars['String']['input']
-  text: Scalars['String']['input']
-  title: Scalars['String']['input']
-}
-
 export type AddQuestionInput = {
   audioUrl?: InputMaybe<Scalars['String']['input']>
   description?: InputMaybe<Scalars['String']['input']>
@@ -129,7 +122,6 @@ export type Comment = {
 export enum CommentType {
   Blog = 'BLOG',
   Bookmark = 'BOOKMARK',
-  Post = 'POST',
   Question = 'QUESTION',
   Stack = 'STACK',
 }
@@ -138,14 +130,6 @@ export type EditBookmarkInput = {
   description?: InputMaybe<Scalars['String']['input']>
   faviconUrl?: InputMaybe<Scalars['String']['input']>
   tag?: InputMaybe<Scalars['String']['input']>
-  title: Scalars['String']['input']
-}
-
-export type EditPostInput = {
-  excerpt?: InputMaybe<Scalars['String']['input']>
-  published?: InputMaybe<Scalars['Boolean']['input']>
-  slug: Scalars['String']['input']
-  text: Scalars['String']['input']
   title: Scalars['String']['input']
 }
 
@@ -173,18 +157,15 @@ export type Mutation = {
   __typename?: 'Mutation'
   addBookmark?: Maybe<Bookmark>
   addComment?: Maybe<Comment>
-  addPost?: Maybe<Post>
   addQuestion?: Maybe<Question>
   addStack?: Maybe<Stack>
   deleteBookmark?: Maybe<Scalars['Boolean']['output']>
   deleteComment?: Maybe<Scalars['Boolean']['output']>
-  deletePost?: Maybe<Scalars['Boolean']['output']>
   deleteQuestion?: Maybe<Scalars['Boolean']['output']>
   deleteStack?: Maybe<Scalars['Boolean']['output']>
   deleteUser?: Maybe<Scalars['Boolean']['output']>
   editBookmark?: Maybe<Bookmark>
   editComment?: Maybe<Comment>
-  editPost?: Maybe<Post>
   editQuestion?: Maybe<Question>
   editStack?: Maybe<Stack>
   editUser?: Maybe<User>
@@ -203,10 +184,6 @@ export type MutationAddCommentArgs = {
   type: CommentType
 }
 
-export type MutationAddPostArgs = {
-  data: AddPostInput
-}
-
 export type MutationAddQuestionArgs = {
   data: AddQuestionInput
 }
@@ -220,10 +197,6 @@ export type MutationDeleteBookmarkArgs = {
 }
 
 export type MutationDeleteCommentArgs = {
-  id: Scalars['ID']['input']
-}
-
-export type MutationDeletePostArgs = {
   id: Scalars['ID']['input']
 }
 
@@ -243,11 +216,6 @@ export type MutationEditBookmarkArgs = {
 export type MutationEditCommentArgs = {
   id: Scalars['ID']['input']
   text?: InputMaybe<Scalars['String']['input']>
-}
-
-export type MutationEditPostArgs = {
-  data: EditPostInput
-  id: Scalars['ID']['input']
 }
 
 export type MutationEditQuestionArgs = {
@@ -280,22 +248,6 @@ export type PageInfo = {
   totalCount?: Maybe<Scalars['Int']['output']>
 }
 
-export type Post = {
-  __typename?: 'Post'
-  author?: Maybe<User>
-  createdAt?: Maybe<Scalars['Date']['output']>
-  excerpt?: Maybe<Scalars['String']['output']>
-  featureImage?: Maybe<Scalars['String']['output']>
-  id: Scalars['ID']['output']
-  publishedAt?: Maybe<Scalars['Date']['output']>
-  reactionCount?: Maybe<Scalars['Int']['output']>
-  slug?: Maybe<Scalars['String']['output']>
-  text?: Maybe<Scalars['String']['output']>
-  title?: Maybe<Scalars['String']['output']>
-  updatedAt?: Maybe<Scalars['Date']['output']>
-  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
-}
-
 export type Query = {
   __typename?: 'Query'
   blog?: Maybe<Blog>
@@ -304,8 +256,6 @@ export type Query = {
   bookmarks: BookmarksConnection
   comment?: Maybe<Comment>
   comments: Array<Maybe<Comment>>
-  post?: Maybe<Post>
-  posts: Array<Maybe<Post>>
   question?: Maybe<Question>
   questions: QuestionsConnection
   stack?: Maybe<Stack>
@@ -336,14 +286,6 @@ export type QueryCommentArgs = {
 export type QueryCommentsArgs = {
   refId: Scalars['ID']['input']
   type: CommentType
-}
-
-export type QueryPostArgs = {
-  slug: Scalars['String']['input']
-}
-
-export type QueryPostsArgs = {
-  filter?: InputMaybe<WritingFilter>
 }
 
 export type QueryQuestionArgs = {
@@ -408,12 +350,11 @@ export type QuestionsConnection = {
   pageInfo?: Maybe<PageInfo>
 }
 
-export type Reactable = Blog | Bookmark | Post | Question | Stack
+export type Reactable = Blog | Bookmark | Question | Stack
 
 export enum ReactionType {
   Blog = 'BLOG',
   Bookmark = 'BOOKMARK',
-  Post = 'POST',
   Question = 'QUESTION',
   Stack = 'STACK',
 }
@@ -471,10 +412,6 @@ export enum UserRole {
   User = 'USER',
 }
 
-export type WritingFilter = {
-  published?: InputMaybe<Scalars['Boolean']['input']>
-}
-
 export type BookmarkDetailFragment = {
   reactionCount?: number | null
   viewerHasReacted?: boolean | null
@@ -524,26 +461,6 @@ export type UserInfoFragment = {
   isViewer?: boolean | null
   isAdmin?: boolean | null
 } & { __typename: 'User' }
-
-export type PostDetailFragment = {
-  text?: string | null
-  featureImage?: string | null
-  reactionCount?: number | null
-  viewerHasReacted?: boolean | null
-  id: string
-  publishedAt?: any | null
-  title?: string | null
-  slug?: string | null
-  excerpt?: string | null
-} & { __typename: 'Post' }
-
-export type PostCoreFragment = {
-  id: string
-  publishedAt?: any | null
-  title?: string | null
-  slug?: string | null
-  excerpt?: string | null
-} & { __typename: 'Post' }
 
 export type QuestionDetailFragment = {
   description?: string | null
@@ -680,14 +597,6 @@ export type BookmarkListItemFragment = {
   description?: string | null
   faviconUrl?: string | null
 } & { __typename: 'Bookmark' }
-
-export type PostListItemFragment = {
-  id: string
-  publishedAt?: any | null
-  title?: string | null
-  slug?: string | null
-  excerpt?: string | null
-} & { __typename: 'Post' }
 
 export type QuestionsConnectionFragment = {
   pageInfo?:
@@ -896,55 +805,6 @@ export type DeleteCommentMutation = { deleteComment?: boolean | null } & {
   __typename?: 'Mutation'
 }
 
-export type EditPostMutationVariables = Exact<{
-  id: Scalars['ID']['input']
-  data: EditPostInput
-}>
-
-export type EditPostMutation = {
-  editPost?:
-    | ({
-        id: string
-        publishedAt?: any | null
-        title?: string | null
-        slug?: string | null
-        excerpt?: string | null
-        text?: string | null
-        featureImage?: string | null
-        reactionCount?: number | null
-        viewerHasReacted?: boolean | null
-      } & { __typename: 'Post' })
-    | null
-} & { __typename?: 'Mutation' }
-
-export type DeletePostMutationVariables = Exact<{
-  id: Scalars['ID']['input']
-}>
-
-export type DeletePostMutation = { deletePost?: boolean | null } & {
-  __typename?: 'Mutation'
-}
-
-export type AddPostMutationVariables = Exact<{
-  data: AddPostInput
-}>
-
-export type AddPostMutation = {
-  addPost?:
-    | ({
-        id: string
-        publishedAt?: any | null
-        title?: string | null
-        slug?: string | null
-        excerpt?: string | null
-        text?: string | null
-        featureImage?: string | null
-        reactionCount?: number | null
-        viewerHasReacted?: boolean | null
-      } & { __typename: 'Post' })
-    | null
-} & { __typename?: 'Mutation' }
-
 export type EditQuestionMutationVariables = Exact<{
   id: Scalars['ID']['input']
   data: EditQuestionInput
@@ -1031,7 +891,7 @@ export type ToggleReactionMutation = {
         id: string
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
-      } & { __typename?: 'Blog' | 'Post' | 'Question' | 'Stack' })
+      } & { __typename?: 'Blog' | 'Question' | 'Stack' })
     | ({
         id: string
         url: string
@@ -1282,43 +1142,6 @@ export type GetCommentsQuery = {
       } & { __typename: 'Comment' })
     | null
   >
-} & { __typename?: 'Query' }
-
-export type GetPostsQueryVariables = Exact<{
-  filter?: InputMaybe<WritingFilter>
-}>
-
-export type GetPostsQuery = {
-  posts: Array<
-    | ({
-        id: string
-        publishedAt?: any | null
-        title?: string | null
-        slug?: string | null
-        excerpt?: string | null
-      } & { __typename: 'Post' })
-    | null
-  >
-} & { __typename?: 'Query' }
-
-export type GetPostQueryVariables = Exact<{
-  slug: Scalars['String']['input']
-}>
-
-export type GetPostQuery = {
-  post?:
-    | ({
-        id: string
-        publishedAt?: any | null
-        title?: string | null
-        slug?: string | null
-        excerpt?: string | null
-        text?: string | null
-        featureImage?: string | null
-        reactionCount?: number | null
-        viewerHasReacted?: boolean | null
-      } & { __typename: 'Post' })
-    | null
 } & { __typename?: 'Query' }
 
 export type GetQuestionsQueryVariables = Exact<{
@@ -1617,32 +1440,6 @@ export const CommentInfoFragmentDoc = /*#__PURE__*/ gql`
     }
   }
   ${UserInfoFragmentDoc}
-`
-export const PostCoreFragmentDoc = /*#__PURE__*/ gql`
-  fragment PostCore on Post {
-    __typename
-    id
-    publishedAt
-    title
-    slug
-    excerpt
-  }
-`
-export const PostListItemFragmentDoc = /*#__PURE__*/ gql`
-  fragment PostListItem on Post {
-    ...PostCore
-  }
-  ${PostCoreFragmentDoc}
-`
-export const PostDetailFragmentDoc = /*#__PURE__*/ gql`
-  fragment PostDetail on Post {
-    ...PostCore
-    text
-    featureImage
-    reactionCount
-    viewerHasReacted
-  }
-  ${PostCoreFragmentDoc}
 `
 export const QuestionCoreFragmentDoc = /*#__PURE__*/ gql`
   fragment QuestionCore on Question {
@@ -2056,150 +1853,6 @@ export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<
   DeleteCommentMutation,
   DeleteCommentMutationVariables
 >
-export const EditPostDocument = /*#__PURE__*/ gql`
-  mutation editPost($id: ID!, $data: EditPostInput!) {
-    editPost(id: $id, data: $data) {
-      ...PostDetail
-    }
-  }
-  ${PostDetailFragmentDoc}
-`
-export type EditPostMutationFn = Apollo.MutationFunction<
-  EditPostMutation,
-  EditPostMutationVariables
->
-
-/**
- * __useEditPostMutation__
- *
- * To run a mutation, you first call `useEditPostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useEditPostMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [editPostMutation, { data, loading, error }] = useEditPostMutation({
- *   variables: {
- *      id: // value for 'id'
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useEditPostMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    EditPostMutation,
-    EditPostMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<EditPostMutation, EditPostMutationVariables>(
-    EditPostDocument,
-    options
-  )
-}
-export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>
-export type EditPostMutationResult = Apollo.MutationResult<EditPostMutation>
-export type EditPostMutationOptions = Apollo.BaseMutationOptions<
-  EditPostMutation,
-  EditPostMutationVariables
->
-export const DeletePostDocument = /*#__PURE__*/ gql`
-  mutation deletePost($id: ID!) {
-    deletePost(id: $id)
-  }
-`
-export type DeletePostMutationFn = Apollo.MutationFunction<
-  DeletePostMutation,
-  DeletePostMutationVariables
->
-
-/**
- * __useDeletePostMutation__
- *
- * To run a mutation, you first call `useDeletePostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeletePostMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deletePostMutation, { data, loading, error }] = useDeletePostMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeletePostMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeletePostMutation,
-    DeletePostMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<DeletePostMutation, DeletePostMutationVariables>(
-    DeletePostDocument,
-    options
-  )
-}
-export type DeletePostMutationHookResult = ReturnType<
-  typeof useDeletePostMutation
->
-export type DeletePostMutationResult = Apollo.MutationResult<DeletePostMutation>
-export type DeletePostMutationOptions = Apollo.BaseMutationOptions<
-  DeletePostMutation,
-  DeletePostMutationVariables
->
-export const AddPostDocument = /*#__PURE__*/ gql`
-  mutation addPost($data: AddPostInput!) {
-    addPost(data: $data) {
-      ...PostDetail
-    }
-  }
-  ${PostDetailFragmentDoc}
-`
-export type AddPostMutationFn = Apollo.MutationFunction<
-  AddPostMutation,
-  AddPostMutationVariables
->
-
-/**
- * __useAddPostMutation__
- *
- * To run a mutation, you first call `useAddPostMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddPostMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addPostMutation, { data, loading, error }] = useAddPostMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useAddPostMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddPostMutation,
-    AddPostMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useMutation<AddPostMutation, AddPostMutationVariables>(
-    AddPostDocument,
-    options
-  )
-}
-export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>
-export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>
-export type AddPostMutationOptions = Apollo.BaseMutationOptions<
-  AddPostMutation,
-  AddPostMutationVariables
->
 export const EditQuestionDocument = /*#__PURE__*/ gql`
   mutation editQuestion($id: ID!, $data: EditQuestionInput!) {
     editQuestion(id: $id, data: $data) {
@@ -2366,11 +2019,6 @@ export const ToggleReactionDocument = /*#__PURE__*/ gql`
         viewerHasReacted
       }
       ... on Question {
-        id
-        reactionCount
-        viewerHasReacted
-      }
-      ... on Post {
         id
         reactionCount
         viewerHasReacted
@@ -3076,139 +2724,6 @@ export type GetCommentsQueryResult = Apollo.QueryResult<
   GetCommentsQuery,
   GetCommentsQueryVariables
 >
-export const GetPostsDocument = /*#__PURE__*/ gql`
-  query getPosts($filter: WritingFilter) {
-    posts(filter: $filter) {
-      ...PostListItem
-    }
-  }
-  ${PostListItemFragmentDoc}
-`
-
-/**
- * __useGetPostsQuery__
- *
- * To run a query within a React component, call `useGetPostsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPostsQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useGetPostsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options
-  )
-}
-export function useGetPostsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPostsQuery,
-    GetPostsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options
-  )
-}
-export function useGetPostsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetPostsQuery,
-    GetPostsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSuspenseQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options
-  )
-}
-export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>
-export type GetPostsLazyQueryHookResult = ReturnType<
-  typeof useGetPostsLazyQuery
->
-export type GetPostsSuspenseQueryHookResult = ReturnType<
-  typeof useGetPostsSuspenseQuery
->
-export type GetPostsQueryResult = Apollo.QueryResult<
-  GetPostsQuery,
-  GetPostsQueryVariables
->
-export const GetPostDocument = /*#__PURE__*/ gql`
-  query getPost($slug: String!) {
-    post(slug: $slug) {
-      ...PostDetail
-    }
-  }
-  ${PostDetailFragmentDoc}
-`
-
-/**
- * __useGetPostQuery__
- *
- * To run a query within a React component, call `useGetPostQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPostQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPostQuery({
- *   variables: {
- *      slug: // value for 'slug'
- *   },
- * });
- */
-export function useGetPostQuery(
-  baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(
-    GetPostDocument,
-    options
-  )
-}
-export function useGetPostLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<GetPostQuery, GetPostQueryVariables>(
-    GetPostDocument,
-    options
-  )
-}
-export function useGetPostSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    GetPostQuery,
-    GetPostQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useSuspenseQuery<GetPostQuery, GetPostQueryVariables>(
-    GetPostDocument,
-    options
-  )
-}
-export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>
-export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>
-export type GetPostSuspenseQueryHookResult = ReturnType<
-  typeof useGetPostSuspenseQuery
->
-export type GetPostQueryResult = Apollo.QueryResult<
-  GetPostQuery,
-  GetPostQueryVariables
->
 export const GetQuestionsDocument = /*#__PURE__*/ gql`
   query getQuestions($first: Int, $after: String, $filter: QuestionFilter) {
     questions(first: $first, after: $after, filter: $filter) {
@@ -3850,18 +3365,15 @@ export type CommentFieldPolicy = {
 export type MutationKeySpecifier = (
   | 'addBookmark'
   | 'addComment'
-  | 'addPost'
   | 'addQuestion'
   | 'addStack'
   | 'deleteBookmark'
   | 'deleteComment'
-  | 'deletePost'
   | 'deleteQuestion'
   | 'deleteStack'
   | 'deleteUser'
   | 'editBookmark'
   | 'editComment'
-  | 'editPost'
   | 'editQuestion'
   | 'editStack'
   | 'editUser'
@@ -3872,18 +3384,15 @@ export type MutationKeySpecifier = (
 export type MutationFieldPolicy = {
   addBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   addComment?: FieldPolicy<any> | FieldReadFunction<any>
-  addPost?: FieldPolicy<any> | FieldReadFunction<any>
   addQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   addStack?: FieldPolicy<any> | FieldReadFunction<any>
   deleteBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   deleteComment?: FieldPolicy<any> | FieldReadFunction<any>
-  deletePost?: FieldPolicy<any> | FieldReadFunction<any>
   deleteQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   deleteStack?: FieldPolicy<any> | FieldReadFunction<any>
   deleteUser?: FieldPolicy<any> | FieldReadFunction<any>
   editBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   editComment?: FieldPolicy<any> | FieldReadFunction<any>
-  editPost?: FieldPolicy<any> | FieldReadFunction<any>
   editQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   editStack?: FieldPolicy<any> | FieldReadFunction<any>
   editUser?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3901,35 +3410,6 @@ export type PageInfoFieldPolicy = {
   hasNextPage?: FieldPolicy<any> | FieldReadFunction<any>
   totalCount?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type PostKeySpecifier = (
-  | 'author'
-  | 'createdAt'
-  | 'excerpt'
-  | 'featureImage'
-  | 'id'
-  | 'publishedAt'
-  | 'reactionCount'
-  | 'slug'
-  | 'text'
-  | 'title'
-  | 'updatedAt'
-  | 'viewerHasReacted'
-  | PostKeySpecifier
-)[]
-export type PostFieldPolicy = {
-  author?: FieldPolicy<any> | FieldReadFunction<any>
-  createdAt?: FieldPolicy<any> | FieldReadFunction<any>
-  excerpt?: FieldPolicy<any> | FieldReadFunction<any>
-  featureImage?: FieldPolicy<any> | FieldReadFunction<any>
-  id?: FieldPolicy<any> | FieldReadFunction<any>
-  publishedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
-  slug?: FieldPolicy<any> | FieldReadFunction<any>
-  text?: FieldPolicy<any> | FieldReadFunction<any>
-  title?: FieldPolicy<any> | FieldReadFunction<any>
-  updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
-  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
-}
 export type QueryKeySpecifier = (
   | 'blog'
   | 'blogs'
@@ -3937,8 +3417,6 @@ export type QueryKeySpecifier = (
   | 'bookmarks'
   | 'comment'
   | 'comments'
-  | 'post'
-  | 'posts'
   | 'question'
   | 'questions'
   | 'stack'
@@ -3955,8 +3433,6 @@ export type QueryFieldPolicy = {
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>
   comment?: FieldPolicy<any> | FieldReadFunction<any>
   comments?: FieldPolicy<any> | FieldReadFunction<any>
-  post?: FieldPolicy<any> | FieldReadFunction<any>
-  posts?: FieldPolicy<any> | FieldReadFunction<any>
   question?: FieldPolicy<any> | FieldReadFunction<any>
   questions?: FieldPolicy<any> | FieldReadFunction<any>
   stack?: FieldPolicy<any> | FieldReadFunction<any>
@@ -4139,10 +3615,6 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | PageInfoKeySpecifier)
     fields?: PageInfoFieldPolicy
   }
-  Post?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
-    keyFields?: false | PostKeySpecifier | (() => undefined | PostKeySpecifier)
-    fields?: PostFieldPolicy
-  }
   Query?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
     keyFields?:
       | false
@@ -4209,8 +3681,6 @@ export const ListAllOperations = {
     getBookmarks: 'getBookmarks',
     getBookmark: 'getBookmark',
     getComments: 'getComments',
-    getPosts: 'getPosts',
-    getPost: 'getPost',
     getQuestions: 'getQuestions',
     getQuestion: 'getQuestion',
     getStacks: 'getStacks',
@@ -4227,9 +3697,6 @@ export const ListAllOperations = {
     addComment: 'addComment',
     editComment: 'editComment',
     deleteComment: 'deleteComment',
-    editPost: 'editPost',
-    deletePost: 'deletePost',
-    addPost: 'addPost',
     editQuestion: 'editQuestion',
     deleteQuestion: 'deleteQuestion',
     addQuestion: 'addQuestion',
@@ -4250,9 +3717,6 @@ export const ListAllOperations = {
     BookmarkDetail: 'BookmarkDetail',
     BookmarksConnection: 'BookmarksConnection',
     CommentInfo: 'CommentInfo',
-    PostCore: 'PostCore',
-    PostListItem: 'PostListItem',
-    PostDetail: 'PostDetail',
     QuestionCore: 'QuestionCore',
     QuestionListItem: 'QuestionListItem',
     QuestionDetail: 'QuestionDetail',

@@ -19,11 +19,6 @@ export const TOGGLE_REACTION = gql`
         reactionCount
         viewerHasReacted
       }
-      ... on Post {
-        id
-        reactionCount
-        viewerHasReacted
-      }
       ... on Blog {
         id
         reactionCount

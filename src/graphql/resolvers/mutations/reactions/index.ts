@@ -22,11 +22,6 @@ export async function toggleReaction(
       table = 'bookmark'
       break
     }
-    case ReactionType.Post: {
-      field = 'postId'
-      table = 'post'
-      break
-    }
     case ReactionType.Blog: {
       field = 'blogId'
       table = 'blog'
