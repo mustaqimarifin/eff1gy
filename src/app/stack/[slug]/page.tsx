@@ -10,7 +10,7 @@ import type { GetStackQuery } from '~/graphql/typeSlut'
 import { CommentType } from '~/graphql/typeSlut'
 import { HiddenCounter } from '~/lib/actions'
 
-export const dynamic = 'force-static'
+//export const dynamic = 'force-static'
 
 export default async function StackPage({ params: { slug } }) {
   const client = getClient()
