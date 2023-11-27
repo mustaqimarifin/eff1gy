@@ -79,12 +79,6 @@ export async function addComment(
       route = `${CLIENT_URL}/blog/${refId}`
       break
     }
-    case CommentType.Post: {
-      field = 'postId'
-      table = 'post'
-      route = `${CLIENT_URL}/writing/${refId}`
-      break
-    }
     case CommentType.Question: {
       field = 'questionId'
       table = 'question'

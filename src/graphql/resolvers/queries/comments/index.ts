@@ -56,13 +56,6 @@ export async function getComments(_, args, ctx: Context) {
 
       return results || []
     }
-    case CommentType.Post: {
-      const results = await prisma.post
-        .findUnique({ where: { id: refId } })
-        .comments()
-
-      return results || []
-    }
     default: {
       return []
     }
