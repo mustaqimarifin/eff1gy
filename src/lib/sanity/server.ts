@@ -3,25 +3,6 @@ import { createClient } from 'next-sanity'
 
 import type { CaseStudy, Post } from '~/components/Posts/PostDetail'
 
-export const projectId = 'do33z8xq'
-export const dataset = 'production'
-
-// see https://www.sanity.io/docs/api-versioning for how versioning works
-export const apiVersion = '2023-05-03'
-
-export const useCdn = true
-
-/* const query = encodeURI(
-  `https://${projectId}.api.sanity.io/v2023-05-03/data/query/production?query=${indexQuery}`
-)
- */
-
-export const sanityConfig = {
-  dataset,
-  projectId,
-  useCdn,
-  apiVersion,
-}
 import {
   caseQuery,
   casesQuery,
@@ -30,6 +11,7 @@ import {
   type Settings,
   settingsQuery,
 } from './queries'
+import { projectId, sanityConfig } from './config'
 
 const client = projectId ? createClient(sanityConfig) : null
 

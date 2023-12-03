@@ -1,8 +1,18 @@
-/**
- * As this file is reused in several other files, try to keep it lean and small.
- * Importing other npm packages here could lead to needlessly increasing the client bundle size, or end up in a server-only function that don't need it.
+export const projectId = 'do33z8xq'
+export const dataset = 'production'
+
+export const apiVersion = '2023-05-03'
+
+export const useCdn = false
+
+export const sanityConfig = {
+  dataset,
+  projectId,
+  useCdn,
+  apiVersion,
+}
+
+/* const query = encodeURI(
+  `https://${projectId}.api.sanity.io/v2023-05-03/data/query/production?query=${indexQuery}`
+)
  */
-
-//import { indexQuery } from './queries'
-
-
