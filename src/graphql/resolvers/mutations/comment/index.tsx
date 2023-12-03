@@ -104,7 +104,7 @@ export async function addComment(
     throw new GraphQLError('Commenting on something that doesn’t exist')
   }
 
-  const [comment] = await Promise.all([
+  /*   const [comment] = await Promise.all([
     prisma.comment.create({
       data: {
         text,
@@ -125,12 +125,18 @@ export async function addComment(
     console.error({ err })
     throw new GraphQLError('Unable to add comment')
   })
+ */
 
-  //graphcdn.purgeList('comments')
-
+  const comment = await prisma.comment.create({
+    data: {
+      text,
+      parentId,
+      userId: viewer?.id,
+      [field]: refId,
+    },
+  })
   return comment
 }
-
 export async function deleteComment(
   _: any,
   args: MutationDeleteCommentArgs,

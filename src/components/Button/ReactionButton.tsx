@@ -7,7 +7,7 @@ import { HeartFillIcon, HeartIcon } from '../Icon'
 import { SignInDialog } from '../SignInDialog'
 
 interface Props {
-  id: string // used to reset the button state as the user switches between pages
+  id: string // reset state
   hasReacted: boolean
   count: number
   onClick: () => void
@@ -31,7 +31,7 @@ export function ReactionButton(props: Props) {
   const nextOpacity = 'opacity-0'
   const [ping, setPing] = useState(false)
 
-  // reset all the states as people navigate between different reactable pages
+  // reset states between ppl/pages
   useEffect(() => {
     setHasReactedState(hasReacted)
     currCount = count

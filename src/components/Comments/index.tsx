@@ -1,3 +1,4 @@
+'use client'
 import { MessageCircle } from 'lucide-react'
 import { useRef } from 'react'
 

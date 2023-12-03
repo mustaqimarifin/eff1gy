@@ -1,4 +1,4 @@
-import lqip, { LqipOptions, type LqipResult } from 'lqip-modern'
+import lqip, { type LqipResult } from 'lqip-modern'
 import path from 'path'
 import { cwd } from 'process'
 import { visit } from 'unist-util-visit'

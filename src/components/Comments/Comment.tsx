@@ -169,7 +169,7 @@ export const Comment = memo(function MemoComment({
       ) : (
         <MarkdownRenderer
           children={comment.text}
-          className="comment prose flex-grow pl-14 leading-normal"
+          className="comment prose dark:prose-invert flex-grow pl-14 leading-normal"
           variant="comment"
         />
       )}

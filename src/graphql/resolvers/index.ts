@@ -1,5 +1,3 @@
-import GraphQLJSON from 'graphql-type-json'
-
 import { type Context } from '~/graphql/context'
 import Mutation from '~/graphql/resolvers/mutations'
 import Query from '~/graphql/resolvers/queries'
@@ -7,11 +5,11 @@ import { getCommentAuthor } from '~/graphql/resolvers/queries/comments'
 import { getQuestionAuthor } from '~/graphql/resolvers/queries/questions'
 import { QuestionStatus, UserRole } from '~/graphql/typeSlut'
 
-import { DateQL } from '../scalars'
+import { DateQL, JSON } from '../scalars'
 
 const resolvers = {
   Date: DateQL,
-  JSON: GraphQLJSON,
+  JSON: JSON,
   Query,
   Mutation,
   Reactable: {

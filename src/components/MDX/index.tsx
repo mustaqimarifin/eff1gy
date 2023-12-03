@@ -1,14 +1,56 @@
 import NextImage from 'next/legacy/image'
 import Link from 'next/link'
 import React from 'react'
-import { highlight } from 'sugar-high'
 
+import { CLIENT_URL } from '~/graphql/constants'
 import { slugify } from '~/lib/functions'
 
-import { LinkRenderer } from '../MarkdownRenderer'
 import { YoutubeEmbed } from './Embed'
+import { highlight } from './sugar'
 
-function CustomLink(props) {
+export function CustomLink2(props) {
+  let href = props.href
+
+  if (href.startsWith('/')) {
+    return (
+      <Link href={href} {...props}>
+        {props.children}
+      </Link>
+    )
+  }
+
+  if (href.startsWith('#')) {
+    return (
+      <Link href={href} {...props}>
+        {props.children}
+      </Link>
+    )
+  }
+
+  if (href.startsWith('@')) {
+    return (
+      <Link href={`/u/${href.slice(1)}`} {...props}>
+        {props.children}
+      </Link>
+    )
+  }
+  try {
+    const url = new URL(href)
+    if (url.origin === CLIENT_URL) {
+      return (
+        <Link href={href} {...props}>
+          {props.children}
+        </Link>
+      )
+    }
+    return <a target="_blank" rel="noopener" href={href} {...props} />
+  } catch (e) {
+    console.error(e)
+    return <a target="_blank" rel="noopener" href={href} {...props} />
+  }
+}
+
+/* function CustomLink(props) {
   let href = props.href
 
   if (href.startsWith('/')) {
@@ -25,7 +67,7 @@ function CustomLink(props) {
 
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
-
+ */
 function ProsCard({ title, pros }) {
   return (
     <div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
@@ -79,7 +121,16 @@ function ConsCard({ title, cons }) {
 }
 
 function Image(props) {
-  return <NextImage {...props} quality={75} className=" rounded-md" />
+  return (
+    <div className="flex my-4 max-w-3xl content-center justify-center overflow-hidden">
+      <NextImage
+        {...props}
+        quality={75}
+        className=" rounded-md"
+        sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
+      />
+    </div>
+  )
 }
 
 function Callout(props) {
@@ -136,6 +187,7 @@ export function createHeading(level) {
 }
 
 export const components = {
+  a: CustomLink2,
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
@@ -143,7 +195,6 @@ export const components = {
   h5: createHeading(5),
   h6: createHeading(6),
   img: Image,
-  a: CustomLink,
   Callout,
   ProsCard,
   ConsCard,

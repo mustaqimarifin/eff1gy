@@ -5,10 +5,12 @@ const config = {
     node: true,
   },
   ignorePatterns: [
-    '.github',
-    '.next',
+    '.github/**',
+    '.next/**',
     'node_modules/**',
     'src/components/Marquee/m.js',
+    'public',
+    'src/components/MDX/sugar.js',
   ],
 
   root: true,

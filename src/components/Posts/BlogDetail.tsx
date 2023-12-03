@@ -12,6 +12,7 @@ import { TitleBar } from '../ListDetail/TitleBar'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { BlogActions } from './BlogActions'
 import PageTitle from './PageTitle'
+import { CoverImage } from '../Image'
 
 export type Post = {
   id: string
@@ -103,24 +104,12 @@ export function BlogDetail({ children, post, slug }: Props) {
 
         <Detail.ContentContainer>
           <Detail.Header>
-            <div className="full-cover max-h-60 overflow-hidden object-center ">
-              <Image
-                src={post.caption}
-                alt={post.title}
-                width={1200}
-                height={400}
-              />
-            </div>
-
+            <CoverImage src={post.caption} />
             <div className="text-3xl font-bold capitalize text-black dark:text-white">
               {post.title}
             </div>
           </Detail.Header>
           {children}
-          <div className="py-6" />
-          <Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={data.blog.id} type={CommentType.Blog} />
-          </Suspense>
         </Detail.ContentContainer>
       </Detail.Container>
     </>

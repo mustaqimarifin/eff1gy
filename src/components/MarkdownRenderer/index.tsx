@@ -4,13 +4,10 @@
 
 import Markdown from 'markdown-to-jsx'
 import NextImage from 'next/legacy/image'
-import Link from 'next/link'
 
-import { CLIENT_URL } from '~/graphql/constants'
+import { Code, createHeading, CustomLink2 } from '../MDX'
 
-import { Code, createHeading } from '../MDX'
-
-export function LinkRenderer({ href, ...rest }: any) {
+/* export function CustomLink({ href, ...rest }: any) {
   if (href.startsWith('#')) {
     return <Link href={href} {...rest} />
   }
@@ -29,19 +26,19 @@ export function LinkRenderer({ href, ...rest }: any) {
     return <a target="_blank" rel="noopener" href={href} {...rest} />
   }
 }
-
+ */
 function getComponentsForVariant(variant) {
   // Blog posts
   switch (variant) {
     case 'longform': {
       return {
+        a: CustomLink2,
         h1: createHeading(1),
         h2: createHeading(2),
         h3: createHeading(3),
         h4: createHeading(4),
         h5: createHeading(5),
         h6: createHeading(6),
-        a: LinkRenderer,
         p: (paragraph: { children?: any; node?: any }) => {
           const { node } = paragraph
           if (node.children[0].tagName === 'img') {
@@ -91,7 +88,7 @@ function getComponentsForVariant(variant) {
     // Questions, comments, descriptions on bookmarks, etc.
     case 'comment': {
       return {
-        a: LinkRenderer,
+        a: CustomLink2,
         h1: 'p',
         h2: 'p',
         h3: 'p',
@@ -172,7 +169,7 @@ export function MarkdownRenderer(props) {
   const components = getComponentsForVariant(variant)
 
   return (
-    <article className="prose-quoteless prose prose-neutral dark:prose-invert">
+    <article className=" prose prose-neutral dark:prose-invert">
       <Markdown
         {...props}
         options={{

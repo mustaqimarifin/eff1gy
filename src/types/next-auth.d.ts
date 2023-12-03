@@ -3,12 +3,11 @@ import type { User as PrismaUser, UserRole } from '@prisma/client'
 import NextAuth, { type DefaultSession, Session } from 'next-auth'
 
 declare module 'next-auth' {
-  /**
-   * Returned by `useViewerQuery`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
   interface Session {
     user: {
-      /** HOKAGE */
+      /**
+       * Returned by `useViewerQuery`, `getSession` and received as a prop on the `SessionProvider` React Context
+       */
       id: string
       username?: string
       role: UserRole

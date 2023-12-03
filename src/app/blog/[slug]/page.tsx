@@ -1,7 +1,19 @@
+import { Suspense } from 'react'
+
 import Mdx from '~/app/mdxrsc'
+import { Comments } from '~/components/Comments'
 import { ListDetailView } from '~/components/Layouts'
+import { LoadingSpinner } from '~/components/LoadingSpinner'
 import { BlogDetail } from '~/components/Posts/BlogDetail'
 import { PostsList } from '~/components/Posts/PostsList'
+import { getClient } from '~/components/Provider/ApolloClient'
+import { GET_VIEWER } from '~/graphql/queries/viewer'
+import type { GetBlogQuery } from '~/graphql/typeSlut'
+import {
+  CommentType,
+  GetBlogDocument,
+  GetCommentsDocument,
+} from '~/graphql/typeSlut'
 import { Counter } from '~/lib/actions'
 import { getPost, getPosts } from '~/lib/sanity/sanity.client'
 import { formatDate } from '~/lib/transformers'
@@ -23,6 +35,25 @@ export default async function Blog({ params: { slug } }) {
   if (!post) {
     return { notFound: true }
   }
+
+  const client = getClient()
+  const { data } = await client.query<GetBlogQuery>({
+    query: GetBlogDocument,
+    variables: { slug },
+  })
+
+  await Promise.all([
+    client.query({ query: GET_VIEWER }),
+
+    data?.blog &&
+      client.query({
+        query: GetCommentsDocument,
+        variables: { refId: data.blog.id, type: CommentType.Blog },
+        context: { fetchOptions: { cache: 'no-store' } },
+      }),
+  ])
+
+  const { blog } = data
 
   return (
     <ListDetailView
@@ -46,8 +77,11 @@ export default async function Blog({ params: { slug } }) {
               </div>
             </div>
           </div>
-
           <Mdx source={post?.content} />
+          <div className="py-6" />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Comments refId={blog.id} type={CommentType.Blog} />
+          </Suspense>
         </BlogDetail>
       }
     />

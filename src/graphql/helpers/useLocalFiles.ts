@@ -7,7 +7,7 @@ export async function useLocalFiles({ path, fetch }) {
     if (localData) return JSON.parse(localData)
     throw new Error()
   } catch (err) {
-    // file doesn't exist, create it
+    //! file doesn't exist, create it
     const data = await fetch()
     fs.writeFileSync(fullPath, JSON.stringify(data, null, 4), 'utf8')
     const localData = fs.readFileSync(fullPath, 'utf8')

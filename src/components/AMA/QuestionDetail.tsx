@@ -99,7 +99,7 @@ export function QuestionDetail({ id }: { id: string }) {
             {question?.description && (
               <MarkdownRenderer
                 children={question?.description}
-                className="comment prose leading-normal"
+                className="comment prose dark:prose-invert leading-normal"
                 variant="comment"
               />
             )}
