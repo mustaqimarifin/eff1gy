@@ -4,7 +4,7 @@ import { requiresUser } from '~/graphql/helpers/requiresUser'
   addBlog,
   deleteBlog,
   editBlog,
-} from '~/graphql/resolvers/mutations/blog' */
+} from '~/graphql/resolvers/mutations/post' */
 import {
   addBookmark,
   deleteBookmark,

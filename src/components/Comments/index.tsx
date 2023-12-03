@@ -40,7 +40,7 @@ export function Comments({ refId, type }: Props) {
     )
   }
 
-  if (error) return <p>Error loading comments...</p>
+  if (error) return <div>Error loading comments...</div>
 
   const { comments } = data
 
@@ -61,9 +61,9 @@ export function Comments({ refId, type }: Props) {
               />
             ))}
           {comments?.length === 0 && (
-            <p className="text-quaternary block pt-12 pb-16 text-center">
+            <div className="text-quaternary block pt-12 pb-16 text-center">
               No comments yet...
-            </p>
+            </div>
           )}
         </div>
       </div>

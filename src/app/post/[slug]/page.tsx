@@ -1,10 +1,8 @@
 import { Suspense } from 'react'
 
 import Mdx from '~/app/mdxrsc'
-import { Comments } from '~/components/Comments'
 import { ListDetailView } from '~/components/Layouts'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { BlogDetail } from '~/components/Posts/BlogDetail'
+import { PostDetail } from '~/components/Posts/PostDetail'
 import { PostsList } from '~/components/Posts/PostsList'
 import { getClient } from '~/components/Provider/ApolloClient'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
@@ -15,10 +13,10 @@ import {
   GetCommentsDocument,
 } from '~/graphql/typeSlut'
 import { Counter } from '~/lib/actions'
-import { getPost, getPosts } from '~/lib/sanity/sanity.client'
+import { getPost, getPosts } from '~/lib/sanity/server'
 import { formatDate } from '~/lib/transformers'
 
-export const revalidate = 60
+//export const revalidate = 3600
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -28,7 +26,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Blog({ params: { slug } }) {
+export default async function Post({ params: { slug } }) {
   const posts = await getPosts()
   const post = await getPost(slug)
 
@@ -36,7 +34,13 @@ export default async function Blog({ params: { slug } }) {
     return { notFound: true }
   }
 
-  const client = getClient()
+  const tags = post.tags?.length
+    ? post.tags
+        .slice(0)
+        .map((tag: any, index: any) => <div key={index}>{`#${tag}`}</div>)
+    : null
+
+  /*   const client = getClient()
   const { data } = await client.query<GetBlogQuery>({
     query: GetBlogDocument,
     variables: { slug },
@@ -53,36 +57,27 @@ export default async function Blog({ params: { slug } }) {
       }),
   ])
 
-  const { blog } = data
+  const { blog } = data */
 
   return (
     <ListDetailView
       list={<PostsList posts={posts} />}
       hasDetail
       detail={
-        <BlogDetail post={post} slug={slug}>
-          <div className="mb-16 flex flex-col items-start uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
-            <div className="flex gap-2  items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
+        <PostDetail post={post} slug={slug}>
+          <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
+            <div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
               {formatDate(post?.date)}
               {` • `}
               <Counter id={post.slug} />
               {` • `}
-              <div className="flex space-x-2">
-                {post.tags?.length &&
-                  post.tags
-                    .slice(0)
-                    .map((tag: any, index: any) => (
-                      <div key={index}>{tag}</div>
-                    ))}
-              </div>
+              {tags}
             </div>
           </div>
-          <Mdx source={post?.content} />
-          <div className="py-6" />
-          <Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={blog.id} type={CommentType.Blog} />
+          <Suspense>
+            <Mdx source={post?.content} />
           </Suspense>
-        </BlogDetail>
+        </PostDetail>
       }
     />
   )

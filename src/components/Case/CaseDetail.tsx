@@ -6,9 +6,9 @@ import { useRef } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { realTime } from '~/lib/transformers'
 
-import type { CaseStudy } from '../Posts/BlogDetail'
+import type { CaseStudy } from '../Posts/PostDetail'
 
 interface Props {
   children: ReactNode
@@ -19,7 +19,7 @@ export function CaseDetail({ casestudy, children }: Props) {
   const scrollContainerRef = useRef(null)
   const titleRef = useRef(null)
 
-  const date = timestampToCleanTime({ timestamp: casestudy.date })
+  const date = realTime({ timestamp: casestudy.date })
 
   return (
     <Detail.Container data-cy="app-detail" ref={scrollContainerRef}>

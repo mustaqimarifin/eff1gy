@@ -1,6 +1,6 @@
 import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
-import { getCases } from '~/lib/sanity/sanity.client'
+import { getCases } from '~/lib/sanity/server'
 
 export default async function CaseIndex() {
   const cases = await getCases()

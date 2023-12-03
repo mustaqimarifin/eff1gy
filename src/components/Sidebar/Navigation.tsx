@@ -64,11 +64,11 @@ export function SidebarNavigation() {
           isExternal: false,
         },
         {
-          href: '/blog',
+          href: '/post',
           label: 'Posts',
           icon: WritingIcon,
           trailingAccessory: null,
-          isActive: path.indexOf('/blog') >= 0,
+          isActive: path.indexOf('/post') >= 0,
           trailingAction: null,
           isExternal: false,
         },

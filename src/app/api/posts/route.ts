@@ -1,4 +1,4 @@
-import { getPosts } from '~/lib/sanity/sanity.client'
+import { getPosts } from '~/lib/sanity/server'
 export async function GET() {
   try {
     const res = await getPosts()

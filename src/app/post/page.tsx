@@ -1,10 +1,10 @@
 import { ListDetailView } from '~/components/Layouts'
 import { PostsList } from '~/components/Posts/PostsList'
-import { getPosts } from '~/lib/sanity/sanity.client'
+import { getPosts } from '~/lib/sanity/server'
 
-export const revalidate = 60
+//export const revalidate = 3600
 
-export default async function BlogIndex() {
+export default async function PostIndex() {
   const posts = await getPosts()
 
   if (!posts) {

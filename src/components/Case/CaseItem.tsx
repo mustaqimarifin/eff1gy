@@ -5,7 +5,7 @@ import { memo } from 'react'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 
-import type { CaseStudy } from '../Posts/BlogDetail'
+import type { CaseStudy } from '../Posts/PostDetail'
 
 interface Props {
   casestudy: CaseStudy

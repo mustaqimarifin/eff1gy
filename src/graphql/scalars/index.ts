@@ -61,12 +61,12 @@ function _parseLiteral(typeName, ast, variables) {
   }
 }
 
-export const JSON = new GraphQLScalarType({
-  name: 'JSON',
+export const JSOD = new GraphQLScalarType({
+  name: 'JSOD',
   description: 'Odd custom scalar type',
   serialize: identity,
   parseValue: identity,
   parseLiteral: function parseLiteral(ast, variables) {
-    return _parseLiteral('JSON', ast, variables)
+    return _parseLiteral('JSOD', ast, variables)
   },
 })

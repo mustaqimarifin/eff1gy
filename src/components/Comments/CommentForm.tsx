@@ -7,7 +7,7 @@ import type { CommentType, GetCommentsQuery } from '~/graphql/typeSlut'
 import { useAddCommentMutation, useViewerQuery } from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks'
 import { genId } from '~/lib/nanoid'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { realTime } from '~/lib/transformers'
 
 import { nuts } from '../Provider/Toaster'
 
@@ -29,8 +29,8 @@ export function CommentForm({ refId, type, openModal }: Props) {
         __typename: 'Comment',
         id: genId(),
         text,
-        createdAt: timestampToCleanTime({ month: 'short' }).formatted,
-        updatedAt: timestampToCleanTime({ month: 'short' }).formatted,
+        createdAt: realTime({ month: 'short' }).formatted,
+        updatedAt: realTime({ month: 'short' }).formatted,
         viewerCanDelete: false,
         viewerCanEdit: false,
         author: {

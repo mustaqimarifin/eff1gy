@@ -2,7 +2,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import linkifyRegex from 'remark-linkify-regex'
 
 import { components } from '~/components/MDX'
-import imageMetadata from '~/components/MDX/Meta2'
+import meta2 from '~/components/MDX/Meta2'
+
 export default async function Mdx(props) {
   return (
     <article className="prose prose-neutral dark:prose-invert">
@@ -12,11 +13,11 @@ export default async function Mdx(props) {
           mdxOptions: {
             useDynamicImport: true,
             remarkPlugins: [linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)],
-            rehypePlugins: [imageMetadata],
+            rehypePlugins: [meta2],
             format: 'mdx',
           },
         }}
-        components={{ ...components, ...(props.components || {}) }}
+        components={{ ...components }}
       />
     </article>
   )

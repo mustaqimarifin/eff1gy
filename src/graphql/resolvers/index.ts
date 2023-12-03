@@ -5,11 +5,11 @@ import { getCommentAuthor } from '~/graphql/resolvers/queries/comments'
 import { getQuestionAuthor } from '~/graphql/resolvers/queries/questions'
 import { QuestionStatus, UserRole } from '~/graphql/typeSlut'
 
-import { DateQL, JSON } from '../scalars'
+import { DateQL, JSOD } from '../scalars'
 
 const resolvers = {
   Date: DateQL,
-  JSON: JSON,
+  JSON: JSOD,
   Query,
   Mutation,
   Reactable: {

@@ -68,7 +68,7 @@ export function StackDetail({ children, stack }) {
             </div>
 
             <MarkdownRenderer
-              className="text-primary prose dark:prose-invert"
+              className="text-primary"
               children={stack.description}
               variant="comment"
             />

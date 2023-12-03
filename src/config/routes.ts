@@ -16,7 +16,7 @@ const routes = {
   },
   blog: {
     label: 'Posts',
-    path: '/blog',
+    path: '/post',
     seo: extendSEO({
       title: 'blog',
       description: 'Thinking out loud',

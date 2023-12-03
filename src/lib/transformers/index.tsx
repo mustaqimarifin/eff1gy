@@ -8,7 +8,7 @@ type Props = {
   day?: 'numeric' | '2-digit'
 }
 
-export function timestampToCleanTime({
+export function realTime({
   timestamp = null,
   locale = 'en-us',
   year = 'numeric',
@@ -57,5 +57,5 @@ export function formatDate(date: string) {
     year: 'numeric',
   })
 
-  return `${fullDate} (${formattedDate})`
+  return `${fullDate} `
 }

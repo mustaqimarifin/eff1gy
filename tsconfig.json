@@ -8,7 +8,6 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -18,20 +17,20 @@
     "baseUrl": ".",
     "paths": { "~/*": ["./src/*"] },
     "incremental": true,
-    "plugins": [{ "name": "next" }],
+    "plugins": [ {"name": "next"} ],
     "strictNullChecks": false
   },
   "exclude": ["node_modules"],
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "prettier.config.mjs",
-    "next.config.mjs",
-    "prisma/seed.mts",
-    "src/lib/transformers/merge.js",
-    "src/components/MDX/Lite.tsx",
+    "next-env.d.ts"                   ,
+    "**/*.ts"                         ,
+    "**/*.tsx"                        ,
+    ".next/types/**/*.ts"             ,
+    "prettier.config.mjs"             ,
+    "next.config.mjs"                 ,
+    "prisma/seed.mts"                 ,
+    "src/lib/transformers/merge.js"   ,
+    "src/components/MDX/Lite.tsx"     ,
     "src/components/Marquee/index.mjs"
   ]
 }

@@ -19,7 +19,7 @@ import { TitleBar } from './TitleBar'
 function ContentContainer(props) {
   return (
     <div
-      className="mx-auto  max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl   lg:px-4 "
+      className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 "
       {...props}
     />
   )
@@ -77,13 +77,13 @@ function Null() {
       <div className="flex flex-1 flex-col items-center justify-center space-y-6 px-8 text-center lg:px-16">
         <Compass className="text-secondary" size={32} />
         <div className="flex flex-col space-y-1">
-          <p className="text-primary font-semibold">
+          <div className="text-primary font-semibold">
             What you seek does not exist.
-          </p>
-          <p className="text-tertiary">
+          </div>
+          <div className="text-tertiary">
             Maybe this link is broken. Maybe something was deleted, or moved. In
             any case, there’s nothing to see here...
-          </p>
+          </div>
         </div>
         <Button href="/">Go home</Button>
       </div>

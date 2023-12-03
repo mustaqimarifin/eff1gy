@@ -1,4 +1,5 @@
 'use server'
+import { EyeIcon } from 'lucide-react'
 import { unstable_noStore as noStore } from 'next/cache'
 import { Suspense } from 'react'
 
@@ -17,6 +18,7 @@ const yt = youtube({
   auth: googleAuth,
 })
  */
+
 export const addView = async (id) => {
   noStore()
   const total = await prisma.pageView.upsert({
@@ -44,7 +46,8 @@ export const addView = async (id) => {
 
 export async function Counter({ id }) {
   const views = await addView(id)
-  return <Suspense>{`${views.counter} - views`}</Suspense>
+  const counter = `${views.counter}`
+  return `${counter} V`
 }
 
 export async function HiddenCounter({ id }) {

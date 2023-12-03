@@ -4,10 +4,13 @@
 
 import Markdown from 'markdown-to-jsx'
 import NextImage from 'next/legacy/image'
+import Link from 'next/link'
 
-import { Code, createHeading, CustomLink2 } from '../MDX'
+import { CLIENT_URL } from '~/graphql/constants'
 
-/* export function CustomLink({ href, ...rest }: any) {
+import { Code, createHeading } from '../MDX'
+
+export function CustomLink1({ href, ...rest }: any) {
   if (href.startsWith('#')) {
     return <Link href={href} {...rest} />
   }
@@ -26,61 +29,19 @@ import { Code, createHeading, CustomLink2 } from '../MDX'
     return <a target="_blank" rel="noopener" href={href} {...rest} />
   }
 }
- */
+
 function getComponentsForVariant(variant) {
   // Blog posts
   switch (variant) {
     case 'longform': {
       return {
-        a: CustomLink2,
+        a: CustomLink1,
         h1: createHeading(1),
         h2: createHeading(2),
         h3: createHeading(3),
         h4: createHeading(4),
         h5: createHeading(5),
         h6: createHeading(6),
-        p: (paragraph: { children?: any; node?: any }) => {
-          const { node } = paragraph
-          if (node.children[0].tagName === 'img') {
-            const image = node.children[0]
-            const metastring = image.properties.alt
-            const alt = metastring?.replace(/ *\{[^)]*\} */g, '')
-            const metaWidth = metastring.match(/{([^}]+)x/)
-            const metaHeight = metastring.match(/x([^}]+)}/)
-            const width = metaWidth ? metaWidth[1] : 768
-            const height = metaHeight ? metaHeight[1] : 432
-            const isPriority = metastring?.toLowerCase().match('{priority}')
-            const hasCaption = metastring?.toLowerCase().includes('{caption:')
-            const caption = metastring?.match(/{caption: (.*?)}/)?.pop()
-
-            return (
-              <div className="mx-auto">
-                <NextImage
-                  src={image.properties.src}
-                  width={768}
-                  height={462}
-                  placeholder="blur"
-                  sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-                  // blurDataURL={previewImage.dataURIBase64}
-                  blurDataURL={rgbDataURL(255, 204, 153)} // Orange placeholder 👺 rgba(255, 204, 153) */
-                  className="object-cover"
-                  alt={alt}
-                  priority={isPriority}
-                  style={{
-                    maxWidth: '100%',
-                    height: 'auto',
-                  }}
-                />
-                {hasCaption ? (
-                  <div className="prose-sm" aria-label={caption}>
-                    {caption}
-                  </div>
-                ) : null}
-              </div>
-            )
-          }
-          return <p>{paragraph.children}</p>
-        },
         Callout,
         code: Code,
       }
@@ -88,7 +49,7 @@ function getComponentsForVariant(variant) {
     // Questions, comments, descriptions on bookmarks, etc.
     case 'comment': {
       return {
-        a: CustomLink2,
+        a: CustomLink1,
         h1: 'p',
         h2: 'p',
         h3: 'p',
@@ -169,7 +130,7 @@ export function MarkdownRenderer(props) {
   const components = getComponentsForVariant(variant)
 
   return (
-    <article className=" prose prose-neutral dark:prose-invert">
+    <article className="prose prose-neutral dark:prose-invert">
       <Markdown
         {...props}
         options={{

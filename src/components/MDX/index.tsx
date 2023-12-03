@@ -1,4 +1,4 @@
-import NextImage from 'next/legacy/image'
+import NextImage from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -50,7 +50,7 @@ export function CustomLink2(props) {
   }
 }
 
-/* function CustomLink(props) {
+function CustomLink(props) {
   let href = props.href
 
   if (href.startsWith('/')) {
@@ -67,7 +67,7 @@ export function CustomLink2(props) {
 
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
- */
+
 function ProsCard({ title, pros }) {
   return (
     <div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
@@ -126,8 +126,8 @@ function Image(props) {
       <NextImage
         {...props}
         quality={75}
-        className=" rounded-md"
-        sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
+        className="rounded-md"
+        //sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
       />
     </div>
   )
@@ -187,7 +187,7 @@ export function createHeading(level) {
 }
 
 export const components = {
-  a: CustomLink2,
+  a: CustomLink,
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),

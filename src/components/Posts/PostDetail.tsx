@@ -10,9 +10,8 @@ import { Comments } from '../Comments'
 import { Detail } from '../ListDetail/Detail'
 import { TitleBar } from '../ListDetail/TitleBar'
 import { LoadingSpinner } from '../LoadingSpinner'
-import { BlogActions } from './BlogActions'
 import PageTitle from './PageTitle'
-import { CoverImage } from '../Image'
+import { PostAction } from './PostAction'
 
 export type Post = {
   id: string
@@ -54,7 +53,7 @@ type Props = {
     ssr: false,
   }
 ) */
-export function BlogDetail({ children, post, slug }: Props) {
+export function PostDetail({ children, post, slug }: Props) {
   const scrollContainerRef = useRef(null)
   const titleRef = useRef(null)
   const { data, error, loading } = useGetBlogQuery({ variables: { slug } })
@@ -71,7 +70,7 @@ export function BlogDetail({ children, post, slug }: Props) {
   // if (!post) return <div>loading...</div>;
   /*  useEffect(() => {
     async function fetchPost() {
-      const response =  await fetch(`/api/blog/${post.slug}`;
+      const response =  await fetch(`/api/post/${post.slug}`;
       const fetchedPost = await response.json();
       setPost(fetchedPost);
     }
@@ -85,31 +84,34 @@ export function BlogDetail({ children, post, slug }: Props) {
     return <Detail.Null />;
   } */
   // const { post } = data;
-  //  const publishedAt = timestampToCleanTime({ timestamp: post.publishedAt });
-  //const publishedAt = timestampToCleanTime({ timestamp: post.date })
+  //  const publishedAt = realTime({ timestamp: post.publishedAt });
+  //const publishedAt = realTime({ timestamp: post.date })
 
   return (
     <>
-      <Detail.Container data-cy="blog-detail" ref={scrollContainerRef}>
+      <Detail.Container data-cy="post-detail" ref={scrollContainerRef}>
         <TitleBar
           backButton
           globalMenu={false}
-          backButtonHref={'/blog'}
+          backButtonHref={'/post'}
           magicTitle
           title={post.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
-          trailingAccessory={<BlogActions blog={blog} />}
+          trailingAccessory={<PostAction blog={blog} />}
         />
 
         <Detail.ContentContainer>
           <Detail.Header>
-            <CoverImage src={post.caption} />
             <div className="text-3xl font-bold capitalize text-black dark:text-white">
-              {post.title}
+              <PageTitle>{post.title}</PageTitle>
             </div>
           </Detail.Header>
           {children}
+          <div className="py-6" />
+          <Suspense fallback={<LoadingSpinner />}>
+            <Comments refId={blog?.id} type={CommentType.Blog} />
+          </Suspense>
         </Detail.ContentContainer>
       </Detail.Container>
     </>

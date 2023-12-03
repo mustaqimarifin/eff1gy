@@ -84,7 +84,7 @@ export function BookmarkDetail({
             {children}
             {bookmark.description && (
               <MarkdownRenderer
-                className="prose dark:prose-invert italic opacity-70"
+                className="italic opacity-70"
                 children={bookmark.description}
                 variant="comment"
               />

@@ -7,7 +7,7 @@ import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { CommentType, useGetQuestionQuery } from '~/graphql/typeSlut'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { realTime } from '~/lib/transformers'
 
 import AudioPlayer from '../AudioPlayer'
 import { MarkdownRenderer } from '../MarkdownRenderer'
@@ -30,7 +30,7 @@ export function QuestionDetail({ id }: { id: string }) {
   }
 
   const { question } = data
-  const createdAt = timestampToCleanTime({
+  const createdAt = realTime({
     month: 'short',
     timestamp: question?.createdAt,
   })
@@ -99,7 +99,7 @@ export function QuestionDetail({ id }: { id: string }) {
             {question?.description && (
               <MarkdownRenderer
                 children={question?.description}
-                className="comment prose dark:prose-invert leading-normal"
+                className="comment leading-normal"
                 variant="comment"
               />
             )}

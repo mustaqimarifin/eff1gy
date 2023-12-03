@@ -3,7 +3,7 @@ import path from 'path'
 import { cwd } from 'process'
 import { visit } from 'unist-util-visit'
 
-export interface PreviewImage {
+export type PreviewImage = {
   width: number
   height: number
   base64: string
@@ -32,19 +32,8 @@ function isImageNode(node: ImageNode) {
 }
 
 async function createPreviewImage(node: ImageNode) {
-  /*   try {
-    const cachedPreviewImage = await redis.hgetall(cacheKey)
-    if (cachedPreviewImage) {
-      return cachedPreviewImage
-    }
-  } catch (err) {
-    // ignore redis errors
-    console.warn(`redis error get "${cacheKey}"`, err)
-  } */
   let result: LqipResult
   const url = node.properties.src
-  // console.log(url)
-  //const id = sha256(url)
   const ext_img = url.startsWith('http')
   const local_img = path.join(cwd(), './public', url)
 
@@ -52,7 +41,6 @@ async function createPreviewImage(node: ImageNode) {
     if (!ext_img) {
       result = await lqip(local_img)
     } else {
-      // const { body } = await got(result, { responseType: 'buffer' });
       const body = await fetch(url).then(async (res) =>
         Buffer.from(await res.arrayBuffer())
       )
@@ -64,34 +52,21 @@ async function createPreviewImage(node: ImageNode) {
       base64: result.metadata.dataURIBase64,
     }
 
-    //const pi = JSON.stringify(previewImage)
-    //console.log(pi)
-    //const result = await getPlaiceholder(result, { size: 10 });
-    //console.log('lqip', { ...result.metadata, cacheKey });
-
     if (!result) throw Error(`Invalid image with src "${url}"`)
-    ;(node.properties.width = previewImage.width || 768),
-      (node.properties.height = previewImage.height || 432),
+    ;(node.properties.width = previewImage.width ?? 768),
+      (node.properties.height = previewImage.height ?? 432),
       (node.properties.blurDataURL = previewImage.base64),
       (node.properties.placeholder = 'blur')
-    //console.log('lqip', { result, url })
-    /*  try {
-      await redis.hsetnx(cacheKey, JSON.stringify(previewImage), 30)
-      //console.log(cacheKey);
-    } catch (err) {
-      // ignore redis errors
-      console.warn(`redis error set "${url}"`, err)
-    }
-
-    return previewImage
-    */
   } catch (err) {
-    //console.warn('failed to create preview image', url, err)
-    return null
+    // ignore redis errors
+    console.warn(`redis error set "${url}"`, err)
   }
+
+  //console.warn('failed to create preview image', url, err)
+  return null
 }
 
-const imageMetadata = () => {
+const meta2 = () => {
   return async function transformer(tree: any) {
     const images: ImageNode[] = []
 
@@ -109,4 +84,4 @@ const imageMetadata = () => {
   }
 }
 
-export default imageMetadata
+export default meta2

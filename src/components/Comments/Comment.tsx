@@ -15,7 +15,7 @@ import {
   useDeleteCommentMutation,
   useEditCommentMutation,
 } from '~/graphql/typeSlut'
-import { timestampToCleanTime } from '~/lib/transformers'
+import { realTime } from '~/lib/transformers'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { CommentMenu } from './CommentMenu'
@@ -103,7 +103,7 @@ export const Comment = memo(function MemoComment({
     editComment()
   }
 
-  const createdAt = timestampToCleanTime({
+  const createdAt = realTime({
     month: 'short',
     timestamp: comment.createdAt,
   })
@@ -119,7 +119,6 @@ export const Comment = memo(function MemoComment({
               width={40}
               height={40}
               quality={100}
-              layout="fixed"
               className="rounded-full"
             />
           </Link>
@@ -132,12 +131,12 @@ export const Comment = memo(function MemoComment({
                 {comment.author.name}
               </div>
             </Link>
-            <p className="text-quaternary leading-snug">·</p>
-            <p
+            <div className="text-quaternary leading-snug">·</div>
+            <div
               className="text-quaternary leading-snug line-clamp-1"
               title={createdAt.raw}>
               {createdAt.formatted}
-            </p>
+            </div>
           </div>
         </div>
 
@@ -169,7 +168,7 @@ export const Comment = memo(function MemoComment({
       ) : (
         <MarkdownRenderer
           children={comment.text}
-          className="comment prose dark:prose-invert flex-grow pl-14 leading-normal"
+          className="comment flex-grow pl-14 leading-normal"
           variant="comment"
         />
       )}

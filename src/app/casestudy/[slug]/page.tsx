@@ -3,7 +3,7 @@ import { CaseDetail } from '~/components/Case/CaseDetail'
 import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
 import { HiddenCounter } from '~/lib/actions'
-import { getCase, getCases } from '~/lib/sanity/sanity.client'
+import { getCase, getCases } from '~/lib/sanity/server'
 
 //export const dynamic = 'force-static'
 
@@ -30,8 +30,8 @@ export default async function CaseStudy({ params: { slug } }) {
       hasDetail
       detail={
         <CaseDetail casestudy={casestudy}>
-          <HiddenCounter id={casestudy.slug} />
-          <Mdx source={casestudy.content} />
+          <HiddenCounter id={casestudy?.slug} />
+          <Mdx source={casestudy?.content} />
         </CaseDetail>
       }
     />
