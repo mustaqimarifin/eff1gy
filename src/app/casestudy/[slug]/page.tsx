@@ -16,8 +16,6 @@ export async function generateStaticParams() {
 }
 
 export default async function CaseStudy({ params: { slug } }) {
-  const cases = await getCases()
-
   const casestudy = await getCase(slug)
 
   if (!casestudy) {
@@ -26,7 +24,7 @@ export default async function CaseStudy({ params: { slug } }) {
 
   return (
     <ListDetailView
-      list={<CaseList cases={cases} />}
+      list={<CaseList />}
       hasDetail
       detail={
         <CaseDetail casestudy={casestudy}>

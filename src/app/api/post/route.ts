@@ -3,7 +3,7 @@ export async function GET() {
   try {
     const res = await getPosts()
 
-    return Response.json({ res })
+    return Response.json(res)
   } catch (e) {
     console.log(`${e}`)
     return new Response(`Failed to get posts`, {

@@ -2,22 +2,26 @@
 
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import useSWR from 'swr'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
+import { CLIENT_URL } from '~/graphql/constants'
+import { fetcher } from '~/lib/functions'
 
 import { LoadingSpinner } from '../LoadingSpinner'
+import type { CaseStudy } from '../Posts/PostDetail'
 import { CaseListItem } from './CaseItem'
 
-export const CaseList = ({ cases }) => {
+export const CaseList = () => {
   const path = usePathname()
   const [scrollContainerRef, setScrollContainerRef] = useState(null)
-  /*     const { data, isLoading } = useSWR<CaseStudy[]>(
-        'http://localhost:3000/api/casestudy',
-        fetcher
-    )
- */
-  if (!cases) {
+  const { data, isLoading } = useSWR<CaseStudy[]>(
+    CLIENT_URL + `/api/case`,
+    fetcher
+  )
+
+  if (!data && isLoading) {
     return (
       <ListContainer onRef={setScrollContainerRef}>
         <TitleBar scrollContainerRef={scrollContainerRef} title="Case Study" />
@@ -33,8 +37,8 @@ export const CaseList = ({ cases }) => {
       <TitleBar scrollContainerRef={scrollContainerRef} title="Case Study" />
 
       <div className="lg:space-y-1 lg:p-3">
-        {cases &&
-          cases?.map((casestudy) => {
+        {data &&
+          data?.map((casestudy) => {
             const active = path === casestudy.slug
             return (
               <CaseListItem

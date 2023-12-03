@@ -4,14 +4,6 @@ import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
 import { PostDetail } from '~/components/Posts/PostDetail'
 import { PostsList } from '~/components/Posts/PostsList'
-import { getClient } from '~/components/Provider/ApolloClient'
-import { GET_VIEWER } from '~/graphql/queries/viewer'
-import type { GetBlogQuery } from '~/graphql/typeSlut'
-import {
-  CommentType,
-  GetBlogDocument,
-  GetCommentsDocument,
-} from '~/graphql/typeSlut'
 import { Counter } from '~/lib/actions'
 import { getPost, getPosts } from '~/lib/sanity/server'
 import { formatDate } from '~/lib/transformers'
@@ -27,7 +19,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Post({ params: { slug } }) {
-  const posts = await getPosts()
   const post = await getPost(slug)
 
   if (!post) {
@@ -40,28 +31,9 @@ export default async function Post({ params: { slug } }) {
         .map((tag: any, index: any) => <div key={index}>{`#${tag}`}</div>)
     : null
 
-  /*   const client = getClient()
-  const { data } = await client.query<GetBlogQuery>({
-    query: GetBlogDocument,
-    variables: { slug },
-  })
-
-  await Promise.all([
-    client.query({ query: GET_VIEWER }),
-
-    data?.blog &&
-      client.query({
-        query: GetCommentsDocument,
-        variables: { refId: data.blog.id, type: CommentType.Blog },
-        context: { fetchOptions: { cache: 'no-store' } },
-      }),
-  ])
-
-  const { blog } = data */
-
   return (
     <ListDetailView
-      list={<PostsList posts={posts} />}
+      list={<PostsList />}
       hasDetail
       detail={
         <PostDetail post={post} slug={slug}>

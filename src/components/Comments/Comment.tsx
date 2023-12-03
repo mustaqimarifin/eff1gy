@@ -18,7 +18,6 @@ import {
 import { realTime } from '~/lib/transformers'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
-import { CommentMenu } from './CommentMenu'
 
 interface Props {
   comment: CommentProp
@@ -137,16 +136,34 @@ export const Comment = memo(function MemoComment({
               title={createdAt.raw}>
               {createdAt.formatted}
             </div>
+            <div className="text-quaternary leading-snug text-xs flex flex-row items-center text-gray-500 dark:text-gray-200">
+              {comment.viewerCanEdit && (
+                <button
+                  className=" hover:text-lime-400 hover:dark:text-lime-300 border-none"
+                  onClick={handleEdit}
+                  aria-label="Edit">
+                  &nbsp;edit
+                </button>
+              )}
+              {comment.viewerCanDelete && (
+                <button
+                  className=" hover:text-pink-400 hover:dark:text-pink-300 border-none"
+                  onClick={handleDelete}
+                  aria-label={`Delete comment by ${comment.author.name}`}>
+                  &nbsp;del
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        {(comment.viewerCanDelete || comment.viewerCanEdit) && (
+        {/*         {(comment.viewerCanDelete || comment.viewerCanEdit) && (
           <CommentMenu
             comment={comment}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
           />
-        )}
+        )} */}
       </div>
 
       {isEditing ? (
