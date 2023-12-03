@@ -8,7 +8,7 @@ import { Counter } from '~/lib/actions'
 import { getPost, getPosts } from '~/lib/sanity/server'
 import { formatDate } from '~/lib/transformers'
 
-//export const revalidate = 3600
+export const revalidate = 3600
 
 export async function generateStaticParams() {
   const posts = await getPosts()

@@ -5,7 +5,7 @@ import { ListDetailView } from '~/components/Layouts'
 import { HiddenCounter } from '~/lib/actions'
 import { getCase, getCases } from '~/lib/sanity/server'
 
-//export const dynamic = 'force-static'
+export const revalidate = 3600
 
 export async function generateStaticParams() {
   const cases = await getCases()
