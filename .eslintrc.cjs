@@ -11,6 +11,7 @@ const config = {
     'src/components/Marquee/m.js',
     'public',
     'src/components/MDX/sugar.js',
+    'bla.js',
   ],
 
   root: true,

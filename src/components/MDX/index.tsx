@@ -6,6 +6,7 @@ import { CLIENT_URL } from '~/graphql/constants'
 import { slugify } from '~/lib/functions'
 
 import { YoutubeEmbed } from './Embed'
+import { GFY } from './gfy'
 import { highlight } from './sugar'
 
 export function CustomLink2(props) {
@@ -200,5 +201,6 @@ export const components = {
   ConsCard,
   YoutubeEmbed,
   code: Code,
+  GFY,
   Table,
 }

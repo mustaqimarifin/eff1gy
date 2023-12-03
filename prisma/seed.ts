@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client'
 
-import { genId } from '~/lib/nanoid'
 
 const prisma = new PrismaClient()
 

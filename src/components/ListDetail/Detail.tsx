@@ -54,7 +54,7 @@ const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
   return (
     <h1
       ref={ref}
-      className="text-primary font-sans text-2xl font-bold xl:text-3xl"
+      className="text-gray-600 dark:text-slate-50 text-3xl font-bold capitalize"
       {...props}
     />
   )

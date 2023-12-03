@@ -1,7 +1,8 @@
-import lqip, { type LqipResult } from 'lqip-modern'
 import path from 'path'
 import { cwd } from 'process'
 import { visit } from 'unist-util-visit'
+
+import lqip from './bla'
 
 export type PreviewImage = {
   width: number
@@ -32,7 +33,7 @@ function isImageNode(node: ImageNode) {
 }
 
 async function createPreviewImage(node: ImageNode) {
-  let result: LqipResult
+  let result
   const url = node.properties.src
   const ext_img = url.startsWith('http')
   const local_img = path.join(cwd(), './public', url)

@@ -27,7 +27,9 @@ export function Sidebar() {
           trailingAccessory={null}
           title="[Mustaqim Arifin]"
         />
+
         <SidebarNavigation />
+
         <UserFooter />
       </nav>
 

@@ -103,8 +103,10 @@ export function PostDetail({ children, post, slug }: Props) {
 
         <Detail.ContentContainer>
           <Detail.Header>
-            <div className="text-3xl font-bold capitalize text-black dark:text-white">
-              <PageTitle>{post.title}</PageTitle>
+            <div className="flex items-center space-x-6">
+              <div>
+                <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
+              </div>
             </div>
           </Detail.Header>
           {children}

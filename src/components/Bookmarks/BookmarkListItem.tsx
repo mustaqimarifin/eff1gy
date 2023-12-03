@@ -1,6 +1,6 @@
 import { Link2Icon } from 'lucide-react'
 import { memo, useState } from 'react'
-import ReactVisibilitySensor from 'react-visibility-sensor'
+import { InView } from 'react-intersection-observer'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 import { type BookmarkListItemFragment } from '~/graphql/typeSlut'
@@ -22,8 +22,8 @@ export const BookmarksListItem = memo<Props>(({ bookmark, active }) => {
   }
 
   return (
-    <ReactVisibilitySensor
-      partialVisibility
+    <InView
+      as="div"
       onChange={(visible: boolean) => !isVisible && setIsVisible(visible)}>
       <ListItem
         key={bookmark.id}
@@ -51,6 +51,6 @@ export const BookmarksListItem = memo<Props>(({ bookmark, active }) => {
         as={`/bookmarks/${bookmark.id}`}
         onClick={(e) => handleClick(e, bookmark)}
       />
-    </ReactVisibilitySensor>
+    </InView>
   )
 })

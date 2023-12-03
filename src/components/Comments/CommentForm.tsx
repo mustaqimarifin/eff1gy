@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 
 import { CommentButton } from '~/components/Button'
 import { Textarea } from '~/components/Input'
@@ -6,7 +6,6 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import type { CommentType, GetCommentsQuery } from '~/graphql/typeSlut'
 import { useAddCommentMutation, useViewerQuery } from '~/graphql/typeSlut'
 import { useDebounce } from '~/hooks'
-import { genId } from '~/lib/nanoid'
 import { realTime } from '~/lib/transformers'
 
 import { nuts } from '../Provider/Toaster'
@@ -18,6 +17,7 @@ interface Props {
 }
 
 export function CommentForm({ refId, type, openModal }: Props) {
+  const genId = () => useId()
   const { data } = useViewerQuery()
   const [text, setText] = useState('')
   const [error, setError] = useState(null)

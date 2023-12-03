@@ -1,4 +1,4 @@
-import withPlaiceholder from '@plaiceholder/next'
+//import withPlaiceholder from '@plaiceholder/next'
 
 const config = {
   eslint: {
@@ -38,4 +38,4 @@ const config = {
   },
 }
 
-export default withPlaiceholder(config)
+export default config

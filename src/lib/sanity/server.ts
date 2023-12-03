@@ -3,6 +3,7 @@ import { createClient } from 'next-sanity'
 
 import type { CaseStudy, Post } from '~/components/Posts/PostDetail'
 
+import { projectId, sanityConfig } from './config'
 import {
   caseQuery,
   casesQuery,
@@ -11,7 +12,6 @@ import {
   type Settings,
   settingsQuery,
 } from './queries'
-import { projectId, sanityConfig } from './config'
 
 const client = projectId ? createClient(sanityConfig) : null
 

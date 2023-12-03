@@ -244,11 +244,11 @@ export function SidebarNavigation() {
         return (
           <ul key={i} className="space-y-1">
             {section.label && (
-              <h4
+              <div
                 key={i}
                 className="px-2 pb-2 pt-5 text-xs font-semibold text-gray-1000 text-opacity-40 dark:text-white">
                 {section.label}
-              </h4>
+              </div>
             )}
             {section.items.map((item, j) => (
               <NavigationLink key={j} link={item} />
