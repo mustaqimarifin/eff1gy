@@ -29,7 +29,6 @@ const stellateKEY = process.env.STELLATE_KEY
 const cloudinaryURL = process.env.CLOUDINARY_URL
 const cloudinaryAPI = process.env.CLOUDINARY_API
 const cloudinaryKEY = process.env.CLOUDINARY_KEY
-
 const twitterID = process.env.TWITTER_ID
 const twitterKEY = process.env.TWITTER_SECRET
 const gitID = process.env.GITHUB_ID

@@ -91,7 +91,7 @@ async function main() {
         slug: 'multi-unfathomable',
       },
       {
-        title: 'the saus',
+        title: 'The Saus',
         slug: 'the-saus',
       },
       {

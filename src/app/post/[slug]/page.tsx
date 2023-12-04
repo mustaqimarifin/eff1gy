@@ -2,16 +2,20 @@ import { Suspense } from 'react'
 
 import Mdx from '~/app/mdxrsc'
 import { ListDetailView } from '~/components/Layouts'
+import type { Post } from '~/components/Posts/PostDetail'
 import { PostDetail } from '~/components/Posts/PostDetail'
 import { PostsList } from '~/components/Posts/PostsList'
 import { Counter } from '~/lib/actions'
-import { getPost, getPosts } from '~/lib/sanity/server'
+import { sanityFetch } from '~/lib/sanity/client'
+import { postQuery, postsQuery } from '~/lib/sanity/queries'
 import { formatDate } from '~/lib/transformers'
-
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const posts = await getPosts()
+  const posts = await sanityFetch<Post[]>({
+    query: postsQuery,
+    tags: ['posts'],
+  })
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -19,7 +23,11 @@ export async function generateStaticParams() {
 }
 
 export default async function Post({ params: { slug } }) {
-  const post = await getPost(slug)
+  const post = await sanityFetch<Post>({
+    query: postQuery,
+    params: { slug },
+    tags: ['post'],
+  })
 
   if (!post) {
     return { notFound: true }

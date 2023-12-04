@@ -1,10 +1,8 @@
-import Image from 'next/image'
-
-import avatar from '~/app/avatar2.webp'
-import { Intro } from '~/components/Home/Intro'
+import { Globe } from '~/components/Home/Globe'
+import Intro from '~/components/Home/Intro'
 import { Akhyla, Muse2 } from '~/components/Icon'
-import { Detail } from '~/components/ListDetail/Detail'
-export const dynamic = 'force-dynamic'
+
+export const dynamic = 'force-static'
 
 function SectionTitle(props) {
   return (
@@ -152,5 +150,106 @@ const speakingData = [
  */
 
 export default async function Home() {
-  return <Intro />
+  return (
+    <Intro>
+      <div className="my-8 mx-16 flex flex-col md:justify-items-center md:flex-row md:items-center">
+        <Globe />
+        <SectionTitle></SectionTitle>
+        <SectionContainer>
+          <SectionContent>
+            <div className="space-y-8 pb-24 md:space-y-16">
+              <div className=" w-full p-2 lg:max-w-3xl">
+                <h2 className="mb-6 pt-4 font-serif text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-4xl">
+                  Greetings! I'm a{' '}
+                  <span className="dark:text-active font-serif font-normal text-blue-400">
+                    regional marketing manager&nbsp;
+                  </span>
+                  at{` `}
+                  <Muse2 className="inline h-12 items-center dark:invert" />,{' '}
+                  <span>where we focus on&nbsp;</span>
+                  <span className="text-coyRed font-serif">
+                    large-scale sport & lifestyle events
+                  </span>
+                </h2>
+                <div className="drop-shadow-sm">
+                  <p className="dark:prose-invert prose max-w-none  py-4 md:prose-lg">
+                    In 2014, I founded{' '}
+                    <Akhyla className="mb-1 inline h-8 w-8 items-center text-red-400" />{' '}
+                    Akhyla - which was merely my own indie label for my own
+                    music but ended up becoming a platform to electronic
+                    musicians to learn, collaborate and make records. And in
+                    between that time I served as
+                    <span className="dark:text-active font-serif font-normal text-orange-400 hover:text-sky-400">
+                      {' '}
+                      &nbsp;Principal Foley Artist
+                    </span>
+                    &nbsp;for Infinity Games. More to come as I finally catalog
+                    my life and adventures as a "forever-noob" web developer
+                    too.
+                  </p>
+                  {/*                <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
+      More to come as I finally catalog my life!
+    </p> */}
+                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
+                    Thanks for stopping by!{' '}
+                  </p>
+                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
+                    Mustaqim Arifin{' '}
+                  </p>
+                </div>
+
+                {/* <Image
+alt="Mustaqim Arifin"
+src="/vmp-banner.webp"
+width={512}
+height={512}
+sizes="100vw"
+style={{
+width: '100%',
+height: 'auto',
+}}
+priority
+className="transition-colors duration-200 border-4 border-orange-400 rounded-full dark:invert"
+/> */}
+              </div>
+
+              {/*
+
+  <SectionContainer>
+     <SectionTitle>Speaking</SectionTitle>
+     <SectionContent>
+<div className="flex flex-col space-y-3">
+{speakingData.map((s) => (
+<TableRow
+  href={s.href}
+  title={s.title}
+  date={s.date}
+  key={s.href}
+/>
+))}
+</div>
+</SectionContent>
+  </SectionContainer> */}
+            </div>
+          </SectionContent>
+        </SectionContainer>
+        {/*         <SectionContainer>
+      <SectionTitle>Work</SectionTitle>
+      <SectionContent>
+        <div className="flex flex-col space-y-3">
+          {workHistory.map((job) => (
+            <TableRow
+              href={job.href}
+              title={job.title}
+              subtitle={job.subtitle}
+              date={job.date}
+              key={job.href}
+            />
+          ))}
+        </div>
+      </SectionContent>
+    </SectionContainer> */}
+      </div>
+    </Intro>
+  )
 }

@@ -1,24 +1,24 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import linkifyRegex from 'remark-linkify-regex'
 
+//import linkifyRegex from 'remark-linkify-regex'
 import { components } from '~/components/MDX'
 import meta2 from '~/components/MDX/Meta2'
 
 export default async function Mdx(props) {
   return (
-    <article className="prose prose-neutral dark:prose-invert">
+    <div className="prose prose-neutral dark:prose-invert">
       <MDXRemote
         {...props}
         options={{
           mdxOptions: {
-            useDynamicImport: true,
-            remarkPlugins: [linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)],
+            //useDynamicImport: true,
+            remarkPlugins: [],
             rehypePlugins: [meta2],
             format: 'mdx',
           },
         }}
         components={{ ...components }}
       />
-    </article>
+    </div>
   )
 }

@@ -25,11 +25,6 @@ const config = {
         hostname: 'avatars.githubusercontent.com',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'm.media-amazon.com',
-        pathname: '/**',
-      },
     ],
     dangerouslyAllowSVG: true,
   },

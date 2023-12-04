@@ -2,13 +2,18 @@ import Mdx from '~/app/mdxrsc'
 import { CaseDetail } from '~/components/Case/CaseDetail'
 import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
+import type { CaseStudy } from '~/components/Posts/PostDetail'
 import { HiddenCounter } from '~/lib/actions'
-import { getCase, getCases } from '~/lib/sanity/server'
+import { sanityFetch } from '~/lib/sanity/client'
+import { caseQuery, casesQuery } from '~/lib/sanity/queries'
 
-export const revalidate = 3600
+//export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const cases = await getCases()
+  const cases = await sanityFetch<CaseStudy[]>({
+    query: casesQuery,
+    tags: ['cases'],
+  })
 
   return cases.map((post) => ({
     slug: post.slug,
@@ -16,7 +21,11 @@ export async function generateStaticParams() {
 }
 
 export default async function CaseStudy({ params: { slug } }) {
-  const casestudy = await getCase(slug)
+  const casestudy = await sanityFetch<CaseStudy>({
+    query: caseQuery,
+    params: { slug },
+    tags: ['case'],
+  })
 
   if (!casestudy) {
     return { notFound: true }
