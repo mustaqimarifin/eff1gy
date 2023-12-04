@@ -1,10 +1,7 @@
-//import withPlaiceholder from '@plaiceholder/next'
-
 const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-
   transpilePackages: ['react-tweet'],
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -15,8 +12,8 @@ const config = {
       { protocol: 'https', hostname: 'i.scdn.co', pathname: '/**' },
       {
         protocol: 'https',
-        hostname: 'ik.imagekit.io/mstqmarfn',
-        pathname: '/**',
+        hostname: 'ik.imagekit.io',
+        pathname: '/mstqmarfn/**',
       },
       {
         protocol: 'https',
@@ -37,5 +34,4 @@ const config = {
     dangerouslyAllowSVG: true,
   },
 }
-
 export default config

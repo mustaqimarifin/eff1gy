@@ -7,7 +7,7 @@ export default function CoverImage({ src }) {
   const [isLoading, setLoading] = useState(true)
 
   return (
-    <div className="mb-6  max-w-3xl content-center justify-center overflow-hidden md:rounded-lg   ">
+    <div className="mb-6 max-w-3xl content-center justify-center overflow-hidden md:rounded-lg">
       <Image
         src={src}
         alt={''}

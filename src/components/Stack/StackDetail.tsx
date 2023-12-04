@@ -1,6 +1,7 @@
 'use client'
 
 import { Link2Icon } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 
@@ -11,7 +12,6 @@ import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
 import { CommentType } from '~/graphql/typeSlut'
 
-import { IKImage } from '../Image'
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { SignInDialog } from '../SignInDialog'
 import { StackActions } from './StackActions'
@@ -45,10 +45,10 @@ export function StackDetail({ children, stack }) {
             <div className="flex items-center space-x-6">
               <Link href={stack.url} passHref className="inline-block">
                 <div className="w-12 h-12">
-                  <IKImage
+                  <Image
                     priority
                     //src={`/static/img/stack/${stack.image}`}
-                    src={stack.image}
+                    src={`https://ik.imagekit.io/mstqmarfn/stack/${stack.image}`}
                     width={60}
                     height={60}
                     alt={`${stack.name} icon`}
