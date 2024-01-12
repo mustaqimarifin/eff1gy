@@ -12,7 +12,7 @@ import { caseQuery, casesQuery } from '~/lib/sanity/queries'
 export async function generateStaticParams() {
   const cases = await sanityFetch<CaseStudy[]>({
     query: casesQuery,
-    tags: ['cases'],
+    tags: ['case-study'],
   })
 
   return cases.map((post) => ({
@@ -24,7 +24,7 @@ export default async function CaseStudy({ params: { slug } }) {
   const casestudy = await sanityFetch<CaseStudy>({
     query: caseQuery,
     params: { slug },
-    tags: ['case'],
+    tags: ['case-study'],
   })
 
   if (!casestudy) {

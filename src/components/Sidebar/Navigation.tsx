@@ -171,7 +171,15 @@ export function SidebarNavigation() {
           isExternal: false,
         },
 
- */
+ */ {
+          href: '/events',
+          label: 'Events',
+          icon: CaseIcon,
+          trailingAccessory: null,
+          isActive: path.indexOf('/events') >= 0,
+          trailingAction: null,
+          isExternal: false,
+        },
         {
           href: '/casestudy',
           label: 'Case Studies',

@@ -9,12 +9,12 @@ import { Counter } from '~/lib/actions'
 import { sanityFetch } from '~/lib/sanity/client'
 import { postQuery, postsQuery } from '~/lib/sanity/queries'
 import { formatDate } from '~/lib/transformers'
-export const revalidate = 3600
-
+export const revalidate = 0
+//xport const dynamic = 'force-dynamic'
 export async function generateStaticParams() {
   const posts = await sanityFetch<Post[]>({
     query: postsQuery,
-    tags: ['posts'],
+    tags: ['post'],
   })
 
   return posts.map((post) => ({
@@ -49,14 +49,12 @@ export default async function Post({ params: { slug } }) {
             <div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
               {formatDate(post?.date)}
               {` • `}
-              <Counter id={post.slug} />
+              <Counter id={post?.slug} />
               {` • `}
               {tags}
             </div>
           </div>
-          <Suspense>
-            <Mdx source={post?.content} />
-          </Suspense>
+          <Mdx source={post?.content} />
         </PostDetail>
       }
     />

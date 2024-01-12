@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const posts = await sanityFetch<Post[]>({
       query: postsQuery,
-      tags: ['posts'],
+      tags: ['post'],
     })
     return Response.json(posts)
   } catch (e) {

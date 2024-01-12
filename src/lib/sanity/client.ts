@@ -10,6 +10,7 @@ const client = createClient({
   dataset,
   apiVersion,
   useCdn: false,
+  studioUrl: 'https://studio-olive.vercel.app',
 })
 
 /* const query = encodeURI(

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const cases = await sanityFetch<CaseStudy[]>({
       query: casesQuery,
-      tags: ['cases'],
+      tags: ['case-study'],
     })
 
     return Response.json(cases)
