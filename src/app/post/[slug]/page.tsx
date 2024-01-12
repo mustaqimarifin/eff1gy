@@ -54,7 +54,10 @@ export default async function Post({ params: { slug } }) {
               {tags}
             </div>
           </div>
-          <Mdx source={post?.content} />
+          <Suspense>
+            {' '}
+            <Mdx source={post?.content} />
+          </Suspense>
         </PostDetail>
       }
     />

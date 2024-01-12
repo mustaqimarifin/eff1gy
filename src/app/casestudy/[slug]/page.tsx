@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import Mdx from '~/app/mdxrsc'
 import { CaseDetail } from '~/components/Case/CaseDetail'
 import { CaseList } from '~/components/Case/CaseList'
@@ -38,7 +40,10 @@ export default async function CaseStudy({ params: { slug } }) {
       detail={
         <CaseDetail casestudy={casestudy}>
           <HiddenCounter id={casestudy?.slug} />
-          <Mdx source={casestudy?.content} />
+          <Suspense>
+            {' '}
+            <Mdx source={casestudy?.content} />
+          </Suspense>
         </CaseDetail>
       }
     />
