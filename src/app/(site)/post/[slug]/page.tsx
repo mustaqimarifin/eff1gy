@@ -8,8 +8,10 @@ import { PostsList } from '~/components/Posts/PostsList'
 import { ViewType } from '~/graphql/typeSlut'
 import { Counter, HiddenCounter } from '~/lib/actions'
 import { getAllPosts, getPost } from '~/lib/sanity/client'
-//export const revalidate = 10
 //xport const dynamic = 'force-dynamic'
+
+export const revalidate = 3600
+
 export async function generateStaticParams() {
   const posts = await getAllPosts()
 

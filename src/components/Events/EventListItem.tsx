@@ -13,8 +13,7 @@ export const EventListItem = React.memo<Props>(({ summary, active }) => {
   return (
     <ListItem
       key={summary.slug}
-      href="/events/[slug]"
-      as={`/events/${summary.slug}`}
+      href={`/events/${summary.slug}`}
       title={summary.title}
       description={null}
       leadingAccessory={

@@ -146,7 +146,7 @@ export default function AudioRecorder({
         console.log(`Recording with mimeType: ${mr.mimeType}`)
         setMediaRecorder(mr)
       } catch (e) {
-        console.log(e)
+        // console.log(e)
       }
     }
 

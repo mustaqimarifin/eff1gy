@@ -19,7 +19,7 @@ export function CaseDetail({ casestudy, children }: Props) {
   const scrollContainerRef = useRef(null)
   const titleRef = useRef(null)
 
-  const date = realTime({ timestamp: casestudy.date })
+  const date = realTime({ timestamp: casestudy?.date })
 
   return (
     <Detail.Container data-cy="app-detail" ref={scrollContainerRef}>
@@ -28,7 +28,7 @@ export function CaseDetail({ casestudy, children }: Props) {
         globalMenu={false}
         backButtonHref={'/casestudy'}
         magicTitle
-        title={casestudy.title}
+        title={casestudy?.title}
         titleRef={titleRef}
         scrollContainerRef={scrollContainerRef}
       />
@@ -37,14 +37,14 @@ export function CaseDetail({ casestudy, children }: Props) {
         <Detail.Header>
           <div className="flex items-center space-x-6">
             <Image
-              src={casestudy.caption}
+              src={casestudy?.caption}
               width={80}
               height={80}
-              alt={`${casestudy.title} icon`}
+              alt={`${casestudy?.title} icon`}
               className={'rounded-2xl'}
             />
             <div>
-              <Detail.Title ref={titleRef}>{casestudy.title}</Detail.Title>
+              <Detail.Title ref={titleRef}>{casestudy?.title}</Detail.Title>
               <span
                 title={date.raw}
                 className="text-tertiary inline-block leading-snug">

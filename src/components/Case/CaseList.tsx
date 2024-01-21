@@ -42,7 +42,7 @@ export const CaseList = () => {
             const active = path === casestudy.slug
             return (
               <CaseListItem
-                key={casestudy.slug}
+                key={casestudy?.slug}
                 casestudy={casestudy}
                 active={active}
               />

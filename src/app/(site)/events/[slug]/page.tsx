@@ -8,7 +8,7 @@ import allEvents from '~/data/events'
 import { ViewType } from '~/graphql/typeSlut'
 import { HiddenCounter } from '~/lib/actions'
 
-//export const revalidate = 3600
+export const dynamic = 'force-static'
 interface Props {
   post: EventDetailsPost
 }
@@ -75,7 +75,11 @@ export default async function Events({ params: { slug } }) {
                   <div className="flex items-center justify-center p-2 mt-8 mb-4 -mx-4 bg-gray-100 rounded-none dark:bg-gray-900 md:-mx-8 md:p-4 xl:rounded-md ">
                     {detail.gallery.map((src) => (
                       <div className="aspect-square relative" key={src}>
-                        <Image fill src={src} alt="drawing"></Image>
+                        <Image
+                          width={500}
+                          height={500}
+                          src={src}
+                          alt="drawing"></Image>
                       </div>
                     ))}
                   </div>

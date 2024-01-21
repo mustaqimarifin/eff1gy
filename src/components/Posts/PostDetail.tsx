@@ -94,7 +94,7 @@ export function PostDetail({ children, post, slug }: Props) {
           globalMenu={false}
           backButtonHref={'/post'}
           magicTitle
-          title={blog?.title}
+          title={post?.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
           trailingAccessory={null}
@@ -104,7 +104,7 @@ export function PostDetail({ children, post, slug }: Props) {
           <Detail.Header>
             <div className="flex items-center space-x-6">
               <div>
-                <Detail.Title ref={titleRef}>{blog?.title}</Detail.Title>
+                <Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
               </div>
             </div>
           </Detail.Header>

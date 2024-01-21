@@ -3,7 +3,7 @@ import { CassetteTape, ListMusicIcon, Plus } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import useSWR from 'swr'
 
-import type { TrackType } from '~/app/(misc)/dash/Track'
+import type { TrackType } from '~/app/(site)/dash/Track'
 import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
 import { GhostButton } from '~/components/Button'
 import {

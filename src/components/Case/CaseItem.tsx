@@ -15,18 +15,18 @@ interface Props {
 export const CaseListItem = memo<Props>(({ casestudy, active }) => {
   return (
     <ListItem
-      key={casestudy.slug}
+      key={casestudy?.slug}
       href="/casestudy/[slug]"
-      as={`/casestudy/${casestudy.slug}`}
+      as={`/casestudy/${casestudy?.slug}`}
       title={casestudy.title}
       description={null}
       leadingAccessory={
         <Image
           width={48}
           height={48}
-          alt={casestudy.title}
+          alt={casestudy?.title}
           className="rounded-xl"
-          src={casestudy.caption}
+          src={casestudy?.caption}
         />
       }
       //byline={`${casestudy.detailsCount} details`}

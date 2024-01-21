@@ -20,9 +20,9 @@ export function EventDetailMedia(props: Props) {
       as="div"
       onChange={(visible: boolean) => !isVisible && setIsVisible(visible)}>
       <div className="flex flex-col">
-        <h2 className="mb-4 text-lg font-bold text-primary">{detail.title}</h2>
+        <h2 className="mb-4 text-lg font-bold text-primary">{detail?.title}</h2>
         <div className="prose">
-          <MarkdownRenderer>{detail.description}</MarkdownRenderer>
+          <MarkdownRenderer>{detail?.description}</MarkdownRenderer>
         </div>
 
         {isVisible && detail.media && (

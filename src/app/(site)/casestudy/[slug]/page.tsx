@@ -9,7 +9,7 @@ import { ViewType } from '~/graphql/typeSlut'
 import { HiddenCounter } from '~/lib/actions'
 import { getAllCases, getCase } from '~/lib/sanity/client'
 
-//export const revalidate = 3600
+export const revalidate = 3600
 
 export async function generateStaticParams() {
   const cases = await getAllCases()
