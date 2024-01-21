@@ -24,6 +24,16 @@ export const TOGGLE_REACTION = gql`
         reactionCount
         viewerHasReacted
       }
+      ... on Event {
+        id
+        reactionCount
+        viewerHasReacted
+      }
+      ... on Case {
+        id
+        reactionCount
+        viewerHasReacted
+      }
     }
   }
 `

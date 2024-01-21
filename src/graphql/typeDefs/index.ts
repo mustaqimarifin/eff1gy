@@ -266,7 +266,7 @@ export default gql`
     waveform: JSON
   }
 
-  union Reactable = Bookmark | Question | Stack | Blog
+  union Reactable = Bookmark | Question | Stack | Blog | Event | Case
   union Viewable = Bookmark | Question | Stack | Blog | Event | Case
 
   type Mutation {

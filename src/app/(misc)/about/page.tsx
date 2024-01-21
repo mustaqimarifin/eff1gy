@@ -1,4 +1,4 @@
-import Home from '../../../page'
+import Home from '~/app/page'
 
 export const dynamic = 'force-static'
 

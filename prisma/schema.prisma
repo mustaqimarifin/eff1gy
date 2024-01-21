@@ -10,7 +10,8 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(dbgenerated("nanoid()"))
+  //id                String  @id @default(dbgenerated("nanoid()"))
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -38,8 +39,8 @@ model Session {
 }
 
 model User {
-  id String @id @default(dbgenerated("nanoid()"))
-
+  //id                String  @id @default(dbgenerated("nanoid()"))
+  id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   name          String
   image         String?
@@ -70,8 +71,8 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id String @id @default(dbgenerated("nanoid()"))
-
+  //id                String  @id @default(dbgenerated("nanoid()"))
+  id            String     @id @default(cuid())
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   url           String?    @unique
@@ -96,7 +97,8 @@ enum Status {
 }
 
 model Question {
-  id          String     @id @default(dbgenerated("nanoid()"))
+  //id                String  @id @default(dbgenerated("nanoid()"))
+  id          String     @id @default(cuid())
   status      Status     @default(PENDING)
   hearts      Int?       @default(0)
   createdAt   DateTime   @default(now())
@@ -117,8 +119,8 @@ model Question {
 }
 
 model Comment {
-  id String @id @default(dbgenerated("nanoid()"))
-
+  //id                String  @id @default(dbgenerated("nanoid()"))
+  id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
@@ -135,24 +137,24 @@ model Comment {
   question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId   String?
-  events   Event?    @relation(fields: [eventId], references: [id])
-  eventId  String?
-  cases    Case?     @relation(fields: [caseId], references: [id])
-  caseId   String?
+  blog     Blog?     @relation(fields: [slug], references: [slug])
+
+  event   Event?  @relation(fields: [eventId], references: [id])
+  eventId String?
+  case    Case?   @relation(fields: [caseId], references: [id])
+  caseId  String?
 
   @@index([bookmarkId])
   @@index([questionId])
-  @@index([blogId])
+  @@index([slug])
   @@index([stackId])
   @@index([userId])
   @@index([eventId])
 }
 
 model Blog {
-  id        String     @id @default(dbgenerated("nanoid()"))
-  slug      String     @unique
+  id        String     @id @default(cuid())
+  slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
   comments  Comment[]
@@ -183,7 +185,7 @@ model Tag {
 }
 
 model Stack {
-  id          String     @id @default(dbgenerated("nanoid()"))
+  id          String     @id @default(cuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String?
@@ -199,7 +201,7 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("nanoid()"))
+  id String @id @default(cuid())
 
   createdAt  DateTime  @default(now())
   userId     String?
@@ -212,12 +214,12 @@ model Reaction {
   question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [blogId], references: [id])
-  blogId   String?
+  blog     Blog?     @relation(fields: [slug], references: [slug])
+  slug     String?
 
   @@index([bookmarkId])
   @@index([questionId])
-  @@index([blogId])
+  @@index([slug])
   @@index([stackId])
   @@index([userId])
 }

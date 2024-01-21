@@ -8,7 +8,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- allowing for customization to meet specific needs.
 DROP FUNCTION IF EXISTS nanoid(int, text, float);
 CREATE OR REPLACE FUNCTION nanoid(
-    size int DEFAULT 6, -- The number of symbols in the NanoId String. Must be greater than 0.
+    size int DEFAULT 5, -- The number of symbols in the NanoId String. Must be greater than 0.
     alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- The symbols used in the NanoId String. Must contain between 1 and 255 symbols.
     additionalBytesFactor float DEFAULT 1.6 -- The additional bytes factor used for calculating the step size. Must be equal or greater then 1.
 )
