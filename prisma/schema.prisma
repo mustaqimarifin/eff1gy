@@ -89,6 +89,7 @@ model Bookmark {
   count         Int        @default(1)
 
   @@index([host])
+  @@index([id, count])
 }
 
 enum Status {
@@ -116,6 +117,7 @@ model Question {
   count       Int        @default(1)
 
   @@index([userId, status])
+  @@index([id, count])
 }
 
 model Comment {
@@ -128,7 +130,6 @@ model Comment {
   bookmarkId String?
   questionId String?
   stackId    String?
-  slug       String?
   parentId   String?
   parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   replies    Comment[] @relation("ParentChild")
@@ -138,6 +139,7 @@ model Comment {
   stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog     Blog?     @relation(fields: [slug], references: [slug])
+  slug     String?
 
   event   Event?  @relation(fields: [eventId], references: [id])
   eventId String?
@@ -150,6 +152,7 @@ model Comment {
   @@index([stackId])
   @@index([userId])
   @@index([eventId])
+  @@index([caseId])
 }
 
 model Blog {
@@ -163,19 +166,21 @@ model Blog {
   userId    String?
   count     Int        @default(1)
 
-  @@index([slug])
+  @@index([slug, count])
 }
 
 model Event {
-  id       String    @id
-  count    Int       @default(1)
-  comments Comment[]
+  id        String     @id
+  count     Int        @default(1)
+  comments  Comment[]
+  reactions Reaction[]
 }
 
 model Case {
-  id      String    @id
-  count   Int       @default(1)
-  Comment Comment[]
+  id        String     @id
+  count     Int        @default(1)
+  comments  Comment[]
+  reactions Reaction[]
 }
 
 model Tag {
@@ -198,6 +203,8 @@ model Stack {
   tags        Tag[]      @relation("StackToTag")
   users       User[]     @relation("StackToUser")
   count       Int        @default(1)
+
+  @@index([slug, count])
 }
 
 model Reaction {
@@ -216,6 +223,11 @@ model Reaction {
   user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   blog     Blog?     @relation(fields: [slug], references: [slug])
   slug     String?
+
+  event   Event?  @relation(fields: [eventId], references: [id])
+  eventId String?
+  case    Case?   @relation(fields: [caseId], references: [id])
+  caseId  String?
 
   @@index([bookmarkId])
   @@index([questionId])

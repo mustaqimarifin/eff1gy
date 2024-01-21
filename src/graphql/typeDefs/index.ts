@@ -28,10 +28,14 @@ export default gql`
   type Event {
     id: ID!
     count: Int
+    reactionCount: Int
+    viewerHasReacted: Boolean
   }
   type Case {
     id: ID!
     count: Int
+    reactionCount: Int
+    viewerHasReacted: Boolean
   }
   type Bookmark {
     id: ID!
@@ -78,6 +82,8 @@ export default gql`
     QUESTION
     STACK
     BLOG
+    EVENT
+    CASE
   }
   enum ViewType {
     BOOKMARK
@@ -93,6 +99,8 @@ export default gql`
     QUESTION
     STACK
     BLOG
+    EVENT
+    CASE
   }
 
   type Tag @cacheControl(maxAge: 3600) {
