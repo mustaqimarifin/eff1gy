@@ -5,7 +5,7 @@ interface Props {
   title: string
   active: boolean
   href: string
-  as: string
+  as?: string
   description?: string | ReactElement
   byline?: string | ReactElement
   leadingAccessory?: ReactElement

@@ -17,7 +17,7 @@ export default async function Mdx(props) {
             format: 'mdx',
           },
         }}
-        components={{ ...components }}
+        components={{ ...components, ...(props.components || {}) }}
       />
     </div>
   )

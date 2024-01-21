@@ -5,29 +5,22 @@ import { CaseDetail } from '~/components/Case/CaseDetail'
 import { CaseList } from '~/components/Case/CaseList'
 import { ListDetailView } from '~/components/Layouts'
 import type { CaseStudy } from '~/components/Posts/PostDetail'
+import { ViewType } from '~/graphql/typeSlut'
 import { HiddenCounter } from '~/lib/actions'
-import { sanityFetch } from '~/lib/sanity/client'
-import { caseQuery, casesQuery } from '~/lib/sanity/queries'
+import { getAllCases, getCase } from '~/lib/sanity/client'
 
 //export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const cases = await sanityFetch<CaseStudy[]>({
-    query: casesQuery,
-    tags: ['case-study'],
-  })
+  const cases = await getAllCases()
 
   return cases.map((post) => ({
     slug: post.slug,
   }))
 }
 
-export default async function CaseStudy({ params: { slug } }) {
-  const casestudy = await sanityFetch<CaseStudy>({
-    query: caseQuery,
-    params: { slug },
-    tags: ['case-study'],
-  })
+export default async function CaseStudyPage({ params: { slug } }) {
+  const casestudy: CaseStudy = await getCase(slug)
 
   if (!casestudy) {
     return { notFound: true }
@@ -39,7 +32,7 @@ export default async function CaseStudy({ params: { slug } }) {
       hasDetail
       detail={
         <CaseDetail casestudy={casestudy}>
-          <HiddenCounter id={casestudy?.slug} />
+          <HiddenCounter refId={casestudy?.slug} type={ViewType.Case} />
           <Suspense>
             {' '}
             <Mdx source={casestudy?.content} />

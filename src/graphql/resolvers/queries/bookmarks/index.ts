@@ -49,6 +49,7 @@ export async function getBookmarks(
 
   try {
     const edges = await prisma.bookmark.findMany({
+      relationLoadStrategy: 'join',
       take,
       skip,
       cursor,

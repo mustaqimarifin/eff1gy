@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import Button from '../../../components/Button'
-import { ExternalLinkIcon, YouTubeIcon } from '../../../components/Icon'
+import Button from '~/components/Button'
+import { ExternalLinkIcon } from '~/components/Icon'
 
 type TestimonialProps = {
   avatarSrc: string

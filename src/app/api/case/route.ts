@@ -1,15 +1,10 @@
-import type { CaseStudy } from '~/components/Posts/PostDetail'
-import { sanityFetch } from '~/lib/sanity/client'
-import { casesQuery } from '~/lib/sanity/queries'
+import { getAllCases } from '~/lib/sanity/client'
 
 export async function GET() {
   try {
-    const cases = await sanityFetch<CaseStudy[]>({
-      query: casesQuery,
-      tags: ['case-study'],
-    })
+    const posts = await getAllCases()
 
-    return Response.json(cases)
+    return Response.json(posts)
   } catch (e) {
     console.log(`${e}`)
     return new Response(`Failed to get posts`, {

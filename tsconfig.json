@@ -18,7 +18,7 @@
     "paths": { "~/*": ["./src/*"] },
     "incremental": true,
     "plugins": [{ "name": "next" }],
-    "strictNullChecks": false
+    "strictNullChecks": false,
   },
   "exclude": ["node_modules"],
   "include": [
@@ -32,6 +32,6 @@
     "src/lib/transformers/merge.js",
     "src/components/MDX/Lite.tsx",
     "src/components/Marquee/index.mjs",
-    "src/components/MDX/bla.ts"
-  ]
+    "src/components/MDX/bla.ts",
+  ],
 }

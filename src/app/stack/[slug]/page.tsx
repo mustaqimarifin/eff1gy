@@ -7,7 +7,7 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_STACK, GET_STACKS } from '~/graphql/queries/stack'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import type { GetStackQuery } from '~/graphql/typeSlut'
-import { CommentType } from '~/graphql/typeSlut'
+import { CommentType, ViewType } from '~/graphql/typeSlut'
 import { HiddenCounter } from '~/lib/actions'
 
 //export const dynamic = 'force-static'
@@ -50,7 +50,7 @@ export default async function StackPage({ params: { slug } }) {
       hasDetail
       detail={
         <StackDetail stack={stack}>
-          <HiddenCounter id={slug} />
+          <HiddenCounter refId={slug} type={ViewType.Stack} />
         </StackDetail>
       }
     />

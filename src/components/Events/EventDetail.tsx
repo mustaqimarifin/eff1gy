@@ -5,10 +5,7 @@ import * as React from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { MarkdownRenderer } from '~/components/MarkdownRenderer'
 import type { EventDetailsPost } from '~/data/events'
-
-import { EventDetailMedia } from './DetailMedia'
 
 interface Props {
   post: EventDetailsPost
@@ -45,23 +42,14 @@ export function EventDetail({ post, children }: Props) {
             <div>
               <Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
               <span
-                title={post.date}
+                title={post?.date}
                 className="text-tertiary inline-block leading-snug">
                 {post?.date}
               </span>
             </div>
           </div>
+          {children}
         </Detail.Header>
-
-        <div className="space-y-12">
-          <div className="prose pt-12">
-            <MarkdownRenderer children={post?.description} />
-          </div>
-
-          {post?.details.map((detail, i) => (
-            <EventDetailMedia detail={detail} key={`${detail?.title}-${i}`} />
-          ))}
-        </div>
       </Detail.ContentContainer>
     </Detail.Container>
   )

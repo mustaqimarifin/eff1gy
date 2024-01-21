@@ -10,7 +10,7 @@ import { GET_COMMENTS } from '~/graphql/queries/comments'
 import { GET_TAGS } from '~/graphql/queries/tags'
 import { GET_VIEWER } from '~/graphql/queries/viewer'
 import type { GetBookmarkQuery } from '~/graphql/typeSlut'
-import { CommentType } from '~/graphql/typeSlut'
+import { CommentType, ViewType } from '~/graphql/typeSlut'
 import { HiddenCounter } from '~/lib/actions'
 
 //export const dynamic = 'force-dynamic'
@@ -45,7 +45,7 @@ export default async function BookmarkPage({ params: { id } }) {
       detail={
         <Suspense fallback={<LoadingSpinner />}>
           <BookmarkDetail id={id}>
-            <HiddenCounter id={id} />
+            <HiddenCounter refId={id} type={ViewType.Bookmark} />
           </BookmarkDetail>
         </Suspense>
       }

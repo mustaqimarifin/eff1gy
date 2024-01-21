@@ -29,6 +29,7 @@ export async function getStacks(
 
   try {
     const edges = await prisma.stack.findMany({
+      relationLoadStrategy: 'join',
       take,
       skip,
       cursor,

@@ -1,4 +1,9 @@
 const config = {
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

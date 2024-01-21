@@ -1,7 +1,9 @@
 'use server'
-import { EyeIcon } from 'lucide-react'
 import { unstable_noStore as noStore } from 'next/cache'
 import { Suspense } from 'react'
+
+import { CLIENT_URL } from '~/graphql/constants'
+import { ViewType } from '~/graphql/typeSlut'
 
 import { prisma } from '../prisma'
 /* 
@@ -19,7 +21,108 @@ const yt = youtube({
 })
  */
 
-export const addView = async (id) => {
+export async function addView(refId, type) {
+  if (!refId || !type) {
+    return []
+  }
+
+  switch (type) {
+    case ViewType.Event: {
+      const results = await prisma.event.upsert({
+        where: { id: refId },
+        create: {
+          id: refId,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      })
+
+      return results || []
+    }
+    case ViewType.Case: {
+      const results = await prisma.case.upsert({
+        where: { id: refId },
+        create: {
+          id: refId,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      })
+
+      return results || []
+    }
+    case ViewType.Bookmark: {
+      const results = await prisma.bookmark.upsert({
+        where: { id: refId },
+        create: {
+          id: refId,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      })
+
+      return results || []
+    }
+    case ViewType.Blog: {
+      const results = await prisma.blog.upsert({
+        where: { slug: refId },
+        create: {
+          slug: refId,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      })
+
+      return results || []
+    }
+    case ViewType.Question: {
+      const results = await prisma.question.upsert({
+        where: { id: refId },
+        create: {
+          id: refId,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      })
+
+      return results || []
+    }
+    case ViewType.Stack: {
+      const results = await prisma.stack.upsert({
+        where: { id: refId },
+        create: {
+          id: refId,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      })
+
+      return results || []
+    }
+    default: {
+      return []
+    }
+  }
+}
+/* export const addView = async (id) => {
   noStore()
   const total = await prisma.pageView.upsert({
     where: { id },
@@ -43,23 +146,39 @@ export const addView = async (id) => {
       },
     })
 }
-
-export async function Counter({ id }) {
-  const views = await addView(id)
-  const counter = `${views.counter}`
-  return `${counter} V`
-}
-
-export async function HiddenCounter({ id }) {
-  const views = await addView(id)
+ */
+export async function Counter({
+  refId,
+  type,
+}: {
+  refId: string
+  type: ViewType
+}) {
+  const views = await addView(refId, type)
+  const counter = `${views}`
   return (
     <Suspense>
-      <div className="hidden">{`${views.counter} - views`}</div>
+      <div>{`${counter} - views`}</div>
     </Suspense>
   )
 }
 
-export const getView = async (id) => {
+export async function HiddenCounter({
+  refId,
+  type,
+}: {
+  refId: string
+  type: ViewType
+}) {
+  const views = await addView(refId, type)
+  return (
+    <Suspense>
+      <div className="hidden">{`${views} - views`}</div>
+    </Suspense>
+  )
+}
+
+/* export const getView = async (id) => {
   noStore()
   const total = await prisma.pageView.findMany({
     where: {
@@ -70,7 +189,7 @@ export const getView = async (id) => {
     },
   })
   return total
-}
+} */
 /* export const getAkhylaYouTubeSubs = cache(
   async () => {
     const response = await yt.channels.list({

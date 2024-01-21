@@ -10,7 +10,11 @@ import { Comments } from '~/components/Comments'
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import { Tags } from '~/components/Tag'
-import { CommentType, useGetBookmarkQuery } from '~/graphql/typeSlut'
+import {
+  CommentType,
+  GetBookmarkQuery,
+  useGetBookmarkQuery,
+} from '~/graphql/typeSlut'
 
 import { MarkdownRenderer } from '../MarkdownRenderer'
 import { BookmarkActions } from './BookmarkActions'
@@ -79,7 +83,7 @@ export function BookmarkDetail({
                   height="16px"
                 />
               )}
-              <span>{bookmark.host}</span>
+              <span>{bookmark.count}</span>
             </Link>
             {children}
             {bookmark.description && (

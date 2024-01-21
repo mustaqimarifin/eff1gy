@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const q = await prisma.question.createMany({
+  /* const q = await prisma.question.createMany({
     data: [
       {
         title: 'What developer tools do you like?',
@@ -79,8 +79,8 @@ async function main() {
         ],
       },
     ],
-  })
-  const posts = await prisma.blog.createMany({
+  }) */
+  /*   const posts = await prisma.blog.createMany({
     data: [
       {
         title: 'VICE',
@@ -107,8 +107,8 @@ async function main() {
         slug: 'new-mdx',
       },
     ],
-  })
-  await prisma.tag.createMany({
+  }) */
+  const tags = await prisma.tag.createMany({
     data: [
       { name: 'lol' },
       { name: 'web' },
@@ -120,7 +120,7 @@ async function main() {
       { name: 'music' },
     ],
   })
-  console.log({ posts, q })
+  console.log({ tags })
 }
 main()
   .then(async () => {

@@ -17,7 +17,8 @@ export const PostsList = () => {
   const path = usePathname()
   const [scrollContainerRef, setScrollContainerRef] = useState(null)
   const { data: posts, isLoading } = useSWR<Post[]>(
-    CLIENT_URL + '/api/post',
+    CLIENT_URL + `/api/post`,
+    //`http://localhost:3000/api/post`,
     fetcher
   )
 
@@ -40,7 +41,7 @@ export const PostsList = () => {
           {posts &&
             posts
               ?.sort((a, b) => {
-                if (new Date(a.date) > new Date(b.date)) {
+                if (new Date(a?.date) > new Date(b?.date)) {
                   return -1
                 }
                 return 1
@@ -48,7 +49,7 @@ export const PostsList = () => {
               .map((post) => {
                 const active = path === post.slug
                 return (
-                  <PostListItem key={post.slug} post={post} active={active} />
+                  <PostListItem key={post?.slug} post={post} active={active} />
                 )
               })}
         </div>

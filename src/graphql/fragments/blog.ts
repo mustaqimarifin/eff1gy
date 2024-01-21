@@ -7,6 +7,7 @@ export const BlogCoreFragment = gql`
     title
     date
     slug
+    count
   }
 `
 
@@ -21,7 +22,6 @@ export const BlogDetailFragment = gql`
   fragment BlogDetail on Blog {
     ...BlogCore
     reactionCount
-
     viewerHasReacted
   }
   ${BlogCoreFragment}

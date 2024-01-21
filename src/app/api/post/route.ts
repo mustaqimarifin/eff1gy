@@ -1,13 +1,9 @@
-import type { Post } from '~/components/Posts/PostDetail'
-import { sanityFetch } from '~/lib/sanity/client'
-import { postsQuery } from '~/lib/sanity/queries'
+import { getAllPosts } from '~/lib/sanity/client'
 
 export async function GET() {
   try {
-    const posts = await sanityFetch<Post[]>({
-      query: postsQuery,
-      tags: ['post'],
-    })
+    const posts = await getAllPosts()
+
     return Response.json(posts)
   } catch (e) {
     console.log(`${e}`)

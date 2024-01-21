@@ -11,6 +11,7 @@ export const BookmarkCoreFragment = gql`
     title
     description
     faviconUrl
+    count
   }
 `
 

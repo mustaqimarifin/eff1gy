@@ -20,20 +20,30 @@ export default gql`
     title: String
     date: Date
     slug: String
+    count: Int
     reactionCount: Int
     viewerHasReacted: Boolean
   }
 
+  type Event {
+    id: ID!
+    count: Int
+  }
+  type Case {
+    id: ID!
+    count: Int
+  }
   type Bookmark {
     id: ID!
     createdAt: Date!
     updatedAt: Date!
-    url: String!
+    url: String
     host: String!
     title: String
     image: String
     faviconUrl: String
     description: String
+    count: Int
     tags: [Tag]!
     reactionCount: Int
     viewerHasReacted: Boolean
@@ -49,6 +59,7 @@ export default gql`
     waveform: JSON
     playCount: Int
     description: String
+    count: Int
     status: QuestionStatus
     viewerCanEdit: Boolean
     viewerCanComment: Boolean
@@ -67,6 +78,14 @@ export default gql`
     QUESTION
     STACK
     BLOG
+  }
+  enum ViewType {
+    BOOKMARK
+    QUESTION
+    STACK
+    BLOG
+    EVENT
+    CASE
   }
 
   enum ReactionType {
@@ -88,6 +107,7 @@ export default gql`
     description: String
     image: String
     url: String!
+    count: Int
     slug: String!
     tags: [Tag]!
     usedBy: [User]!
@@ -185,6 +205,10 @@ export default gql`
     comments(refId: ID!, type: CommentType!): [Comment]!
     blogs: [Blog]!
     blog(slug: String!): Blog
+    events: [Event]!
+    event(id: ID!): Event
+    cases: [Case]!
+    case(id: ID!): Case
     question(id: ID!): Question
     questions(
       first: Int
@@ -243,6 +267,7 @@ export default gql`
   }
 
   union Reactable = Bookmark | Question | Stack | Blog
+  union Viewable = Bookmark | Question | Stack | Blog | Event | Case
 
   type Mutation {
     addBookmark(data: AddBookmarkInput!): Bookmark
@@ -267,5 +292,6 @@ export default gql`
     editUser(data: EditUserInput): User
     deleteUser: Boolean
     toggleReaction(refId: ID!, type: ReactionType!): Reactable
+    addView(refId: ID!, type: ViewType!): Viewable
   }
 `

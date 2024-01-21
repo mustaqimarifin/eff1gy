@@ -8,10 +8,8 @@ export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
   const { prisma, viewer } = ctx
 
   return await prisma.blog.findMany({
+    relationLoadStrategy: 'join',
     orderBy: { date: 'desc' },
-    where: {
-      date: viewer?.isAdmin ? { equals: null } : { not: null },
-    },
     include: {
       _count: {
         select: {

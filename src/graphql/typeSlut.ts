@@ -60,6 +60,7 @@ export type AddStackInput = {
 
 export type Blog = {
   __typename?: 'Blog'
+  count?: Maybe<Scalars['Int']['output']>
   date?: Maybe<Scalars['Date']['output']>
   id: Scalars['ID']['output']
   reactionCount?: Maybe<Scalars['Int']['output']>
@@ -70,6 +71,7 @@ export type Blog = {
 
 export type Bookmark = {
   __typename?: 'Bookmark'
+  count?: Maybe<Scalars['Int']['output']>
   createdAt: Scalars['Date']['output']
   description?: Maybe<Scalars['String']['output']>
   faviconUrl?: Maybe<Scalars['String']['output']>
@@ -80,7 +82,7 @@ export type Bookmark = {
   tags: Array<Maybe<Tag>>
   title?: Maybe<Scalars['String']['output']>
   updatedAt: Scalars['Date']['output']
-  url: Scalars['String']['output']
+  url?: Maybe<Scalars['String']['output']>
   viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
 }
 
@@ -104,6 +106,12 @@ export type BookmarksConnection = {
 export enum CacheControlScope {
   Private = 'PRIVATE',
   Public = 'PUBLIC',
+}
+
+export type Case = {
+  __typename?: 'Case'
+  count?: Maybe<Scalars['Int']['output']>
+  id: Scalars['ID']['output']
 }
 
 export type Comment = {
@@ -153,12 +161,19 @@ export type EditUserInput = {
   name?: InputMaybe<Scalars['String']['input']>
 }
 
+export type Event = {
+  __typename?: 'Event'
+  count?: Maybe<Scalars['Int']['output']>
+  id: Scalars['ID']['output']
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   addBookmark?: Maybe<Bookmark>
   addComment?: Maybe<Comment>
   addQuestion?: Maybe<Question>
   addStack?: Maybe<Stack>
+  addView?: Maybe<Viewable>
   deleteBookmark?: Maybe<Scalars['Boolean']['output']>
   deleteComment?: Maybe<Scalars['Boolean']['output']>
   deleteQuestion?: Maybe<Scalars['Boolean']['output']>
@@ -190,6 +205,11 @@ export type MutationAddQuestionArgs = {
 
 export type MutationAddStackArgs = {
   data: AddStackInput
+}
+
+export type MutationAddViewArgs = {
+  refId: Scalars['ID']['input']
+  type: ViewType
 }
 
 export type MutationDeleteBookmarkArgs = {
@@ -254,8 +274,12 @@ export type Query = {
   blogs: Array<Maybe<Blog>>
   bookmark?: Maybe<Bookmark>
   bookmarks: BookmarksConnection
+  case?: Maybe<Case>
+  cases: Array<Maybe<Case>>
   comment?: Maybe<Comment>
   comments: Array<Maybe<Comment>>
+  event?: Maybe<Event>
+  events: Array<Maybe<Event>>
   question?: Maybe<Question>
   questions: QuestionsConnection
   stack?: Maybe<Stack>
@@ -279,6 +303,10 @@ export type QueryBookmarksArgs = {
   first?: InputMaybe<Scalars['Int']['input']>
 }
 
+export type QueryCaseArgs = {
+  id: Scalars['ID']['input']
+}
+
 export type QueryCommentArgs = {
   id: Scalars['ID']['input']
 }
@@ -286,6 +314,10 @@ export type QueryCommentArgs = {
 export type QueryCommentsArgs = {
   refId: Scalars['ID']['input']
   type: CommentType
+}
+
+export type QueryEventArgs = {
+  id: Scalars['ID']['input']
 }
 
 export type QueryQuestionArgs = {
@@ -315,6 +347,7 @@ export type Question = {
   __typename?: 'Question'
   audioUrl?: Maybe<Scalars['String']['output']>
   author?: Maybe<User>
+  count?: Maybe<Scalars['Int']['output']>
   createdAt: Scalars['Date']['output']
   description?: Maybe<Scalars['String']['output']>
   id: Scalars['ID']['output']
@@ -361,6 +394,7 @@ export enum ReactionType {
 
 export type Stack = {
   __typename?: 'Stack'
+  count?: Maybe<Scalars['Int']['output']>
   createdAt: Scalars['Date']['output']
   description?: Maybe<Scalars['String']['output']>
   id: Scalars['ID']['output']
@@ -412,25 +446,38 @@ export enum UserRole {
   User = 'USER',
 }
 
+export enum ViewType {
+  Blog = 'BLOG',
+  Bookmark = 'BOOKMARK',
+  Case = 'CASE',
+  Event = 'EVENT',
+  Question = 'QUESTION',
+  Stack = 'STACK',
+}
+
+export type Viewable = Blog | Bookmark | Case | Event | Question | Stack
+
 export type BookmarkDetailFragment = {
   reactionCount?: number | null
   viewerHasReacted?: boolean | null
   id: string
-  url: string
+  url?: string | null
   host: string
   title?: string | null
   description?: string | null
   faviconUrl?: string | null
+  count?: number | null
   tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
 } & { __typename: 'Bookmark' }
 
 export type BookmarkCoreFragment = {
   id: string
-  url: string
+  url?: string | null
   host: string
   title?: string | null
   description?: string | null
   faviconUrl?: string | null
+  count?: number | null
 } & { __typename: 'Bookmark' }
 
 export type CommentInfoFragment = {
@@ -473,6 +520,7 @@ export type QuestionDetailFragment = {
   title: string
   audioUrl?: string | null
   waveform?: any | null
+  count?: number | null
   createdAt: any
   author?:
     | ({
@@ -492,6 +540,7 @@ export type QuestionCoreFragment = {
   title: string
   audioUrl?: string | null
   waveform?: any | null
+  count?: number | null
   createdAt: any
   author?:
     | ({
@@ -517,6 +566,7 @@ export type StackDetailFragment = {
   image?: string | null
   url: string
   slug: string
+  count?: number | null
   usedBy: Array<
     | ({
         id: string
@@ -538,6 +588,7 @@ export type StackCoreFragment = {
   image?: string | null
   url: string
   slug: string
+  count?: number | null
 } & { __typename: 'Stack' }
 
 export type BlogListItemFragment = {
@@ -545,6 +596,7 @@ export type BlogListItemFragment = {
   title?: string | null
   date?: any | null
   slug?: string | null
+  count?: number | null
 } & { __typename: 'Blog' }
 
 export type BlogCoreFragment = {
@@ -552,6 +604,7 @@ export type BlogCoreFragment = {
   title?: string | null
   date?: any | null
   slug?: string | null
+  count?: number | null
 } & { __typename: 'Blog' }
 
 export type BlogDetailFragment = {
@@ -561,6 +614,7 @@ export type BlogDetailFragment = {
   title?: string | null
   date?: any | null
   slug?: string | null
+  count?: number | null
 } & { __typename: 'Blog' }
 
 export type BookmarksConnectionFragment = {
@@ -577,11 +631,12 @@ export type BookmarksConnectionFragment = {
         node?:
           | ({
               id: string
-              url: string
+              url?: string | null
               host: string
               title?: string | null
               description?: string | null
               faviconUrl?: string | null
+              count?: number | null
             } & { __typename: 'Bookmark' })
           | null
       } & { __typename?: 'BookmarkEdge' })
@@ -591,11 +646,12 @@ export type BookmarksConnectionFragment = {
 
 export type BookmarkListItemFragment = {
   id: string
-  url: string
+  url?: string | null
   host: string
   title?: string | null
   description?: string | null
   faviconUrl?: string | null
+  count?: number | null
 } & { __typename: 'Bookmark' }
 
 export type QuestionsConnectionFragment = {
@@ -615,6 +671,7 @@ export type QuestionsConnectionFragment = {
               title: string
               audioUrl?: string | null
               waveform?: any | null
+              count?: number | null
               createdAt: any
               author?:
                 | ({
@@ -639,6 +696,7 @@ export type QuestionListItemFragment = {
   title: string
   audioUrl?: string | null
   waveform?: any | null
+  count?: number | null
   createdAt: any
   author?:
     | ({
@@ -671,6 +729,7 @@ export type StacksConnectionFragment = {
               image?: string | null
               url: string
               slug: string
+              count?: number | null
             } & { __typename: 'Stack' })
           | null
       } & { __typename?: 'StackEdge' })
@@ -684,6 +743,7 @@ export type StackListItemFragment = {
   image?: string | null
   url: string
   slug: string
+  count?: number | null
 } & { __typename: 'Stack' }
 
 export type UserSettingsFragment = { email?: string | null } & {
@@ -699,11 +759,12 @@ export type EditBookmarkMutation = {
   editBookmark?:
     | ({
         id: string
-        url: string
+        url?: string | null
         host: string
         title?: string | null
         description?: string | null
         faviconUrl?: string | null
+        count?: number | null
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
         tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
@@ -727,11 +788,12 @@ export type AddBookmarkMutation = {
   addBookmark?:
     | ({
         id: string
-        url: string
+        url?: string | null
         host: string
         title?: string | null
         description?: string | null
         faviconUrl?: string | null
+        count?: number | null
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
         tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
@@ -817,6 +879,7 @@ export type EditQuestionMutation = {
         title: string
         audioUrl?: string | null
         waveform?: any | null
+        count?: number | null
         createdAt: any
         description?: string | null
         status?: QuestionStatus | null
@@ -858,6 +921,7 @@ export type AddQuestionMutation = {
         title: string
         audioUrl?: string | null
         waveform?: any | null
+        count?: number | null
         createdAt: any
         description?: string | null
         status?: QuestionStatus | null
@@ -894,7 +958,7 @@ export type ToggleReactionMutation = {
       } & { __typename?: 'Blog' | 'Question' | 'Stack' })
     | ({
         id: string
-        url: string
+        url?: string | null
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
       } & { __typename?: 'Bookmark' })
@@ -914,6 +978,7 @@ export type EditStackMutation = {
         image?: string | null
         url: string
         slug: string
+        count?: number | null
         createdAt: any
         description?: string | null
         reactionCount?: number | null
@@ -956,6 +1021,7 @@ export type AddStackMutation = {
         image?: string | null
         url: string
         slug: string
+        count?: number | null
         createdAt: any
         description?: string | null
         reactionCount?: number | null
@@ -990,6 +1056,7 @@ export type ToggleStackUserMutation = {
         image?: string | null
         url: string
         slug: string
+        count?: number | null
         usedBy: Array<
           | ({
               id: string
@@ -1030,6 +1097,20 @@ export type EditUserMutation = {
     | null
 } & { __typename?: 'Mutation' }
 
+export type AddViewMutationVariables = Exact<{
+  refId: Scalars['ID']['input']
+  type: ViewType
+}>
+
+export type AddViewMutation = {
+  addView?:
+    | ({ id: string; count?: number | null } & {
+        __typename?: 'Blog' | 'Bookmark' | 'Question' | 'Stack'
+      })
+    | { __typename?: 'Case' | 'Event' }
+    | null
+} & { __typename?: 'Mutation' }
+
 export type GetBlogsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetBlogsQuery = {
@@ -1039,6 +1120,7 @@ export type GetBlogsQuery = {
         title?: string | null
         date?: any | null
         slug?: string | null
+        count?: number | null
       } & { __typename: 'Blog' })
     | null
   >
@@ -1055,6 +1137,7 @@ export type GetBlogQuery = {
         title?: string | null
         date?: any | null
         slug?: string | null
+        count?: number | null
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
       } & { __typename: 'Blog' })
@@ -1082,11 +1165,12 @@ export type GetBookmarksQuery = {
           node?:
             | ({
                 id: string
-                url: string
+                url?: string | null
                 host: string
                 title?: string | null
                 description?: string | null
                 faviconUrl?: string | null
+                count?: number | null
               } & { __typename: 'Bookmark' })
             | null
         } & { __typename?: 'BookmarkEdge' })
@@ -1103,11 +1187,12 @@ export type GetBookmarkQuery = {
   bookmark?:
     | ({
         id: string
-        url: string
+        url?: string | null
         host: string
         title?: string | null
         description?: string | null
         faviconUrl?: string | null
+        count?: number | null
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
         tags: Array<({ name: string } & { __typename?: 'Tag' }) | null>
@@ -1168,6 +1253,7 @@ export type GetQuestionsQuery = {
                 title: string
                 audioUrl?: string | null
                 waveform?: any | null
+                count?: number | null
                 createdAt: any
                 author?:
                   | ({
@@ -1199,6 +1285,7 @@ export type GetQuestionQuery = {
         title: string
         audioUrl?: string | null
         waveform?: any | null
+        count?: number | null
         createdAt: any
         description?: string | null
         status?: QuestionStatus | null
@@ -1245,6 +1332,7 @@ export type GetStacksQuery = {
                 image?: string | null
                 url: string
                 slug: string
+                count?: number | null
               } & { __typename: 'Stack' })
             | null
         } & { __typename?: 'StackEdge' })
@@ -1265,6 +1353,7 @@ export type GetStackQuery = {
         image?: string | null
         url: string
         slug: string
+        count?: number | null
         createdAt: any
         description?: string | null
         reactionCount?: number | null
@@ -1353,6 +1442,7 @@ export const BlogCoreFragmentDoc = /*#__PURE__*/ gql`
     title
     date
     slug
+    count
   }
 `
 export const BlogListItemFragmentDoc = /*#__PURE__*/ gql`
@@ -1378,6 +1468,7 @@ export const BookmarkCoreFragmentDoc = /*#__PURE__*/ gql`
     title
     description
     faviconUrl
+    count
   }
 `
 export const BookmarkDetailFragmentDoc = /*#__PURE__*/ gql`
@@ -1448,6 +1539,7 @@ export const QuestionCoreFragmentDoc = /*#__PURE__*/ gql`
     title
     audioUrl
     waveform
+    count
     createdAt
     author {
       ...UserInfo
@@ -1497,6 +1589,7 @@ export const StackCoreFragmentDoc = /*#__PURE__*/ gql`
     image
     url
     slug
+    count
   }
 `
 export const StackDetailFragmentDoc = /*#__PURE__*/ gql`
@@ -2370,6 +2463,69 @@ export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>
 export type EditUserMutationOptions = Apollo.BaseMutationOptions<
   EditUserMutation,
   EditUserMutationVariables
+>
+export const AddViewDocument = /*#__PURE__*/ gql`
+  mutation addView($refId: ID!, $type: ViewType!) {
+    addView(refId: $refId, type: $type) {
+      ... on Stack {
+        id
+        count
+      }
+      ... on Bookmark {
+        id
+        count
+      }
+      ... on Question {
+        id
+        count
+      }
+      ... on Blog {
+        id
+        count
+      }
+    }
+  }
+`
+export type AddViewMutationFn = Apollo.MutationFunction<
+  AddViewMutation,
+  AddViewMutationVariables
+>
+
+/**
+ * __useAddViewMutation__
+ *
+ * To run a mutation, you first call `useAddViewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddViewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addViewMutation, { data, loading, error }] = useAddViewMutation({
+ *   variables: {
+ *      refId: // value for 'refId'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useAddViewMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddViewMutation,
+    AddViewMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<AddViewMutation, AddViewMutationVariables>(
+    AddViewDocument,
+    options
+  )
+}
+export type AddViewMutationHookResult = ReturnType<typeof useAddViewMutation>
+export type AddViewMutationResult = Apollo.MutationResult<AddViewMutation>
+export type AddViewMutationOptions = Apollo.BaseMutationOptions<
+  AddViewMutation,
+  AddViewMutationVariables
 >
 export const GetBlogsDocument = /*#__PURE__*/ gql`
   query getBlogs {
@@ -3276,6 +3432,7 @@ export type GetViewerWithSettingsQueryResult = Apollo.QueryResult<
   GetViewerWithSettingsQueryVariables
 >
 export type BlogKeySpecifier = (
+  | 'count'
   | 'date'
   | 'id'
   | 'reactionCount'
@@ -3285,6 +3442,7 @@ export type BlogKeySpecifier = (
   | BlogKeySpecifier
 )[]
 export type BlogFieldPolicy = {
+  count?: FieldPolicy<any> | FieldReadFunction<any>
   date?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
   reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3293,6 +3451,7 @@ export type BlogFieldPolicy = {
   viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type BookmarkKeySpecifier = (
+  | 'count'
   | 'createdAt'
   | 'description'
   | 'faviconUrl'
@@ -3308,6 +3467,7 @@ export type BookmarkKeySpecifier = (
   | BookmarkKeySpecifier
 )[]
 export type BookmarkFieldPolicy = {
+  count?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   description?: FieldPolicy<any> | FieldReadFunction<any>
   faviconUrl?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3339,6 +3499,11 @@ export type BookmarksConnectionFieldPolicy = {
   edges?: FieldPolicy<any> | FieldReadFunction<any>
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
+export type CaseKeySpecifier = ('count' | 'id' | CaseKeySpecifier)[]
+export type CaseFieldPolicy = {
+  count?: FieldPolicy<any> | FieldReadFunction<any>
+  id?: FieldPolicy<any> | FieldReadFunction<any>
+}
 export type CommentKeySpecifier = (
   | 'author'
   | 'createdAt'
@@ -3362,11 +3527,17 @@ export type CommentFieldPolicy = {
   viewerCanDelete?: FieldPolicy<any> | FieldReadFunction<any>
   viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
 }
+export type EventKeySpecifier = ('count' | 'id' | EventKeySpecifier)[]
+export type EventFieldPolicy = {
+  count?: FieldPolicy<any> | FieldReadFunction<any>
+  id?: FieldPolicy<any> | FieldReadFunction<any>
+}
 export type MutationKeySpecifier = (
   | 'addBookmark'
   | 'addComment'
   | 'addQuestion'
   | 'addStack'
+  | 'addView'
   | 'deleteBookmark'
   | 'deleteComment'
   | 'deleteQuestion'
@@ -3386,6 +3557,7 @@ export type MutationFieldPolicy = {
   addComment?: FieldPolicy<any> | FieldReadFunction<any>
   addQuestion?: FieldPolicy<any> | FieldReadFunction<any>
   addStack?: FieldPolicy<any> | FieldReadFunction<any>
+  addView?: FieldPolicy<any> | FieldReadFunction<any>
   deleteBookmark?: FieldPolicy<any> | FieldReadFunction<any>
   deleteComment?: FieldPolicy<any> | FieldReadFunction<any>
   deleteQuestion?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3415,8 +3587,12 @@ export type QueryKeySpecifier = (
   | 'blogs'
   | 'bookmark'
   | 'bookmarks'
+  | 'case'
+  | 'cases'
   | 'comment'
   | 'comments'
+  | 'event'
+  | 'events'
   | 'question'
   | 'questions'
   | 'stack'
@@ -3431,8 +3607,12 @@ export type QueryFieldPolicy = {
   blogs?: FieldPolicy<any> | FieldReadFunction<any>
   bookmark?: FieldPolicy<any> | FieldReadFunction<any>
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>
+  case?: FieldPolicy<any> | FieldReadFunction<any>
+  cases?: FieldPolicy<any> | FieldReadFunction<any>
   comment?: FieldPolicy<any> | FieldReadFunction<any>
   comments?: FieldPolicy<any> | FieldReadFunction<any>
+  event?: FieldPolicy<any> | FieldReadFunction<any>
+  events?: FieldPolicy<any> | FieldReadFunction<any>
   question?: FieldPolicy<any> | FieldReadFunction<any>
   questions?: FieldPolicy<any> | FieldReadFunction<any>
   stack?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3444,6 +3624,7 @@ export type QueryFieldPolicy = {
 export type QuestionKeySpecifier = (
   | 'audioUrl'
   | 'author'
+  | 'count'
   | 'createdAt'
   | 'description'
   | 'id'
@@ -3461,6 +3642,7 @@ export type QuestionKeySpecifier = (
 export type QuestionFieldPolicy = {
   audioUrl?: FieldPolicy<any> | FieldReadFunction<any>
   author?: FieldPolicy<any> | FieldReadFunction<any>
+  count?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   description?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3493,6 +3675,7 @@ export type QuestionsConnectionFieldPolicy = {
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type StackKeySpecifier = (
+  | 'count'
   | 'createdAt'
   | 'description'
   | 'id'
@@ -3509,6 +3692,7 @@ export type StackKeySpecifier = (
   | StackKeySpecifier
 )[]
 export type StackFieldPolicy = {
+  count?: FieldPolicy<any> | FieldReadFunction<any>
   createdAt?: FieldPolicy<any> | FieldReadFunction<any>
   description?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3594,12 +3778,23 @@ export type StrictTypedTypePolicies = {
       | (() => undefined | BookmarksConnectionKeySpecifier)
     fields?: BookmarksConnectionFieldPolicy
   }
+  Case?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+    keyFields?: false | CaseKeySpecifier | (() => undefined | CaseKeySpecifier)
+    fields?: CaseFieldPolicy
+  }
   Comment?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
     keyFields?:
       | false
       | CommentKeySpecifier
       | (() => undefined | CommentKeySpecifier)
     fields?: CommentFieldPolicy
+  }
+  Event?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+    keyFields?:
+      | false
+      | EventKeySpecifier
+      | (() => undefined | EventKeySpecifier)
+    fields?: EventFieldPolicy
   }
   Mutation?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
     keyFields?:
@@ -3707,6 +3902,7 @@ export const ListAllOperations = {
     toggleStackUser: 'toggleStackUser',
     deleteUser: 'deleteUser',
     editUser: 'editUser',
+    addView: 'addView',
   },
   Fragment: {
     BlogCore: 'BlogCore',

@@ -1,12 +1,15 @@
 'use client'
 
-import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { Suspense, useRef } from 'react'
 
+import type { Blog } from '~/graphql/typeSlut'
 import { CommentType, useGetBlogQuery } from '~/graphql/typeSlut'
+import { formatDate } from '~/lib/transformers'
 
 import { Comments } from '../Comments'
+import { CoverImage } from '../Image'
+import { Image } from '../Image/NextImage'
 import { Detail } from '../ListDetail/Detail'
 import { TitleBar } from '../ListDetail/TitleBar'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -42,9 +45,10 @@ export type CaseStudy = {
 }
 
 type Props = {
-  children: ReactNode
-  post: Post
-  slug: string
+  children?: ReactNode
+  post?: Post
+  blog?: Blog
+  slug?: string
 }
 
 /* const Comments = dynamic(
@@ -56,16 +60,11 @@ type Props = {
 export function PostDetail({ children, post, slug }: Props) {
   const scrollContainerRef = useRef(null)
   const titleRef = useRef(null)
-  const { data, error, loading } = useGetBlogQuery({ variables: { slug } })
 
-  if (loading) {
-    return <Detail.Loading />
-  }
+  const { data, loading, error } = useGetBlogQuery({
+    variables: { slug },
+  })
 
-  if (!data?.blog || error) {
-    return <Detail.Null />
-  }
-  const { blog } = data
   //if (error) return <div>failed to load</div>;
   // if (!post) return <div>loading...</div>;
   /*  useEffect(() => {
@@ -76,14 +75,14 @@ export function PostDetail({ children, post, slug }: Props) {
     }
     fetchPost();
   }, []); */
-  /*   if (loading) {
-    return <Detail.Loading />;
+  if (loading) {
+    return <Detail.Loading />
   }
 
-  if (!data?.post || error) {
-    return <Detail.Null />;
-  } */
-  // const { post } = data;
+  if (!data?.blog || error) {
+    return <Detail.Null />
+  }
+  const { blog } = data
   //  const publishedAt = realTime({ timestamp: post.publishedAt });
   //const publishedAt = realTime({ timestamp: post.date })
 
@@ -95,24 +94,31 @@ export function PostDetail({ children, post, slug }: Props) {
           globalMenu={false}
           backButtonHref={'/post'}
           magicTitle
-          title={post.title}
+          title={blog?.title}
           titleRef={titleRef}
           scrollContainerRef={scrollContainerRef}
-          trailingAccessory={<PostAction blog={blog} />}
+          trailingAccessory={null}
         />
 
         <Detail.ContentContainer>
           <Detail.Header>
             <div className="flex items-center space-x-6">
               <div>
-                <Detail.Title ref={titleRef}>{post.title}</Detail.Title>
+                <Detail.Title ref={titleRef}>{blog?.title}</Detail.Title>
               </div>
             </div>
           </Detail.Header>
+          <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
+            <div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
+              {formatDate(post?.date)}
+              {` • `}
+              {blog?.count}
+            </div>
+          </div>
           {children}
           <div className="py-6" />
           <Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={blog?.id} type={CommentType.Blog} />
+            <Comments refId={blog?.slug} type={CommentType.Blog} />
           </Suspense>
         </Detail.ContentContainer>
       </Detail.Container>

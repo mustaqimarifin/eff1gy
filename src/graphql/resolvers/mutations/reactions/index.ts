@@ -48,6 +48,7 @@ export async function toggleReaction(
     }),
 
     prisma.reaction.findMany({
+      relationLoadStrategy: 'join',
       where: {
         [field]: refId,
         userId: viewer?.id,

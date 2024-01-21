@@ -102,6 +102,7 @@ export async function getQuestions(
 
   try {
     const edges = await prisma.question.findMany({
+      relationLoadStrategy: 'join',
       take,
       skip,
       cursor,

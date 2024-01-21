@@ -21,7 +21,6 @@ export const EventListItem = React.memo<Props>(({ summary, active }) => {
         <Image
           width={48}
           height={48}
-          layout="fixed"
           alt={summary?.title}
           className={'rounded-xl'}
           src={summary?.logo}

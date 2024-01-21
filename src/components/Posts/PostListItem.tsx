@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { realTime } from '~/lib/transformers'
+import { formatDate } from '~/lib/transformers'
 
 import { ListItem } from '../ListDetail/ListItem'
 import type { Post } from './PostDetail'
@@ -11,13 +11,11 @@ type Props = {
 }
 
 export const PostListItem = memo<Props>(({ post, active }) => {
-  const publishedAt = realTime({ timestamp: post.date })
   return (
     <ListItem
-      href="/post/[slug]"
-      as={`/post/${post.slug}`}
+      href={`/post/${post.slug}`}
       title={post.title}
-      byline={post.date ? publishedAt.formatted : 'Draft'}
+      byline={formatDate(post?.date)}
       active={active}
     />
   )
