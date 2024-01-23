@@ -10,3 +10,7 @@ yarn-error.log
 .vercel
 cors.json
 src/data/local/*
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

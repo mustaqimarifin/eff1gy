@@ -27,6 +27,7 @@
     "@sanity/ui": "^2.0.1",
     "@sanity/vision": "^3.25.0",
     "@tippyjs/react": "^4.2.6",
+    "bufferutil": "^4.0.8",
     "cheerio": "1.0.0-rc.12",
     "cloudinary": "^1.41.3",
     "easymde": "^2.18.0",
