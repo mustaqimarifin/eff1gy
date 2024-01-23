@@ -19,7 +19,7 @@ export default async function Dashboard() {
     <DashPage>
       <SectionContent>
         <div className="w-full justify-center items-start max-w-3xl mx-auto mb-16 px-8">
-          <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
+          <h1 className="font-quad text-3xl md:text-5xl tracking-tight mb-4 text-black dark:text-white">
             Spotify Picks
           </h1>
           <div className="mb-8"></div>

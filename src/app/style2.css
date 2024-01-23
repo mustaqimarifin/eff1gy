@@ -2,6 +2,32 @@
   @apply text-gray-700 dark:text-gray-400;
 }
 
+.prose pre > code {
+  @apply bg-neutral-50 dark:bg-neutral-900;
+}
+
+.prose :where(code):not(:where([class~='not-prose'] *))::before {
+  content: none;
+}
+
+.prose :where(code):not(:where([class~='not-prose'] *))::after {
+  content: none;
+}
+
+.prose pre {
+  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900;
+}
+
+.prose code {
+  @apply px-1 py-0.5 rounded-lg;
+}
+
+.prose pre code {
+  @apply p-0;
+  border: initial;
+  line-height: 1.5;
+}
+
 .prose blockquote {
   @apply border-l-2 border-gray-200 font-normal dark:border-gray-800 dark:text-gray-400;
 }
@@ -62,11 +88,11 @@
   @apply bg-gray-50 dark:bg-gray-900;
 }
  */
-.prose b,
+/* .prose b,
 .prose strong {
   @apply font-bold text-gray-900 dark:text-gray-300;
 }
-
+ */
 .prose hr {
   @apply border-gray-200 dark:border-gray-800;
 }

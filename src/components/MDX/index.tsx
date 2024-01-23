@@ -5,11 +5,11 @@ import React from 'react'
 import { CLIENT_URL } from '~/graphql/constants'
 import { slugify } from '~/lib/functions'
 
-import { YoutubeEmbed } from './Embed'
-import { GFY } from './gfy'
+import { Embed } from './Embed'
+import { Tweet } from './gfy'
 import { highlight } from './sugar'
 
-export function CustomLink2(props) {
+export function CustomLink(props) {
   let href = props.href
 
   if (href.startsWith('/')) {
@@ -21,11 +21,7 @@ export function CustomLink2(props) {
   }
 
   if (href.startsWith('#')) {
-    return (
-      <Link href={href} {...props}>
-        {props.children}
-      </Link>
-    )
+    return <a {...props} />
   }
 
   if (href.startsWith('@')) {
@@ -51,7 +47,7 @@ export function CustomLink2(props) {
   }
 }
 
-function CustomLink(props) {
+/* function CustomLink(props) {
   let href = props.href
 
   if (href.startsWith('/')) {
@@ -68,7 +64,7 @@ function CustomLink(props) {
 
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
-
+ */
 function ProsCard({ title, pros }) {
   return (
     <div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
@@ -143,6 +139,22 @@ function Callout(props) {
   )
 }
 
+const Paragraph = (props) => {
+  if (typeof props.children !== 'string' && props.children.type === 'p') {
+    return <>{props.children}</>
+  }
+
+  return <p {...props} />
+}
+
+function Bust(props) {
+  return (
+    <strong className="font-quad text-orange-500 text-2xl italic ">
+      {props.children}
+    </strong>
+  )
+}
+
 export function Code({ children, ...props }) {
   const codeHTML = highlight(children)
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
@@ -195,12 +207,13 @@ export const components = {
   h4: createHeading(4),
   h5: createHeading(5),
   h6: createHeading(6),
+  Bust,
   img: Image,
   Callout,
   ProsCard,
   ConsCard,
-  YoutubeEmbed,
+  Embed,
   code: Code,
-  GFY,
+  Tweet,
   Table,
 }

@@ -6,7 +6,7 @@ import meta2 from '~/components/MDX/Meta2'
 
 export default async function Mdx(props) {
   return (
-    <div className="prose prose-neutral dark:prose-invert">
+    <div className="prose font-mono tracking-tight prose-neutral dark:prose-invert">
       <MDXRemote
         {...props}
         options={{

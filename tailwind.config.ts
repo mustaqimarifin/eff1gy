@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         sans: ['var(--font-geist-sans)', ...fontFamily.sans],
         mono: ['var(--font-geist-mono)', ...fontFamily.mono],
+        quad: ['var(--font-quad)', ...fontFamily.serif],
       },
 
       colors: {

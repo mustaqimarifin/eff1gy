@@ -1,12 +1,12 @@
 const config = {
-  logging: {
+  /*   logging: {
     fetches: {
       fullUrl: true,
     },
   },
   eslint: {
     ignoreDuringBuilds: true,
-  },
+  }, */
   transpilePackages: ['react-tweet'],
   images: {
     formats: ['image/avif', 'image/webp'],

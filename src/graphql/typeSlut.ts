@@ -112,6 +112,8 @@ export type Case = {
   __typename?: 'Case'
   count?: Maybe<Scalars['Int']['output']>
   id: Scalars['ID']['output']
+  reactionCount?: Maybe<Scalars['Int']['output']>
+  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type Comment = {
@@ -130,6 +132,8 @@ export type Comment = {
 export enum CommentType {
   Blog = 'BLOG',
   Bookmark = 'BOOKMARK',
+  Case = 'CASE',
+  Event = 'EVENT',
   Question = 'QUESTION',
   Stack = 'STACK',
 }
@@ -165,6 +169,8 @@ export type Event = {
   __typename?: 'Event'
   count?: Maybe<Scalars['Int']['output']>
   id: Scalars['ID']['output']
+  reactionCount?: Maybe<Scalars['Int']['output']>
+  viewerHasReacted?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type Mutation = {
@@ -383,11 +389,13 @@ export type QuestionsConnection = {
   pageInfo?: Maybe<PageInfo>
 }
 
-export type Reactable = Blog | Bookmark | Question | Stack
+export type Reactable = Blog | Bookmark | Case | Event | Question | Stack
 
 export enum ReactionType {
   Blog = 'BLOG',
   Bookmark = 'BOOKMARK',
+  Case = 'CASE',
+  Event = 'EVENT',
   Question = 'QUESTION',
   Stack = 'STACK',
 }
@@ -955,7 +963,7 @@ export type ToggleReactionMutation = {
         id: string
         reactionCount?: number | null
         viewerHasReacted?: boolean | null
-      } & { __typename?: 'Blog' | 'Question' | 'Stack' })
+      } & { __typename?: 'Blog' | 'Case' | 'Event' | 'Question' | 'Stack' })
     | ({
         id: string
         url?: string | null
@@ -1504,6 +1512,27 @@ export const BookmarksConnectionFragmentDoc = /*#__PURE__*/ gql`
   }
   ${BookmarkListItemFragmentDoc}
 `
+export const CaseCoreFragmentDoc = /*#__PURE__*/ gql`
+  fragment CaseCore on Case {
+    __typename
+    id
+    count
+  }
+`
+export const CaseListItemFragmentDoc = /*#__PURE__*/ gql`
+  fragment CaseListItem on Case {
+    ...CaseCore
+  }
+  ${CaseCoreFragmentDoc}
+`
+export const CaseDetailFragmentDoc = /*#__PURE__*/ gql`
+  fragment CaseDetail on Case {
+    ...CaseCore
+    reactionCount
+    viewerHasReacted
+  }
+  ${CaseCoreFragmentDoc}
+`
 export const UserInfoFragmentDoc = /*#__PURE__*/ gql`
   fragment UserInfo on User {
     __typename
@@ -1531,6 +1560,27 @@ export const CommentInfoFragmentDoc = /*#__PURE__*/ gql`
     }
   }
   ${UserInfoFragmentDoc}
+`
+export const EventCoreFragmentDoc = /*#__PURE__*/ gql`
+  fragment EventCore on Event {
+    __typename
+    id
+    count
+  }
+`
+export const EventListItemFragmentDoc = /*#__PURE__*/ gql`
+  fragment EventListItem on Event {
+    ...EventCore
+  }
+  ${EventCoreFragmentDoc}
+`
+export const EventDetailFragmentDoc = /*#__PURE__*/ gql`
+  fragment EventDetail on Event {
+    ...EventCore
+    reactionCount
+    viewerHasReacted
+  }
+  ${EventCoreFragmentDoc}
 `
 export const QuestionCoreFragmentDoc = /*#__PURE__*/ gql`
   fragment QuestionCore on Question {
@@ -2117,6 +2167,16 @@ export const ToggleReactionDocument = /*#__PURE__*/ gql`
         viewerHasReacted
       }
       ... on Blog {
+        id
+        reactionCount
+        viewerHasReacted
+      }
+      ... on Event {
+        id
+        reactionCount
+        viewerHasReacted
+      }
+      ... on Case {
         id
         reactionCount
         viewerHasReacted
@@ -3499,10 +3559,18 @@ export type BookmarksConnectionFieldPolicy = {
   edges?: FieldPolicy<any> | FieldReadFunction<any>
   pageInfo?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type CaseKeySpecifier = ('count' | 'id' | CaseKeySpecifier)[]
+export type CaseKeySpecifier = (
+  | 'count'
+  | 'id'
+  | 'reactionCount'
+  | 'viewerHasReacted'
+  | CaseKeySpecifier
+)[]
 export type CaseFieldPolicy = {
   count?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
+  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
+  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type CommentKeySpecifier = (
   | 'author'
@@ -3527,10 +3595,18 @@ export type CommentFieldPolicy = {
   viewerCanDelete?: FieldPolicy<any> | FieldReadFunction<any>
   viewerCanEdit?: FieldPolicy<any> | FieldReadFunction<any>
 }
-export type EventKeySpecifier = ('count' | 'id' | EventKeySpecifier)[]
+export type EventKeySpecifier = (
+  | 'count'
+  | 'id'
+  | 'reactionCount'
+  | 'viewerHasReacted'
+  | EventKeySpecifier
+)[]
 export type EventFieldPolicy = {
   count?: FieldPolicy<any> | FieldReadFunction<any>
   id?: FieldPolicy<any> | FieldReadFunction<any>
+  reactionCount?: FieldPolicy<any> | FieldReadFunction<any>
+  viewerHasReacted?: FieldPolicy<any> | FieldReadFunction<any>
 }
 export type MutationKeySpecifier = (
   | 'addBookmark'
@@ -3912,7 +3988,13 @@ export const ListAllOperations = {
     BookmarkListItem: 'BookmarkListItem',
     BookmarkDetail: 'BookmarkDetail',
     BookmarksConnection: 'BookmarksConnection',
+    CaseCore: 'CaseCore',
+    CaseListItem: 'CaseListItem',
+    CaseDetail: 'CaseDetail',
     CommentInfo: 'CommentInfo',
+    EventCore: 'EventCore',
+    EventListItem: 'EventListItem',
+    EventDetail: 'EventDetail',
     QuestionCore: 'QuestionCore',
     QuestionListItem: 'QuestionListItem',
     QuestionDetail: 'QuestionDetail',

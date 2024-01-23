@@ -54,9 +54,9 @@ interface TitleProps {
 
 const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
   return (
-    <h1
+    <div
       ref={ref}
-      className="text-gray-600 dark:text-slate-50 text-3xl font-bold capitalize"
+      className="text-gray-600 dark:text-slate-50 text-5xl font-quad font-bold capitalize"
       {...props}
     />
   )

@@ -10,7 +10,7 @@ import { Counter, HiddenCounter } from '~/lib/actions'
 import { getAllPosts, getPost } from '~/lib/sanity/client'
 //xport const dynamic = 'force-dynamic'
 
-export const revalidate = 3600
+export const revalidate = 10
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
