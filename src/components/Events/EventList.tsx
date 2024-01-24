@@ -1,6 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import * as React from 'react'
+import { memo, useState } from 'react'
 
 import { ListContainer } from '~/components/ListDetail/ListContainer'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -8,16 +8,13 @@ import { summaries } from '~/data/events'
 
 import { EventListItem } from './EventListItem'
 
-export const EventList = React.memo(() => {
+export const EventList = memo(() => {
   const path = usePathname()
-  let [scrollContainerRef, setScrollContainerRef] = React.useState(null)
+  let [scrollContainerRef, setScrollContainerRef] = useState(null)
 
   return (
-    <ListContainer data-cy="apps-list" onRef={setScrollContainerRef}>
-      <TitleBar
-        scrollContainerRef={scrollContainerRef}
-        title="App Dissection"
-      />
+    <ListContainer data-cy="event-list" onRef={setScrollContainerRef}>
+      <TitleBar scrollContainerRef={scrollContainerRef} title="Events" />
 
       <div className="lg:space-y-1 lg:p-3">
         {summaries.map((summary) => {

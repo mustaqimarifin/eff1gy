@@ -5,7 +5,7 @@ import { ViewType } from '~/graphql/typeSlut'
 
 export async function addView(_, args, ctx: Context) {
   const { refId, type } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
   let field: string
   let table: string
@@ -36,11 +36,11 @@ export async function addView(_, args, ctx: Context) {
   }
 
   const [parentObject] = await Promise.all([
-    prisma[table].findUnique({
+    db[table].findUnique({
       where: { id: refId },
     }),
 
-    prisma[table].findMany({
+    db[table].findMany({
       relationLoadStrategy: 'join',
       where: {
         [field]: refId,
@@ -55,7 +55,7 @@ export async function addView(_, args, ctx: Context) {
   let fn
 
   fn = () =>
-    prisma[table].create({
+    db[table].create({
       data: {
         [field]: String(refId),
       },

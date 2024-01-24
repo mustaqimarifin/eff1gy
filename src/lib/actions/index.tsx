@@ -1,11 +1,11 @@
 'use server'
 import { unstable_noStore as noStore } from 'next/cache'
-import { Suspense } from 'react'
+import { Suspense, cache } from 'react'
 
 import { CLIENT_URL } from '~/graphql/constants'
 import { ViewType } from '~/graphql/typeSlut'
 
-import { prisma } from '../prisma'
+import { db } from '../db'
 /* 
 const googleAuth = new auth.GoogleAuth({
   credentials: {
@@ -25,10 +25,10 @@ export async function addView(refId, type) {
   if (!refId || !type) {
     return []
   }
-
+  noStore()
   switch (type) {
     case ViewType.Event: {
-      const results = await prisma.event.upsert({
+      const results = await db.event.upsert({
         where: { id: refId },
         create: {
           id: refId,
@@ -43,7 +43,7 @@ export async function addView(refId, type) {
       return results || []
     }
     case ViewType.Case: {
-      const results = await prisma.case.upsert({
+      const results = await db.case.upsert({
         where: { id: refId },
         create: {
           id: refId,
@@ -58,7 +58,7 @@ export async function addView(refId, type) {
       return results || []
     }
     case ViewType.Bookmark: {
-      const results = await prisma.bookmark.upsert({
+      const results = await db.bookmark.upsert({
         where: { id: refId },
         create: {
           id: refId,
@@ -73,7 +73,7 @@ export async function addView(refId, type) {
       return results || []
     }
     case ViewType.Blog: {
-      const results = await prisma.blog.upsert({
+      const results = await db.blog.upsert({
         where: { slug: refId },
         create: {
           slug: refId,
@@ -88,7 +88,7 @@ export async function addView(refId, type) {
       return results || []
     }
     case ViewType.Question: {
-      const results = await prisma.question.upsert({
+      const results = await db.question.upsert({
         where: { id: refId },
         create: {
           id: refId,
@@ -103,7 +103,7 @@ export async function addView(refId, type) {
       return results || []
     }
     case ViewType.Stack: {
-      const results = await prisma.stack.upsert({
+      const results = await db.stack.upsert({
         where: { id: refId },
         create: {
           id: refId,
@@ -124,7 +124,7 @@ export async function addView(refId, type) {
 }
 /* export const addView = async (id) => {
   noStore()
-  const total = await prisma.pageView.upsert({
+  const total = await db.pageView.upsert({
     where: { id },
     create: {
       id,
@@ -137,7 +137,7 @@ export async function addView(refId, type) {
   })
   if (total?.counter < 1) return null
   else
-    return await prisma.pageView.findUnique({
+    return await db.pageView.findUnique({
       where: {
         id,
       },
@@ -163,24 +163,20 @@ export async function Counter({
   )
 }
 
-export async function HiddenCounter({
-  refId,
-  type,
-}: {
-  refId: string
-  type: ViewType
-}) {
-  const views = await addView(refId, type)
-  return (
-    <Suspense>
-      <div className="hidden">{`${views} - views`}</div>
-    </Suspense>
-  )
-}
+export const HiddenCounter = cache(
+  async ({ refId, type }: { refId: string; type: ViewType }) => {
+    const views = await addView(refId, type)
+    return (
+      <Suspense>
+        <div className="hidden">{`${views} - views`}</div>
+      </Suspense>
+    )
+  }
+)
 
 /* export const getView = async (id) => {
   noStore()
-  const total = await prisma.pageView.findMany({
+  const total = await db.pageView.findMany({
     where: {
       id,
     },

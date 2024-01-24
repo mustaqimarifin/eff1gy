@@ -19,15 +19,15 @@ export async function editQuestion(
 ) {
   const { data, id } = args
 
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
-  const ama = await prisma.question.findUnique({ where: { id } })
+  const ama = await db.question.findUnique({ where: { id } })
   if (!ama) {
     throw new GraphQLError('Question doesn’t exist')
   }
 
   if (viewer?.isAdmin || viewer?.id === ama?.userId) {
-    return await prisma.question
+    return await db.question
       .update({
         where: { id },
         data: {
@@ -67,9 +67,9 @@ export async function addQuestion(
 ) {
   const { data } = args
   const { title, description } = data
-  const { viewer, prisma } = ctx
+  const { viewer, db } = ctx
 
-  const question = await prisma.question
+  const question = await db.question
     .create({
       data: {
         title,
@@ -102,13 +102,13 @@ export async function deleteQuestion(
   ctx: Context
 ) {
   const { id } = args
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
-  const question = await prisma.question.findUnique({ where: { id } })
+  const question = await db.question.findUnique({ where: { id } })
   if (!question) return true
 
   if (viewer?.isAdmin || viewer?.id === question.userId) {
-    return await prisma.question
+    return await db.question
       .delete({ where: { id } })
       /*       .then(() => {
         graphcdn.purgeList('questions')

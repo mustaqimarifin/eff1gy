@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import * as React from 'react'
+import { memo } from 'react'
 
 import { ListItem } from '~/components/ListDetail/ListItem'
 import type { EventDetailsPostSummary } from '~/data/events'
@@ -9,7 +9,7 @@ interface Props {
   active: boolean
 }
 
-export const EventListItem = React.memo<Props>(({ summary, active }) => {
+export const EventListItem = memo<Props>(({ summary, active }) => {
   return (
     <ListItem
       key={summary.slug}

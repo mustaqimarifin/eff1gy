@@ -13,7 +13,8 @@ type Props = {
 export const PostListItem = memo<Props>(({ post, active }) => {
   return (
     <ListItem
-      href={`/post/${post.slug}`}
+      href="/(site)/post/[slug]"
+      as={`/post/${post.slug}`}
       title={post.title}
       byline={formatDate(post?.date)}
       active={active}

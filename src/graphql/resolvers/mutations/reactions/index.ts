@@ -12,7 +12,7 @@ export async function toggleReaction(
   ctx: Context
 ) {
   const { refId, type } = args
-  const { viewer, prisma } = ctx
+  const { viewer, db } = ctx
 
   let field: string
   let table: string
@@ -43,11 +43,11 @@ export async function toggleReaction(
   }
 
   const [parentObject, existingReaction] = await Promise.all([
-    prisma[table].findUnique({
+    db[table].findUnique({
       where: { id: refId },
     }),
 
-    prisma.reaction.findMany({
+    db.reaction.findMany({
       relationLoadStrategy: 'join',
       where: {
         [field]: refId,
@@ -63,14 +63,14 @@ export async function toggleReaction(
   let fn
   if (existingReaction.length > 0) {
     fn = () =>
-      prisma.reaction.delete({
+      db.reaction.delete({
         where: {
           id: existingReaction[0].id,
         },
       })
   } else {
     fn = () =>
-      prisma.reaction.create({
+      db.reaction.create({
         data: {
           userId: viewer?.id,
           [field]: String(refId),

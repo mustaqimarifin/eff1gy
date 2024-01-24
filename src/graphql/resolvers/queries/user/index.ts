@@ -2,7 +2,7 @@ import { type Context } from '~/graphql/context'
 
 export function getUser(_, args, ctx: Context) {
   const { id } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
-  return prisma.user.findUnique({ where: { id } })
+  return db.user.findUnique({ where: { id } })
 }

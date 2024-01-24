@@ -1,7 +1,5 @@
 'use client'
-import Image from 'next/image'
-import type { ReactNode } from 'react'
-import * as React from 'react'
+import { type ReactNode, useRef } from 'react'
 
 import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
@@ -16,8 +14,8 @@ interface Props {
 }
 
 export function EventDetail({ post, children }: Props) {
-  const scrollContainerRef = React.useRef(null)
-  const titleRef = React.useRef(null)
+  const scrollContainerRef = useRef(null)
+  const titleRef = useRef(null)
 
   return (
     <>

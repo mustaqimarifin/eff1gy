@@ -11,11 +11,11 @@ export async function getStacks(
   ctx: Context
 ) {
   const { first = PAGINATION_AMOUNT, after = undefined } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
   /*
     When we are paginating after a cursor, we need to skip the cursor object itself. 
-    Ref https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
+    Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
   const skip = after ? 1 : 0
   const cursor = after ? { id: after } : undefined
@@ -28,7 +28,7 @@ export async function getStacks(
   const take = first + 1
 
   try {
-    const edges = await prisma.stack.findMany({
+    const edges = await db.stack.findMany({
       relationLoadStrategy: 'join',
       take,
       skip,
@@ -55,7 +55,7 @@ export async function getStacks(
     return {
       pageInfo: {
         hasNextPage,
-        totalCount: await prisma.stack.count(),
+        totalCount: await db.stack.count(),
         endCursor: edgesWithNodes[edgesWithNodes.length - 1].cursor,
       },
       edges: edgesWithNodes,
@@ -78,9 +78,9 @@ export async function getStack(
   { slug }: GetStackQueryVariables,
   ctx: Context
 ) {
-  const { prisma } = ctx
+  const { db } = ctx
 
-  const stackBySlug = await prisma.stack
+  const stackBySlug = await db.stack
     .findUnique({
       where: { slug },
       include: {
@@ -100,7 +100,7 @@ export async function getStack(
   if (stackBySlug) return stackBySlug
 
   // Fallback for old links that may exist that used a stack ID
-  return await prisma.stack.findUnique({
+  return await db.stack.findUnique({
     where: { id: slug },
     include: {
       users: true,

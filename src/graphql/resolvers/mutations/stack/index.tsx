@@ -12,7 +12,7 @@ import { slugify, urlRX } from '~/lib/functions'
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   const { id, data } = args
   const { name, url, tag, description, image } = data
-  const { prisma } = ctx
+  const { db } = ctx
 
   if (!name || name.length === 0)
     throw new GraphQLError('Stack must have a name')
@@ -22,7 +22,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
   /*
     Keep our image storage somewhat clean by deleting unused images
   */
-  const old = await prisma.stack.findUnique({ where: { id } })
+  const old = await db.stack.findUnique({ where: { id } })
 
   if (old.image !== data.image) {
     try {
@@ -45,7 +45,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
     }
   }
 
-  await prisma.stack.update({
+  await db.stack.update({
     where: { id },
     data: {
       tags: {
@@ -63,7 +63,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
       }
     : undefined
 
-  return await prisma.stack
+  return await db.stack
     .update({
       where: { id },
       data: {
@@ -88,7 +88,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
   const { data } = args
   const { url, name, description, image, tag } = data
-  const { prisma } = ctx
+  const { db } = ctx
 
   if (!urlRX(url)) throw new GraphQLError('URL was invalid')
 
@@ -101,7 +101,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
       }
     : undefined
 
-  return await prisma.stack
+  return await db.stack
     .create({
       data: {
         name,
@@ -129,9 +129,9 @@ export async function deleteStack(
   ctx: Context
 ) {
   const { id } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
-  const old = await prisma.stack.findUnique({ where: { id } })
+  const old = await db.stack.findUnique({ where: { id } })
 
   try {
     const url = new URL(old.image)
@@ -151,7 +151,7 @@ export async function deleteStack(
     console.error({ err })
   }
 
-  return await prisma.stack
+  return await db.stack
     .delete({
       where: { id },
     })
@@ -171,15 +171,15 @@ export async function toggleStackUser(
   ctx: Context
 ) {
   const { id } = args
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
-  const stackUsers = await prisma.stack.findUnique({
+  const stackUsers = await db.stack.findUnique({
     where: { id },
     include: { users: true },
   })
 
   if (stackUsers.users.find((s) => s.id === viewer?.id)) {
-    const data = await prisma.stack.update({
+    const data = await db.stack.update({
       where: { id },
       data: {
         users: {
@@ -199,7 +199,7 @@ export async function toggleStackUser(
       usedByViewer,
     }
   } else {
-    const data = await prisma.stack.update({
+    const data = await db.stack.update({
       where: { id },
       data: {
         users: {

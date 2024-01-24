@@ -2,7 +2,7 @@ import { type PrismaClient } from '@prisma/client'
 import type { User } from 'next-auth'
 
 import { auth } from '~/lib/auth'
-import { prisma } from '~/lib/prisma'
+import { db } from '~/lib/db'
 
 import { UserRole } from '../typeSlut'
 
@@ -11,7 +11,7 @@ export async function getViewer(req, res) {
   const user = session?.user
   let viewer = null
   if (user) {
-    viewer = await prisma.user.findUnique({ where: { id: session.userId } })
+    viewer = await db.user.findUnique({ where: { id: session.userId } })
 
     return viewer
       ? {
@@ -27,11 +27,11 @@ export async function getContext(req, res) {
 
   return {
     viewer,
-    prisma,
+    db,
   }
 }
 
 export type Context = {
-  prisma: PrismaClient
+  db: PrismaClient
   viewer: User | null
 }

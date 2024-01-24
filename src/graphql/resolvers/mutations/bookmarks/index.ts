@@ -17,13 +17,13 @@ export async function editBookmark(
 ) {
   const { id, data } = args
   const { title, description, tag, faviconUrl } = data
-  const { prisma } = ctx
+  const { db } = ctx
 
   if (!title || title.length === 0)
     throw new GraphQLError('Bookmark must have a title')
 
   // reset tags
-  await prisma.bookmark.update({
+  await db.bookmark.update({
     where: { id },
     data: {
       tags: {
@@ -33,7 +33,7 @@ export async function editBookmark(
     include: { tags: true },
   })
 
-  return await prisma.bookmark
+  return await db.bookmark
     .update({
       where: { id },
       data: {
@@ -66,7 +66,7 @@ export async function addBookmark(
 ) {
   const { data } = args
   const { url, tag } = data
-  const { prisma } = ctx
+  const { db } = ctx
 
   if (!urlRX(url)) throw new GraphQLError('URL was invalid')
 
@@ -78,7 +78,7 @@ export async function addBookmark(
     more broadly in the newsletter
   */
 
-  return await prisma.bookmark
+  return await db.bookmark
     .create({
       data: {
         url,
@@ -112,9 +112,9 @@ export async function deleteBookmark(
   ctx: Context
 ) {
   const { id } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
-  return await prisma.bookmark
+  return await db.bookmark
     .delete({
       where: { id },
     })

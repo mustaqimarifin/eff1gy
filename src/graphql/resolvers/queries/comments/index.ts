@@ -7,21 +7,21 @@ import {
 
 export async function getComment(_, args: QueryCommentArgs, ctx: Context) {
   const { id } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
-  return await prisma.comment.findUnique({ where: { id } })
+  return await db.comment.findUnique({ where: { id } })
 }
 
 export async function getCommentAuthor(parent: Bookmark, _, ctx: Context) {
   const { id } = parent
-  const { prisma } = ctx
+  const { db } = ctx
 
-  return await prisma.comment.findUnique({ where: { id } }).author()
+  return await db.comment.findUnique({ where: { id } }).author()
 }
 
 export async function getComments(_, args, ctx: Context) {
   const { refId, type } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
   if (!refId || !type) {
     return []
@@ -29,28 +29,28 @@ export async function getComments(_, args, ctx: Context) {
 
   switch (type) {
     case CommentType.Bookmark: {
-      const results = await prisma.bookmark
+      const results = await db.bookmark
         .findUnique({ where: { id: refId } })
         .comments()
 
       return results || []
     }
     case CommentType.Blog: {
-      const results = await prisma.blog
+      const results = await db.blog
         .findUnique({ where: { id: refId } })
         .comments()
 
       return results || []
     }
     case CommentType.Question: {
-      const results = await prisma.question
+      const results = await db.question
         .findUnique({ where: { id: refId } })
         .comments()
 
       return results || []
     }
     case CommentType.Stack: {
-      const results = await prisma.stack
+      const results = await db.stack
         .findUnique({ where: { id: refId } })
         .comments()
 

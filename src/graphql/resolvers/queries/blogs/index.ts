@@ -5,9 +5,9 @@ import {
 } from '~/graphql/typeSlut'
 
 export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
-  return await prisma.blog.findMany({
+  return await db.blog.findMany({
     relationLoadStrategy: 'join',
     orderBy: { date: 'desc' },
     include: {
@@ -25,10 +25,10 @@ export async function getBlog(
   { slug }: GetBlogQueryVariables,
   ctx: Context
 ) {
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
   const [blogBySlug, blogById] = await Promise.all([
-    prisma.blog.findUnique({
+    db.blog.findUnique({
       where: { slug },
       include: {
         comments: true,
@@ -39,7 +39,7 @@ export async function getBlog(
         },
       },
     }),
-    prisma.blog.findUnique({
+    db.blog.findUnique({
       where: { slug },
       include: {
         comments: true,

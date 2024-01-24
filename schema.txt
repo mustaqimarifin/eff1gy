@@ -1,3 +1,5 @@
+pnpm add @neondatabase/serverless @prisma/adapter-neon ws @types/ws bufferutil
+
 
   "prisma": {
     "seed": "tsx prisma/seed.ts"

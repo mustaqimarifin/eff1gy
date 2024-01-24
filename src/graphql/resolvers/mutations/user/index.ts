@@ -5,15 +5,15 @@ import { type MutationEditUserArgs } from '~/graphql/typeSlut'
 import { emailRX, nameRX } from '~/lib/functions'
 
 export async function deleteUser(_, __, ctx: Context) {
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
   if (viewer.isAdmin) {
     throw new GraphQLError('Admins can’t be deleted')
   }
 
-  await prisma.user.findUnique({ where: { id: viewer.id } })
+  await db.user.findUnique({ where: { id: viewer.id } })
 
-  return await prisma.user
+  return await db.user
     .delete({
       where: { id: viewer.id },
     })
@@ -21,7 +21,7 @@ export async function deleteUser(_, __, ctx: Context) {
 }
 
 export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
   const { data } = args
   const { name, email } = data
 
@@ -30,7 +30,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
       throw new GraphQLError('Usernames can be 16 characters long')
     }
 
-    const user = await prisma.user.findUnique({
+    const user = await db.user.findUnique({
       where: { email },
     })
 
@@ -38,7 +38,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
       throw new GraphQLError('That name is taken')
     }
 
-    return await prisma.user.update({
+    return await db.user.update({
       where: { id: viewer.id },
       data: { name },
     })
@@ -49,7 +49,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
       throw new GraphQLError('That email is not valid')
     }
 
-    const userByEmail = await prisma.user.findUnique({
+    const userByEmail = await db.user.findUnique({
       where: { email },
     })
 
@@ -64,14 +64,14 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
       }
     }
 
-    return await prisma.user.update({
+    return await db.user.update({
       where: { id: viewer.id },
       data: { email },
     })
   }
 
   // if no email or name were passed, the user is trying to cancel the pending email request
-  return await prisma.user.update({
+  return await db.user.update({
     where: { id: viewer.id },
     data: {},
   })

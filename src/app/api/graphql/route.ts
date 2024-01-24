@@ -5,7 +5,7 @@ import type { User } from 'next-auth'
 import { getViewer } from '~/graphql/context'
 import resolvers from '~/graphql/resolvers'
 import typeDefs from '~/graphql/typeDefs'
-import { prisma } from '~/lib/prisma'
+import { db } from '~/lib/db'
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -26,7 +26,7 @@ const { handleRequest } = createYoga<
 
     return {
       viewer,
-      prisma,
+      db,
     }
   },
   schema,

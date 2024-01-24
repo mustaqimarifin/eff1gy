@@ -42,11 +42,11 @@ const resolvers = {
       return userId === viewer?.id || viewer?.isAdmin
     },
     viewerCanComment: async ({ id }, _, ctx: Context) => {
-      const { viewer, prisma } = ctx
+      const { viewer, db } = ctx
       // I can always comment to answer a question
       if (viewer?.isAdmin) return true
       // If it's not me, only let people see the comment form if there are existing comments (answered)
-      const comments = await prisma.question
+      const comments = await db.question
         .findUnique({
           where: { id },
         })
@@ -56,10 +56,10 @@ const resolvers = {
     author: getQuestionAuthor,
     status: ({ _count: { comments } }) =>
       comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending,
-    viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {
+    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
       if (!viewer) return false
 
-      const reactions = await prisma.question
+      const reactions = await db.question
         .findUnique({
           where: { id },
         })
@@ -67,10 +67,10 @@ const resolvers = {
 
       return reactions.some(({ userId }) => userId === viewer.id)
     },
-    reactionCount: async ({ id, _count }, _, { prisma }: Context) => {
+    reactionCount: async ({ id, _count }, _, { db }: Context) => {
       if (_count?.reactions) return _count.reactions
 
-      const reactions = await prisma.question
+      const reactions = await db.question
         .findUnique({
           where: { id },
         })
@@ -91,10 +91,10 @@ const resolvers = {
     },
   },
   Bookmark: {
-    viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {
+    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
       if (!viewer) return false
 
-      const reactions = await prisma.bookmark
+      const reactions = await db.bookmark
         .findUnique({
           where: { id },
         })
@@ -102,10 +102,10 @@ const resolvers = {
 
       return reactions.some(({ userId }) => userId === viewer.id)
     },
-    reactionCount: async ({ id, _count }, _, { prisma }: Context) => {
+    reactionCount: async ({ id, _count }, _, { db }: Context) => {
       if (_count?.reactions) return _count.reactions
 
-      const reactions = await prisma.bookmark
+      const reactions = await db.bookmark
         .findUnique({
           where: { id },
         })
@@ -115,10 +115,10 @@ const resolvers = {
     },
   },
   Blog: {
-    viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {
+    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
       if (!viewer) return false
 
-      const reactions = await prisma.blog
+      const reactions = await db.blog
         .findUnique({
           where: { id },
         })
@@ -126,10 +126,10 @@ const resolvers = {
 
       return reactions.some(({ userId }) => userId === viewer.id)
     },
-    reactionCount: async ({ id, _count }, _, { prisma }: Context) => {
+    reactionCount: async ({ id, _count }, _, { db }: Context) => {
       if (_count?.reactions) return _count.reactions
 
-      const reactions = await prisma.blog
+      const reactions = await db.blog
         .findUnique({
           where: { id },
         })
@@ -139,10 +139,10 @@ const resolvers = {
     },
   },
   Stack: {
-    viewerHasReacted: async ({ id }, _, { viewer, prisma }: Context) => {
+    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
       if (!viewer) return false
 
-      const reactions = await prisma.stack
+      const reactions = await db.stack
         .findUnique({
           where: { id },
         })
@@ -150,10 +150,10 @@ const resolvers = {
 
       return reactions.some(({ userId }) => userId === viewer.id)
     },
-    reactionCount: async ({ id, _count }, _, { prisma }: Context) => {
+    reactionCount: async ({ id, _count }, _, { db }: Context) => {
       if (_count?.reactions) return _count.reactions
 
-      const reactions = await prisma.stack
+      const reactions = await db.stack
         .findUnique({
           where: { id },
         })
@@ -162,10 +162,10 @@ const resolvers = {
       return reactions.length
     },
     usedBy: async ({ id, users }, _, ctx: Context) => {
-      const { prisma } = ctx
+      const { db } = ctx
       if (users) return users
 
-      const data = await prisma.stack.findUnique({
+      const data = await db.stack.findUnique({
         where: { id },
         include: {
           users: true,
@@ -175,11 +175,11 @@ const resolvers = {
       return data.users || []
     },
     usedByViewer: async ({ id, users }, _, ctx: Context) => {
-      const { prisma, viewer } = ctx
+      const { db, viewer } = ctx
       if (!viewer?.id) return false
       if (users) return users.some((s) => s.id === viewer.id)
 
-      const data = await prisma.stack.findUnique({
+      const data = await db.stack.findUnique({
         where: { id },
         include: {
           users: true,

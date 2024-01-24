@@ -8,8 +8,8 @@ import {
 } from '~/graphql/typeSlut'
 
 export async function getQuestion(_, { id }: QueryQuestionArgs, ctx: Context) {
-  const { prisma, viewer } = ctx
-  const question = await prisma.question.findUnique({
+  const { db, viewer } = ctx
+  const question = await db.question.findUnique({
     where: { id },
     include: {
       comments: true,
@@ -50,7 +50,7 @@ export async function getQuestions(
     filter = { status: QuestionStatus.Answered },
   } = args
 
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
   const nullResults = {
     pageInfo: {
@@ -67,7 +67,7 @@ export async function getQuestions(
 
   /*
     When we are paginating after a cursor, we need to skip the cursor object itself. 
-    Ref https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
+    Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
   const skip = after ? 1 : 0
   const cursor = after ? { id: after } : undefined
@@ -101,7 +101,7 @@ export async function getQuestions(
   const take = first + 1
 
   try {
-    const edges = await prisma.question.findMany({
+    const edges = await db.question.findMany({
       relationLoadStrategy: 'join',
       take,
       skip,
@@ -135,7 +135,7 @@ export async function getQuestions(
     return {
       pageInfo: {
         hasNextPage,
-        totalCount: await prisma.question.count({ where }),
+        totalCount: await db.question.count({ where }),
         endCursor: edgesWithNodes[edgesWithNodes.length - 1].cursor,
       },
       edges: edgesWithNodes,
@@ -148,7 +148,7 @@ export async function getQuestions(
 
 export async function getQuestionAuthor(parent: Question, _, ctx: Context) {
   const { id } = parent
-  const { prisma } = ctx
+  const { db } = ctx
 
-  return await prisma.question.findUnique({ where: { id } }).author()
+  return await db.question.findUnique({ where: { id } }).author()
 }

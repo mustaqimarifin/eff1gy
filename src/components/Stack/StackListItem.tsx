@@ -21,7 +21,8 @@ export const StackListItem = memo<Props>(({ stack, active }) => {
   return (
     <ListItem
       key={stack.id}
-      href={`/stack/${stack.slug}`}
+      href="/(site)/stack/[slug]"
+      as={`/stack/${stack.slug}`}
       title={stack.name}
       description={null}
       byline={null}

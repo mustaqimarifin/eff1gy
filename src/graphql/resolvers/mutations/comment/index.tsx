@@ -20,12 +20,12 @@ export async function editComment(
   ctx: Context
 ) {
   const { id, text } = args
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
   if (!text || text.length === 0)
     throw new GraphQLError('Comment can’t be blank')
 
-  const comment = await prisma.comment.findUnique({
+  const comment = await db.comment.findUnique({
     where: { id },
   })
 
@@ -35,7 +35,7 @@ export async function editComment(
     throw new GraphQLError('You can’t edit this comment')
   }
 
-  return await prisma.comment
+  return await db.comment
     .update({
       where: { id },
       data: { text },
@@ -56,7 +56,7 @@ export async function addComment(
   ctx: Context
 ) {
   const { refId, type, text, parentId } = args
-  const { viewer, prisma } = ctx
+  const { viewer, db } = ctx
 
   const trimmedText = text.trim()
 
@@ -96,7 +96,7 @@ export async function addComment(
     }
   }
 
-  const parentObject = await prisma[table].findUnique({
+  const parentObject = await db[table].findUnique({
     where: { id: refId },
   })
 
@@ -105,7 +105,7 @@ export async function addComment(
   }
 
   /*   const [comment] = await Promise.all([
-    prisma.comment.create({
+    db.comment.create({
       data: {
         text,
         parentId,
@@ -113,7 +113,7 @@ export async function addComment(
         [field]: refId,
       },
     }),
-    prisma[table].update({
+    db[table].update({
       where: {
         id: refId,
       },
@@ -127,7 +127,7 @@ export async function addComment(
   })
  */
 
-  const comment = await prisma.comment.create({
+  const comment = await db.comment.create({
     data: {
       text,
       parentId,
@@ -143,9 +143,9 @@ export async function deleteComment(
   ctx: Context
 ) {
   const { id } = args
-  const { prisma, viewer } = ctx
+  const { db, viewer } = ctx
 
-  const comment = await prisma.comment.findUnique({
+  const comment = await db.comment.findUnique({
     where: { id },
   })
 
@@ -162,7 +162,7 @@ export async function deleteComment(
       })
     }
   }
-  return await prisma.comment
+  return await db.comment
     .delete({
       where: { id },
     })

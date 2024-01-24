@@ -8,11 +8,11 @@ export async function getBookmarks(
   ctx: Context
 ) {
   const { first = PAGINATION_AMOUNT, after = undefined, filter = null } = args
-  const { prisma } = ctx
+  const { db } = ctx
 
   /*
     When we are paginating after a cursor, we need to skip the cursor object itself. 
-    Ref https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
+    Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
   const skip = after ? 1 : 0
   const cursor = after ? { id: after } : undefined
@@ -48,7 +48,7 @@ export async function getBookmarks(
   const take = first + 1
 
   try {
-    const edges = await prisma.bookmark.findMany({
+    const edges = await db.bookmark.findMany({
       relationLoadStrategy: 'join',
       take,
       skip,
@@ -75,7 +75,7 @@ export async function getBookmarks(
     return {
       pageInfo: {
         hasNextPage,
-        totalCount: await prisma.bookmark.count({ where }),
+        totalCount: await db.bookmark.count({ where }),
         endCursor: edgesWithNodes[edgesWithNodes.length - 1].cursor,
       },
       edges: edgesWithNodes,
@@ -94,10 +94,10 @@ export async function getBookmarks(
 }
 
 export async function getBookmark(_, { id }, ctx: Context) {
-  const { prisma } = ctx
+  const { db } = ctx
 
   try {
-    return await prisma.bookmark.findUnique({
+    return await db.bookmark.findUnique({
       where: { id },
       include: {
         tags: true,

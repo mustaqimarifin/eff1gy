@@ -13,10 +13,10 @@ import {
   twitterKEY,
 } from '~/graphql/constants'
 
-import { prisma } from './prisma'
+import { db } from './db'
 
 export const authConfig = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   providers: [
     Twitter({
       clientId: twitterID,

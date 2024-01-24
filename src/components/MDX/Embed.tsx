@@ -1,6 +1,5 @@
 'use client'
-import LiteYouTubeEmbed from './Lite.js'
-import getVideoId from './vidID.js'
+import LiteYouTubeEmbed from './Lite.mjs'
 
 const youtubeDomains = new Set([
   'youtu.be',
