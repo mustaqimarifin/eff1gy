@@ -1,4 +1,6 @@
 'use client'
+import type { EventDetailsPostSummary } from '~/data/events'
+
 import LiteYouTubeEmbed from './Lite.mjs'
 
 const youtubeDomains = new Set([
@@ -27,10 +29,17 @@ const getYoutubeId = (url: string): string | null => {
   return null
 }
 
-export const Embed = ({ id }: { id: string }) => (
-  <div className="aspect-video overflow-hidden rounded-md shadow-md object-fill ">
+export const Embed = ({ video }) => (
+  <div className="aspect-[32/9] object-cover w-full">
     <LiteYouTubeEmbed
-      id={getYoutubeId(id)} // Default none, id of the video or playlist
+      width={1307}
+      height={560}
+      style={{
+        width: '100%',
+        height: 'auto',
+      }}
+      id={getYoutubeId(video.url)}
+      thumbnail={video.thumbnail} // Default none, id of the video or playlist
       adNetwork={false} // Default true, to preconnect or not to doubleclick addresses called by YouTube iframe (the adnetwork from Google)
       params="" // any params you want to pass to the URL, assume we already had '&' and pass your parameters string
       playlist={false} // Use  true when your ID be from a playlist

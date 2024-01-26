@@ -1,6 +1,6 @@
 'use server'
 import { unstable_noStore as noStore } from 'next/cache'
-import { Suspense, cache } from 'react'
+import { cache, Suspense } from 'react'
 
 import { CLIENT_URL } from '~/graphql/constants'
 import { ViewType } from '~/graphql/typeSlut'
@@ -245,7 +245,7 @@ export const getTopTracks = async () => {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   })
 }
 

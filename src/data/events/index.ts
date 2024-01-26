@@ -7,28 +7,34 @@ import spartan from './spartan'
 import starwars from './starwars'
 import tokyo from './tokyo'
 
-export interface EventDetail {
+type EventVideo = {
+  url: string
+  thumbnail: string
+}
+
+export type EventDetail = {
   title: string
   description: string
   media?: Array<string> | null
-  gallery?: string[] | null
   orientation?: 'landscape'
 }
 
-export interface EventDetailsPost {
+export type EventDetailsPost = {
   slug: string
   title: string
-  video: string
+  video: EventVideo
+  gallery?: string[] | null
   logo: string
   description: string
   date: string
   details: Array<EventDetail>
 }
 
-export interface EventDetailsPostSummary {
+export type EventDetailsPostSummary = {
   slug: string
-  video: string
+  video: EventVideo
   logo: string
+  gallery?: string[] | null
   title: string
   firstDetail: EventDetail
   detailsCount: number
@@ -50,6 +56,7 @@ function extractSummary({
   title,
   slug,
   video,
+  gallery,
   logo,
   details,
   date,
@@ -59,6 +66,7 @@ function extractSummary({
     slug,
     logo,
     video,
+    gallery,
     firstDetail: details[1],
     detailsCount: details.length,
     date,

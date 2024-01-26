@@ -11,10 +11,7 @@ export default async function Mdx(props) {
         {...props}
         options={{
           mdxOptions: {
-            //useDynamicImport: true,
-            remarkPlugins: [],
             rehypePlugins: [meta2],
-            format: 'mdx',
           },
         }}
         components={{ ...components, ...(props.components || {}) }}

@@ -8,7 +8,6 @@ const config = {
     '.github/**',
     '.next/**',
     'node_modules/**',
-    'src/components/Marquee/m.js',
     'public',
     'src/components/MDX/sugar.js',
     'src/components/MDX/vidID.js',

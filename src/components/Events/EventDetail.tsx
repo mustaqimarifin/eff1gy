@@ -5,9 +5,6 @@ import { Detail } from '~/components/ListDetail/Detail'
 import { TitleBar } from '~/components/ListDetail/TitleBar'
 import type { EventDetailsPost } from '~/data/events'
 
-import { FunContainer } from '../Layouts'
-import { Embed } from '../MDX/Embed'
-
 interface Props {
   post: EventDetailsPost
   children?: ReactNode
@@ -16,7 +13,14 @@ interface Props {
 export function EventDetail({ post, children }: Props) {
   const scrollContainerRef = useRef(null)
   const titleRef = useRef(null)
-
+  const gallery = [
+    '/starwars1.jpeg',
+    '/starwars2.jpeg',
+    '/starwars3.jpeg',
+    '/starwars4.jpeg',
+    '/starwars5.jpeg',
+    '/starwars6.jpeg',
+  ]
   return (
     <>
       <Detail.Container data-cy="event-detail" ref={scrollContainerRef}>
@@ -30,39 +34,12 @@ export function EventDetail({ post, children }: Props) {
           scrollContainerRef={scrollContainerRef}
         />
         <Detail.ContentContainer>
-          <FunContainer className="!pt-0">
-            <div className="max-w-screen-md mx-auto ">
-              <h1 className="mt-2 mb-3 text-5xl font-extrabold tracking-tight text-center text-brand-primary dark:text-white lg:text-4xl lg:leading-snug">
-                {post.title}
-              </h1>
-
-              <div className="flex justify-center mt-3 space-x-3 text-gray-500 ">
-                <div className="flex items-center gap-3">
-                  <div>
-                    <div className="flex items-center space-x-2 text-sm">
-                      <time
-                        className="text-gray-500 dark:text-gray-400"
-                        dateTime={post?.date}>
-                        {new Date(post?.date).toDateString()}
-                      </time>
-                    </div>
-                  </div>
-                </div>
+          {children}
+          {/*             <div className="relative z-0 max-w-screen-lg mx-auto overflow-hidden aspect-video lg:rounded-lg">
+              <div className="object-cover">
+                {post && <Embed id={post?.video} />}
               </div>
-            </div>
-          </FunContainer>{' '}
-          <div className="relative z-0 max-w-screen-lg mx-auto overflow-hidden aspect-video lg:rounded-lg">
-            <div className="object-cover">
-              {post && <Embed id={post?.video} />}
-            </div>
-          </div>
-          <FunContainer>
-            <article className="max-w-screen-md mx-auto ">
-              <div className="mx-auto my-3 prose dark:prose-invert prose-a:text-blue-600">
-                {children}
-              </div>
-            </article>
-          </FunContainer>
+            </div> */}
         </Detail.ContentContainer>
       </Detail.Container>
       {/*       <Detail.Container data-cy="event-detail" ref={scrollContainerRef}>

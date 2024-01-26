@@ -21,7 +21,7 @@ export function CustomLink(props) {
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <Link {...props} />
   }
 
   if (href.startsWith('@')) {

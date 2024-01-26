@@ -18,7 +18,6 @@ export const PostsList = () => {
   const [scrollContainerRef, setScrollContainerRef] = useState(null)
   const { data: posts, isLoading } = useSWR<Post[]>(
     CLIENT_URL + `/api/post`,
-    //`http://localhost:3000/api/post`,
     fetcher
   )
 

@@ -1,5 +1,5 @@
-pnpm add @neondatabase/serverless @prisma/adapter-neon ws @types/ws bufferutil
-
+pnpm remove @neondatabase/serverless @prisma/adapter-neon ws @types/ws bufferutil
+bun build src/components/MDX/Marquee.tsx --outdir src/components/MDX --external react --minify
 
   "prisma": {
     "seed": "tsx prisma/seed.ts"

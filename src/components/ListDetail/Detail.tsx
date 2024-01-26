@@ -21,7 +21,8 @@ import { TitleBar } from './TitleBar'
 function ContentContainer(props) {
   return (
     <div
-      className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 "
+      /*       className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 " */
+      className="mx-auto "
       {...props}
     />
   )
