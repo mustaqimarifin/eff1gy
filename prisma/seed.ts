@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-  /* const q = await prisma.question.createMany({
+	/* const q = await prisma.question.createMany({
     data: [
       {
         title: 'What developer tools do you like?',
@@ -80,7 +80,7 @@ async function main() {
       },
     ],
   }) */
-  /*   const posts = await prisma.blog.createMany({
+	/*   const posts = await prisma.blog.createMany({
     data: [
       {
         title: 'VICE',
@@ -108,26 +108,26 @@ async function main() {
       },
     ],
   }) */
-  const tags = await prisma.tag.createMany({
-    data: [
-      { name: 'lol' },
-      { name: 'web' },
-      { name: 'gear' },
-      { name: 'portfolio' },
-      { name: 'software' },
-      { name: 'art' },
-      { name: 'plugins' },
-      { name: 'music' },
-    ],
-  })
-  //console.log({ tags })
+	const tags = await prisma.tag.createMany({
+		data: [
+			{ name: "lol" },
+			{ name: "web" },
+			{ name: "gear" },
+			{ name: "portfolio" },
+			{ name: "software" },
+			{ name: "art" },
+			{ name: "plugins" },
+			{ name: "music" },
+		],
+	});
+	//console.log({ tags })
 }
 main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+	.then(async () => {
+		await prisma.$disconnect();
+	})
+	.catch(async (e) => {
+		console.error(e);
+		await prisma.$disconnect();
+		process.exit(1);
+	});

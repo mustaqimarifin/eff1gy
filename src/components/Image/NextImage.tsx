@@ -1,5 +1,5 @@
-import NextImage from 'next/image'
+import NextImage from "next/image";
 
 export const Image = (props) => {
-  return <NextImage {...props} />
-}
+	return <NextImage {...props} />;
+};

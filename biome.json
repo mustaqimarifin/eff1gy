@@ -1,0 +1,54 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"formatter": {
+		"enabled": true,
+		"lineWidth": 120,
+		"ignore": [
+			".next/*"
+		]
+	},
+	"files": {
+		"ignore": [
+			".next/*",
+			"src/gql/**/*"
+		]
+	},
+	"linter": {
+		"ignore": [
+			".next/*", "src/graphql/typeSlut.js"
+		],
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"complexity": {
+				"noBannedTypes": "off"
+			},
+			"a11y": {
+				"useButtonType": "off",
+				"noSvgWithoutTitle": "off",
+				"useKeyWithClickEvents": "off"
+			},
+			"correctness": {
+				"noChildrenProp": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noImplicitAnyLet": "off",
+				"noArrayIndexKey": "off"
+			},
+			"style": {
+				"useConst": "off",
+				"noUnusedTemplateLiteral": "off",
+				"noNonNullAssertion": "off"
+			}
+		}
+	}
+}

@@ -1,4 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
+
+import { ToggleReactionDocument, type ToggleReactionMutation } from "~/graphql/typeSlut";
 
 export const TOGGLE_REACTION = gql`
   mutation toggleReaction($refId: ID!, $type: ReactionType!) {
@@ -36,4 +38,5 @@ export const TOGGLE_REACTION = gql`
       }
     }
   }
-`
+`;
+//export const TOGGLE_REACTION = ToggleReactionDocument

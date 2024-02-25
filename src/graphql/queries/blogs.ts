@@ -1,9 +1,6 @@
 import { gql } from '@apollo/client'
 
-import {
-  BlogDetailFragment,
-  BlogListItemFragment,
-} from '~/graphql/fragments/blog'
+import { BlogDetailFragment, BlogListItemFragment } from '~/graphql/fragments/blog'
 
 export const GET_BLOGS = gql`
   query getBlogs {

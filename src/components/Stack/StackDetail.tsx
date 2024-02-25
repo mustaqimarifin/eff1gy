@@ -1,97 +1,91 @@
-'use client'
+"use client";
 
-import { Link2Icon } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRef } from 'react'
+import { Link2Icon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRef } from "react";
 
-import { PrimaryButton } from '~/components/Button'
-import { Comments } from '~/components/Comments'
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import { Tags } from '~/components/Tag'
-import { CommentType } from '~/graphql/typeSlut'
+import { PrimaryButton } from "~/components/Button";
+import { Comments } from "~/components/Comments";
+import { Detail } from "~/components/ListDetail/Detail";
+import { TitleBar } from "~/components/ListDetail/TitleBar";
+import { Tags } from "~/components/Tag";
+import { CommentType, GetStackDocument, useGetStackQuery, type GetStackQuery } from "~/graphql/typeSlut";
 
-import { MarkdownRenderer } from '../MarkdownRenderer'
-import { SignInDialog } from '../SignInDialog'
-import { StackActions } from './StackActions'
-import { StackUsedBy } from './StackUsedBy'
+import { MarkdownRenderer } from "../MarkdownRenderer";
+import { SignInDialog } from "../SignInDialog";
+import { StackActions } from "./StackActions";
+import { StackUsedBy } from "./StackUsedBy";
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
-export function StackDetail({ children, stack }) {
-  const scrollContainerRef = useRef(null)
-  const titleRef = useRef(null)
+export function StackDetail({ slug }) {
+	const scrollContainerRef = useRef(null);
+	const titleRef = useRef(null);
 
-  /*     const { data, loading, error } = useGetStackQuery({
+	     const { data, loading, error } = useQuery<GetStackQuery>(GetStackDocument,{
         variables: { slug },
     })
- */
+			if (loading) {
+		return <Detail.Loading />;
+	}
 
-  return (
-    <>
-      <Detail.Container data-cy="stack-detail" ref={scrollContainerRef}>
-        <TitleBar
-          backButton
-          globalMenu={false}
-          backButtonHref={'/stack'}
-          magicTitle
-          title={stack.name}
-          titleRef={titleRef}
-          scrollContainerRef={scrollContainerRef}
-          trailingAccessory={<StackActions stack={stack} />}
-        />
+	if (!data?.stack || error) {
+		return <Detail.Null />;
+	}
 
-        <Detail.ContentContainer>
-          <Detail.Header>
-            <div className="flex items-center space-x-6">
-              <Link href={stack.url} passHref className="inline-block">
-                <div className="w-12 h-12">
-                  <Image
-                    priority
-                    //src={`/static/img/stack/${stack.image}`}
-                    src={`https://ik.imagekit.io/mstqmarfn/stack/${stack.image}`}
-                    width={60}
-                    height={60}
-                    alt={`${stack.name} icon`}
-                    className={'rounded-md object-cover'}
-                  />
-                </div>
-              </Link>
-              <div className="flex flex-col space-y-1">
-                <Link href={stack.url} passHref className="block">
-                  <Detail.Title ref={titleRef}>{stack.name}</Detail.Title>
-                </Link>
-                {stack.tags && stack.tags.length > 0 && (
-                  <Tags tags={stack.tags} />
-                )}
-              </div>
-              {children}
-            </div>
+ const { stack } = data
 
-            <MarkdownRenderer
-              className="text-primary"
-              children={stack.description}
-              variant="comment"
-            />
+	return (
+		<>
+			<Detail.Container data-cy="stack-detail" ref={scrollContainerRef}>
+				<TitleBar
+					backButton
+					globalMenu={false}
+					backButtonHref={"/stack"}
+					magicTitle
+					title={stack.name}
+					titleRef={titleRef}
+					scrollContainerRef={scrollContainerRef}
+					trailingAccessory={<StackActions stack={stack} />}
+				/>
 
-            <PrimaryButton
-              size="large"
-              href={stack.url}
-              target="_blank"
-              rel="noopener noreferrer">
-              <Link2Icon />
-              <span>Visit</span>
-            </PrimaryButton>
+				<Detail.ContentContainer>
+					<Detail.Header>
+						<div className="flex items-center space-x-6">
+							<Link href={stack.url} passHref className="inline-block">
+								<div className="w-12 h-12">
+									<Image
+										priority
+										//src={`/static/img/stack/${stack.image}`}
+										src={`https://ik.imagekit.io/mstqmarfn/stack/${stack.image}`}
+										width={60}
+										height={60}
+										alt={`${stack.name} icon`}
+										className={"rounded-md object-cover"}
+									/>
+								</div>
+							</Link>
+							<div className="flex flex-col space-y-1">
+								<Link href={stack.url} passHref className="block">
+									<Detail.Title ref={titleRef}>{stack.name}</Detail.Title>
+								</Link>
+								{stack.tags && stack.tags.length > 0 && <Tags tags={stack.tags} />}
+							</div>
+					
+						</div>
+						<MarkdownRenderer className="text-primary" children={stack.description} variant="comment" />
 
-            <SignInDialog>
-              {({ openModal }) => (
-                <StackUsedBy triggerSignIn={openModal} stack={stack} />
-              )}
-            </SignInDialog>
-          </Detail.Header>
-        </Detail.ContentContainer>
+						<PrimaryButton size="large" href={stack.url} target="_blank" rel="noopener noreferrer">
+							<Link2Icon />
+							<span>Visit</span>
+						</PrimaryButton>
 
-        <Comments refId={stack.id} type={CommentType.Stack} />
-      </Detail.Container>
-    </>
-  )
+						<SignInDialog>{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}</SignInDialog>
+					</Detail.Header>
+				</Detail.ContentContainer>
+
+				<Comments refId={stack.id} type={CommentType.Stack} />
+			</Detail.Container>
+		</>
+	);
 }

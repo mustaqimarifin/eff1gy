@@ -1,89 +1,78 @@
-import { Globe } from '~/components/Home/Globe'
-import Intro from '~/components/Home/Intro'
-import { Akhyla, Muse2 } from '~/components/Icon'
+import { Globe } from "~/components/Home/Globe";
+import Intro from "~/components/Home/Intro";
+import { Akhyla, Muse2 } from "~/components/Icon";
 
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
 
 function SectionTitle(props) {
-  return (
-    <h4
-      className="col-span-2 pt-8 text-lg font-extrabold text-black dark:text-white md:pt-0 md:text-right md:text-base md:font-normal md:text-opacity-40"
-      {...props}
-    />
-  )
+	return (
+		<h4
+			className="col-span-2 pt-8 text-lg font-extrabold text-black dark:text-white md:pt-0 md:text-right md:text-base md:font-normal md:text-opacity-40"
+			{...props}
+		/>
+	);
 }
 
 function SectionContent(props) {
-  return <div className="col-span-10" {...props} />
+	return <div className="col-span-10" {...props} />;
 }
 
 interface TableRowProps {
-  href: string
-  title: string
-  date: string
-  subtitle?: string
+	href: string;
+	title: string;
+	date: string;
+	subtitle?: string;
 }
 
 function TableRow({ href, title, subtitle, date }: TableRowProps) {
-  return (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      href={href}
-      className="group flex items-center space-x-4">
-      <strong className="flex-none font-medium text-gray-900 group-hover:text-blue-600 group-hover:underline dark:text-gray-100 dark:group-hover:text-blue-500">
-        {title}
-      </strong>
-      <span className="w-full shrink border-t border-dashed border-gray-300 dark:border-gray-800" />
-      {subtitle && <span className="text-tertiary flex-none">{subtitle}</span>}
-      {date && (
-        <span className="text-quaternary flex-none font-mono">{date}</span>
-      )}
-    </a>
-  )
+	return (
+		<a target="_blank" rel="noopener noreferrer" href={href} className="group flex items-center space-x-4">
+			<strong className="flex-none font-medium text-gray-900 group-hover:text-blue-600 group-hover:underline dark:text-gray-100 dark:group-hover:text-blue-500">
+				{title}
+			</strong>
+			<span className="w-full shrink border-t border-dashed border-gray-300 dark:border-gray-800" />
+			{subtitle && <span className="text-tertiary flex-none">{subtitle}</span>}
+			{date && <span className="text-quaternary flex-none font-mono">{date}</span>}
+		</a>
+	);
 }
 
 function SectionContainer(props) {
-  return (
-    <div
-      className="grid grid-cols-1 items-start gap-6 md:grid-cols-12"
-      {...props}
-    />
-  )
+	return <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-12" {...props} />;
 }
 
 const workHistory = [
-  {
-    href: 'https://github.com/mobile',
-    title: 'GitHub',
-    subtitle: 'Product Designer',
-    date: '2018—\u00a0\u00a0',
-  },
-  {
-    href: 'https://designdetails.fm',
-    title: 'Design Details Podcast',
-    subtitle: 'Co-host',
-    date: '2014—\u00a0\u00a0',
-  },
-  {
-    href: 'https://github.com/withspectrum/spectrum',
-    title: 'Spectrum.chat',
-    subtitle: 'Co-founder',
-    date: '2017—18',
-  },
-  {
-    href: 'https://facebook.com',
-    title: 'Facebook',
-    subtitle: 'Product Designer',
-    date: '2015—17',
-  },
-  {
-    href: 'https://buffer.com',
-    title: 'Buffer',
-    subtitle: 'Product Designer',
-    date: '2013—15',
-  },
-]
+	{
+		href: "https://github.com/mobile",
+		title: "GitHub",
+		subtitle: "Product Designer",
+		date: "2018—\u00a0\u00a0",
+	},
+	{
+		href: "https://designdetails.fm",
+		title: "Design Details Podcast",
+		subtitle: "Co-host",
+		date: "2014—\u00a0\u00a0",
+	},
+	{
+		href: "https://github.com/withspectrum/spectrum",
+		title: "Spectrum.chat",
+		subtitle: "Co-founder",
+		date: "2017—18",
+	},
+	{
+		href: "https://facebook.com",
+		title: "Facebook",
+		subtitle: "Product Designer",
+		date: "2015—17",
+	},
+	{
+		href: "https://buffer.com",
+		title: "Buffer",
+		subtitle: "Product Designer",
+		date: "2013—15",
+	},
+];
 /*
 const speakingData = [
   {
@@ -150,55 +139,44 @@ const speakingData = [
  */
 
 export default async function Home() {
-  return (
-    <Intro>
-      <div className="my-8 mx-16 flex flex-col md:justify-items-center md:flex-row md:items-center">
-        <Globe />
-        <SectionTitle></SectionTitle>
-        <SectionContainer>
-          <SectionContent>
-            <div className="space-y-8 pb-24 md:space-y-16">
-              <div className=" w-full p-2 lg:max-w-3xl">
-                <h2 className="mb-6 pt-4 font-serif text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-4xl">
-                  Greetings! I'm a{' '}
-                  <span className="dark:text-active font-serif font-normal text-blue-400">
-                    regional marketing manager&nbsp;
-                  </span>
-                  at{` `}
-                  <Muse2 className="inline h-12 items-center dark:invert" />,{' '}
-                  <span>where we focus on&nbsp;</span>
-                  <span className="text-coyRed font-serif">
-                    large-scale sport & lifestyle events
-                  </span>
-                </h2>
-                <div className="drop-shadow-sm">
-                  <p className="dark:prose-invert prose max-w-none  py-4 md:prose-lg">
-                    In 2014, I founded{' '}
-                    <Akhyla className="mb-1 inline h-8 w-8 items-center text-red-400" />{' '}
-                    Akhyla - which was merely my own indie label for my own
-                    music but ended up becoming a platform to electronic
-                    musicians to learn, collaborate and make records. And in
-                    between that time I served as
-                    <span className="dark:text-active font-serif font-normal text-orange-400 hover:text-sky-400">
-                      {' '}
-                      &nbsp;Principal Foley Artist
-                    </span>
-                    &nbsp;for Infinity Games. More to come as I finally catalog
-                    my life and adventures as a "forever-noob" web developer
-                    too.
-                  </p>
-                  {/*                <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
+	return (
+		<Intro>
+			<div className="my-8 mx-16 flex flex-col md:justify-items-center md:flex-row md:items-center">
+				<Globe />
+				<SectionTitle />
+				<SectionContainer>
+					<SectionContent>
+						<div className="space-y-8 pb-24 md:space-y-16">
+							<div className=" w-full p-2 lg:max-w-3xl">
+								<h2 className="mb-6 pt-4 font-serif text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-4xl">
+									Greetings! I'm a{" "}
+									<span className="dark:text-active font-serif font-normal text-blue-400">
+										regional marketing manager&nbsp;
+									</span>
+									at{` `}
+									<Muse2 className="inline h-12 items-center dark:invert" />, <span>where we focus on&nbsp;</span>
+									<span className="text-coyRed font-serif">large-scale sport & lifestyle events</span>
+								</h2>
+								<div className="drop-shadow-sm">
+									<p className="dark:prose-invert prose max-w-none  py-4 md:prose-lg">
+										In 2014, I founded <Akhyla className="mb-1 inline h-8 w-8 items-center text-red-400" /> Akhyla -
+										which was merely my own indie label for my own music but ended up becoming a platform to electronic
+										musicians to learn, collaborate and make records. And in between that time I served as
+										<span className="dark:text-active font-serif font-normal text-orange-400 hover:text-sky-400">
+											{" "}
+											&nbsp;Principal Foley Artist
+										</span>
+										&nbsp;for Infinity Games. More to come as I finally catalog my life and adventures as a
+										"forever-noob" web developer too.
+									</p>
+									{/*                <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
       More to come as I finally catalog my life!
     </p> */}
-                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
-                    Thanks for stopping by!{' '}
-                  </p>
-                  <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
-                    Mustaqim Arifin{' '}
-                  </p>
-                </div>
+									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Thanks for stopping by! </p>
+									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Mustaqim Arifin </p>
+								</div>
 
-                {/* <Image
+								{/* <Image
 alt="Mustaqim Arifin"
 src="/vmp-banner.webp"
 width={512}
@@ -211,9 +189,9 @@ height: 'auto',
 priority
 className="transition-colors duration-200 border-4 border-orange-400 rounded-full dark:invert"
 /> */}
-              </div>
+							</div>
 
-              {/*
+							{/*
 
   <SectionContainer>
      <SectionTitle>Speaking</SectionTitle>
@@ -230,10 +208,10 @@ className="transition-colors duration-200 border-4 border-orange-400 rounded-ful
 </div>
 </SectionContent>
   </SectionContainer> */}
-            </div>
-          </SectionContent>
-        </SectionContainer>
-        {/*         <SectionContainer>
+						</div>
+					</SectionContent>
+				</SectionContainer>
+				{/*         <SectionContainer>
       <SectionTitle>Work</SectionTitle>
       <SectionContent>
         <div className="flex flex-col space-y-3">
@@ -249,7 +227,7 @@ className="transition-colors duration-200 border-4 border-orange-400 rounded-ful
         </div>
       </SectionContent>
     </SectionContainer> */}
-      </div>
-    </Intro>
-  )
+			</div>
+		</Intro>
+	);
 }

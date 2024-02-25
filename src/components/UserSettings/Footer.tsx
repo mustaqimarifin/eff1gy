@@ -1,19 +1,19 @@
 //
 
-import { signOut } from 'next-auth/react'
+import { signOut } from "next-auth/react";
 
-import Button, { DeleteButton } from '~/components/Button'
+import Button, { DeleteButton } from "~/components/Button";
 
-import { DeleteUserDialog } from './DeleteUserDialog'
+import { DeleteUserDialog } from "./DeleteUserDialog";
 
 export function UserSettingsFooter() {
-  return (
-    <div className="flex justify-between space-x-4 py-12">
-      <Button variant="link" onClick={() => signOut()}>
-        Log out
-      </Button>
+	return (
+		<div className="flex justify-between space-x-4 py-12">
+			<Button variant="link" onClick={() => signOut()}>
+				Log out
+			</Button>
 
-      <DeleteUserDialog trigger={<DeleteButton>Delete account</DeleteButton>} />
-    </div>
-  )
+			<DeleteUserDialog trigger={<DeleteButton>Delete account</DeleteButton>} />
+		</div>
+	);
 }

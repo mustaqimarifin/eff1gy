@@ -1,20 +1,10 @@
-import author from './author'
-import post from './post'
-import tag from './tag'
-import siteConfig from './siteConfig'
-import blockContent from './blockContent'
-import coverImage from './coverImage'
-import social from './social'
-import media from './media'
-import caseStudy from './caseStudy'
-export const schemaTypes = [
-  media,
-  social,
-  coverImage,
-  author,
-  post,
-  blockContent,
-  tag,
-  siteConfig,
-  caseStudy,
-]
+import author from "./author";
+import blockContent from "./blockContent";
+import caseStudy from "./caseStudy";
+import coverImage from "./coverImage";
+import media from "./media";
+import post from "./post";
+import siteConfig from "./siteConfig";
+import social from "./social";
+import tag from "./tag";
+export const schemaTypes = [media, social, coverImage, author, post, blockContent, tag, siteConfig, caseStudy];

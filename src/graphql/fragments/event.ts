@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const EventCoreFragment = gql`
   fragment EventCore on Event {
@@ -6,14 +6,14 @@ export const EventCoreFragment = gql`
     id
     count
   }
-`
+`;
 
 export const EventListItemFragment = gql`
   fragment EventListItem on Event {
     ...EventCore
   }
   ${EventCoreFragment}
-`
+`;
 
 export const EventDetailFragment = gql`
   fragment EventDetail on Event {
@@ -22,4 +22,4 @@ export const EventDetailFragment = gql`
     viewerHasReacted
   }
   ${EventCoreFragment}
-`
+`;

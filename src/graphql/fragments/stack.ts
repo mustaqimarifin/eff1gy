@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { UserInfoFragment } from './user'
+import { UserInfoFragment } from "./user";
 
 export const StackCoreFragment = gql`
   fragment StackCore on Stack {
@@ -12,14 +12,14 @@ export const StackCoreFragment = gql`
     slug
     count
   }
-`
+`;
 
 export const StackListItemFragment = gql`
   fragment StackListItem on Stack {
     ...StackCore
   }
   ${StackCoreFragment}
-`
+`;
 
 export const StackDetailFragment = gql`
   fragment StackDetail on Stack {
@@ -39,7 +39,7 @@ export const StackDetailFragment = gql`
   }
   ${StackCoreFragment}
   ${UserInfoFragment}
-`
+`;
 
 export const StacksConnectionFragment = gql`
   fragment StacksConnection on StacksConnection {
@@ -56,4 +56,4 @@ export const StacksConnectionFragment = gql`
     }
   }
   ${StackListItemFragment}
-`
+`;

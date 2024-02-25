@@ -1,33 +1,50 @@
-'use client'
-import Link from 'next/link'
-import { useRef, useState } from 'react'
+"use client";
+import Link from "next/link";
+import { useRef, useState } from "react";
 
-import { Detail } from '../ListDetail/Detail'
-import { TitleBar } from '../ListDetail/TitleBar'
+import { Detail } from "../ListDetail/Detail";
+import { TitleBar } from "../ListDetail/TitleBar";
+import type { Post } from "./BlogDetail";
 
-export default function PostList2({ posts, children }) {
-  const scrollContainerRef = useRef(null)
-  const titleRef = useRef(null)
-  const [searchValue, setSearchValue] = useState('')
-  const filteredBlogPosts =
-    posts &&
-    posts
-      .sort((a, b) => Number(new Date(b.date)) - Number(new Date(b.date)))
-      .filter((post) =>
-        post.title.toLowerCase().includes(searchValue.toLowerCase())
-      )
+import { formatDate } from "~/lib/transformers";
+
+export default function BlogList ({ posts }) {
+  const scrollContainerRef = useRef(null);
+  const titleRef = useRef(null);
+  const [searchValue, setSearchValue] = useState("");
+
+
+  /*   const { data, loading, error } = useQuery<GetBlogsQuery>(GetBlogsDocument, {
+      fetchPolicy: "cache-first",
+    });
+      if (loading) {
+      return <Detail.Loading />;
+    }
+  
+    if (!data?.blogs || error) {
+      return <Detail.Null />;
+    }
+  
+    const { blogs } = data
+    let count : number
+    const views =  blogs.filter((blog) => blog.count === count);
+    const viewCount = views */
+
+  const fPosts: Post[] = posts
+    ?.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
+    .filter((post) => post.title.toLowerCase().includes(searchValue.toLowerCase()))
 
   return (
-    <Detail.Container data-cy="post-list-2" ref={scrollContainerRef}>
+    <Detail.Container data-cy="post-list-2" ref={ scrollContainerRef }>
       <TitleBar
         backButton
-        globalMenu={false}
-        backButtonHref={'/post'}
+        globalMenu={ false }
+        backButtonHref={ "/blog" }
         magicTitle
         title="Posts"
-        titleRef={titleRef}
-        scrollContainerRef={scrollContainerRef}
-        trailingAccessory={null}
+        titleRef={ titleRef }
+        scrollContainerRef={ scrollContainerRef }
+        trailingAccessory={ null }
       />
 
       <Detail.ContentContainer>
@@ -39,15 +56,13 @@ export default function PostList2({ posts, children }) {
           </div>
         </Detail.Header> */}
         <div className="flex flex-col items-start justify-center max-w-2xl mx-auto mb-16">
-          <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
-            Posts
-          </h1>
+          <h1 className="mb-4 text-3xl font-quad tracking-tight text-black md:text-5xl dark:text-white">Posts</h1>
           <p className="mb-4 text-gray-600 dark:text-gray-400">
-            {`I've been writing online since 2014, mostly about web development and tech careers.
+            { `I've been writing online since 2014, mostly about web development and tech careers.
             In total, I've written ${posts?.length} articles on this site.
             Use the search below to filter by title.`}
           </p>
-          <div className="relative w-full mb-4"></div>
+          <div className="relative w-full mb-4" />
           {/*         {!searchValue && (
           <>
             <h3 className="mt-8 mb-4 text-2xl font-bold tracking-tight text-black md:text-4xl dark:text-white">
@@ -70,13 +85,26 @@ export default function PostList2({ posts, children }) {
             />
           </>
         )} */}
-
-          {children}
+          { fPosts?.map((p) =>
+            <Link className="w-full" href={ `/blog/${p.slug}` }>
+              <div className="mb-8">
+                <div className="flex flex-col justify-between md:flex-row">
+                  <div className=" mb-2 text-lg font-bold text-gray-900 md:text-xl dark:text-gray-100">
+                    { p.title }
+                  </div>
+                  <div className="w-42 mb-4 text-left text-gray-500 text-sm md:text-right ">
+                    { formatDate(p?.date) }
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400">{ p.excerpt }</p>
+              </div>
+            </Link>
+          ) }
         </div>
         <div className="py-6" />
       </Detail.ContentContainer>
     </Detail.Container>
-  )
+  );
 }
 /* 
 export default async function PostIndex() {

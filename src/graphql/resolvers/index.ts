@@ -1,194 +1,219 @@
-import { type Context } from '~/graphql/context'
-import Mutation from '~/graphql/resolvers/mutations'
-import Query from '~/graphql/resolvers/queries'
-import { getCommentAuthor } from '~/graphql/resolvers/queries/comments'
-import { getQuestionAuthor } from '~/graphql/resolvers/queries/questions'
-import { QuestionStatus, UserRole } from '~/graphql/typeSlut'
+import { type Context } from "~/graphql/context";
+import Mutation from "~/graphql/resolvers/mutations";
+import Query from "~/graphql/resolvers/queries";
+import { getCommentAuthor } from "~/graphql/resolvers/queries/comments";
+import { getQuestionAuthor } from "~/graphql/resolvers/queries/questions";
 
-import { DateQL, JSOD } from '../scalars'
+import { QuestionStatus, UserRole } from "~/graphql/typeSlut";
+import { DateQL, JSOD } from "../scalars";
 
 const resolvers = {
-  Date: DateQL,
-  JSON: JSOD,
-  Query,
-  Mutation,
-  Reactable: {
-    __resolveType(obj) {
-      switch (obj.reactableType) {
-        case 'question':
-          return 'Question'
-        case 'stack':
-          return 'Stack'
-        case 'bookmark':
-          return 'Bookmark'
-        case 'blog':
-          return 'Blog'
-        default:
-          return null
-      }
-    },
-  },
-  Comment: {
-    author: getCommentAuthor,
-    viewerCanEdit: ({ userId }, _, { viewer }: Context) => {
-      return userId === viewer?.id
-    },
-    viewerCanDelete: ({ userId }, _, { viewer }: Context) => {
-      return userId === viewer?.id || viewer?.isAdmin
-    },
-  },
-  Question: {
-    viewerCanEdit: ({ userId }, _, { viewer }: Context) => {
-      return userId === viewer?.id || viewer?.isAdmin
-    },
-    viewerCanComment: async ({ id }, _, ctx: Context) => {
-      const { viewer, db } = ctx
-      // I can always comment to answer a question
-      if (viewer?.isAdmin) return true
-      // If it's not me, only let people see the comment form if there are existing comments (answered)
-      const comments = await db.question
-        .findUnique({
-          where: { id },
-        })
-        .comments()
-      return comments.length > 0
-    },
-    author: getQuestionAuthor,
-    status: ({ _count: { comments } }) =>
-      comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending,
-    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
-      if (!viewer) return false
+	Date: DateQL,
+	JSON: JSOD,
+	Query,
+	Mutation,
+	Reactable: {
+		__resolveType(obj) {
+			switch (obj.reactableType) {
+				case "question":
+					return "Question";
+				case "stack":
+					return "Stack";
+				case "post":
+					return "Post";
+				case "bookmark":
+					return "Bookmark";
+				case "blog":
+					return "Blog";
+				default:
+					return null;
+			}
+		},
+	},
+	Comment: {
+		author: getCommentAuthor,
+		viewerCanEdit: ({ userId }, _, { viewer }: Context) => {
+			return userId === viewer?.id;
+		},
+		viewerCanDelete: ({ userId }, _, { viewer }: Context) => {
+			return userId === viewer?.id || viewer?.isAdmin;
+		},
+	},
+	Question: {
+		viewerCanEdit: ({ userId }, _, { viewer }: Context) => {
+			return userId === viewer?.id || viewer?.isAdmin;
+		},
+		viewerCanComment: async ({ id }, _, ctx: Context) => {
+			const { viewer, db } = ctx;
+			// I can always comment to answer a question
+			if (viewer?.isAdmin) return true;
+			// If it's not me, only let people see the comment form if there are existing comments (answered)
+			const comments = await db.question
+				.findUnique({
+					where: { id },
+				})
+				.comments();
+			return comments.length > 0;
+		},
+		author: getQuestionAuthor,
+		status: ({ _count: { comments } }) => (comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending),
+		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+			if (!viewer) return false;
 
-      const reactions = await db.question
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.question
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.some(({ userId }) => userId === viewer.id)
-    },
-    reactionCount: async ({ id, _count }, _, { db }: Context) => {
-      if (_count?.reactions) return _count.reactions
+			return reactions.some(({ userId }) => userId === viewer.id);
+		},
+		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+			if (_count?.reactions) return _count.reactions;
 
-      const reactions = await db.question
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.question
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.length
-    },
-  },
-  User: {
-    isViewer: ({ id }, _, { viewer }: Context) => {
-      return viewer && viewer.id === id
-    },
-    isAdmin: ({ role }) => {
-      return role === UserRole.Admin
-    },
-    email: ({ id }, _, { viewer }: Context) => {
-      return viewer && viewer.id === id ? viewer.email : null
-    },
-  },
-  Bookmark: {
-    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
-      if (!viewer) return false
+			return reactions.length;
+		},
+	},
+	User: {
+		isViewer: ({ id }, _, { viewer }: Context) => {
+			return viewer && viewer.id === id;
+		},
+		isAdmin: ({ role }) => {
+			return role === UserRole.Admin;
+		},
+		email: ({ id }, _, { viewer }: Context) => {
+			return viewer && viewer.id === id ? viewer.email : null;
+		},
+	},
+	Bookmark: {
+		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+			if (!viewer) return false;
 
-      const reactions = await db.bookmark
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.bookmark
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.some(({ userId }) => userId === viewer.id)
-    },
-    reactionCount: async ({ id, _count }, _, { db }: Context) => {
-      if (_count?.reactions) return _count.reactions
+			return reactions.some(({ userId }) => userId === viewer.id);
+		},
+		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+			if (_count?.reactions) return _count.reactions;
 
-      const reactions = await db.bookmark
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.bookmark
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.length
-    },
-  },
-  Blog: {
-    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
-      if (!viewer) return false
+			return reactions.length;
+		},
+	},
+	Post: {
+		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+			if (!viewer) return false;
 
-      const reactions = await db.blog
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.post
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.some(({ userId }) => userId === viewer.id)
-    },
-    reactionCount: async ({ id, _count }, _, { db }: Context) => {
-      if (_count?.reactions) return _count.reactions
+			return reactions.some(({ userId }) => userId === viewer.id);
+		},
+		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+			if (_count?.reactions) return _count.reactions;
 
-      const reactions = await db.blog
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.post
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.length
-    },
-  },
-  Stack: {
-    viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
-      if (!viewer) return false
+			return reactions.length;
+		},
+	},
+	Blog: {
+		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+			if (!viewer) return false;
 
-      const reactions = await db.stack
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.blog
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.some(({ userId }) => userId === viewer.id)
-    },
-    reactionCount: async ({ id, _count }, _, { db }: Context) => {
-      if (_count?.reactions) return _count.reactions
+			return reactions.some(({ userId }) => userId === viewer.id);
+		},
+		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+			if (_count?.reactions) return _count.reactions;
 
-      const reactions = await db.stack
-        .findUnique({
-          where: { id },
-        })
-        .reactions()
+			const reactions = await db.blog
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return reactions.length
-    },
-    usedBy: async ({ id, users }, _, ctx: Context) => {
-      const { db } = ctx
-      if (users) return users
+			return reactions.length;
+		},
+	},
+	Stack: {
+		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+			if (!viewer) return false;
 
-      const data = await db.stack.findUnique({
-        where: { id },
-        include: {
-          users: true,
-        },
-      })
+			const reactions = await db.stack
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return data.users || []
-    },
-    usedByViewer: async ({ id, users }, _, ctx: Context) => {
-      const { db, viewer } = ctx
-      if (!viewer?.id) return false
-      if (users) return users.some((s) => s.id === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer.id);
+		},
+		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+			if (_count?.reactions) return _count.reactions;
 
-      const data = await db.stack.findUnique({
-        where: { id },
-        include: {
-          users: true,
-        },
-      })
+			const reactions = await db.stack
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
 
-      return data.users.some((s) => s.id === viewer.id)
-    },
-  },
-}
+			return reactions.length;
+		},
+		usedBy: async ({ id, users }, _, ctx: Context) => {
+			const { db } = ctx;
+			if (users) return users;
 
-export default resolvers
+			const data = await db.stack.findUnique({
+				where: { id },
+				include: {
+					users: true,
+				},
+			});
+
+			return data.users || [];
+		},
+		usedByViewer: async ({ id, users }, _, ctx: Context) => {
+			const { db, viewer } = ctx;
+			if (!viewer?.id) return false;
+			if (users) return users.some((s) => s.id === viewer.id);
+
+			const data = await db.stack.findUnique({
+				where: { id },
+				include: {
+					users: true,
+				},
+			});
+
+			return data.users.some((s) => s.id === viewer.id);
+		},
+	},
+};
+
+export default resolvers;

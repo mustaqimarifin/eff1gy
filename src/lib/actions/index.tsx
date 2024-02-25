@@ -1,11 +1,11 @@
-'use server'
-import { unstable_noStore as noStore } from 'next/cache'
-import { cache, Suspense } from 'react'
+"use server";
+import { unstable_noStore as noStore } from "next/cache";
+import { Suspense, cache } from "react";
 
-import { CLIENT_URL } from '~/graphql/constants'
-import { ViewType } from '~/graphql/typeSlut'
+import { CLIENT_URL } from "~/graphql/constants";
+import { ViewType } from "~/graphql/typeSlut";
 
-import { db } from '../db'
+import { db } from "../db";
 /* 
 const googleAuth = new auth.GoogleAuth({
   credentials: {
@@ -22,105 +22,105 @@ const yt = youtube({
  */
 
 export async function addView(refId, type) {
-  if (!refId || !type) {
-    return []
-  }
-  noStore()
-  switch (type) {
-    case ViewType.Event: {
-      const results = await db.event.upsert({
-        where: { id: refId },
-        create: {
-          id: refId,
-        },
-        update: {
-          count: {
-            increment: 1,
-          },
-        },
-      })
+	if (!refId || !type) {
+		return [];
+	}
+	noStore();
+	switch (type) {
+		case ViewType.Event: {
+			const results = await db.event.upsert({
+				where: { id: refId },
+				create: {
+					id: refId,
+				},
+				update: {
+					count: {
+						increment: 1,
+					},
+				},
+			});
 
-      return results || []
-    }
-    case ViewType.Case: {
-      const results = await db.case.upsert({
-        where: { id: refId },
-        create: {
-          id: refId,
-        },
-        update: {
-          count: {
-            increment: 1,
-          },
-        },
-      })
+			return results || [];
+		}
+		case ViewType.Case: {
+			const results = await db.case.upsert({
+				where: { id: refId },
+				create: {
+					id: refId,
+				},
+				update: {
+					count: {
+						increment: 1,
+					},
+				},
+			});
 
-      return results || []
-    }
-    case ViewType.Bookmark: {
-      const results = await db.bookmark.upsert({
-        where: { id: refId },
-        create: {
-          id: refId,
-        },
-        update: {
-          count: {
-            increment: 1,
-          },
-        },
-      })
+			return results || [];
+		}
+		case ViewType.Bookmark: {
+			const results = await db.bookmark.upsert({
+				where: { id: refId },
+				create: {
+					id: refId,
+				},
+				update: {
+					count: {
+						increment: 1,
+					},
+				},
+			});
 
-      return results || []
-    }
-    case ViewType.Blog: {
-      const results = await db.blog.upsert({
-        where: { slug: refId },
-        create: {
-          slug: refId,
-        },
-        update: {
-          count: {
-            increment: 1,
-          },
-        },
-      })
+			return results || [];
+		}
+		case ViewType.Blog: {
+			const results = await db.blog.upsert({
+				where: { slug: refId },
+				create: {
+					slug: refId,
+				},
+				update: {
+					count: {
+						increment: 1,
+					},
+				},
+			});
 
-      return results || []
-    }
-    case ViewType.Question: {
-      const results = await db.question.upsert({
-        where: { id: refId },
-        create: {
-          id: refId,
-        },
-        update: {
-          count: {
-            increment: 1,
-          },
-        },
-      })
+			return results || [];
+		}
+		case ViewType.Question: {
+			const results = await db.question.upsert({
+				where: { id: refId },
+				create: {
+					id: refId,
+				},
+				update: {
+					count: {
+						increment: 1,
+					},
+				},
+			});
 
-      return results || []
-    }
-    case ViewType.Stack: {
-      const results = await db.stack.upsert({
-        where: { id: refId },
-        create: {
-          id: refId,
-        },
-        update: {
-          count: {
-            increment: 1,
-          },
-        },
-      })
+			return results || [];
+		}
+		case ViewType.Stack: {
+			const results = await db.stack.upsert({
+				where: { id: refId },
+				create: {
+					id: refId,
+				},
+				update: {
+					count: {
+						increment: 1,
+					},
+				},
+			});
 
-      return results || []
-    }
-    default: {
-      return []
-    }
-  }
+			return results || [];
+		}
+		default: {
+			return [];
+		}
+	}
 }
 /* export const addView = async (id) => {
   noStore()
@@ -148,31 +148,29 @@ export async function addView(refId, type) {
 }
  */
 export async function Counter({
-  refId,
-  type,
+	refId,
+	type,
 }: {
-  refId: string
-  type: ViewType
+	refId: string;
+	type: ViewType;
 }) {
-  const views = await addView(refId, type)
-  const counter = `${views}`
-  return (
-    <Suspense>
-      <div>{`${counter} - views`}</div>
-    </Suspense>
-  )
+	const views = await addView(refId, type);
+	const counter = `${views}`;
+	return (
+		<Suspense>
+			<div>{`${counter} - views`}</div>
+		</Suspense>
+	);
 }
 
-export const HiddenCounter = cache(
-  async ({ refId, type }: { refId: string; type: ViewType }) => {
-    const views = await addView(refId, type)
-    return (
-      <Suspense>
-        <div className="hidden">{`${views} - views`}</div>
-      </Suspense>
-    )
-  }
-)
+export const HiddenCounter = cache(async ({ refId, type }: { refId: string; type: ViewType }) => {
+	const views = await addView(refId, type);
+	return (
+		<Suspense>
+			<div className="hidden">{`${views} - views`}</div>
+		</Suspense>
+	);
+});
 
 /* export const getView = async (id) => {
   noStore()
@@ -202,52 +200,52 @@ export const HiddenCounter = cache(
   }
 )
  */
-const client_id = process.env.SPOTIFY_CLIENT_ID
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET
-const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN
+const client_id = process.env.SPOTIFY_CLIENT_ID;
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64')
-const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`
-const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks`
-const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`
+const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
+const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
+const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks`;
+const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
 const getAccessToken = async () => {
-  const response = await fetch(TOKEN_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${basic}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      grant_type: 'refresh_token',
-      refresh_token,
-    }),
-  })
+	const response = await fetch(TOKEN_ENDPOINT, {
+		method: "POST",
+		headers: {
+			Authorization: `Basic ${basic}`,
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+		body: new URLSearchParams({
+			grant_type: "refresh_token",
+			refresh_token,
+		}),
+	});
 
-  return response.json()
-}
+	return response.json();
+};
 
 export const getNowPlaying = async () => {
-  //noStore()
-  const { access_token } = await getAccessToken()
+	//noStore()
+	const { access_token } = await getAccessToken();
 
-  return fetch(NOW_PLAYING_ENDPOINT, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-  })
-}
+	return fetch(NOW_PLAYING_ENDPOINT, {
+		headers: {
+			Authorization: `Bearer ${access_token}`,
+		},
+	});
+};
 
 export const getTopTracks = async () => {
-  const { access_token } = await getAccessToken()
+	const { access_token } = await getAccessToken();
 
-  return fetch(TOP_TRACKS_ENDPOINT, {
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    next: { revalidate: 86400 },
-  })
-}
+	return fetch(TOP_TRACKS_ENDPOINT, {
+		headers: {
+			Authorization: `Bearer ${access_token}`,
+		},
+		next: { revalidate: 86400 },
+	});
+};
 
 /* 
 

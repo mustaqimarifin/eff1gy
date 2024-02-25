@@ -1,104 +1,96 @@
-import { Compass } from 'lucide-react'
-import type { ReactNode } from 'react'
-import { forwardRef } from 'react'
+import { Compass } from "lucide-react";
+import type { ReactNode } from "react";
+import { forwardRef } from "react";
 
-import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { LoadingSpinner } from "~/components/LoadingSpinner";
 
-import Button from '../Button'
-import { TitleBar } from './TitleBar'
+import Button from "../Button";
+import { TitleBar } from "./TitleBar";
 
 //** ORIGINAL CONTAINER REF */
 
+function ContentContainer (props) {
+	return (
+		<div
+			className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
+			{ ...props }
+		/>
+	)
+}
+
 /* function ContentContainer(props) {
-  return (
-    <div
-      className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
-      {...props}
-    />
-  )
-}  */
-
-function ContentContainer(props) {
-  return (
-    <div
-      /*       className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 " */
-      className="mx-auto "
-      {...props}
-    />
-  )
+	return (
+		<div
+						className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 " 
+			//className="mx-auto "
+			{...props}
+		/>
+	);
 }
-
+ */
 interface DetailContainerProps {
-  children: ReactNode
+	children: ReactNode;
 }
 
-const Container = forwardRef<HTMLDivElement, DetailContainerProps>(
-  (props, ref) => {
-    return (
-      <div
-        ref={ref}
-        id="main"
-        className="relative flex max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
-        {...props}
-      />
-    )
-  }
-)
+const Container = forwardRef<HTMLDivElement, DetailContainerProps>((props, ref) => {
+	return (
+		<div
+			ref={ ref }
+			id="main"
+			className="relative flex max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
+			{ ...props }
+		/>
+	);
+});
 
-function Header(props) {
-  return <div className="space-y-3" {...props} />
+function Header (props) {
+	return <div className="space-y-3" { ...props } />;
 }
 
 interface TitleProps {
-  children: ReactNode
+	children: ReactNode;
 }
 
 const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  return (
-    <div
-      ref={ref}
-      className="text-gray-600 dark:text-slate-50 text-5xl font-quad font-bold capitalize"
-      {...props}
-    />
-  )
-})
+	return (
+		<div ref={ ref } className="text-gray-600 dark:text-slate-50 text-5xl font-quad " { ...props } />
+	);
+});
 
-function Loading() {
-  return (
-    <Container>
-      <div className="flex flex-1 flex-col items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    </Container>
-  )
+function Loading () {
+	return (
+		<Container>
+			<div className="flex flex-1 flex-col items-center justify-center">
+				<LoadingSpinner />
+			</div>
+		</Container>
+	);
 }
 
-function Null() {
-  return (
-    <Container>
-      <TitleBar title="Not found" />
-      <div className="flex flex-1 flex-col items-center justify-center space-y-6 px-8 text-center lg:px-16">
-        <Compass className="text-secondary" size={32} />
-        <div className="flex flex-col space-y-1">
-          <div className="text-primary font-semibold">
-            What you seek does not exist.
-          </div>
-          <div className="text-tertiary">
-            Maybe this link is broken. Maybe something was deleted, or moved. In
-            any case, there’s nothing to see here...
-          </div>
-        </div>
-        <Button href="/">Go home</Button>
-      </div>
-    </Container>
-  )
+function Null () {
+	return (
+		<Container>
+			<TitleBar title="Not found" />
+			<div className="flex flex-1 flex-col items-center justify-center space-y-6 px-8 text-center lg:px-16">
+				<Compass className="text-secondary" size={ 32 } />
+				<div className="flex flex-col space-y-1">
+					<div className="text-primary font-semibold">What you seek does not exist.</div>
+					<div className="text-tertiary">
+						Maybe this link is broken. Maybe something was deleted, or moved. In any case, there’s nothing to see
+						here...
+					</div>
+				</div>
+				<Button href="/">Go home</Button>
+			</div>
+		</Container>
+	);
 }
 
 export const Detail = {
-  Container,
-  ContentContainer,
-  Header,
-  Title,
-  Loading,
-  Null,
-}
+	Container,
+	ContentContainer,
+	Header,
+	Title,
+	Loading,
+	Null,
+};

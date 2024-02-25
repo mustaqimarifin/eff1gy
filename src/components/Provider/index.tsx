@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import type { ReactNode } from 'react'
-import { createContext, useState } from 'react'
+import type { ReactNode } from "react";
+import { createContext, useState } from "react";
 
-import { ApolloWrapper } from './ApolloWrapper'
+import { ApolloWrapper } from "./ApolloWrapper";
 
 interface Props {
-  children?: ReactNode
+	children?: ReactNode;
 }
 
 const globalNavigationContext = {
-  isOpen: false,
-  setIsOpen: (val: boolean) => {},
-}
+	isOpen: false,
+	setIsOpen: (val: boolean) => {},
+};
 
-export const GlobalNavigationContext = createContext(globalNavigationContext)
+export const GlobalNavigationContext = createContext(globalNavigationContext);
 
 export function Providers({ children }: Props) {
-  const initialState = {
-    isOpen: false,
-    setIsOpen,
-  }
+	const initialState = {
+		isOpen: false,
+		setIsOpen,
+	};
 
-  const [state, setState] = useState(initialState)
+	const [state, setState] = useState(initialState);
 
-  function setIsOpen(isOpen: boolean) {
-    return setState({ ...state, isOpen })
-  }
+	function setIsOpen(isOpen: boolean) {
+		return setState({ ...state, isOpen });
+	}
 
-  return (
-    <>
-      <GlobalNavigationContext.Provider value={state}>
-        <ApolloWrapper>{children}</ApolloWrapper>
-      </GlobalNavigationContext.Provider>
-    </>
-  )
+	return (
+		<>
+			<GlobalNavigationContext.Provider value={state}>
+				<ApolloWrapper>{children}</ApolloWrapper>
+			</GlobalNavigationContext.Provider>
+		</>
+	);
 }

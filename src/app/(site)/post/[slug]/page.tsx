@@ -1,50 +1,35 @@
-import { Suspense } from 'react'
+//import { redirect } from 'next/navigation'
+import { Suspense } from "react";
 
-import Mdx from '~/app/mdxrsc'
-import { ListDetailView } from '~/components/Layouts'
-import type { Post } from '~/components/Posts/PostDetail'
-import { PostDetail } from '~/components/Posts/PostDetail'
-import { PostsList } from '~/components/Posts/PostsList'
-import { ViewType } from '~/graphql/typeSlut'
-import { Counter, HiddenCounter } from '~/lib/actions'
-import { getAllPosts, getPost } from '~/lib/sanity/client'
-//xport const dynamic = 'force-dynamic'
+//import Mdx from '~/app/mdxrsc'
+import { ListDetailView } from "~/components/Layouts";
+import { Detail } from "~/components/ListDetail/Detail";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
+import { PostEditor } from "~/components/Posts/Editor/PostEditor";
+import { PostDetail } from "~/components/Posts/PostDetail";
+import { PostsList } from "~/components/Posts/PostsList";
+import { getClient } from "~/components/Provider/ApolloClient";
+import { GetPostDocument, ViewType } from "~/graphql/typeSlut";
 
-export const revalidate = 3600
 
-export async function generateStaticParams() {
-  const posts = await getAllPosts()
+import { HiddenCounter } from "~/lib/actions";
 
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+//export const dynamic = 'force-dynamic'
 
-export default async function Post({ params: { slug } }) {
-  const post: Post = await getPost(slug)
-
-  if (!post) {
-    return { notFound: true }
-  }
-
-  /*   const tags = post.tags?.length
-    ? post.tags
-        .slice(0)
-        .map((tag: any, index: any) => <div key={index}>{`#${tag}`}</div>)
-    : null
- */
-  return (
-    <ListDetailView
-      list={<PostsList />}
-      hasDetail
-      detail={
-        <Suspense>
-          <HiddenCounter refId={post?.slug} type={ViewType.Blog} />
-          <PostDetail post={post} slug={slug}>
-            <Mdx source={post?.content} />
-          </PostDetail>
-        </Suspense>
-      }
-    />
-  )
+export default async function PostPage({ params: { slug } }: { params: { slug: string } }) {
+	//const { data } = useGetPostQuery({ variables: { slug } })
+	const client = getClient();
+	const { data } = await client.query({ query: GetPostDocument, variables: { slug } });
+	if (data?.post && !data.post.publishedAt) return <PostEditor slug={slug} />;
+	return (
+		<ListDetailView
+			list={<PostsList />}
+			hasDetail
+			detail={
+				<Suspense fallback={<LoadingSpinner />}>
+					<PostDetail slug={slug}><HiddenCounter refId={data?.post?.id} type={ViewType.Post} /></PostDetail>
+				</Suspense>
+			}
+		/>
+	);
 }

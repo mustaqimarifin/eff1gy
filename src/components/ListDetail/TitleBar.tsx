@@ -1,11 +1,9 @@
-'use client'
-
+"use client"
 import { ArrowLeft, Menu, X } from 'lucide-react'
 import Link from 'next/link'
-import type { MutableRefObject, ReactNode } from 'react'
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { GlobalNavigationContext } from '../Provider'
+import { type MutableRefObject, type ReactNode, useContext, useState, useRef, useCallback, useEffect } from 'react'
 
-import { GlobalNavigationContext } from '~/components/Provider'
 
 interface Props {
   title: string
@@ -20,7 +18,7 @@ interface Props {
   trailingAccessory?: ReactNode
 }
 
-export function TitleBar({
+export function TitleBar ({
   title,
   globalMenu = true,
   backButton = false,
@@ -71,10 +69,10 @@ export function TitleBar({
     const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56
     const initialOffsets = initialTitleOffsetsRef.current
 
-    const offsetAmount =
+    let offsetAmount =
       parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100
 
-    const opacityOffset =
+    let opacityOffset =
       parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1
 
     setOffset(Math.min(Math.max(offsetAmount, 0), 100))
@@ -99,6 +97,7 @@ export function TitleBar({
 
   useEffect(() => {
     const isDarkMode =
+      // biome-ignore lint/complexity/useOptionalChain: <explanation>
       window?.matchMedia &&
       window?.matchMedia('(prefers-color-scheme: dark)').matches
     if (isDarkMode) setDarkMode(true)
@@ -107,60 +106,63 @@ export function TitleBar({
   return (
     <>
       <div
-        style={{
-          /* background: `rgba(${darkMode ? '50,50,50' : '255,255,255'},${
-            currentScrollOffset === 0
-              ? currentScrollOffset
-              : darkMode
-                ? currentScrollOffset + 1
-                : currentScrollOffset + 0
-          })`, */
+        style={ {
+          background: `rgba(${darkMode ? '50,50,50' : '255,255,255'},${currentScrollOffset === 0
+            ? currentScrollOffset
+            : darkMode
+              ? currentScrollOffset + 0.5
+              : currentScrollOffset + 0.8
+            })`,
           boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
           minHeight: '48px',
-        }}
-        className={`filter-blur dark:bg-gray-900 sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}>
-        <div className="flex flex-none items-center justify-between">
+        } }
+        className={ `filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900` }
+      >
+        <div className="flex items-center justify-between flex-none">
           <span className="flex items-center space-x-3">
-            {globalMenu && (
+            { globalMenu && (
               <span
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex cursor-pointer items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden">
-                {isOpen ? (
-                  <X size={16} className="text-primary" />
+                onClick={ () => setIsOpen(!isOpen) }
+                className="flex items-center justify-center p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
+              >
+                { isOpen ? (
+                  <X size={ 16 } className="text-primary" />
                 ) : (
-                  <Menu size={16} className="text-primary" />
-                )}
+                  <Menu size={ 16 } className="text-primary" />
+                ) }
               </span>
-            )}
+            ) }
 
-            {backButton && (
+            { backButton && (
               <Link
-                href={backButtonHref}
-                className="text-primary flex items-center justify-center rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden">
-                <ArrowLeft size={16} className="text-primary" />
+                href={ backButtonHref }
+                className="flex items-center justify-center p-2 rounded-md text-primary hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
+              >
+                <ArrowLeft size={ 16 } className="text-primary" />
               </Link>
-            )}
+            ) }
 
-            {leadingAccessory && <>{leadingAccessory}</>}
+            { leadingAccessory && <>{ leadingAccessory }</> }
 
             <h2
               style={
                 magicTitle
                   ? {
-                      transform: `translateY(${offset}%)`,
-                      opacity: `${opacity}`,
-                    }
+                    transform: `translateY(${offset}%)`,
+                    opacity: `${opacity}`,
+                  }
                   : {}
               }
-              className="text-primary line-clamp-1  text-sm font-bold">
-              {title}
+              className="text-sm font-bold text-primary transform line-clamp-1"
+            >
+              { title }
             </h2>
           </span>
 
-          {trailingAccessory && <>{trailingAccessory}</>}
+          { trailingAccessory && <>{ trailingAccessory }</> }
         </div>
 
-        <div>{children}</div>
+        <div>{ children }</div>
       </div>
     </>
   )

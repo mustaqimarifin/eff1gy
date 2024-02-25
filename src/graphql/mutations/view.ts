@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const ADD_VIEW = gql`
   mutation addView($refId: ID!, $type: ViewType!) {
@@ -21,4 +21,4 @@ export const ADD_VIEW = gql`
       }
     }
   }
-`
+`;

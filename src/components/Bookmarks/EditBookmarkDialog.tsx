@@ -1,15 +1,13 @@
-import { DialogComponent } from '~/components/Dialog'
+import { DialogComponent } from "~/components/Dialog";
 
-import { EditBookmarkForm } from './EditBookmarkForm'
+import { EditBookmarkForm } from "./EditBookmarkForm";
 
 export function EditBookmarkDialog({ trigger, bookmark }) {
-  return (
-    <DialogComponent
-      trigger={trigger}
-      title={'Add bookmark'}
-      modalContent={({ closeModal }) => (
-        <EditBookmarkForm bookmark={bookmark} closeModal={closeModal} />
-      )}
-    />
-  )
+	return (
+		<DialogComponent
+			trigger={trigger}
+			title={"Add bookmark"}
+			modalContent={({ closeModal }) => <EditBookmarkForm bookmark={bookmark} closeModal={closeModal} />}
+		/>
+	);
 }

@@ -1,18 +1,16 @@
-import { useContext } from 'react'
+import { useContext } from "react";
 
-import { GlobalNavigationContext } from '~/components/Provider'
+import { GlobalNavigationContext } from "~/components/Provider";
 
 export function SidebarOverlay() {
-  const { isOpen, setIsOpen } = useContext(GlobalNavigationContext)
+	const { isOpen, setIsOpen } = useContext(GlobalNavigationContext);
 
-  return (
-    <div
-      className={`fixed inset-0 z-20 bg-black bg-opacity-10 transition duration-200 ease-in-out dark:bg-opacity-50 ${
-        isOpen
-          ? 'pointer-events-auto opacity-100'
-          : 'pointer-events-none opacity-0'
-      }`}
-      onClick={() => setIsOpen(false)}
-    />
-  )
+	return (
+		<div
+			className={`fixed inset-0 z-20 bg-black bg-opacity-10 transition duration-200 ease-in-out dark:bg-opacity-50 ${
+				isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+			}`}
+			onClick={() => setIsOpen(false)}
+		/>
+	);
 }

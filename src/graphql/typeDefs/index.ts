@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export default gql`
   scalar Date
@@ -23,6 +23,21 @@ export default gql`
     count: Int
     reactionCount: Int
     viewerHasReacted: Boolean
+  }
+  type Post {
+    id: ID!
+    createdAt: Date
+    updatedAt: Date
+    publishedAt: Date
+    author: User
+    title: String
+    slug: String
+    text: String
+    excerpt: String
+    featureImage: String
+    reactionCount: Int
+    viewerHasReacted: Boolean
+    hitRate: Int
   }
 
   type Event {
@@ -84,6 +99,7 @@ export default gql`
     BLOG
     EVENT
     CASE
+    POST
   }
   enum ViewType {
     BOOKMARK
@@ -92,6 +108,7 @@ export default gql`
     BLOG
     EVENT
     CASE
+    POST
   }
 
   enum ReactionType {
@@ -101,6 +118,7 @@ export default gql`
     BLOG
     EVENT
     CASE
+    POST
   }
 
   type Tag @cacheControl(maxAge: 3600) {
@@ -146,6 +164,10 @@ export default gql`
     viewerCanEdit: Boolean
     viewerCanDelete: Boolean
     replies: [Comment]
+  }
+
+  input PostFilter {
+    published: Boolean
   }
 
   input BookmarkFilter {
@@ -202,27 +224,21 @@ export default gql`
     viewer: User
     user(id: ID!): User
     bookmark(id: ID!): Bookmark
-    bookmarks(
-      first: Int
-      after: String
-      filter: BookmarkFilter
-    ): BookmarksConnection!
+    bookmarks(first: Int, after: String, filter: BookmarkFilter): BookmarksConnection!
     stack(slug: String!): Stack
     stacks(first: Int, after: String): StacksConnection!
     comment(id: ID!): Comment
     comments(refId: ID!, type: CommentType!): [Comment]!
     blogs: [Blog]!
     blog(slug: String!): Blog
+    posts(filter: PostFilter): [Post]!
+    post(slug: String!): Post
     events: [Event]!
     event(id: ID!): Event
     cases: [Case]!
     case(id: ID!): Case
     question(id: ID!): Question
-    questions(
-      first: Int
-      after: String
-      filter: QuestionFilter
-    ): QuestionsConnection!
+    questions(first: Int, after: String, filter: QuestionFilter): QuestionsConnection!
 
     tags: [Tag]!
   }
@@ -273,9 +289,23 @@ export default gql`
     audioUrl: String
     waveform: JSON
   }
+  input AddPostInput {
+    title: String!
+    text: String!
+    slug: String!
+    excerpt: String
+  }
 
-  union Reactable = Bookmark | Question | Stack | Blog | Event | Case
-  union Viewable = Bookmark | Question | Stack | Blog | Event | Case
+  input EditPostInput {
+    title: String!
+    text: String!
+    slug: String!
+    excerpt: String
+    published: Boolean
+  }
+
+  union Reactable = Bookmark | Question | Stack | Blog | Event | Case | Post
+  union Viewable = Bookmark | Question | Stack | Blog | Event | Case | Post
 
   type Mutation {
     addBookmark(data: AddBookmarkInput!): Bookmark
@@ -288,18 +318,15 @@ export default gql`
     addQuestion(data: AddQuestionInput!): Question
     editQuestion(id: ID!, data: EditQuestionInput!): Question
     deleteQuestion(id: ID!): Boolean
-    addComment(
-      refId: ID!
-      parentId: String
-      type: CommentType!
-      text: String!
-    ): Comment
+    addComment(refId: ID!, parentId: String, type: CommentType!, text: String!): Comment
     editComment(id: ID!, text: String): Comment
     deleteComment(id: ID!): Boolean
-
     editUser(data: EditUserInput): User
     deleteUser: Boolean
     toggleReaction(refId: ID!, type: ReactionType!): Reactable
+    addPost(data: AddPostInput!): Post
+    editPost(id: ID!, data: EditPostInput!): Post
+    deletePost(id: ID!): Boolean
     addView(refId: ID!, type: ViewType!): Viewable
   }
-`
+`;

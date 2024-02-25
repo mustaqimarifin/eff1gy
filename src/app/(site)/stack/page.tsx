@@ -9,11 +9,8 @@ export const dynamic = 'force-dynamic'
 export const metadata = {
   title: 'Stack',
 }
-export default async function StackIndex() {
-  const client = getClient()
-  await Promise.all([
-    client.query({ query: GET_VIEWER }),
-    client.query({ query: GET_STACKS }),
-  ])
+export default function StackIndex() {
+  /*   const client = getClient()
+  await Promise.all([client.query({ query: GET_VIEWER }), client.query({ query: GET_STACKS })]) */
   return <ListDetailView list={<StackList />} hasDetail={false} detail={null} />
 }

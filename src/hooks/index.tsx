@@ -1,63 +1,63 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react";
 
 export function useDebounce(value: string, delay: number) {
-  const [debouncedValue, setDebouncedValue] = useState(value)
+	const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay)
+	useEffect(() => {
+		const timer = setTimeout(() => setDebouncedValue(value), delay);
 
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [value, delay])
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [value, delay]);
 
-  return debouncedValue
+	return debouncedValue;
 }
 
-type Delay = number | null
-type TimerHandler = (...args: any[]) => void
+type Delay = number | null;
+type TimerHandler = (...args: any[]) => void;
 
 export const useInterval = (callback: TimerHandler, delay: Delay) => {
-  const savedCallbackRef = useRef<TimerHandler>()
+	const savedCallbackRef = useRef<TimerHandler>();
 
-  useEffect(() => {
-    savedCallbackRef.current = callback
-  }, [callback])
+	useEffect(() => {
+		savedCallbackRef.current = callback;
+	}, [callback]);
 
-  useEffect(() => {
-    const handler = (...args: any[]) => savedCallbackRef.current(...args)
+	useEffect(() => {
+		const handler = (...args: any[]) => savedCallbackRef.current(...args);
 
-    if (delay !== null) {
-      const intervalId = setInterval(handler, delay)
-      return () => clearInterval(intervalId)
-    }
-  }, [delay])
-}
+		if (delay !== null) {
+			const intervalId = setInterval(handler, delay);
+			return () => clearInterval(intervalId);
+		}
+	}, [delay]);
+};
 
-const hasFocus = () => typeof document !== 'undefined' && document.hasFocus()
+const hasFocus = () => typeof document !== "undefined" && document.hasFocus();
 
 interface Props {
-  onFocus?: () => void
-  onBlur?: () => void
+	onFocus?: () => void;
+	onBlur?: () => void;
 }
 
 export function useWindowFocus({ onFocus, onBlur }: Props) {
-  const [focused, setFocused] = useState(hasFocus) // Focus for first render
+	const [focused, setFocused] = useState(hasFocus); // Focus for first render
 
-  useEffect(() => {
-    setFocused(hasFocus()) // Focus for additional renders
+	useEffect(() => {
+		setFocused(hasFocus()); // Focus for additional renders
 
-    const onFocus = () => setFocused(true)
-    const onBlur = () => setFocused(false)
+		const onFocus = () => setFocused(true);
+		const onBlur = () => setFocused(false);
 
-    window.addEventListener('focus', onFocus)
-    window.addEventListener('blur', onBlur)
+		window.addEventListener("focus", onFocus);
+		window.addEventListener("blur", onBlur);
 
-    return () => {
-      window.removeEventListener('focus', onFocus)
-      window.removeEventListener('blur', onBlur)
-    }
-  }, [])
+		return () => {
+			window.removeEventListener("focus", onFocus);
+			window.removeEventListener("blur", onBlur);
+		};
+	}, []);
 
-  return focused
+	return focused;
 }

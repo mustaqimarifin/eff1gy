@@ -1,127 +1,75 @@
-'use client'
+"use client";
 
-import type { ReactNode } from 'react'
-import { Suspense, useRef } from 'react'
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import * as React from "react";
 
-import type { Blog } from '~/graphql/typeSlut'
-import { CommentType, useGetBlogQuery } from '~/graphql/typeSlut'
-import { formatDate } from '~/lib/transformers'
+import { Comments } from "~/components/Comments";
+import { Detail } from "~/components/ListDetail/Detail";
+import { TitleBar } from "~/components/ListDetail/TitleBar";
+import { GET_POST } from "~/graphql/queries/posts";
+import type { GetPostQuery, Post } from "~/graphql/typeSlut";
+import { CommentType } from "~/graphql/typeSlut";
+import { realTime } from "~/lib/transformers";
 
-import { Comments } from '../Comments'
-import { CoverImage } from '../Image'
-import { Image } from '../Image/NextImage'
-import { Detail } from '../ListDetail/Detail'
-import { TitleBar } from '../ListDetail/TitleBar'
-import { LoadingSpinner } from '../LoadingSpinner'
-import PageTitle from './PageTitle'
-import { PostAction } from './PostAction'
+import { MarkdownRenderer } from "../MarkdownRenderer";
+import { PostActions } from "./PostActions";
 
-export type Post = {
-  id: string
-  slug: string
-  name: string
-  content: string
-  title: string
-  date: string
-  excerpt: string
-  coverImage: string
-  caption?: string
-  readingTime?: string
-  tweets: any[]
-  tags?: string[]
+interface PD {
+	children?: React.ReactNode;
+	slug?: string;
+	post?: Post;
 }
+export function PostDetail({ slug }: PD) {
+	const scrollContainerRef = React.useRef(null);
+	const titleRef = React.useRef(null);
+	const { data, loading, error } = useQuery<GetPostQuery>(GET_POST, {
+		variables: { slug },
+		//context: { fetchOptions: { cache: 'force-cache' } },
+	});
+	// const { data, loading, error } = useGetPostQuery({ variables: { slug } })
 
-export type CaseStudy = {
-  id: string
-  slug: string
-  name: string
-  content: string
-  title: string
-  date: string
-  caption: string
-  overview: string
-  coverImage: string
-  orientation?: 'landscape'
-}
+	if (loading) {
+		return <Detail.Loading />;
+	}
 
-type Props = {
-  children?: ReactNode
-  post?: Post
-  blog?: Blog
-  slug?: string
-}
+	if (!data?.post || error) {
+		return <Detail.Null />;
+	}
 
-/* const Comments = dynamic(
-  () => import('../Comments/index').then((x) => x.Comments),
-  {
-    ssr: false,
-  }
-) */
-export function PostDetail({ children, post, slug }: Props) {
-  const scrollContainerRef = useRef(null)
-  const titleRef = useRef(null)
+	const publishedAt = realTime({
+		timestamp: data?.post.publishedAt,
+	});
 
-  const { data, loading, error } = useGetBlogQuery({
-    variables: { slug },
-  })
+	const { post } = data;
+	return (
+		<>
+			<Detail.Container data-cy="post-detail" ref={scrollContainerRef}>
+				<TitleBar
+					backButton
+					globalMenu={false}
+					backButtonHref={"/post"}
+					magicTitle
+					title={post.title}
+					titleRef={titleRef}
+					scrollContainerRef={scrollContainerRef}
+					trailingAccessory={<PostActions post={post} />}
+				/>
 
-  //if (error) return <div>failed to load</div>;
-  // if (!post) return <div>loading...</div>;
-  /*  useEffect(() => {
-    async function fetchPost() {
-      const response =  await fetch(`/api/post/${post.slug}`;
-      const fetchedPost = await response.json();
-      setPost(fetchedPost);
-    }
-    fetchPost();
-  }, []); */
-  if (loading) {
-    return <Detail.Loading />
-  }
+				<Detail.ContentContainer>
+					<Detail.Header>
+						<Detail.Title ref={titleRef}>{post.title}</Detail.Title>
+						<span title={publishedAt.raw} className="text-tertiary inline-block leading-snug">
+							{publishedAt.formatted}
+						</span>
+					</Detail.Header>
+					{/*     <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div> */}
+					<MarkdownRenderer children={post.text} className="mt-8 xl:prose-md lg:max-w-3xl" />
+					{/* bottom padding to give space between post content and comments */}
+					<div className="py-6" />
+				</Detail.ContentContainer>
 
-  if (!data?.blog || error) {
-    return <Detail.Null />
-  }
-  const { blog } = data
-  //  const publishedAt = realTime({ timestamp: post.publishedAt });
-  //const publishedAt = realTime({ timestamp: post.date })
-
-  return (
-    <>
-      <Detail.Container data-cy="post-detail" ref={scrollContainerRef}>
-        <TitleBar
-          backButton
-          globalMenu={false}
-          backButtonHref={'/post'}
-          magicTitle
-          title={post?.title}
-          titleRef={titleRef}
-          scrollContainerRef={scrollContainerRef}
-          trailingAccessory={null}
-        />
-
-        <Detail.ContentContainer>
-          <Detail.Header>
-            <div className="flex items-center space-x-6">
-              <div>
-                <Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
-              </div>
-            </div>
-          </Detail.Header>
-          <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
-            <div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
-              {formatDate(post?.date)}
-              {` • `}
-              {blog?.count}
-            </div>
-          </div>
-          {children}
-          <div className="py-6" />
-          <Suspense fallback={<LoadingSpinner />}>
-            <Comments refId={blog?.slug} type={CommentType.Blog} />
-          </Suspense>
-        </Detail.ContentContainer>
-      </Detail.Container>
-    </>
-  )
+				<Comments refId={post.id} type={CommentType.Post} />
+			</Detail.Container>
+		</>
+	);
 }

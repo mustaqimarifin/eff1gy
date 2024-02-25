@@ -1,78 +1,78 @@
-import { GraphQLError } from 'graphql'
+import { GraphQLError } from "graphql";
 
-import { type Context } from '~/graphql/context'
-import { type MutationEditUserArgs } from '~/graphql/typeSlut'
-import { emailRX, nameRX } from '~/lib/functions'
+import { type Context } from "~/graphql/context";
+import { type MutationEditUserArgs } from "~/graphql/typeSlut";
+import { emailRX, nameRX } from "~/lib/functions";
 
 export async function deleteUser(_, __, ctx: Context) {
-  const { db, viewer } = ctx
+	const { db, viewer } = ctx;
 
-  if (viewer.isAdmin) {
-    throw new GraphQLError('Admins can’t be deleted')
-  }
+	if (viewer.isAdmin) {
+		throw new GraphQLError("Admins can’t be deleted");
+	}
 
-  await db.user.findUnique({ where: { id: viewer.id } })
+	await db.user.findUnique({ where: { id: viewer.id } });
 
-  return await db.user
-    .delete({
-      where: { id: viewer.id },
-    })
-    .then(() => true)
+	return await db.user
+		.delete({
+			where: { id: viewer.id },
+		})
+		.then(() => true);
 }
 
 export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
-  const { db, viewer } = ctx
-  const { data } = args
-  const { name, email } = data
+	const { db, viewer } = ctx;
+	const { data } = args;
+	const { name, email } = data;
 
-  if (name) {
-    if (!nameRX(name)) {
-      throw new GraphQLError('Usernames can be 16 characters long')
-    }
+	if (name) {
+		if (!nameRX(name)) {
+			throw new GraphQLError("Usernames can be 16 characters long");
+		}
 
-    const user = await db.user.findUnique({
-      where: { email },
-    })
+		const user = await db.user.findUnique({
+			where: { email },
+		});
 
-    if (user && user.id !== viewer.id) {
-      throw new GraphQLError('That name is taken')
-    }
+		if (user && user.id !== viewer.id) {
+			throw new GraphQLError("That name is taken");
+		}
 
-    return await db.user.update({
-      where: { id: viewer.id },
-      data: { name },
-    })
-  }
+		return await db.user.update({
+			where: { id: viewer.id },
+			data: { name },
+		});
+	}
 
-  if (email) {
-    if (!emailRX(email)) {
-      throw new GraphQLError('That email is not valid')
-    }
+	if (email) {
+		if (!emailRX(email)) {
+			throw new GraphQLError("That email is not valid");
+		}
 
-    const userByEmail = await db.user.findUnique({
-      where: { email },
-    })
+		const userByEmail = await db.user.findUnique({
+			where: { email },
+		});
 
-    if (userByEmail && userByEmail.id !== viewer.id) {
-      throw new GraphQLError('That email is taken')
-    }
+		if (userByEmail && userByEmail.id !== viewer.id) {
+			throw new GraphQLError("That email is taken");
+		}
 
-    // the user is updating their email to be the same thing
-    if (userByEmail && userByEmail.id === viewer.id) {
-      if (userByEmail.email === email) {
-        return userByEmail
-      }
-    }
+		// the user is updating their email to be the same thing
+		if (userByEmail && userByEmail.id === viewer.id) {
+			if (userByEmail.email === email) {
+				return userByEmail;
+			}
+		}
 
-    return await db.user.update({
-      where: { id: viewer.id },
-      data: { email },
-    })
-  }
+		return await db.user.update({
+			where: { id: viewer.id },
+			data: { email },
+		});
+	}
 
-  // if no email or name were passed, the user is trying to cancel the pending email request
-  return await db.user.update({
-    where: { id: viewer.id },
-    data: {},
-  })
+	// if no email or name were passed, the user is trying to cancel the pending email request
+	return await db.user.update({
+		where: { id: viewer.id },
+		data: {},
+	});
 }

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 //import { BookmarkCoreFragment } from '../typeSlut'
 
@@ -13,14 +13,14 @@ export const BookmarkCoreFragment = gql`
     faviconUrl
     count
   }
-`
+`;
 
 export const BookmarkListItemFragment = gql`
   fragment BookmarkListItem on Bookmark {
     ...BookmarkCore
   }
   ${BookmarkCoreFragment}
-`
+`;
 
 export const BookmarkDetailFragment = gql`
   fragment BookmarkDetail on Bookmark {
@@ -33,7 +33,7 @@ export const BookmarkDetailFragment = gql`
     }
   }
   ${BookmarkCoreFragment}
-`
+`;
 
 export const BookmarksConnectionFragment = gql`
   fragment BookmarksConnection on BookmarksConnection {
@@ -50,4 +50,4 @@ export const BookmarksConnectionFragment = gql`
     }
   }
   ${BookmarkListItemFragment}
-`
+`;

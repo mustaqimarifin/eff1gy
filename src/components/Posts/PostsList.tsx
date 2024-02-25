@@ -1,58 +1,77 @@
-'use client'
+"use client";
 
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import useSWR from 'swr'
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { usePathname } from "next/navigation";
+import * as React from "react";
 
-import { CLIENT_URL } from '~/graphql/constants'
-import { fetcher } from '~/lib/functions'
+import { ListContainer } from "~/components/ListDetail/ListContainer";
+import { GET_POSTS } from "~/graphql/queries/posts";
+import type { GetPostsQuery } from "~/graphql/typeSlut";
 
-import { ListContainer } from '../ListDetail/ListContainer'
-import { TitleBar } from '../ListDetail/TitleBar'
-import { LoadingSpinner } from '../LoadingSpinner'
-import { type Post } from './PostDetail'
-import { PostListItem } from './PostListItem'
+import { LoadingSpinner } from "../LoadingSpinner";
+import { PostListItem } from "./PostListItem";
+import { WritingTitlebar } from "./WritingTitlebar";
 
-export const PostsList = () => {
-  const path = usePathname()
-  const [scrollContainerRef, setScrollContainerRef] = useState(null)
-  const { data: posts, isLoading } = useSWR<Post[]>(
-    CLIENT_URL + `/api/post`,
-    fetcher
-  )
+export const WritingContext = React.createContext({
+	filter: "published",
+	setFilter: (filter: string) => {},
+});
 
-  if (!posts && isLoading) {
-    return (
-      <ListContainer onRef={setScrollContainerRef}>
-        <TitleBar scrollContainerRef={scrollContainerRef} title="Posts" />
-        <div className="flex flex-1 items-center justify-center">
-          <LoadingSpinner />
-        </div>
-      </ListContainer>
-    )
-  }
+export function PostsList() {
+	const path = usePathname();
 
-  return (
-    <>
-      <ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
-        <TitleBar scrollContainerRef={scrollContainerRef} title="Posts" />
-        <div className="lg:space-y-1 lg:p-3">
-          {posts &&
-            posts
-              ?.sort((a, b) => {
-                if (new Date(a?.date) > new Date(b?.date)) {
-                  return -1
-                }
-                return 1
-              })
-              .map((post) => {
-                const active = path === post.slug
-                return (
-                  <PostListItem key={post?.slug} post={post} active={active} />
-                )
-              })}
-        </div>
-      </ListContainer>
-    </>
-  )
+	const [filter, setFilter] = React.useState("published");
+	const [scrollContainerRef, setScrollContainerRef] = React.useState(null);
+
+	const variables = filter === "published" ? { filter: { published: true } } : { filter: { published: false } };
+
+	const { error, data, refetch, loading } = useQuery<GetPostsQuery>(GET_POSTS, {
+		variables,
+	});
+
+	React.useEffect(() => {
+		refetch();
+	}, [refetch]);
+
+	if (error) {
+		return (
+			<ListContainer onRef={setScrollContainerRef}>
+				<div />
+			</ListContainer>
+		);
+	}
+
+	if (loading && !data?.posts) {
+		return (
+			<ListContainer onRef={setScrollContainerRef}>
+				<WritingTitlebar scrollContainerRef={scrollContainerRef} />
+				<div className="flex flex-1 items-center justify-center">
+					<LoadingSpinner />
+				</div>
+			</ListContainer>
+		);
+	}
+
+	const { posts } = data;
+
+	const defaultContextValue = {
+		filter,
+		setFilter,
+	};
+
+	return (
+		<WritingContext.Provider value={defaultContextValue}>
+			<ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
+				<WritingTitlebar scrollContainerRef={scrollContainerRef} />
+
+				<div className="lg:space-y-1 lg:p-3">
+					{posts.map((post) => {
+						const active = path === post.slug;
+
+						return <PostListItem key={post.id} post={post} active={active} />;
+					})}
+				</div>
+			</ListContainer>
+		</WritingContext.Provider>
+	);
 }

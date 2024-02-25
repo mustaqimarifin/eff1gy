@@ -1,24 +1,24 @@
-import { Suspense } from 'react'
+import { Suspense } from "react";
 
-import { QuestionDetail } from '~/components/AMA/QuestionDetail'
-import { QuestionsList } from '~/components/AMA/QuestionsList'
-import { ListDetailView } from '~/components/Layouts'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { QuestionDetail } from "~/components/AMA/QuestionDetail";
+import { QuestionsList } from "~/components/AMA/QuestionsList";
+import { ListDetailView } from "~/components/Layouts";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
 
 export default async function QuestionPage({
-  params: { id },
+	params: { id },
 }: {
-  params: { id: string }
+	params: { id: string };
 }) {
-  return (
-    <ListDetailView
-      list={<QuestionsList />}
-      hasDetail
-      detail={
-        <Suspense fallback={<LoadingSpinner />}>
-          <QuestionDetail id={id} />
-        </Suspense>
-      }
-    />
-  )
+	return (
+		<ListDetailView
+			list={<QuestionsList />}
+			hasDetail
+			detail={
+				<Suspense fallback={<LoadingSpinner />}>
+					<QuestionDetail id={id} />
+				</Suspense>
+			}
+		/>
+	);
 }

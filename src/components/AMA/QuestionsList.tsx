@@ -1,95 +1,90 @@
-'use client'
-import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { usePathname } from 'next/navigation'
-import { createContext, useEffect, useState } from 'react'
+"use client";
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { usePathname } from "next/navigation";
+import { createContext, useEffect, useState } from "react";
 
-import { ListContainer } from '~/components/ListDetail/ListContainer'
-import { GET_QUESTIONS } from '~/graphql/queries/questions'
-import { QuestionStatus } from '~/graphql/typeSlut'
+import { ListContainer } from "~/components/ListDetail/ListContainer";
 
-import { ListLoadMore } from '../ListDetail/ListLoadMore'
-import { LoadingSpinner } from '../LoadingSpinner'
-import { AMATitlebar } from './AMATitlebar'
-import { QuestionListItem } from './QuestionListItem'
+import { GetQuestionsDocument, QuestionStatus, type GetQuestionsQuery } from "~/graphql/typeSlut";
+import { ListLoadMore } from "../ListDetail/ListLoadMore";
+import { LoadingSpinner } from "../LoadingSpinner";
+import { AMATitlebar } from "./AMATitlebar";
+import { QuestionListItem } from "./QuestionListItem";
 
 export const QuestionsContext = createContext({
-  filterPending: false,
-  setFilterPending: (bool: boolean) => {},
-})
+	filterPending: false,
+	setFilterPending: (bool: boolean) => {},
+});
 
 export function QuestionsList() {
-  const path = usePathname()
+	const path = usePathname();
 
-  const [filterPending, setFilterPending] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const [scrollContainerRef, setScrollContainerRef] = useState(null)
+	const [filterPending, setFilterPending] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+	const [scrollContainerRef, setScrollContainerRef] = useState(null);
 
-  const status = filterPending
-    ? QuestionStatus.Pending
-    : QuestionStatus.Answered
+	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered;
 
-  const { data, error, loading, fetchMore, refetch } = useQuery(GET_QUESTIONS, {
-    variables: { filter: { status } },
-  })
+	const { data, error, loading, fetchMore, refetch, } = useQuery<GetQuestionsQuery>(GetQuestionsDocument, {
+		variables: { filter: { status } },
+	});
 
-  // refetch questions whenever I toggle back and forth between answered/unanswered
-  useEffect(() => {
-    refetch()
-  }, [status])
+	// refetch questions whenever I toggle back and forth between answered/unanswered
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
-  function handleFetchMore() {
-    return fetchMore({
-      variables: {
-        after: data.questions.pageInfo.endCursor,
-        filter: { status },
-      },
-    })
-  }
+	function handleFetchMore() {
+		return fetchMore({
+			variables: {
+				after: data.questions.pageInfo.endCursor,
+				filter: { status },
+			},
+		});
+	}
 
-  useEffect(() => {
-    if (isVisible) handleFetchMore()
-  }, [isVisible])
+	useEffect(() => {
+		if (isVisible) handleFetchMore();
+	}, [isVisible]);
 
-  if (loading && !data?.questions) {
-    return (
-      <ListContainer onRef={setScrollContainerRef}>
-        <AMATitlebar scrollContainerRef={scrollContainerRef} />
-        <div className="flex flex-1 items-center justify-center">
-          <LoadingSpinner />
-        </div>
-      </ListContainer>
-    )
-  }
+	if (loading && !data?.questions) {
+		return (
+			<ListContainer onRef={setScrollContainerRef}>
+				<AMATitlebar scrollContainerRef={scrollContainerRef} />
+				<div className="flex flex-1 items-center justify-center">
+					<LoadingSpinner />
+				</div>
+			</ListContainer>
+		);
+	}
 
-  if (error) return null
+	if (error) return null;
 
-  const { questions } = data
+	const { questions } = data;
 
-  const defaultContextValue = { filterPending, setFilterPending }
+	const defaultContextValue = { filterPending, setFilterPending };
 
-  return (
-    <QuestionsContext.Provider value={defaultContextValue}>
-      <ListContainer data-cy="questions-list" onRef={setScrollContainerRef}>
-        <AMATitlebar scrollContainerRef={scrollContainerRef} />
+	return (
+		<QuestionsContext.Provider value={defaultContextValue}>
+			<ListContainer data-cy="questions-list" onRef={setScrollContainerRef}>
+				<AMATitlebar scrollContainerRef={scrollContainerRef} />
 
-        <div className="lg:space-y-1 lg:p-3">
-          {questions.edges.map((question) => {
-            const active = path === question.node.id.toString() // post ids are numbers
+				<div className="lg:space-y-1 lg:p-3">
+					{questions.edges.map((question) => {
+						const active = path === question.node.id.toString(); // post ids are numbers
 
-            return (
-              <animate key={question.node.id}>
-                <QuestionListItem question={question.node} active={active} />
-              </animate>
-            )
-          })}
+						return (
+							<animate key={question.node.id}>
+								<QuestionListItem question={question.node} active={active} />
+							</animate>
+						);
+					})}
 
-          {data.questions.pageInfo.hasNextPage && (
-            <ListLoadMore setIsVisible={setIsVisible} />
-          )}
-        </div>
-      </ListContainer>
-    </QuestionsContext.Provider>
-  )
+					{data.questions.pageInfo.hasNextPage && <ListLoadMore setIsVisible={setIsVisible} />}
+				</div>
+			</ListContainer>
+		</QuestionsContext.Provider>
+	);
 }
 
 // const [showLoadMore, setShowLoadMore] =useState(true)

@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { StackCoreFragment, StackDetailFragment } from '../fragments/stack'
-import { UserInfoFragment } from '../fragments/user'
+import { StackCoreFragment, StackDetailFragment } from "../fragments/stack";
+import { UserInfoFragment } from "../fragments/user";
 
 export const EDIT_STACK = gql`
   mutation editStack($id: ID!, $data: EditStackInput!) {
@@ -10,13 +10,13 @@ export const EDIT_STACK = gql`
     }
   }
   ${StackDetailFragment}
-`
+`;
 
 export const DELETE_STACK = gql`
   mutation deleteStack($id: ID!) {
     deleteStack(id: $id)
   }
-`
+`;
 
 export const ADD_STACK = gql`
   mutation addStack($data: AddStackInput!) {
@@ -25,7 +25,7 @@ export const ADD_STACK = gql`
     }
   }
   ${StackDetailFragment}
-`
+`;
 
 export const TOGGLE_STACK_USER = gql`
   mutation toggleStackUser($id: ID!) {
@@ -38,4 +38,4 @@ export const TOGGLE_STACK_USER = gql`
   }
   ${StackCoreFragment}
   ${UserInfoFragment}
-`
+`;

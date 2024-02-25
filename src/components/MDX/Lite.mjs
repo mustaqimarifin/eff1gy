@@ -9,7 +9,7 @@
  *
  *  Author site: https://ibrahimcesar.cloud
  */
-import * as React from 'react'
+import * as React from "react";
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -26,163 +26,133 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
-var __assign = function () {
-  __assign =
-    Object.assign ||
-    function __assign(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i]
-        for (var p in s)
-          if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p]
-      }
-      return t
-    }
-  return __assign.apply(this, arguments)
-}
+let __assign = function () {
+	__assign =
+		Object.assign ||
+		function __assign(t) {
+			for (let s, i = 1, n = arguments.length; i < n; i++) {
+				s = arguments[i];
+				for (const p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+			}
+			return t;
+		};
+	return __assign.apply(this, arguments);
+};
 
 function LiteYouTubeEmbed(props) {
-  var _a = React.useState(false),
-    preconnected = _a[0],
-    setPreconnected = _a[1]
-  var _b = React.useState(false),
-    iframe = _b[0],
-    setIframe = _b[1]
-  var videoId = encodeURIComponent(props.id)
-  var videoPlaylisCovertId =
-    typeof props.playlistCoverId === 'string'
-      ? encodeURIComponent(props.playlistCoverId)
-      : null
-  var videoTitle = props.title
-  var posterImp = props.poster || 'hqdefault'
-  var paramsImp = '&' + props.params || ''
-  var mutedImp = props.muted ? '&mute=1' : ''
-  var announceWatch = props.announce || 'Watch'
-  var format = props.webp ? 'webp' : 'jpg'
-  var vi = props.webp ? 'vi_webp' : 'vi'
-  var posterUrl =
-    props.thumbnail ||
-    (!props.playlist
-      ? 'https://i.ytimg.com/' +
-        vi +
-        '/' +
-        videoId +
-        '/' +
-        posterImp +
-        '.' +
-        format
-      : 'https://i.ytimg.com/' +
-        vi +
-        '/' +
-        videoPlaylisCovertId +
-        '/' +
-        posterImp +
-        '.' +
-        format)
-  var ytUrl = props.noCookie
-    ? 'https://www.youtube-nocookie.com'
-    : 'https://www.youtube.com'
-  ytUrl = props.cookie
-    ? 'https://www.youtube.com'
-    : 'https://www.youtube-nocookie.com'
-  var iframeSrc = !props.playlist
-    ? ytUrl + '/embed/' + videoId + '?autoplay=1&state=1' + mutedImp + paramsImp
-    : ytUrl +
-      '/embed/videoseries?autoplay=1' +
-      mutedImp +
-      '&list=' +
-      videoId +
-      paramsImp
-  var activatedClassImp = props.activatedClass || 'lyt-activated'
-  var adNetworkImp = props.adNetwork || false
-  var aspectHeight = props.aspectHeight || 9
-  var aspectWidth = props.aspectWidth || 16
-  var iframeClassImp = props.iframeClass || ''
-  var playerClassImp = props.playerClass || 'lty-playbtn'
-  var wrapperClassImp = props.wrapperClass || 'yt-lite'
-  var onIframeAdded = props.onIframeAdded || function () {}
-  var rel = props.rel ? 'prefetch' : 'preload'
-  var ContainerElement = props.containerElement || 'article'
-  var warmConnections = function () {
-    if (preconnected) return
-    setPreconnected(true)
-  }
-  var addIframe = function () {
-    if (iframe) return
-    setIframe(true)
-  }
-  React.useEffect(
-    function () {
-      if (iframe) {
-        onIframeAdded()
-      }
-    },
-    [iframe]
-  )
-  return React.createElement(
-    React.Fragment,
-    null,
-    React.createElement('link', { rel: rel, href: posterUrl, as: 'image' }),
-    React.createElement(
-      React.Fragment,
-      null,
-      preconnected &&
-        React.createElement(
-          React.Fragment,
-          null,
-          React.createElement('link', { rel: 'preconnect', href: ytUrl }),
-          React.createElement('link', {
-            rel: 'preconnect',
-            href: 'https://www.google.com',
-          }),
-          adNetworkImp &&
-            React.createElement(
-              React.Fragment,
-              null,
-              React.createElement('link', {
-                rel: 'preconnect',
-                href: 'https://static.doubleclick.net',
-              }),
-              React.createElement('link', {
-                rel: 'preconnect',
-                href: 'https://googleads.g.doubleclick.net',
-              })
-            )
-        )
-    ),
-    React.createElement(
-      ContainerElement,
-      {
-        onPointerOver: warmConnections,
-        onClick: addIframe,
-        className: wrapperClassImp + ' ' + (iframe ? activatedClassImp : ''),
-        'data-title': videoTitle,
-        style: __assign(
-          { backgroundImage: 'url(' + posterUrl + ')' },
-          {
-            '--aspect-ratio': (aspectHeight / aspectWidth) * 100 + '%',
-          }
-        ),
-      },
-      React.createElement('button', {
-        type: 'button',
-        className: playerClassImp,
-        'aria-label': announceWatch + ' ' + videoTitle,
-      }),
-      iframe &&
-        React.createElement('iframe', {
-          className: iframeClassImp,
-          title: videoTitle,
-          width: '560',
-          height: '315',
-          frameBorder: '0',
-          allow:
-            'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture',
-          allowFullScreen: true,
-          src: iframeSrc,
-        })
-    )
-  )
+	const _a = React.useState(false);
+	const preconnected = _a[0];
+	const setPreconnected = _a[1];
+	const _b = React.useState(false);
+	const iframe = _b[0];
+	const setIframe = _b[1];
+	const videoId = encodeURIComponent(props.id);
+	const videoPlaylisCovertId =
+		typeof props.playlistCoverId === "string" ? encodeURIComponent(props.playlistCoverId) : null;
+	const videoTitle = props.title;
+	const posterImp = props.poster || "hqdefault";
+	const paramsImp = `&${props.params}` || "";
+	const mutedImp = props.muted ? "&mute=1" : "";
+	const announceWatch = props.announce || "Watch";
+	const format = props.webp ? "webp" : "jpg";
+	const vi = props.webp ? "vi_webp" : "vi";
+	const posterUrl =
+		props.thumbnail ||
+		(!props.playlist
+			? `https://i.ytimg.com/${vi}/${videoId}/${posterImp}.${format}`
+			: `https://i.ytimg.com/${vi}/${videoPlaylisCovertId}/${posterImp}.${format}`);
+	let ytUrl = props.noCookie ? "https://www.youtube-nocookie.com" : "https://www.youtube.com";
+	ytUrl = props.cookie ? "https://www.youtube.com" : "https://www.youtube-nocookie.com";
+	const iframeSrc = !props.playlist
+		? `${ytUrl}/embed/${videoId}?autoplay=1&state=1${mutedImp}${paramsImp}`
+		: `${ytUrl}/embed/videoseries?autoplay=1${mutedImp}&list=${videoId}${paramsImp}`;
+	const activatedClassImp = props.activatedClass || "lyt-activated";
+	const adNetworkImp = props.adNetwork || false;
+	const aspectHeight = props.aspectHeight || 9;
+	const aspectWidth = props.aspectWidth || 16;
+	const iframeClassImp = props.iframeClass || "";
+	const playerClassImp = props.playerClass || "lty-playbtn";
+	const wrapperClassImp = props.wrapperClass || "yt-lite";
+	const onIframeAdded = props.onIframeAdded || (() => {});
+	const rel = props.rel ? "prefetch" : "preload";
+	const ContainerElement = props.containerElement || "article";
+	const warmConnections = () => {
+		if (preconnected) return;
+		setPreconnected(true);
+	};
+	const addIframe = () => {
+		if (iframe) return;
+		setIframe(true);
+	};
+	React.useEffect(() => {
+		if (iframe) {
+			onIframeAdded();
+		}
+	}, [iframe]);
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement("link", { rel: rel, href: posterUrl, as: "image" }),
+		React.createElement(
+			React.Fragment,
+			null,
+			preconnected &&
+				React.createElement(
+					React.Fragment,
+					null,
+					React.createElement("link", { rel: "preconnect", href: ytUrl }),
+					React.createElement("link", {
+						rel: "preconnect",
+						href: "https://www.google.com",
+					}),
+					adNetworkImp &&
+						React.createElement(
+							React.Fragment,
+							null,
+							React.createElement("link", {
+								rel: "preconnect",
+								href: "https://static.doubleclick.net",
+							}),
+							React.createElement("link", {
+								rel: "preconnect",
+								href: "https://googleads.g.doubleclick.net",
+							}),
+						),
+				),
+		),
+		React.createElement(
+			ContainerElement,
+			{
+				onPointerOver: warmConnections,
+				onClick: addIframe,
+				className: `${wrapperClassImp} ${iframe ? activatedClassImp : ""}`,
+				"data-title": videoTitle,
+				style: __assign(
+					{ backgroundImage: `url(${posterUrl})` },
+					{
+						"--aspect-ratio": `${(aspectHeight / aspectWidth) * 100}%`,
+					},
+				),
+			},
+			React.createElement("button", {
+				type: "button",
+				className: playerClassImp,
+				"aria-label": `${announceWatch} ${videoTitle}`,
+			}),
+			iframe &&
+				React.createElement("iframe", {
+					className: iframeClassImp,
+					title: videoTitle,
+					width: "560",
+					height: "315",
+					frameBorder: "0",
+					allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+					allowFullScreen: true,
+					src: iframeSrc,
+				}),
+		),
+	);
 }
 
-export { LiteYouTubeEmbed as default }
+export { LiteYouTubeEmbed as default };
 //# sourceMappingURL=index.es.jsx.map

@@ -1,15 +1,13 @@
-import { DialogComponent } from '~/components/Dialog'
+import { DialogComponent } from "~/components/Dialog";
 
-import { AddQuestionForm } from './AddQuestionForm'
+import { AddQuestionForm } from "./AddQuestionForm";
 
 export function AddQuestionDialog({ trigger }) {
-  return (
-    <DialogComponent
-      trigger={trigger}
-      title={'Ask Me Anything'}
-      modalContent={({ closeModal }) => (
-        <AddQuestionForm closeModal={closeModal} />
-      )}
-    />
-  )
+	return (
+		<DialogComponent
+			trigger={trigger}
+			title={"Ask Me Anything"}
+			modalContent={({ closeModal }) => <AddQuestionForm closeModal={closeModal} />}
+		/>
+	);
 }

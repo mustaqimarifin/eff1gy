@@ -1,48 +1,48 @@
-'use client'
-import { type ReactNode, useRef } from 'react'
+"use client";
+import { type ReactNode, useRef } from "react";
 
-import { Detail } from '~/components/ListDetail/Detail'
-import { TitleBar } from '~/components/ListDetail/TitleBar'
-import type { EventDetailsPost } from '~/data/events'
+import { Detail } from "~/components/ListDetail/Detail";
+import { TitleBar } from "~/components/ListDetail/TitleBar";
+import type { EventDetailsPost } from "~/data/events";
 
 interface Props {
-  post: EventDetailsPost
-  children?: ReactNode
+	post: EventDetailsPost;
+	children?: ReactNode;
 }
 
 export function EventDetail({ post, children }: Props) {
-  const scrollContainerRef = useRef(null)
-  const titleRef = useRef(null)
-  const gallery = [
-    '/starwars1.jpeg',
-    '/starwars2.jpeg',
-    '/starwars3.jpeg',
-    '/starwars4.jpeg',
-    '/starwars5.jpeg',
-    '/starwars6.jpeg',
-  ]
-  return (
-    <>
-      <Detail.Container data-cy="event-detail" ref={scrollContainerRef}>
-        <TitleBar
-          backButton
-          globalMenu={false}
-          backButtonHref={'/events'}
-          magicTitle
-          title={post?.title}
-          titleRef={titleRef}
-          scrollContainerRef={scrollContainerRef}
-        />
-        <Detail.ContentContainer>
-          {children}
-          {/*             <div className="relative z-0 max-w-screen-lg mx-auto overflow-hidden aspect-video lg:rounded-lg">
+	const scrollContainerRef = useRef(null);
+	const titleRef = useRef(null);
+	const gallery = [
+		"/starwars1.jpeg",
+		"/starwars2.jpeg",
+		"/starwars3.jpeg",
+		"/starwars4.jpeg",
+		"/starwars5.jpeg",
+		"/starwars6.jpeg",
+	];
+	return (
+		<>
+			<Detail.Container data-cy="event-detail" ref={scrollContainerRef}>
+				<TitleBar
+					backButton
+					globalMenu={false}
+					backButtonHref={"/events"}
+					magicTitle
+					title={post?.title}
+					titleRef={titleRef}
+					scrollContainerRef={scrollContainerRef}
+				/>
+				<Detail.ContentContainer>
+					{children}
+					{/*             <div className="relative z-0 max-w-screen-lg mx-auto overflow-hidden aspect-video lg:rounded-lg">
               <div className="object-cover">
                 {post && <Embed id={post?.video} />}
               </div>
             </div> */}
-        </Detail.ContentContainer>
-      </Detail.Container>
-      {/*       <Detail.Container data-cy="event-detail" ref={scrollContainerRef}>
+				</Detail.ContentContainer>
+			</Detail.Container>
+			{/*       <Detail.Container data-cy="event-detail" ref={scrollContainerRef}>
         <TitleBar
           backButton
           globalMenu={false}
@@ -78,6 +78,6 @@ export function EventDetail({ post, children }: Props) {
           {children}
         </Detail.ContentContainer>
       </Detail.Container> */}
-    </>
-  )
+		</>
+	);
 }

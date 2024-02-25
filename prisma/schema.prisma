@@ -1,17 +1,19 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["views", "relationJoins"]
+  previewFeatures = ["views", "relationJoins", "postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider   = "postgresql"
+  //url        = env("SQL_WSL")
+  extensions = [pgcrypto]
+  url = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Account {
-  //id                String  @id @default(dbgenerated("nanoid()"))
-  id                String  @id @default(cuid())
+  id                String  @id @default(dbgenerated("penis()"))
+  //id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -39,8 +41,8 @@ model Session {
 }
 
 model User {
-  //id                String  @id @default(dbgenerated("nanoid()"))
-  id            String    @id @default(cuid())
+  id            String    @id @default(dbgenerated("penis()"))
+  //id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   name          String
   image         String?
@@ -53,6 +55,7 @@ model User {
   location    String?
   username    String?    @unique
   accounts    Account[]
+  posts       Post[]
   comments    Comment[]
   blogs       Blog[]
   questions   Question[]
@@ -71,8 +74,8 @@ model VerificationToken {
 }
 
 model Bookmark {
-  //id                String  @id @default(dbgenerated("nanoid()"))
-  id            String     @id @default(cuid())
+  id            String     @id @default(dbgenerated("penis()"))
+  //id            String     @id @default(cuid())
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   url           String?    @unique
@@ -98,8 +101,8 @@ enum Status {
 }
 
 model Question {
-  //id                String  @id @default(dbgenerated("nanoid()"))
-  id          String     @id @default(cuid())
+  id          String     @id @default(dbgenerated("penis()"))
+  //id          String     @id @default(cuid())
   status      Status     @default(PENDING)
   hearts      Int?       @default(0)
   createdAt   DateTime   @default(now())
@@ -121,8 +124,8 @@ model Question {
 }
 
 model Comment {
-  //id                String  @id @default(dbgenerated("nanoid()"))
-  id         String    @id @default(cuid())
+  id         String    @id @default(dbgenerated("penis()"))
+  //id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
@@ -138,25 +141,26 @@ model Comment {
   question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [slug], references: [slug])
-  slug     String?
+  blog     Blog?     @relation(fields: [blogId], references: [id])
+  blogId   String?
+  post     Post?     @relation(fields: [postId], references: [id])
+  postId   String?
+  event    Event?    @relation(fields: [eventId], references: [id])
+  eventId  String?
+  case     Case?     @relation(fields: [caseId], references: [id])
+  caseId   String?
 
-  event   Event?  @relation(fields: [eventId], references: [id])
-  eventId String?
-  case    Case?   @relation(fields: [caseId], references: [id])
-  caseId  String?
-
-  @@index([bookmarkId])
-  @@index([questionId])
-  @@index([slug])
-  @@index([stackId])
-  @@index([userId])
-  @@index([eventId])
-  @@index([caseId])
+  @@index([bookmarkId, userId])
+  @@index([questionId, userId])
+  @@index([blogId, userId])
+  @@index([stackId, userId])
+  @@index([eventId, userId])
+  @@index([caseId, userId])
+  @@index([postId, userId])
 }
 
 model Blog {
-  id        String     @id @default(cuid())
+  id        String     @id @default(dbgenerated("penis()"))
   slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
@@ -170,14 +174,14 @@ model Blog {
 }
 
 model Event {
-  id        String     @id
+  id        String     @id @default(dbgenerated("penis()"))
   count     Int        @default(1)
   comments  Comment[]
   reactions Reaction[]
 }
 
 model Case {
-  id        String     @id
+  id        String     @id @default(dbgenerated("penis()"))
   count     Int        @default(1)
   comments  Comment[]
   reactions Reaction[]
@@ -190,7 +194,7 @@ model Tag {
 }
 
 model Stack {
-  id          String     @id @default(cuid())
+  id          String     @id @default(dbgenerated("penis()"))
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String?
@@ -208,7 +212,7 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(cuid())
+  id String @id @default(dbgenerated("penis()"))
 
   createdAt  DateTime  @default(now())
   userId     String?
@@ -216,24 +220,63 @@ model Reaction {
   questionId String?
   stackId    String?
   postId     String?
+  blogId     String?
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-
-  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [slug], references: [slug])
-  slug     String?
+  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blog       Blog?     @relation(fields: [blogId], references: [id])
+  slug       String?
 
   event   Event?  @relation(fields: [eventId], references: [id])
   eventId String?
   case    Case?   @relation(fields: [caseId], references: [id])
   caseId  String?
 
-  @@index([bookmarkId])
-  @@index([questionId])
-  @@index([slug])
-  @@index([stackId])
+  @@index([bookmarkId, userId])
+  @@index([questionId, userId])
+  @@index([blogId, userId])
+  @@index([postId, userId])
+  @@index([eventId, userId])
+  @@index([caseId, userId])
+  @@index([stackId, userId])
+}
+
+model Post {
+  id    String @id @default(dbgenerated("penis()"))
+  count Int?   @default(1)
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  publishedAt  DateTime?
+  slug         String     @unique
+  title        String
+  text         String
+  excerpt      String
+  featureImage String?
+  userId       String
+  comments     Comment[]
+  author       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  history      PostEdit[]
+  reactions    Reaction[]
+
+  @@index([publishedAt])
   @@index([userId])
+}
+
+model PostEdit {
+  id String @id @default(dbgenerated("penis()"))
+
+  createdAt    DateTime @default(now())
+  text         String
+  title        String
+  excerpt      String
+  featureImage String?
+  postId       String?
+  post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
 }
 
 enum Role {

@@ -1,127 +1,135 @@
-'use client'
-import { CassetteTape, ListMusicIcon, Plus } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import useSWR from 'swr'
-
-import type { TrackType } from '~/app/(site)/dash/Track'
-import { AddBookmarkDialog } from '~/components/Bookmarks/AddBookmarkDialog'
-import { GhostButton } from '~/components/Button'
+"use client";
+import { CassetteTape, ListMusicIcon, Plus } from "lucide-react";
+import { usePathname } from "next/navigation";
+import useSWR from "swr";
+import type { TrackType } from "~/app/(site)/dash/Track";
+import { AddBookmarkDialog } from "~/components/Bookmarks/AddBookmarkDialog";
+import { GhostButton } from "~/components/Button";
 import {
-  AMAIcon,
-  BookmarksIcon,
-  CaseIcon,
-  ExternalLinkIcon,
-  GitHubIcon,
-  HomeIcon,
-  SoundcloudIcon,
-  Spotify,
-  StackIcon,
-  TwitterIcon,
-  WritingIcon,
-} from '~/components/Icon'
-import { useViewerQuery } from '~/graphql/typeSlut'
-import { fetcher } from '~/lib/functions'
+	AMAIcon,
+	BookmarksIcon,
+	CaseIcon,
+	ExternalLinkIcon,
+	GitHubIcon,
+	HomeIcon,
+	SoundcloudIcon,
+	Spotify,
+	StackIcon,
+	TwitterIcon,
+	WritingIcon,
+} from "~/components/Icon";
 
-import Marquee from '../MDX/Marquee'
-import { NavigationLink } from './NavigationLink'
+import { fetcher } from "~/lib/functions";
+
+import { useViewerQuery } from "~/graphql/typeSlut";
+import Marquee from "../MDX/Marquee";
+import { NavigationLink } from "./NavigationLink";
 
 function ThisAddBookmarkDialog() {
-  return (
-    <AddBookmarkDialog
-      trigger={
-        <GhostButton aria-label="Add bookmark" size="small-square">
-          <Plus size={16} />
-        </GhostButton>
-      }
-    />
-  )
+	return (
+		<AddBookmarkDialog
+			trigger={
+				<GhostButton aria-label="Add bookmark" size="small-square">
+					<Plus size={16} />
+				</GhostButton>
+			}
+		/>
+	);
 }
 
 function Player(track: TrackType) {
-  return (
-    <Marquee speed={25} pauseOnHover delay={2} gradient>
-      <div className="pr-2">{` ${track.title} - ${track.artist} `}</div>
-    </Marquee>
-  )
+	return (
+		<Marquee speed={25} pauseOnHover delay={2} gradient>
+			<div className="pr-2">{` ${track.title} - ${track.artist} `}</div>
+		</Marquee>
+	);
 }
 
 export function SidebarNavigation() {
-  const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher)
-  //console.log(track)
-  const path = usePathname()
-  const { data } = useViewerQuery()
-  const sections = [
-    {
-      label: null,
-      items: [
-        {
-          href: '/',
-          label: 'Home',
-          icon: HomeIcon,
-          trailingAccessory: null,
-          isActive: path === '/',
-          trailingAction: null,
-          isExternal: false,
-        },
-        {
-          href: '/post',
-          label: 'Posts',
-          icon: WritingIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/post') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
-      ],
-    },
-    {
-      label: 'Me',
-      items: [
-        {
-          href: '/bookmarks',
-          label: 'Bookmarks',
-          icon: BookmarksIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/bookmarks') >= 0,
-          trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
-          isExternal: false,
-        },
-        {
-          href: '/dash',
-          label: 'Dashboard',
-          icon: ListMusicIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/dash') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
+	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher);
+	//console.log(track)
+	const path = usePathname();
+	const { data } = useViewerQuery();
+	const sections = [
+		{
+			label: null,
+			items: [
+				{
+					href: "/",
+					label: "Home",
+					icon: HomeIcon,
+					trailingAccessory: null,
+					isActive: path === "/",
+					trailingAction: null,
+					isExternal: false,
+				},
+			/* 	{
+					href: "/post",
+					label: "Posts",
+					icon: WritingIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/post") >= 0,
+					trailingAction: null,
+					isExternal: false,
+				}, */
+				{
+					href: "/blog",
+					label: "Posts",
+					icon: WritingIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/blog") >= 0,
+					trailingAction: null,
+					isExternal: false,
+				},
+			],
+		},
+		{
+			label: "Me",
+			items: [
+				{
+					href: "/bookmarks",
+					label: "Bookmarks",
+					icon: BookmarksIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/bookmarks") >= 0,
+					trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
+					isExternal: false,
+				},
+				{
+					href: "/dash",
+					label: "Dashboard",
+					icon: ListMusicIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/dash") >= 0,
+					trailingAction: null,
+					isExternal: false,
+				},
 
-        {
-          href: '/ama',
-          label: 'AMA',
-          icon: AMAIcon,
-          trailingAccessory: null,
-          isActive:
-            path.indexOf('/ama') >= 0 && !path.startsWith('/ama/pending'),
-          trailingAction: null,
-          isExternal: false,
-        },
+				{
+					href: "/ama",
+					label: "AMA",
+					icon: AMAIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/ama") >= 0 && !path.startsWith("/ama/pending"),
+					trailingAction: null,
+					isExternal: false,
+				},
 
-        {
-          href: '/stack',
-          label: 'Stack',
-          icon: StackIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/stack') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
-      ],
-    },
-    {
-      label: 'Projects',
-      items: [
-        /*         {
+				{
+					href: "/stack",
+					label: "Stack",
+					icon: StackIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/stack") >= 0,
+					trailingAction: null,
+					isExternal: false,
+				},
+			],
+		},
+		{
+			label: "Projects",
+			items: [
+				/*         {
           href: 'https://designdetails.fm',
           label: 'Design Details',
           icon: PodcastIcon,
@@ -151,7 +159,7 @@ export function SidebarNavigation() {
           isExternal: true,
         }, */
 
-        /*         {
+				/*         {
           href: '/security',
           label: 'Security Checklist',
           icon: SecurityChecklistIcon,
@@ -171,80 +179,80 @@ export function SidebarNavigation() {
           isExternal: false,
         },
 
- */ {
-          href: '/events',
-          label: 'Events',
-          icon: CaseIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/events') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
-        {
-          href: '/casestudy',
-          label: 'Case Studies',
-          icon: CaseIcon,
-          trailingAccessory: null,
-          isActive: path.indexOf('/casestudy') >= 0,
-          trailingAction: null,
-          isExternal: false,
-        },
-      ],
-    },
-    {
-      label: 'Online',
-      items: [
-        {
-          href: '/dash',
-          label: track && track.isPlaying ? Player(track) : 'AUDIO FEED',
-          icon: CassetteTape,
-          trailingAccessory: null,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true,
-        },
-        {
-          href: 'https://twitter.com/vmprmyth',
-          label: 'Twitter',
-          icon: TwitterIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true,
-        },
+ */ /* {
+					href: "/events",
+					label: "Events",
+					icon: CaseIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/events") >= 0,
+					trailingAction: null,
+					isExternal: false,
+				}, */
+				{
+					href: "/casestudy",
+					label: "Case Studies",
+					icon: CaseIcon,
+					trailingAccessory: null,
+					isActive: path.indexOf("/casestudy") >= 0,
+					trailingAction: null,
+					isExternal: false,
+				},
+			],
+		},
+		{
+			label: "Online",
+			items: [
+				{
+					href: "/dash",
+					label: track?.isPlaying ? Player(track) : "AUDIO FEED",
+					icon: CassetteTape,
+					trailingAccessory: null,
+					isActive: false,
+					trailingAction: null,
+					isExternal: true,
+				},
+				{
+					href: "https://twitter.com/vmprmyth",
+					label: "Twitter",
+					icon: TwitterIcon,
+					trailingAccessory: ExternalLinkIcon,
+					isActive: false,
+					trailingAction: null,
+					isExternal: true,
+				},
 
-        {
-          href: 'https://open.spotify.com/artist/6bBbUUix7BfttiaHCDkcEI',
-          label: 'Spotify',
-          icon: Spotify,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true,
-        },
+				{
+					href: "https://open.spotify.com/artist/6bBbUUix7BfttiaHCDkcEI",
+					label: "Spotify",
+					icon: Spotify,
+					trailingAccessory: ExternalLinkIcon,
+					isActive: false,
+					trailingAction: null,
+					isExternal: true,
+				},
 
-        {
-          href: 'https://github.com/mustaqimarifin',
-          label: 'GitHub',
-          icon: GitHubIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true,
-        },
+				{
+					href: "https://github.com/mustaqimarifin",
+					label: "GitHub",
+					icon: GitHubIcon,
+					trailingAccessory: ExternalLinkIcon,
+					isActive: false,
+					trailingAction: null,
+					isExternal: true,
+				},
 
-        {
-          href: 'https://soundcloud.com/vmprmyth',
-          label: 'SoundCloud',
-          icon: SoundcloudIcon,
-          trailingAccessory: ExternalLinkIcon,
-          isActive: false,
-          trailingAction: null,
-          isExternal: true,
-        },
-      ],
-    },
-  ]
+				{
+					href: "https://soundcloud.com/vmprmyth",
+					label: "SoundCloud",
+					icon: SoundcloudIcon,
+					trailingAccessory: ExternalLinkIcon,
+					isActive: false,
+					trailingAction: null,
+					isExternal: true,
+				},
+			],
+		},
+	];
 
   return (
     <div className="flex-1 space-y-1 px-3 py-3">
@@ -262,8 +270,8 @@ export function SidebarNavigation() {
               <NavigationLink key={j} link={item} />
             ))}
           </ul>
-        )
-      })}
-    </div>
-  )
+				);
+			})}
+		</div>
+	);
 }

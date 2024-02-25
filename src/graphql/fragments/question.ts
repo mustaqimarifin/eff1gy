@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { UserInfoFragment } from './user'
+import { UserInfoFragment } from "./user";
 
 export const QuestionCoreFragment = gql`
   fragment QuestionCore on Question {
@@ -16,14 +16,14 @@ export const QuestionCoreFragment = gql`
     }
   }
   ${UserInfoFragment}
-`
+`;
 
 export const QuestionListItemFragment = gql`
   fragment QuestionListItem on Question {
     ...QuestionCore
   }
   ${QuestionCoreFragment}
-`
+`;
 
 export const QuestionDetailFragment = gql`
   fragment QuestionDetail on Question {
@@ -38,7 +38,7 @@ export const QuestionDetailFragment = gql`
   }
   ${QuestionCoreFragment}
   ${UserInfoFragment}
-`
+`;
 
 export const QuestionsConnectionFragment = gql`
   fragment QuestionsConnection on QuestionsConnection {
@@ -55,4 +55,4 @@ export const QuestionsConnectionFragment = gql`
     }
   }
   ${QuestionListItemFragment}
-`
+`;
