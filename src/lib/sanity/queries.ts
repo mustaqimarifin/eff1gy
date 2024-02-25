@@ -35,12 +35,12 @@ export const settingsQuery = groq`*[_type == "settings"][0]`;
 
 export const postsQuery = groq`
 *[_type == "post"] | order(priority desc, _updatedAt desc) {
-'id': _id, title, date, 'slug': slug.current
+ title, date, 'slug': slug.current
 }`;
 
 export const casesQuery = groq`
 *[_type == "case-study"] | order(priority desc, _updatedAt desc) {
-'id': _id, title, date, 'updatedAt': _updatedAt, 'caption': coverImage.caption,
+title, date, 'updatedAt': _updatedAt, 'caption': coverImage.caption,
  'slug': slug.current
 }`;
 

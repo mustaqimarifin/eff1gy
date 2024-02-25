@@ -52,16 +52,15 @@ export function Comments({ refId, type }: Props) {
 				<MessageCircle />
 			</div>
 			<div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pt-8 pb-4 md:px-8">
-				<div className="flex flex-col space-y-6">
+				<div className="flex flex-col space-y-3">
 					{comments?.length > 0 &&
 						comments.map((comment) => <Comment key={comment.id} refId={refId} type={type} comment={comment} />)}
 					{comments?.length === 0 && (
-						<div className="text-quaternary block pt-12 pb-16 text-center">No comments yet...</div>
+						<p className="text-quaternary block pt-12 pb-16 text-center">No comments yet...</p>
 					)}
 				</div>
 			</div>
 			<div ref={messagesEndRef} />
-
 			<SignInDialog>{({ openModal }) => <CommentForm refId={refId} type={type} openModal={openModal} />}</SignInDialog>
 		</div>
 	);

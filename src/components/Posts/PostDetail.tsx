@@ -64,8 +64,7 @@ export function PostDetail({ slug }: PD) {
 					</Detail.Header>
 					{/*     <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div> */}
 					<MarkdownRenderer children={post.text} className="mt-8 xl:prose-md lg:max-w-3xl" />
-					{/* bottom padding to give space between post content and comments */}
-					<div className="py-6" />
+					<div className="py-6" /> {/* bottom padding to give space between post content and comments */}
 				</Detail.ContentContainer>
 
 				<Comments refId={post.id} type={CommentType.Post} />

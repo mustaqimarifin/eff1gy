@@ -17,15 +17,9 @@ import { TitleBar } from "./TitleBar";
 		/>
 	)
 }
- */
+  */
 function ContentContainer(props) {
-	return (
-		<div
-			className="mx-auto w-full px-4 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-6 "
-			//className="mx-auto "
-			{...props}
-		/>
-	);
+	return <div className="mx-auto w-full max-w-sm px-2 md:px-3 py-12  md:max-w-2xl lg:max-w-3xl lg:px-4 " {...props} />;
 }
 
 interface DetailContainerProps {

@@ -16,3 +16,4 @@ src/data/local/*
 !.env.vault
 schema.txt
 nanoid.sql
+sanity.json

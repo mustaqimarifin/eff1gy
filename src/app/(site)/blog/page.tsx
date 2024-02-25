@@ -1,4 +1,3 @@
-
 import type { Post } from "~/components/Blogs/BlogDetail";
 import BlogList from "~/components/Blogs/BlogList";
 

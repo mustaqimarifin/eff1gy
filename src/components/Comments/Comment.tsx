@@ -104,22 +104,22 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 						<Avatar
 							user={comment.author}
 							src={comment.author.image}
-							width={40}
-							height={40}
+							width={32}
+							height={32}
 							quality={100}
 							className="rounded-full"
 						/>
 					</Link>
 
-					<div className="flex space-x-1">
-						<Link href={`/u/${comment.author.username}`} className="text-primary font-semibold leading-snug">
+					<div className="flex space-x-1 text-sm">
+						<Link href={`/u/${comment.author.username}`} className="text-primary  font-semibold leading-snug">
 							<div className="flex break-all line-clamp-1">{comment.author.name}</div>
 						</Link>
 						<div className="text-quaternary leading-snug">·</div>
 						<div className="text-quaternary leading-snug line-clamp-1" title={createdAt.raw}>
 							{createdAt.formatted}
 						</div>
-						<div className="text-quaternary leading-snug text-xs flex flex-row items-center text-gray-500 dark:text-gray-200">
+						<div className="text-quaternary leading-snug flex flex-row items-center text-gray-500 dark:text-gray-200">
 							{comment.viewerCanEdit && (
 								<button
 									className=" hover:text-lime-400 hover:dark:text-lime-300 border-none"
@@ -164,7 +164,7 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 			) : (
 				<MarkdownRenderer
 					children={comment.text}
-					className="comment flex-grow pl-14 prose prose-neutral dark:prose-invert "
+					className="comment flex-grow pl-14  text-sm prose prose-neutral dark:prose-invert"
 					variant="comment"
 				/>
 			)}

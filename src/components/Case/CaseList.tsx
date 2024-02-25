@@ -2,15 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import useSWR from "swr";
+//import useSWR from "swr";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { CLIENT_URL } from "~/graphql/constants";
-import { fetcher } from "~/lib/functions";
 
 import type { CaseStudy } from "../Blogs/BlogDetail";
-import { LoadingSpinner } from "../LoadingSpinner";
+
 import { CaseListItem } from "./CaseItem";
 
 export const CaseList = ({ cases }: { cases: CaseStudy[] }) => {

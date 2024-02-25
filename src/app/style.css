@@ -479,11 +479,11 @@
 }
 
 .prose pre {
-  @apply  rounded-lg overflow-x-auto border shadow-pink-400 ;
+  @apply   overflow-x-auto border shadow-pink-400 ;
 }
 
 .prose code {
-  @apply px-1 py-0.5 rounded-lg;
+  @apply px-1 py-0.5 ;
 }
 
 .prose pre code {
