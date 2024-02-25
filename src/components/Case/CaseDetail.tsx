@@ -26,7 +26,7 @@ export function CaseDetail({ casestudy, children }: Props) {
 			<TitleBar
 				backButton
 				globalMenu={false}
-				backButtonHref={"/casestudy"}
+				backButtonHref={"/code"}
 				magicTitle
 				title={casestudy?.title}
 				titleRef={titleRef}

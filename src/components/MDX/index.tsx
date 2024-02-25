@@ -3,11 +3,13 @@ import Link from "next/link";
 import React from "react";
 
 import { CLIENT_URL } from "~/graphql/constants";
-import { slugify } from "~/lib/functions";
 
 import { Embed } from "./Embed";
 import { Tweet } from "./gfy";
-import { highlight } from "./sugar";
+
+import { Code } from "bright";
+import { createHeading } from "./CreateHeading";
+Code.theme = "one-dark-pro";
 
 export function CustomLink(props) {
 	let href = props.href;
@@ -147,12 +149,6 @@ function Bust(props) {
 	return <strong className="font-quad text-orange-500 text-2xl italic ">{props.children}</strong>;
 }
 
-export function Code({ children, ...props }) {
-	const codeHTML = highlight(children);
-	// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-return  <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
-}
-
 function Table({ data }) {
 	const headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
 	const rows = data.rows.map((row, index) => (
@@ -172,23 +168,6 @@ function Table({ data }) {
 		</table>
 	);
 }
-export function createHeading(level) {
-	return ({ children }) => {
-		let slug = slugify(children);
-		return React.createElement(
-			`h${level}`,
-			{ id: slug },
-			[
-				React.createElement("a", {
-					href: `#${slug}`,
-					key: `link-${slug}`,
-					className: "anchor",
-				}),
-			],
-			children,
-		);
-	};
-}
 
 export const components = {
 	a: CustomLink,
@@ -204,7 +183,7 @@ export const components = {
 	ProsCard,
 	ConsCard,
 	Embed,
-	code: Code,
+	pre: Code,
 	Tweet,
 	Table,
 };

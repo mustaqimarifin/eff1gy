@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { BlogDetailFragment, BlogListItemFragment } from '~/graphql/fragments/blog'
+import { BlogDetailFragment, BlogListItemFragment } from "~/graphql/fragments/blog";
 
 export const GET_BLOGS = gql`
   query getBlogs {
@@ -9,7 +9,7 @@ export const GET_BLOGS = gql`
     }
   }
   ${BlogListItemFragment}
-`
+`;
 
 export const GET_BLOG = gql`
   query getBlog($slug: String!) {
@@ -18,4 +18,4 @@ export const GET_BLOG = gql`
     }
   }
   ${BlogDetailFragment}
-`
+`;

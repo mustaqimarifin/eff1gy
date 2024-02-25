@@ -97,7 +97,6 @@ export function BookmarkActions({ bookmark }) {
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(bookmark)}
-			
 
 			{data?.viewer?.isAdmin && (
 				<>

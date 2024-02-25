@@ -16,8 +16,8 @@ export const CaseListItem = memo<Props>(({ casestudy, active }) => {
 	return (
 		<ListItem
 			key={casestudy?.slug}
-			href="/casestudy/[slug]"
-			as={`/casestudy/${casestudy?.slug}`}
+			href="/codey/[slug]"
+			as={`/code/${casestudy?.slug}`}
 			title={casestudy.title}
 			description={null}
 			leadingAccessory={

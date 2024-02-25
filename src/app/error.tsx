@@ -5,7 +5,7 @@ import { ListDetailView } from "~/components/Layouts";
 import { Detail } from "~/components/ListDetail/Detail";
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
-export  default function Error({
+export default function Error({
 	error,
 	reset,
 }: {

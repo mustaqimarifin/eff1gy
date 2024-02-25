@@ -10,7 +10,6 @@ import { HiddenCounter } from "~/lib/actions";
 import { getAllCases, getCase } from "~/lib/sanity/client";
 
 export const revalidate = 3600;
-
 export async function generateStaticParams() {
 	const cases = await getAllCases();
 
@@ -25,16 +24,16 @@ export default async function CaseStudyPage({ params: { slug } }) {
 	if (!casestudy) {
 		return { notFound: true };
 	}
+	const cases = await getAllCases();
 
 	return (
 		<ListDetailView
-			list={<CaseList />}
+			list={<CaseList cases={cases} />}
 			hasDetail
 			detail={
 				<CaseDetail casestudy={casestudy}>
 					<HiddenCounter refId={casestudy?.slug} type={ViewType.Case} />
 					<Suspense>
-						{" "}
 						<Mdx source={casestudy?.content} />
 					</Suspense>
 				</CaseDetail>

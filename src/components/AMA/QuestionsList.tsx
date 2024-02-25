@@ -25,7 +25,7 @@ export function QuestionsList() {
 
 	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered;
 
-	const { data, error, loading, fetchMore, refetch, } = useQuery<GetQuestionsQuery>(GetQuestionsDocument, {
+	const { data, error, loading, fetchMore, refetch } = useQuery<GetQuestionsQuery>(GetQuestionsDocument, {
 		variables: { filter: { status } },
 	});
 

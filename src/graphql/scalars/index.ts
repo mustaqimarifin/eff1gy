@@ -27,8 +27,8 @@ function parseObject(typeName, ast, variables) {
 	let value = Object.create(null);
 	for (let field of ast.fields) {
 		value[field.name.value] = _parseLiteral(typeName, field.value, variables);
-	};
-/* 		ast.fields.forEach((field) => {
+	}
+	/* 		ast.fields.forEach((field) => {
 		// eslint-disable-next-line no-use-before-define
 		value[field.name.value] = _parseLiteral(typeName, field.value, variables);
 	}); */

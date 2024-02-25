@@ -11,7 +11,6 @@ import { PostsList } from "~/components/Posts/PostsList";
 import { getClient } from "~/components/Provider/ApolloClient";
 import { GetPostDocument, ViewType } from "~/graphql/typeSlut";
 
-
 import { HiddenCounter } from "~/lib/actions";
 
 //export const dynamic = 'force-dynamic'
@@ -27,7 +26,9 @@ export default async function PostPage({ params: { slug } }: { params: { slug: s
 			hasDetail
 			detail={
 				<Suspense fallback={<LoadingSpinner />}>
-					<PostDetail slug={slug}><HiddenCounter refId={data?.post?.id} type={ViewType.Post} /></PostDetail>
+					<PostDetail slug={slug}>
+						<HiddenCounter refId={data?.post?.id} type={ViewType.Post} />
+					</PostDetail>
 				</Suspense>
 			}
 		/>

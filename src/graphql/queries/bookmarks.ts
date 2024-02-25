@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { BookmarkDetailFragment, BookmarksConnectionFragment } from '../fragments/bookmark'
+import { BookmarkDetailFragment, BookmarksConnectionFragment } from "../fragments/bookmark";
 
 export const GET_BOOKMARKS = gql`
   query getBookmarks($first: Int, $after: String, $filter: BookmarkFilter) {
@@ -9,7 +9,7 @@ export const GET_BOOKMARKS = gql`
     }
   }
   ${BookmarksConnectionFragment}
-`
+`;
 export const GET_BOOKMARK = gql`
   query getBookmark($id: ID!) {
     bookmark(id: $id) {
@@ -17,4 +17,4 @@ export const GET_BOOKMARK = gql`
     }
   }
   ${BookmarkDetailFragment}
-`
+`;

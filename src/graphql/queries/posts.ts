@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { PostDetailFragment, PostListItemFragment } from '~/graphql/fragments/post'
+import { PostDetailFragment, PostListItemFragment } from "~/graphql/fragments/post";
 
 export const GET_POSTS = gql`
   query getPosts($filter: PostFilter) {
@@ -9,7 +9,7 @@ export const GET_POSTS = gql`
     }
   }
   ${PostListItemFragment}
-`
+`;
 
 export const GET_POST = gql`
   query getPost($slug: String!) {
@@ -18,4 +18,4 @@ export const GET_POST = gql`
     }
   }
   ${PostDetailFragment}
-`
+`;

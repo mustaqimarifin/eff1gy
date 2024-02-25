@@ -25,12 +25,12 @@ export async function toggleReaction(_, args: MutationToggleReactionArgs, ctx: C
 			table = "post";
 			break;
 		}
-				case ReactionType.Event: {
+		case ReactionType.Event: {
 			field = "eventId";
 			table = "event";
 			break;
 		}
-				case ReactionType.Case: {
+		case ReactionType.Case: {
 			field = "caseId";
 			table = "case";
 			break;

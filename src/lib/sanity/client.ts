@@ -56,8 +56,7 @@ export async function getPost(slug: Post["slug"]) {
 
 export async function getAllCases() {
 	if (sanity) {
-		const slugs = (await sanity.fetch(casesQuery)) || [];
-		return slugs.map((slug) => ({ slug }));
+		return (await sanity.fetch(casesQuery)) || [];
 	}
 	return [];
 }

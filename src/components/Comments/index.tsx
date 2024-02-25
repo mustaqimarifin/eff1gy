@@ -17,7 +17,7 @@ interface Props {
 	type: CommentType;
 }
 
-export function Comments ({ refId, type }: Props) {
+export function Comments({ refId, type }: Props) {
 	const messagesEndRef = useRef(null);
 
 	const { data, loading, error, refetch } = useQuery<GetCommentsQuery>(GetCommentsDocument, {
@@ -25,8 +25,7 @@ export function Comments ({ refId, type }: Props) {
 			refId,
 			type,
 		},
-		context: { fetchOptions: { cache: 'no-store' } },
-
+		context: { fetchOptions: { cache: "no-store" } },
 	});
 
 	useWindowFocus({ onFocus: refetch });
@@ -54,16 +53,16 @@ export function Comments ({ refId, type }: Props) {
 			</div>
 			<div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pt-8 pb-4 md:px-8">
 				<div className="flex flex-col space-y-6">
-					{ comments?.length > 0 &&
-						comments.map((comment) => <Comment key={ comment.id } refId={ refId } type={ type } comment={ comment } />) }
-					{ comments?.length === 0 && (
+					{comments?.length > 0 &&
+						comments.map((comment) => <Comment key={comment.id} refId={refId} type={type} comment={comment} />)}
+					{comments?.length === 0 && (
 						<div className="text-quaternary block pt-12 pb-16 text-center">No comments yet...</div>
-					) }
+					)}
 				</div>
 			</div>
-			<div ref={ messagesEndRef } />
+			<div ref={messagesEndRef} />
 
-			<SignInDialog>{ ({ openModal }) => <CommentForm refId={ refId } type={ type } openModal={ openModal } /> }</SignInDialog>
+			<SignInDialog>{({ openModal }) => <CommentForm refId={refId} type={type} openModal={openModal} />}</SignInDialog>
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const GET_TAGS = gql`
   query getTags {
@@ -6,4 +6,4 @@ export const GET_TAGS = gql`
       name
     }
   }
-`
+`;

@@ -3,7 +3,7 @@ import { GraphQLError } from "graphql";
 import { type Context } from "~/graphql/context";
 import { ViewType } from "~/graphql/typeSlut";
 
-export async function addView (_, args, ctx: Context) {
+export async function addView(_, args, ctx: Context) {
 	const { refId, type } = args;
 	const { db } = ctx;
 

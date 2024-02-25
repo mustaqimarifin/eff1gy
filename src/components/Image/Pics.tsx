@@ -23,7 +23,7 @@ export const DickPics = ({ src }) => {
 					}}
 					className={cx(
 						" mx-auto flex  w-full items-center justify-center object-cover object-top duration-700 ease-in-out group-hover:opacity-75 lg:max-w-7xl",
-						isLoading && isVisible ? "scale-110 blur-2xl grayscale" : "scale-100 blur-0 grayscale-0",
+						isLoading && isVisible ? "scale-110 blur-2xl grayscale" : "scale-100  grayscale-0",
 					)}
 					onLoad={() => setLoading(false)}
 					//blurDataURL={blurDataUrl}

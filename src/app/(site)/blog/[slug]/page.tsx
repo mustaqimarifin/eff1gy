@@ -1,4 +1,3 @@
-
 import { Suspense } from "react";
 
 import Mdx from "~/app/mdxrsc";
@@ -10,9 +9,9 @@ import { HiddenCounter } from "~/lib/actions";
 import { getAllPosts, getPost } from "~/lib/sanity/client";
 //xport const dynamic = 'force-dynamic'
 
-//export const revalidate = 3600;
+export const revalidate = 3600;
 
-export async function generateStaticParams () {
+export async function generateStaticParams() {
 	const posts = await getAllPosts();
 
 	return posts.map((post) => ({
@@ -20,8 +19,7 @@ export async function generateStaticParams () {
 	}));
 }
 
-export default async function Blog ({ params: { slug } }) {
-
+export default async function Blog({ params: { slug } }) {
 	/* const { data } = await client.query({query: GetBlogDocument})
 	const { blog } = data
 	
@@ -53,14 +51,11 @@ export default async function Blog ({ params: { slug } }) {
 		: null
  */
 	return (
-
 		<Suspense>
-			<HiddenCounter refId={ post?.slug } type={ ViewType.Blog } />
-			<BlogDetail post={ post } slug={ slug }>
-				<Mdx source={ post?.content } />
+			<HiddenCounter refId={post?.slug} type={ViewType.Blog} />
+			<BlogDetail post={post} slug={slug}>
+				<Mdx source={post?.content} />
 			</BlogDetail>
 		</Suspense>
-
-
 	);
 }

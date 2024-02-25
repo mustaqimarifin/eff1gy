@@ -13,7 +13,7 @@ interface Props {
 	id: string;
 	initialAudioUrl?: string;
 	initialWaveform?: number[];
-onRecordingStart?: Function;
+	onRecordingStart?: Function;
 	onRecordingStop?: Function;
 	onRecordingError?: Function;
 	// onTranscriptionComplete?: (e: OnComplete) => void
@@ -143,11 +143,9 @@ export default function AudioRecorder({
 			});
 			try {
 				const mr = new MediaRecorder(stream);
-			//	console.log(`Recording with mimeType: ${mr.mimeType}`);
+				//	console.log(`Recording with mimeType: ${mr.mimeType}`);
 				setMediaRecorder(mr);
-			} catch (e) {
-		
-			}
+			} catch (e) {}
 		}
 
 		// navigator.getUserMedia =

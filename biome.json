@@ -11,20 +11,13 @@
 	"formatter": {
 		"enabled": true,
 		"lineWidth": 120,
-		"ignore": [
-			".next/*"
-		]
+		"ignore": [".next/*", "node_modules"]
 	},
 	"files": {
-		"ignore": [
-			".next/*",
-			"src/gql/**/*"
-		]
+		"ignore": [".next/*", "src/gql/**/*"]
 	},
 	"linter": {
-		"ignore": [
-			".next/*", "src/graphql/typeSlut.js"
-		],
+		"ignore": [".next/*", "src/graphql/typeSlut.js"],
 		"enabled": true,
 		"rules": {
 			"recommended": true,

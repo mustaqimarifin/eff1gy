@@ -120,7 +120,7 @@ async function main() {
 			{ name: "music" },
 		],
 	});
-//	console.log({ tags })
+	//	console.log({ tags })
 }
 main()
 	.then(async () => {

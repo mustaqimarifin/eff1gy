@@ -11,7 +11,7 @@ import { PostEditorContext } from "./PostEditor";
 export function PostEditorComposer() {
 	const context = React.useContext(PostEditorContext);
 	const { draftState, setDraftState } = context;
-	const uploadingImagePlaceholder = `![](Uploading...)`
+	const uploadingImagePlaceholder = `![](Uploading...)`;
 
 	function handleTitleChange(e) {
 		setDraftState((draft) => ({ ...draft, title: e.target.value }));
@@ -40,7 +40,7 @@ export function PostEditorComposer() {
 		setDraftState((draft) => ({
 			...draft,
 			// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-text: (draft.text += uploadingImagePlaceholder),
+			text: (draft.text += uploadingImagePlaceholder),
 		}));
 	}
 

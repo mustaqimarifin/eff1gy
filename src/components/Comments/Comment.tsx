@@ -152,7 +152,7 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 			</div>
 
 			{isEditing ? (
-				<div className="flex flex-col space-y-3 pl-14">
+				<div className="flex flex-col space-y-2 pl-14">
 					<Textarea onChange={(e) => setEditText(e.target.value)} value={editText} onKeyDown={onKeyDown} />
 					<div className="flex justify-between">
 						<Button onClick={() => setIsEditing(false)}>Cancel</Button>
@@ -164,7 +164,7 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 			) : (
 				<MarkdownRenderer
 					children={comment.text}
-					className="comment flex-grow pl-14 leading-normal"
+					className="comment flex-grow pl-14 prose prose-neutral dark:prose-invert "
 					variant="comment"
 				/>
 			)}

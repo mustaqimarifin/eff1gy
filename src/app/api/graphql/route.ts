@@ -22,7 +22,7 @@ const { handleRequest } = createYoga<
 		viewer: User | null;
 	}
 >({
-  graphiql: false,
+	graphiql: false,
 	context: async ({ req, res }) => {
 		const viewer = await getViewer(req, res);
 
@@ -34,7 +34,7 @@ const { handleRequest } = createYoga<
 	schema,
 	graphqlEndpoint: "/api/graphql",
 	fetchAPI: { Response },
-	plugins: [useAPQ()]
+	plugins: [useAPQ()],
 });
 
 export { handleRequest as GET, handleRequest as POST };

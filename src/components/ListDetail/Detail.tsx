@@ -21,13 +21,13 @@ import { TitleBar } from "./TitleBar";
 function ContentContainer(props) {
 	return (
 		<div
-						className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 " 
+			className="mx-auto w-full px-4 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-6 "
 			//className="mx-auto "
 			{...props}
 		/>
 	);
 }
- 
+
 interface DetailContainerProps {
 	children: ReactNode;
 }
@@ -35,16 +35,16 @@ interface DetailContainerProps {
 const Container = forwardRef<HTMLDivElement, DetailContainerProps>((props, ref) => {
 	return (
 		<div
-			ref={ ref }
+			ref={ref}
 			id="main"
 			className="relative flex max-h-screen w-full flex-col overflow-y-auto bg-white dark:bg-black"
-			{ ...props }
+			{...props}
 		/>
 	);
 });
 
-function Header (props) {
-	return <div className="space-y-3" { ...props } />;
+function Header(props) {
+	return <div className="space-y-3" {...props} />;
 }
 
 interface TitleProps {
@@ -52,12 +52,10 @@ interface TitleProps {
 }
 
 const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-	return (
-		<div ref={ ref } className="text-gray-600 dark:text-slate-50 text-3xl font-quad " { ...props } />
-	);
+	return <div ref={ref} className="text-gray-600 dark:text-slate-50 text-3xl font-quad " {...props} />;
 });
 
-function Loading () {
+function Loading() {
 	return (
 		<Container>
 			<div className="flex flex-1 flex-col items-center justify-center">
@@ -67,12 +65,12 @@ function Loading () {
 	);
 }
 
-function Null () {
+function Null() {
 	return (
 		<Container>
 			<TitleBar title="Not found" />
 			<div className="flex flex-1 flex-col items-center justify-center space-y-6 px-8 text-center lg:px-16">
-				<Compass className="text-secondary" size={ 32 } />
+				<Compass className="text-secondary" size={32} />
 				<div className="flex flex-col space-y-1">
 					<div className="text-primary font-semibold">What you seek does not exist.</div>
 					<div className="text-tertiary">

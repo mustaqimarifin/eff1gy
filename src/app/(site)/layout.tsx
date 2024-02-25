@@ -1,11 +1,7 @@
 import "~/app/style.css";
 
-
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import type { NextFontWithVariable } from "next/dist/compiled/@next/font";
-import localFont from "next/font/local";
+
 import type { ReactNode } from "react";
 
 import { SiteLayout } from "~/components/Layouts";
@@ -13,6 +9,7 @@ import { Providers } from "~/components/Provider";
 import { Toast } from "~/components/Provider/Toaster";
 import { CLIENT_URL } from "~/graphql/constants";
 import { cx } from "~/lib/transformers";
+import { GMono, GSans, Quad } from "./fonts";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(CLIENT_URL),
@@ -46,16 +43,9 @@ export const metadata: Metadata = {
 	},
 };
 
-const Quad: NextFontWithVariable = localFont({
-	src: "/qbc.woff2",
-	weight: "700",
-	style: "italic",
-	variable: "--font-quad",
-});
-
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
-		<html lang="en" className={cx(Quad.variable, GeistSans.variable, GeistMono.variable)}>
+		<html lang="en" className={cx(Quad.variable, GSans.variable, GMono.variable)}>
 			<body>
 				<span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-900">
 					<a className="text-primary font-semibold" href="#main">

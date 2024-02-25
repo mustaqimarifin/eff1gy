@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply max-h-screen overflow-hidden text-base;
+    @apply max-h-screen overflow-hidden text-base ;
   }
 
   /* handles safari overscroll background color */
@@ -467,7 +467,7 @@
 }
 
 .prose pre > code {
-  @apply bg-neutral-50 dark:bg-neutral-900;
+  background: none
 }
 
 .prose :where(code):not(:where([class~='not-prose'] *))::before {
@@ -479,7 +479,7 @@
 }
 
 .prose pre {
-  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900;
+  @apply  rounded-lg overflow-x-auto border shadow-pink-400 ;
 }
 
 .prose code {

@@ -41,8 +41,6 @@ import { addView } from "./view";
 	addView: addView,
 };
  */
- 
-
 
 /* import {
   addPost,
@@ -50,26 +48,25 @@ import { addView } from "./view";
   editPost,
 } from '~/graphql/resolvers/mutations/post' */
 
-
 export default {
-  addBookmark: requiresAdmin(addBookmark),
-  editBookmark: requiresAdmin(editBookmark),
-  deleteBookmark: requiresAdmin(deleteBookmark),
-  addStack: requiresAdmin(addStack),
-  editStack: requiresAdmin(editStack),
-  deleteStack: requiresAdmin(deleteStack),
-  toggleStackUser: requiresUser(toggleStackUser),
-  addQuestion: requiresUser(addQuestion),
-  editQuestion: requiresUser(editQuestion),
-  deleteQuestion: requiresUser(deleteQuestion),
-  addComment: requiresUser(addComment),
-  editComment: requiresUser(editComment),
-  deleteComment: requiresUser(deleteComment),
-  deleteUser: requiresUser(deleteUser),
-  editUser: requiresUser(editUser),
-  addPost: requiresAdmin(addPost),
-  editPost: requiresAdmin(editPost),
-  deletePost: requiresAdmin(deletePost),
-  toggleReaction: requiresUser(toggleReaction),
-  addView: addView,
-}
+	addBookmark: requiresAdmin(addBookmark),
+	editBookmark: requiresAdmin(editBookmark),
+	deleteBookmark: requiresAdmin(deleteBookmark),
+	addStack: requiresAdmin(addStack),
+	editStack: requiresAdmin(editStack),
+	deleteStack: requiresAdmin(deleteStack),
+	toggleStackUser: requiresUser(toggleStackUser),
+	addQuestion: requiresUser(addQuestion),
+	editQuestion: requiresUser(editQuestion),
+	deleteQuestion: requiresUser(deleteQuestion),
+	addComment: requiresUser(addComment),
+	editComment: requiresUser(editComment),
+	deleteComment: requiresUser(deleteComment),
+	deleteUser: requiresUser(deleteUser),
+	editUser: requiresUser(editUser),
+	addPost: requiresAdmin(addPost),
+	editPost: requiresAdmin(editPost),
+	deletePost: requiresAdmin(deletePost),
+	toggleReaction: requiresUser(toggleReaction),
+	addView: addView,
+};

@@ -40,8 +40,7 @@ export const postsQuery = groq`
 
 export const casesQuery = groq`
 *[_type == "case-study"] | order(priority desc, _updatedAt desc) {
-'id': _id, title, date, "updatedAt": _updatedAt,
-  "caption" : coverImage.caption,
+'id': _id, title, date, 'updatedAt': _updatedAt, 'caption': coverImage.caption,
  'slug': slug.current
 }`;
 

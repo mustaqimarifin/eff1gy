@@ -5,7 +5,7 @@ import { QuestionsList } from "~/components/AMA/QuestionsList";
 import { ListDetailView } from "~/components/Layouts";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 
-export default async function QuestionPage({
+export default function QuestionPage({
 	params: { id },
 }: {
 	params: { id: string };

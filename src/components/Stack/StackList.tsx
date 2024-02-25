@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
 
-import {  useGetStacksQuery } from "~/graphql/typeSlut";
+import { useGetStacksQuery } from "~/graphql/typeSlut";
 
 import { ListLoadMore } from "../ListDetail/ListLoadMore";
 import { LoadingSpinner } from "../LoadingSpinner";
@@ -17,7 +17,7 @@ export function StackList() {
 	const [isVisible, setIsVisible] = useState(false);
 	const [scrollContainerRef, setScrollContainerRef] = useState(null);
 
-	const { data, loading, fetchMore } = useGetStacksQuery()
+	const { data, loading, fetchMore } = useGetStacksQuery();
 
 	function handleFetchMore() {
 		return fetchMore({

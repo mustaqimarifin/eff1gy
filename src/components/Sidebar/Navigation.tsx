@@ -62,7 +62,7 @@ export function SidebarNavigation() {
 					trailingAction: null,
 					isExternal: false,
 				},
-			/* 	{
+				/* 	{
 					href: "/post",
 					label: "Posts",
 					icon: WritingIcon,
@@ -188,11 +188,11 @@ export function SidebarNavigation() {
 					isExternal: false,
 				}, */
 				{
-					href: "/casestudy",
-					label: "Case Studies",
+					href: "/code",
+					label: "Code",
 					icon: CaseIcon,
 					trailingAccessory: null,
-					isActive: path.indexOf("/casestudy") >= 0,
+					isActive: path.indexOf("/code") >= 0,
 					trailingAction: null,
 					isExternal: false,
 				},
@@ -253,22 +253,23 @@ export function SidebarNavigation() {
 		},
 	];
 
-  return (
-    <div className="flex-1 space-y-1 px-3 py-3">
-      {sections.map((section, i) => {
-        return (
-          <ul key={i} className="space-y-1">
-            {section.label && (
-              <div
-                key={i}
-                className="px-2 pb-2 pt-5 text-xs font-semibold text-gray-1000 text-opacity-40 dark:text-white">
-                {section.label}
-              </div>
-            )}
-            {section.items.map((item, j) => (
-              <NavigationLink key={j} link={item} />
-            ))}
-          </ul>
+	return (
+		<div className="flex-1 space-y-1 px-3 py-3">
+			{sections.map((section, i) => {
+				return (
+					<ul key={i} className="space-y-1">
+						{section.label && (
+							<div
+								key={i}
+								className="px-2 pb-2 pt-5 text-xs font-semibold text-gray-1000 text-opacity-40 dark:text-white"
+							>
+								{section.label}
+							</div>
+						)}
+						{section.items.map((item, j) => (
+							<NavigationLink key={j} link={item} />
+						))}
+					</ul>
 				);
 			})}
 		</div>

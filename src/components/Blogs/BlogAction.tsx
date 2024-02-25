@@ -5,11 +5,11 @@ import { GET_BLOG } from "~/graphql/queries/blogs";
 import type { Blog } from "~/graphql/typeSlut";
 import { ReactionType, ToggleReactionDocument, useToggleReactionMutation } from "~/graphql/typeSlut";
 
-function getReactionButton (blog: Blog) {
+function getReactionButton(blog: Blog) {
 	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument, {
-		context: { fetchOptions: { cache: 'no-store' } },
-	})
-	function handleClick () {
+		context: { fetchOptions: { cache: "no-store" } },
+	});
+	function handleClick() {
 		if (loading) return;
 
 		toggleReaction({
@@ -26,7 +26,7 @@ function getReactionButton (blog: Blog) {
 					viewerHasReacted: !blog.viewerHasReacted,
 				},
 			},
-			update (cache, { data: { toggleReaction } }) {
+			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
 					query: GET_BLOG,
 					variables: { id: blog.id },
@@ -43,15 +43,15 @@ function getReactionButton (blog: Blog) {
 
 	return (
 		<ReactionButton
-			id={ blog.id }
-			loading={ loading }
-			count={ blog.reactionCount }
-			hasReacted={ blog.viewerHasReacted }
-			onClick={ handleClick }
+			id={blog.id}
+			loading={loading}
+			count={blog.reactionCount}
+			hasReacted={blog.viewerHasReacted}
+			onClick={handleClick}
 		/>
 	);
 }
 
-export function BlogAction ({ blog }: { blog: Blog }) {
-	return <div className="flex items-center space-x-2">{ getReactionButton(blog) }</div>;
+export function BlogAction({ blog }: { blog: Blog }) {
+	return <div className="flex items-center space-x-2">{getReactionButton(blog)}</div>;
 }

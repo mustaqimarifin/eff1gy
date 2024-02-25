@@ -1,19 +1,18 @@
-import { Suspense } from 'react'
+import { Suspense } from "react";
 
-import { BookmarkDetail } from '~/components/Bookmarks/BookmarkDetail'
-import { BookmarksList } from '~/components/Bookmarks/BookmarksList'
-import { ListDetailView } from '~/components/Layouts'
-import { LoadingSpinner } from '~/components/LoadingSpinner'
+import { BookmarkDetail } from "~/components/Bookmarks/BookmarkDetail";
+import { BookmarksList } from "~/components/Bookmarks/BookmarksList";
+import { ListDetailView } from "~/components/Layouts";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
 
-import { ViewType } from '~/graphql/typeSlut'
+import { ViewType } from "~/graphql/typeSlut";
 
-import { HiddenCounter } from '~/lib/actions'
+import { HiddenCounter } from "~/lib/actions";
 
 //export const dynamic = 'force-dynamic'
 
 export default function BookmarkPage({ params: { id } }) {
-
-/*   await Promise.allSettled([
+	/*   await Promise.allSettled([
     client.query({ query: GET_VIEWER }),
     client.query({
       query: GET_BOOKMARKS,
@@ -33,17 +32,17 @@ export default function BookmarkPage({ params: { id } }) {
     }),
   ])
  */
-  return (
-    <ListDetailView
-      list={<BookmarksList />}
-      hasDetail
-      detail={
-        <Suspense fallback={<LoadingSpinner />}>
-          <BookmarkDetail id={id}>
-            <HiddenCounter refId={id} type={ViewType.Bookmark} />
-          </BookmarkDetail>
-        </Suspense>
-      }
-    />
-  )
+	return (
+		<ListDetailView
+			list={<BookmarksList />}
+			hasDetail
+			detail={
+				<Suspense fallback={<LoadingSpinner />}>
+					<BookmarkDetail id={id}>
+						<HiddenCounter refId={id} type={ViewType.Bookmark} />
+					</BookmarkDetail>
+				</Suspense>
+			}
+		/>
+	);
 }

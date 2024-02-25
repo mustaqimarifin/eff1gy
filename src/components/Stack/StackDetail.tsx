@@ -22,10 +22,10 @@ export function StackDetail({ slug }) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);
 
-	     const { data, loading, error } = useQuery<GetStackQuery>(GetStackDocument,{
-        variables: { slug },
-    })
-			if (loading) {
+	const { data, loading, error } = useQuery<GetStackQuery>(GetStackDocument, {
+		variables: { slug },
+	});
+	if (loading) {
 		return <Detail.Loading />;
 	}
 
@@ -33,7 +33,7 @@ export function StackDetail({ slug }) {
 		return <Detail.Null />;
 	}
 
- const { stack } = data
+	const { stack } = data;
 
 	return (
 		<>
@@ -71,7 +71,6 @@ export function StackDetail({ slug }) {
 								</Link>
 								{stack.tags && stack.tags.length > 0 && <Tags tags={stack.tags} />}
 							</div>
-					
 						</div>
 						<MarkdownRenderer className="text-primary" children={stack.description} variant="comment" />
 

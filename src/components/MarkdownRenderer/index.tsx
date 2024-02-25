@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable prefer-const */
-/* eslint-disable no-unsafe-optional-chaining */
-
-import Markdown from "markdown-to-jsx";
+import Markdown from "react-markdown";
 import NextImage from "next/legacy/image";
 import Link from "next/link";
-
+import linkifyRegex from "remark-linkify-regex";
 import { CLIENT_URL } from "~/graphql/constants";
-
-import { Code, createHeading } from "../MDX";
+import { createHeading } from "../MDX/CreateHeading";
+import { highlight } from "../MDX/sugar.js";
 
 export function CustomLink1({ href, ...rest }: any) {
 	if (href.startsWith("#")) {
@@ -28,6 +24,12 @@ export function CustomLink1({ href, ...rest }: any) {
 		console.error(e);
 		return <a target="_blank" rel="noopener" href={href} {...rest} />;
 	}
+}
+
+function Code({ children, ...props }) {
+	const codeHTML = highlight(children);
+	// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+	return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
 function getComponentsForVariant(variant) {
@@ -129,13 +131,8 @@ export function MarkdownRenderer(props) {
 	const components = getComponentsForVariant(variant);
 
 	return (
-		<article className="prose prose-neutral dark:prose-invert">
-			<Markdown
-				{...props}
-				options={{
-					overrides: components,
-				}}
-			/>
-		</article>
+		<Markdown {...rest} remarkPlugins={[linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]} components={{ ...components }}>
+			{children}
+		</Markdown>
 	);
 }

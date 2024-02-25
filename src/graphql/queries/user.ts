@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
-import { UserInfoFragment } from '~/graphql/fragments/user'
+import { UserInfoFragment } from "~/graphql/fragments/user";
 
 export const GET_USER = gql`
   query getUser($id: ID!) {
@@ -9,4 +9,4 @@ export const GET_USER = gql`
     }
   }
   ${UserInfoFragment}
-`
+`;
