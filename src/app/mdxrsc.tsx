@@ -7,7 +7,7 @@ import imageMetadata from "~/components/MDX/image-size";
 
 export default async function Mdx(props) {
 	return (
-		<div className="prose tracking-tight prose-neutral dark:prose-invert">
+		<div className="prose prose-neutral dark:prose-invert">
 			<MDXRemote
 				{...props}
 				options={{

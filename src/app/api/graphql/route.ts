@@ -22,6 +22,7 @@ const { handleRequest } = createYoga<
 		viewer: User | null;
 	}
 >({
+  graphiql: false,
 	context: async ({ req, res }) => {
 		const viewer = await getViewer(req, res);
 

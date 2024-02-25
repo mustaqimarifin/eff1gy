@@ -9,7 +9,7 @@ import { TitleBar } from "./TitleBar";
 
 //** ORIGINAL CONTAINER REF */
 
-function ContentContainer (props) {
+/* function ContentContainer (props) {
 	return (
 		<div
 			className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
@@ -17,8 +17,8 @@ function ContentContainer (props) {
 		/>
 	)
 }
-
-/* function ContentContainer(props) {
+ */
+function ContentContainer(props) {
 	return (
 		<div
 						className="mx-auto max-w-sm px-3 py-12 sm:max-w-xl md:max-w-2xl lg:max-w-3xl lg:px-4 " 
@@ -27,7 +27,7 @@ function ContentContainer (props) {
 		/>
 	);
 }
- */
+ 
 interface DetailContainerProps {
 	children: ReactNode;
 }

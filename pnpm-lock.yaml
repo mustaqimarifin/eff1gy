@@ -20,6 +20,9 @@ dependencies:
   '@graphql-yoga/plugin-apq':
     specifier: ^3.1.1
     version: 3.1.1(@graphql-tools/utils@10.1.0)(graphql-yoga@5.1.1)
+  '@graphql-yoga/plugin-response-cache':
+    specifier: ^3.3.0
+    version: 3.3.0(@envelop/core@5.0.0)(graphql-yoga@5.1.1)(graphql@16.8.1)
   '@headlessui/react':
     specifier: 1.7.18
     version: 1.7.18(react-dom@18.2.0)(react@18.2.0)
@@ -130,12 +133,6 @@ devDependencies:
   '@graphql-codegen/cli':
     specifier: ^5.0.2
     version: 5.0.2(@types/node@20.11.20)(graphql@16.8.1)(typescript@5.3.3)
-  '@graphql-codegen/client-preset':
-    specifier: 4.2.3
-    version: 4.2.3(graphql@16.8.1)
-  '@graphql-codegen/client-preset-swc-plugin':
-    specifier: ^0.2.0
-    version: 0.2.0
   '@graphql-codegen/typescript':
     specifier: ^4.0.6
     version: 4.0.6(graphql@16.8.1)
@@ -145,9 +142,6 @@ devDependencies:
   '@graphql-codegen/typescript-react-apollo':
     specifier: ^4.3.0
     version: 4.3.0(graphql-tag@2.12.6)(graphql@16.8.1)
-  '@graphql-typed-document-node/core':
-    specifier: ^3.2.0
-    version: 3.2.0(graphql@16.8.1)
   '@tailwindcss/forms':
     specifier: ^0.5.7
     version: 0.5.7(tailwindcss@3.4.1)
@@ -1144,6 +1138,22 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@envelop/response-cache@6.1.2(@envelop/core@5.0.0)(graphql@16.8.1):
+    resolution: {integrity: sha512-vBX6z/TxBZSNReVn69VJVkdGHpGzHyeQNMz9LXobczl55KCZaf2inBWguSdGq+vx6PlB068GhLeg+a7kseiF1Q==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@envelop/core': ^5.0.0
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@envelop/core': 5.0.0
+      '@graphql-tools/utils': 10.1.0(graphql@16.8.1)
+      '@whatwg-node/fetch': 0.9.16
+      fast-json-stable-stringify: 2.1.0
+      graphql: 16.8.1
+      lru-cache: 10.2.0
+      tslib: 2.6.2
+    dev: false
+
   /@envelop/types@5.0.0:
     resolution: {integrity: sha512-IPjmgSc4KpQRlO4qbEDnBEixvtb06WDmjKfi/7fkZaryh5HuOmTtixe1EupQI5XfXO8joc3d27uUZ0QdC++euA==}
     engines: {node: '>=18.0.0'}
@@ -1664,10 +1674,6 @@ packages:
       - supports-color
       - typescript
       - utf-8-validate
-    dev: true
-
-  /@graphql-codegen/client-preset-swc-plugin@0.2.0:
-    resolution: {integrity: sha512-wibvCKuB+pP1ggNzZnkMLQgfyr0l+71kZsfK9M9GxxV8kaFGypbT3eN2XP4U8wH35GTaceLDg9jTg2JSUpcWdg==}
     dev: true
 
   /@graphql-codegen/client-preset@4.2.3(graphql@16.8.1):
@@ -2346,6 +2352,20 @@ packages:
     dependencies:
       '@graphql-tools/utils': 10.1.0(graphql@16.8.1)
       graphql-yoga: 5.1.1(graphql@16.8.1)
+    dev: false
+
+  /@graphql-yoga/plugin-response-cache@3.3.0(@envelop/core@5.0.0)(graphql-yoga@5.1.1)(graphql@16.8.1):
+    resolution: {integrity: sha512-SoVpPqR3tBeSyrdVb81zBGehWgtdeqBxEh2HTuv10jhLCL62nvCrCMfe1DYD6AvRE8DlRfLY/uCn8lwS3CAOwg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      graphql: ^15.2.0 || ^16.0.0
+      graphql-yoga: ^5.1.1
+    dependencies:
+      '@envelop/response-cache': 6.1.2(@envelop/core@5.0.0)(graphql@16.8.1)
+      graphql: 16.8.1
+      graphql-yoga: 5.1.1(graphql@16.8.1)
+    transitivePeerDependencies:
+      - '@envelop/core'
     dev: false
 
   /@graphql-yoga/subscription@5.0.0:
@@ -5352,6 +5372,10 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
+
+  /fast-json-stable-stringify@2.1.0:
+    resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
+    dev: false
 
   /fast-querystring@1.1.2:
     resolution: {integrity: sha512-g6KuKWmFXc0fID8WWH0jit4g0AGBoJhCkJMb1RmbsSEUNvQ+ZC8D6CUZ+GtF8nMzSPXnhiePyyqqipzNNEnHjg==}
