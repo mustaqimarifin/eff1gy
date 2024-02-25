@@ -1,5 +1,5 @@
-import "~/app/style1.css";
-import "~/app/style2.css";
+import "~/app/style.css";
+
 
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";

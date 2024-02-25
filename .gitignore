@@ -14,3 +14,5 @@ src/data/local/*
 .flaskenv*
 !.env.project
 !.env.vault
+schema.txt
+nanoid.sql

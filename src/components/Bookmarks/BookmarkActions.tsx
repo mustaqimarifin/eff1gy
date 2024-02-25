@@ -9,7 +9,7 @@ import type { Bookmark } from "~/graphql/typeSlut";
 import { ReactionType, ViewType, useToggleReactionMutation, useViewerQuery } from "~/graphql/typeSlut";
 
 import { ReactionButton } from "../Button/ReactionButton";
-function getBookmarkView(bookmark: Bookmark) {
+/* function getBookmarkView(bookmark: Bookmark) {
 	const [addView, { loading }] = useMutation(ADD_VIEW);
 
 	function handleClick() {
@@ -45,7 +45,7 @@ function getBookmarkView(bookmark: Bookmark) {
 
 	return <Button id={bookmark.id} loading={loading} count={bookmark.count} onClick={handleClick} />;
 }
-
+ */
 function getReactionButton(bookmark: Bookmark) {
 	const [toggleReaction, { loading }] = useMutation(TOGGLE_REACTION);
 
@@ -97,7 +97,7 @@ export function BookmarkActions({ bookmark }) {
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(bookmark)}
-			{getBookmarkView(bookmark)}
+			
 
 			{data?.viewer?.isAdmin && (
 				<>

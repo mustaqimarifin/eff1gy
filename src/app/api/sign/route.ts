@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 		return Response.json({ folder, signature, timestamp });
 	} catch (e) {
 		console.log(`${e}`);
-		return new Response(`Failed to increment page`, {
+		return new Response(`Failed to upload`, {
 			status: 500,
 		});
 	}

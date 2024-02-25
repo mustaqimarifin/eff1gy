@@ -143,10 +143,10 @@ export default function AudioRecorder({
 			});
 			try {
 				const mr = new MediaRecorder(stream);
-				console.log(`Recording with mimeType: ${mr.mimeType}`);
+			//	console.log(`Recording with mimeType: ${mr.mimeType}`);
 				setMediaRecorder(mr);
 			} catch (e) {
-				// console.log(e)
+		
 			}
 		}
 

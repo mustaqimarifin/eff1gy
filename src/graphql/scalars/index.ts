@@ -25,10 +25,13 @@ export const DateQL = new GraphQLScalarType({
 
 function parseObject(typeName, ast, variables) {
 	let value = Object.create(null);
-	ast.fields.forEach((field) => {
+	for (let field of ast.fields) {
+		value[field.name.value] = _parseLiteral(typeName, field.value, variables);
+	};
+/* 		ast.fields.forEach((field) => {
 		// eslint-disable-next-line no-use-before-define
 		value[field.name.value] = _parseLiteral(typeName, field.value, variables);
-	});
+	}); */
 	return value;
 }
 

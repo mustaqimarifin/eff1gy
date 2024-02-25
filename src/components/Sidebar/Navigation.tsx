@@ -47,7 +47,6 @@ function Player(track: TrackType) {
 
 export function SidebarNavigation() {
 	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher);
-	//console.log(track)
 	const path = usePathname();
 	const { data } = useViewerQuery();
 	const sections = [
@@ -95,7 +94,7 @@ export function SidebarNavigation() {
 					trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
 					isExternal: false,
 				},
-				{
+				/* {
 					href: "/dash",
 					label: "Dashboard",
 					icon: ListMusicIcon,
@@ -103,7 +102,7 @@ export function SidebarNavigation() {
 					isActive: path.indexOf("/dash") >= 0,
 					trailingAction: null,
 					isExternal: false,
-				},
+				}, */
 
 				{
 					href: "/ama",
@@ -204,12 +203,12 @@ export function SidebarNavigation() {
 			items: [
 				{
 					href: "/dash",
-					label: track?.isPlaying ? Player(track) : "AUDIO FEED",
+					label: track?.isPlaying ? Player(track) : "On Rotation",
 					icon: CassetteTape,
 					trailingAccessory: null,
 					isActive: false,
 					trailingAction: null,
-					isExternal: true,
+					isExternal: false,
 				},
 				{
 					href: "https://twitter.com/vmprmyth",

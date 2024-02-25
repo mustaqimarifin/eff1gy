@@ -4,12 +4,8 @@ import { BookmarkDetail } from '~/components/Bookmarks/BookmarkDetail'
 import { BookmarksList } from '~/components/Bookmarks/BookmarksList'
 import { ListDetailView } from '~/components/Layouts'
 import { LoadingSpinner } from '~/components/LoadingSpinner'
-import { client } from '~/components/Provider/ApolloClient'
-import { GET_BOOKMARK, GET_BOOKMARKS } from '~/graphql/queries/bookmarks'
-import { GET_COMMENTS } from '~/graphql/queries/comments'
-import { GET_TAGS } from '~/graphql/queries/tags'
-import { GET_VIEWER } from '~/graphql/queries/viewer'
-import { CommentType, ViewType } from '~/graphql/typeSlut'
+
+import { ViewType } from '~/graphql/typeSlut'
 
 import { HiddenCounter } from '~/lib/actions'
 
