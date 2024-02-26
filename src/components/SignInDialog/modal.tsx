@@ -1,9 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { GithubIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { Fragment, useRef, useState } from "react";
 
 import { GhostButton, GoogleButton } from "../Button";
+import { GitHubIcon } from "../Icon";
 
 export default function SignIn2() {
 	const [open, setOpen] = useState(true);
@@ -54,7 +54,7 @@ export default function SignIn2() {
 													}}
 													aria-label="Sign in with GitHub"
 												>
-													<GithubIcon className="w-5 h-5 dark:text-white " />
+													<GitHubIcon className="w-5 h-5 dark:text-white " />
 													<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with GitHub</span>
 												</GhostButton>
 											</div>

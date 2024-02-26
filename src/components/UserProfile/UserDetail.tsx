@@ -6,12 +6,11 @@ import Button from "~/components/Button";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { useGetUserQuery } from "~/graphql/typeSlut";
-
-export function UserDetail({ id }) {
+export function UserDetail({ username }) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);
 
-	const { data, loading, error } = useGetUserQuery({ variables: { id } });
+	const { data, loading, error } = useGetUserQuery({ variables: { username } });
 
 	if (error) return null;
 	if (loading) return <Detail.Loading />;

@@ -13,14 +13,7 @@ interface Props {
 export function EventDetail({ post, children }: Props) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);
-	const gallery = [
-		"/starwars1.jpeg",
-		"/starwars2.jpeg",
-		"/starwars3.jpeg",
-		"/starwars4.jpeg",
-		"/starwars5.jpeg",
-		"/starwars6.jpeg",
-	];
+
 	return (
 		<>
 			<Detail.Container data-cy="event-detail" ref={scrollContainerRef}>

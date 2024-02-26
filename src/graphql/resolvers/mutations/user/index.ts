@@ -23,15 +23,15 @@ export async function deleteUser(_, __, ctx: Context) {
 export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
 	const { db, viewer } = ctx;
 	const { data } = args;
-	const { name, email } = data;
+	const { username, email } = data;
 
-	if (name) {
-		if (!nameRX(name)) {
+	if (username) {
+		if (!nameRX(username)) {
 			throw new GraphQLError("Usernames can be 16 characters long");
 		}
 
 		const user = await db.user.findUnique({
-			where: { email },
+			where: { username },
 		});
 
 		if (user && user.id !== viewer.id) {
@@ -40,7 +40,7 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
 
 		return await db.user.update({
 			where: { id: viewer.id },
-			data: { name },
+			data: { username },
 		});
 	}
 
@@ -66,13 +66,13 @@ export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
 
 		return await db.user.update({
 			where: { id: viewer.id },
-			data: { email },
+			data: { pendingEmail: email },
 		});
 	}
 
-	// if no email or name were passed, the user is trying to cancel the pending email request
+	// if no email or username were passed, the user is trying to cancel the pending email request
 	return await db.user.update({
 		where: { id: viewer.id },
-		data: {},
+		data: { pendingEmail: null },
 	});
 }

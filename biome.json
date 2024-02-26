@@ -14,7 +14,7 @@
 		"ignore": [".next/*", "node_modules"]
 	},
 	"files": {
-		"ignore": [".next/*", "src/gql/**/*"]
+		"ignore": [".next/*", "src/gql/**/*", "node_modules"]
 	},
 	"linter": {
 		"ignore": [".next/*", "src/graphql/typeSlut.js"],

@@ -15,10 +15,7 @@ import { HELLSQL } from "~/graphql/constants";
 
 const ssr = typeof window === "undefined";
 
-
-
 function makeClient() {
-
 	const httpLink = new HttpLink({
 		// this needs to be an absolute url, as relative urls cannot be used in SSR
 		uri: HELLSQL,
@@ -31,7 +28,7 @@ function makeClient() {
 		// to an Apollo Client data fetching hook, e.g.:
 		// const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
 	});
-/* const olink = createPersistedQueryLink({
+	/* const olink = createPersistedQueryLink({
   sha256,
   useGETForHashedQueries: true,
 }).concat(httpLink) */
@@ -73,7 +70,7 @@ function makeClient() {
 					}),
 					httpLink,
 			  ])
-			: httpLink
+			: httpLink,
 	});
 }
 export function ApolloWrapper({ children }: PropsWithChildren) {

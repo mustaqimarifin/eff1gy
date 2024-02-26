@@ -151,6 +151,7 @@ export default gql`
     name: String
     isViewer: Boolean
     email: String
+    pendingEmail: String
     isAdmin: Boolean
   }
 
@@ -222,7 +223,7 @@ export default gql`
 
   type Query {
     viewer: User
-    user(id: ID!): User
+ user(username: String!): User
     bookmark(id: ID!): Bookmark
     bookmarks(first: Int, after: String, filter: BookmarkFilter): BookmarksConnection!
     stack(slug: String!): Stack
@@ -243,10 +244,11 @@ export default gql`
     tags: [Tag]!
   }
 
-  input EditUserInput {
-    name: String
+    input EditUserInput {
+    username: String
     email: String
   }
+
 
   input AddStackInput {
     name: String!

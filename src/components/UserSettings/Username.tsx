@@ -14,20 +14,17 @@ export function UsernameForm(props: {
 	viewer: GetViewerWithSettingsQuery["viewer"];
 }) {
 	const { viewer } = props;
-	const [name, setUsername] = useState("");
+	const [username, setUsername] = useState("");
 	const [isEditing, setIsEditing] = useState(false);
 	const [error, setError] = useState(null);
 
 	const [editUser, editUserResponse] = useEditUserMutation({
 		variables: {
 			data: {
-				name,
+				username,
 			},
 		},
-		onError(error) {
-			// eslint-disable-next-line prettier/prettier
-			error;
-		},
+		onError() {},
 		onCompleted() {
 			setIsEditing(false);
 		},
@@ -36,8 +33,8 @@ export function UsernameForm(props: {
 	function onSubmit(e) {
 		e.preventDefault();
 		if (editUserResponse.loading) return;
-		if (name === viewer.name) return setIsEditing(false);
-		if (!nameRX(name)) return setError(true);
+		if (username === viewer.username) return setIsEditing(false);
+		if (!nameRX(username)) return setError(true);
 		editUser();
 	}
 
@@ -50,11 +47,11 @@ export function UsernameForm(props: {
 		<div className="space-y-2">
 			<p className="text-primary font-semibold">Username</p>
 
-			{viewer.name && (
+			{viewer.username && (
 				<div className="text-primary flex space-x-2">
-					<span>@{viewer.name}</span>
+					<span>@{viewer.username}</span>
 					<span>·</span>
-					<button className="text-active cursor-pointer font-medium" onClick={() => setIsEditing(!isEditing)}>
+					<button className="cursor-pointer font-medium text-blue-500" onClick={() => setIsEditing(!isEditing)}>
 						{isEditing ? "Cancel" : "Edit"}
 					</button>
 				</div>
@@ -62,17 +59,23 @@ export function UsernameForm(props: {
 
 			{isEditing && (
 				<form className="space-y-2" onSubmit={onSubmit}>
-					<Input type="text" placeholder={"Choose a name"} value={name} autoFocus onChange={handleUsernameChange} />
+					<Input
+						type="text"
+						placeholder={"Choose a username"}
+						value={username}
+						autoFocus
+						onChange={handleUsernameChange}
+					/>
 					{error && (
-						<p className={`text-error text-xs`}>
+						<p className={`text-xs text-red-500`}>
 							Usernames should be between 4 and 16 characters and only have numbers, letters, or underscores.
 						</p>
 					)}
 					<p className="text-quaternary text-xs">
-						Updating your name will break any existing links to your profile, so you know, don’t do it too often.
+						Updating your username will break any existing links to your profile, so you know, don’t do it too often.
 					</p>
 					<div className="flex justify-between">
-						<Button type="submit">{editUserResponse.loading ? <LoadingSpinner /> : "Save name"}</Button>
+						<Button type="submit">{editUserResponse.loading ? <LoadingSpinner /> : "Save username"}</Button>
 					</div>
 				</form>
 			)}

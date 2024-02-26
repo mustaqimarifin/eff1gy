@@ -1,9 +1,8 @@
 "use client";
-import { GithubIcon, Twitter } from "lucide-react";
 import { signIn } from "next-auth/react";
 
 import { GhostButton } from "../Button";
-import { Google } from "../Icon";
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "../Icon";
 
 export function SignInDialogContent() {
 	return (
@@ -23,7 +22,7 @@ export function SignInDialogContent() {
 						}}
 						aria-label="Sign in with GitHub"
 					>
-						<GithubIcon className="w-5 h-5 dark:text-white " />
+						<GitHubIcon className="w-5 h-5 dark:text-white " />
 						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with GitHub</span>
 					</GhostButton>
 					<GhostButton
@@ -35,7 +34,7 @@ export function SignInDialogContent() {
 						}}
 						aria-label="Sign in with Google"
 					>
-						<Google className="w-5 h-5 dark:text-white" />
+						<GoogleIcon className="w-5 h-5 dark:text-white" />
 						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with Google</span>
 					</GhostButton>
 					<GhostButton
@@ -47,7 +46,7 @@ export function SignInDialogContent() {
 						}}
 						aria-label="Sign in with Twitter"
 					>
-						<Twitter className="w-5 h-5 dark:text-white" />
+						<TwitterIcon className="w-5 h-5 dark:text-white" />
 						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with Twitter</span>
 					</GhostButton>
 				</div>
