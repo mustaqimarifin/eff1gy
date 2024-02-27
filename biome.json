@@ -30,7 +30,8 @@
 				"useKeyWithClickEvents": "off"
 			},
 			"correctness": {
-				"noChildrenProp": "off"
+				"noChildrenProp": "off",
+				"useExhaustiveDependencies": "warn"
 			},
 			"suspicious": {
 				"noExplicitAny": "off",

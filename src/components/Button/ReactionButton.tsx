@@ -38,7 +38,7 @@ export function ReactionButton(props: Props) {
 		nextCount = hasReacted ? count - 1 : count + 1;
 		setCurrTranslate(hasReacted ? "-translate-y-4" : "translate-y-0");
 		setNextTranslate(hasReacted ? "translate-y-0" : "-translate-y-4");
-	}, [hasReacted, currCount, count, nextCount]);
+	}, [id, hasReacted, currCount, nextCount]);
 
 	if (!data?.viewer) {
 		return (
