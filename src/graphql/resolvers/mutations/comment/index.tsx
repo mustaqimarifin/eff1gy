@@ -75,6 +75,18 @@ export async function addComment(_: any, args: MutationAddCommentArgs, ctx: Cont
 			route = `${CLIENT_URL}/post/${refId}`;
 			break;
 		}
+				case CommentType.Case: {
+			field = "caseId";
+			table = "case";
+			route = `${CLIENT_URL}/code/${refId}`;
+			break;
+		}
+				case CommentType.Event: {
+			field = "eventId";
+			table = "event";
+			route = `${CLIENT_URL}/event/${refId}`;
+			break;
+		}
 		case CommentType.Question: {
 			field = "questionId";
 			table = "question";

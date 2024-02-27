@@ -21,7 +21,7 @@ export function UserDetail({ username }) {
 			<Detail.Container ref={scrollContainerRef}>
 				<TitleBar
 					magicTitle
-					title={user.name}
+					title={user.name ?? user.id}
 					titleRef={titleRef}
 					scrollContainerRef={scrollContainerRef}
 					trailingAccessory={user.isViewer ? <Button href="/settings">Settings</Button> : null}

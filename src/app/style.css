@@ -27,6 +27,7 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
 :root {
   --sh-class: #6c757d;
   --sh-identifier: #343a40;
@@ -35,6 +36,8 @@
   --sh-keyword: #212529;
   --sh-comment: #6c757d;
   --sh-jsxliterals: #4a4e69;
+  --sh-property: #FF7E8A;
+  --sh-entity: #6ACFC7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,6 +49,8 @@
     --sh-keyword: #9b9b7a;
     --sh-comment: #797d62;
     --sh-jsxliterals: #997b66;
+    --sh-property: #FF7E8A;
+    --sh-entity: #6ACFC7;
   }
 }
 

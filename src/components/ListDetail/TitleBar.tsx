@@ -82,12 +82,12 @@ export function TitleBar({
 
 		setOffset(Math.min(Math.max(offsetAmount, 0), 100));
 		setOpacity(opacityOffset);
-	}, [title, titleRef, scrollContainerRef]);
+	}, [setCurrentScrollOffset,titleRef,setOpacity, scrollContainerRef]);
 
 	useEffect(() => {
 		scrollContainerRef?.current?.addEventListener("scroll", handler);
 		return () => scrollContainerRef?.current?.removeEventListener("scroll", handler);
-	}, [title, titleRef, scrollContainerRef]);
+	}, [handler,scrollContainerRef]);
 
 	useEffect(() => {
 		if (!titleRef?.current || !scrollContainerRef?.current) return;
@@ -97,7 +97,7 @@ export function TitleBar({
 			bottom: titleRef.current.getBoundingClientRect().bottom - 56,
 			top: titleRef.current.getBoundingClientRect().top - 48,
 		});
-	}, [title, titleRef, scrollContainerRef]);
+	}, [titleRef,setOpacity, setInitialTitleOffsets, scrollContainerRef]);
 
 	useEffect(() => {
 		const isDarkMode =
@@ -146,7 +146,7 @@ export function TitleBar({
 							</Link>
 						)}
 
-						{leadingAccessory && <>{leadingAccessory}</>}
+						{leadingAccessory && leadingAccessory}
 
 						<h2
 							style={
@@ -163,7 +163,7 @@ export function TitleBar({
 						</h2>
 					</span>
 
-					{trailingAccessory && <>{trailingAccessory}</>}
+					{trailingAccessory && trailingAccessory}
 				</div>
 
 				<div>{children}</div>

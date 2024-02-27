@@ -25,7 +25,6 @@ export default async function Dashboard() {
 					<div className="mb-8" />
 					<div className="flex flex-col w-full" />
 					<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full" />
-					<h2 className="font-bold text-3xl tracking-tight mb-4 mt-16 text-black dark:text-white" />
 					<p className="text-gray-600 dark:text-gray-400 mb-4">
 						Top tracks I grab courtesy of Spotify's WEB API -- updated daily!
 					</p>

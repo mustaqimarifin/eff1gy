@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import {gql} from '@apollo/client'
 
 export default gql`
   scalar Date
@@ -9,11 +9,7 @@ export default gql`
     PRIVATE
   }
 
-  directive @cacheControl(
-    maxAge: Int
-    scope: CacheControlScope
-    inheritMaxAge: Boolean
-  ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
+  directive @cacheControl(maxAge: Int, scope: CacheControlScope, inheritMaxAge: Boolean) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
 
   type Blog {
     id: ID!
@@ -223,7 +219,7 @@ export default gql`
 
   type Query {
     viewer: User
- user(username: String!): User
+    user(username: String!): User
     bookmark(id: ID!): Bookmark
     bookmarks(first: Int, after: String, filter: BookmarkFilter): BookmarksConnection!
     stack(slug: String!): Stack
@@ -244,11 +240,10 @@ export default gql`
     tags: [Tag]!
   }
 
-    input EditUserInput {
+  input EditUserInput {
     username: String
     email: String
   }
-
 
   input AddStackInput {
     name: String!
@@ -331,4 +326,4 @@ export default gql`
     deletePost(id: ID!): Boolean
     addView(refId: ID!, type: ViewType!): Viewable
   }
-`;
+`

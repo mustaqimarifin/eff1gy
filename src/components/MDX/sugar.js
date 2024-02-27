@@ -12,14 +12,16 @@ const $7 = (b) => {
 	const V = b[0];
 	return (y(V) && V === V.toUpperCase()) || b === "null";
 };
-const o = (b) => /[^\u0000-\u007f]/.test(b);
+// biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
+const  o = (b) => /[^\u0000-\u007f]/.test(b);
 const a = (b) => /^[a-zA-Z]$/.test(b);
 const i = (b) => a(b) || o(b);
 const z7 = (b) => i(b[0]) && (b.length === 1 || y(b.slice(1)));
 const E = (b) => b === "`";
 const R = (b) => b === '"' || b === "'";
 const X7 = (b) => R(b) || E(b);
-const p = (b) => ((b = b.slice(0, 2)), b === "//" || b === "/*");
+// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+const  p = (b) => ((b = b.slice(0, 2)), b === "//" || b === "/*");
 const Y7 = (b) => b[0] === "/" && !p(b[0] + b[1]);
 const H7 = (b) => {
 	let V = "";

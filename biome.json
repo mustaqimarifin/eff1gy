@@ -17,7 +17,7 @@
 		"ignore": [".next/*", "src/gql/**/*", "node_modules"]
 	},
 	"linter": {
-		"ignore": [".next/*"],
+		"ignore": [".next/*", "src/components/MDX/sugar.js", "src/components/MDX/vidID.js"],
 		"enabled": true,
 		"rules": {
 			"recommended": true,
