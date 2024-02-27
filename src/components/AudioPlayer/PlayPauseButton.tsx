@@ -19,7 +19,13 @@ export default function PlayPauseButton({ isPlaying, onClick }) {
 					/>
 				</svg>
 			) : (
-				<svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg
+					width="9"
+					height="14"
+					viewBox="0 0 9 14"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
 					<rect width="3" height="14" rx="1.5" fill="currentColor" />
 					<rect x="6" width="3" height="14" rx="1.5" fill="currentColor" />
 				</svg>

@@ -12,7 +12,11 @@ type SegmentedControlProps = {
 	active: string;
 };
 
-const SegmentedControl = ({ onSetActiveItem, items, active }: SegmentedControlProps): JSX.Element => {
+const SegmentedControl = ({
+	onSetActiveItem,
+	items,
+	active,
+}: SegmentedControlProps): JSX.Element => {
 	const [activeItem, setActiveitem] = useState(active);
 	const [parent] = useAutoAnimate();
 
@@ -22,12 +26,18 @@ const SegmentedControl = ({ onSetActiveItem, items, active }: SegmentedControlPr
 	}
 
 	return (
-		<ol ref={parent} className={`flex list-none rounded-md bg-black bg-opacity-5 p-1 dark:bg-white dark:bg-opacity-5`}>
+		<ol
+			ref={parent}
+			className={`flex list-none rounded-md bg-black bg-opacity-5 p-1 dark:bg-white dark:bg-opacity-5`}
+		>
 			{items.map((item, i) => {
 				const isActive = items[i].id === activeItem;
 				return (
 					<li
-						className={cx(isActive ? { scale: 0.95 } : { opacity: 0.6 }, "relative flex-1 leading-none")}
+						className={cx(
+							isActive ? { scale: 0.95 } : { opacity: 0.6 },
+							"relative flex-1 leading-none",
+						)}
 						key={item.id}
 					>
 						<button

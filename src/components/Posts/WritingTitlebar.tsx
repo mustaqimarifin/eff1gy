@@ -7,8 +7,8 @@ import { useContext } from "react";
 import { GhostButton } from "~/components/Button";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 
-import SegmentedControl from "../UI/SegmentedController";
 import { WritingContext } from "./PostsList";
+import SegmentedControl from "../SegControl";
 
 export function WritingTitlebar({ scrollContainerRef }) {
 	const { data } = useViewerQuery();
@@ -16,7 +16,12 @@ export function WritingTitlebar({ scrollContainerRef }) {
 	function getAddButton() {
 		if (data?.viewer.isAdmin) {
 			return (
-				<GhostButton href="/post/new" data-cy="new-post-button" size="small-square" aria-label="Add post">
+				<GhostButton
+					href="/post/new"
+					data-cy="new-post-button"
+					size="small-square"
+					aria-label="Add post"
+				>
 					<Plus size={16} />
 				</GhostButton>
 			);
@@ -49,7 +54,11 @@ export function WritingTitlebar({ scrollContainerRef }) {
 	}
 
 	return (
-		<TitleBar trailingAccessory={trailingAccessory()} title="Posts" scrollContainerRef={scrollContainerRef}>
+		<TitleBar
+			trailingAccessory={trailingAccessory()}
+			title="Posts"
+			scrollContainerRef={scrollContainerRef}
+		>
 			{getChildren()}
 		</TitleBar>
 	);

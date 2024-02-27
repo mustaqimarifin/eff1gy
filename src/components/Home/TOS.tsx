@@ -10,7 +10,12 @@ export default function TOS({ children }) {
 	const titleRef = useRef(null);
 	return (
 		<Detail.Container data-cy="pp" ref={scrollContainerRef}>
-			<TitleBar magicTitle titleRef={titleRef} scrollContainerRef={scrollContainerRef} title="Terms of Service" />
+			<TitleBar
+				magicTitle
+				titleRef={titleRef}
+				scrollContainerRef={scrollContainerRef}
+				title="Terms of Service"
+			/>
 			{children}
 		</Detail.Container>
 	);

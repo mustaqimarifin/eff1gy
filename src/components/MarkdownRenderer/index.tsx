@@ -131,7 +131,11 @@ export function MarkdownRenderer(props) {
 	const components = getComponentsForVariant(variant);
 
 	return (
-		<Markdown {...rest} remarkPlugins={[linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]} components={{ ...components }}>
+		<Markdown
+			{...rest}
+			remarkPlugins={[linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
+			components={{ ...components }}
+		>
 			{children}
 		</Markdown>
 	);

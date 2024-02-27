@@ -30,7 +30,9 @@ export function UserDetail({ username }) {
 				<Detail.ContentContainer>
 					<Detail.Header>
 						<Detail.Title ref={titleRef}>Profiles are coming soon</Detail.Title>
-						<p className="text-tertiary text-xl">Check back in the future to see questions, comments, and more...</p>
+						<p className="text-tertiary text-xl">
+							Check back in the future to see questions, comments, and more...
+						</p>
 					</Detail.Header>
 				</Detail.ContentContainer>
 			</Detail.Container>

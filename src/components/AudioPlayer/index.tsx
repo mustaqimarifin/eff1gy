@@ -13,7 +13,13 @@ interface Props {
 	isRecorder: boolean;
 }
 
-export default function AudioPlayer({ src, setWaveformData, waveform, id, isRecorder = false }: Props) {
+export default function AudioPlayer({
+	src,
+	setWaveformData,
+	waveform,
+	id,
+	isRecorder = false,
+}: Props) {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const audioRef = useRef<HTMLAudioElement>(null);
 	const scrubbableRef = useRef(null);
@@ -150,9 +156,18 @@ export default function AudioPlayer({ src, setWaveformData, waveform, id, isReco
 			<HiddenAudioPlayer preload={isRecorder} ref={audioRef} src={src} />
 			<div className="flex  items-center space-x-4 overflow-hidden rounded-md border bg-white p-2 pr-6 text-white shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
 				<PlayPauseButton isPlaying={isPlaying} onClick={togglePlay} />
-				<div ref={scrubbableRef} onClick={scrub} className="relative flex w-full items-center space-x-1">
+				<div
+					ref={scrubbableRef}
+					onClick={scrub}
+					className="relative flex w-full items-center space-x-1"
+				>
 					<ProgressOverlay ref={progressOverlayRef} />
-					<Waveform isRecorder={isRecorder} src={src} waveform={waveform} setWaveformData={setWaveformData} />
+					<Waveform
+						isRecorder={isRecorder}
+						src={src}
+						waveform={waveform}
+						setWaveformData={setWaveformData}
+					/>
 				</div>
 			</div>
 		</div>

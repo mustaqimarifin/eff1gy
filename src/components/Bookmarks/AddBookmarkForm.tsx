@@ -92,7 +92,13 @@ export function AddBookmarkForm({ closeModal }) {
 
 	return (
 		<form className="space-y-3 p-4" onSubmit={onSubmit}>
-			<Input type="text" placeholder="Add a url..." value={url} onChange={onUrlChange} onKeyDown={onKeyDown} />
+			<Input
+				type="text"
+				placeholder="Add a url..."
+				value={url}
+				onChange={onUrlChange}
+				onKeyDown={onKeyDown}
+			/>
 
 			<TagPicker filter={tagFilter} defaultValue={tag} onChange={setTag} />
 

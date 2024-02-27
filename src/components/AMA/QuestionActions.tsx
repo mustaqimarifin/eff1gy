@@ -1,7 +1,12 @@
 import { EditQuestionDialog } from "~/components/AMA/EditQuestionDialog";
 import Button from "~/components/Button";
 
-import { GetQuestionDocument, type Question, ReactionType, useToggleReactionMutation } from "~/graphql/typeSlut";
+import {
+	GetQuestionDocument,
+	type Question,
+	ReactionType,
+	useToggleReactionMutation,
+} from "~/graphql/typeSlut";
 import { ReactionButton } from "../Button/ReactionButton";
 
 function useReactionButton(question: Question) {
@@ -20,7 +25,9 @@ function useReactionButton(question: Question) {
 				toggleReaction: {
 					__typename: "Question",
 					...question,
-					reactionCount: question.viewerHasReacted ? question.reactionCount - 1 : question.reactionCount + 1,
+					reactionCount: question.viewerHasReacted
+						? question.reactionCount - 1
+						: question.reactionCount + 1,
 					viewerHasReacted: !question.viewerHasReacted,
 				},
 			},
@@ -55,7 +62,9 @@ export function QuestionActions({ question }: { question: Question }) {
 		return (
 			<div className="flex items-center space-x-2">
 				{useReactionButton(question)}
-				{question.viewerCanEdit && <EditQuestionDialog question={question} trigger={<Button>Edit</Button>} />}
+				{question.viewerCanEdit && (
+					<EditQuestionDialog question={question} trigger={<Button>Edit</Button>} />
+				)}
 			</div>
 		);
 	}

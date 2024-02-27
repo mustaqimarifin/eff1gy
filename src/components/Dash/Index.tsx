@@ -27,7 +27,12 @@ export function DashPage({ children }) {
 
 	return (
 		<Detail.Container data-cy="dash-detail" ref={scrollContainerRef}>
-			<TitleBar magicTitle titleRef={titleRef} scrollContainerRef={scrollContainerRef} title="Dashboard" />
+			<TitleBar
+				magicTitle
+				titleRef={titleRef}
+				scrollContainerRef={scrollContainerRef}
+				title="Dashboard"
+			/>
 			{/* Keep this div to trigger the magic scroll */}
 			<div className="p-4" ref={titleRef} />
 

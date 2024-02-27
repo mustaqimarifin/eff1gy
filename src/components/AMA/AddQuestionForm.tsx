@@ -66,7 +66,13 @@ export function AddQuestionForm({ closeModal }) {
 		<form className="items-stretch space-y-4 p-4" onSubmit={onSubmit}>
 			<div className="flex items-start space-x-3">
 				<div className="pt-0.5">
-					<Avatar user={viewer} src={viewer?.image} width={40} height={40} className="rounded-full" />
+					<Avatar
+						user={viewer}
+						src={viewer?.image}
+						width={40}
+						height={40}
+						className="rounded-full"
+					/>
 				</div>
 				<Textarea
 					rows={1}

@@ -1,7 +1,12 @@
 const T = (b) => /^[^\S\r\n]+$/g.test(b);
 const V7 = (b) => u.has(b);
 const Z7 = (b) =>
-	b.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+	b
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
 const y = (b) => /^[\w_]+$/.test(b) || o(b);
 const $7 = (b) => {
 	const V = b[0];
@@ -180,7 +185,12 @@ const P7 = (b) => {
 	function M(z) {
 		V.push(
 			K(
-				z.map(([$, H]) => `<span class="sh__token--${C[$]}" style="color: var(--sh-${C[$]})">${Z7(H)}</span>`).join(""),
+				z
+					.map(
+						([$, H]) =>
+							`<span class="sh__token--${C[$]}" style="color: var(--sh-${C[$]})">${Z7(H)}</span>`,
+					)
+					.join(""),
 			),
 		);
 	}
@@ -191,7 +201,8 @@ const P7 = (b) => {
 		if (H !== I)
 			if (W.includes("\n")) {
 				const O = W.split("\n");
-				for (let A = 0; A < O.length; A++) if ((Y.push([H, O[A]]), A < O.length - 1)) M(Y), (Y.length = 0);
+				for (let A = 0; A < O.length; A++)
+					if ((Y.push([H, O[A]]), A < O.length - 1)) M(Y), (Y.length = 0);
 			} else Y.push($);
 		else Y.push([H, ""]), M(Y), (Y.length = 0);
 	}
@@ -276,7 +287,17 @@ const u = new Set([
 	"\\",
 	...g,
 ]);
-const C = ["identifier", "keyword", "string", "class", "sign", "comment", "break", "space", "jsxliterals"];
+const C = [
+	"identifier",
+	"keyword",
+	"string",
+	"class",
+	"sign",
+	"comment",
+	"break",
+	"space",
+	"jsxliterals",
+];
 const [m, b7, D, q7, F, l, I, d, w7] = C.map((b, V) => V);
 const O7 = { TokenTypes: C };
 export { F7 as highlight, O7 as SugarHigh, H7 as tokenize };

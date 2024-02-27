@@ -7,7 +7,7 @@ datasource db {
   provider   = "postgresql"
   //url        = env("SQL_WSL")
   extensions = [pgcrypto]
-  url = env("DATABASE_URL")
+url = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 

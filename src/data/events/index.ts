@@ -41,7 +41,16 @@ export type EventDetailsPostSummary = {
 	date: string;
 };
 
-const allEvents: EventDetailsPost[] = [hsn, spartan, manu, letape, silat, marvel, starwars, tokyo].reverse();
+const allEvents: EventDetailsPost[] = [
+	hsn,
+	spartan,
+	manu,
+	letape,
+	silat,
+	marvel,
+	starwars,
+	tokyo,
+].reverse();
 
 function extractSummary({
 	title,

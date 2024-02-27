@@ -19,7 +19,12 @@ import { TitleBar } from "./TitleBar";
 }
   */
 function ContentContainer(props) {
-	return <div className="mx-auto w-full max-w-sm px-2 md:px-3 py-12  md:max-w-2xl lg:max-w-3xl lg:px-4 " {...props} />;
+	return (
+		<div
+			className="mx-auto w-full max-w-sm px-2 md:px-3 py-12  md:max-w-2xl lg:max-w-3xl lg:px-4 "
+			{...props}
+		/>
+	);
 }
 
 interface DetailContainerProps {
@@ -46,7 +51,9 @@ interface TitleProps {
 }
 
 const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-	return <div ref={ref} className="text-gray-600 dark:text-slate-50 text-3xl font-quad " {...props} />;
+	return (
+		<div ref={ref} className="text-gray-600 dark:text-slate-50 text-3xl font-quad " {...props} />
+	);
 });
 
 function Loading() {
@@ -68,8 +75,8 @@ function Null() {
 				<div className="flex flex-col space-y-1">
 					<div className="text-primary font-semibold">What you seek does not exist.</div>
 					<div className="text-tertiary">
-						Maybe this link is broken. Maybe something was deleted, or moved. In any case, there’s nothing to see
-						here...
+						Maybe this link is broken. Maybe something was deleted, or moved. In any case, there’s
+						nothing to see here...
 					</div>
 				</div>
 				<Button href="/">Go home</Button>

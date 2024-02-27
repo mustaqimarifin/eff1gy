@@ -1,6 +1,15 @@
 "use client";
 import type { CSSProperties, FC, MutableRefObject, ReactNode, RefAttributes } from "react";
-import React, { Children, forwardRef, Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+	Children,
+	forwardRef,
+	Fragment,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 
 type MarqueeProps = {
 	/**
@@ -207,7 +216,8 @@ const Marquee: FC<MarqueeProps> = forwardRef(function Marquee(
 		() => ({
 			...style,
 			["--pause-on-hover" as string]: !play || pauseOnHover ? "paused" : "running",
-			["--pause-on-click" as string]: !play || (pauseOnHover && !pauseOnClick) || pauseOnClick ? "paused" : "running",
+			["--pause-on-click" as string]:
+				!play || (pauseOnHover && !pauseOnClick) || pauseOnClick ? "paused" : "running",
 			["--width" as string]: direction === "up" || direction === "down" ? `100vh` : "100%",
 			["--transform" as string]:
 				direction === "up" ? "rotate(-90deg)" : direction === "down" ? "rotate(90deg)" : "none",
@@ -218,7 +228,8 @@ const Marquee: FC<MarqueeProps> = forwardRef(function Marquee(
 	const gradientStyle = useMemo(
 		() => ({
 			["--gradient-color" as string]: gradientColor,
-			["--gradient-width" as string]: typeof gradientWidth === "number" ? `${gradientWidth}px` : gradientWidth,
+			["--gradient-width" as string]:
+				typeof gradientWidth === "number" ? `${gradientWidth}px` : gradientWidth,
 		}),
 		[gradientColor, gradientWidth],
 	);
@@ -246,17 +257,19 @@ const Marquee: FC<MarqueeProps> = forwardRef(function Marquee(
 	// Render {multiplier} number of children
 	const multiplyChildren = useCallback(
 		(multiplier: number) => {
-			return [...Array(Number.isFinite(multiplier) && multiplier >= 0 ? multiplier : 0)].map((_, i) => (
-				<Fragment key={i}>
-					{Children.map(children, (child) => {
-						return (
-							<div style={childStyle} className="rfm-child">
-								{child}
-							</div>
-						);
-					})}
-				</Fragment>
-			));
+			return [...Array(Number.isFinite(multiplier) && multiplier >= 0 ? multiplier : 0)].map(
+				(_, i) => (
+					<Fragment key={i}>
+						{Children.map(children, (child) => {
+							return (
+								<div style={childStyle} className="rfm-child">
+									{child}
+								</div>
+							);
+						})}
+					</Fragment>
+				),
+			);
 		},
 		[childStyle, children],
 	);

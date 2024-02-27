@@ -2,7 +2,15 @@
 import { ArrowLeft, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { GlobalNavigationContext } from "../Provider";
-import { type MutableRefObject, type ReactNode, useContext, useState, useRef, useCallback, useEffect } from "react";
+import {
+	type MutableRefObject,
+	type ReactNode,
+	useContext,
+	useState,
+	useRef,
+	useCallback,
+	useEffect,
+} from "react";
 
 interface Props {
 	title: string;
@@ -121,7 +129,11 @@ export function TitleBar({
 								onClick={() => setIsOpen(!isOpen)}
 								className="flex items-center justify-center p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
 							>
-								{isOpen ? <X size={16} className="text-primary" /> : <Menu size={16} className="text-primary" />}
+								{isOpen ? (
+									<X size={16} className="text-primary" />
+								) : (
+									<Menu size={16} className="text-primary" />
+								)}
 							</span>
 						)}
 

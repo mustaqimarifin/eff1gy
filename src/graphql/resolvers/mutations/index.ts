@@ -5,7 +5,12 @@ import { addComment, deleteComment, editComment } from "~/graphql/resolvers/muta
 import { addPost, deletePost, editPost } from "~/graphql/resolvers/mutations/post";
 import { addQuestion, deleteQuestion, editQuestion } from "~/graphql/resolvers/mutations/questions";
 import { toggleReaction } from "~/graphql/resolvers/mutations/reactions";
-import { addStack, deleteStack, editStack, toggleStackUser } from "~/graphql/resolvers/mutations/stack";
+import {
+	addStack,
+	deleteStack,
+	editStack,
+	toggleStackUser,
+} from "~/graphql/resolvers/mutations/stack";
 import { deleteUser, editUser } from "~/graphql/resolvers/mutations/user";
 
 /* import {

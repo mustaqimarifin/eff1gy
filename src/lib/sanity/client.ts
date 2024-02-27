@@ -1,5 +1,4 @@
-import type { SanityClient } from "next-sanity";
-import { type QueryParams, createClient } from "next-sanity";
+import { type SanityClient, createClient } from "next-sanity";
 
 import { type Post } from "~/components/Blogs/BlogDetail";
 

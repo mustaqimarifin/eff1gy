@@ -45,7 +45,11 @@ export function PostEditorComposer() {
 	}
 
 	return (
-		<Dropzone onUploadStarted={onUploadStarted} onUploadComplete={onUploadComplete} onUploadFailed={onUploadFailed}>
+		<Dropzone
+			onUploadStarted={onUploadStarted}
+			onUploadComplete={onUploadComplete}
+			onUploadFailed={onUploadFailed}
+		>
 			<Detail.ContentContainer>
 				<Detail.Header>
 					<Textarea

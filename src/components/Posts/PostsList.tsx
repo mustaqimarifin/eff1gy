@@ -23,7 +23,8 @@ export function PostsList() {
 	const [filter, setFilter] = React.useState("published");
 	const [scrollContainerRef, setScrollContainerRef] = React.useState(null);
 
-	const variables = filter === "published" ? { filter: { published: true } } : { filter: { published: false } };
+	const variables =
+		filter === "published" ? { filter: { published: true } } : { filter: { published: false } };
 
 	const { error, data, refetch, loading } = useQuery<GetPostsQuery>(GET_POSTS, {
 		variables,

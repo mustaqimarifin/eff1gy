@@ -82,11 +82,20 @@ export function BookmarkDetail({
 							<span>{bookmark.host}</span>
 						</Link>
 						{bookmark.description && (
-							<MarkdownRenderer className="italic prose opacity-70" children={bookmark.description} variant="comment" />
+							<MarkdownRenderer
+								className="italic prose opacity-70"
+								children={bookmark.description}
+								variant="comment"
+							/>
 						)}
 					</Detail.Header>
 					<div className="mt-6">
-						<PrimaryButton size="large" href={bookmark.url} target="_blank" rel="noopener noreferrer">
+						<PrimaryButton
+							size="large"
+							href={bookmark.url}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							<LinkIcon size={14} />
 							<span>Visit</span>
 						</PrimaryButton>

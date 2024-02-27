@@ -8,9 +8,9 @@ import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { useViewerQuery } from "~/graphql/typeSlut";
 
 import { SignInDialog } from "../SignInDialog";
-import SegmentedControl from "../UI/SegmentedController";
 import { AddQuestionDialog } from "./AddQuestionDialog";
 import { QuestionsContext } from "./QuestionsList";
+import SegmentedControl from "../SegControl";
 
 export function AMATitlebar({ scrollContainerRef }) {
 	const { data } = useViewerQuery();
@@ -21,7 +21,11 @@ export function AMATitlebar({ scrollContainerRef }) {
 			return (
 				<SignInDialog
 					trigger={
-						<GhostButton aria-label="Ask a question" size="small-square" data-cy="open-add-question-dialog">
+						<GhostButton
+							aria-label="Ask a question"
+							size="small-square"
+							data-cy="open-add-question-dialog"
+						>
 							<Plus size={16} />
 						</GhostButton>
 					}
@@ -32,7 +36,11 @@ export function AMATitlebar({ scrollContainerRef }) {
 		return (
 			<AddQuestionDialog
 				trigger={
-					<GhostButton aria-label="Ask a question" size="small-square" data-cy="open-add-question-dialog">
+					<GhostButton
+						aria-label="Ask a question"
+						size="small-square"
+						data-cy="open-add-question-dialog"
+					>
 						<Plus size={16} />
 					</GhostButton>
 				}
@@ -63,7 +71,11 @@ export function AMATitlebar({ scrollContainerRef }) {
 	}
 
 	return (
-		<TitleBar scrollContainerRef={scrollContainerRef} title="Ask me anything" trailingAccessory={trailingAccessory()}>
+		<TitleBar
+			scrollContainerRef={scrollContainerRef}
+			title="Ask me anything"
+			trailingAccessory={trailingAccessory()}
+		>
 			{getChildren()}
 		</TitleBar>
 	);

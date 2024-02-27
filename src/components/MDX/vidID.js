@@ -55,7 +55,8 @@ const M = (q) => {
 	if (Array.isArray(q)) return q;
 };
 const k = (q, j) => {
-	let z = q == null ? null : (typeof Symbol !== "undefined" && q[Symbol.iterator]) || q["@@iterator"];
+	let z =
+		q == null ? null : (typeof Symbol !== "undefined" && q[Symbol.iterator]) || q["@@iterator"];
 	if (z == null) return;
 	const B = [];
 	let D = !0;
@@ -63,7 +64,8 @@ const k = (q, j) => {
 	let F;
 	let C;
 	try {
-		for (z = z.call(q); !(D = (F = z.next()).done); D = !0) if ((B.push(F.value), j && B.length === j)) break;
+		for (z = z.call(q); !(D = (F = z.next()).done); D = !0)
+			if ((B.push(F.value), j && B.length === j)) break;
 	} catch (O) {
 		(G = !0), (C = O);
 	} finally {
@@ -113,7 +115,12 @@ const A = (q) => {
 	const V = /https?:\/\/vimeo\.com\/(\d+)/;
 	const N = V.exec(j);
 	if (N?.[1]) return N[1];
-	const X = ["https?://player.vimeo.com/video/[0-9]+$", "https?://vimeo.com/channels", "groups", "album"].join("|");
+	const X = [
+		"https?://player.vimeo.com/video/[0-9]+$",
+		"https?://vimeo.com/channels",
+		"groups",
+		"album",
+	].join("|");
 	const Q = new RegExp(X, "gim");
 	if (Q.test(j)) {
 		if (((C = j.split("/")), C && C.length > 0)) F = C.pop();
@@ -192,5 +199,6 @@ const P = (q) => {
 	else if (/(dailymotion\.com|dai\.ly)/.test(j)) z = { id: $(j), service: "dailymotion" };
 	return z;
 };
-/*! get-video-id v3.6.5 | @license MIT © Michael Wuergler | https://github.com/radiovisual/get-video-id */ const y = P;
+/*! get-video-id v3.6.5 | @license MIT © Michael Wuergler | https://github.com/radiovisual/get-video-id */ const y =
+	P;
 export { y as default };

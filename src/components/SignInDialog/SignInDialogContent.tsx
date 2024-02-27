@@ -10,7 +10,9 @@ export function SignInDialogContent() {
 			<h1 className="text-2xl leading-6 font-semibold dark:text-white" id="modal-headline">
 				Sign in
 			</h1>
-			<p className="text-sm my-2 text-gray-600 dark:text-gray-200">Don&apos;t worry, we&apos;ll save your comment.</p>
+			<p className="text-sm my-2 text-gray-600 dark:text-gray-200">
+				Don&apos;t worry, we&apos;ll save your comment.
+			</p>
 			<div>
 				<div>
 					<GhostButton
@@ -23,7 +25,9 @@ export function SignInDialogContent() {
 						aria-label="Sign in with GitHub"
 					>
 						<GitHubIcon className="w-5 h-5 dark:text-white " />
-						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with GitHub</span>
+						<span className="ml-2 text-sm leading-none dark:text-gray-200">
+							Sign in with GitHub
+						</span>
 					</GhostButton>
 					<GhostButton
 						href={`/api/auth/signin/google`}
@@ -35,7 +39,9 @@ export function SignInDialogContent() {
 						aria-label="Sign in with Google"
 					>
 						<GoogleIcon className="w-5 h-5 dark:text-white" />
-						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with Google</span>
+						<span className="ml-2 text-sm leading-none dark:text-gray-200">
+							Sign in with Google
+						</span>
 					</GhostButton>
 					<GhostButton
 						href={`/api/auth/signin/twitter`}
@@ -47,7 +53,9 @@ export function SignInDialogContent() {
 						aria-label="Sign in with Twitter"
 					>
 						<TwitterIcon className="w-5 h-5 dark:text-white" />
-						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with Twitter</span>
+						<span className="ml-2 text-sm leading-none dark:text-gray-200">
+							Sign in with Twitter
+						</span>
 					</GhostButton>
 				</div>
 			</div>

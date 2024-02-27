@@ -51,7 +51,10 @@ export function UsernameForm(props: {
 				<div className="text-primary flex space-x-2">
 					<span>@{viewer.username}</span>
 					<span>·</span>
-					<button className="cursor-pointer font-medium text-blue-500" onClick={() => setIsEditing(!isEditing)}>
+					<button
+						className="cursor-pointer font-medium text-blue-500"
+						onClick={() => setIsEditing(!isEditing)}
+					>
 						{isEditing ? "Cancel" : "Edit"}
 					</button>
 				</div>
@@ -68,14 +71,18 @@ export function UsernameForm(props: {
 					/>
 					{error && (
 						<p className={`text-xs text-red-500`}>
-							Usernames should be between 4 and 16 characters and only have numbers, letters, or underscores.
+							Usernames should be between 4 and 16 characters and only have numbers, letters, or
+							underscores.
 						</p>
 					)}
 					<p className="text-quaternary text-xs">
-						Updating your username will break any existing links to your profile, so you know, don’t do it too often.
+						Updating your username will break any existing links to your profile, so you know, don’t
+						do it too often.
 					</p>
 					<div className="flex justify-between">
-						<Button type="submit">{editUserResponse.loading ? <LoadingSpinner /> : "Save username"}</Button>
+						<Button type="submit">
+							{editUserResponse.loading ? <LoadingSpinner /> : "Save username"}
+						</Button>
 					</div>
 				</form>
 			)}

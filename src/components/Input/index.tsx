@@ -9,7 +9,13 @@ export function Input(props) {
 
 export function Textarea({ maxRows = 8, rows = 1, ...props }) {
 	return (
-		<TextareaAutosize cacheMeasurements={true} maxRows={maxRows} rows={rows} className={`${styles} block`} {...props} />
+		<TextareaAutosize
+			cacheMeasurements={true}
+			maxRows={maxRows}
+			rows={rows}
+			className={`${styles} block`}
+			{...props}
+		/>
 	);
 }
 
