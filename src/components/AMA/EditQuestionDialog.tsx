@@ -7,9 +7,7 @@ export function EditQuestionDialog({ trigger, question }) {
 		<DialogComponent
 			trigger={trigger}
 			title={"Edit question"}
-			modalContent={({ closeModal }) => (
-				<EditQuestionForm question={question} closeModal={closeModal} />
-			)}
+			modalContent={({ closeModal }) => <EditQuestionForm question={question} closeModal={closeModal} />}
 		/>
 	);
 }

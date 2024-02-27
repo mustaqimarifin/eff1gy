@@ -81,28 +81,10 @@ export function AddStackForm({ closeModal }) {
 			{/*       <StackImageUploader stack={null} onImageUploaded={onImageUploaded} />
 			 */} <form className="space-y-3" onSubmit={onSubmit}>
 				<TagPicker filter={tagFilter} defaultValue={tag} onChange={setTag} />
-				<Input
-					type="text"
-					placeholder="/static/img/..."
-					value={image}
-					onChange={onImageChange}
-					onKeyDown={onKeyDown}
-				/>
-				<Input
-					type="text"
-					placeholder="Add a url..."
-					value={url}
-					onChange={onUrlChange}
-					onKeyDown={onKeyDown}
-				/>
+				<Input type="text" placeholder="/static/img/..." value={image} onChange={onImageChange} onKeyDown={onKeyDown} />
+				<Input type="text" placeholder="Add a url..." value={url} onChange={onUrlChange} onKeyDown={onKeyDown} />
 
-				<Input
-					type="text"
-					placeholder="Name"
-					value={name}
-					onChange={onNameChange}
-					onKeyDown={onKeyDown}
-				/>
+				<Input type="text" placeholder="Name" value={name} onChange={onNameChange} onKeyDown={onKeyDown} />
 				<Textarea
 					rows={4}
 					placeholder="Description"

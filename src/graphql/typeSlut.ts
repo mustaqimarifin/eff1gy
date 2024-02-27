@@ -5,12 +5,8 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
-	[_ in K]?: never;
-};
-export type Incremental<T> =
-	| T
-	| { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -805,14 +801,9 @@ export type StacksConnectionFragment = {
 		| ({
 				cursor?: string | null;
 				node?:
-					| ({
-							id: string;
-							name: string;
-							image?: string | null;
-							url: string;
-							slug: string;
-							count?: number | null;
-					  } & { __typename: "Stack" })
+					| ({ id: string; name: string; image?: string | null; url: string; slug: string; count?: number | null } & {
+							__typename: "Stack";
+					  })
 					| null;
 		  } & { __typename?: "StackEdge" })
 		| null
@@ -828,9 +819,7 @@ export type StackListItemFragment = {
 	count?: number | null;
 } & { __typename: "Stack" };
 
-export type UserSettingsFragment = { email?: string | null; pendingEmail?: string | null } & {
-	__typename?: "User";
-};
+export type UserSettingsFragment = { email?: string | null; pendingEmail?: string | null } & { __typename?: "User" };
 
 export type EditBookmarkMutationVariables = Exact<{
 	id: Scalars["ID"]["input"];
@@ -858,9 +847,7 @@ export type DeleteBookmarkMutationVariables = Exact<{
 	id: Scalars["ID"]["input"];
 }>;
 
-export type DeleteBookmarkMutation = { deleteBookmark?: boolean | null } & {
-	__typename?: "Mutation";
-};
+export type DeleteBookmarkMutation = { deleteBookmark?: boolean | null } & { __typename?: "Mutation" };
 
 export type AddBookmarkMutationVariables = Exact<{
 	data: AddBookmarkInput;
@@ -945,9 +932,7 @@ export type DeleteCommentMutationVariables = Exact<{
 	id: Scalars["ID"]["input"];
 }>;
 
-export type DeleteCommentMutation = { deleteComment?: boolean | null } & {
-	__typename?: "Mutation";
-};
+export type DeleteCommentMutation = { deleteComment?: boolean | null } & { __typename?: "Mutation" };
 
 export type EditPostMutationVariables = Exact<{
 	id: Scalars["ID"]["input"];
@@ -1037,9 +1022,7 @@ export type DeleteQuestionMutationVariables = Exact<{
 	id: Scalars["ID"]["input"];
 }>;
 
-export type DeleteQuestionMutation = { deleteQuestion?: boolean | null } & {
-	__typename?: "Mutation";
-};
+export type DeleteQuestionMutation = { deleteQuestion?: boolean | null } & { __typename?: "Mutation" };
 
 export type AddQuestionMutationVariables = Exact<{
 	data: AddQuestionInput;
@@ -1085,12 +1068,9 @@ export type ToggleReactionMutation = {
 		| ({ id: string; reactionCount?: number | null; viewerHasReacted?: boolean | null } & {
 				__typename?: "Blog" | "Case" | "Event" | "Question" | "Stack";
 		  })
-		| ({
-				id: string;
-				url?: string | null;
-				reactionCount?: number | null;
-				viewerHasReacted?: boolean | null;
-		  } & { __typename?: "Bookmark" })
+		| ({ id: string; url?: string | null; reactionCount?: number | null; viewerHasReacted?: boolean | null } & {
+				__typename?: "Bookmark";
+		  })
 		| { __typename?: "Post" }
 		| null;
 } & { __typename?: "Mutation" };
@@ -1230,9 +1210,7 @@ export type AddViewMutationVariables = Exact<{
 
 export type AddViewMutation = {
 	addView?:
-		| ({ id: string; count?: number | null } & {
-				__typename?: "Blog" | "Bookmark" | "Question" | "Stack";
-		  })
+		| ({ id: string; count?: number | null } & { __typename?: "Blog" | "Bookmark" | "Question" | "Stack" })
 		| { __typename?: "Case" | "Event" | "Post" }
 		| null;
 } & { __typename?: "Mutation" };
@@ -1241,13 +1219,9 @@ export type GetBlogsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetBlogsQuery = {
 	blogs: Array<
-		| ({
-				id: string;
-				title?: string | null;
-				date?: any | null;
-				slug?: string | null;
-				count?: number | null;
-		  } & { __typename: "Blog" })
+		| ({ id: string; title?: string | null; date?: any | null; slug?: string | null; count?: number | null } & {
+				__typename: "Blog";
+		  })
 		| null
 	>;
 } & { __typename?: "Query" };
@@ -1484,14 +1458,9 @@ export type GetStacksQuery = {
 			| ({
 					cursor?: string | null;
 					node?:
-						| ({
-								id: string;
-								name: string;
-								image?: string | null;
-								url: string;
-								slug: string;
-								count?: number | null;
-						  } & { __typename: "Stack" })
+						| ({ id: string; name: string; image?: string | null; url: string; slug: string; count?: number | null } & {
+								__typename: "Stack";
+						  })
 						| null;
 			  } & { __typename?: "StackEdge" })
 			| null
@@ -1852,18 +1821,12 @@ export const EditBookmarkDocument = /*#__PURE__*/ gql`
   }
 }
     ${BookmarkDetailFragmentDoc}`;
-export type EditBookmarkMutationFn = Apollo.MutationFunction<
-	EditBookmarkMutation,
-	EditBookmarkMutationVariables
->;
+export type EditBookmarkMutationFn = Apollo.MutationFunction<EditBookmarkMutation, EditBookmarkMutationVariables>;
 export function useEditBookmarkMutation(
 	baseOptions?: Apollo.MutationHookOptions<EditBookmarkMutation, EditBookmarkMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<EditBookmarkMutation, EditBookmarkMutationVariables>(
-		EditBookmarkDocument,
-		options,
-	);
+	return Apollo.useMutation<EditBookmarkMutation, EditBookmarkMutationVariables>(EditBookmarkDocument, options);
 }
 export type EditBookmarkMutationHookResult = ReturnType<typeof useEditBookmarkMutation>;
 export type EditBookmarkMutationResult = Apollo.MutationResult<EditBookmarkMutation>;
@@ -1876,18 +1839,12 @@ export const DeleteBookmarkDocument = /*#__PURE__*/ gql`
   deleteBookmark(id: $id)
 }
     `;
-export type DeleteBookmarkMutationFn = Apollo.MutationFunction<
-	DeleteBookmarkMutation,
-	DeleteBookmarkMutationVariables
->;
+export type DeleteBookmarkMutationFn = Apollo.MutationFunction<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
 export function useDeleteBookmarkMutation(
 	baseOptions?: Apollo.MutationHookOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>(
-		DeleteBookmarkDocument,
-		options,
-	);
+	return Apollo.useMutation<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>(DeleteBookmarkDocument, options);
 }
 export type DeleteBookmarkMutationHookResult = ReturnType<typeof useDeleteBookmarkMutation>;
 export type DeleteBookmarkMutationResult = Apollo.MutationResult<DeleteBookmarkMutation>;
@@ -1902,25 +1859,16 @@ export const AddBookmarkDocument = /*#__PURE__*/ gql`
   }
 }
     ${BookmarkDetailFragmentDoc}`;
-export type AddBookmarkMutationFn = Apollo.MutationFunction<
-	AddBookmarkMutation,
-	AddBookmarkMutationVariables
->;
+export type AddBookmarkMutationFn = Apollo.MutationFunction<AddBookmarkMutation, AddBookmarkMutationVariables>;
 export function useAddBookmarkMutation(
 	baseOptions?: Apollo.MutationHookOptions<AddBookmarkMutation, AddBookmarkMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<AddBookmarkMutation, AddBookmarkMutationVariables>(
-		AddBookmarkDocument,
-		options,
-	);
+	return Apollo.useMutation<AddBookmarkMutation, AddBookmarkMutationVariables>(AddBookmarkDocument, options);
 }
 export type AddBookmarkMutationHookResult = ReturnType<typeof useAddBookmarkMutation>;
 export type AddBookmarkMutationResult = Apollo.MutationResult<AddBookmarkMutation>;
-export type AddBookmarkMutationOptions = Apollo.BaseMutationOptions<
-	AddBookmarkMutation,
-	AddBookmarkMutationVariables
->;
+export type AddBookmarkMutationOptions = Apollo.BaseMutationOptions<AddBookmarkMutation, AddBookmarkMutationVariables>;
 export const AddCommentDocument = /*#__PURE__*/ gql`
     mutation addComment($refId: ID!, $parentId: String, $type: CommentType!, $text: String!) {
   addComment(refId: $refId, parentId: $parentId, type: $type, text: $text) {
@@ -1928,25 +1876,16 @@ export const AddCommentDocument = /*#__PURE__*/ gql`
   }
 }
     ${CommentInfoFragmentDoc}`;
-export type AddCommentMutationFn = Apollo.MutationFunction<
-	AddCommentMutation,
-	AddCommentMutationVariables
->;
+export type AddCommentMutationFn = Apollo.MutationFunction<AddCommentMutation, AddCommentMutationVariables>;
 export function useAddCommentMutation(
 	baseOptions?: Apollo.MutationHookOptions<AddCommentMutation, AddCommentMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<AddCommentMutation, AddCommentMutationVariables>(
-		AddCommentDocument,
-		options,
-	);
+	return Apollo.useMutation<AddCommentMutation, AddCommentMutationVariables>(AddCommentDocument, options);
 }
 export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutation>;
 export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
-export type AddCommentMutationOptions = Apollo.BaseMutationOptions<
-	AddCommentMutation,
-	AddCommentMutationVariables
->;
+export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
 export const EditCommentDocument = /*#__PURE__*/ gql`
     mutation editComment($id: ID!, $text: String!) {
   editComment(id: $id, text: $text) {
@@ -1954,42 +1893,27 @@ export const EditCommentDocument = /*#__PURE__*/ gql`
   }
 }
     ${CommentInfoFragmentDoc}`;
-export type EditCommentMutationFn = Apollo.MutationFunction<
-	EditCommentMutation,
-	EditCommentMutationVariables
->;
+export type EditCommentMutationFn = Apollo.MutationFunction<EditCommentMutation, EditCommentMutationVariables>;
 export function useEditCommentMutation(
 	baseOptions?: Apollo.MutationHookOptions<EditCommentMutation, EditCommentMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<EditCommentMutation, EditCommentMutationVariables>(
-		EditCommentDocument,
-		options,
-	);
+	return Apollo.useMutation<EditCommentMutation, EditCommentMutationVariables>(EditCommentDocument, options);
 }
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
 export type EditCommentMutationResult = Apollo.MutationResult<EditCommentMutation>;
-export type EditCommentMutationOptions = Apollo.BaseMutationOptions<
-	EditCommentMutation,
-	EditCommentMutationVariables
->;
+export type EditCommentMutationOptions = Apollo.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
 export const DeleteCommentDocument = /*#__PURE__*/ gql`
     mutation deleteComment($id: ID!) {
   deleteComment(id: $id)
 }
     `;
-export type DeleteCommentMutationFn = Apollo.MutationFunction<
-	DeleteCommentMutation,
-	DeleteCommentMutationVariables
->;
+export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutation, DeleteCommentMutationVariables>;
 export function useDeleteCommentMutation(
 	baseOptions?: Apollo.MutationHookOptions<DeleteCommentMutation, DeleteCommentMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(
-		DeleteCommentDocument,
-		options,
-	);
+	return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, options);
 }
 export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteCommentMutation>;
 export type DeleteCommentMutationResult = Apollo.MutationResult<DeleteCommentMutation>;
@@ -2004,10 +1928,7 @@ export const EditPostDocument = /*#__PURE__*/ gql`
   }
 }
     ${PostDetailFragmentDoc}`;
-export type EditPostMutationFn = Apollo.MutationFunction<
-	EditPostMutation,
-	EditPostMutationVariables
->;
+export type EditPostMutationFn = Apollo.MutationFunction<EditPostMutation, EditPostMutationVariables>;
 export function useEditPostMutation(
 	baseOptions?: Apollo.MutationHookOptions<EditPostMutation, EditPostMutationVariables>,
 ) {
@@ -2016,34 +1937,22 @@ export function useEditPostMutation(
 }
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
 export type EditPostMutationResult = Apollo.MutationResult<EditPostMutation>;
-export type EditPostMutationOptions = Apollo.BaseMutationOptions<
-	EditPostMutation,
-	EditPostMutationVariables
->;
+export type EditPostMutationOptions = Apollo.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
 export const DeletePostDocument = /*#__PURE__*/ gql`
     mutation deletePost($id: ID!) {
   deletePost(id: $id)
 }
     `;
-export type DeletePostMutationFn = Apollo.MutationFunction<
-	DeletePostMutation,
-	DeletePostMutationVariables
->;
+export type DeletePostMutationFn = Apollo.MutationFunction<DeletePostMutation, DeletePostMutationVariables>;
 export function useDeletePostMutation(
 	baseOptions?: Apollo.MutationHookOptions<DeletePostMutation, DeletePostMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<DeletePostMutation, DeletePostMutationVariables>(
-		DeletePostDocument,
-		options,
-	);
+	return Apollo.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument, options);
 }
 export type DeletePostMutationHookResult = ReturnType<typeof useDeletePostMutation>;
 export type DeletePostMutationResult = Apollo.MutationResult<DeletePostMutation>;
-export type DeletePostMutationOptions = Apollo.BaseMutationOptions<
-	DeletePostMutation,
-	DeletePostMutationVariables
->;
+export type DeletePostMutationOptions = Apollo.BaseMutationOptions<DeletePostMutation, DeletePostMutationVariables>;
 export const AddPostDocument = /*#__PURE__*/ gql`
     mutation addPost($data: AddPostInput!) {
   addPost(data: $data) {
@@ -2060,10 +1969,7 @@ export function useAddPostMutation(
 }
 export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>;
 export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
-export type AddPostMutationOptions = Apollo.BaseMutationOptions<
-	AddPostMutation,
-	AddPostMutationVariables
->;
+export type AddPostMutationOptions = Apollo.BaseMutationOptions<AddPostMutation, AddPostMutationVariables>;
 export const EditQuestionDocument = /*#__PURE__*/ gql`
     mutation editQuestion($id: ID!, $data: EditQuestionInput!) {
   editQuestion(id: $id, data: $data) {
@@ -2071,18 +1977,12 @@ export const EditQuestionDocument = /*#__PURE__*/ gql`
   }
 }
     ${QuestionDetailFragmentDoc}`;
-export type EditQuestionMutationFn = Apollo.MutationFunction<
-	EditQuestionMutation,
-	EditQuestionMutationVariables
->;
+export type EditQuestionMutationFn = Apollo.MutationFunction<EditQuestionMutation, EditQuestionMutationVariables>;
 export function useEditQuestionMutation(
 	baseOptions?: Apollo.MutationHookOptions<EditQuestionMutation, EditQuestionMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<EditQuestionMutation, EditQuestionMutationVariables>(
-		EditQuestionDocument,
-		options,
-	);
+	return Apollo.useMutation<EditQuestionMutation, EditQuestionMutationVariables>(EditQuestionDocument, options);
 }
 export type EditQuestionMutationHookResult = ReturnType<typeof useEditQuestionMutation>;
 export type EditQuestionMutationResult = Apollo.MutationResult<EditQuestionMutation>;
@@ -2095,18 +1995,12 @@ export const DeleteQuestionDocument = /*#__PURE__*/ gql`
   deleteQuestion(id: $id)
 }
     `;
-export type DeleteQuestionMutationFn = Apollo.MutationFunction<
-	DeleteQuestionMutation,
-	DeleteQuestionMutationVariables
->;
+export type DeleteQuestionMutationFn = Apollo.MutationFunction<DeleteQuestionMutation, DeleteQuestionMutationVariables>;
 export function useDeleteQuestionMutation(
 	baseOptions?: Apollo.MutationHookOptions<DeleteQuestionMutation, DeleteQuestionMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<DeleteQuestionMutation, DeleteQuestionMutationVariables>(
-		DeleteQuestionDocument,
-		options,
-	);
+	return Apollo.useMutation<DeleteQuestionMutation, DeleteQuestionMutationVariables>(DeleteQuestionDocument, options);
 }
 export type DeleteQuestionMutationHookResult = ReturnType<typeof useDeleteQuestionMutation>;
 export type DeleteQuestionMutationResult = Apollo.MutationResult<DeleteQuestionMutation>;
@@ -2121,25 +2015,16 @@ export const AddQuestionDocument = /*#__PURE__*/ gql`
   }
 }
     ${QuestionDetailFragmentDoc}`;
-export type AddQuestionMutationFn = Apollo.MutationFunction<
-	AddQuestionMutation,
-	AddQuestionMutationVariables
->;
+export type AddQuestionMutationFn = Apollo.MutationFunction<AddQuestionMutation, AddQuestionMutationVariables>;
 export function useAddQuestionMutation(
 	baseOptions?: Apollo.MutationHookOptions<AddQuestionMutation, AddQuestionMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<AddQuestionMutation, AddQuestionMutationVariables>(
-		AddQuestionDocument,
-		options,
-	);
+	return Apollo.useMutation<AddQuestionMutation, AddQuestionMutationVariables>(AddQuestionDocument, options);
 }
 export type AddQuestionMutationHookResult = ReturnType<typeof useAddQuestionMutation>;
 export type AddQuestionMutationResult = Apollo.MutationResult<AddQuestionMutation>;
-export type AddQuestionMutationOptions = Apollo.BaseMutationOptions<
-	AddQuestionMutation,
-	AddQuestionMutationVariables
->;
+export type AddQuestionMutationOptions = Apollo.BaseMutationOptions<AddQuestionMutation, AddQuestionMutationVariables>;
 export const ToggleReactionDocument = /*#__PURE__*/ gql`
     mutation toggleReaction($refId: ID!, $type: ReactionType!) {
   toggleReaction(refId: $refId, type: $type) {
@@ -2177,18 +2062,12 @@ export const ToggleReactionDocument = /*#__PURE__*/ gql`
   }
 }
     `;
-export type ToggleReactionMutationFn = Apollo.MutationFunction<
-	ToggleReactionMutation,
-	ToggleReactionMutationVariables
->;
+export type ToggleReactionMutationFn = Apollo.MutationFunction<ToggleReactionMutation, ToggleReactionMutationVariables>;
 export function useToggleReactionMutation(
 	baseOptions?: Apollo.MutationHookOptions<ToggleReactionMutation, ToggleReactionMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<ToggleReactionMutation, ToggleReactionMutationVariables>(
-		ToggleReactionDocument,
-		options,
-	);
+	return Apollo.useMutation<ToggleReactionMutation, ToggleReactionMutationVariables>(ToggleReactionDocument, options);
 }
 export type ToggleReactionMutationHookResult = ReturnType<typeof useToggleReactionMutation>;
 export type ToggleReactionMutationResult = Apollo.MutationResult<ToggleReactionMutation>;
@@ -2203,49 +2082,31 @@ export const EditStackDocument = /*#__PURE__*/ gql`
   }
 }
     ${StackDetailFragmentDoc}`;
-export type EditStackMutationFn = Apollo.MutationFunction<
-	EditStackMutation,
-	EditStackMutationVariables
->;
+export type EditStackMutationFn = Apollo.MutationFunction<EditStackMutation, EditStackMutationVariables>;
 export function useEditStackMutation(
 	baseOptions?: Apollo.MutationHookOptions<EditStackMutation, EditStackMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<EditStackMutation, EditStackMutationVariables>(
-		EditStackDocument,
-		options,
-	);
+	return Apollo.useMutation<EditStackMutation, EditStackMutationVariables>(EditStackDocument, options);
 }
 export type EditStackMutationHookResult = ReturnType<typeof useEditStackMutation>;
 export type EditStackMutationResult = Apollo.MutationResult<EditStackMutation>;
-export type EditStackMutationOptions = Apollo.BaseMutationOptions<
-	EditStackMutation,
-	EditStackMutationVariables
->;
+export type EditStackMutationOptions = Apollo.BaseMutationOptions<EditStackMutation, EditStackMutationVariables>;
 export const DeleteStackDocument = /*#__PURE__*/ gql`
     mutation deleteStack($id: ID!) {
   deleteStack(id: $id)
 }
     `;
-export type DeleteStackMutationFn = Apollo.MutationFunction<
-	DeleteStackMutation,
-	DeleteStackMutationVariables
->;
+export type DeleteStackMutationFn = Apollo.MutationFunction<DeleteStackMutation, DeleteStackMutationVariables>;
 export function useDeleteStackMutation(
 	baseOptions?: Apollo.MutationHookOptions<DeleteStackMutation, DeleteStackMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<DeleteStackMutation, DeleteStackMutationVariables>(
-		DeleteStackDocument,
-		options,
-	);
+	return Apollo.useMutation<DeleteStackMutation, DeleteStackMutationVariables>(DeleteStackDocument, options);
 }
 export type DeleteStackMutationHookResult = ReturnType<typeof useDeleteStackMutation>;
 export type DeleteStackMutationResult = Apollo.MutationResult<DeleteStackMutation>;
-export type DeleteStackMutationOptions = Apollo.BaseMutationOptions<
-	DeleteStackMutation,
-	DeleteStackMutationVariables
->;
+export type DeleteStackMutationOptions = Apollo.BaseMutationOptions<DeleteStackMutation, DeleteStackMutationVariables>;
 export const AddStackDocument = /*#__PURE__*/ gql`
     mutation addStack($data: AddStackInput!) {
   addStack(data: $data) {
@@ -2253,10 +2114,7 @@ export const AddStackDocument = /*#__PURE__*/ gql`
   }
 }
     ${StackDetailFragmentDoc}`;
-export type AddStackMutationFn = Apollo.MutationFunction<
-	AddStackMutation,
-	AddStackMutationVariables
->;
+export type AddStackMutationFn = Apollo.MutationFunction<AddStackMutation, AddStackMutationVariables>;
 export function useAddStackMutation(
 	baseOptions?: Apollo.MutationHookOptions<AddStackMutation, AddStackMutationVariables>,
 ) {
@@ -2265,10 +2123,7 @@ export function useAddStackMutation(
 }
 export type AddStackMutationHookResult = ReturnType<typeof useAddStackMutation>;
 export type AddStackMutationResult = Apollo.MutationResult<AddStackMutation>;
-export type AddStackMutationOptions = Apollo.BaseMutationOptions<
-	AddStackMutation,
-	AddStackMutationVariables
->;
+export type AddStackMutationOptions = Apollo.BaseMutationOptions<AddStackMutation, AddStackMutationVariables>;
 export const ToggleStackUserDocument = /*#__PURE__*/ gql`
     mutation toggleStackUser($id: ID!) {
   toggleStackUser(id: $id) {
@@ -2285,10 +2140,7 @@ export type ToggleStackUserMutationFn = Apollo.MutationFunction<
 	ToggleStackUserMutationVariables
 >;
 export function useToggleStackUserMutation(
-	baseOptions?: Apollo.MutationHookOptions<
-		ToggleStackUserMutation,
-		ToggleStackUserMutationVariables
-	>,
+	baseOptions?: Apollo.MutationHookOptions<ToggleStackUserMutation, ToggleStackUserMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useMutation<ToggleStackUserMutation, ToggleStackUserMutationVariables>(
@@ -2307,25 +2159,16 @@ export const DeleteUserDocument = /*#__PURE__*/ gql`
   deleteUser
 }
     `;
-export type DeleteUserMutationFn = Apollo.MutationFunction<
-	DeleteUserMutation,
-	DeleteUserMutationVariables
->;
+export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
 export function useDeleteUserMutation(
 	baseOptions?: Apollo.MutationHookOptions<DeleteUserMutation, DeleteUserMutationVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(
-		DeleteUserDocument,
-		options,
-	);
+	return Apollo.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, options);
 }
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
-export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<
-	DeleteUserMutation,
-	DeleteUserMutationVariables
->;
+export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
 export const EditUserDocument = /*#__PURE__*/ gql`
     mutation editUser($data: EditUserInput) {
   editUser(data: $data) {
@@ -2333,10 +2176,7 @@ export const EditUserDocument = /*#__PURE__*/ gql`
   }
 }
     ${UserInfoFragmentDoc}`;
-export type EditUserMutationFn = Apollo.MutationFunction<
-	EditUserMutation,
-	EditUserMutationVariables
->;
+export type EditUserMutationFn = Apollo.MutationFunction<EditUserMutation, EditUserMutationVariables>;
 export function useEditUserMutation(
 	baseOptions?: Apollo.MutationHookOptions<EditUserMutation, EditUserMutationVariables>,
 ) {
@@ -2345,10 +2185,7 @@ export function useEditUserMutation(
 }
 export type EditUserMutationHookResult = ReturnType<typeof useEditUserMutation>;
 export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>;
-export type EditUserMutationOptions = Apollo.BaseMutationOptions<
-	EditUserMutation,
-	EditUserMutationVariables
->;
+export type EditUserMutationOptions = Apollo.BaseMutationOptions<EditUserMutation, EditUserMutationVariables>;
 export const AddViewDocument = /*#__PURE__*/ gql`
     mutation addView($refId: ID!, $type: ViewType!) {
   addView(refId: $refId, type: $type) {
@@ -2380,10 +2217,7 @@ export function useAddViewMutation(
 }
 export type AddViewMutationHookResult = ReturnType<typeof useAddViewMutation>;
 export type AddViewMutationResult = Apollo.MutationResult<AddViewMutation>;
-export type AddViewMutationOptions = Apollo.BaseMutationOptions<
-	AddViewMutation,
-	AddViewMutationVariables
->;
+export type AddViewMutationOptions = Apollo.BaseMutationOptions<AddViewMutation, AddViewMutationVariables>;
 export const GetBlogsDocument = /*#__PURE__*/ gql`
     query getBlogs {
   blogs {
@@ -2391,15 +2225,11 @@ export const GetBlogsDocument = /*#__PURE__*/ gql`
   }
 }
     ${BlogListItemFragmentDoc}`;
-export function useGetBlogsQuery(
-	baseOptions?: Apollo.QueryHookOptions<GetBlogsQuery, GetBlogsQueryVariables>,
-) {
+export function useGetBlogsQuery(baseOptions?: Apollo.QueryHookOptions<GetBlogsQuery, GetBlogsQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetBlogsQuery, GetBlogsQueryVariables>(GetBlogsDocument, options);
 }
-export function useGetBlogsLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetBlogsQuery, GetBlogsQueryVariables>,
-) {
+export function useGetBlogsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBlogsQuery, GetBlogsQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetBlogsQuery, GetBlogsQueryVariables>(GetBlogsDocument, options);
 }
@@ -2427,9 +2257,7 @@ export function useGetBlogQuery(
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetBlogQuery, GetBlogQueryVariables>(GetBlogDocument, options);
 }
-export function useGetBlogLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetBlogQuery, GetBlogQueryVariables>,
-) {
+export function useGetBlogLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBlogQuery, GetBlogQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetBlogQuery, GetBlogQueryVariables>(GetBlogDocument, options);
 }
@@ -2454,36 +2282,24 @@ export function useGetBookmarksQuery(
 	baseOptions?: Apollo.QueryHookOptions<GetBookmarksQuery, GetBookmarksQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(
-		GetBookmarksDocument,
-		options,
-	);
+	return Apollo.useQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(GetBookmarksDocument, options);
 }
 export function useGetBookmarksLazyQuery(
 	baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarksQuery, GetBookmarksQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useLazyQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(
-		GetBookmarksDocument,
-		options,
-	);
+	return Apollo.useLazyQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(GetBookmarksDocument, options);
 }
 export function useGetBookmarksSuspenseQuery(
 	baseOptions?: Apollo.SuspenseQueryHookOptions<GetBookmarksQuery, GetBookmarksQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(
-		GetBookmarksDocument,
-		options,
-	);
+	return Apollo.useSuspenseQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(GetBookmarksDocument, options);
 }
 export type GetBookmarksQueryHookResult = ReturnType<typeof useGetBookmarksQuery>;
 export type GetBookmarksLazyQueryHookResult = ReturnType<typeof useGetBookmarksLazyQuery>;
 export type GetBookmarksSuspenseQueryHookResult = ReturnType<typeof useGetBookmarksSuspenseQuery>;
-export type GetBookmarksQueryResult = Apollo.QueryResult<
-	GetBookmarksQuery,
-	GetBookmarksQueryVariables
->;
+export type GetBookmarksQueryResult = Apollo.QueryResult<GetBookmarksQuery, GetBookmarksQueryVariables>;
 export const GetBookmarkDocument = /*#__PURE__*/ gql`
     query getBookmark($id: ID!) {
   bookmark(id: $id) {
@@ -2502,27 +2318,18 @@ export function useGetBookmarkLazyQuery(
 	baseOptions?: Apollo.LazyQueryHookOptions<GetBookmarkQuery, GetBookmarkQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useLazyQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(
-		GetBookmarkDocument,
-		options,
-	);
+	return Apollo.useLazyQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(GetBookmarkDocument, options);
 }
 export function useGetBookmarkSuspenseQuery(
 	baseOptions?: Apollo.SuspenseQueryHookOptions<GetBookmarkQuery, GetBookmarkQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(
-		GetBookmarkDocument,
-		options,
-	);
+	return Apollo.useSuspenseQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(GetBookmarkDocument, options);
 }
 export type GetBookmarkQueryHookResult = ReturnType<typeof useGetBookmarkQuery>;
 export type GetBookmarkLazyQueryHookResult = ReturnType<typeof useGetBookmarkLazyQuery>;
 export type GetBookmarkSuspenseQueryHookResult = ReturnType<typeof useGetBookmarkSuspenseQuery>;
-export type GetBookmarkQueryResult = Apollo.QueryResult<
-	GetBookmarkQuery,
-	GetBookmarkQueryVariables
->;
+export type GetBookmarkQueryResult = Apollo.QueryResult<GetBookmarkQuery, GetBookmarkQueryVariables>;
 export const GetCommentsDocument = /*#__PURE__*/ gql`
     query getComments($refId: ID!, $type: CommentType!) {
   comments(refId: $refId, type: $type) {
@@ -2541,27 +2348,18 @@ export function useGetCommentsLazyQuery(
 	baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(
-		GetCommentsDocument,
-		options,
-	);
+	return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
 }
 export function useGetCommentsSuspenseQuery(
 	baseOptions?: Apollo.SuspenseQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<GetCommentsQuery, GetCommentsQueryVariables>(
-		GetCommentsDocument,
-		options,
-	);
+	return Apollo.useSuspenseQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
 }
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
 export type GetCommentsSuspenseQueryHookResult = ReturnType<typeof useGetCommentsSuspenseQuery>;
-export type GetCommentsQueryResult = Apollo.QueryResult<
-	GetCommentsQuery,
-	GetCommentsQueryVariables
->;
+export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
 export const GetPostsDocument = /*#__PURE__*/ gql`
     query getPosts($filter: PostFilter) {
   posts(filter: $filter) {
@@ -2569,15 +2367,11 @@ export const GetPostsDocument = /*#__PURE__*/ gql`
   }
 }
     ${PostListItemFragmentDoc}`;
-export function useGetPostsQuery(
-	baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>,
-) {
+export function useGetPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
 }
-export function useGetPostsLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>,
-) {
+export function useGetPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
 }
@@ -2605,9 +2399,7 @@ export function useGetPostQuery(
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
 }
-export function useGetPostLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>,
-) {
+export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostQuery, GetPostQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
 }
@@ -2632,36 +2424,24 @@ export function useGetQuestionsQuery(
 	baseOptions?: Apollo.QueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(
-		GetQuestionsDocument,
-		options,
-	);
+	return Apollo.useQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
 }
 export function useGetQuestionsLazyQuery(
 	baseOptions?: Apollo.LazyQueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useLazyQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(
-		GetQuestionsDocument,
-		options,
-	);
+	return Apollo.useLazyQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
 }
 export function useGetQuestionsSuspenseQuery(
 	baseOptions?: Apollo.SuspenseQueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(
-		GetQuestionsDocument,
-		options,
-	);
+	return Apollo.useSuspenseQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
 }
 export type GetQuestionsQueryHookResult = ReturnType<typeof useGetQuestionsQuery>;
 export type GetQuestionsLazyQueryHookResult = ReturnType<typeof useGetQuestionsLazyQuery>;
 export type GetQuestionsSuspenseQueryHookResult = ReturnType<typeof useGetQuestionsSuspenseQuery>;
-export type GetQuestionsQueryResult = Apollo.QueryResult<
-	GetQuestionsQuery,
-	GetQuestionsQueryVariables
->;
+export type GetQuestionsQueryResult = Apollo.QueryResult<GetQuestionsQuery, GetQuestionsQueryVariables>;
 export const GetQuestionDocument = /*#__PURE__*/ gql`
     query getQuestion($id: ID!) {
   question(id: $id) {
@@ -2680,27 +2460,18 @@ export function useGetQuestionLazyQuery(
 	baseOptions?: Apollo.LazyQueryHookOptions<GetQuestionQuery, GetQuestionQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useLazyQuery<GetQuestionQuery, GetQuestionQueryVariables>(
-		GetQuestionDocument,
-		options,
-	);
+	return Apollo.useLazyQuery<GetQuestionQuery, GetQuestionQueryVariables>(GetQuestionDocument, options);
 }
 export function useGetQuestionSuspenseQuery(
 	baseOptions?: Apollo.SuspenseQueryHookOptions<GetQuestionQuery, GetQuestionQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<GetQuestionQuery, GetQuestionQueryVariables>(
-		GetQuestionDocument,
-		options,
-	);
+	return Apollo.useSuspenseQuery<GetQuestionQuery, GetQuestionQueryVariables>(GetQuestionDocument, options);
 }
 export type GetQuestionQueryHookResult = ReturnType<typeof useGetQuestionQuery>;
 export type GetQuestionLazyQueryHookResult = ReturnType<typeof useGetQuestionLazyQuery>;
 export type GetQuestionSuspenseQueryHookResult = ReturnType<typeof useGetQuestionSuspenseQuery>;
-export type GetQuestionQueryResult = Apollo.QueryResult<
-	GetQuestionQuery,
-	GetQuestionQueryVariables
->;
+export type GetQuestionQueryResult = Apollo.QueryResult<GetQuestionQuery, GetQuestionQueryVariables>;
 export const GetStacksDocument = /*#__PURE__*/ gql`
     query getStacks($first: Int, $after: String) {
   stacks(first: $first, after: $after) {
@@ -2708,9 +2479,7 @@ export const GetStacksDocument = /*#__PURE__*/ gql`
   }
 }
     ${StacksConnectionFragmentDoc}`;
-export function useGetStacksQuery(
-	baseOptions?: Apollo.QueryHookOptions<GetStacksQuery, GetStacksQueryVariables>,
-) {
+export function useGetStacksQuery(baseOptions?: Apollo.QueryHookOptions<GetStacksQuery, GetStacksQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetStacksQuery, GetStacksQueryVariables>(GetStacksDocument, options);
 }
@@ -2724,10 +2493,7 @@ export function useGetStacksSuspenseQuery(
 	baseOptions?: Apollo.SuspenseQueryHookOptions<GetStacksQuery, GetStacksQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<GetStacksQuery, GetStacksQueryVariables>(
-		GetStacksDocument,
-		options,
-	);
+	return Apollo.useSuspenseQuery<GetStacksQuery, GetStacksQueryVariables>(GetStacksDocument, options);
 }
 export type GetStacksQueryHookResult = ReturnType<typeof useGetStacksQuery>;
 export type GetStacksLazyQueryHookResult = ReturnType<typeof useGetStacksLazyQuery>;
@@ -2747,9 +2513,7 @@ export function useGetStackQuery(
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetStackQuery, GetStackQueryVariables>(GetStackDocument, options);
 }
-export function useGetStackLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetStackQuery, GetStackQueryVariables>,
-) {
+export function useGetStackLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStackQuery, GetStackQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetStackQuery, GetStackQueryVariables>(GetStackDocument, options);
 }
@@ -2770,15 +2534,11 @@ export const GetTagsDocument = /*#__PURE__*/ gql`
   }
 }
     `;
-export function useGetTagsQuery(
-	baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>,
-) {
+export function useGetTagsQuery(baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
 }
-export function useGetTagsLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>,
-) {
+export function useGetTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
 }
@@ -2806,9 +2566,7 @@ export function useGetUserQuery(
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
 }
-export function useGetUserLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>,
-) {
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
 }
@@ -2829,15 +2587,11 @@ export const ViewerDocument = /*#__PURE__*/ gql`
   }
 }
     ${UserInfoFragmentDoc}`;
-export function useViewerQuery(
-	baseOptions?: Apollo.QueryHookOptions<ViewerQuery, ViewerQueryVariables>,
-) {
+export function useViewerQuery(baseOptions?: Apollo.QueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, options);
 }
-export function useViewerLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<ViewerQuery, ViewerQueryVariables>,
-) {
+export function useViewerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, options);
 }
@@ -2861,10 +2615,7 @@ export const GetViewerWithSettingsDocument = /*#__PURE__*/ gql`
     ${UserInfoFragmentDoc}
 ${UserSettingsFragmentDoc}`;
 export function useGetViewerWithSettingsQuery(
-	baseOptions?: Apollo.QueryHookOptions<
-		GetViewerWithSettingsQuery,
-		GetViewerWithSettingsQueryVariables
-	>,
+	baseOptions?: Apollo.QueryHookOptions<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useQuery<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>(
@@ -2873,10 +2624,7 @@ export function useGetViewerWithSettingsQuery(
 	);
 }
 export function useGetViewerWithSettingsLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<
-		GetViewerWithSettingsQuery,
-		GetViewerWithSettingsQueryVariables
-	>,
+	baseOptions?: Apollo.LazyQueryHookOptions<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useLazyQuery<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>(
@@ -2885,10 +2633,7 @@ export function useGetViewerWithSettingsLazyQuery(
 	);
 }
 export function useGetViewerWithSettingsSuspenseQuery(
-	baseOptions?: Apollo.SuspenseQueryHookOptions<
-		GetViewerWithSettingsQuery,
-		GetViewerWithSettingsQueryVariables
-	>,
+	baseOptions?: Apollo.SuspenseQueryHookOptions<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return Apollo.useSuspenseQuery<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>(
@@ -2897,12 +2642,8 @@ export function useGetViewerWithSettingsSuspenseQuery(
 	);
 }
 export type GetViewerWithSettingsQueryHookResult = ReturnType<typeof useGetViewerWithSettingsQuery>;
-export type GetViewerWithSettingsLazyQueryHookResult = ReturnType<
-	typeof useGetViewerWithSettingsLazyQuery
->;
-export type GetViewerWithSettingsSuspenseQueryHookResult = ReturnType<
-	typeof useGetViewerWithSettingsSuspenseQuery
->;
+export type GetViewerWithSettingsLazyQueryHookResult = ReturnType<typeof useGetViewerWithSettingsLazyQuery>;
+export type GetViewerWithSettingsSuspenseQueryHookResult = ReturnType<typeof useGetViewerWithSettingsSuspenseQuery>;
 export type GetViewerWithSettingsQueryResult = Apollo.QueryResult<
 	GetViewerWithSettingsQuery,
 	GetViewerWithSettingsQueryVariables

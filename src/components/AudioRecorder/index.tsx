@@ -214,12 +214,7 @@ export default function AudioRecorder({
 
 	const { mutate } = useSWR(`/api/sign`, {
 		onSuccess: async (data) => {
-			const upload = await uploadToCloudinary(
-				state.audioBlob,
-				data.folder,
-				`${data.timestamp}`,
-				data.signature,
-			);
+			const upload = await uploadToCloudinary(state.audioBlob, data.folder, `${data.timestamp}`, data.signature);
 			onUploadComplete({
 				waveform: state.waveform,
 				src: upload.secure_url,
@@ -230,14 +225,10 @@ export default function AudioRecorder({
 	return (
 		<div className="flex flex-col space-y-4 rounded-md border border-gray-200 bg-gray-100 p-4 dark:border-gray-800 dark:bg-gray-900">
 			{state.status === "idle" && (
-				<Button onClick={startRecording}>
-					{initialAudioUrl ? "Re-record answer" : "Record answer"}
-				</Button>
+				<Button onClick={startRecording}>{initialAudioUrl ? "Re-record answer" : "Record answer"}</Button>
 			)}
 
-			{state.status === "recording" && (
-				<RecordingButton onClick={stopRecording}>Stop recording...</RecordingButton>
-			)}
+			{state.status === "recording" && <RecordingButton onClick={stopRecording}>Stop recording...</RecordingButton>}
 
 			{state.audioUrl && state.status !== "recording" && (
 				<>

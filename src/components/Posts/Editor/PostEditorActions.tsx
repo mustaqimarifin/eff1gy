@@ -15,14 +15,7 @@ export function PostEditorActions() {
 	const router = useRouter();
 	const path = usePathname();
 	const context = React.useContext(PostEditorContext);
-	const {
-		draftState,
-		existingPost,
-		sidebarIsOpen,
-		setSidebarIsOpen,
-		isPreviewing,
-		setIsPreviewing,
-	} = context;
+	const { draftState, existingPost, sidebarIsOpen, setSidebarIsOpen, isPreviewing, setIsPreviewing } = context;
 
 	const [addPost, { loading: creatingPost }] = useAddPostMutation({
 		onCompleted({ addPost }) {
@@ -63,8 +56,7 @@ export function PostEditorActions() {
 					<LoadingSpinner />
 				) : (
 					<>
-						<PostEditorAutoSave />{" "}
-						<span>{existingPost?.publishedAt ? "Update" : "Save draft"}</span>
+						<PostEditorAutoSave /> <span>{existingPost?.publishedAt ? "Update" : "Save draft"}</span>
 					</>
 				)}
 			</Button>

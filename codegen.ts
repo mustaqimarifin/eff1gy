@@ -6,6 +6,9 @@ const config: CodegenConfig = {
 	overwrite: true,
 	documents: ["./src/**/*.ts"],
 	ignoreNoDocuments: true,
+	/*   hooks: {
+    afterOneFileWrite: ['eslint --fix', 'prettier --write'],
+  }, */
 	generates: {
 		/*"./src/gql/": {
 			preset: "client",

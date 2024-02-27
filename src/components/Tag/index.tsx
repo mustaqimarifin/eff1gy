@@ -16,7 +16,7 @@ export function Tag({ name }) {
 	const baseClasses =
 		"flex-none justify-center flex items-center space-x-2 cursor-pointer self-start border uppercase rounded-full hover:bg-opacity-10 dark:hover:bg-opacity-30 px-3 py-0.5 text-xs font-semibold leading-5 tracking-wide border-opacity-50 dark:border-opacity-10";
 
-	let specificClasses;
+	let specificClasses = "";
 	if (name) {
 		switch (name?.toLowerCase()) {
 			case "web": {
@@ -35,8 +35,7 @@ export function Tag({ name }) {
 				break;
 			}
 			case "software": {
-				specificClasses =
-					"border-red-200 text-red-600 dark:text-red-200 bg-red-500 bg-opacity-5 dark:bg-opacity-10";
+				specificClasses = "border-red-200 text-red-600 dark:text-red-200 bg-red-500 bg-opacity-5 dark:bg-opacity-10";
 				break;
 			}
 

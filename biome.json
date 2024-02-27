@@ -10,14 +10,14 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"lineWidth": 100,
+		"lineWidth": 120,
 		"ignore": [".next/*", "node_modules"]
 	},
 	"files": {
 		"ignore": [".next/*", "src/gql/**/*", "node_modules"]
 	},
 	"linter": {
-		"ignore": [".next/*", "src/components/MDX/sugar.js", "src/components/MDX/vidID.js"],
+		"ignore": [".next/*", "src/graphql/typeSlut.js"],
 		"enabled": true,
 		"rules": {
 			"recommended": true,
@@ -31,7 +31,7 @@
 			},
 			"correctness": {
 				"noChildrenProp": "off",
-				"useExhaustiveDependencies": "warn"
+				"useExhaustiveDependencies":"warn"
 			},
 			"suspicious": {
 				"noExplicitAny": "off",

@@ -1,9 +1,6 @@
 import { UserSettings } from "~/components/UserSettings";
+//export const dynamic = 'force-dynamic'
 
-export default function Settings() {
-	return (
-		<div className="mt-24 object-center mx-auto max-w-lg">
-			<UserSettings />
-		</div>
-	);
+export default async function Settings() {
+	return <UserSettings />;
 }

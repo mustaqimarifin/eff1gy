@@ -6,11 +6,7 @@ import { SignInDialogContent } from "./SignInDialogContent";
 
 export function SignInDialog({ children = null, trigger = null, style = null }) {
 	return (
-		<DialogComponent
-			trigger={trigger}
-			title={"Sign In"}
-			modalContent={() => <SignInDialogContent />}
-		>
+		<DialogComponent trigger={trigger} title={"Sign In"} modalContent={() => <SignInDialogContent />}>
 			{children ? ({ openModal }: { openModal: boolean }) => children({ openModal }) : null}
 		</DialogComponent>
 	);

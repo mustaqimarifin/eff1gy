@@ -1,27 +1,20 @@
 const T = (b) => /^[^\S\r\n]+$/g.test(b);
 const V7 = (b) => u.has(b);
 const Z7 = (b) =>
-	b
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#039;");
+	b.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 const y = (b) => /^[\w_]+$/.test(b) || o(b);
 const $7 = (b) => {
 	const V = b[0];
 	return (y(V) && V === V.toUpperCase()) || b === "null";
 };
-// biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
-const  o = (b) => /[^\u0000-\u007f]/.test(b);
+const o = (b) => /[^\u0000-\u007f]/.test(b);
 const a = (b) => /^[a-zA-Z]$/.test(b);
 const i = (b) => a(b) || o(b);
 const z7 = (b) => i(b[0]) && (b.length === 1 || y(b.slice(1)));
 const E = (b) => b === "`";
 const R = (b) => b === '"' || b === "'";
 const X7 = (b) => R(b) || E(b);
-// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-const  p = (b) => ((b = b.slice(0, 2)), b === "//" || b === "/*");
+const p = (b) => ((b = b.slice(0, 2)), b === "//" || b === "/*");
 const Y7 = (b) => b[0] === "/" && !p(b[0] + b[1]);
 const H7 = (b) => {
 	let V = "";
@@ -187,12 +180,7 @@ const P7 = (b) => {
 	function M(z) {
 		V.push(
 			K(
-				z
-					.map(
-						([$, H]) =>
-							`<span class="sh__token--${C[$]}" style="color: var(--sh-${C[$]})">${Z7(H)}</span>`,
-					)
-					.join(""),
+				z.map(([$, H]) => `<span class="sh__token--${C[$]}" style="color: var(--sh-${C[$]})">${Z7(H)}</span>`).join(""),
 			),
 		);
 	}
@@ -203,8 +191,7 @@ const P7 = (b) => {
 		if (H !== I)
 			if (W.includes("\n")) {
 				const O = W.split("\n");
-				for (let A = 0; A < O.length; A++)
-					if ((Y.push([H, O[A]]), A < O.length - 1)) M(Y), (Y.length = 0);
+				for (let A = 0; A < O.length; A++) if ((Y.push([H, O[A]]), A < O.length - 1)) M(Y), (Y.length = 0);
 			} else Y.push($);
 		else Y.push([H, ""]), M(Y), (Y.length = 0);
 	}
@@ -289,17 +276,7 @@ const u = new Set([
 	"\\",
 	...g,
 ]);
-const C = [
-	"identifier",
-	"keyword",
-	"string",
-	"class",
-	"sign",
-	"comment",
-	"break",
-	"space",
-	"jsxliterals",
-];
+const C = ["identifier", "keyword", "string", "class", "sign", "comment", "break", "space", "jsxliterals"];
 const [m, b7, D, q7, F, l, I, d, w7] = C.map((b, V) => V);
 const O7 = { TokenTypes: C };
 export { F7 as highlight, O7 as SugarHigh, H7 as tokenize };

@@ -55,9 +55,7 @@ export default function BlogList({ posts }) {
           </div>
         </Detail.Header> */}
 				<div className="flex flex-col items-start justify-center max-w-2xl mx-auto mb-16">
-					<h1 className="mb-4 text-3xl font-quad tracking-tight text-black md:text-5xl dark:text-white">
-						Posts
-					</h1>
+					<h1 className="mb-4 text-3xl font-quad tracking-tight text-black md:text-5xl dark:text-white">Posts</h1>
 					<p className="mb-4 text-gray-600 dark:text-gray-400">
 						{`I've been writing online since 2014, mostly about web development and tech careers.
             In total, I've written ${posts?.length} articles on this site.
@@ -90,12 +88,8 @@ export default function BlogList({ posts }) {
 						<Link className="w-full" href={`/blog/${p.slug}`}>
 							<div className="mb-8">
 								<div className="flex flex-col justify-between md:flex-row">
-									<div className=" mb-2 text-lg font-bold text-gray-900 md:text-xl dark:text-gray-100">
-										{p.title}
-									</div>
-									<div className="w-42 mb-4 text-left text-gray-500 text-sm md:text-right ">
-										{formatDate(p?.date)}
-									</div>
+									<div className=" mb-2 text-lg font-bold text-gray-900 md:text-xl dark:text-gray-100">{p.title}</div>
+									<div className="w-42 mb-4 text-left text-gray-500 text-sm md:text-right ">{formatDate(p?.date)}</div>
 								</div>
 								<p className="text-gray-600 dark:text-gray-400">{p.excerpt}</p>
 							</div>

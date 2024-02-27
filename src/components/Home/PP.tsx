@@ -12,12 +12,7 @@ export default function PP({ children }) {
 
 	return (
 		<Detail.Container data-cy="pp" ref={scrollContainerRef}>
-			<TitleBar
-				magicTitle
-				titleRef={titleRef}
-				scrollContainerRef={scrollContainerRef}
-				title="Privacy Policy"
-			/>
+			<TitleBar magicTitle titleRef={titleRef} scrollContainerRef={scrollContainerRef} title="Privacy Policy" />
 			<Detail.Title ref={titleRef}>{`Privacy Policy`}</Detail.Title>
 
 			{children}

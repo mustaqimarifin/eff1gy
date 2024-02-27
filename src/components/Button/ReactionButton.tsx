@@ -21,12 +21,8 @@ export function ReactionButton(props: Props) {
 	const [hasReactedState, setHasReactedState] = useState(hasReacted);
 	let currCount = count;
 	let nextCount = hasReactedState ? count - 1 : count + 1;
-	const [currTranslate, setCurrTranslate] = useState(
-		hasReactedState ? "-translate-y-4" : "translate-y-0",
-	);
-	const [nextTranslate, setNextTranslate] = useState(
-		hasReactedState ? "translate-y-0" : "-translate-y-4",
-	);
+	const [currTranslate, setCurrTranslate] = useState(hasReactedState ? "-translate-y-4" : "translate-y-0");
+	const [nextTranslate, setNextTranslate] = useState(hasReactedState ? "translate-y-0" : "-translate-y-4");
 	const currOpacity = "opacity-100";
 	const nextOpacity = "opacity-0";
 	const [ping, setPing] = useState(false);

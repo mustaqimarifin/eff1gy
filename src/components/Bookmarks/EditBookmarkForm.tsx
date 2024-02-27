@@ -166,12 +166,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 	return (
 		<div className="p-4">
 			<form className="space-y-3" onSubmit={handleSave}>
-				<Input
-					placeholder="Title"
-					defaultValue={state.title}
-					onChange={onTitleChange}
-					onKeyDown={onKeyDown}
-				/>
+				<Input placeholder="Title" defaultValue={state.title} onChange={onTitleChange} onKeyDown={onKeyDown} />
 				{state.error && <p className="text-red-500">{state.error}</p>}
 				<Link
 					passHref

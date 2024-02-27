@@ -7,9 +7,7 @@ export function EditBookmarkDialog({ trigger, bookmark }) {
 		<DialogComponent
 			trigger={trigger}
 			title={"Add bookmark"}
-			modalContent={({ closeModal }) => (
-				<EditBookmarkForm bookmark={bookmark} closeModal={closeModal} />
-			)}
+			modalContent={({ closeModal }) => <EditBookmarkForm bookmark={bookmark} closeModal={closeModal} />}
 		/>
 	);
 }

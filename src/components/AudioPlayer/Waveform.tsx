@@ -27,7 +27,7 @@ export default function Waveform({ src, setWaveformData, waveform = [], isRecord
 				audioContext.close();
 			}
 		};
-	}, [audioContext]);
+	}, []);
 
 	useEffect(() => {
 		const drawAudio = (url: RequestInfo | URL, sampleCount: number) => {
@@ -49,7 +49,7 @@ export default function Waveform({ src, setWaveformData, waveform = [], isRecord
 			drawAudio(src, sampleCount);
 			setHasDrawnAudio(true);
 		}
-	}, [hasDrawnAudio, draw, isRecorder, audioContext, src]);
+	}, [audioContext, src]);
 
 	return (
 		<>

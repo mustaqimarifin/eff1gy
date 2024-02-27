@@ -2,15 +2,7 @@
 import { ArrowLeft, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { GlobalNavigationContext } from "../Provider";
-import {
-	type MutableRefObject,
-	type ReactNode,
-	useContext,
-	useState,
-	useRef,
-	useCallback,
-	useEffect,
-} from "react";
+import { type MutableRefObject, type ReactNode, useContext, useState, useRef, useCallback, useEffect } from "react";
 
 interface Props {
 	title: string;
@@ -82,12 +74,12 @@ export function TitleBar({
 
 		setOffset(Math.min(Math.max(offsetAmount, 0), 100));
 		setOpacity(opacityOffset);
-	}, [setCurrentScrollOffset,titleRef,setOpacity, scrollContainerRef]);
+	}, [title, titleRef, scrollContainerRef]);
 
 	useEffect(() => {
 		scrollContainerRef?.current?.addEventListener("scroll", handler);
 		return () => scrollContainerRef?.current?.removeEventListener("scroll", handler);
-	}, [handler,scrollContainerRef]);
+	}, [title, titleRef, scrollContainerRef]);
 
 	useEffect(() => {
 		if (!titleRef?.current || !scrollContainerRef?.current) return;
@@ -97,7 +89,7 @@ export function TitleBar({
 			bottom: titleRef.current.getBoundingClientRect().bottom - 56,
 			top: titleRef.current.getBoundingClientRect().top - 48,
 		});
-	}, [titleRef,setOpacity, setInitialTitleOffsets, scrollContainerRef]);
+	}, [title, titleRef, scrollContainerRef]);
 
 	useEffect(() => {
 		const isDarkMode =
@@ -129,11 +121,7 @@ export function TitleBar({
 								onClick={() => setIsOpen(!isOpen)}
 								className="flex items-center justify-center p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
 							>
-								{isOpen ? (
-									<X size={16} className="text-primary" />
-								) : (
-									<Menu size={16} className="text-primary" />
-								)}
+								{isOpen ? <X size={16} className="text-primary" /> : <Menu size={16} className="text-primary" />}
 							</span>
 						)}
 
@@ -146,7 +134,7 @@ export function TitleBar({
 							</Link>
 						)}
 
-						{leadingAccessory && leadingAccessory}
+						{leadingAccessory && <>{leadingAccessory}</>}
 
 						<h2
 							style={
@@ -163,7 +151,7 @@ export function TitleBar({
 						</h2>
 					</span>
 
-					{trailingAccessory && trailingAccessory}
+					{trailingAccessory && <>{trailingAccessory}</>}
 				</div>
 
 				<div>{children}</div>

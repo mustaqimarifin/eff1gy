@@ -16,11 +16,7 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
 			return (
 				<AddBookmarkDialog
 					trigger={
-						<GhostButton
-							aria-label="Add bookmark"
-							data-cy="open-add-bookmark-dialog"
-							size="small-square"
-						>
+						<GhostButton aria-label="Add bookmark" data-cy="open-add-bookmark-dialog" size="small-square">
 							<PlusIcon />
 						</GhostButton>
 					}
@@ -39,11 +35,5 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
 		);
 	}
 
-	return (
-		<TitleBar
-			scrollContainerRef={scrollContainerRef}
-			title="Bookmarks"
-			trailingAccessory={trailingAccessory()}
-		/>
-	);
+	return <TitleBar scrollContainerRef={scrollContainerRef} title="Bookmarks" trailingAccessory={trailingAccessory()} />;
 }

@@ -25,11 +25,5 @@ export function StackTitlebar({ scrollContainerRef }) {
 		return null;
 	}
 
-	return (
-		<TitleBar
-			scrollContainerRef={scrollContainerRef}
-			title="Stack"
-			trailingAccessory={trailingAccessory()}
-		/>
-	);
+	return <TitleBar scrollContainerRef={scrollContainerRef} title="Stack" trailingAccessory={trailingAccessory()} />;
 }

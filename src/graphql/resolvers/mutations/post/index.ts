@@ -1,11 +1,7 @@
 import { GraphQLError } from "graphql";
 
 import { type Context } from "~/graphql/context";
-import {
-	type MutationAddPostArgs,
-	type MutationDeletePostArgs,
-	type MutationEditPostArgs,
-} from "~/graphql/typeSlut";
+import { type MutationAddPostArgs, type MutationDeletePostArgs, type MutationEditPostArgs } from "~/graphql/typeSlut";
 
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
 	const { id, data } = args;
@@ -27,11 +23,7 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
 					// as long as the current post isn't published, and the user is trying to hit publish
 					// then it's save to publish. but if the post is _already_ published, we don't want
 					// to override the publishedAt date
-					!existing.publishedAt && published
-						? new Date()
-						: existing.publishedAt
-						  ? existing.publishedAt
-						  : null,
+					!existing.publishedAt && published ? new Date() : existing.publishedAt ? existing.publishedAt : null,
 			},
 		})
 		/*     .then((post) => {

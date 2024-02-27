@@ -112,10 +112,7 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 					</Link>
 
 					<div className="flex space-x-1 text-sm">
-						<Link
-							href={`/u/${comment.author.username}`}
-							className="text-primary  font-semibold leading-snug"
-						>
+						<Link href={`/u/${comment.author.username}`} className="text-primary  font-semibold leading-snug">
 							<div className="flex break-all line-clamp-1">{comment.author.name}</div>
 						</Link>
 						<div className="text-quaternary leading-snug">·</div>
@@ -156,17 +153,10 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 
 			{isEditing ? (
 				<div className="flex flex-col space-y-2 pl-14">
-					<Textarea
-						onChange={(e) => setEditText(e.target.value)}
-						value={editText}
-						onKeyDown={onKeyDown}
-					/>
+					<Textarea onChange={(e) => setEditText(e.target.value)} value={editText} onKeyDown={onKeyDown} />
 					<div className="flex justify-between">
 						<Button onClick={() => setIsEditing(false)}>Cancel</Button>
-						<PrimaryButton
-							disabled={editText.trim().length === 0 || isSavingEdit}
-							onClick={handleSaveEdit}
-						>
+						<PrimaryButton disabled={editText.trim().length === 0 || isSavingEdit} onClick={handleSaveEdit}>
 							{isSavingEdit ? <LoadingSpinner /> : "Save"}
 						</PrimaryButton>
 					</div>

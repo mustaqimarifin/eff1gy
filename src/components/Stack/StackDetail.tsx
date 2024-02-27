@@ -10,12 +10,7 @@ import { Comments } from "~/components/Comments";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { Tags } from "~/components/Tag";
-import {
-	CommentType,
-	GetStackDocument,
-	useGetStackQuery,
-	type GetStackQuery,
-} from "~/graphql/typeSlut";
+import { CommentType, GetStackDocument, useGetStackQuery, type GetStackQuery } from "~/graphql/typeSlut";
 
 import { MarkdownRenderer } from "../MarkdownRenderer";
 import { SignInDialog } from "../SignInDialog";
@@ -77,20 +72,14 @@ export function StackDetail({ slug }) {
 								{stack.tags && stack.tags.length > 0 && <Tags tags={stack.tags} />}
 							</div>
 						</div>
-						<MarkdownRenderer
-							className="text-primary"
-							children={stack.description}
-							variant="comment"
-						/>
+						<MarkdownRenderer className="text-primary" children={stack.description} variant="comment" />
 
 						<PrimaryButton size="large" href={stack.url} target="_blank" rel="noopener noreferrer">
 							<Link2Icon />
 							<span>Visit</span>
 						</PrimaryButton>
 
-						<SignInDialog>
-							{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}
-						</SignInDialog>
+						<SignInDialog>{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}</SignInDialog>
 					</Detail.Header>
 				</Detail.ContentContainer>
 

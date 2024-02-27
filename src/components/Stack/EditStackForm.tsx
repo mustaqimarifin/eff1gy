@@ -173,20 +173,10 @@ export function EditStackForm({ closeModal, stack }) {
 			{/*       <StackImageUploader stack={stack} onImageUploaded={onImageUploaded} /> */}
 
 			<form className="space-y-3" onSubmit={handleSave}>
-				<Input
-					placeholder="IMG"
-					value={state.image}
-					onChange={onImageChange}
-					onKeyDown={onKeyDown}
-				/>
+				<Input placeholder="IMG" value={state.image} onChange={onImageChange} onKeyDown={onKeyDown} />
 				<Input placeholder="URL" value={state.url} onChange={onURLChange} onKeyDown={onKeyDown} />
 
-				<Input
-					placeholder="Title"
-					value={state.name}
-					onChange={onNameChange}
-					onKeyDown={onKeyDown}
-				/>
+				<Input placeholder="Title" value={state.name} onChange={onNameChange} onKeyDown={onKeyDown} />
 
 				<TagPicker filter={tagFilter} defaultValue={state.tag} onChange={handleTagChange} />
 

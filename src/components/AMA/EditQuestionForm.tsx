@@ -258,12 +258,7 @@ export function EditQuestionForm({
 	return (
 		<div className="p-4">
 			<form className="space-y-3" onSubmit={handleSave}>
-				<Input
-					placeholder="Ask me anything..."
-					value={state.title}
-					onChange={onTitleChange}
-					onKeyDown={onKeyDown}
-				/>
+				<Input placeholder="Ask me anything..." value={state.title} onChange={onTitleChange} onKeyDown={onKeyDown} />
 				{state.error && <p className="text-red-500">{state.error}</p>}
 				<div className="flex flex-col space-y-2 ">
 					<p className="text-sm font-semibold text-primary">Record answer</p>
@@ -302,10 +297,7 @@ export function EditQuestionForm({
 						Delete
 					</DeleteButton>
 					<div className="flex space-x-3">
-						<PrimaryButton
-							disabled={loading || state.title.trim().length === 0}
-							onClick={handleSave}
-						>
+						<PrimaryButton disabled={loading || state.title.trim().length === 0} onClick={handleSave}>
 							{loading ? <LoadingSpinner /> : "Save"}
 						</PrimaryButton>
 					</div>

@@ -25,12 +25,9 @@ export function QuestionsList() {
 
 	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered;
 
-	const { data, error, loading, fetchMore, refetch } = useQuery<GetQuestionsQuery>(
-		GetQuestionsDocument,
-		{
-			variables: { filter: { status } },
-		},
-	);
+	const { data, error, loading, fetchMore, refetch } = useQuery<GetQuestionsQuery>(GetQuestionsDocument, {
+		variables: { filter: { status } },
+	});
 
 	// refetch questions whenever I toggle back and forth between answered/unanswered
 	useEffect(() => {

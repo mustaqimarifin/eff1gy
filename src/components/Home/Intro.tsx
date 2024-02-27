@@ -27,12 +27,7 @@ interface TableRowProps {
 
 function TableRow({ href, title, subtitle, date }: TableRowProps) {
 	return (
-		<a
-			target="_blank"
-			rel="noopener noreferrer"
-			href={href}
-			className="group flex items-center space-x-4"
-		>
+		<a target="_blank" rel="noopener noreferrer" href={href} className="group flex items-center space-x-4">
 			<strong className="flex-none font-medium text-gray-900 group-hover:text-blue-600 group-hover:underline dark:text-gray-100 dark:group-hover:text-blue-500">
 				{title}
 			</strong>
@@ -150,12 +145,7 @@ export default function Intro({ children }) {
 
 	return (
 		<Detail.Container data-cy="intro" ref={scrollContainerRef}>
-			<TitleBar
-				magicTitle
-				titleRef={titleRef}
-				scrollContainerRef={scrollContainerRef}
-				title="Home"
-			/>
+			<TitleBar magicTitle titleRef={titleRef} scrollContainerRef={scrollContainerRef} title="Home" />
 
 			{children}
 		</Detail.Container>

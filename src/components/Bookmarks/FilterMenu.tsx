@@ -31,13 +31,7 @@ export function BookmarksFilterMenu() {
 									<div className="absolute right-1 top-1 h-3 w-3 rounded-full border-2 border-white bg-blue-500 dark:border-gray-900" />
 								)}
 								<GhostButton aria-label="Filter bookmarks" size="small-square">
-									<svg
-										width="16"
-										height="16"
-										viewBox="0 0 16 16"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
+									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path
 											fillRule="evenodd"
 											clipRule="evenodd"

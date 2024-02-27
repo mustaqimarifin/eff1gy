@@ -7,11 +7,5 @@ export function PreviewSwitch() {
 	const context = React.useContext(PostEditorContext);
 	const { isPreviewing, setIsPreviewing } = context;
 
-	return (
-		<Switch
-			label={"Preview"}
-			defaultEnabled={isPreviewing}
-			onChange={(val: boolean) => setIsPreviewing(val)}
-		/>
-	);
+	return <Switch label={"Preview"} defaultEnabled={isPreviewing} onChange={(val: boolean) => setIsPreviewing(val)} />;
 }

@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useGetTagsQuery } from "~/graphql/typeSlut";
 
 import { Tag } from ".";
-//import { Tag2 } from "./tag2";
 
 export function TagPicker({ filter, onChange, defaultValue = undefined }) {
 	const { data, loading } = useGetTagsQuery();

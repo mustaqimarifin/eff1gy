@@ -18,9 +18,7 @@ import { CommentType, GetQuestionDocument, type GetQuestionQuery } from "~/graph
 export function QuestionDetail({ id }: { id: string }) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);
-	const { data, loading, error } = useQuery<GetQuestionQuery>(GetQuestionDocument, {
-		variables: { id },
-	});
+	const { data, loading, error } = useQuery<GetQuestionQuery>(GetQuestionDocument, { variables: { id } });
 
 	if (loading) {
 		return <Detail.Loading />;

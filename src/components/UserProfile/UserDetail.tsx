@@ -21,7 +21,7 @@ export function UserDetail({ username }) {
 			<Detail.Container ref={scrollContainerRef}>
 				<TitleBar
 					magicTitle
-					title={user.name ?? user.id}
+					title={user.name}
 					titleRef={titleRef}
 					scrollContainerRef={scrollContainerRef}
 					trailingAccessory={user.isViewer ? <Button href="/settings">Settings</Button> : null}
@@ -30,9 +30,7 @@ export function UserDetail({ username }) {
 				<Detail.ContentContainer>
 					<Detail.Header>
 						<Detail.Title ref={titleRef}>Profiles are coming soon</Detail.Title>
-						<p className="text-tertiary text-xl">
-							Check back in the future to see questions, comments, and more...
-						</p>
+						<p className="text-tertiary text-xl">Check back in the future to see questions, comments, and more...</p>
 					</Detail.Header>
 				</Detail.ContentContainer>
 			</Detail.Container>

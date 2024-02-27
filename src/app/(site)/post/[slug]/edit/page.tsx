@@ -13,8 +13,7 @@ import { PostsList } from "~/components/Posts/PostsList";
 
 export default function EditPage({ params: { slug } }) {
 	const { data } = useViewerQuery();
-	if (!data?.viewer.isAdmin)
-		return <ListDetailView list={<PostsList />} hasDetail detail={<Detail.Null />} />;
+	if (!data?.viewer.isAdmin) return <ListDetailView list={<PostsList />} hasDetail detail={<Detail.Null />} />;
 	return (
 		<ListDetailView
 			list={<PostsList />}

@@ -6,12 +6,7 @@ import { TOGGLE_REACTION } from "~/graphql/mutations/reactions";
 import { ADD_VIEW } from "~/graphql/mutations/view";
 import { GET_BOOKMARK } from "~/graphql/queries/bookmarks";
 import type { Bookmark } from "~/graphql/typeSlut";
-import {
-	ReactionType,
-	ViewType,
-	useToggleReactionMutation,
-	useViewerQuery,
-} from "~/graphql/typeSlut";
+import { ReactionType, ViewType, useToggleReactionMutation, useViewerQuery } from "~/graphql/typeSlut";
 
 import { ReactionButton } from "../Button/ReactionButton";
 /* function getBookmarkView(bookmark: Bookmark) {
@@ -67,9 +62,7 @@ function getReactionButton(bookmark: Bookmark) {
 				toggleReaction: {
 					__typename: "Bookmark",
 					...bookmark,
-					reactionCount: bookmark.viewerHasReacted
-						? bookmark.reactionCount - 1
-						: bookmark.reactionCount + 1,
+					reactionCount: bookmark.viewerHasReacted ? bookmark.reactionCount - 1 : bookmark.reactionCount + 1,
 					viewerHasReacted: !bookmark.viewerHasReacted,
 				},
 			},
@@ -107,10 +100,7 @@ export function BookmarkActions({ bookmark }) {
 
 			{data?.viewer?.isAdmin && (
 				<>
-					<EditBookmarkDialog
-						bookmark={bookmark}
-						trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>}
-					/>
+					<EditBookmarkDialog bookmark={bookmark} trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>} />
 				</>
 			)}
 		</div>

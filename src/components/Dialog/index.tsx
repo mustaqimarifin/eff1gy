@@ -11,12 +11,7 @@ interface DialogProps {
 	modalContent: Function;
 }
 
-export function DialogComponent({
-	trigger = null,
-	children = null,
-	title,
-	modalContent,
-}: DialogProps) {
+export function DialogComponent({ trigger = null, children = null, title, modalContent }: DialogProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const closeButtonRef = useRef(null);
 
@@ -44,12 +39,7 @@ export function DialogComponent({
 			{children?.({ closeModal, openModal })}
 
 			<Transition.Root appear show={isOpen} as={Fragment}>
-				<Dialog
-					as="div"
-					className="relative z-10"
-					onClose={closeModal}
-					initialFocus={closeButtonRef}
-				>
+				<Dialog as="div" className="relative z-10" onClose={closeModal} initialFocus={closeButtonRef}>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"

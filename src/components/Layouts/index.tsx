@@ -13,10 +13,7 @@ export function ListDetailView({ list, detail, hasDetail = false }: Props) {
 	return (
 		<div className="flex w-full">
 			{list && (
-				<div
-					id="list"
-					className={`bg-dots ${hasDetail ? "hidden lg:flex" : "min-h-screen w-full"}`}
-				>
+				<div id="list" className={`bg-dots ${hasDetail ? "hidden lg:flex" : "min-h-screen w-full"}`}>
 					{list}
 				</div>
 			)}

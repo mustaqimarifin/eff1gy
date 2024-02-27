@@ -3,11 +3,7 @@ import { useMutation } from "@apollo/client";
 import { ReactionButton } from "~/components/Button/ReactionButton";
 import { GET_BLOG } from "~/graphql/queries/blogs";
 import type { Blog } from "~/graphql/typeSlut";
-import {
-	ReactionType,
-	ToggleReactionDocument,
-	useToggleReactionMutation,
-} from "~/graphql/typeSlut";
+import { ReactionType, ToggleReactionDocument, useToggleReactionMutation } from "~/graphql/typeSlut";
 
 function getReactionButton(blog: Blog) {
 	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument, {

@@ -4,15 +4,7 @@ import { useContext } from "react";
 import { GlobalNavigationContext } from "~/components/Provider";
 
 export function NavigationLink({
-	link: {
-		href,
-		label,
-		icon: Icon,
-		trailingAccessory: Accessory,
-		trailingAction: Action,
-		isActive,
-		isExternal,
-	},
+	link: { href, label, icon: Icon, trailingAccessory: Accessory, trailingAction: Action, isActive, isExternal },
 }) {
 	const { setIsOpen } = useContext(GlobalNavigationContext);
 	return (

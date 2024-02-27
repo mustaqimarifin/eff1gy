@@ -10,7 +10,7 @@ import { PostEditorActions } from "./PostEditorActions";
 import { PostEditorComposer } from "./PostEditorComposer";
 import { PostEditorMetaSidebar } from "./PostEditorMetaSidebar";
 import { PostEditorPreview } from "./PostEditorPreview";
-//import { PreviewSwitch } from "./PreviewSwitch";
+import { PreviewSwitch } from "./PreviewSwitch";
 
 export const PostEditorContext = React.createContext({
 	draftState: {
@@ -75,7 +75,7 @@ export function PostEditor({ slug: propsSlug = "" }: PEditor) {
 					scrollContainerRef={scrollContainerRef}
 					title=""
 					trailingAccessory={<PostEditorActions />}
-					leadingAccessory={null /* <PreviewSwitch /> */}
+					leadingAccessory={<PreviewSwitch />}
 				/>
 
 				{isPreviewing ? <PostEditorPreview /> : <PostEditorComposer />}

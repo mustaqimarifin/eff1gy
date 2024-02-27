@@ -2,14 +2,10 @@ import Link from "next/link";
 
 import { Avatar } from "~/components/Avatar";
 import type { GetStackQuery } from "~/graphql/typeSlut";
-import {
-	GetStackDocument,
-	useGetStackQuery,
-	useToggleStackUserMutation,
-	useViewerQuery,
-} from "~/graphql/typeSlut";
+import { GetStackDocument, useGetStackQuery, useToggleStackUserMutation, useViewerQuery } from "~/graphql/typeSlut";
 import { useWindowFocus } from "~/hooks";
-import { Tooltip } from "../Tooltip";
+
+import { Tooltip } from "../UI/Tooltip";
 
 export function StackUsedBy(props) {
 	const { triggerSignIn } = props;
@@ -97,13 +93,7 @@ export function StackUsedBy(props) {
 							<Tooltip key={user.id} content={user.name}>
 								<span>
 									<Link href={`/u/${user.id}`} passHref className="inline-flex p-1">
-										<Avatar
-											user={user}
-											src={user.image}
-											width={32}
-											height={32}
-											className="rounded-full"
-										/>
+										<Avatar user={user} src={user.image} width={32} height={32} className="rounded-full" />
 									</Link>
 								</span>
 							</Tooltip>

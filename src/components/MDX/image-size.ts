@@ -31,12 +31,7 @@ type ImageNode = {
 
 function isImageNode(node: ImageNode) {
 	const img = node as ImageNode;
-	return (
-		img.type === "element" &&
-		img.tagName === "img" &&
-		img.properties &&
-		typeof img.properties.src === "string"
-	);
+	return img.type === "element" && img.tagName === "img" && img.properties && typeof img.properties.src === "string";
 }
 async function addProps(node: ImageNode): Promise<void> {
 	const local_img = path.join(process.cwd(), "public", node.properties.src);
@@ -49,9 +44,7 @@ async function addProps(node: ImageNode): Promise<void> {
 
 		res = imageDimensionsFromData(file);
 	} else {
-		const buffer = await fetch(node.properties.src).then(async (res) =>
-			Buffer.from(await res.arrayBuffer()),
-		);
+		const buffer = await fetch(node.properties.src).then(async (res) => Buffer.from(await res.arrayBuffer()));
 
 		res = imageDimensionsFromData(buffer);
 	}

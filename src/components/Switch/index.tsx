@@ -11,9 +11,7 @@ export function Switch({ label = null, onChange = null, defaultEnabled = false }
 		<SwitchComponent.Group>
 			<div className="flex items-center">
 				{label && (
-					<SwitchComponent.Label className="text-primary mr-2 text-sm font-medium">
-						{label}
-					</SwitchComponent.Label>
+					<SwitchComponent.Label className="text-primary mr-2 text-sm font-medium">{label}</SwitchComponent.Label>
 				)}
 				<SwitchComponent
 					checked={enabled}

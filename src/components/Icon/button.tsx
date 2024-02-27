@@ -30,14 +30,7 @@ export const IconButton = (props: IconButtonProps) => {
 			)}
 			{...props}
 		>
-			<Icon
-				className={cx(
-					"h-4 w-4",
-					!isActive && color,
-					isActive && "text-black",
-					children?.toString() && "mr-1",
-				)}
-			/>
+			<Icon className={cx("h-4 w-4", !isActive && color, isActive && "text-black", children?.toString() && "mr-1")} />
 			<span className="text-sm">{children}</span>
 		</button>
 	);

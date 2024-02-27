@@ -62,20 +62,9 @@ export function UserFooter() {
 					onClick={() => setIsOpen(false)}
 					className="flex flex-none items-center rounded-full"
 				>
-					<Avatar
-						user={data.viewer}
-						src={data.viewer.image}
-						width={24}
-						height={24}
-						className="rounded-full"
-					/>
+					<Avatar user={data.viewer} src={data.viewer.image} width={24} height={24} className="rounded-full" />
 				</Link>
-				<GhostButton
-					aria-label="Manage settings"
-					onClick={() => setIsOpen(false)}
-					size="small-square"
-					href="/settings"
-				>
+				<GhostButton aria-label="Manage settings" onClick={() => setIsOpen(false)} size="small-square" href="/settings">
 					<Settings size={16} />
 				</GhostButton>
 			</Container>

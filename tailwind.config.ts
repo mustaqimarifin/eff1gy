@@ -3,15 +3,10 @@ import typo from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 import { fontFamily } from "tailwindcss/defaultTheme";
-import animate from "tailwindcss-animate";
+
 export default {
+	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	darkMode: "media",
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -36,18 +31,15 @@ export default {
 				twitter: "#479BEA",
 				current: "currentColor",
 			},
-			borderRadius: {
-				lg: "var(--radius)",
-				md: "calc(var(--radius) - 2px)",
-				sm: "calc(var(--radius) - 4px)",
-			},
 			boxShadow: {
 				xs: "0 1px 2px 0px rgba(0,0,0,0.03)",
 				subtle: "0 4px 32px rgba(0,0,0,0.03)",
 				cardHover:
 					"0 4px 4.1px rgba(0, 0, 0, 0.012),0 4.9px 5.8px rgba(0, 0, 0, 0.018),0 6.3px 8.4px rgba(0, 0, 0, 0.029),0 8.8px 12.9px rgba(0, 0, 0, 0.05),0 15px 23px rgba(0, 0, 0, 0.11)",
 			},
-
+			animation: {
+				modalEnter: "modal-enter 200ms cubic-bezier(0.16, 1, 0.3, 1)",
+			},
 			keyframes: {
 				"modal-enter": {
 					"0%": {
@@ -59,22 +51,8 @@ export default {
 						transform: "translate(-50%, -50%) scale(1)",
 					},
 				},
-				"accordion-down": {
-					from: { height: "0" },
-					to: { height: "var(--radix-accordion-content-height)" },
-				},
-				"accordion-up": {
-					from: { height: "var(--radix-accordion-content-height)" },
-					to: { height: "0" },
-				},
-			},
-			animation: {
-				modalEnter: "modal-enter 200ms cubic-bezier(0.16, 1, 0.3, 1)",
-				"accordion-down": "accordion-down 0.2s ease-out",
-				"accordion-up": "accordion-up 0.2s ease-out",
 			},
 		},
 	},
-
-	plugins: [animate, typo, forms],
+	plugins: [typo, forms],
 } satisfies Config;

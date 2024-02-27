@@ -31,6 +31,6 @@
     "src/components/MDX/Lite.mjs",
     "src/components/Marquee/index.mjs",
     "src/components/MDX/bla.ts",
-    "src/components/MDX/vidID.js", "tw.ts_",
+    "src/components/MDX/vidID.js",
   ],
 }

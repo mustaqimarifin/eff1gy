@@ -17,13 +17,7 @@ export const EventListItem = memo<Props>(({ summary, active }) => {
 			title={summary.title}
 			description={null}
 			leadingAccessory={
-				<Image
-					width={48}
-					height={48}
-					alt={summary?.title}
-					className={"rounded-xl"}
-					src={summary?.logo}
-				/>
+				<Image width={48} height={48} alt={summary?.title} className={"rounded-xl"} src={summary?.logo} />
 			}
 			byline={`${summary?.detailsCount} details`}
 			active={active}

@@ -28,12 +28,7 @@ export function UserSettings() {
 
 	return (
 		<Detail.Container ref={scrollContainerRef}>
-			<TitleBar
-				magicTitle
-				title={"Settings"}
-				titleRef={titleRef}
-				scrollContainerRef={scrollContainerRef}
-			/>
+			<TitleBar magicTitle title={"Settings"} titleRef={titleRef} scrollContainerRef={scrollContainerRef} />
 			<Detail.ContentContainer>
 				<Detail.Header>
 					<Detail.Title ref={titleRef}>Settings</Detail.Title>

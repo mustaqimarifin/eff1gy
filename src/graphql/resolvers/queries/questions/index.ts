@@ -40,11 +40,7 @@ export async function getQuestion(_, { id }: QueryQuestionArgs, ctx: Context) {
 }
 
 export async function getQuestions(_, args: GetQuestionsQueryVariables, ctx: Context) {
-	const {
-		first = PAGINATION_AMOUNT,
-		after = undefined,
-		filter = { status: QuestionStatus.Answered },
-	} = args;
+	const { first = PAGINATION_AMOUNT, after = undefined, filter = { status: QuestionStatus.Answered } } = args;
 
 	const { db, viewer } = ctx;
 

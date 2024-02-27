@@ -25,10 +25,6 @@ const resolvers = {
 					return "Bookmark";
 				case "blog":
 					return "Blog";
-				case "case":
-					return "Case";
-				case "event":
-					return "Event";
 				default:
 					return null;
 			}
@@ -60,8 +56,7 @@ const resolvers = {
 			return comments.length > 0;
 		},
 		author: getQuestionAuthor,
-		status: ({ _count: { comments } }) =>
-			comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending,
+		status: ({ _count: { comments } }) => (comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending),
 		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
 			if (!viewer) return false;
 
@@ -163,54 +158,6 @@ const resolvers = {
 			if (_count?.reactions) return _count.reactions;
 
 			const reactions = await db.blog
-				.findUnique({
-					where: { id },
-				})
-				.reactions();
-
-			return reactions.length;
-		},
-	},
-	Case: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
-			if (!viewer) return false;
-
-			const reactions = await db.case
-				.findUnique({
-					where: { id },
-				})
-				.reactions();
-
-			return reactions.some(({ userId }) => userId === viewer.id);
-		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
-			if (_count?.reactions) return _count.reactions;
-
-			const reactions = await db.case
-				.findUnique({
-					where: { id },
-				})
-				.reactions();
-
-			return reactions.length;
-		},
-	},
-	Event: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
-			if (!viewer) return false;
-
-			const reactions = await db.event
-				.findUnique({
-					where: { id },
-				})
-				.reactions();
-
-			return reactions.some(({ userId }) => userId === viewer.id);
-		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
-			if (_count?.reactions) return _count.reactions;
-
-			const reactions = await db.event
 				.findUnique({
 					where: { id },
 				})
