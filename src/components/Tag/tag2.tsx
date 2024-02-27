@@ -1,8 +1,8 @@
 import { XCircleIcon } from "lucide-react";
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cx } from "~/lib/transformers";
 
-import { cn } from "~/lib/utils";
 
 const tagVariants = cva(
 	"flex-none justify-center flex items-center space-x-2 cursor-pointer self-start border uppercase rounded-full hover:bg-opacity-10 dark:hover:bg-opacity-30 px-3 py-0.5 text-xs font-semibold leading-5 tracking-wide border-opacity-50 dark:border-opacity-10",
@@ -44,7 +44,7 @@ function Tag2({ className, variant, ...props }: TagProps) {
 					<span>Clear tag</span>
 				</>
 			) : (
-				<div className={cn(tagVariants({ variant }), className)} {...props} />
+				<div className={cx(tagVariants({ variant }), className)} {...props} />
 			)}
 		</span>
 	);
@@ -63,4 +63,3 @@ export function Tags({ tags }) {
 		</div>
 	);
 }
-
