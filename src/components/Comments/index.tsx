@@ -8,9 +8,9 @@ import type { CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
 import { GetCommentsDocument, useGetCommentsQuery } from "~/graphql/typeSlut";
 import { useWindowFocus } from "~/hooks";
 
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { Comment } from "./Comment";
 import { CommentForm } from "./CommentForm";
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
 interface Props {
 	refId: string;
@@ -56,7 +56,7 @@ export function Comments({ refId, type }: Props) {
 					{comments?.length > 0 &&
 						comments.map((comment) => <Comment key={comment.id} refId={refId} type={type} comment={comment} />)}
 					{comments?.length === 0 && (
-						<p className="text-quaternary block pt-12 pb-16 text-center">No comments yet...</p>
+						<div className="text-quaternary block pt-12 pb-16 text-center">No comments yet...</div>
 					)}
 				</div>
 			</div>

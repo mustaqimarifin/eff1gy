@@ -10,13 +10,13 @@ import { Comments } from "~/components/Comments";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { Tags } from "~/components/Tag";
-import { CommentType, GetStackDocument, useGetStackQuery, type GetStackQuery } from "~/graphql/typeSlut";
+import { CommentType, GetStackDocument, type GetStackQuery, useGetStackQuery } from "~/graphql/typeSlut";
 
+import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { MarkdownRenderer } from "../MarkdownRenderer";
 import { SignInDialog } from "../SignInDialog";
 import { StackActions } from "./StackActions";
 import { StackUsedBy } from "./StackUsedBy";
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
 export function StackDetail({ slug }) {
 	const scrollContainerRef = useRef(null);

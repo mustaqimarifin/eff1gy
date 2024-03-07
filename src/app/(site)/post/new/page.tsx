@@ -1,6 +1,6 @@
 "use client";
-import { useViewerQuery } from "~/graphql/typeSlut";
 import { Suspense } from "react";
+import { useViewerQuery } from "~/graphql/typeSlut";
 
 import { ListDetailView } from "~/components/Layouts";
 import { Detail } from "~/components/ListDetail/Detail";

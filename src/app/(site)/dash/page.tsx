@@ -1,6 +1,6 @@
 import { DashPage, SectionContent } from "~/components/Dash/Index";
-import { ListDetailView } from "~/components/Layouts";
-import { getTopTracks } from "~/lib/actions";
+//import { ListDetailView } from "~/components/Layouts";
+import { getTopTracks } from "~/lib/queries";
 
 import Track from "./Track";
 

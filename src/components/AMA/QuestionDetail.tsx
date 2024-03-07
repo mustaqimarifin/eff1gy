@@ -10,10 +10,10 @@ import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { realTime } from "~/lib/transformers";
 
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { CommentType, GetQuestionDocument, type GetQuestionQuery } from "~/graphql/typeSlut";
 import AudioPlayer from "../AudioPlayer";
 import { MarkdownRenderer } from "../MarkdownRenderer";
 import { QuestionActions } from "./QuestionActions";
-import { CommentType, GetQuestionDocument, type GetQuestionQuery } from "~/graphql/typeSlut";
 
 export function QuestionDetail({ id }: { id: string }) {
 	const scrollContainerRef = useRef(null);

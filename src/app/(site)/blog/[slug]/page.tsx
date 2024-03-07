@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import Mdx from "~/app/mdxrsc";
@@ -34,7 +35,7 @@ export default async function Blog({ params: { slug } }) {
 	const post: Post = await getPost(slug);
 
 	if (!post) {
-		return { notFound: true };
+		notFound();
 	}
 
 	/* 	const Comments = dynamic(

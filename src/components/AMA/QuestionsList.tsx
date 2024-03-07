@@ -5,7 +5,7 @@ import { createContext, useEffect, useState } from "react";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
 
-import { GetQuestionsDocument, QuestionStatus, type GetQuestionsQuery } from "~/graphql/typeSlut";
+import { GetQuestionsDocument, type GetQuestionsQuery, QuestionStatus } from "~/graphql/typeSlut";
 import { ListLoadMore } from "../ListDetail/ListLoadMore";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { AMATitlebar } from "./AMATitlebar";

@@ -1,8 +1,8 @@
+import { GeistMono as GMono } from "geist/font/mono";
+import { GeistSans as GSans } from "geist/font/sans";
 import type { NextFontWithVariable } from "next/dist/compiled/@next/font";
 //import {  Roboto_Flex } from "next/font/google";
 import localFont from "next/font/local";
-import { GeistMono as GMono } from "geist/font/mono";
-import { GeistSans as GSans } from "geist/font/sans";
 /* const RFlex = Roboto_Flex({
 	//weight: ['400', '500', '700'],
 	variable: "--rflex",

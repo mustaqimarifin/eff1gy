@@ -14,8 +14,8 @@ export default function CoverImage({ src }) {
 				width={680}
 				height={503}
 				className={cx(
-					" mx-auto flex aspect-[21/9] w-full items-center justify-center object-cover object-top duration-700 ease-in-out group-hover:opacity-75 lg:max-w-7xl",
-					isLoading ? "scale-110 blur-2xl grayscale" : "scale-100 blur-0 grayscale-0",
+					"mx-auto flex aspect-[21/9] w-full items-center justify-center object-cover object-top duration-700 ease-in-out group-hover:opacity-75 lg:max-w-7xl",
+					isLoading ? "scale-110 blur-2xl grayscale" : "scale-100 grayscale-0",
 				)}
 				onLoadingComplete={() => setLoading(false)}
 				//blurDataURL={blurDataUrl}

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Suspense, useRef } from "react";
+import { useRef } from "react";
 
 import type { Blog } from "~/graphql/typeSlut";
 import { CommentType, useGetBlogQuery } from "~/graphql/typeSlut";
@@ -9,8 +9,7 @@ import { formatDate } from "~/lib/transformers";
 
 import { Detail } from "../ListDetail/Detail";
 import { TitleBar } from "../ListDetail/TitleBar";
-import { LoadingSpinner } from "../LoadingSpinner";
-import PageTitle from "./PageTitle";
+
 
 import dynamic from "next/dynamic";
 
@@ -116,7 +115,6 @@ export function BlogDetail({ children, post, slug }: Props) {
 					</div>
 					{children}
 					<div className="py-6" />
-
 					<Comments refId={blog?.id} type={CommentType.Blog} />
 				</Detail.ContentContainer>
 			</Detail.Container>

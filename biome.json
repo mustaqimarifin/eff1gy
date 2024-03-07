@@ -31,7 +31,7 @@
 			},
 			"correctness": {
 				"noChildrenProp": "off",
-				"useExhaustiveDependencies":"warn"
+				"useExhaustiveDependencies": "warn"
 			},
 			"suspicious": {
 				"noExplicitAny": "off",

@@ -1,4 +1,4 @@
-"use server";
+"use server"
 import { unstable_noStore as noStore } from "next/cache";
 import { Suspense, cache } from "react";
 
@@ -163,14 +163,14 @@ export async function Counter({
 	);
 }
 
-export const HiddenCounter = cache(async ({ refId, type }: { refId: string; type: ViewType }) => {
+export async function HiddenCounter ({ refId, type }: { refId: string; type: ViewType }) {
 	const views = await addView(refId, type);
 	return (
 		<Suspense>
 			<div className="hidden">{`${views} - views`}</div>
 		</Suspense>
 	);
-});
+}
 
 /* export const getView = async (id) => {
   noStore()
@@ -200,78 +200,3 @@ export const HiddenCounter = cache(async ({ refId, type }: { refId: string; type
   }
 )
  */
-const client_id = process.env.SPOTIFY_CLIENT_ID;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
-
-const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
-const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
-const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks`;
-const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
-
-const getAccessToken = async () => {
-	const response = await fetch(TOKEN_ENDPOINT, {
-		method: "POST",
-		headers: {
-			Authorization: `Basic ${basic}`,
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		body: new URLSearchParams({
-			grant_type: "refresh_token",
-			refresh_token,
-		}),
-	});
-
-	return response.json();
-};
-
-export const getNowPlaying = async () => {
-	//noStore()
-	const { access_token } = await getAccessToken();
-
-	return fetch(NOW_PLAYING_ENDPOINT, {
-		headers: {
-			Authorization: `Bearer ${access_token}`,
-		},
-	});
-};
-
-export const getTopTracks = async () => {
-	const { access_token } = await getAccessToken();
-
-	return fetch(TOP_TRACKS_ENDPOINT, {
-		headers: {
-			Authorization: `Bearer ${access_token}`,
-		},
-		next: { revalidate: 86400 },
-	});
-};
-
-/* 
-
-{
-  "id": "ikkFeLTCltA",
-  "publishedAt": "2014-01-12T21:38:22Z",
-  "channelId": "UCd-pjthLQYLYVdN7GNwJgyA",
-  "title": "Amir Meludah - Igauan Si Laknat",
-  "description": "Igauan Si Laknat by Amir Meludah © 2014 MythLab Produced by VMPRMYTH & JSTN PWRS ...",
-  "thumbnail": "https://i.ytimg.com/vi/ikkFeLTCltA/hqdefault.jpg"
-}
-https://www.youtube.com/watch?v=FeLb0IPHGZQ
-https://api.socialcounts.org/youtube-live-subscriber-count/UCd-pjthLQYLYVdN7GNwJgyA
-
-
-{
-  "est_sub": 571,
-  "API_sub": 571,
-  "table": [
-    {
-      "name": "Channel Views",
-      "count": 121388
-    },
-    {
-      "name": "Videos",
-      "count": 65
-    }
-  ]
-} */

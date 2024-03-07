@@ -12,10 +12,10 @@ import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { Tags } from "~/components/Tag";
 import { CommentType, GetBookmarkQuery, useGetBookmarkQuery } from "~/graphql/typeSlut";
 
+import dynamic from "next/dynamic";
 import { MarkdownRenderer } from "../MarkdownRenderer";
 import { BookmarkActions } from "./BookmarkActions";
 import { RelatedBookmarks } from "./RelatedBookmarks";
-import dynamic from "next/dynamic";
 
 export function BookmarkDetail({
 	children,

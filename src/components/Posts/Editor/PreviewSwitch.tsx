@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { PostEditorContext } from "./PostEditor";
 import { Switch } from "~/components/Switch";
+import { PostEditorContext } from "./PostEditor";
 
 export function PreviewSwitch() {
 	const context = React.useContext(PostEditorContext);

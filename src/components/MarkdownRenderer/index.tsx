@@ -1,8 +1,10 @@
-import Markdown from "react-markdown";
 import NextImage from "next/legacy/image";
 import Link from "next/link";
+import Markdown from "react-markdown";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import linkifyRegex from "remark-linkify-regex";
 import { CLIENT_URL } from "~/graphql/constants";
+import { deepmerge } from "~/lib/transformers/merge";
 import { createHeading } from "../MDX/CreateHeading";
 import { highlight } from "../MDX/sugar.js";
 
@@ -128,10 +130,24 @@ function Callout(props) {
 export function MarkdownRenderer(props) {
 	const { children, variant = "longform", ...rest } = props;
 
+	const schema = deepmerge(defaultSchema, {
+		tagNames: [...defaultSchema.tagNames, "sup", "sub", "section"],
+		attributes: {
+			"*": ["className"],
+		},
+		clobberPrefix: "",
+		clobber: ["name", "id"],
+	});
+
 	const components = getComponentsForVariant(variant);
 
 	return (
-		<Markdown {...rest} remarkPlugins={[linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]} components={{ ...components }}>
+		<Markdown
+			{...rest}
+			remarkPlugins={[linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
+			rehypePlugins={[[rehypeSanitize, schema]]}
+			components={components}
+		>
 			{children}
 		</Markdown>
 	);
