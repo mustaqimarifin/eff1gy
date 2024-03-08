@@ -48,7 +48,7 @@ async function addProps(node: ImageNode): Promise<void> {
 
 		res = imageDimensionsFromData(buffer);
 	}
-	//	console.log(res);
+	console.log(node.properties.src);
 	if (!res) throw Error(`Invalid image with src "${node.properties.src}"`);
 
 	node.properties.width = res.width;

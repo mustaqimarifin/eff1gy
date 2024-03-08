@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { unstable_noStore as noStore } from "next/cache";
 import { Suspense, cache } from "react";
 
@@ -163,7 +163,7 @@ export async function Counter({
 	);
 }
 
-export async function HiddenCounter ({ refId, type }: { refId: string; type: ViewType }) {
+export async function HiddenCounter({ refId, type }: { refId: string; type: ViewType }) {
 	const views = await addView(refId, type);
 	return (
 		<Suspense>

@@ -23,7 +23,7 @@ const HELLSQL = CLIENT_URL + GQL;
 const PAGINATION_AMOUNT = 24;
 
 //!ENV
-const imagekitURL = "https://ik.imagekit.io/mstqmarfn";
+let imagekitURL = "https://ik.imagekit.io/mstqmarfn";
 const stellateURL = process.env.STELLATE_ENDPOINT;
 const stellateKEY = process.env.STELLATE_KEY;
 const cloudinaryURL = process.env.CLOUDINARY_URL;

@@ -17,6 +17,7 @@ export async function GET() {
 	}
 
 	const song = await response.json();
+	//console.log(song)
 
 	if (song.item === null) {
 		return new NextResponse(JSON.stringify({ isPlaying: false }), {

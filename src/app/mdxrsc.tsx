@@ -3,7 +3,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 //import linkifyRegex from 'remark-linkify-regex'
 import { components } from "~/components/MDX";
 //import meta2 from "~/components/MDX/Meta2";
-import imageMetadata from "~/components/MDX/image-size";
+//import imageMetadata from "~/components/MDX/image-size";
 
 export default async function Mdx(props) {
 	return (
@@ -12,7 +12,7 @@ export default async function Mdx(props) {
 				{...props}
 				options={{
 					mdxOptions: {
-						rehypePlugins: [imageMetadata],
+						rehypePlugins: [],
 					},
 				}}
 				components={{ ...components, ...(props.components || {}) }}

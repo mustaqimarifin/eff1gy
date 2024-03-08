@@ -9,6 +9,9 @@ import { Tweet } from "./gfy";
 
 import { Code } from "bright";
 import { createHeading } from "./CreateHeading";
+import IKImage from "../Image/IKImage";
+//import dynamic from "next/dynamic";
+
 Code.theme = "one-dark-pro";
 
 export function CustomLink(props) {
@@ -115,13 +118,17 @@ function ConsCard({ title, cons }) {
 	);
 }
 
-function Image(props) {
+function Image({ src, ...rest }) {
 	return (
 		<div className="flex my-4 max-w-3xl content-center justify-center overflow-hidden">
 			<NextImage
-				{...props}
+				{...rest}
+				src={`https://ik.imagekit.io/mstqmarfn/${src}`}
+				width={980}
+				height={980}
 				quality={75}
 				className="rounded-md"
+				alt=""
 				//sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
 			/>
 		</div>
@@ -169,6 +176,11 @@ function Table({ data }) {
 	);
 }
 
+/* const IKImage = dynamic(() => import("src/components/Image/IKImage"), {
+  ssr: false,
+});
+
+ */
 export const components = {
 	a: CustomLink,
 	h1: createHeading(1),
@@ -178,6 +190,7 @@ export const components = {
 	h5: createHeading(5),
 	h6: createHeading(6),
 	Bust,
+	IKImage,
 	img: Image,
 	Callout,
 	ProsCard,

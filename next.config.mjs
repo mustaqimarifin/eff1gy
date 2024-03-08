@@ -4,9 +4,9 @@ const config = {
       fullUrl: true,
     },
   },
-*/ /* experimental:{
-    swcPlugins: [['@graphql-codegen/client-preset-swc-plugin', { artifactDirectory: './src/gql/', gqlTagName: 'gql' }]],
-}, */
+*/  experimental:{
+   useLightningcss:true
+}, 
 	transpilePackages: ["react-tweet"],
 	images: {
 		formats: ["image/avif", "image/webp"],

@@ -23,6 +23,17 @@ const caseFields = groq`
   "slug": slug.current
 `;
 
+const lilFields = groq`
+  "id": _id,
+  title,
+  date,
+"updatedAt": _updatedAt,
+  overview,
+  "tags": tags[]->title,
+  "caption" : coverImage.caption,
+  "slug": slug.current
+`;
+
 const pathFields = groq`
   _id,
   title,
@@ -33,9 +44,25 @@ const pathFields = groq`
 
 export const settingsQuery = groq`*[_type == "settings"][0]`;
 
+export const postSlugs = groq`
+*[_type == "post"] | order(priority desc, _updatedAt desc) {
+ 'slug': slug.current
+}`;
+
+export const lilSlugs = groq`
+*[_type == "lilbits"] | order(priority desc, _updatedAt desc) {
+ 'slug': slug.current
+}`;
+
 export const postsQuery = groq`
 *[_type == "post"] | order(priority desc, _updatedAt desc) {
  title, date, 'slug': slug.current
+}`;
+
+export const lilQueries = groq`
+*[_type == "lilbits"] | order(priority desc, _updatedAt desc) {
+title, date, 'updatedAt': _updatedAt, 'caption': coverImage.caption,
+ 'slug': slug.current
 }`;
 
 export const casesQuery = groq`
@@ -60,6 +87,13 @@ export const caseQuery = groq`
 *[_type == "case-study" && slug.current == $slug] | order(_updatedAt desc) [0] {
     ...,
     ${caseFields}
+  }
+`;
+
+export const lilQuery = groq` 
+*[_type == "lilbits" && slug.current == $slug] | order(_updatedAt desc) [0] {
+    ...,
+    ${lilFields}
   }
 `;
 

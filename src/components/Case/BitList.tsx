@@ -7,16 +7,15 @@ import { useState } from "react";
 import { ListContainer } from "~/components/ListDetail/ListContainer";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 
-import type { CaseStudy } from "../Blogs/BlogDetail";
-
 import { CaseListItem } from "./CaseItem";
+import type { LilBits } from "~/lib/sanity/client";
 
-export const CaseList = ({ cases }: { cases: CaseStudy[] }) => {
+export const BitList = ({ bits }: { bits: LilBits[] }) => {
 	const path = usePathname();
 	const [scrollContainerRef, setScrollContainerRef] = useState(null);
-	/* 	const { data, isLoading } = useSWR<CaseStudy[]>(`${CLIENT_URL}/api/case`, fetcher); */
+	/* 	const { data, isLoading } = useSWR<b[]>(`${CLIENT_URL}/api/case`, fetcher); */
 
-	/* 	if (!cases && isLoading) {
+	/* 	if (!bits && isLoading) {
 		return (
 			<ListContainer onRef={ setScrollContainerRef }>
 				<TitleBar scrollContainerRef={ scrollContainerRef } title="Case Study" />
@@ -32,9 +31,9 @@ export const CaseList = ({ cases }: { cases: CaseStudy[] }) => {
 			<TitleBar scrollContainerRef={scrollContainerRef} title="Code" />
 
 			<div className="lg:space-y-1 lg:p-3">
-				{cases?.map((casestudy) => {
-					const active = path === casestudy.slug;
-					return <CaseListItem key={casestudy?.slug} casestudy={casestudy} active={active} />;
+				{bits?.map((b) => {
+					const active = path === b.slug;
+					return <CaseListItem key={b?.slug} c={b} active={active} />;
 				})}
 			</div>
 		</ListContainer>

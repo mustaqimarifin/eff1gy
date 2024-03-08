@@ -46,7 +46,14 @@ export const getTopTracks = async () => {
 };
 
 /* 
-
+{
+    "album": "KILLER BEES",
+    "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273e01033d225eb83ed8fd59d58",
+    "artist": "COPYCATT",
+    "isPlaying": true,
+    "songUrl": "https://open.spotify.com/track/3vKbuwkHwx7rSGqO8ZTR61",
+    "title": "KILLER BEES"
+}
 {
   "id": "ikkFeLTCltA",
   "publishedAt": "2014-01-12T21:38:22Z",

@@ -1,42 +1,42 @@
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import Mdx from "~/app/mdxrsc";
-import type { CaseStudy } from "~/components/Blogs/BlogDetail";
-import { CaseDetail } from "~/components/Case/CaseDetail";
-import { CaseList } from "~/components/Case/CaseList";
+import { BitDetail } from "~/components/Case/BitDetail";
+import { BitList } from "~/components/Case/BitList";
 import { ListDetailView } from "~/components/Layouts";
 import { ViewType } from "~/graphql/typeSlut";
 import { HiddenCounter } from "~/lib/actions";
-import { getAllCases, getCase } from "~/lib/sanity/client";
+import { allBits, allLilSlugs, getAllCases, getCase, getLilBit, type LilBits } from "~/lib/sanity/client";
 
 export const revalidate = 3600;
 export async function generateStaticParams() {
-	const cases = await getAllCases();
-
-	return cases.map((post) => ({
-		slug: post.slug,
+	return allLilSlugs.map((p) => ({
+		slug: p.slug,
 	}));
 }
 
-export default async function CaseStudyPage({ params: { slug } }) {
-	const casestudy: CaseStudy = await getCase(slug);
-
-	if (!casestudy) {
-		return { notFound: true };
+export default async function LilPage({
+	params,
+}: {
+	params: { slug: string };
+}) {
+	const p: LilBits = await getLilBit(params.slug);
+	if (!p) {
+		notFound();
 	}
-	const cases = await getAllCases();
 
 	return (
 		<ListDetailView
-			list={<CaseList cases={cases} />}
+			list={<BitList bits={allBits} />}
 			hasDetail
 			detail={
-				<CaseDetail casestudy={casestudy}>
-					<HiddenCounter refId={casestudy?.slug} type={ViewType.Case} />
+				<BitDetail bit={p}>
+					<HiddenCounter refId={p?.slug} type={ViewType.Case} />
 					<Suspense>
-						<Mdx source={casestudy?.content} />
+						<Mdx source={p?.content} />
 					</Suspense>
-				</CaseDetail>
+				</BitDetail>
 			}
 		/>
 	);

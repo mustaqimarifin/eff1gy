@@ -5,25 +5,23 @@ import { memo } from "react";
 
 import { ListItem } from "~/components/ListDetail/ListItem";
 
-import type { CaseStudy } from "../Blogs/BlogDetail";
+import type { LilBits } from "~/lib/sanity/client";
 
 interface Props {
-	casestudy: CaseStudy;
+	c: LilBits;
 	active: boolean;
 }
 
-export const CaseListItem = memo<Props>(({ casestudy, active }) => {
+export const CaseListItem = memo<Props>(({ c, active }) => {
 	return (
 		<ListItem
-			key={casestudy?.slug}
-			href="/codey/[slug]"
-			as={`/code/${casestudy?.slug}`}
-			title={casestudy.title}
+			key={c?.slug}
+			href="/code/[slug]"
+			as={`/code/${c?.slug}`}
+			title={c.title}
 			description={null}
-			leadingAccessory={
-				<Image width={48} height={48} alt={casestudy?.title} className="rounded-xl" src={casestudy?.caption} />
-			}
-			//byline={`${casestudy.detailsCount} details`}
+			leadingAccessory={<Image width={48} height={48} alt={c?.title} className="rounded-xl" src={c?.caption} />}
+			//byline={`${c.detailsCount} details`}
 			active={active}
 		/>
 	);
