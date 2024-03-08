@@ -9,7 +9,7 @@
     "fix": "biome check --apply-unsafe ./",
     "lint:fix": "pnpm format && pnpm lint --fix",
     "format": "biome format --write ./",
-    "gen": "prisma generate && pnpm generate",
+    "postinstall": "prisma generate && pnpm generate",
     "generate": "graphql-codegen-esm --config codegen.ts",
     "generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'"
   },
