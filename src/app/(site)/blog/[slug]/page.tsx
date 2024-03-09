@@ -7,14 +7,12 @@ import { BlogDetail } from "~/components/Blogs/BlogDetail";
 
 import { ViewType } from "~/graphql/typeSlut";
 import { HiddenCounter } from "~/lib/actions";
-import { getAllPosts, getPost } from "~/lib/sanity/client";
+import { allPosts, getAllPosts, getPost } from "~/lib/sanity/client";
 
-export const revalidate = 3600;
+//export const revalidate = 3600;
 
 export async function generateStaticParams() {
-	const posts = await getAllPosts();
-
-	return posts.map((post) => ({
+	return allPosts.map((post) => ({
 		slug: post.slug,
 	}));
 }

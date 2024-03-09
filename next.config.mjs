@@ -4,9 +4,9 @@ const config = {
       fullUrl: true,
     },
   },
-*/  experimental:{
-   useLightningcss:true
-}, 
+*/ experimental: {
+		useLightningcss: true,
+	},
 	transpilePackages: ["react-tweet"],
 	images: {
 		formats: ["image/avif", "image/webp"],

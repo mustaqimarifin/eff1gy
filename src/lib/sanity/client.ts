@@ -1,5 +1,5 @@
-import type { SanityClient } from "next-sanity";
-import { type QueryParams, createClient } from "next-sanity";
+import { createClient, SanityClient } from "next-sanity";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { caseQuery, casesQuery, lilQueries, lilQuery, lilSlugs, postQuery, postSlugs, postsQuery } from "./queries";
 import { cache } from "react";
@@ -63,10 +63,10 @@ const sanity = getClient();
   ? createClient({ projectId, dataset, apiVersion, useCdn, studioUrl })
   : null;
  */
-export const fetcher = async ([query, params]) => {
+/* export const fetcher = async ([query, params]) => {
 	return sanity ? sanity.fetch(query, params) : [];
 };
-
+ */
 export const getPostSlugs = async (): Promise<Post[]> => {
 	if (sanity) {
 		return (await sanity.fetch(postSlugs)) || [];
@@ -94,29 +94,51 @@ export const getLilSlugs = async (): Promise<LilBits[]> => {
   }
   return [];
 } */
-export const getAllPosts = async (): Promise<Post[]> => {
+
+export const getAllPosts = cache(async (): Promise<Post[]> => {
 	if (sanity) {
 		return (await sanity.fetch(postsQuery)) || [];
 	}
+	revalidateTag("posts");
 	return [];
-};
+});
 
-export const getAllBits = async (): Promise<LilBits[]> => {
+export const getAllBits = cache(async (): Promise<LilBits[]> => {
 	if (sanity) {
 		return (await sanity.fetch(lilQueries)) || [];
 	}
+	revalidateTag("bits");
 	return [];
-};
+});
 /* export async function getPost(slug: string) {
   if (sanity) {
     return (await sanity.fetch(postQuery, { slug })) || {};
   }
   return {};
 } */
+/* export const getVercelYouTubeSubs = cache(
+  async () => {
+    let response = await yt.channels.list({
+      id: ['UCLq8gNoee7oXM7MvTdjyQvA'],
+      part: ['statistics'],
+    });
+
+    let channel = response.data.items![0];
+    return Number(channel?.statistics?.subscriberCount).toLocaleString();
+  },
+  ['vercel-youtube-subs'],
+  {
+    revalidate: 3600,
+  }
+);
+
+ */
+
 export const getPost = cache(async (slug: string) => {
 	if (sanity) {
 		return (await sanity.fetch(postQuery, { slug })) || {};
 	}
+	revalidatePath("/(site)/blog/[slug]", "page");
 	return {};
 });
 
@@ -124,6 +146,8 @@ export const getLilBit = cache(async (slug: string) => {
 	if (sanity) {
 		return (await sanity.fetch(lilQuery, { slug })) || {};
 	}
+	//revalidatePath('/src/app/(site)/code/[slug]', 'page')
+	revalidatePath("/(site)/code/[slug]", "page");
 	return {};
 });
 export async function getAllCases() {

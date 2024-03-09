@@ -99,8 +99,11 @@ export enum CacheControlScope {
 export type Case = {
 	__typename?: "Case";
 	count?: Maybe<Scalars["Int"]["output"]>;
+	date?: Maybe<Scalars["Date"]["output"]>;
 	id: Scalars["ID"]["output"];
 	reactionCount?: Maybe<Scalars["Int"]["output"]>;
+	slug?: Maybe<Scalars["String"]["output"]>;
+	title?: Maybe<Scalars["String"]["output"]>;
 	viewerHasReacted?: Maybe<Scalars["Boolean"]["output"]>;
 };
 
@@ -346,7 +349,7 @@ export type QueryBookmarksArgs = {
 };
 
 export type QueryCaseArgs = {
-	id: Scalars["ID"]["input"];
+	slug: Scalars["String"]["input"];
 };
 
 export type QueryCommentArgs = {
@@ -727,6 +730,17 @@ export type BookmarkListItemFragment = {
 	faviconUrl?: string | null;
 	count?: number | null;
 } & { __typename: "Bookmark" };
+
+export type CaseListItemFragment = { id: string; count?: number | null } & { __typename: "Case" };
+
+export type CaseCoreFragment = { id: string; count?: number | null } & { __typename: "Case" };
+
+export type CaseDetailFragment = {
+	reactionCount?: number | null;
+	viewerHasReacted?: boolean | null;
+	id: string;
+	count?: number | null;
+} & { __typename: "Case" };
 
 export type PostListItemFragment = {
 	id: string;
@@ -1295,6 +1309,24 @@ export type GetBookmarkQuery = {
 				viewerHasReacted?: boolean | null;
 				tags: Array<({ name: string } & { __typename?: "Tag" }) | null>;
 		  } & { __typename: "Bookmark" })
+		| null;
+} & { __typename?: "Query" };
+
+export type GetCasesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCasesQuery = {
+	cases: Array<({ id: string; count?: number | null } & { __typename: "Case" }) | null>;
+} & { __typename?: "Query" };
+
+export type GetCaseQueryVariables = Exact<{
+	slug: Scalars["String"]["input"];
+}>;
+
+export type GetCaseQuery = {
+	case?:
+		| ({ id: string; count?: number | null; reactionCount?: number | null; viewerHasReacted?: boolean | null } & {
+				__typename: "Case";
+		  })
 		| null;
 } & { __typename?: "Query" };
 
@@ -2330,6 +2362,59 @@ export type GetBookmarkQueryHookResult = ReturnType<typeof useGetBookmarkQuery>;
 export type GetBookmarkLazyQueryHookResult = ReturnType<typeof useGetBookmarkLazyQuery>;
 export type GetBookmarkSuspenseQueryHookResult = ReturnType<typeof useGetBookmarkSuspenseQuery>;
 export type GetBookmarkQueryResult = Apollo.QueryResult<GetBookmarkQuery, GetBookmarkQueryVariables>;
+export const GetCasesDocument = /*#__PURE__*/ gql`
+    query getCases {
+  cases {
+    ...CaseListItem
+  }
+}
+    ${CaseListItemFragmentDoc}`;
+export function useGetCasesQuery(baseOptions?: Apollo.QueryHookOptions<GetCasesQuery, GetCasesQueryVariables>) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<GetCasesQuery, GetCasesQueryVariables>(GetCasesDocument, options);
+}
+export function useGetCasesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCasesQuery, GetCasesQueryVariables>) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<GetCasesQuery, GetCasesQueryVariables>(GetCasesDocument, options);
+}
+export function useGetCasesSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<GetCasesQuery, GetCasesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<GetCasesQuery, GetCasesQueryVariables>(GetCasesDocument, options);
+}
+export type GetCasesQueryHookResult = ReturnType<typeof useGetCasesQuery>;
+export type GetCasesLazyQueryHookResult = ReturnType<typeof useGetCasesLazyQuery>;
+export type GetCasesSuspenseQueryHookResult = ReturnType<typeof useGetCasesSuspenseQuery>;
+export type GetCasesQueryResult = Apollo.QueryResult<GetCasesQuery, GetCasesQueryVariables>;
+export const GetCaseDocument = /*#__PURE__*/ gql`
+    query getCase($slug: String!) {
+  case(slug: $slug) {
+    ...CaseDetail
+  }
+}
+    ${CaseDetailFragmentDoc}`;
+export function useGetCaseQuery(
+	baseOptions: Apollo.QueryHookOptions<GetCaseQuery, GetCaseQueryVariables> &
+		({ variables: GetCaseQueryVariables; skip?: boolean } | { skip: boolean }),
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<GetCaseQuery, GetCaseQueryVariables>(GetCaseDocument, options);
+}
+export function useGetCaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCaseQuery, GetCaseQueryVariables>) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<GetCaseQuery, GetCaseQueryVariables>(GetCaseDocument, options);
+}
+export function useGetCaseSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<GetCaseQuery, GetCaseQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<GetCaseQuery, GetCaseQueryVariables>(GetCaseDocument, options);
+}
+export type GetCaseQueryHookResult = ReturnType<typeof useGetCaseQuery>;
+export type GetCaseLazyQueryHookResult = ReturnType<typeof useGetCaseLazyQuery>;
+export type GetCaseSuspenseQueryHookResult = ReturnType<typeof useGetCaseSuspenseQuery>;
+export type GetCaseQueryResult = Apollo.QueryResult<GetCaseQuery, GetCaseQueryVariables>;
 export const GetCommentsDocument = /*#__PURE__*/ gql`
     query getComments($refId: ID!, $type: CommentType!) {
   comments(refId: $refId, type: $type) {

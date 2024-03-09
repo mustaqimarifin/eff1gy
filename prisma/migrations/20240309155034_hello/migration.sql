@@ -1,13 +1,13 @@
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- The `penis()` function generates a compact, URL-friendly unique identifier.
+-- The `nanoid()` function generates a compact, URL-friendly unique identifier.
 -- Based on the given size and alphabet, iat creates a randomized string that's ideal for
 -- use-cases requiring small, unpredictable IDs (e.g., URL shorteners, generated file names, etc.).
 -- While it comes with a default configuration, the function is designed to be flexible,
 -- allowing for customization to meet specific needs.
-DROP FUNCTION IF EXISTS penis(int, text, float);
-CREATE OR REPLACE FUNCTION penis(
+DROP FUNCTION IF EXISTS nanoid(int, text, float);
+CREATE OR REPLACE FUNCTION nanoid(
     size int DEFAULT 5, -- The number of symbols in the NanoId String. Must be greater than 0.
     alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- The symbols used in the NanoId String. Must contain between 1 and 255 symbols.
     additionalBytesFactor float DEFAULT 1.6 -- The additional bytes factor used for calculating the step size. Must be equal or greater then 1.
@@ -45,15 +45,15 @@ BEGIN
         step := 1024; -- The step size % can''t be bigger then 1024!
     END IF;
 
-    RETURN penis_optimized(size, alphabet, mask, step);
+    RETURN nanoid_optimized(size, alphabet, mask, step);
 END
 $$;
 
 -- Generates an optimized random string of a specified size using the given alphabet, mask, and step.
 -- This optimized version is designed for higher performance and lower memory overhead.
 -- No checks are performed! Use it only if you really know what you are doing.
-DROP FUNCTION IF EXISTS penis_optimized(int, text, int, int);
-CREATE OR REPLACE FUNCTION penis_optimized(
+DROP FUNCTION IF EXISTS nanoid_optimized(int, text, int, int);
+CREATE OR REPLACE FUNCTION nanoid_optimized(
     size int, -- The desired length of the generated string.
     alphabet text, -- The set of characters to choose from for generating the string.
     mask int, -- The mask used for mapping random bytes to alphabet indices. Should be `(2^n) - 1` where `n` is a power of 2 less than or equal to the alphabet size.
@@ -98,12 +98,12 @@ CREATE TYPE "Status" AS ENUM ('ANSWERED', 'PENDING');
 CREATE TYPE "Role" AS ENUM ('BLOCKED', 'USER', 'ADMIN');
 
 -- CreateTable
-CREATE TABLE accounts (
-    id TEXT NOT NULL DEFAULT penis(),
+CREATE TABLE "Account" (
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "userId" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
-    "provideraccountsId" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
     "refresh_token" TEXT,
     "access_token" TEXT,
     "expires_at" INTEGER,
@@ -112,11 +112,11 @@ CREATE TABLE accounts (
     "id_token" TEXT,
     "session_state" TEXT,
 
-    CONSTRAINT "accounts_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE sessions (
+CREATE TABLE "Session" (
     "sessionToken" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
@@ -125,12 +125,13 @@ CREATE TABLE sessions (
 );
 
 -- CreateTable
-CREATE TABLE users (
-    id TEXT NOT NULL DEFAULT penis(),
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
     "image" TEXT,
     "email" TEXT,
+    "pendingEmail" TEXT,
     "role" "Role" NOT NULL DEFAULT 'USER',
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "emailVerified" TIMESTAMP(3),
@@ -138,7 +139,7 @@ CREATE TABLE users (
     "location" TEXT,
     "username" TEXT,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY (id)
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -150,7 +151,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT,
@@ -162,12 +163,12 @@ CREATE TABLE "Bookmark" (
     "faviconUrl" TEXT,
     "count" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "Bookmark_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Bookmark_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Question" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "status" "Status" NOT NULL DEFAULT 'PENDING',
     "hearts" INTEGER DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -181,12 +182,12 @@ CREATE TABLE "Question" (
     "userId" TEXT,
     "count" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "Question_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE comments (
-    id TEXT NOT NULL DEFAULT penis(),
+CREATE TABLE "Comment" (
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
@@ -200,35 +201,39 @@ CREATE TABLE comments (
     "eventId" TEXT,
     "caseId" TEXT,
 
-    CONSTRAINT "comments_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Blog" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "slug" TEXT,
     "title" TEXT,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT,
     "count" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "Blog_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Blog_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Event" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "count" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "Event_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Case" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "slug" TEXT,
+    "title" TEXT,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT,
     "count" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "Case_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Case_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -240,7 +245,7 @@ CREATE TABLE "Tag" (
 
 -- CreateTable
 CREATE TABLE "Stack" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT,
@@ -250,12 +255,12 @@ CREATE TABLE "Stack" (
     "url" TEXT,
     "count" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "Stack_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Stack_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Reaction" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT,
     "bookmarkId" TEXT,
@@ -267,12 +272,12 @@ CREATE TABLE "Reaction" (
     "eventId" TEXT,
     "caseId" TEXT,
 
-    CONSTRAINT "Reaction_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Reaction_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Post" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "count" INTEGER DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -284,12 +289,12 @@ CREATE TABLE "Post" (
     "featureImage" TEXT,
     "userId" TEXT NOT NULL,
 
-    CONSTRAINT "Post_pkey" PRIMARY KEY (id)
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "PostEdit" (
-    id TEXT NOT NULL DEFAULT penis(),
+    "id" TEXT NOT NULL DEFAULT nanoid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "text" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -297,7 +302,7 @@ CREATE TABLE "PostEdit" (
     "featureImage" TEXT,
     "postId" TEXT,
 
-    CONSTRAINT "PostEdit_pkey" PRIMARY KEY (id)
+    CONSTRAINT "PostEdit_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -319,22 +324,22 @@ CREATE TABLE "_StackToUser" (
 );
 
 -- CreateIndex
-CREATE INDEX "accounts_userId_idx" ON accounts("userId");
+CREATE INDEX "Account_userId_idx" ON "Account"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "accounts_provider_providerAccountsId_key" ON accounts("provider", "providerAccountsId");
+CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Session_sessionToken_key" ON sessions("sessionToken");
+CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
-CREATE INDEX "Session_userId_idx" ON sessions("userId");
+CREATE INDEX "Session_userId_idx" ON "Session"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON users("email");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_username_key" ON users("username");
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
@@ -349,40 +354,46 @@ CREATE UNIQUE INDEX "Bookmark_url_key" ON "Bookmark"("url");
 CREATE INDEX "Bookmark_host_idx" ON "Bookmark"("host");
 
 -- CreateIndex
-CREATE INDEX "Bookmark_id_count_idx" ON "Bookmark"(id, "count");
+CREATE INDEX "Bookmark_id_count_idx" ON "Bookmark"("id", "count");
 
 -- CreateIndex
 CREATE INDEX "Question_userId_status_idx" ON "Question"("userId", "status");
 
 -- CreateIndex
-CREATE INDEX "Question_id_count_idx" ON "Question"(id, "count");
+CREATE INDEX "Question_id_count_idx" ON "Question"("id", "count");
 
 -- CreateIndex
-CREATE INDEX "comments_bookmarkId_userId_idx" ON comments("bookmarkId", "userId");
+CREATE INDEX "Comment_bookmarkId_userId_idx" ON "Comment"("bookmarkId", "userId");
 
 -- CreateIndex
-CREATE INDEX "comments_questionId_userId_idx" ON comments("questionId", "userId");
+CREATE INDEX "Comment_questionId_userId_idx" ON "Comment"("questionId", "userId");
 
 -- CreateIndex
-CREATE INDEX "comments_blogId_userId_idx" ON comments("blogId", "userId");
+CREATE INDEX "Comment_blogId_userId_idx" ON "Comment"("blogId", "userId");
 
 -- CreateIndex
-CREATE INDEX "comments_stackId_userId_idx" ON comments("stackId", "userId");
+CREATE INDEX "Comment_stackId_userId_idx" ON "Comment"("stackId", "userId");
 
 -- CreateIndex
-CREATE INDEX "comments_eventId_userId_idx" ON comments("eventId", "userId");
+CREATE INDEX "Comment_eventId_userId_idx" ON "Comment"("eventId", "userId");
 
 -- CreateIndex
-CREATE INDEX "comments_caseId_userId_idx" ON comments("caseId", "userId");
+CREATE INDEX "Comment_caseId_userId_idx" ON "Comment"("caseId", "userId");
 
 -- CreateIndex
-CREATE INDEX "comments_postId_userId_idx" ON comments("postId", "userId");
+CREATE INDEX "Comment_postId_userId_idx" ON "Comment"("postId", "userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Blog_slug_key" ON "Blog"("slug");
 
 -- CreateIndex
 CREATE INDEX "Blog_slug_count_idx" ON "Blog"("slug", "count");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Case_slug_key" ON "Case"("slug");
+
+-- CreateIndex
+CREATE INDEX "Case_slug_count_idx" ON "Case"("slug", "count");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Stack_slug_key" ON "Stack"("slug");
@@ -442,91 +453,94 @@ CREATE UNIQUE INDEX "_StackToUser_AB_unique" ON "_StackToUser"("A", "B");
 CREATE INDEX "_StackToUser_B_index" ON "_StackToUser"("B");
 
 -- AddForeignKey
-ALTER TABLE accounts ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE sessions ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_twitterHandle_fkey" FOREIGN KEY ("twitterHandle") REFERENCES users("username") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_twitterHandle_fkey" FOREIGN KEY ("twitterHandle") REFERENCES "User"("username") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES comments(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_bookmarkId_fkey" FOREIGN KEY ("bookmarkId") REFERENCES "Bookmark"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_bookmarkId_fkey" FOREIGN KEY ("bookmarkId") REFERENCES "Bookmark"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_stackId_fkey" FOREIGN KEY ("stackId") REFERENCES "Stack"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_stackId_fkey" FOREIGN KEY ("stackId") REFERENCES "Stack"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE comments ADD CONSTRAINT "comments_caseId_fkey" FOREIGN KEY ("caseId") REFERENCES "Case"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_caseId_fkey" FOREIGN KEY ("caseId") REFERENCES "Case"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Blog" ADD CONSTRAINT "Blog_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Blog" ADD CONSTRAINT "Blog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_bookmarkId_fkey" FOREIGN KEY ("bookmarkId") REFERENCES "Bookmark"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Case" ADD CONSTRAINT "Case_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_bookmarkId_fkey" FOREIGN KEY ("bookmarkId") REFERENCES "Bookmark"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_stackId_fkey" FOREIGN KEY ("stackId") REFERENCES "Stack"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_stackId_fkey" FOREIGN KEY ("stackId") REFERENCES "Stack"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "Blog"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_caseId_fkey" FOREIGN KEY ("caseId") REFERENCES "Case"(id) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_userId_fkey" FOREIGN KEY ("userId") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Reaction" ADD CONSTRAINT "Reaction_caseId_fkey" FOREIGN KEY ("caseId") REFERENCES "Case"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PostEdit" ADD CONSTRAINT "PostEdit_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Post" ADD CONSTRAINT "Post_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_BookmarkToTag" ADD CONSTRAINT "_BookmarkToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Bookmark"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "PostEdit" ADD CONSTRAINT "PostEdit_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_BookmarkToTag" ADD CONSTRAINT "_BookmarkToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Bookmark"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_BookmarkToTag" ADD CONSTRAINT "_BookmarkToTag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("name") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_StackToTag" ADD CONSTRAINT "_StackToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Stack"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_StackToTag" ADD CONSTRAINT "_StackToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Stack"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_StackToTag" ADD CONSTRAINT "_StackToTag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("name") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_StackToUser" ADD CONSTRAINT "_StackToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Stack"(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_StackToUser" ADD CONSTRAINT "_StackToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Stack"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_StackToUser" ADD CONSTRAINT "_StackToUser_B_fkey" FOREIGN KEY ("B") REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_StackToUser" ADD CONSTRAINT "_StackToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

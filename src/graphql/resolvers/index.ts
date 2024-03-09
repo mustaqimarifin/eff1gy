@@ -17,6 +17,9 @@ const resolvers = {
 			switch (obj.reactableType) {
 				case "question":
 					return "Question";
+				case "case":
+					return "Case";
+
 				case "stack":
 					return "Stack";
 				case "post":
@@ -158,6 +161,30 @@ const resolvers = {
 			if (_count?.reactions) return _count.reactions;
 
 			const reactions = await db.blog
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
+
+			return reactions.length;
+		},
+	},
+	Case: {
+		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+			if (!viewer) return false;
+
+			const reactions = await db.case
+				.findUnique({
+					where: { id },
+				})
+				.reactions();
+
+			return reactions.some(({ userId }) => userId === viewer.id);
+		},
+		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+			if (_count?.reactions) return _count.reactions;
+
+			const reactions = await db.case
 				.findUnique({
 					where: { id },
 				})

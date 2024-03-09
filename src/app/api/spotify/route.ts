@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getNowPlaying } from "~/lib/queries";
 
 //export const runtime = 'edge'
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 export async function GET() {
 	const response = await getNowPlaying();
 
@@ -48,7 +48,7 @@ export async function GET() {
 			status: 200,
 			headers: {
 				"content-type": "application/json",
-				"cache-control": "public, s-maxage=60, stale-while-revalidate=30",
+				"cache-control": "public, s-maxage=240, stale-while-revalidate=120",
 			},
 		},
 	);

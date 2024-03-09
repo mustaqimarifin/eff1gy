@@ -5,14 +5,14 @@ generator client {
 
 datasource db {
   provider   = "postgresql"
-  //url        = env("SQL_WSL")
+  //url        = env("SQL_MACOS")
   extensions = [pgcrypto]
   url = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Account {
-  id                String  @id @default(dbgenerated("penis()"))
+  id                String  @id @default(dbgenerated("nanoid()"))
   //id                String  @id @default(cuid())
   userId            String
   type              String
@@ -41,7 +41,7 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(dbgenerated("penis()"))
+  id            String    @id @default(dbgenerated("nanoid()"))
   //id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   name          String
@@ -57,13 +57,14 @@ model User {
   username    String?    @unique
   accounts    Account[]
   posts       Post[]
+  cases       Case[]
   comments    Comment[]
   blogs       Blog[]
   questions   Question[]
   reactions   Reaction[]
   sessions    Session[]
   stacks      Stack[]    @relation("StackToUser")
-  Bookmark    Bookmark[]
+  bookmark    Bookmark[]
 }
 
 model VerificationToken {
@@ -75,7 +76,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id            String     @id @default(dbgenerated("penis()"))
+  id            String     @id @default(dbgenerated("nanoid()"))
   //id            String     @id @default(cuid())
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -102,7 +103,7 @@ enum Status {
 }
 
 model Question {
-  id          String     @id @default(dbgenerated("penis()"))
+  id          String     @id @default(dbgenerated("nanoid()"))
   //id          String     @id @default(cuid())
   status      Status     @default(PENDING)
   hearts      Int?       @default(0)
@@ -125,7 +126,7 @@ model Question {
 }
 
 model Comment {
-  id         String    @id @default(dbgenerated("penis()"))
+  id         String    @id @default(dbgenerated("nanoid()"))
   //id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
@@ -161,7 +162,7 @@ model Comment {
 }
 
 model Blog {
-  id        String     @id @default(dbgenerated("penis()"))
+  id        String     @id @default(dbgenerated("nanoid()"))
   slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
@@ -175,17 +176,24 @@ model Blog {
 }
 
 model Event {
-  id        String     @id @default(dbgenerated("penis()"))
+  id        String     @id @default(dbgenerated("nanoid()"))
   count     Int        @default(1)
   comments  Comment[]
   reactions Reaction[]
 }
 
 model Case {
-  id        String     @id @default(dbgenerated("penis()"))
-  count     Int        @default(1)
+  id        String     @id @default(dbgenerated("nanoid()"))
+  slug      String?    @unique
+  title     String?
+  date      DateTime   @default(now())
   comments  Comment[]
   reactions Reaction[]
+  author    User?      @relation(fields: [userId], references: [id])
+  userId    String?
+  count     Int        @default(1)
+
+  @@index([slug, count])
 }
 
 model Tag {
@@ -195,7 +203,7 @@ model Tag {
 }
 
 model Stack {
-  id          String     @id @default(dbgenerated("penis()"))
+  id          String     @id @default(dbgenerated("nanoid()"))
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String?
@@ -213,7 +221,7 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("penis()"))
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt  DateTime  @default(now())
   userId     String?
@@ -245,7 +253,7 @@ model Reaction {
 }
 
 model Post {
-  id    String @id @default(dbgenerated("penis()"))
+  id    String @id @default(dbgenerated("nanoid()"))
   count Int?   @default(1)
 
   createdAt    DateTime   @default(now())
@@ -267,7 +275,7 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated("penis()"))
+  id String @id @default(dbgenerated("nanoid()"))
 
   createdAt    DateTime @default(now())
   text         String

@@ -1,5 +1,6 @@
 import { getBlog, getBlogs } from "./blogs";
 import { getBookmark, getBookmarks } from "./bookmarks";
+import { getCase, getCases } from "./cases";
 import { getComment, getComments } from "./comments";
 import { getPost, getPosts } from "./posts";
 import { getQuestion, getQuestions } from "./questions";
@@ -15,6 +16,8 @@ export default {
 	bookmarks: getBookmarks,
 	blogs: getBlogs,
 	blog: getBlog,
+	cases: getCases,
+	case: getCase,
 	post: getPost,
 	posts: getPosts,
 	question: getQuestion,

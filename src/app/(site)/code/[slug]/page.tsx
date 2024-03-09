@@ -16,12 +16,8 @@ export async function generateStaticParams() {
 	}));
 }
 
-export default async function LilPage({
-	params,
-}: {
-	params: { slug: string };
-}) {
-	const p: LilBits = await getLilBit(params.slug);
+export default async function LilPage({ params: { slug } }) {
+	const p: LilBits = await getLilBit(slug);
 	if (!p) {
 		notFound();
 	}

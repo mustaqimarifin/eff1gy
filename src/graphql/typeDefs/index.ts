@@ -48,6 +48,9 @@ export default gql`
   }
   type Case {
     id: ID!
+    title: String
+    date: Date
+    slug: String
     count: Int
     reactionCount: Int
     viewerHasReacted: Boolean
@@ -232,12 +235,12 @@ export default gql`
     comments(refId: ID!, type: CommentType!): [Comment]!
     blogs: [Blog]!
     blog(slug: String!): Blog
+    cases: [Case]!
+    case(slug: String!): Case
     posts(filter: PostFilter): [Post]!
     post(slug: String!): Post
     events: [Event]!
     event(id: ID!): Event
-    cases: [Case]!
-    case(id: ID!): Case
     question(id: ID!): Question
     questions(first: Int, after: String, filter: QuestionFilter): QuestionsConnection!
 
