@@ -478,10 +478,10 @@
   content: none;
 }
 
-/* .prose pre {
-  @apply overflow-x-auto border shadow-pink-400 ;
+ .prose pre {
+  @apply overflow-x-auto ;
 }
- */
+ 
 .prose code {
   @apply px-1 py-0.5 ;
 }
@@ -659,12 +659,12 @@
 }
 */
 
-/* .prose code,
+.prose code,
 .prose pre {
-  @apply whitespace-pre-wrap text-sm font-medium;
+  @apply whitespace-pre text-sm font-medium;
   word-break: break-word;
 }
- */
+ 
 
 .prose sup {
   @apply text-sm text-blue-500 dark:text-gray-400;

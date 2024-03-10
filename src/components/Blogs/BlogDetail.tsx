@@ -111,7 +111,7 @@ export function BlogDetail({ children, post, slug }: Props) {
 						<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
 						<div
 							title={post?.date}
-							className="text-nowrap text-tertiary font-semibold text-xs inline-block leading-snug"
+							className=" text-tertiary font-semibold text-xs inline-block leading-snug"
 						>
 							{`${formatDate(post?.date)} • ${blog?.count} views`}
 						</div>

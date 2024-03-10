@@ -59,12 +59,14 @@ export function BitDetail({ bit, children, slug }: Props) {
 				<Detail.Header>
 					<div className="flex items-center space-x-6">
 						<Image src={bit?.caption} width={80} height={80} alt={`${bit?.title} icon`} className="rounded-2xl" />
+						<div>
 						<Detail.Title ref={titleRef}>{bit?.title}</Detail.Title>
 						<div
 							title={bit?.date}
-							className="text-nowrap text-tertiary font-semibold text-xs inline-block leading-snug"
+							className="text-tertiary font-semibold text-xs inline-block leading-snug"
 						>
 							{`${formatDate(bit?.date)} • ${kase?.count} views`}
+						</div>
 						</div>
 					</div>
 				</Detail.Header>
