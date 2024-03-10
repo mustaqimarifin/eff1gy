@@ -11,13 +11,13 @@ import { allBits, allLilSlugs, getLilBit, type LilBits } from "~/lib/sanity/clie
 
 export const revalidate = 3600;
 
-export async function generateStaticParams () {
+export async function generateStaticParams() {
 	return allLilSlugs.map((p) => ({
 		slug: p.slug,
 	}));
 }
 
-export default async function LilPage ({ params: { slug } }) {
+export default async function LilPage({ params: { slug } }) {
 	const p: LilBits = await getLilBit(slug);
 	if (!p) {
 		notFound();
@@ -25,17 +25,15 @@ export default async function LilPage ({ params: { slug } }) {
 
 	return (
 		<ListDetailView
-			list={ <BitList bits={ allBits } /> }
+			list={<BitList bits={allBits} />}
 			hasDetail
 			detail={
-
 				<Suspense>
-					<HiddenCounter refId={ p?.slug } type={ ViewType.Case } />
-					<BitDetail bit={ p } slug={ slug }>
-						<Mdx source={ p?.content } />
+					<HiddenCounter refId={p?.slug} type={ViewType.Case} />
+					<BitDetail bit={p} slug={slug}>
+						<Mdx source={p?.content} />
 					</BitDetail>
 				</Suspense>
-
 			}
 		/>
 		/* 		<Suspense>

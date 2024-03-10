@@ -1,11 +1,11 @@
 "use client";
-import { MessageCircle } from "lucide-react";
+
 import { useRef } from "react";
 
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { SignInDialog } from "~/components/SignInDialog";
 import type { CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
-import { GetCommentsDocument, useGetCommentsQuery } from "~/graphql/typeSlut";
+import { GetCommentsDocument } from "~/graphql/typeSlut";
 import { useWindowFocus } from "~/hooks";
 
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";

@@ -150,11 +150,10 @@ export default function Home() {
 							<div className=" mx-auto w-full p-2 lg:max-w-3xl">
 								<h2 className="text-left mb-6 pt-4 font-imp text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-3xl">
 									Greetings! I'm a{" "}
-									<span className="dark:text-active text-blue-400">
-										regional marketing manager&nbsp;
-									</span>
+									<span className="dark:text-active text-blue-400">regional marketing manager&nbsp;</span>
 									at{` `}
-									<Muse2 className="lg:-ml-2 inline h-12 items-center dark:invert" /><span>where we focus on&nbsp;</span>
+									<Muse2 className="lg:-ml-2 inline h-12 items-center dark:invert" />
+									<span>where we focus on&nbsp;</span>
 									<span className="text-coyRed">large-scale sport & lifestyle events</span>
 								</h2>
 								<div className="drop-shadow-sm">
@@ -169,8 +168,7 @@ export default function Home() {
 										&nbsp;for Infinity Games. More to come as I finally catalog my life and adventures as a
 										"forever-noob" web developer too.
 									</p>
-									
-									
+
 									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Thanks for stopping by! </p>
 									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Mustaqim Arifin </p>
 								</div>

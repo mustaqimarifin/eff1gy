@@ -13,10 +13,12 @@ function ContentContainer(props) {
 	return <div className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8" {...props} />;
 }
  */
- function ContentContainer(props) {
-	return <div className="mx-auto w-full max-w-sm px-4 md:px-8 py-12 pb-10  md:max-w-2xl lg:max-w-3xl lg:px-12" {...props} />;
+function ContentContainer(props) {
+	return (
+		<div className="mx-auto w-full max-w-sm px-4 md:px-8 py-12 pb-10  md:max-w-2xl lg:max-w-3xl lg:px-12" {...props} />
+	);
 }
- 
+
 interface DetailContainerProps {
 	children: ReactNode;
 }

@@ -31,8 +31,8 @@ export const graphcdn = {
 	async purgeBlog(id) {
 		return await handleFetch(`mutation { purgeBlog(id: [${id}]) }`);
 	},
-	
-		async purgeCase(id) {
+
+	async purgeCase(id) {
 		return await handleFetch(`mutation { purgeCase(id: [${id}]) }`);
 	},
 

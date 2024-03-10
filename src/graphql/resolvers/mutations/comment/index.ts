@@ -9,7 +9,7 @@ import {
 	type MutationDeleteCommentArgs,
 	type MutationEditCommentArgs,
 } from "~/graphql/typeSlut";
-import { graphcdn } from "~/lib/graphcdn";
+//import { graphcdn } from "~/lib/graphcdn";
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
@@ -36,10 +36,10 @@ export async function editComment(_: any, args: MutationEditCommentArgs, ctx: Co
 			where: { id },
 			data: { text },
 		})
-		.then((comment) => {
+		/* 		.then((comment) => {
 			graphcdn.purgeList('comments')
 			return comment;
-		})
+		}) */
 		.catch((err) => {
 			console.error({ err });
 			throw new GraphQLError("Unable to edit comment");
@@ -157,10 +157,10 @@ export async function deleteComment(_: any, args: MutationDeleteCommentArgs, ctx
 		.delete({
 			where: { id },
 		})
-		.then(() => {
+		/* 	.then(() => {
 			graphcdn.purgeList('comments')
 			return true;
-		})
+		}) */
 		.catch((err) => {
 			console.error({ err });
 			throw new GraphQLError("Unable to delete comment");

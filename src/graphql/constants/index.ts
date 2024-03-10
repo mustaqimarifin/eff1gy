@@ -17,24 +17,17 @@ const devUrl = "http://localhost:3000";
 const GQL = "/api/graphql";
 
 const IS_PROD = process.env.NODE_ENV === "production";
-const IS_DEV = process.env.NODE_ENV === 'development'
-const IS_PREVIEW =
-  process.env.VERCEL_ENV === 'preview' || process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+const IS_DEV = process.env.NODE_ENV === "development";
+const IS_PREVIEW = process.env.VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "preview";
 //const GRAPHCDN_PURGE_ENDPOINT = process.env.GRAPHCDN_PURGE_ENDPOINT
 const CLIENT_URL = IS_PROD ? baseUrl : devUrl;
 
 const HELLSQL = CLIENT_URL + GQL;
-const PREVIEW_URL = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL
+const PREVIEW_URL = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
 
- const GRAPHQL_ENDPOINT = IS_DEV
-  ? '/api/graphql'
-  : IS_PREVIEW
-    ? `https://${PREVIEW_URL}/api/graphql`
-    : stellateURL 
+const GRAPHQL_ENDPOINT = IS_DEV ? "/api/graphql" : IS_PREVIEW ? `https://${PREVIEW_URL}/api/graphql` : stellateURL;
 
 const PAGINATION_AMOUNT = 24;
-
-
 
 export {
 	CLIENT_URL,

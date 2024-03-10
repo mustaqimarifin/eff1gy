@@ -8,7 +8,7 @@ export const { getClient } = registerApolloClient(() => {
 		cache: new InMemoryCache(),
 		link: new HttpLink({
 			//fetchOptions: { cache: 'no-store' },
-			uri: stellateURL,
+			uri: HELLSQL,
 			//uri: "http://localhost:3000/api/graphql",
 		}),
 	});

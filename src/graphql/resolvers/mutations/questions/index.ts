@@ -6,7 +6,7 @@ import {
 	type MutationDeleteQuestionArgs,
 	type MutationEditQuestionArgs,
 } from "~/graphql/typeSlut";
-import { graphcdn } from "~/lib/graphcdn";
+//import { graphcdn } from "~/lib/graphcdn";
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
@@ -40,10 +40,10 @@ export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Conte
 					},
 				},
 			})
-			      .then((question) => {
+			/* 			      .then((question) => {
         graphcdn.purgeList('questions')
         return question
-      }) 
+      })  */
 			.catch((err) => {
 				console.error({ err });
 				throw new GraphQLError("Unable to edit question");
@@ -73,10 +73,10 @@ export async function addQuestion(_, args: MutationAddQuestionArgs, ctx: Context
 				},
 			},
 		})
-		     .then((question) => {
+		/* 		     .then((question) => {
       graphcdn.purgeList('questions')
       return question
-    }) 
+    })  */
 		.catch((err) => {
 			console.error({ err });
 			throw new GraphQLError("Unable to add question");
@@ -95,10 +95,10 @@ export async function deleteQuestion(_, args: MutationDeleteQuestionArgs, ctx: C
 	if (viewer?.isAdmin || viewer?.id === question.userId) {
 		return await db.question
 			.delete({ where: { id } })
-			       .then(() => {
+			/* 			       .then(() => {
         graphcdn.purgeList('questions')
         return true
-      }) 
+      })  */
 			.catch((err) => {
 				console.error({ err });
 				throw new GraphQLError("Unable to delete question");

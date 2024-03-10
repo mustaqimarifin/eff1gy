@@ -31,7 +31,7 @@ const Imp = localFont({
 	variable: "--newsreader",
 });
  */
-export { GMono, GSans, Quad ,Imp};
+export { GMono, GSans, Quad, Imp };
 
 /* const GT: NextFontWithVariable = localFont({
   src: [

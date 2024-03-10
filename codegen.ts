@@ -35,6 +35,7 @@ const config: CodegenConfig = {
 				addDocBlocks: false,
 				dedupeOperationSuffix: true,
 				pureMagicComment: true,
+				//extractAllFieldsToTypes: true
 			},
 		},
 	},

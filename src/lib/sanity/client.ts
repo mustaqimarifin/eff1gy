@@ -146,7 +146,7 @@ export const getLilBit = cache(async (slug: string) => {
 	if (sanity) {
 		return (await sanity.fetch(lilQuery, { slug })) || {};
 	}
-	revalidatePath('/src/app/(site)/code/[slug]', 'page')
+	revalidatePath("/src/app/(site)/code/[slug]", "page");
 	//revalidatePath("/(site)/code/[slug]", "page");
 	return {};
 });
