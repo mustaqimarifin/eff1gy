@@ -20,7 +20,10 @@ const Quad: NextFontWithVariable = localFont({
 	style: "italic",
 	variable: "--font-quad",
 });
-
+const Imp = localFont({
+	src: "../assets/fonts/imperial-500.woff2",
+	variable: "--imp",
+});
 /* const NewsReader: NextFontWithVariable = Newsreader({
 	subsets: ["latin"],
 	style: ["italic", "normal"],
@@ -28,7 +31,7 @@ const Quad: NextFontWithVariable = localFont({
 	variable: "--newsreader",
 });
  */
-export { GMono, GSans, Quad };
+export { GMono, GSans, Quad ,Imp};
 
 /* const GT: NextFontWithVariable = localFont({
   src: [

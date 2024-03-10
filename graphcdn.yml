@@ -10,7 +10,7 @@ keyFields:
       - name
     User:
       - id
-      - username
+      - name
     PageInfo: []
     StackEdge: []
     BookmarkEdge: []
@@ -19,9 +19,11 @@ keyFields:
 rules:
   - types:
       Query:
-        - post
+        - blog
+        - case
+        - cases
         - tags
-        - posts
+        - blogs
         - stack
         - stacks
         - bookmark
@@ -29,8 +31,6 @@ rules:
         - question
         - bookmarks
         - questions
-        - hackerNewsPost
-        - hackerNewsPosts
     maxAge: 43200
     swr: 43200
     scope: AUTHENTICATED

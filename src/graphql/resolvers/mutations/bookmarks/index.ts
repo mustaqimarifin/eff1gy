@@ -9,6 +9,7 @@ import {
 import { urlRX } from "~/lib/functions";
 
 import getBookmarkMetaData from "./getBookmarkMetaData";
+import { graphcdn } from "~/lib/graphcdn";
 
 export async function editBookmark(_, args: MutationEditBookmarkArgs, ctx: Context) {
 	const { id, data } = args;
@@ -44,10 +45,10 @@ export async function editBookmark(_, args: MutationEditBookmarkArgs, ctx: Conte
 			},
 			include: { tags: true },
 		})
-		/*     .then((bookmark) => {
-      //graphcdn.purgeList('bookmarks')
+		     .then((bookmark) => {
+      graphcdn.purgeList('bookmarks')
       return bookmark
-    }) */
+    }) 
 		.catch((err) => {
 			console.error({ err });
 			throw new GraphQLError("Unable to edit bookmark");
@@ -88,7 +89,7 @@ export async function addBookmark(_, args: MutationAddBookmarkArgs, ctx: Context
 			include: { tags: true },
 		})
 		.then((bookmark) => {
-			//graphcdn.purgeList('bookmarks')
+			graphcdn.purgeList('bookmarks')
 			return bookmark;
 		})
 		.catch((err) => {
@@ -106,7 +107,7 @@ export async function deleteBookmark(_, args: MutationDeleteBookmarkArgs, ctx: C
 			where: { id },
 		})
 		.then(() => {
-			//graphcdn.purgeList('bookmarks')
+			graphcdn.purgeList('bookmarks')
 			return true;
 		})
 		.catch((err) => {

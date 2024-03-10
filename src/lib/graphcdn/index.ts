@@ -28,8 +28,12 @@ export const graphcdn = {
 		return await handleFetch(`mutation { purgeBookmark(id: [${id}]) }`);
 	},
 
-	async purgePost(id) {
-		return await handleFetch(`mutation { purgePost(id: [${id}]) }`);
+	async purgeBlog(id) {
+		return await handleFetch(`mutation { purgeBlog(id: [${id}]) }`);
+	},
+	
+		async purgeCase(id) {
+		return await handleFetch(`mutation { purgeCase(id: [${id}]) }`);
 	},
 
 	async purgeStack(id) {

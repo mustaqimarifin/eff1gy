@@ -9,6 +9,7 @@ import {
 	type MutationDeleteCommentArgs,
 	type MutationEditCommentArgs,
 } from "~/graphql/typeSlut";
+import { graphcdn } from "~/lib/graphcdn";
 
 //import { graphcdn } from '~/lib/redis'
 //import { graphcdn } from '~/lib/graphcdn'
@@ -36,7 +37,7 @@ export async function editComment(_: any, args: MutationEditCommentArgs, ctx: Co
 			data: { text },
 		})
 		.then((comment) => {
-			//graphcdn.purgeList('comments')
+			graphcdn.purgeList('comments')
 			return comment;
 		})
 		.catch((err) => {
@@ -157,7 +158,7 @@ export async function deleteComment(_: any, args: MutationDeleteCommentArgs, ctx
 			where: { id },
 		})
 		.then(() => {
-			//graphcdn.purgeList('comments')
+			graphcdn.purgeList('comments')
 			return true;
 		})
 		.catch((err) => {

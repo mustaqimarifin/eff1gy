@@ -11,14 +11,14 @@ import {
 import type { PropsWithChildren } from "react";
 //import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
 //import { sha256 } from "crypto-hash";
-import { HELLSQL } from "~/graphql/constants";
+import { HELLSQL, stellateURL } from "~/graphql/constants";
 
 const ssr = typeof window === "undefined";
 
 function makeClient() {
 	const httpLink = new HttpLink({
 		// this needs to be an absolute url, as relative urls cannot be used in SSR
-		uri: HELLSQL,
+		uri: stellateURL,
 		//uri: "http://localhost:3000/api/graphql",
 		// you can disable result caching here if you want to
 		// (this does not work if you are rendering your page with `export const dynamic = "force-static"`)

@@ -478,10 +478,10 @@
   content: none;
 }
 
-.prose pre {
-  @apply   overflow-x-auto border shadow-pink-400 ;
+/* .prose pre {
+  @apply overflow-x-auto border shadow-pink-400 ;
 }
-
+ */
 .prose code {
   @apply px-1 py-0.5 ;
 }
@@ -512,9 +512,9 @@
   @apply text-blue-600 dark:text-blue-500;
 }
  */
-.prose pre > code {
+ .prose pre > code {
   display: grid;
-}
+} 
 /* 
 .prose table {
   @apply my-2 rounded-md border border-gray-200 text-gray-1000 dark:border-gray-800 dark:text-gray-50;
@@ -657,13 +657,14 @@
 /* .prose code {
   @apply rounded-md border-gray-100 bg-gray-100 px-1 py-0.5 text-gray-800 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-200;
 }
+*/
 
-.prose code,
+/* .prose code,
 .prose pre {
   @apply whitespace-pre-wrap text-sm font-medium;
   word-break: break-word;
 }
-*/
+ */
 
 .prose sup {
   @apply text-sm text-blue-500 dark:text-gray-400;

@@ -9,7 +9,7 @@ import { Providers } from "~/components/Provider";
 import { Toast } from "~/components/Provider/Toaster";
 import { CLIENT_URL } from "~/graphql/constants";
 import { cx } from "~/lib/transformers";
-import { GMono, GSans, Quad } from "./fonts";
+import { GMono, GSans, Imp, Quad } from "./fonts";
 import Script from "next/script";
 import type { Viewport } from "next";
 
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
-		<html lang="en" className={cx(Quad.variable, GSans.variable, GMono.variable)}>
+		<html lang="en" className={cx(Quad.variable, GSans.variable, GMono.variable, Imp.variable)}>
 			<body>
 				<span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-900">
 					<a className="text-primary font-semibold" href="#main">

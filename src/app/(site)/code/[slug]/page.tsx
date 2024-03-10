@@ -9,6 +9,8 @@ import { ViewType } from "~/graphql/typeSlut";
 import { HiddenCounter } from "~/lib/actions";
 import { allBits, allLilSlugs, getLilBit, type LilBits } from "~/lib/sanity/client";
 
+export const revalidate = 3600;
+
 export async function generateStaticParams () {
 	return allLilSlugs.map((p) => ({
 		slug: p.slug,

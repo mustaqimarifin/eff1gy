@@ -11,6 +11,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+				imp: ["var(--imp)", ...fontFamily.serif],
 				mono: ["var(--font-geist-mono)", ...fontFamily.mono],
 				quad: ["var(--font-quad)", ...fontFamily.serif],
 			},

@@ -138,28 +138,28 @@ const speakingData = [
 ]
  */
 
-export default async function Home() {
+export default function Home() {
 	return (
 		<Intro>
-			<div className="my-8 mx-16 flex flex-col md:justify-items-center md:flex-row md:items-center">
+			<div className="my-8 mx-8 flex flex-col md:justify-items-center md:flex-row md:items-center">
 				<Globe />
 				<SectionTitle />
 				<SectionContainer>
 					<SectionContent>
 						<div className="space-y-8 pb-24 md:space-y-16">
-							<div className=" w-full p-2 lg:max-w-3xl">
-								<h2 className="mb-6 pt-4 font-serif text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-4xl">
+							<div className=" mx-auto w-full p-2 lg:max-w-3xl">
+								<h2 className="text-left mb-6 pt-4 font-imp text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-3xl">
 									Greetings! I'm a{" "}
-									<span className="dark:text-active font-serif font-normal text-blue-400">
+									<span className="dark:text-active text-blue-400">
 										regional marketing manager&nbsp;
 									</span>
 									at{` `}
-									<Muse2 className="inline h-12 items-center dark:invert" />, <span>where we focus on&nbsp;</span>
-									<span className="text-coyRed font-serif">large-scale sport & lifestyle events</span>
+									<Muse2 className="lg:-ml-2 inline h-12 items-center dark:invert" /><span>where we focus on&nbsp;</span>
+									<span className="text-coyRed">large-scale sport & lifestyle events</span>
 								</h2>
 								<div className="drop-shadow-sm">
-									<p className="dark:prose-invert prose max-w-none  py-4 md:prose-lg">
-										In 2014, I founded <Akhyla className="mb-1 inline h-8 w-8 items-center text-red-400" /> Akhyla -
+									<p className="dark:prose-invert prose max-w-none  py-4 md:prose-lg text-wrap">
+										In 2014, I founded <Akhyla className="mb-1 inline h-7 w-7 items-center text-red-400" /> Akhyla -
 										which was merely my own indie label for my own music but ended up becoming a platform to electronic
 										musicians to learn, collaborate and make records. And in between that time I served as
 										<span className="dark:text-active font-serif font-normal text-orange-400 hover:text-sky-400">
@@ -169,9 +169,8 @@ export default async function Home() {
 										&nbsp;for Infinity Games. More to come as I finally catalog my life and adventures as a
 										"forever-noob" web developer too.
 									</p>
-									{/*                <p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">
-      More to come as I finally catalog my life!
-    </p> */}
+									
+									
 									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Thanks for stopping by! </p>
 									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Mustaqim Arifin </p>
 								</div>

@@ -8,6 +8,7 @@ import {
 	type MutationToggleStackUserArgs,
 } from "~/graphql/typeSlut";
 import { slugify, urlRX } from "~/lib/functions";
+import { graphcdn } from "~/lib/graphcdn";
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 	const { id, data } = args;
@@ -75,7 +76,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 			include: { tags: true },
 		})
 		.then((stack) => {
-			//graphcdn.purgeList('stacks')
+graphcdn.purgeList('stacks')
 			return stack;
 		})
 		.catch((err) => {
@@ -113,7 +114,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
 			include: { tags: true },
 		})
 		.then((stack) => {
-			//graphcdn.purgeList('stacks')
+			graphcdn.purgeList('stacks')
 			return stack;
 		})
 		.catch((err) => {
@@ -151,7 +152,7 @@ export async function deleteStack(_, args: MutationDeleteStackArgs, ctx: Context
 			where: { id },
 		})
 		.then(() => {
-			//graphcdn.purgeList('stacks')
+			graphcdn.purgeList('stacks')
 			return true;
 		})
 		.catch((err) => {
