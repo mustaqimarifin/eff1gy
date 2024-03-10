@@ -96,6 +96,14 @@ export function TitleBar({
 			// biome-ignore lint/complexity/useOptionalChain: <explanation>
 			window?.matchMedia && window?.matchMedia("(prefers-color-scheme: dark)").matches;
 		if (isDarkMode) setDarkMode(true);
+		/* 		if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
+			document.documentElement.classList.add('dark')
+		} else {
+			document.documentElement.classList.remove('dark')
+		}
+		localStorage.theme = 'light'
+		localStorage.theme = 'dark'
+		localStorage.removeItem('theme') */
 	}, []);
 
 	return (
@@ -134,7 +142,7 @@ export function TitleBar({
 							</Link>
 						)}
 
-						{leadingAccessory && <>{leadingAccessory}</>}
+						{leadingAccessory && leadingAccessory}
 
 						<h2
 							style={
@@ -151,7 +159,7 @@ export function TitleBar({
 						</h2>
 					</span>
 
-					{trailingAccessory && <>{trailingAccessory}</>}
+					{trailingAccessory && trailingAccessory}
 				</div>
 
 				<div>{children}</div>

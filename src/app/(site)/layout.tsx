@@ -10,6 +10,15 @@ import { Toast } from "~/components/Provider/Toaster";
 import { CLIENT_URL } from "~/graphql/constants";
 import { cx } from "~/lib/transformers";
 import { GMono, GSans, Quad } from "./fonts";
+import Script from "next/script";
+import type { Viewport } from "next";
+
+export const viewport: Viewport = {
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "white" },
+		{ media: "(prefers-color-scheme: dark)", color: "black" },
+	],
+};
 
 export const metadata: Metadata = {
 	metadataBase: new URL(CLIENT_URL),
@@ -65,6 +74,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 					</Providers>
 				</main>
 			</body>
+			{/* 							<Script id="theme" strategy="lazyOnload">
+					{ `					window?.matchMedia && window?.matchMedia("(prefers-color-scheme: dark)").matches;
+		if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
+			document.documentElement.classList.add('dark')
+		} else {
+			document.documentElement.classList.remove('dark')
+		}
+		localStorage.theme = 'light'
+		localStorage.theme = 'dark'
+		localStorage.removeItem('theme')`}
+				</Script>  */}
 		</html>
 	);
 }

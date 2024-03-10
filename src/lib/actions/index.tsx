@@ -2,7 +2,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { Suspense, cache } from "react";
 
-import { CLIENT_URL } from "~/graphql/constants";
 import { ViewType } from "~/graphql/typeSlut";
 
 import { db } from "../db";
@@ -44,9 +43,9 @@ export async function addView(refId, type) {
 		}
 		case ViewType.Case: {
 			const results = await db.case.upsert({
-				where: { id: refId },
+				where: { slug: refId },
 				create: {
-					id: refId,
+					slug: refId,
 				},
 				update: {
 					count: {

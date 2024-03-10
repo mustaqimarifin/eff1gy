@@ -2,10 +2,10 @@
 import { useMutation } from "@apollo/client";
 import { ReactionButton } from "~/components/Button/ReactionButton";
 import { GET_CASE } from "~/graphql/queries/cases";
-import type { Case} from "~/graphql/typeSlut";
+import type { Case } from "~/graphql/typeSlut";
 import { ReactionType, ToggleReactionDocument } from "~/graphql/typeSlut";
 
-function getReactionButton(x:Case) {
+function getReactionButton(x: Case) {
 	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument, {
 		context: { fetchOptions: { cache: "no-store" } },
 	});
@@ -52,6 +52,6 @@ function getReactionButton(x:Case) {
 	);
 }
 
-export function BitAction({ x }: { x: Case}) {
+export function BitAction({ x }: { x: Case }) {
 	return <div className="flex items-center space-x-2">{getReactionButton(x)}</div>;
 }

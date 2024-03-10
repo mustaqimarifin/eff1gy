@@ -7,7 +7,7 @@ import { components } from "~/components/MDX";
 
 export default async function Mdx(props) {
 	return (
-		<div className="prose prose-neutral dark:prose-invert">
+		<div className="prose prose-neutral dark:prose-invert mt-8">
 			<MDXRemote
 				{...props}
 				options={{

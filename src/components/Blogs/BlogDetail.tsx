@@ -11,6 +11,7 @@ import { Detail } from "../ListDetail/Detail";
 import { TitleBar } from "../ListDetail/TitleBar";
 
 import dynamic from "next/dynamic";
+import { EyeIcon } from "lucide-react";
 
 export type Post = {
 	id: string;
@@ -47,6 +48,9 @@ type Props = {
 	slug?: string;
 };
 
+function eye() {
+	return <EyeIcon size={20} />;
+}
 export function BlogDetail({ children, post, slug }: Props) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);
@@ -99,19 +103,26 @@ export function BlogDetail({ children, post, slug }: Props) {
 
 				<Detail.ContentContainer>
 					<Detail.Header>
-						<div className="flex items-center space-x-6">
+						{/* 	<div className="flex items-center space-x-6">
 							<div>
 								<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
 							</div>
+						</div> */}
+						<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
+						<div
+							title={post?.date}
+							className="text-nowrap text-tertiary font-semibold text-xs inline-block leading-snug"
+						>
+							{`${formatDate(post?.date)} • ${blog?.count} views`}
 						</div>
 					</Detail.Header>
-					<div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
+					{/* <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
 						<div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
 							{formatDate(post?.date)}
 							{` • `}
 							{blog?.count}
 						</div>
-					</div>
+					</div> */}
 					{children}
 					<div className="py-6" />
 					<Comments refId={blog?.id} type={CommentType.Blog} />

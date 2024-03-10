@@ -11,6 +11,7 @@ import { useWindowFocus } from "~/hooks";
 import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { Comment } from "./Comment";
 import { CommentForm } from "./CommentForm";
+import { FireIcon } from "../Icon";
 
 interface Props {
 	refId: string;
@@ -49,7 +50,7 @@ export function Comments({ refId, type }: Props) {
 	return (
 		<div className="relative flex flex-1 flex-col border-t border-gray-150 dark:border-gray-800">
 			<div className="text-quaternary absolute left-1/2 -top-5 -translate-x-1/2 transform bg-white px-8 py-2 dark:bg-black">
-				<MessageCircle />
+				<FireIcon className="w-8 h-8 text-2xl font-bold" />
 			</div>
 			<div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pt-8 pb-4 md:px-8">
 				<div className="flex flex-col space-y-3">

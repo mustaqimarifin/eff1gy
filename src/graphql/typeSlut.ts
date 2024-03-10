@@ -731,14 +731,29 @@ export type BookmarkListItemFragment = {
 	count?: number | null;
 } & { __typename: "Bookmark" };
 
-export type CaseListItemFragment = { id: string; count?: number | null } & { __typename: "Case" };
+export type CaseListItemFragment = {
+	id: string;
+	title?: string | null;
+	date?: any | null;
+	slug?: string | null;
+	count?: number | null;
+} & { __typename: "Case" };
 
-export type CaseCoreFragment = { id: string; count?: number | null } & { __typename: "Case" };
+export type CaseCoreFragment = {
+	id: string;
+	title?: string | null;
+	date?: any | null;
+	slug?: string | null;
+	count?: number | null;
+} & { __typename: "Case" };
 
 export type CaseDetailFragment = {
 	reactionCount?: number | null;
 	viewerHasReacted?: boolean | null;
 	id: string;
+	title?: string | null;
+	date?: any | null;
+	slug?: string | null;
 	count?: number | null;
 } & { __typename: "Case" };
 
@@ -1315,7 +1330,12 @@ export type GetBookmarkQuery = {
 export type GetCasesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCasesQuery = {
-	cases: Array<({ id: string; count?: number | null } & { __typename: "Case" }) | null>;
+	cases: Array<
+		| ({ id: string; title?: string | null; date?: any | null; slug?: string | null; count?: number | null } & {
+				__typename: "Case";
+		  })
+		| null
+	>;
 } & { __typename?: "Query" };
 
 export type GetCaseQueryVariables = Exact<{
@@ -1324,9 +1344,15 @@ export type GetCaseQueryVariables = Exact<{
 
 export type GetCaseQuery = {
 	case?:
-		| ({ id: string; count?: number | null; reactionCount?: number | null; viewerHasReacted?: boolean | null } & {
-				__typename: "Case";
-		  })
+		| ({
+				id: string;
+				title?: string | null;
+				date?: any | null;
+				slug?: string | null;
+				count?: number | null;
+				reactionCount?: number | null;
+				viewerHasReacted?: boolean | null;
+		  } & { __typename: "Case" })
 		| null;
 } & { __typename?: "Query" };
 
@@ -1661,6 +1687,9 @@ export const CaseCoreFragmentDoc = /*#__PURE__*/ gql`
     fragment CaseCore on Case {
   __typename
   id
+  title
+  date
+  slug
   count
 }
     `;

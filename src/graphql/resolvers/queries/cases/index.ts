@@ -16,25 +16,39 @@ export async function getCases(_, args: GetCasesQueryVariables, ctx: Context) {
 		},
 	});
 }
-
 export async function getCase(_, { slug }: GetCaseQueryVariables, ctx: Context) {
 	const { db, viewer } = ctx;
 
-	const caseID = await db.case.findUnique({
-		where: { slug },
-		include: {
-			comments: true,
-			_count: {
-				select: {
-					reactions: true,
+	const [caseBySlug, caseById] = await Promise.all([
+		db.case.findUnique({
+			where: { slug },
+			include: {
+				comments: true,
+				_count: {
+					select: {
+						reactions: true,
+					},
 				},
 			},
-		},
-	});
+		}),
+		db.case.findUnique({
+			where: { slug },
+			include: {
+				comments: true,
+				_count: {
+					select: {
+						reactions: true,
+					},
+				},
+			},
+		}),
+	]);
+
+	const cibai = caseBySlug || caseById;
 
 	/*   if (!case.date && !viewer?.isAdmin) {
     return null
   }
  */
-	return caseID;
+	return cibai;
 }

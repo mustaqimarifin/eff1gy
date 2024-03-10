@@ -4,7 +4,11 @@ export const CaseCoreFragment = gql`
   fragment CaseCore on Case {
     __typename
     id
+    title
+    date
+    slug
     count
+
   }
 `;
 

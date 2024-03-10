@@ -9,19 +9,14 @@ import { TitleBar } from "./TitleBar";
 
 //** ORIGINAL CONTAINER REF */
 
-/* function ContentContainer (props) {
-	return (
-		<div
-			className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8"
-			{ ...props }
-		/>
-	)
-}
-  */
 function ContentContainer(props) {
-	return <div className="mx-auto w-full max-w-sm px-2 md:px-3 py-12  md:max-w-2xl lg:max-w-3xl lg:px-4 " {...props} />;
+	return <div className="mx-auto w-full max-w-3xl px-4 py-12 pb-10 md:px-8" {...props} />;
 }
 
+/* function ContentContainer(props) {
+	return <div className="mx-auto w-full max-w-sm px-2 md:px-3 py-12  md:max-w-2xl lg:max-w-3xl lg:px-4 " {...props} />;
+}
+ */
 interface DetailContainerProps {
 	children: ReactNode;
 }
@@ -46,7 +41,7 @@ interface TitleProps {
 }
 
 const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-	return <div ref={ref} className="text-gray-600 dark:text-slate-50 text-3xl font-quad " {...props} />;
+	return <h1 ref={ref} className="mb-4 text-3xl font-quad tracking-tight text-primary md:text-4xl" {...props} />;
 });
 
 function Loading() {

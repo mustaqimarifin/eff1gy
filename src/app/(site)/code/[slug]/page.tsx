@@ -7,16 +7,15 @@ import { BitList } from "~/components/Case/BitList";
 import { ListDetailView } from "~/components/Layouts";
 import { ViewType } from "~/graphql/typeSlut";
 import { HiddenCounter } from "~/lib/actions";
-import { allBits, allLilSlugs, getAllCases, getCase, getLilBit, type LilBits } from "~/lib/sanity/client";
+import { allBits, allLilSlugs, getLilBit, type LilBits } from "~/lib/sanity/client";
 
-export const revalidate = 3600;
-export async function generateStaticParams() {
+export async function generateStaticParams () {
 	return allLilSlugs.map((p) => ({
 		slug: p.slug,
 	}));
 }
 
-export default async function LilPage({ params: { slug } }) {
+export default async function LilPage ({ params: { slug } }) {
 	const p: LilBits = await getLilBit(slug);
 	if (!p) {
 		notFound();
@@ -24,16 +23,24 @@ export default async function LilPage({ params: { slug } }) {
 
 	return (
 		<ListDetailView
-			list={<BitList bits={allBits} />}
+			list={ <BitList bits={ allBits } /> }
 			hasDetail
 			detail={
-				<BitDetail bit={p}>
-					<HiddenCounter refId={p?.slug} type={ViewType.Case} />
-					<Suspense>
-						<Mdx source={p?.content} />
-					</Suspense>
-				</BitDetail>
+
+				<Suspense>
+					<HiddenCounter refId={ p?.slug } type={ ViewType.Case } />
+					<BitDetail bit={ p } slug={ slug }>
+						<Mdx source={ p?.content } />
+					</BitDetail>
+				</Suspense>
+
 			}
 		/>
+		/* 		<Suspense>
+					<HiddenCounter refId={p?.slug} type={ViewType.Case} />
+					<BitDetail bit={p} slug={slug}>
+						<Mdx source={p?.content} />
+					</BitDetail>
+				</Suspense> */
 	);
 }
