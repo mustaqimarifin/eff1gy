@@ -1,8 +1,8 @@
 "use client";
 import { ArrowLeft, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { type MutableRefObject, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { GlobalNavigationContext } from "../Provider";
-import { type MutableRefObject, type ReactNode, useContext, useState, useRef, useCallback, useEffect } from "react";
 
 interface Props {
 	title: string;
@@ -11,7 +11,7 @@ interface Props {
 	backButtonHref?: string;
 	magicTitle?: boolean;
 	titleRef?: MutableRefObject<HTMLParagraphElement>;
-	scrollContainerRef?: MutableRefObject<HTMLDivElement>;
+	scrollContainerRef: MutableRefObject<HTMLDivElement>;
 	children?: ReactNode;
 	leadingAccessory?: ReactNode;
 	trailingAccessory?: ReactNode;
@@ -68,9 +68,9 @@ export function TitleBar({
 		const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56;
 		const initialOffsets = initialTitleOffsetsRef.current;
 
-		let offsetAmount = parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100;
+		const offsetAmount = Number.parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100;
 
-		let opacityOffset = parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1;
+		const opacityOffset = Number.parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1;
 
 		setOffset(Math.min(Math.max(offsetAmount, 0), 100));
 		setOpacity(opacityOffset);
@@ -114,13 +114,13 @@ export function TitleBar({
 						currentScrollOffset === 0
 							? currentScrollOffset
 							: darkMode
-							  ? currentScrollOffset + 0.5
-							  : currentScrollOffset + 0.8
+								? currentScrollOffset + 0.5
+								: currentScrollOffset + 0.8
 					})`,
 					boxShadow: `0 1px 3px rgba(0,0,0,${currentScrollOffset})`,
 					minHeight: "48px",
 				}}
-				className={`filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900`}
+				className="filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900"
 			>
 				<div className="flex items-center justify-between flex-none">
 					<span className="flex items-center space-x-3">
@@ -150,7 +150,7 @@ export function TitleBar({
 									? {
 											transform: `translateY(${offset}%)`,
 											opacity: `${opacity}`,
-									  }
+										}
 									: {}
 							}
 							className="text-sm font-bold text-primary transform line-clamp-1"

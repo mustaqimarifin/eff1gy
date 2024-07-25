@@ -5,9 +5,8 @@ import { PrimaryButton } from "~/components/Button";
 import { Textarea } from "~/components/Input";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { useAddQuestionMutation, useViewerQuery } from "~/graphql/typeSlut";
-
 import { Avatar } from "../Avatar";
-import { nuts } from "../Provider/Toaster";
+import { Nuts } from "../Provider/Toaster";
 
 export function AddQuestionForm({ closeModal }) {
 	const { data } = useViewerQuery();
@@ -23,7 +22,7 @@ export function AddQuestionForm({ closeModal }) {
 		},
 		onError({ message }) {
 			const clean = message.replace("GraphQL error:", "");
-			nuts.error(clean);
+			Nuts.error(clean);
 		},
 	});
 
@@ -90,7 +89,7 @@ export function AddQuestionForm({ closeModal }) {
 					{loading ? <LoadingSpinner /> : "Ask away"}
 				</PrimaryButton>
 			</div>
-			{error && nuts.error("error")}
+			{error && Nuts.error("error")}
 		</form>
 	);
 }

@@ -1,6 +1,7 @@
+/* eslint-disable node/prefer-global/process */
 import { baseUrl } from "~/config/seo";
-//!ENV
-let imagekitURL = "https://ik.imagekit.io/mstqmarfn";
+// !ENV
+const imagekitURL = "https://ik.imagekit.io/mstqmarfn";
 const stellateURL = process.env.STELLATE_ENDPOINT;
 const stellateKEY = process.env.STELLATE_KEY;
 const cloudinaryURL = process.env.CLOUDINARY_URL;
@@ -19,7 +20,7 @@ const GQL = "/api/graphql";
 const IS_PROD = process.env.NODE_ENV === "production";
 const IS_DEV = process.env.NODE_ENV === "development";
 const IS_PREVIEW = process.env.VERCEL_ENV === "preview" || process.env.NEXT_PUBLIC_VERCEL_ENV === "preview";
-//const GRAPHCDN_PURGE_ENDPOINT = process.env.GRAPHCDN_PURGE_ENDPOINT
+// const GRAPHCDN_PURGE_ENDPOINT = process.env.GRAPHCDN_PURGE_ENDPOINT
 const CLIENT_URL = IS_PROD ? baseUrl : devUrl;
 
 const HELLSQL = CLIENT_URL + GQL;

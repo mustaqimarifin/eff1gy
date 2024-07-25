@@ -21,7 +21,7 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
               33vw" */
 				priority
 				onLoad={() => setLoaded(false)}
-				alt={""}
+				alt=""
 				style={{
 					position: "absolute",
 					top: "0px",
@@ -50,7 +50,7 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
 				<Image
 					src={imgSrc}
 					onLoad={() => setLoaded(true)}
-					alt={""}
+					alt=""
 					/*           sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw" */

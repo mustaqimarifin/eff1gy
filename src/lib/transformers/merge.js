@@ -3,14 +3,14 @@ function B(...x) {
 		return Object.prototype.toString.call(i).slice(8, -1).toLowerCase();
 	}
 	function A(i, f) {
-		for (let [h, w] of Object.entries(f)) {
+		for (const [h, w] of Object.entries(f)) {
 			const z = q(w);
 			if (i[h] !== void 0 && q(i[h]) === z && ["array", "object"].includes(z)) i[h] = B(i[h], w);
 			else i[h] = structuredClone(w);
 		}
 	}
 	let d = structuredClone(x.shift());
-	for (let i of x) {
+	for (const i of x) {
 		const f = q(i);
 		if (q(d) !== f) {
 			d = structuredClone(i);

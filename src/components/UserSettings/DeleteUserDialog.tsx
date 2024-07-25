@@ -3,7 +3,6 @@ import { useApolloClient } from "@apollo/client";
 import { DeleteButton } from "~/components/Button";
 import { DialogComponent } from "~/components/Dialog";
 import { useDeleteUserMutation } from "~/graphql/typeSlut";
-
 import { LoadingSpinner } from "../LoadingSpinner";
 
 export function DeleteUserDialog({ trigger }) {
@@ -13,7 +12,7 @@ export function DeleteUserDialog({ trigger }) {
 	return (
 		<DialogComponent
 			trigger={trigger}
-			title={"Delete account"}
+			title="Delete account"
 			modalContent={() => (
 				<div className="text-primary flex flex-col space-y-4 p-4 text-left">
 					<div>All comments, reactions, and AMA questions will be deleted.</div>

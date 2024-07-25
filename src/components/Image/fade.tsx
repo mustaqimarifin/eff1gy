@@ -3,10 +3,10 @@
 import type { ReactNode } from "react";
 import { useInView } from "react-intersection-observer";
 
-export const Fade = ({ children }: { children: ReactNode }) => {
+export function Fade({ children }: { children: ReactNode }) {
 	const { ref, inView } = useInView({
 		triggerOnce: true,
-		//rootMargin: '-100px 0px',
+		// rootMargin: '-100px 0px',
 		threshold: 0.4,
 	});
 
@@ -21,4 +21,4 @@ export const Fade = ({ children }: { children: ReactNode }) => {
 			{children}
 		</div>
 	);
-};
+}

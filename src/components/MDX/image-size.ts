@@ -1,23 +1,24 @@
-import path from "path";
+import path from "node:path";
 
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 import { imageDimensionsFromData } from "image-dimensions";
 import { cache } from "react";
 import { visit } from "unist-util-visit";
-export type Size = {
+
+export interface Size {
 	width: number | undefined;
 	height: number | undefined;
 	orientation?: number;
 	type?: string;
-};
+}
 export type SizeCalculationResult = {
 	images?: Size[];
 } & Size;
-export type IImage = {
+export interface IImage {
 	validate: (input: Uint8Array) => boolean;
 	calculate: (input: Uint8Array, filepath?: string) => SizeCalculationResult;
-};
-type ImageNode = {
+}
+interface ImageNode {
 	type: "element";
 	tagName: "img";
 	properties: {
@@ -27,7 +28,7 @@ type ImageNode = {
 		blurDataURL?: string;
 		placeholder?: "blur" | "empty";
 	};
-};
+}
 
 function isImageNode(node: ImageNode) {
 	const img = node as ImageNode;
@@ -49,7 +50,7 @@ async function addProps(node: ImageNode): Promise<void> {
 		res = imageDimensionsFromData(buffer);
 	}
 	console.log(node.properties.src);
-	if (!res) throw Error(`Invalid image with src "${node.properties.src}"`);
+	if (!res) throw new Error(`Invalid image with src "${node.properties.src}"`);
 
 	node.properties.width = res.width;
 	node.properties.height = res.height;

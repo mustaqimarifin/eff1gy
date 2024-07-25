@@ -6,7 +6,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
-	darkMode: "media",
+	//darkMode: 'media',
 	theme: {
 		extend: {
 			fontFamily: {
@@ -15,7 +15,6 @@ export default {
 				mono: ["var(--font-geist-mono)", ...fontFamily.mono],
 				quad: ["var(--font-quad)", ...fontFamily.serif],
 			},
-
 			colors: {
 				white: "#fff",
 				green: colors.emerald,

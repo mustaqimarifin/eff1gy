@@ -17,7 +17,13 @@ export async function generateStaticParams() {
 	}));
 }
 
-export default async function Blog({ params: { slug } }) {
+interface BlogProps {
+	params: {
+		slug: string;
+	};
+}
+export default async function Blog(props: BlogProps) {
+	const { slug } = props.params;
 	const post: Post = await getPost(slug);
 	if (!post) {
 		notFound();

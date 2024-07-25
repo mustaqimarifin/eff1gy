@@ -5,7 +5,6 @@ import { useRef } from "react";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { useGetViewerWithSettingsQuery } from "~/graphql/typeSlut";
-
 import { UserSettingsFooter } from "./Footer";
 import { SignedOut } from "./SignedOut";
 import { UsernameForm } from "./Username";
@@ -28,7 +27,7 @@ export function UserSettings() {
 
 	return (
 		<Detail.Container ref={scrollContainerRef}>
-			<TitleBar magicTitle title={"Settings"} titleRef={titleRef} scrollContainerRef={scrollContainerRef} />
+			<TitleBar magicTitle title="Settings" titleRef={titleRef} scrollContainerRef={scrollContainerRef} />
 			<Detail.ContentContainer>
 				<Detail.Header>
 					<Detail.Title ref={titleRef}>Settings</Detail.Title>

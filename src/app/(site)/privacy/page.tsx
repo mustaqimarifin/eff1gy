@@ -1,5 +1,6 @@
 import PP from "~/components/Home/PP";
 import { Detail } from "~/components/ListDetail/Detail";
+
 export const dynamic = "force-static";
 
 export default function Privacy() {

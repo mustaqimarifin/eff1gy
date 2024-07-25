@@ -14,7 +14,7 @@ export function SignInDialogContent() {
 			<div>
 				<div>
 					<GhostButton
-						href={`/api/auth/signin/github`}
+						href="/api/auth/signin/github"
 						className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
 						onClick={(e) => {
 							e.preventDefault();
@@ -26,7 +26,7 @@ export function SignInDialogContent() {
 						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with GitHub</span>
 					</GhostButton>
 					<GhostButton
-						href={`/api/auth/signin/google`}
+						href="/api/auth/signin/google"
 						className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
 						onClick={(e) => {
 							e.preventDefault();
@@ -38,7 +38,7 @@ export function SignInDialogContent() {
 						<span className="ml-2 text-sm leading-none dark:text-gray-200">Sign in with Google</span>
 					</GhostButton>
 					<GhostButton
-						href={`/api/auth/signin/twitter`}
+						href="/api/auth/signin/twitter"
 						className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
 						onClick={(e) => {
 							e.preventDefault();

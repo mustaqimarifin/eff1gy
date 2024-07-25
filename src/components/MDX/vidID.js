@@ -1,10 +1,10 @@
-const J = (q) => {
+function J(q) {
 	if (q.includes("?")) q = q.split("?")[0];
 	if (q.includes("/")) q = q.split("/")[0];
 	if (q.includes("&")) q = q.split("&")[0];
 	return q;
-};
-const I = (q) => {
+}
+function I(q) {
 	let j = q;
 	(j = j.replace(/#t=.*$/, "")), (j = j.replace(/^https?:\/\//, ""));
 	const z = /youtube:\/\/|youtu\.be\/|y2u\.be\//g;
@@ -48,13 +48,12 @@ const I = (q) => {
 	}
 	const E = /\/attribution_link\?.*v%3D([^%&]*)(%26|&|$)/;
 	if (E.test(j)) return J(j.match(E)[1]);
-	return;
-};
+}
 const f = (q, j) => M(q) || k(q, j) || w(q, j) || L();
-const M = (q) => {
+function M(q) {
 	if (Array.isArray(q)) return q;
-};
-const k = (q, j) => {
+}
+function k(q, j) {
 	let z = q == null ? null : (typeof Symbol !== "undefined" && q[Symbol.iterator]) || q["@@iterator"];
 	if (z == null) return;
 	const B = [];
@@ -63,7 +62,9 @@ const k = (q, j) => {
 	let F;
 	let C;
 	try {
-		for (z = z.call(q); !(D = (F = z.next()).done); D = !0) if ((B.push(F.value), j && B.length === j)) break;
+		for (z = z.call(q); !(D = (F = z.next()).done); D = !0) {
+			if ((B.push(F.value), j && B.length === j)) break;
+		}
 	} catch (O) {
 		(G = !0), (C = O);
 	} finally {
@@ -74,26 +75,26 @@ const k = (q, j) => {
 		}
 	}
 	return B;
-};
-const w = (q, j) => {
+}
+function w(q, j) {
 	if (!q) return;
 	if (typeof q === "string") return H(q, j);
 	let z = Object.prototype.toString.call(q).slice(8, -1);
 	if (z === "Object" && q.constructor) z = q.constructor.name;
 	if (z === "Map" || z === "Set") return Array.from(q);
 	if (z === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(z)) return H(q, j);
-};
-const H = (q, j) => {
+}
+function H(q, j) {
 	if (j == null || j > q.length) j = q.length;
 	for (let z = 0, B = new Array(j); z < j; z++) B[z] = q[z];
 	return B;
-};
-const L = () => {
+}
+function L() {
 	throw new TypeError(
 		"Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.",
 	);
-};
-const A = (q) => {
+}
+function A(q) {
 	let j = q;
 	if (j.includes("#")) {
 		const z = j.split("#");
@@ -117,7 +118,7 @@ const A = (q) => {
 	const Q = new RegExp(X, "gim");
 	if (Q.test(j)) {
 		if (((C = j.split("/")), C && C.length > 0)) F = C.pop();
-	} else if (/clip_id=/gim.test(j)) {
+	} else if (/clip_id=/i.test(j)) {
 		if (((C = j.split("clip_id=")), C && C.length > 0)) {
 			const Y = C[1].split("&");
 			const Z = f(Y, 1);
@@ -125,58 +126,52 @@ const A = (q) => {
 		}
 	}
 	return F;
-};
-const T = (q) => {
+}
+function T(q) {
 	const j = /https:\/\/vine\.co\/v\/([a-zA-Z\d]*)\/?/;
 	const z = j.exec(q);
 	if (z && z.length > 1) return z[1];
-	return;
-};
-const v = (q) => {
+}
+function v(q) {
 	let j;
 	if (q.includes("embed")) return (j = /embed\/(\w{8})/), q.match(j)[1];
 	j = /\/v\/(\w{8})/;
 	const z = q.match(j);
 	if (z && z.length > 0) return z[1];
-	return;
-};
-const x = (q) => {
+}
+function x(q) {
 	const j = q.includes("embed")
 		? /https:\/\/web\.microsoftstream\.com\/embed\/video\/([a-zA-Z\d-]*)\/?/
 		: /https:\/\/web\.microsoftstream\.com\/video\/([a-zA-Z\d-]*)\/?/;
 	const z = j.exec(q);
 	if (z && z.length > 1) return z[1];
-	return;
-};
-const R = (q) => {
-	const j = /tiktok\.com(.*)\/video\/(\d+)/gm;
+}
+function R(q) {
+	const j = /tiktok\.com(.*)\/video\/(\d+)/g;
 	const z = j.exec(q);
 	if (z && z.length > 2) return z[2];
-	return;
-};
-const $ = (q) => {
-	const j = /dailymotion\.com(.*)(video)\/([a-zA-Z\d]+)/gm;
+}
+function $(q) {
+	const j = /dailymotion\.com(.*)(video)\/([a-zA-Z\d]+)/g;
 	const z = j.exec(q);
 	if (z) return z[3];
-	const B = /dai\.ly\/([a-zA-Z\d]+)/gm;
+	const B = /dai\.ly\/([a-zA-Z\d]+)/g;
 	const D = B.exec(q);
 	if (D && D.length > 1) return D[1];
-	const G = /dailymotion\.com(.*)video=([a-zA-Z\d]+)/gm;
+	const G = /dailymotion\.com(.*)video=([a-zA-Z\d]+)/g;
 	const F = G.exec(q);
 	if (F && F.length > 2) return F[2];
-	return;
-};
-const b = (q) => {
+}
+function b(q) {
 	if (typeof q !== "string") throw new TypeError("getSrc expected a string");
-	const j = /src="(.*?)"/gm;
+	const j = /src="(.*?)"/g;
 	const z = j.exec(q);
 	if (z && z.length >= 2) return z[1];
-	return;
-};
-const P = (q) => {
+}
+function P(q) {
 	if (typeof q !== "string") throw new TypeError("get-video-id expects a string");
 	let j = q;
-	if (/<iframe/gi.test(j)) j = b(j) || "";
+	if (/<iframe/i.test(j)) j = b(j) || "";
 	(j = j.trim()), (j = j.replace("-nocookie", "")), (j = j.replace("/www.", "/"));
 	let z = { id: null, service: null };
 	if (/\/\/google/.test(j)) {
@@ -191,6 +186,6 @@ const P = (q) => {
 	else if (/tiktok\.com/.test(j)) z = { id: R(j), service: "tiktok" };
 	else if (/(dailymotion\.com|dai\.ly)/.test(j)) z = { id: $(j), service: "dailymotion" };
 	return z;
-};
+}
 /*! get-video-id v3.6.5 | @license MIT © Michael Wuergler | https://github.com/radiovisual/get-video-id */ const y = P;
 export { y as default };

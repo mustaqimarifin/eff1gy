@@ -20,7 +20,7 @@ export function EventDetail({ post, children }: Props) {
 				<TitleBar
 					backButton
 					globalMenu={false}
-					backButtonHref={"/events"}
+					backButtonHref="/events"
 					magicTitle
 					title={post?.title}
 					titleRef={titleRef}

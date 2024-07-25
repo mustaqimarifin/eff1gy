@@ -1,3 +1,5 @@
+/* eslint-disable node/prefer-global/process */
+/* eslint-disable node/prefer-global/buffer */
 const client_id = process.env.SPOTIFY_CLIENT_ID as string;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET as string;
 const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN as string;
@@ -7,7 +9,7 @@ const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-pla
 const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks`;
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
-const getAccessToken = async () => {
+async function getAccessToken() {
 	const response = await fetch(TOKEN_ENDPOINT, {
 		method: "POST",
 		headers: {
@@ -21,10 +23,10 @@ const getAccessToken = async () => {
 	});
 
 	return response.json();
-};
+}
 
-export const getNowPlaying = async () => {
-	//noStore()
+export async function getNowPlaying() {
+	// noStore()
 	const { access_token } = await getAccessToken();
 
 	return fetch(NOW_PLAYING_ENDPOINT, {
@@ -32,9 +34,9 @@ export const getNowPlaying = async () => {
 			Authorization: `Bearer ${access_token}`,
 		},
 	});
-};
+}
 
-export const getTopTracks = async () => {
+export async function getTopTracks() {
 	const { access_token } = await getAccessToken();
 
 	return fetch(TOP_TRACKS_ENDPOINT, {
@@ -43,9 +45,9 @@ export const getTopTracks = async () => {
 		},
 		next: { revalidate: 86400 },
 	});
-};
+}
 
-/* 
+/*
 {
     "album": "KILLER BEES",
     "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273e01033d225eb83ed8fd59d58",
@@ -64,7 +66,6 @@ export const getTopTracks = async () => {
 }
 https://www.youtube.com/watch?v=FeLb0IPHGZQ
 https://api.socialcounts.org/youtube-live-subscriber-count/UCd-pjthLQYLYVdN7GNwJgyA
-
 
 {
   "est_sub": 571,

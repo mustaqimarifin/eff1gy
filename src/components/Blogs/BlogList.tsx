@@ -19,11 +19,11 @@ export default function BlogList({ posts }) {
       if (loading) {
       return <Detail.Loading />;
     }
-  
+
     if (!data?.blogs || error) {
       return <Detail.Null />;
     }
-  
+
     const { blogs } = data
     let count : number
     const views =  blogs.filter((blog) => blog.count === count);
@@ -38,7 +38,7 @@ export default function BlogList({ posts }) {
 			<TitleBar
 				backButton
 				globalMenu={false}
-				backButtonHref={"/"}
+				backButtonHref="/"
 				magicTitle
 				title="Posts"
 				titleRef={titleRef}
@@ -123,7 +123,7 @@ export default function BlogList({ posts }) {
 		</Detail.Container>
 	);
 }
-/* 
+/*
 export default async function PostIndex() {
   let allBlogs = getPosts()
 

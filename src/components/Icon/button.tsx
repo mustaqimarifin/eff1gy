@@ -14,7 +14,7 @@ export interface IconButtonProps {
 	onClick: () => void;
 }
 
-export const IconButton = (props: IconButtonProps) => {
+export function IconButton(props: IconButtonProps) {
 	const { data } = useViewerQuery();
 
 	const { Icon, isActive, color, children, hoverbg } = props;
@@ -34,4 +34,4 @@ export const IconButton = (props: IconButtonProps) => {
 			<span className="text-sm">{children}</span>
 		</button>
 	);
-};
+}

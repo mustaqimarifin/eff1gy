@@ -1,4 +1,4 @@
-import { URL } from "url";
+import { URL } from "node:url";
 import * as cheerio from "cheerio";
 
 import { urlRX } from "~/lib/functions";
@@ -25,7 +25,7 @@ export default async function getBookmarkMetaData(url) {
 		$(`link[rel="apple-touch-icon"]`).attr("href") ||
 		$(`link[rel="shortcut icon"]`).attr("href") ||
 		$(`link[rel="icon"]`).attr("href");
-	let faviconUrl = null;
+	let faviconUrl;
 	if (favicon) {
 		if (favicon.startsWith("data:")) {
 			// if the favicon is a hard-coded URL, or points to some external asset

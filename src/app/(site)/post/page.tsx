@@ -1,25 +1,60 @@
+import { Suspense } from "react";
 import { ListDetailView } from "~/components/Layouts";
 import { PostsList } from "~/components/Posts/PostsList";
-import { getClient } from "~/components/Provider/ApolloClient";
+import { PreloadQuery, query } from "~/components/Provider/ApolloClient";
 import { GET_POSTS } from "~/graphql/queries/posts";
 import { GET_VIEWER } from "~/graphql/queries/viewer";
 
-export const metadata = {
-	title: "Writing",
-};
+/* export default async function WritingPage () {
+	await query({ query: GET_VIEWER })
+	return <ListDetailView list={
 
-export const dynamic = "force-dynamic";
+		<PreloadQuery
+			query={ GET_POSTS }
+			variables={ {
+				filter: { published: true }
+			} }
+		>
+			<Suspense fallback={""}>
+				<PostsList />
+			</Suspense>
+		</PreloadQuery>
+	} hasDetail={ false } detail={ null } />
+} */
 
-export default async function WritingPage() {
-	const client = getClient();
+/* export default async function WritingPage () {
+	await query({ query: GET_VIEWER })
+	return <ListDetailView list={<PostsList />} hasDetail={ false } detail={ null } />
+}
+ 
 
-	await Promise.all([
-		client.query({ query: GET_VIEWER }),
-		client.query({
+
+
+/* export default async function WritingPage() {
+	 await Promise.all([
+		query({ query: GET_VIEWER }),
+		query({
 			query: GET_POSTS,
 			variables: { filter: { published: true } },
 		}),
 	]);
+ 
+	return <ListDetailView list={<PostsList/>} hasDetail={false} detail={null} />;
+}
+ */
 
-	return <ListDetailView list={<PostsList />} hasDetail={false} detail={null} />;
+export default async function WritingPage() {
+	await query({ query: GET_VIEWER });
+	return (
+		<PreloadQuery
+			query={GET_POSTS}
+			variables={{
+				filter: { published: true },
+			}}
+		>
+			<Suspense fallback={""}>
+				<PostsList />
+			</Suspense>
+		</PreloadQuery>
+	);
 }

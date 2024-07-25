@@ -3,12 +3,11 @@ import { useMutation } from "@apollo/client";
 import { EditBookmarkDialog } from "~/components/Bookmarks/EditBookmarkDialog";
 import Button from "~/components/Button";
 import { TOGGLE_REACTION } from "~/graphql/mutations/reactions";
-import { ADD_VIEW } from "~/graphql/mutations/view";
 import { GET_BOOKMARK } from "~/graphql/queries/bookmarks";
 import type { Bookmark } from "~/graphql/typeSlut";
-import { ReactionType, ViewType, useToggleReactionMutation, useViewerQuery } from "~/graphql/typeSlut";
-
+import { ReactionType, useViewerQuery } from "~/graphql/typeSlut";
 import { ReactionButton } from "../Button/ReactionButton";
+
 /* function getBookmarkView(bookmark: Bookmark) {
 	const [addView, { loading }] = useMutation(ADD_VIEW);
 
@@ -62,7 +61,7 @@ function getReactionButton(bookmark: Bookmark) {
 				toggleReaction: {
 					__typename: "Bookmark",
 					...bookmark,
-					reactionCount: bookmark.viewerHasReacted ? bookmark.reactionCount - 1 : bookmark.reactionCount + 1,
+					reactionCount: bookmark.viewerHasReacted ? bookmark.reactionCount! - 1 : bookmark.reactionCount! + 1,
 					viewerHasReacted: !bookmark.viewerHasReacted,
 				},
 			},
@@ -85,8 +84,8 @@ function getReactionButton(bookmark: Bookmark) {
 		<ReactionButton
 			id={bookmark.id}
 			loading={loading}
-			count={bookmark.reactionCount}
-			hasReacted={bookmark.viewerHasReacted}
+			count={bookmark.reactionCount!}
+			hasReacted={bookmark.viewerHasReacted!}
 			onClick={handleClick}
 		/>
 	);
@@ -99,9 +98,7 @@ export function BookmarkActions({ bookmark }) {
 			{getReactionButton(bookmark)}
 
 			{data?.viewer?.isAdmin && (
-				<>
-					<EditBookmarkDialog bookmark={bookmark} trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>} />
-				</>
+				<EditBookmarkDialog bookmark={bookmark} trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>} />
 			)}
 		</div>
 	);

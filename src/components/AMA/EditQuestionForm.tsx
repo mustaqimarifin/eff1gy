@@ -9,12 +9,10 @@ import type { Question } from "~/graphql/typeSlut";
 import {
 	GetQuestionDocument,
 	GetQuestionsDocument,
-	QuestionStatus,
 	useDeleteQuestionMutation,
 	useEditQuestionMutation,
 	useViewerQuery,
 } from "~/graphql/typeSlut";
-
 import AudioRecorder from "../AudioRecorder";
 
 export function EditQuestionForm({
@@ -76,7 +74,7 @@ export function EditQuestionForm({
 				};
 			}
 			default:
-				throw new Error();
+				throw new Error(action.value);
 		}
 	}
 
@@ -277,7 +275,7 @@ export function EditQuestionForm({
 					defaultValue={question.description}
 					onChange={onDescriptionChange}
 					onKeyDown={onKeyDown}
-					placeholder={"Add optional details"}
+					placeholder="Add optional details"
 				/>
 			</form>
 			{state.isRecording && (

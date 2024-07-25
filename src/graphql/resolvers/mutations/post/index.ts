@@ -1,7 +1,7 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "~/graphql/context";
-import { type MutationAddPostArgs, type MutationDeletePostArgs, type MutationEditPostArgs } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { MutationAddPostArgs, MutationDeletePostArgs, MutationEditPostArgs } from "~/graphql/typeSlut";
 
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
 	const { id, data } = args;

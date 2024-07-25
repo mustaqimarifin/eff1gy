@@ -1,18 +1,21 @@
-import { Switch as SwitchComponent } from "@headlessui/react";
+import { Field, Label, Switch as SwitchComponent } from "@headlessui/react";
 import { useState } from "react";
 
-export function Switch({ label = null, onChange = null, defaultEnabled = false }) {
+interface SwitchProps {
+	label: string;
+	onChange?: any;
+	defaultEnabled: boolean;
+}
+export function Switch({ label = null, onChange = null, defaultEnabled = false }: SwitchProps) {
 	const [enabled, setEnabled] = useState(defaultEnabled);
 	function handleChange() {
 		onChange?.(!enabled);
 		setEnabled(!enabled);
 	}
 	return (
-		<SwitchComponent.Group>
+		<Field>
 			<div className="flex items-center">
-				{label && (
-					<SwitchComponent.Label className="text-primary mr-2 text-sm font-medium">{label}</SwitchComponent.Label>
-				)}
+				{label && <Label className="text-primary mr-2 text-sm font-medium">{label}</Label>}
 				<SwitchComponent
 					checked={enabled}
 					onChange={handleChange}
@@ -27,6 +30,6 @@ export function Switch({ label = null, onChange = null, defaultEnabled = false }
 					/>
 				</SwitchComponent>
 			</div>
-		</SwitchComponent.Group>
+		</Field>
 	);
 }

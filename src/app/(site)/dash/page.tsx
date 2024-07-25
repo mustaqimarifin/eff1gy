@@ -1,16 +1,22 @@
 import { DashPage, SectionContent } from "~/components/Dash/Index";
-//import { ListDetailView } from "~/components/Layouts";
+// import { ListDetailView } from "~/components/Layouts";
 import { getTopTracks } from "~/lib/queries";
-
 import Track from "./Track";
 
-//export const runtime = 'edge'
+/* interface SpotifyTrack {
+  artists: {
+    name: string
+  }[]
+  external_urls: { spotify: string }
+  album: { images: { url: string }[] }
+  name: string
+} */
 export default async function Dashboard() {
 	const response = await getTopTracks();
 	const { items } = await response.json();
 
-	const tracks = items.slice(0, 10).map((track) => ({
-		artist: track.artists.map((_artist) => _artist.name).join(", "),
+	const tracks = items?.slice(0, 10).map((track) => ({
+		artist: track.artists.map((_artist: { name: string }) => _artist.name).join(", "),
 		songUrl: track.external_urls.spotify,
 		imageUrl: track.album.images[1].url,
 		title: track.name,
@@ -25,7 +31,6 @@ export default async function Dashboard() {
 					<div className="mb-8" />
 					<div className="flex flex-col w-full" />
 					<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 my-2 w-full" />
-					<h2 className="font-bold text-3xl tracking-tight mb-4 mt-16 text-black dark:text-white" />
 					<p className="text-gray-600 dark:text-gray-400 mb-4">
 						Top tracks I grab courtesy of Spotify's WEB API -- updated daily!
 					</p>

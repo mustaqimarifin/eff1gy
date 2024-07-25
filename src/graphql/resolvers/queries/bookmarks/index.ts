@@ -1,24 +1,24 @@
 import { PAGINATION_AMOUNT } from "~/graphql/constants";
-import { type Context } from "~/graphql/context";
-import { type GetBookmarksQueryVariables } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { GetBookmarksQueryVariables } from "~/graphql/typeSlut";
 
 export async function getBookmarks(_, args: GetBookmarksQueryVariables, ctx: Context) {
 	const { first = PAGINATION_AMOUNT, after = undefined, filter = null } = args;
 	const { db } = ctx;
 
 	/*
-    When we are paginating after a cursor, we need to skip the cursor object itself. 
+    When we are paginating after a cursor, we need to skip the cursor object itself.
     Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
 	const skip = after ? 1 : 0;
 	const cursor = after ? { id: after } : undefined;
 
 	/*
-    Not sure how to handle combined filters, but for now we can essentially 
+    Not sure how to handle combined filters, but for now we can essentially
     switch-case the filter argument and replace the `where` object in our
     findMany call.
   */
-	let where = undefined;
+	let where;
 	if (filter?.tag) {
 		where = {
 			tags: {
@@ -45,7 +45,6 @@ export async function getBookmarks(_, args: GetBookmarksQueryVariables, ctx: Con
 
 	try {
 		const edges = await db.bookmark.findMany({
-			relationLoadStrategy: "join",
 			take,
 			skip,
 			cursor,

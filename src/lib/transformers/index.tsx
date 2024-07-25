@@ -1,12 +1,12 @@
 export const cx = (...classes) => classes.filter(Boolean).join(" ");
 
-type Props = {
+interface Props {
 	timestamp?: number | string;
 	locale?: string;
 	year?: "numeric" | "2-digit";
 	month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
 	day?: "numeric" | "2-digit";
-};
+}
 
 export function realTime({
 	timestamp = null,
@@ -32,12 +32,12 @@ export function realTime({
 }
 
 export function formatDate(date: string) {
-	let currentDate = new Date();
-	let targetDate = new Date(date);
+	const currentDate = new Date();
+	const targetDate = new Date(date);
 
-	let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
-	let monthsAgo = currentDate.getMonth() - targetDate.getMonth();
-	let daysAgo = currentDate.getDate() - targetDate.getDate();
+	const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
+	const monthsAgo = currentDate.getMonth() - targetDate.getMonth();
+	const daysAgo = currentDate.getDate() - targetDate.getDate();
 
 	let formattedDate = "";
 
@@ -51,7 +51,7 @@ export function formatDate(date: string) {
 		formattedDate = "Today";
 	}
 
-	let fullDate = targetDate.toLocaleString("en-us", {
+	const fullDate = targetDate.toLocaleString("en-us", {
 		month: "long",
 		day: "numeric",
 		year: "numeric",

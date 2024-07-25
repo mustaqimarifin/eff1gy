@@ -2,7 +2,6 @@
 import Button from "~/components/Button";
 import { GET_STACK } from "~/graphql/queries/stack";
 import { ReactionType, useToggleReactionMutation, useViewerQuery } from "~/graphql/typeSlut";
-
 import { ReactionButton } from "../Button/ReactionButton";
 import { EditStackDialog } from "./EditStackDialog";
 

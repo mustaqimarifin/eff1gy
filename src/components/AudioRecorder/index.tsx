@@ -3,32 +3,25 @@ import { useEffect, useReducer, useState } from "react";
 import useSWR from "swr";
 
 import { uploadToCloudinary } from "~/lib/cloudinary/api";
-
 import AudioPlayer from "../AudioPlayer";
 import Button, { DeleteButton, RecordingButton } from "../Button";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { nuts } from "../Provider/Toaster";
+import { Nuts } from "../Provider/Toaster";
 
 interface Props {
 	id: string;
 	initialAudioUrl?: string;
 	initialWaveform?: number[];
-	onRecordingStart?: Function;
-	onRecordingStop?: Function;
-	onRecordingError?: Function;
+	onRecordingStart?: () => void;
+	onRecordingStop?: () => void;
+	onRecordingError?: () => void;
 	// onTranscriptionComplete?: (e: OnComplete) => void
-	onDeleteAudio?: Function;
+	onDeleteAudio?: () => void;
 	onUploadComplete: (e: { waveform: number[]; src: string }) => void;
 }
 
 interface State {
-	status:
-		| "idle"
-		| "recording"
-		| "recorded"
-		| "uploading"
-		// | 'transcribing'
-		| "done";
+	status: "idle" | "recording" | "recorded" | "uploading" | "done";
 	audioUrl: string | null;
 	audioBlob: Blob | null;
 	waveform: number[];
@@ -41,7 +34,6 @@ type Action =
 	| { type: "start-recording" }
 	| { type: "stop-recording"; audioUrl: string; audioBlob: Blob }
 	| { type: "start-uploading" }
-	// | { type: 'start-transcribing' }
 	| { type: "done"; transcript: string }
 	| { type: "set-waveform"; waveform: number[] }
 	| { type: "error"; error: string }
@@ -62,7 +54,6 @@ export default function AudioRecorder({
 		audioUrl: initialAudioUrl,
 		audioBlob: null,
 		waveform: initialWaveform,
-		// transcript: null,
 		error: null,
 	};
 
@@ -128,7 +119,7 @@ export default function AudioRecorder({
 				};
 			}
 			default:
-				throw new Error();
+				throw new Error(action);
 		}
 	}
 
@@ -259,7 +250,7 @@ export default function AudioRecorder({
 				</div>
 			)}
 
-			{state.error && nuts.error(state.error)}
+			{state.error && Nuts.error(state.error)}
 
 			{state.status === "uploading" && (
 				<div className="flex items-center justify-center">

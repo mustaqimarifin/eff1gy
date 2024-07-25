@@ -1,11 +1,11 @@
 "use server";
 import { unstable_noStore as noStore } from "next/cache";
-import { Suspense, cache } from "react";
+import { Suspense } from "react";
 
 import { ViewType } from "~/graphql/typeSlut";
-
 import { db } from "../db";
-/* 
+
+/*
 const googleAuth = new auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -20,7 +20,7 @@ const yt = youtube({
 })
  */
 
-export async function addView(refId, type) {
+export async function addView(refId: string, type: ViewType) {
 	if (!refId || !type) {
 		return [];
 	}

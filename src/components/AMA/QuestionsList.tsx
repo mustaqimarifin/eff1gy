@@ -1,11 +1,10 @@
+/* eslint-disable react/no-unstable-context-value */
 "use client";
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { usePathname } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
-
-import { GetQuestionsDocument, type GetQuestionsQuery, QuestionStatus } from "~/graphql/typeSlut";
+import { QuestionStatus, useGetQuestionsSuspenseQuery } from "~/graphql/typeSlut";
 import { ListLoadMore } from "../ListDetail/ListLoadMore";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { AMATitlebar } from "./AMATitlebar";
@@ -25,7 +24,7 @@ export function QuestionsList() {
 
 	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered;
 
-	const { data, error, loading, fetchMore, refetch } = useQuery<GetQuestionsQuery>(GetQuestionsDocument, {
+	const { data, error, fetchMore, refetch } = useGetQuestionsSuspenseQuery({
 		variables: { filter: { status } },
 	});
 
@@ -47,7 +46,7 @@ export function QuestionsList() {
 		if (isVisible) handleFetchMore();
 	}, [isVisible]);
 
-	if (loading && !data?.questions) {
+	if (!data?.questions) {
 		return (
 			<ListContainer onRef={setScrollContainerRef}>
 				<AMATitlebar scrollContainerRef={scrollContainerRef} />
@@ -101,7 +100,7 @@ export function QuestionsList() {
 // if (!data || !data.amaQuestions) return <FullscreenLoading />
 // if (error) return null
 
-//useEffect(() => {
+// useEffect(() => {
 //   if (questions.length < PAGINATION_AMOUNT) {
 //     setShowLoadMore(false)
 //   }

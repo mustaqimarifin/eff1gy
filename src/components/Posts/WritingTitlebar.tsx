@@ -3,18 +3,17 @@
 import { Plus } from "lucide-react";
 import { useContext } from "react";
 import { useViewerQuery } from "~/graphql/typeSlut";
+import SegmentedControl from "../UI/SegmentedController";
+import { WritingContext } from "./PostsList";
 
 import { GhostButton } from "~/components/Button";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
-
-import SegmentedControl from "../UI/SegmentedController";
-import { WritingContext } from "./PostsList";
 
 export function WritingTitlebar({ scrollContainerRef }) {
 	const { data } = useViewerQuery();
 
 	function getAddButton() {
-		if (data?.viewer.isAdmin) {
+		if (data?.viewer?.isAdmin) {
 			return (
 				<GhostButton href="/post/new" data-cy="new-post-button" size="small-square" aria-label="Add post">
 					<Plus size={16} />
@@ -31,7 +30,7 @@ export function WritingTitlebar({ scrollContainerRef }) {
 	function getChildren() {
 		const { data } = useViewerQuery();
 		const { setFilter, filter } = useContext(WritingContext);
-		if (data?.viewer.isAdmin) {
+		if (data?.viewer?.isAdmin) {
 			return (
 				<div className="pb-1 pt-2">
 					<SegmentedControl

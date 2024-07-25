@@ -32,7 +32,9 @@ let __assign = function () {
 		function __assign(t) {
 			for (let s, i = 1, n = arguments.length; i < n; i++) {
 				s = arguments[i];
-				for (const p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+				for (const p in s) {
+					if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+				}
 			}
 			return t;
 		};
@@ -92,7 +94,7 @@ function LiteYouTubeEmbed(props) {
 	return React.createElement(
 		React.Fragment,
 		null,
-		React.createElement("link", { rel: rel, href: posterUrl, as: "image" }),
+		React.createElement("link", { rel, href: posterUrl, as: "image" }),
 		React.createElement(
 			React.Fragment,
 			null,
@@ -155,4 +157,4 @@ function LiteYouTubeEmbed(props) {
 }
 
 export { LiteYouTubeEmbed as default };
-//# sourceMappingURL=index.es.jsx.map
+// # sourceMappingURL=index.es.jsx.map

@@ -6,6 +6,7 @@ import Button from "~/components/Button";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { useGetUserQuery } from "~/graphql/typeSlut";
+
 export function UserDetail({ username }) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);

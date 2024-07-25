@@ -1,7 +1,6 @@
 "use client";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
-
 import { SignInDialogContent } from "../SignInDialog/SignInDialogContent";
 
 export function SignedOut() {

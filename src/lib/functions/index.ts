@@ -1,6 +1,15 @@
-/* eslint-disable no-useless-escape */
-//import ky from 'ky'
-export function slugify(str) {
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable no-new */
+
+import ky, { type Input } from "ky";
+import { customAlphabet } from "nanoid/non-secure";
+/**
+ * if you wanna get fancy... url safety is your responsibility
+ */
+const range = "+-¥∑µ§†ƒ0123456789abcdefghijklmnopqrstuvwxyz";
+export const nanoid = customAlphabet(range, 5);
+
+export function slugify(str: string) {
 	return str
 		.toString()
 		.toLowerCase()
@@ -8,7 +17,7 @@ export function slugify(str) {
 		.replace(/\s+/g, "-") // Replace spaces with -
 		.replace(/&/g, "-and-") // Replace & with 'and'
 		.replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-		.replace(/\-\-+/g, "-"); // Replace multiple - with single -
+		.replace(/-{2,}/g, "-"); // Replace multiple - with single -
 }
 
 /* export const sha256 = (
@@ -18,20 +27,29 @@ export function slugify(str) {
   return createHash('sha256').update(buffer).digest('base64')
 }
  */
-//export const fetcher = url => ky.get(url).then(res => res.json())
-export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
-	const res = await fetch(input, init);
-	return res.json();
-}
+// export const fetcher = url => ky.get(url).then(res => res.json())
 
+export const fetcher = async (url: Input) => await ky(url).json();
+
+/* export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
+  const res = await fetch(input, init)
+  return res.json()
+}
+ */
+/* export function emailRX(email: string): boolean {
+  const re
+		= /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-z\-0-9]+\.)+[a-z]{2,}))$/i
+  return re.test(String(email).toLowerCase())
+}
+ */
 export function emailRX(email: string): boolean {
 	const re =
-		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		/^(?:[^<>()[\]\\.,;:\s@"]+(?:\.[^<>()[\]\\.,;:\s@"]+)*|".+")@(?:\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\]|(?:[a-z\-0-9]+\.)+[a-z]{2,})$/i;
 	return re.test(String(email).toLowerCase());
 }
 
 export function nameRX(name: string): boolean {
-	const re = /^(?=[a-zA-Z0-9_]{4,16}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+	const re = /^(?=\w{4,16}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 	return re.test(String(name));
 }
 

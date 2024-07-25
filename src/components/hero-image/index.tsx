@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const HeroImage = () => {
+function HeroImage() {
 	return (
 		<div className="">
 			<Image
@@ -8,10 +8,10 @@ const HeroImage = () => {
 				height={250}
 				src="/../../../static/clip/vmp-banner.webp"
 				className="rounded-full border-2 border-gray-700 dark:border-gray-200"
-				alt={""}
+				alt=""
 			/>
 		</div>
 	);
-};
+}
 
 export default HeroImage;

@@ -1,9 +1,10 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
-		"useIgnoreFile": true
+		"useIgnoreFile": true,
+		"defaultBranch": "main"
 	},
 	"organizeImports": {
 		"enabled": true
@@ -17,7 +18,13 @@
 		"ignore": [".next/*", "src/gql/**/*", "node_modules"]
 	},
 	"linter": {
-		"ignore": [".next/*", "src/graphql/typeSlut.js"],
+		"ignore": [
+			".next/*",
+			"src/graphql/typeSlut.js",
+			"src/components/MDX/sugar.js",
+			"src/components/MDX/vidID.js",
+			"src/components/MDX/Lite.mjs"
+		],
 		"enabled": true,
 		"rules": {
 			"recommended": true,

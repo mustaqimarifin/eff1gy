@@ -16,7 +16,7 @@ export const DateQL = new GraphQLScalarType({
 	parseLiteral(ast) {
 		if (ast.kind === Kind.INT) {
 			// Convert hard-coded AST string to integer and then to Date
-			return new Date(parseInt(ast.value, 10));
+			return new Date(Number.parseInt(ast.value, 10));
 		}
 		// Invalid hard-coded value (not an integer)
 		return null;
@@ -24,8 +24,8 @@ export const DateQL = new GraphQLScalarType({
 });
 
 function parseObject(typeName, ast, variables) {
-	let value = Object.create(null);
-	for (let field of ast.fields) {
+	const value = Object.create(null);
+	for (const field of ast.fields) {
 		value[field.name.value] = _parseLiteral(typeName, field.value, variables);
 	}
 	/* 		ast.fields.forEach((field) => {
@@ -43,7 +43,7 @@ function _parseLiteral(typeName, ast, variables) {
 
 		case Kind.INT:
 		case Kind.FLOAT:
-			return parseFloat(ast.value);
+			return Number.parseFloat(ast.value);
 
 		case Kind.OBJECT:
 			return parseObject(typeName, ast, variables);

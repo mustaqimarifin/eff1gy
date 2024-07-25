@@ -1,11 +1,10 @@
-import { type Context } from "~/graphql/context";
-import type { GetCasesQueryVariables, GetCaseQueryVariables } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { GetCaseQueryVariables, GetCasesQueryVariables } from "~/graphql/typeSlut";
 
 export async function getCases(_, args: GetCasesQueryVariables, ctx: Context) {
 	const { db, viewer } = ctx;
 
 	return await db.case.findMany({
-		relationLoadStrategy: "join",
 		orderBy: { date: "desc" },
 		include: {
 			_count: {

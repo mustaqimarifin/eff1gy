@@ -160,7 +160,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 
 	const tagFilter = (t) => {
 		const allowedBookmarkTags = ["website", "reading", "portfolio"];
-		return allowedBookmarkTags.indexOf(t.name) >= 0;
+		return allowedBookmarkTags.includes(t.name);
 	};
 
 	return (
@@ -186,7 +186,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 					defaultValue={bookmark.description}
 					onChange={onDescriptionChange}
 					onKeyDown={onKeyDown}
-					placeholder={"Description..."}
+					placeholder="Description..."
 				/>
 
 				<Input

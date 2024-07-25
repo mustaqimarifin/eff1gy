@@ -5,7 +5,7 @@ import { InView } from "react-intersection-observer";
 
 import { cx } from "~/lib/transformers";
 
-export const DickPics = ({ src }) => {
+export function DickPics({ src }) {
 	const [isLoading, setLoading] = useState(true);
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -14,7 +14,7 @@ export const DickPics = ({ src }) => {
 			<div className="mb-6 max-w-3xl content-center justify-center  md:rounded-lg">
 				<Image
 					src={src}
-					alt={""}
+					alt=""
 					width={1307}
 					height={560}
 					style={{
@@ -26,7 +26,7 @@ export const DickPics = ({ src }) => {
 						isLoading && isVisible ? "scale-110 blur-2xl grayscale" : "scale-100  grayscale-0",
 					)}
 					onLoad={() => setLoading(false)}
-					//blurDataURL={blurDataUrl}
+					// blurDataURL={blurDataUrl}
 				/>
 				{/*       <figcaption className="text-center ">
         {caption && (
@@ -38,9 +38,9 @@ export const DickPics = ({ src }) => {
 			</div>
 		</InView>
 	);
-};
+}
 
-export const DickArray = ({ src }) => {
+export function DickArray({ src }) {
 	return (
 		<>
 			<DickPics src={src} />
@@ -51,4 +51,4 @@ export const DickArray = ({ src }) => {
 			<DickPics src={src} />
 		</>
 	);
-};
+}

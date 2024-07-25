@@ -1,12 +1,15 @@
 "use client";
 
-import { DialogComponent } from "~/components/Dialog";
-
+import type { CSSProperties } from "react";
+import { DialogComponent, type DialogProps } from "~/components/Dialog";
 import { SignInDialogContent } from "./SignInDialogContent";
 
-export function SignInDialog({ children = null, trigger = null, style = null }) {
+interface SIDProps extends DialogProps {
+	style?: CSSProperties | null;
+}
+export function SignInDialog({ children, trigger }: SIDProps) {
 	return (
-		<DialogComponent trigger={trigger} title={"Sign In"} modalContent={() => <SignInDialogContent />}>
+		<DialogComponent trigger={trigger} title="Sign In" modalContent={() => <SignInDialogContent />}>
 			{children ? ({ openModal }: { openModal: boolean }) => children({ openModal }) : null}
 		</DialogComponent>
 	);

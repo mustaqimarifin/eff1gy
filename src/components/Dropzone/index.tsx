@@ -1,9 +1,9 @@
-import { type UploadApiResponse } from "cloudinary";
+import type { UploadApiResponse } from "cloudinary";
 import type { ReactNode } from "react";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-//import { CLOUDFLARE_IMAGE_DELIVERY_BASE_URL } from '~/lib/cloudinary'
+// import { CLOUDFLARE_IMAGE_DELIVERY_BASE_URL } from '~/lib/cloudinary'
 import { ActiveDropzone } from "./ActiveDropzone";
 
 interface DropzoneProps {
@@ -18,15 +18,15 @@ interface DropzoneProps {
   return data
 } */
 
-export const upCloud = async (file: File): Promise<UploadApiResponse> => {
-	//const { signature, folder, timestamp } = await signUpload()
+export async function upCloud(file: File): Promise<UploadApiResponse> {
+	// const { signature, folder, timestamp } = await signUpload()
 	const url = `https://api.cloudinary.com/v1_1/mstqmarfn/image/upload`;
 	const formData = new FormData();
 	formData.append("file", file);
-	//formData.append('folder', folder)
-	//formData.append('signature', signature)
-	//formData.append('timestamp', timestamp)
-	//formData.append('api_key', '742773636552889')
+	// formData.append('folder', folder)
+	// formData.append('signature', signature)
+	// formData.append('timestamp', timestamp)
+	// formData.append('api_key', '742773636552889')
 	formData.append("upload_preset", "ml_default");
 	// If recorded on Chrome which currently only supports .webm recording
 	// This parameter will tell cloudinary to transform to mp4 for cross browser compatibility
@@ -36,7 +36,7 @@ export const upCloud = async (file: File): Promise<UploadApiResponse> => {
 		body: formData,
 	});
 	return res.json();
-};
+}
 
 export function Dropzone(props: DropzoneProps) {
 	const { children, onUploadComplete, onUploadStarted, onUploadFailed } = props;
@@ -61,7 +61,7 @@ export function Dropzone(props: DropzoneProps) {
 			onUploadStarted();
 
 			const file = acceptedFiles[0];
-			//const data = await signUP()
+			// const data = await signUP()
 
 			if (!file) {
 				onUploadFailed();
@@ -69,7 +69,7 @@ export function Dropzone(props: DropzoneProps) {
 			}
 			const res = await upCloud(file);
 			const url = res.secure_url;
-			//const url = `https://res.cloudinary.com/mstqmarfn/image/upload/v${version}/${public_id}.${format}`
+			// const url = `https://res.cloudinary.com/mstqmarfn/image/upload/v${version}/${public_id}.${format}`
 			return onUploadComplete(url);
 		},
 		[onUploadComplete, onUploadFailed, onUploadStarted],

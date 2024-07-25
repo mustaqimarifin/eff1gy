@@ -1,10 +1,11 @@
 import { EditQuestionDialog } from "~/components/AMA/EditQuestionDialog";
 import Button from "~/components/Button";
-
-import { GetQuestionDocument, type Question, ReactionType, useToggleReactionMutation } from "~/graphql/typeSlut";
+import { GET_QUESTION } from "~/graphql/queries/questions";
 import { ReactionButton } from "../Button/ReactionButton";
 
-function useReactionButton(question: Question) {
+import { ReactionType, useToggleReactionMutation } from "~/graphql/typeSlut";
+
+function getReactionButton(question) {
 	const [toggleReaction, { loading }] = useToggleReactionMutation();
 
 	function handleClick() {
@@ -26,7 +27,7 @@ function useReactionButton(question: Question) {
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GetQuestionDocument,
+					query: GET_QUESTION,
 					variables: { id: question.id },
 					data: {
 						question: {
@@ -50,11 +51,11 @@ function useReactionButton(question: Question) {
 	);
 }
 
-export function QuestionActions({ question }: { question: Question }) {
+export function QuestionActions({ question }) {
 	if (question.viewerCanEdit) {
 		return (
 			<div className="flex items-center space-x-2">
-				{useReactionButton(question)}
+				{getReactionButton(question)}
 				{question.viewerCanEdit && <EditQuestionDialog question={question} trigger={<Button>Edit</Button>} />}
 			</div>
 		);

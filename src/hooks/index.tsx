@@ -1,35 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
-//^const [user, setUser, removeUser] = useSessionStorage("user", "John Doe")
-
-export const useLocalStorage = (key, value) => useStorage(key, value, window.localStorage);
-
-export const useSessionStorage = (key, value) => {
-	return useStorage(key, value, window.sessionStorage);
-};
-
-const useStorage = (key, value, storageObject) => {
-	const [storageValue, setStorageValue] = useState(() => {
-		const jsonValue = storageObject.getItem(key);
-		if (jsonValue != null) return JSON.parse(jsonValue);
-
-		if (typeof value === "function") {
-			return value();
-		}
-		return value;
-	});
-
-	useEffect(() => {
-		if (storageValue === undefined) return storageObject.removeItem(key);
-		storageObject.setItem(key, JSON.stringify(storageValue));
-	}, [key, storageValue, storageObject]);
-
-	const remove = useCallback(() => {
-		setStorageValue(undefined);
-	}, []);
-
-	return [storageValue, setStorageValue, remove];
-};
+import { useEffect, useRef, useState } from "react";
 
 export function useDebounce(value: string, delay: number) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
@@ -48,7 +17,7 @@ export function useDebounce(value: string, delay: number) {
 type Delay = number | null;
 type TimerHandler = (...args: any[]) => void;
 
-export const useInterval = (callback: TimerHandler, delay: Delay) => {
+export function useInterval(callback: TimerHandler, delay: Delay) {
 	const savedCallbackRef = useRef<TimerHandler>();
 
 	useEffect(() => {
@@ -56,23 +25,18 @@ export const useInterval = (callback: TimerHandler, delay: Delay) => {
 	}, [callback]);
 
 	useEffect(() => {
-		const handler = (...args: any[]) => savedCallbackRef.current(...args);
+		const handler = (...args: any[]) => savedCallbackRef.current!(...args);
 
 		if (delay !== null) {
 			const intervalId = setInterval(handler, delay);
 			return () => clearInterval(intervalId);
 		}
 	}, [delay]);
-};
+}
 
 const hasFocus = () => typeof document !== "undefined" && document.hasFocus();
 
-interface Props {
-	onFocus?: () => void;
-	onBlur?: () => void;
-}
-
-export function useWindowFocus({ onFocus, onBlur }: Props) {
+export function useWindowFocus({ onFocus, onBlur }) {
 	const [focused, setFocused] = useState(hasFocus); // Focus for first render
 
 	useEffect(() => {

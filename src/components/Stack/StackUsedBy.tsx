@@ -4,7 +4,6 @@ import { Avatar } from "~/components/Avatar";
 import type { GetStackQuery } from "~/graphql/typeSlut";
 import { GetStackDocument, useGetStackQuery, useToggleStackUserMutation, useViewerQuery } from "~/graphql/typeSlut";
 import { useWindowFocus } from "~/hooks";
-
 import { Tooltip } from "../UI/Tooltip";
 
 export function StackUsedBy(props) {
@@ -73,9 +72,7 @@ export function StackUsedBy(props) {
 
 	return (
 		<div className="flex flex-col rounded-md pt-2">
-			<div
-				className={`flex flex-col space-y-4 rounded-t-md border border-b-0 border-gray-200 bg-gray-100 p-4 dark:border-gray-800 dark:bg-white dark:bg-opacity-10`}
-			>
+			<div className="flex flex-col space-y-4 rounded-t-md border border-b-0 border-gray-200 bg-gray-100 p-4 dark:border-gray-800 dark:bg-white dark:bg-opacity-10">
 				{data?.stack?.usedBy.length === 0 ? (
 					<p className="text-quaternary text-sm font-medium">Nobody else is using this yet...</p>
 				) : (

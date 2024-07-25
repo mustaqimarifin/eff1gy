@@ -5,7 +5,6 @@ import * as React from "react";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { useEditPostMutation } from "~/graphql/typeSlut";
 import { useInterval } from "~/hooks";
-
 import { PostEditorContext } from "./PostEditor";
 
 export function PostEditorAutoSave() {

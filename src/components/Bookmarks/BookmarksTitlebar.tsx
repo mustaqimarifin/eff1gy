@@ -4,12 +4,11 @@ import { PlusIcon } from "lucide-react";
 import { GhostButton } from "~/components/Button";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { useViewerQuery } from "~/graphql/typeSlut";
-
 import { AddBookmarkDialog } from "./AddBookmarkDialog";
 import { BookmarksFilterMenu } from "./FilterMenu";
 
 export function BookmarksTitlebar({ scrollContainerRef }) {
-	const { data } = useViewerQuery();
+	const { data } = useViewerQuery()
 
 	function getAddButton() {
 		if (data?.viewer?.isAdmin) {

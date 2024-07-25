@@ -2,15 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-//import useSWR from "swr";
+// import useSWR from "swr";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
-
 import { CaseListItem } from "./CaseItem";
+
 import type { LilBits } from "~/lib/sanity/client";
 
-export const BitList = ({ bits }: { bits: LilBits[] }) => {
+export function BitList({ bits }: { bits: LilBits[] }) {
 	const path = usePathname();
 	const [scrollContainerRef, setScrollContainerRef] = useState(null);
 	/* 	const { data, isLoading } = useSWR<b[]>(`${CLIENT_URL}/api/case`, fetcher); */
@@ -38,4 +38,4 @@ export const BitList = ({ bits }: { bits: LilBits[] }) => {
 			</div>
 		</ListContainer>
 	);
-};
+}

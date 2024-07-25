@@ -10,7 +10,7 @@ import { getUser } from "./user";
 import { viewer } from "./viewer";
 
 export default {
-	viewer: viewer,
+	viewer,
 	user: getUser,
 	bookmark: getBookmark,
 	bookmarks: getBookmarks,

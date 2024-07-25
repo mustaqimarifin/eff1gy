@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone";
 
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 
-//import { url } from '~/lib/cloudinary/api'
+// import { url } from '~/lib/cloudinary/api'
 
 export function StackImageUploader({ stack, onImageUploaded }) {
 	const [loading, setLoading] = useState(false);
@@ -44,8 +44,8 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 		}
 
 		setLoading(false);
-		//setPreviewImage(url)
-		//return onImageUploaded(url)
+		// setPreviewImage(url)
+		// return onImageUploaded(url)
 	}, []);
 
 	const { getRootProps, getInputProps } = useDropzone({
@@ -68,7 +68,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 					width="96"
 					height="96"
 					quality={100}
-					className={`inline-block rounded-lg`}
+					className="inline-block rounded-lg"
 					alt={stack.name}
 				/>
 				<button
@@ -88,7 +88,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 	return (
 		<div
 			{...getRootProps()}
-			className={`text-tertiary flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-200 bg-gray-100 p-6 hover:bg-gray-150 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-800`}
+			className="text-tertiary flex h-24 w-24 cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-200 bg-gray-100 p-6 hover:bg-gray-150 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-800"
 		>
 			<input {...getInputProps()} />
 			{loading ? <LoadingSpinner /> : <UploadIcon />}

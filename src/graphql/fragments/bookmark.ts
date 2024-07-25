@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-//import { BookmarkCoreFragment } from '../typeSlut'
+// import { BookmarkCoreFragment } from '../typeSlut'
 
 export const BookmarkCoreFragment = gql`
   fragment BookmarkCore on Bookmark {

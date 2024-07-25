@@ -1,13 +1,7 @@
 const config = {
-	/*   logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
-*/ experimental: {
-		useLightningcss: true,
+	typescript: {
+		ignoreBuildErrors: true,
 	},
-	transpilePackages: ["react-tweet"],
 	images: {
 		formats: ["image/avif", "image/webp"],
 		remotePatterns: [
@@ -32,6 +26,14 @@ const config = {
 			},
 		],
 		dangerouslyAllowSVG: true,
+	},
+	webpack(config, { webpack }) {
+		config.plugins.push(
+			new webpack.DefinePlugin({
+				"globalThis.__DEV__": false,
+			}),
+		);
+		return config;
 	},
 };
 export default config;

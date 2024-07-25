@@ -5,7 +5,6 @@ import { useContext } from "react";
 
 import { GhostButton } from "~/components/Button";
 import { useGetTagsQuery } from "~/graphql/typeSlut";
-
 import { BookmarksContext } from "./BookmarksList";
 
 export function BookmarksFilterMenu() {
@@ -18,7 +17,7 @@ export function BookmarksFilterMenu() {
 
 	const allowedTags = ["web", "lol", "portfolio", "art"];
 
-	const filtered = tags.filter((t) => allowedTags.indexOf(t.name) >= 0);
+	const filtered = tags.filter((t) => allowedTags.includes(t.name));
 
 	return (
 		<div className="flex items-center justify-center">

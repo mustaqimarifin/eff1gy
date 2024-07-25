@@ -4,7 +4,6 @@ import * as React from "react";
 
 import { Detail } from "~/components/ListDetail/Detail";
 import { MarkdownRenderer } from "~/components/MarkdownRenderer";
-
 import { PostEditorContext } from "./PostEditor";
 
 export function PostEditorPreview({ children }: { children?: React.ReactNode }) {

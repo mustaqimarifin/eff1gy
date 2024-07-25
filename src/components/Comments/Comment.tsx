@@ -7,9 +7,8 @@ import { Textarea } from "~/components/Input";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { GET_COMMENTS } from "~/graphql/queries/comments";
 import type { Comment as CommentProp, CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
-import { useDeleteCommentMutation, useEditCommentMutation } from "~/graphql/typeSlut";
+import { GetCommentsDocument, useDeleteCommentMutation, useEditCommentMutation } from "~/graphql/typeSlut";
 import { realTime } from "~/lib/transformers";
-
 import { MarkdownRenderer } from "../MarkdownRenderer";
 
 interface Props {
@@ -18,7 +17,7 @@ interface Props {
 	type: CommentType;
 }
 
-export const Comment = memo(function MemoComment({ comment, refId, type }: Props) {
+export const Comment = memo(({ comment, refId, type }: Props) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editText, setEditText] = useState(comment.text);
 	const [isSavingEdit, setIsSavingEdit] = useState(false);
@@ -31,12 +30,12 @@ export const Comment = memo(function MemoComment({ comment, refId, type }: Props
 		},
 		update(cache) {
 			const { comments } = cache.readQuery<GetCommentsQuery>({
-				query: GET_COMMENTS,
+				query: GetCommentsDocument,
 				variables: { refId, type },
 			});
 
 			cache.writeQuery({
-				query: GET_COMMENTS,
+				query: GetCommentsDocument,
 				variables: { refId, type },
 				data: {
 					comments: comments.filter((o) => o.id !== comment.id),

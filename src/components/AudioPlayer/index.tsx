@@ -59,7 +59,7 @@ export default function AudioPlayer({ src, setWaveformData, waveform, id, isReco
 		}
 
 		// bug where browser thinks duration is infiniy, wait for it to update
-		while (player.duration === Infinity) {
+		while (player.duration === Number.POSITIVE_INFINITY) {
 			await new Promise((r) => setTimeout(r, 10));
 		}
 
@@ -89,10 +89,10 @@ export default function AudioPlayer({ src, setWaveformData, waveform, id, isReco
 	function togglePlay() {
 		// pause all other audio players
 		const audios = document.querySelectorAll("audio");
-		for (let audio of audios) {
+		for (const audio of audios) {
 			audio.pause();
 		}
-		//audios.forEach((audio) => audio.pause());
+		// audios.forEach((audio) => audio.pause());
 
 		// pause or play this audio player
 		isPlaying ? pause() : play();
@@ -108,7 +108,7 @@ export default function AudioPlayer({ src, setWaveformData, waveform, id, isReco
 		const percentage = offset / width;
 		const player = audioRef.current;
 
-		if (player.duration === Infinity) {
+		if (player.duration === Number.POSITIVE_INFINITY) {
 			// When we can't scrub for some weird reason, just play the audio
 			player.play();
 			setIsPlaying(true);

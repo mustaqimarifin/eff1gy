@@ -15,10 +15,10 @@ const routes = {
 		}),
 	},
 	blog: {
-		label: "Posts",
-		path: "/post",
+		label: "Blog",
+		path: "/blog",
 		seo: extendSEO({
-			title: "blog",
+			title: "Blog",
 			description: "Thinking out loud",
 			image: "og/writing.png",
 			url: "blog",

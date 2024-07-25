@@ -1,14 +1,14 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "~/graphql/context";
+import type { Context } from "~/graphql/context";
 import { type MutationToggleReactionArgs, ReactionType } from "~/graphql/typeSlut";
 
-export async function toggleReaction(_, args: MutationToggleReactionArgs, ctx: Context) {
+export async function toggleReaction(_: any, args: MutationToggleReactionArgs, ctx: Context) {
 	const { refId, type } = args;
 	const { viewer, db } = ctx;
 
 	let field: string;
-	let table: string;
+	let table: "bookmark" | "blog" | "post" | "event" | "case" | "question" | "stack";
 	switch (type) {
 		case ReactionType.Bookmark: {
 			field = "bookmarkId";
@@ -51,12 +51,12 @@ export async function toggleReaction(_, args: MutationToggleReactionArgs, ctx: C
 	}
 
 	const [parentObject, existingReaction] = await Promise.all([
+		// @ts-ignore
 		db[table].findUnique({
 			where: { id: refId },
 		}),
 
 		db.reaction.findMany({
-			relationLoadStrategy: "join",
 			where: {
 				[field]: refId,
 				userId: viewer?.id,
@@ -69,7 +69,7 @@ export async function toggleReaction(_, args: MutationToggleReactionArgs, ctx: C
 	}
 
 	let fn;
-	if (existingReaction.length > 0) {
+	if (existingReaction) {
 		fn = () =>
 			db.reaction.delete({
 				where: {

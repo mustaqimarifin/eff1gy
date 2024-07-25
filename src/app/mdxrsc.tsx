@@ -1,11 +1,12 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
+import type { JSX } from "react";
 
-//import linkifyRegex from 'remark-linkify-regex'
-import { components } from "~/components/MDX";
-//import meta2 from "~/components/MDX/Meta2";
-//import imageMetadata from "~/components/MDX/image-size";
+import { MLKComponents } from "~/components/MDX";
+// import meta2 from "~/components/MDX/Meta2";
+// import imageMetadata from "~/components/MDX/image-size";
 
-export default async function Mdx(props) {
+export default async function Mdx(props: JSX.IntrinsicAttributes & MDXRemoteProps) {
+	const { components } = props;
 	return (
 		<div className="prose prose-neutral dark:prose-invert mt-8">
 			<MDXRemote
@@ -15,7 +16,7 @@ export default async function Mdx(props) {
 						rehypePlugins: [],
 					},
 				}}
-				components={{ ...components, ...(props.components || {}) }}
+				components={{ ...MLKComponents, ...(components || {}) }}
 			/>
 		</div>
 	);

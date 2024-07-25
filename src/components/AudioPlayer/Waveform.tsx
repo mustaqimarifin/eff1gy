@@ -73,7 +73,7 @@ export default function Waveform({ src, setWaveformData, waveform = [], isRecord
 }
 
 // See https://css-tricks.com/making-an-audio-waveform-visualizer-with-vanilla-javascript/ for the full tutorial explaining how this works
-const filterData = (audioBuffer: { getChannelData: (arg0: number) => any }, sampleCount: any) => {
+function filterData(audioBuffer: { getChannelData: (arg0: number) => any }, sampleCount: any) {
 	const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
 	const samples = sampleCount; // Number of samples we want to have in our final data set
 	const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
@@ -87,9 +87,9 @@ const filterData = (audioBuffer: { getChannelData: (arg0: number) => any }, samp
 		filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
 	}
 	return filteredData;
-};
+}
 
-const normalizeData = (filteredData: any[]) => {
+function normalizeData(filteredData: any[]) {
 	const multiplier = Math.max(...filteredData) ** -1;
 	return filteredData.map((n: number) => n * multiplier);
-};
+}

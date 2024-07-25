@@ -1,7 +1,7 @@
 import { GeistMono as GMono } from "geist/font/mono";
 import { GeistSans as GSans } from "geist/font/sans";
 import type { NextFontWithVariable } from "next/dist/compiled/@next/font";
-//import {  Roboto_Flex } from "next/font/google";
+// import {  Roboto_Flex } from "next/font/google";
 import localFont from "next/font/local";
 /* const RFlex = Roboto_Flex({
 	//weight: ['400', '500', '700'],
@@ -15,13 +15,13 @@ const Mono = localFont({
 });
  */
 const Quad: NextFontWithVariable = localFont({
-	src: "../assets/fonts/qbc.woff2",
+	src: "./assets/fonts/qbc.woff2",
 	weight: "700",
 	style: "italic",
 	variable: "--font-quad",
 });
 const Imp = localFont({
-	src: "../assets/fonts/imperial-500.woff2",
+	src: "./assets/fonts/imperial-500.woff2",
 	variable: "--imp",
 });
 /* const NewsReader: NextFontWithVariable = Newsreader({

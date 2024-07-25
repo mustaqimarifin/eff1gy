@@ -2,7 +2,7 @@ import Image from "next/image";
 import { memo } from "react";
 
 import { ListItem } from "~/components/ListDetail/ListItem";
-import { type StackListItemFragment } from "~/graphql/typeSlut";
+import type { StackListItemFragment } from "~/graphql/typeSlut";
 // TODO: Figure out how to get this dynamically
 interface Props {
 	stack: StackListItemFragment;
@@ -30,12 +30,12 @@ export const StackListItem = memo<Props>(({ stack, active }) => {
 				<div className="w-12 h-12">
 					<Image
 						priority
-						//src={`/static/img/stack/${stack.image}`}
+						// src={`/static/img/stack/${stack.image}`}
 						src={`https://ik.imagekit.io/mstqmarfn/stack/${stack.image}`}
 						width={60}
 						height={60}
 						alt={`${stack.name} icon`}
-						className={"rounded-md object-cover"}
+						className="rounded-md object-cover"
 					/>
 				</div>
 			}

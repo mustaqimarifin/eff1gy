@@ -8,7 +8,6 @@ import { Avatar } from "~/components/Avatar";
 import { GhostButton } from "~/components/Button";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { useViewerQuery } from "~/graphql/typeSlut";
-
 import { GlobalNavigationContext } from "../Provider";
 
 function Container(props) {
@@ -28,7 +27,7 @@ export function UserFooter() {
 	function signInButton() {
 		return (
 			<GhostButton
-				href={`/api/auth/signin`}
+				href="/api/auth/signin"
 				onClick={(e) => {
 					e.preventDefault();
 					signIn();

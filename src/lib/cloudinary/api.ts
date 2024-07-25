@@ -1,4 +1,4 @@
-import { type UploadApiResponse } from "cloudinary";
+import type { UploadApiResponse } from "cloudinary";
 
 import { cloudinaryAPI, cloudinaryURL } from "~/graphql/constants";
 

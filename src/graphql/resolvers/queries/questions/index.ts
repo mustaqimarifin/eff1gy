@@ -1,5 +1,5 @@
 import { PAGINATION_AMOUNT } from "~/graphql/constants";
-import { type Context } from "~/graphql/context";
+import type { Context } from "~/graphql/context";
 import {
 	type GetQuestionsQueryVariables,
 	type QueryQuestionArgs,
@@ -53,31 +53,31 @@ export async function getQuestions(_, args: GetQuestionsQueryVariables, ctx: Con
 		edges: [],
 	};
 
-	if (!viewer?.isAdmin && filter.status === QuestionStatus.Pending) {
+	if (!viewer?.isAdmin && filter?.status === QuestionStatus.Pending) {
 		return nullResults;
 	}
 
 	/*
-    When we are paginating after a cursor, we need to skip the cursor object itself. 
+    When we are paginating after a cursor, we need to skip the cursor object itself.
     Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
 	const skip = after ? 1 : 0;
 	const cursor = after ? { id: after } : undefined;
 
 	/*
-    Not sure how to handle combined filters, but for now we can essentially 
+    Not sure how to handle combined filters, but for now we can essentially
     switch-case the filter argument and replace the `where` object in our
     findMany call.
   */
-	let where = undefined;
-	if (filter.status === QuestionStatus.Answered) {
+	let where;
+	if (filter?.status === QuestionStatus.Answered) {
 		where = {
 			comments: {
 				some: {},
 			},
 		};
 	}
-	if (filter.status === QuestionStatus.Pending) {
+	if (filter?.status === QuestionStatus.Pending) {
 		where = {
 			comments: {
 				none: {},
@@ -94,7 +94,6 @@ export async function getQuestions(_, args: GetQuestionsQueryVariables, ctx: Con
 
 	try {
 		const edges = await db.question.findMany({
-			relationLoadStrategy: "join",
 			take,
 			skip,
 			cursor,

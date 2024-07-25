@@ -7,10 +7,9 @@ import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { TagPicker } from "~/components/Tag/TagPicker";
 import { GET_STACKS } from "~/graphql/queries/stack";
 import { useAddStackMutation } from "~/graphql/typeSlut";
+import { Nuts } from "../Provider/Toaster";
 
-import { nuts } from "../Provider/Toaster";
-
-//import { StackImageUploader } from './StackImageUploader'
+// import { StackImageUploader } from './StackImageUploader'
 
 export function AddStackForm({ closeModal }) {
 	const [url, setUrl] = useState("");
@@ -73,7 +72,7 @@ export function AddStackForm({ closeModal }) {
 
 	const tagFilter = (t) => {
 		const allowedTags = ["software", "gear", "plugins"];
-		return allowedTags.indexOf(t.name) >= 0;
+		return allowedTags.includes(t.name);
 	};
 
 	return (
@@ -97,7 +96,7 @@ export function AddStackForm({ closeModal }) {
 						{isSaving ? <LoadingSpinner /> : "Save"}
 					</Button>
 				</div>
-				{error && nuts.error(error)}
+				{error && Nuts.error(error)}
 			</form>
 		</div>
 	);

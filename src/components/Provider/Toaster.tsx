@@ -1,6 +1,6 @@
 import { Toaster, toast } from "sonner";
 
-export let nuts = toast;
+export const Nuts = toast;
 
 export function Toast() {
 	return (

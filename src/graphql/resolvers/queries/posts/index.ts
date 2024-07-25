@@ -1,5 +1,5 @@
-import { type Context } from "~/graphql/context";
-import { type GetPostQueryVariables, type GetPostsQueryVariables } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { GetPostQueryVariables, GetPostsQueryVariables } from "~/graphql/typeSlut";
 
 export async function getPosts(_, args: GetPostsQueryVariables, ctx: Context) {
 	const { filter } = args;

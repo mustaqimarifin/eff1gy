@@ -2,25 +2,25 @@ import NextImage from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { CLIENT_URL } from "~/graphql/constants";
-
+import { Code } from "bright";
+import type { MDXComponents } from "mdx/types";
+import IKImage from "../Image/IKImage";
 import { Embed } from "./Embed";
 import { Tweet } from "./gfy";
 
-import { Code } from "bright";
+import { CLIENT_URL } from "~/graphql/constants";
 import { createHeading } from "./CreateHeading";
-import IKImage from "../Image/IKImage";
-//import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
 Code.theme = "one-dark-pro";
 
 export function CustomLink(props) {
-	let href = props.href;
+	const { children, href } = props;
 
 	if (href.startsWith("/")) {
 		return (
 			<Link href={href} {...props}>
-				{props.children}
+				{children}
 			</Link>
 		);
 	}
@@ -32,7 +32,7 @@ export function CustomLink(props) {
 	if (href.startsWith("@")) {
 		return (
 			<Link href={`/u/${href.slice(1)}`} {...props}>
-				{props.children}
+				{children}
 			</Link>
 		);
 	}
@@ -41,7 +41,7 @@ export function CustomLink(props) {
 		if (url.origin === CLIENT_URL) {
 			return (
 				<Link href={href} {...props}>
-					{props.children}
+					{children}
 				</Link>
 			);
 		}
@@ -129,7 +129,7 @@ function Image({ src, ...rest }) {
 				quality={75}
 				className="rounded-md"
 				alt=""
-				//sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
+				// sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
 			/>
 		</div>
 	);
@@ -181,7 +181,7 @@ function Table({ data }) {
 });
 
  */
-export const components = {
+export const MLKComponents = {
 	a: CustomLink,
 	h1: createHeading(1),
 	h2: createHeading(2),
@@ -199,4 +199,4 @@ export const components = {
 	pre: Code,
 	Tweet,
 	Table,
-};
+} as MDXComponents;

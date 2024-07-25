@@ -4,14 +4,12 @@ import { useRef } from "react";
 
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { SignInDialog } from "~/components/SignInDialog";
-import type { CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
-import { GetCommentsDocument } from "~/graphql/typeSlut";
+import type { CommentType } from "~/graphql/typeSlut";
+import { useGetCommentsQuery } from "~/graphql/typeSlut";
 import { useWindowFocus } from "~/hooks";
-
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { FireIcon } from "../Icon";
 import { Comment } from "./Comment";
 import { CommentForm } from "./CommentForm";
-import { FireIcon } from "../Icon";
 
 interface Props {
 	refId: string;
@@ -21,12 +19,12 @@ interface Props {
 export function Comments({ refId, type }: Props) {
 	const messagesEndRef = useRef(null);
 
-	const { data, loading, error, refetch } = useQuery<GetCommentsQuery>(GetCommentsDocument, {
+	const { data, loading, error, refetch } = useGetCommentsQuery({
 		variables: {
 			refId,
 			type,
 		},
-		context: { fetchOptions: { cache: "no-store" } },
+		//context: { fetchOptions: { cache: "no-store" } },
 	});
 
 	useWindowFocus({ onFocus: refetch });

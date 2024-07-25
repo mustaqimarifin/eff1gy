@@ -29,10 +29,8 @@ export function Providers({ children }: Props) {
 	}
 
 	return (
-		<>
-			<GlobalNavigationContext.Provider value={state}>
-				<ApolloWrapper>{children}</ApolloWrapper>
-			</GlobalNavigationContext.Provider>
-		</>
+		<GlobalNavigationContext.Provider value={state}>
+			<ApolloWrapper>{children}</ApolloWrapper>
+		</GlobalNavigationContext.Provider>
 	);
 }

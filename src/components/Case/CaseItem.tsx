@@ -21,7 +21,7 @@ export const CaseListItem = memo<Props>(({ c, active }) => {
 			title={c.title}
 			description={null}
 			leadingAccessory={<Image width={48} height={48} alt={c?.title} className="rounded-xl" src={c?.caption} />}
-			//byline={`${c.detailsCount} details`}
+			// byline={`${c.detailsCount} details`}
 			active={active}
 		/>
 	);

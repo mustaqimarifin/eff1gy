@@ -1,15 +1,11 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "~/graphql/context";
-import {
-	type MutationAddBookmarkArgs,
-	type MutationDeleteBookmarkArgs,
-	type MutationEditBookmarkArgs,
-} from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { MutationAddBookmarkArgs, MutationDeleteBookmarkArgs, MutationEditBookmarkArgs } from "~/graphql/typeSlut";
 import { urlRX } from "~/lib/functions";
-
 import getBookmarkMetaData from "./getBookmarkMetaData";
-//import { graphcdn } from "~/lib/graphcdn";
+
+// import { graphcdn } from "~/lib/graphcdn";
 
 export async function editBookmark(_, args: MutationEditBookmarkArgs, ctx: Context) {
 	const { id, data } = args;
@@ -38,8 +34,8 @@ export async function editBookmark(_, args: MutationEditBookmarkArgs, ctx: Conte
 				faviconUrl,
 				tags: {
 					connectOrCreate: {
-						where: { name: tag },
-						create: { name: tag },
+						where: { name: tag! },
+						create: { name: tag! },
 					},
 				},
 			},

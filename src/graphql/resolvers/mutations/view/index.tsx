@@ -1,14 +1,13 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "~/graphql/context";
+import type { Context } from "~/graphql/context";
 import { ViewType } from "~/graphql/typeSlut";
 
-export async function addView(_, args, ctx: Context) {
+export async function addView(_: any, args: { refId: any; type: any }, ctx: Context) {
 	const { refId, type } = args;
 	const { db } = ctx;
-
-	let field: string;
-	let table: string;
+	let table;
+	let field;
 	switch (type) {
 		case ViewType.Bookmark: {
 			field = "bookmarkId";
@@ -56,7 +55,6 @@ export async function addView(_, args, ctx: Context) {
 		}),
 
 		db[table].findMany({
-			relationLoadStrategy: "join",
 			where: {
 				[field]: refId,
 			},
@@ -80,7 +78,7 @@ export async function addView(_, args, ctx: Context) {
 		.then(() => {
 			return { ...parentObject, reactableType: table };
 		})
-		.catch((err) => {
+		.catch((err: any) => {
 			console.error({ err });
 			return { ...parentObject, reactableType: table };
 		});

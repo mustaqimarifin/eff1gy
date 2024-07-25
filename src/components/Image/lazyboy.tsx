@@ -1,9 +1,9 @@
 import NextImage from "next/image";
-import { Suspense, cache, memo } from "react";
+import { Suspense, cache } from "react";
 
 import { Fade } from "./fade";
 
-const GhostImage = (props) => {
+function GhostImage(props) {
 	return (
 		<Suspense>
 			<Fade>
@@ -11,6 +11,6 @@ const GhostImage = (props) => {
 			</Fade>
 		</Suspense>
 	);
-};
+}
 
 export default cache(GhostImage);

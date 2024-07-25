@@ -9,7 +9,6 @@ import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { GET_POSTS } from "~/graphql/queries/posts";
 import { useEditPostMutation } from "~/graphql/typeSlut";
-
 import { PostEditorContext } from "./PostEditor";
 
 export function PostEditorMetaSidebar() {

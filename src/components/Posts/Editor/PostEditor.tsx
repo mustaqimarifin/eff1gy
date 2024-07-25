@@ -1,11 +1,11 @@
 "use client";
+/* eslint-disable react/no-unstable-context-value */
 
 import * as React from "react";
 
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { useGetPostQuery } from "~/graphql/typeSlut";
-
 import { PostEditorActions } from "./PostEditorActions";
 import { PostEditorComposer } from "./PostEditorComposer";
 import { PostEditorMetaSidebar } from "./PostEditorMetaSidebar";
@@ -27,12 +27,7 @@ export const PostEditorContext = React.createContext({
 	setIsPreviewing: (isPreviewing: boolean) => {},
 });
 
-type PEditor = {
-	children?: React.ReactNode;
-	slug?: string;
-};
-
-export function PostEditor({ slug: propsSlug = "" }: PEditor) {
+export function PostEditor({ slug: propsSlug = "" }) {
 	const scrollContainerRef = React.useRef(null);
 	const { data } = useGetPostQuery({ variables: { slug: propsSlug } });
 
@@ -50,12 +45,22 @@ export function PostEditor({ slug: propsSlug = "" }: PEditor) {
 	const [sidebarIsOpen, setSidebarIsOpen] = React.useState(false);
 
 	React.useEffect(() => {
-		// if navigating between drafts, reset the state each time with the correct
-		// post data
 		setDraftState(defaultDraftState);
-	}, [defaultDraftState]);
+	}, []);
 
-	const defaultContextValue = {
+	/* const value = React.useMemo(
+    () => ({
+      existingPost,
+      draftState,
+      setDraftState,
+      sidebarIsOpen,
+      setSidebarIsOpen,
+      isPreviewing,
+      setIsPreviewing,
+    }),
+    [existingPost, draftState, sidebarIsOpen, isPreviewing],
+  )  */
+	const value = {
 		existingPost,
 		draftState,
 		setDraftState,
@@ -66,12 +71,12 @@ export function PostEditor({ slug: propsSlug = "" }: PEditor) {
 	};
 
 	return (
-		<PostEditorContext.Provider value={defaultContextValue}>
+		<PostEditorContext.Provider value={value}>
 			<Detail.Container ref={scrollContainerRef}>
 				<TitleBar
 					backButton
 					globalMenu={false}
-					backButtonHref={"/post"}
+					backButtonHref="/post"
 					scrollContainerRef={scrollContainerRef}
 					title=""
 					trailingAccessory={<PostEditorActions />}

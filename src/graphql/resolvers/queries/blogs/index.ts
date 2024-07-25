@@ -1,11 +1,10 @@
-import { type Context } from "~/graphql/context";
-import { type GetBlogQueryVariables, type GetBlogsQueryVariables } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { GetBlogQueryVariables, GetBlogsQueryVariables } from "~/graphql/typeSlut";
 
 export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
-	const { db, viewer } = ctx;
+	const { db } = ctx;
 
 	return await db.blog.findMany({
-		relationLoadStrategy: "join",
 		orderBy: { date: "desc" },
 		include: {
 			_count: {
@@ -18,7 +17,7 @@ export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
 }
 
 export async function getBlog(_, { slug }: GetBlogQueryVariables, ctx: Context) {
-	const { db, viewer } = ctx;
+	const { db } = ctx;
 
 	const [blogBySlug, blogById] = await Promise.all([
 		db.blog.findUnique({

@@ -1,4 +1,5 @@
 import details from "./details";
+
 export default {
 	title: "19th World Pencak Silat",
 	video: {

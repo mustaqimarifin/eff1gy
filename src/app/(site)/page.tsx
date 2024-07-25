@@ -46,13 +46,13 @@ const workHistory = [
 		href: "https://github.com/mobile",
 		title: "GitHub",
 		subtitle: "Product Designer",
-		date: "2018—\u00a0\u00a0",
+		date: "2018—\u00A0\u00A0",
 	},
 	{
 		href: "https://designdetails.fm",
 		title: "Design Details Podcast",
 		subtitle: "Co-host",
-		date: "2014—\u00a0\u00a0",
+		date: "2014—\u00A0\u00A0",
 	},
 	{
 		href: "https://github.com/withspectrum/spectrum",
@@ -151,7 +151,8 @@ export default function Home() {
 								<h2 className="text-left mb-6 pt-4 font-imp text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-3xl">
 									Greetings! I'm a{" "}
 									<span className="dark:text-active text-blue-400">regional marketing manager&nbsp;</span>
-									at{` `}
+									at
+									{` `}
 									<Muse2 className="lg:-ml-2 inline h-12 items-center dark:invert" />
 									<span>where we focus on&nbsp;</span>
 									<span className="text-coyRed">large-scale sport & lifestyle events</span>

@@ -4,13 +4,13 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { useRef } from "react";
 
+import dynamic from "next/dynamic";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { formatDate, realTime } from "~/lib/transformers";
 
-import type { LilBits } from "~/lib/sanity/client";
-import dynamic from "next/dynamic";
 import { CommentType, useGetCaseQuery } from "~/graphql/typeSlut";
+import type { LilBits } from "~/lib/sanity/client";
 
 interface Props {
 	children: ReactNode;
@@ -47,7 +47,7 @@ export function BitDetail({ bit, children, slug }: Props) {
 			<TitleBar
 				backButton
 				globalMenu={false}
-				backButtonHref={"/code"}
+				backButtonHref="/code"
 				magicTitle
 				title={bit?.title}
 				titleRef={titleRef}
@@ -60,13 +60,10 @@ export function BitDetail({ bit, children, slug }: Props) {
 					<div className="flex items-center space-x-6">
 						<Image src={bit?.caption} width={80} height={80} alt={`${bit?.title} icon`} className="rounded-2xl" />
 						<div>
-						<Detail.Title ref={titleRef}>{bit?.title}</Detail.Title>
-						<div
-							title={bit?.date}
-							className="text-tertiary font-semibold text-xs inline-block leading-snug"
-						>
-							{`${formatDate(bit?.date)} • ${kase?.count} views`}
-						</div>
+							<Detail.Title ref={titleRef}>{bit?.title}</Detail.Title>
+							<div title={bit?.date} className="text-tertiary font-semibold text-xs inline-block leading-snug">
+								{`${formatDate(bit?.date)} • ${kase?.count} views`}
+							</div>
 						</div>
 					</div>
 				</Detail.Header>

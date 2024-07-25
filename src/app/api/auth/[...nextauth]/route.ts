@@ -1,4 +1,1 @@
-import { handlers } from "~/lib/auth";
-//export const runtime = 'edge'
-
-export const { GET, POST } = handlers;
+export { GET, POST } from "~/lib/auth";

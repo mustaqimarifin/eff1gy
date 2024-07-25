@@ -9,8 +9,15 @@ export async function generateStaticParams() {
 	}));
 	return events;
 }
+interface EventProps {
+	params: {
+		slug: string;
+	};
+}
 
-export default async function Events({ params: { slug } }) {
+export default async function Events(props: EventProps) {
+	const { slug } = props.params;
+
 	const post: EventDetailsPost = allEvents.find((post) => post.slug === slug) || null;
 	return <EventDetail post={post} />;
 }

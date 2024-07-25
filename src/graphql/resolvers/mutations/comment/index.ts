@@ -1,19 +1,19 @@
 import { GraphQLError } from "graphql";
 
-import { nuts } from "~/components/Provider/Toaster";
+import { Nuts } from "~/components/Provider/Toaster";
 import { CLIENT_URL } from "~/graphql/constants";
-import { type Context } from "~/graphql/context";
+import type { Context } from "~/graphql/context";
 import {
 	CommentType,
 	type MutationAddCommentArgs,
 	type MutationDeleteCommentArgs,
 	type MutationEditCommentArgs,
 } from "~/graphql/typeSlut";
-//import { graphcdn } from "~/lib/graphcdn";
+// import { graphcdn } from "~/lib/graphcdn";
 
-//import { graphcdn } from '~/lib/redis'
-//import { graphcdn } from '~/lib/graphcdn'
-//import { emailMe } from '~/lib/postmark'
+// import { graphcdn } from '~/lib/redis'
+// import { graphcdn } from '~/lib/graphcdn'
+// import { emailMe } from '~/lib/postmark'
 
 export async function editComment(_: any, args: MutationEditCommentArgs, ctx: Context) {
 	const { id, text } = args;
@@ -46,6 +46,9 @@ export async function editComment(_: any, args: MutationEditCommentArgs, ctx: Co
 		});
 }
 
+/*     query: INSERT INTO "public"."Comment" ("createdAt","updatedAt","text","userId","postId") VALUES ($1,$2,$3,$4,$5) RETURNING "public"."Comment"."id", "public"."Comment"."createdAt", "public"."Comment"."updatedAt", "public"."Comment"."text", "public"."Comment"."userId", "public"."Comment"."bookmarkId", "public"."Comment"."questionId", "public"."Comment"."stackId", "public"."Comment"."parentId", "public"."Comment"."blogId", "public"."Comment"."postId", "public"."Comment"."eventId", "public"."Comment"."caseId" 
+    --params: ["2024-07-25 00:00:21.195 UTC","2024-07-25 00:00:21.195 UTC","lola","trF8g","ptI0J"]
+     */
 export async function addComment(_: any, args: MutationAddCommentArgs, ctx: Context) {
 	const { refId, type, text, parentId } = args;
 	const { viewer, db } = ctx;
@@ -148,8 +151,8 @@ export async function deleteComment(_: any, args: MutationDeleteCommentArgs, ctx
 	if (comment.userId !== viewer?.id && !viewer?.isAdmin) {
 		throw new GraphQLError("You can’t delete this comment");
 	}
-	(err: any) => {
-		nuts.error("You can’t delete this comment", {
+	(_err: any) => {
+		Nuts.error("You can’t delete this comment", {
 			icon: "🙀",
 		});
 	};

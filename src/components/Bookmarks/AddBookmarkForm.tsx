@@ -8,8 +8,7 @@ import { TagPicker } from "~/components/Tag/TagPicker";
 import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks";
 import type { GetBookmarksQuery } from "~/graphql/typeSlut";
 import { useAddBookmarkMutation, useGetBookmarksQuery } from "~/graphql/typeSlut";
-
-import { nuts } from "../Provider/Toaster";
+import { Nuts } from "../Provider/Toaster";
 
 export function AddBookmarkForm({ closeModal }) {
 	const [url, setUrl] = useState("");
@@ -65,10 +64,10 @@ export function AddBookmarkForm({ closeModal }) {
 				// if I'm already viewing bookmarks, push me to the one I just created.
 				// otherwise, this was triggered from the sidebar shortcut and
 				// don't redirect
-				if (path.indexOf("/bookmarks") >= 0) {
+				if (path.includes("/bookmarks")) {
 					return router.push(`/bookmarks/${id}`);
 				}
-				nuts.success("Bookmark created!", {
+				Nuts.success("Bookmark created!", {
 					icon: "🙀 ",
 				});
 			},
@@ -87,7 +86,7 @@ export function AddBookmarkForm({ closeModal }) {
 
 	const tagFilter = (t) => {
 		const allowedBookmarkTags = ["web", "lol", "portfolio"];
-		return allowedBookmarkTags.indexOf(t.name) >= 0;
+		return allowedBookmarkTags.includes(t.name);
 	};
 
 	return (

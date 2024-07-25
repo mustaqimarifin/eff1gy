@@ -1,5 +1,6 @@
 import TOS from "~/components/Home/TOS";
 import { Detail } from "~/components/ListDetail/Detail";
+
 export const dynamic = "force-static";
 
 export default function Terms() {

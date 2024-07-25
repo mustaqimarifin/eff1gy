@@ -3,7 +3,6 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 import { useGetTagsQuery } from "~/graphql/typeSlut";
-
 import { Tag } from ".";
 
 export function TagPicker({ filter, onChange, defaultValue = undefined }) {
@@ -37,7 +36,7 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
 							.map((tag) => (
 								<Listbox.Option
 									key={tag.name}
-									className={`text-primary relative flex flex-none cursor-pointer select-none p-1`}
+									className="text-primary relative flex flex-none cursor-pointer select-none p-1"
 									value={tag.name}
 								>
 									<Tag name={tag.name} />
@@ -46,10 +45,10 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
 					</div>
 					<div className="w-full border-t border-gray-150 p-2 dark:border-gray-600">
 						<Listbox.Option
-							className={`text-primary relative flex flex-none cursor-pointer select-none p-1`}
+							className="text-primary relative flex flex-none cursor-pointer select-none p-1"
 							value={null}
 						>
-							<Tag name={"__clear_tag_picker"} />
+							<Tag name="__clear_tag_picker" />
 						</Listbox.Option>
 					</div>
 				</Listbox.Options>

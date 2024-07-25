@@ -1,12 +1,11 @@
 import { DialogComponent } from "~/components/Dialog";
-
 import { AddBookmarkForm } from "./AddBookmarkForm";
 
 export function AddBookmarkDialog({ trigger }) {
 	return (
 		<DialogComponent
 			trigger={trigger}
-			title={"Add bookmark"}
+			title="Add bookmark"
 			modalContent={({ closeModal }) => <AddBookmarkForm closeModal={closeModal} />}
 		/>
 	);

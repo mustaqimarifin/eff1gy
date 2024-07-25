@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import avatar from "~/app/avatar2.webp";
 
-export const Globe = () => {
+export function Globe() {
 	return (
 		<div className=" m-4 w-[120px] sm:w-[190px] ease-out hover:duration-1000 ">
 			<Image
@@ -15,4 +15,4 @@ export const Globe = () => {
 			/>
 		</div>
 	);
-};
+}

@@ -1,14 +1,14 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "~/graphql/context";
-import {
-	type MutationAddStackArgs,
-	type MutationDeleteStackArgs,
-	type MutationEditStackArgs,
-	type MutationToggleStackUserArgs,
+import type { Context } from "~/graphql/context";
+import type {
+	MutationAddStackArgs,
+	MutationDeleteStackArgs,
+	MutationEditStackArgs,
+	MutationToggleStackUserArgs,
 } from "~/graphql/typeSlut";
 import { slugify, urlRX } from "~/lib/functions";
-//import { graphcdn } from "~/lib/graphcdn";
+// import { graphcdn } from "~/lib/graphcdn";
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 	const { id, data } = args;
@@ -60,7 +60,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 					where: { name: tag },
 					create: { name: tag },
 				},
-		  }
+			}
 		: undefined;
 
 	return await db.stack
@@ -98,7 +98,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
 					where: { name: tag },
 					create: { name: tag },
 				},
-		  }
+			}
 		: undefined;
 
 	return await db.stack

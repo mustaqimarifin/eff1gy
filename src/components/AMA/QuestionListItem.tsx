@@ -12,7 +12,7 @@ interface Props {
 export const QuestionListItem = memo<Props>(({ question, active }) => {
 	return (
 		<ListItem
-			href={"/ama/[id]"}
+			href="/ama/[id]"
 			as={`/ama/${question?.id}`}
 			title={question?.title}
 			description={null}

@@ -1,33 +1,26 @@
+/* eslint-disable react/no-unstable-context-value */
 "use client";
 
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
-import { GET_POSTS } from "~/graphql/queries/posts";
-import type { GetPostsQuery } from "~/graphql/typeSlut";
-
+import { useGetPostsSuspenseQuery } from "~/graphql/typeSlut";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { PostListItem } from "./PostListItem";
 import { WritingTitlebar } from "./WritingTitlebar";
 
 export const WritingContext = React.createContext({
 	filter: "published",
-	setFilter: (filter: string) => {},
+	setFilter: (_filter: any) => {},
 });
 
 export function PostsList() {
 	const path = usePathname();
-
 	const [filter, setFilter] = React.useState("published");
 	const [scrollContainerRef, setScrollContainerRef] = React.useState(null);
-
 	const variables = filter === "published" ? { filter: { published: true } } : { filter: { published: false } };
-
-	const { error, data, refetch, loading } = useQuery<GetPostsQuery>(GET_POSTS, {
-		variables,
-	});
+	const { data, error, refetch } = useGetPostsSuspenseQuery({ variables });
 
 	React.useEffect(() => {
 		refetch();
@@ -41,7 +34,7 @@ export function PostsList() {
 		);
 	}
 
-	if (loading && !data?.posts) {
+	if (!data?.posts) {
 		return (
 			<ListContainer onRef={setScrollContainerRef}>
 				<WritingTitlebar scrollContainerRef={scrollContainerRef} />
@@ -54,21 +47,26 @@ export function PostsList() {
 
 	const { posts } = data;
 
-	const defaultContextValue = {
+	const value = {
 		filter,
 		setFilter,
 	};
+	/* 
+   const value = React.useMemo(
+    () => ({
+      filter,
+      setFilter,
+    }),
+    [filter], */
 
 	return (
-		<WritingContext.Provider value={defaultContextValue}>
+		<WritingContext.Provider value={value}>
 			<ListContainer data-cy="posts-list" onRef={setScrollContainerRef}>
 				<WritingTitlebar scrollContainerRef={scrollContainerRef} />
-
 				<div className="lg:space-y-1 lg:p-3">
 					{posts.map((post) => {
-						const active = path === post.slug;
-
-						return <PostListItem key={post.id} post={post} active={active} />;
+						const active = path === post?.slug;
+						return <PostListItem key={post?.id} post={post!} active={active} />;
 					})}
 				</div>
 			</ListContainer>

@@ -7,7 +7,7 @@ import { BitList } from "~/components/Case/BitList";
 import { ListDetailView } from "~/components/Layouts";
 import { ViewType } from "~/graphql/typeSlut";
 import { HiddenCounter } from "~/lib/actions";
-import { allBits, allLilSlugs, getLilBit, type LilBits } from "~/lib/sanity/client";
+import { type LilBits, allBits, allLilSlugs, getLilBit } from "~/lib/sanity/client";
 
 export const revalidate = 3600;
 
@@ -16,8 +16,14 @@ export async function generateStaticParams() {
 		slug: p.slug,
 	}));
 }
+interface LilProps {
+	params: {
+		slug: string;
+	};
+}
+export default async function LilPage(props: LilProps) {
+	const { slug } = props.params;
 
-export default async function LilPage({ params: { slug } }) {
 	const p: LilBits = await getLilBit(slug);
 	if (!p) {
 		notFound();

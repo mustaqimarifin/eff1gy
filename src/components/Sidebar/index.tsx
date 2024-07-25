@@ -4,7 +4,6 @@ import { useContext, useRef } from "react";
 
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { GlobalNavigationContext } from "~/components/Provider";
-
 import { SidebarNavigation } from "./Navigation";
 import { SidebarOverlay } from "./Overlay";
 import { UserFooter } from "./UserFooter";
@@ -26,9 +25,7 @@ export function Sidebar() {
 					trailingAccessory={null}
 					title="[Mustaqim Arifin]"
 				/>
-
 				<SidebarNavigation />
-
 				<UserFooter />
 			</nav>
 

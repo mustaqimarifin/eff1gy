@@ -1,6 +1,7 @@
+import { useBackgroundQuery } from "@apollo/client";
 import Link from "next/link";
 
-import { useGetBookmarksQuery } from "~/graphql/typeSlut";
+import { GetBookmarksDocument, useGetBookmarksQuery } from "~/graphql/typeSlut";
 
 export function RelatedBookmarks({ bookmark }) {
 	const { data, loading } = useGetBookmarksQuery({
@@ -9,9 +10,9 @@ export function RelatedBookmarks({ bookmark }) {
 
 	if (loading) return null;
 
-	const { bookmarks } = data;
+	const { bookmarks } = data!;
 	const { host, url } = bookmark;
-	const related = bookmarks.edges.filter((b) => b.node.host === host && b.node.url !== url);
+	const related = bookmarks.edges.filter((b) => b?.node?.host === host && b?.node?.url !== url);
 
 	if (related.length === 0) return null;
 
@@ -27,7 +28,8 @@ export function RelatedBookmarks({ bookmark }) {
 		<div className="mx-auto mb-4 w-full max-w-3xl px-4 md:mb-8 md:px-8">
 			<div className="rounded-md border border-t border-gray-150 bg-gray-100 px-6 py-4 dark:border-gray-800 dark:bg-gray-900">
 				<p className="text-quaternary py-2 text-xs font-medium uppercase leading-snug">
-					{related.length} more from {bookmark.host}
+					{related.length} more from
+					{bookmark.host}
 				</p>
 				<ul>
 					{related.map((r) => (

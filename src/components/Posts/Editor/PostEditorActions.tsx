@@ -1,27 +1,28 @@
+"use client";
 import { Sidebar } from "lucide-react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 import Button from "~/components/Button";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { nuts } from "~/components/Provider/Toaster";
-import { useAddPostMutation, useEditPostMutation } from "~/graphql/typeSlut";
-import { slugify } from "~/lib/functions";
-
 import { PostEditorContext } from "./PostEditor";
 import { PostEditorAutoSave } from "./PostEditorAutoSave";
 
+import { Nuts } from "~/components/Provider/Toaster";
+import { useAddPostMutation, useEditPostMutation } from "~/graphql/typeSlut";
+import { slugify } from "~/lib/functions";
+
 export function PostEditorActions() {
 	const router = useRouter();
-	const path = usePathname();
+	// const path = usePathname();
 	const context = React.useContext(PostEditorContext);
 	const { draftState, existingPost, sidebarIsOpen, setSidebarIsOpen, isPreviewing, setIsPreviewing } = context;
 
 	const [addPost, { loading: creatingPost }] = useAddPostMutation({
 		onCompleted({ addPost }) {
-			nuts.success("Draft created");
-			//router.push(`/post/${addPost.slug}/edit`)
-			router.push(`/post/${path}/edit`);
+			Nuts.success("Draft created");
+			router.push(`/post/${addPost.slug}/edit`);
+			// router.push(`/post/${path}/edit`);
 		},
 	});
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ListItem } from "~/components/ListDetail/ListItem";
-import { type Post } from "~/graphql/typeSlut";
+import type { Post } from "~/graphql/typeSlut";
 import { realTime } from "~/lib/transformers";
 
 interface Props {

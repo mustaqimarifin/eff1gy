@@ -22,7 +22,7 @@ export function ListItem({ title, description, byline, href, as, active, leading
 				active ? "bg-black dark:bg-gray-700" : "sm:hover:bg-gray-200 sm:dark:hover:bg-gray-800"
 			}`}
 		>
-			{leadingAccessory && <>{leadingAccessory}</>}
+			{leadingAccessory && leadingAccessory}
 			<div className="flex flex-col justify-center space-y-1">
 				<div className={`line-clamp-3 font-medium ${active ? "text-white" : "text-gray-1000 dark:text-gray-100"}`}>
 					{title}

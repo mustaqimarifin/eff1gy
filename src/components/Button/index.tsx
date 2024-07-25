@@ -4,6 +4,8 @@ import { forwardRef } from "react";
 
 interface BaseButtonProps {
 	[key: string]: unknown;
+	href?: string | null;
+	as?: string | null;
 	size: string;
 	disabled?: boolean;
 }
@@ -14,15 +16,13 @@ type ButtonAsLink = BaseButtonProps & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-function BaseButton({ href = null, as = null, forwardedRef = null, ...rest }) {
+function BaseButton({ href, as, forwardedRef = null, ...rest }) {
 	if (href?.startsWith("/")) {
 		return <Link href={href} as={as} {...rest} />;
 	}
-
 	if (href) {
 		return <a ref={forwardedRef} href={href} {...rest} />;
 	}
-
 	return <button ref={forwardedRef} {...rest} />;
 }
 

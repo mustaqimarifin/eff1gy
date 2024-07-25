@@ -7,19 +7,19 @@ import spartan from "./spartan";
 import starwars from "./starwars";
 import tokyo from "./tokyo";
 
-type EventVideo = {
+interface EventVideo {
 	url: string;
 	thumbnail: string;
-};
+}
 
-export type EventDetail = {
+export interface EventDetail {
 	title: string;
 	description: string;
 	media?: Array<string> | null;
 	orientation?: "landscape";
-};
+}
 
-export type EventDetailsPost = {
+export interface EventDetailsPost {
 	slug: string;
 	title: string;
 	video: EventVideo;
@@ -28,9 +28,9 @@ export type EventDetailsPost = {
 	description: string;
 	date: string;
 	details: Array<EventDetail>;
-};
+}
 
-export type EventDetailsPostSummary = {
+export interface EventDetailsPostSummary {
 	slug: string;
 	video: EventVideo;
 	logo: string;
@@ -39,7 +39,7 @@ export type EventDetailsPostSummary = {
 	firstDetail: EventDetail;
 	detailsCount: number;
 	date: string;
-};
+}
 
 const allEvents: EventDetailsPost[] = [hsn, spartan, manu, letape, silat, marvel, starwars, tokyo].reverse();
 

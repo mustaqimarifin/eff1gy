@@ -1,13 +1,13 @@
 import { PAGINATION_AMOUNT } from "~/graphql/constants";
-import { type Context } from "~/graphql/context";
-import { type GetStackQueryVariables, type GetStacksQueryVariables } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context";
+import type { GetStackQueryVariables, GetStacksQueryVariables } from "~/graphql/typeSlut";
 
 export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) {
 	const { first = PAGINATION_AMOUNT, after = undefined } = args;
 	const { db } = ctx;
 
 	/*
-    When we are paginating after a cursor, we need to skip the cursor object itself. 
+    When we are paginating after a cursor, we need to skip the cursor object itself.
     Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
 	const skip = after ? 1 : 0;
@@ -22,7 +22,6 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 
 	try {
 		const edges = await db.stack.findMany({
-			relationLoadStrategy: "join",
 			take,
 			skip,
 			cursor,

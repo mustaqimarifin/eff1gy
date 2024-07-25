@@ -1,11 +1,11 @@
-import { type Context } from "~/graphql/context";
+import type { Context } from "~/graphql/context";
 import Mutation from "~/graphql/resolvers/mutations";
 import Query from "~/graphql/resolvers/queries";
 import { getCommentAuthor } from "~/graphql/resolvers/queries/comments";
 import { getQuestionAuthor } from "~/graphql/resolvers/queries/questions";
+import { DateQL, JSOD } from "../scalars";
 
 import { QuestionStatus, UserRole } from "~/graphql/typeSlut";
-import { DateQL, JSOD } from "../scalars";
 
 const resolvers = {
 	Date: DateQL,

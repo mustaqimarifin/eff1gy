@@ -10,7 +10,7 @@ export default function CoverImage({ src }) {
 		<div className="mb-6 max-w-3xl content-center justify-center overflow-hidden md:rounded-lg">
 			<Image
 				src={src}
-				alt={""}
+				alt=""
 				width={680}
 				height={503}
 				className={cx(
@@ -18,7 +18,7 @@ export default function CoverImage({ src }) {
 					isLoading ? "scale-110 blur-2xl grayscale" : "scale-100 grayscale-0",
 				)}
 				onLoadingComplete={() => setLoading(false)}
-				//blurDataURL={blurDataUrl}
+				// blurDataURL={blurDataUrl}
 			/>
 			{/*       <figcaption className="text-center ">
         {caption && (

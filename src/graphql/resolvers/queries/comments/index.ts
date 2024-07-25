@@ -1,4 +1,4 @@
-import { type Context } from "~/graphql/context";
+import type { Context } from "~/graphql/context";
 import { type Bookmark, CommentType, type QueryCommentArgs } from "~/graphql/typeSlut";
 
 export async function getComment(_, args: QueryCommentArgs, ctx: Context) {
@@ -54,3 +54,9 @@ export async function getComments(_, args, ctx: Context) {
 		}
 	}
 }
+
+/* 
+
+    
+    query: SELECT "t1"."id", "t1"."userId", "Comment_author"."__prisma_data__" AS "author" FROM "public"."Comment" AS "t1" LEFT JOIN LATERAL (SELECT JSONB_BUILD_OBJECT('id', "t2"."id", 'createdAt', "t2"."createdAt", 'name', "t2"."name", 'image', "t2"."image", 'email', "t2"."email", 'pendingEmail', "t2"."pendingEmail", 'role', "t2"."role", 'isAdmin', "t2"."isAdmin", 'emailVerified', "t2"."emailVerified", 'description', "t2"."description", 'location', "t2"."location", 'username', "t2"."username") AS "__prisma_data__" FROM "public"."User" AS "t2" WHERE "t1"."userId" = "t2"."id" LIMIT $1) AS "Comment_author" ON true WHERE ("t1"."id" = $2 AND 1=1) LIMIT $3 
+    --params: [1,"MAn9A",1] */

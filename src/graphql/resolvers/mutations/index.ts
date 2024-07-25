@@ -7,13 +7,13 @@ import { addQuestion, deleteQuestion, editQuestion } from "~/graphql/resolvers/m
 import { toggleReaction } from "~/graphql/resolvers/mutations/reactions";
 import { addStack, deleteStack, editStack, toggleStackUser } from "~/graphql/resolvers/mutations/stack";
 import { deleteUser, editUser } from "~/graphql/resolvers/mutations/user";
+import { addView } from "./view";
 
 /* import {
   addPost,
   deletePost,
   editPost,
 } from '~/graphql/resolvers/mutations/post' */
-import { addView } from "./view";
 
 /* export default {
 	addBookmark,
@@ -68,5 +68,5 @@ export default {
 	editPost: requiresAdmin(editPost),
 	deletePost: requiresAdmin(deletePost),
 	toggleReaction: requiresUser(toggleReaction),
-	addView: addView,
+	addView,
 };

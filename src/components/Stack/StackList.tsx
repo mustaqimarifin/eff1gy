@@ -4,9 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
-
 import { useGetStacksQuery } from "~/graphql/typeSlut";
-
 import { ListLoadMore } from "../ListDetail/ListLoadMore";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { StackListItem } from "./StackListItem";

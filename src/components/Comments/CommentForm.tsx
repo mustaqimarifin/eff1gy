@@ -2,13 +2,12 @@ import { useEffect, useId, useState } from "react";
 
 import { CommentButton } from "~/components/Button";
 import { Textarea } from "~/components/Input";
-import { GET_COMMENTS } from "~/graphql/queries/comments";
+//import { GET_COMMENTS } from "~/graphql/queries/comments";
 import type { CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
-import { useAddCommentMutation, useViewerQuery } from "~/graphql/typeSlut";
+import { GetCommentsDocument, useAddCommentMutation, useViewerQuery } from "~/graphql/typeSlut";
 import { useDebounce } from "~/hooks";
 import { realTime } from "~/lib/transformers";
-
-import { nuts } from "../Provider/Toaster";
+import { Nuts } from "../Provider/Toaster";
 
 interface Props {
 	refId: string;
@@ -46,12 +45,12 @@ export function CommentForm({ refId, type, openModal }: Props) {
 		},
 		update(cache, { data: { addComment } }) {
 			const { comments } = cache.readQuery<GetCommentsQuery>({
-				query: GET_COMMENTS,
+				query: GetCommentsDocument,
 				variables: { refId, type },
 			});
 
 			cache.writeQuery({
-				query: GET_COMMENTS,
+				query: GetCommentsDocument,
 				variables: { refId, type },
 				data: {
 					comments: [...comments, addComment],
@@ -128,7 +127,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
 						</CommentButton>
 					</div>
 				</div>
-				{error && nuts.error(error)}
+				{error && Nuts.error(error)}
 			</form>
 		</div>
 	);

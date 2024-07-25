@@ -1,9 +1,10 @@
+/* eslint-disable style/no-mixed-spaces-and-tabs */
 import React from "react";
 import { slugify } from "~/lib/functions";
 
 export function createHeading(level) {
 	return ({ children }) => {
-		let slug = slugify(children);
+		const slug = slugify(children);
 		return React.createElement(
 			`h${level}`,
 			{ id: slug },

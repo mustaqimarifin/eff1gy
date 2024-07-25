@@ -1,8 +1,8 @@
-import { createClient, SanityClient } from "next-sanity";
+import { type SanityClient, createClient } from "next-sanity";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-import { caseQuery, casesQuery, lilQueries, lilQuery, lilSlugs, postQuery, postSlugs, postsQuery } from "./queries";
 import { cache } from "react";
+import { caseQuery, casesQuery, lilQueries, lilQuery, lilSlugs, postQuery, postSlugs, postsQuery } from "./queries";
 
 export const projectId = "do33z8xq";
 export const dataset = "production";
@@ -14,7 +14,7 @@ export const apiVersion = "2023-05-03";
 )
  */
 
-export type Post = {
+export interface Post {
 	id: string;
 	slug: string;
 	name: string;
@@ -27,9 +27,9 @@ export type Post = {
 	readingTime?: string;
 	tweets: any[];
 	tags?: string[];
-};
+}
 
-export type LilBits = {
+export interface LilBits {
 	id: string;
 	slug: string;
 	name: string;
@@ -40,7 +40,7 @@ export type LilBits = {
 	overview: string;
 	coverImage: string;
 	orientation?: "landscape";
-};
+}
 
 export function getClient(): SanityClient {
 	const sanity = createClient({
@@ -67,19 +67,19 @@ const sanity = getClient();
 	return sanity ? sanity.fetch(query, params) : [];
 };
  */
-export const getPostSlugs = async (): Promise<Post[]> => {
+export async function getPostSlugs(): Promise<Post[]> {
 	if (sanity) {
 		return (await sanity.fetch(postSlugs)) || [];
 	}
 	return [];
-};
+}
 
-export const getLilSlugs = async (): Promise<LilBits[]> => {
+export async function getLilSlugs(): Promise<LilBits[]> {
 	if (sanity) {
 		return (await sanity.fetch(lilSlugs)) || [];
 	}
 	return [];
-};
+}
 /* export async function getPostSlugs(): Promise<Post[]> {
   if (sanity) {
     return (await sanity.fetch(postSlugs)) || [];
@@ -147,7 +147,7 @@ export const getLilBit = cache(async (slug: string) => {
 		return (await sanity.fetch(lilQuery, { slug })) || {};
 	}
 	revalidatePath("/src/app/(site)/code/[slug]", "page");
-	//revalidatePath("/(site)/code/[slug]", "page");
+	// revalidatePath("/(site)/code/[slug]", "page");
 	return {};
 });
 export async function getAllCases() {
@@ -165,17 +165,17 @@ export async function getCase(slug) {
 }
 
 export const allPosts = await getAllPosts();
-//console.log("allPosts:-", allPosts, 2);
-//export const posts = allPosts.map((post) => pick(post, ["slug"]));
-///console.log("posts:-", posts);
+// console.log("allPosts:-", allPosts, 2);
+// export const posts = allPosts.map((post) => pick(post, ["slug"]));
+/// console.log("posts:-", posts);
 
 export const allPostSlugs = await getPostSlugs();
-//console.log("allPostSlugs:-", allPostSlugs);
+// console.log("allPostSlugs:-", allPostSlugs);
 
 export const allBits = await getAllBits();
-//console.log("allBits:-", allBits, 2);
-//export const lilbits = allBits.map((post) => pick(post, ["slug"]));
-//console.log("lilBits:-", lilbits);
+// console.log("allBits:-", allBits, 2);
+// export const lilbits = allBits.map((post) => pick(post, ["slug"]));
+// console.log("lilBits:-", lilbits);
 
 export const allLilSlugs = await getLilSlugs();
-//console.log("allLilSlugs:-", allLilSlugs);
+// console.log("allLilSlugs:-", allLilSlugs);

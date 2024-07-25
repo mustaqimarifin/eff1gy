@@ -10,9 +10,7 @@ import { Comments } from "~/components/Comments";
 import { Detail } from "~/components/ListDetail/Detail";
 import { TitleBar } from "~/components/ListDetail/TitleBar";
 import { Tags } from "~/components/Tag";
-import { CommentType, GetStackDocument, type GetStackQuery, useGetStackQuery } from "~/graphql/typeSlut";
-
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { CommentType, useGetStackQuery } from "~/graphql/typeSlut";
 import { MarkdownRenderer } from "../MarkdownRenderer";
 import { SignInDialog } from "../SignInDialog";
 import { StackActions } from "./StackActions";
@@ -22,7 +20,7 @@ export function StackDetail({ slug }) {
 	const scrollContainerRef = useRef(null);
 	const titleRef = useRef(null);
 
-	const { data, loading, error } = useQuery<GetStackQuery>(GetStackDocument, {
+	const { data, loading, error } = useGetStackQuery({
 		variables: { slug },
 	});
 	if (loading) {
@@ -41,7 +39,7 @@ export function StackDetail({ slug }) {
 				<TitleBar
 					backButton
 					globalMenu={false}
-					backButtonHref={"/stack"}
+					backButtonHref="/stack"
 					magicTitle
 					title={stack.name}
 					titleRef={titleRef}
@@ -56,12 +54,12 @@ export function StackDetail({ slug }) {
 								<div className="w-12 h-12">
 									<Image
 										priority
-										//src={`/static/img/stack/${stack.image}`}
+										// src={`/static/img/stack/${stack.image}`}
 										src={`https://ik.imagekit.io/mstqmarfn/stack/${stack.image}`}
 										width={60}
 										height={60}
 										alt={`${stack.name} icon`}
-										className={"rounded-md object-cover"}
+										className="rounded-md object-cover"
 									/>
 								</div>
 							</Link>

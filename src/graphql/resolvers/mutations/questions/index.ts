@@ -1,15 +1,11 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "~/graphql/context";
-import {
-	type MutationAddQuestionArgs,
-	type MutationDeleteQuestionArgs,
-	type MutationEditQuestionArgs,
-} from "~/graphql/typeSlut";
-//import { graphcdn } from "~/lib/graphcdn";
+import type { Context } from "~/graphql/context";
+import type { MutationAddQuestionArgs, MutationDeleteQuestionArgs, MutationEditQuestionArgs } from "~/graphql/typeSlut";
+// import { graphcdn } from "~/lib/graphcdn";
 
-//import { graphcdn } from '~/lib/redis'
-//import { graphcdn } from '~/lib/graphcdn'
+// import { graphcdn } from '~/lib/redis'
+// import { graphcdn } from '~/lib/graphcdn'
 
 export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Context) {
 	const { data, id } = args;

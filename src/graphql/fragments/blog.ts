@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const BlogCoreFragment = gql`
   fragment BlogCore on Blog {
     __typename
+    
     id
     title
     date

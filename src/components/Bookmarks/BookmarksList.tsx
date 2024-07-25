@@ -1,14 +1,11 @@
 "use client";
 
-import { useQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer";
 import { PAGINATION_AMOUNT } from "~/graphql/constants";
-import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks";
-import type { GetBookmarksQuery } from "~/graphql/typeSlut";
-
+import { useGetBookmarksSuspenseQuery } from "~/graphql/typeSlut";
 import { ListLoadMore } from "../ListDetail/ListLoadMore";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { BookmarksListItem } from "./BookmarkListItem";
@@ -53,10 +50,10 @@ export function BookmarksList() {
 		? {
 				first: PAGINATION_AMOUNT,
 				after: null,
-				filter: { tag: tag },
-		  }
+				filter: { tag },
+			}
 		: null;
-	const { error, data, fetchMore, loading } = useQuery<GetBookmarksQuery>(GET_BOOKMARKS, {
+	const { error, data, fetchMore } = useGetBookmarksSuspenseQuery({
 		variables,
 	});
 
@@ -69,14 +66,14 @@ export function BookmarksList() {
 		return fetchMore({
 			variables: {
 				...variables,
-				after: data?.bookmarks.pageInfo.endCursor,
+				after: data?.bookmarks.pageInfo?.endCursor,
 			},
 		});
 	}
 
 	// scroll to the top of the list whenever the filters are changed
 	useEffect(() => {
-		if (scrollContainerRef?.current) scrollContainerRef.current.scrollTo(0, 0);
+		if (scrollContainerRef) scrollContainerRef.current.scrollTo(0, 0);
 	}, [tag]);
 
 	useEffect(() => {
@@ -88,7 +85,7 @@ export function BookmarksList() {
 		if (tagQuery) router.push(path);
 	}, [tagQuery]);
 
-	if (loading && !data?.bookmarks) {
+	if (!data?.bookmarks) {
 		return (
 			<ListContainer onRef={setScrollContainerRef}>
 				<BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
@@ -109,16 +106,16 @@ export function BookmarksList() {
 				<div>
 					<div className="lg:space-y-1 lg:p-3">
 						{bookmarks.edges.map((bookmark) => {
-							const active = path === bookmark.node.id;
+							const active = path === bookmark?.node?.id;
 							return (
-								<div key={bookmark.node.id}>
-									<BookmarksListItem active={active} bookmark={bookmark.node} />
+								<div key={bookmark?.node?.id}>
+									<BookmarksListItem active={active} bookmark={bookmark?.node} />
 								</div>
 							);
 						})}
 					</div>
 
-					{bookmarks.pageInfo.hasNextPage && <ListLoadMore setIsVisible={setIsVisible} />}
+					{bookmarks.pageInfo?.hasNextPage && <ListLoadMore setIsVisible={setIsVisible} />}
 				</div>
 			</ListContainer>
 		</BookmarksContext.Provider>

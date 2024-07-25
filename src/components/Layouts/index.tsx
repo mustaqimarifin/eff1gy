@@ -4,8 +4,8 @@ import { Sidebar } from "~/components/Sidebar";
 import { cx } from "~/lib/transformers";
 
 interface Props {
-	list: ReactElement | null;
-	detail: ReactElement | null;
+	list?: ReactElement | null;
+	detail?: ReactElement | null;
 	hasDetail?: boolean;
 }
 
@@ -26,7 +26,6 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 	return (
 		<div className="relative flex h-full min-h-screen w-full">
 			<Sidebar />
-
 			<div className="flex flex-1">{children}</div>
 		</div>
 	);

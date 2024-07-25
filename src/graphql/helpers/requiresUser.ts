@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 
-import { type Context } from "../context";
+import type { Context } from "../context";
 
 export function requiresUser(fn) {
 	return function resolve(parent, args, context: Context) {

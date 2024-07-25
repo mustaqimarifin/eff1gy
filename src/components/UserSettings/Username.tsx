@@ -3,11 +3,7 @@ import { useState } from "react";
 import Button from "~/components/Button";
 import { Input } from "~/components/Input";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
-import {
-	type GetViewerWithSettingsQuery,
-	useEditUserMutation,
-	useGetViewerWithSettingsQuery,
-} from "~/graphql/typeSlut";
+import { type GetViewerWithSettingsQuery, useEditUserMutation } from "~/graphql/typeSlut";
 import { nameRX } from "~/lib/functions";
 
 export function UsernameForm(props: {
@@ -51,7 +47,11 @@ export function UsernameForm(props: {
 				<div className="text-primary flex space-x-2">
 					<span>@{viewer.username}</span>
 					<span>·</span>
-					<button className="cursor-pointer font-medium text-blue-500" onClick={() => setIsEditing(!isEditing)}>
+					<button
+						type="submit"
+						className="cursor-pointer font-medium text-blue-500"
+						onClick={() => setIsEditing(!isEditing)}
+					>
 						{isEditing ? "Cancel" : "Edit"}
 					</button>
 				</div>
@@ -61,13 +61,13 @@ export function UsernameForm(props: {
 				<form className="space-y-2" onSubmit={onSubmit}>
 					<Input
 						type="text"
-						placeholder={"Choose a username"}
+						placeholder="Choose a username"
 						value={username}
 						autoFocus
 						onChange={handleUsernameChange}
 					/>
 					{error && (
-						<p className={`text-xs text-red-500`}>
+						<p className="text-xs text-red-500">
 							Usernames should be between 4 and 16 characters and only have numbers, letters, or underscores.
 						</p>
 					)}

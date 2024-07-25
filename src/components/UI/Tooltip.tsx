@@ -4,18 +4,18 @@ import Tippy from "@tippyjs/react";
 
 interface Props {
 	content: string;
-	style?: any;
+	style?: object;
 	children: any;
 }
 
 export function Tooltip(props: Props) {
-	const { style = {}, content, ...rest } = props;
+	const { style, content, ...rest } = props;
 
 	return (
 		<Tippy
 			placement="top"
 			touch={false}
-			arrow={true}
+			arrow
 			hideOnClick={false}
 			content={
 				<span className="text-sm font-medium" style={{ ...style }}>

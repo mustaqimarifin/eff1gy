@@ -1,8 +1,8 @@
 "use client";
-import { CassetteTape, ListMusicIcon, Plus } from "lucide-react";
+import { CassetteTape, Plus, Thermometer } from "lucide-react";
+import lazy from "next/dynamic";
 import { usePathname } from "next/navigation";
 import useSWR from "swr";
-import type { TrackType } from "~/app/(site)/dash/Track";
 import { AddBookmarkDialog } from "~/components/Bookmarks/AddBookmarkDialog";
 import { GhostButton } from "~/components/Button";
 import {
@@ -18,13 +18,15 @@ import {
 	TwitterIcon,
 	WritingIcon,
 } from "~/components/Icon";
+import { NavigationLink } from "./NavigationLink";
 
 import { fetcher } from "~/lib/functions";
 
+import { memo } from "react";
 import { useViewerQuery } from "~/graphql/typeSlut";
-import Marquee from "../MDX/Marquee";
-import { NavigationLink } from "./NavigationLink";
-
+const Marquee = lazy(() => import("../MDX/Marquee"), {
+	ssr: false,
+});
 function ThisAddBookmarkDialog() {
 	return (
 		<AddBookmarkDialog
@@ -37,6 +39,12 @@ function ThisAddBookmarkDialog() {
 	);
 }
 
+type TrackType = {
+	title?: string;
+	artist?: string;
+	isPlaying?: boolean;
+};
+
 function Player(track: TrackType) {
 	return (
 		<Marquee speed={25} pauseOnHover delay={2} gradient>
@@ -45,7 +53,7 @@ function Player(track: TrackType) {
 	);
 }
 
-export function SidebarNavigation() {
+export const SidebarNavigation = memo(() => {
 	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher);
 	const path = usePathname();
 	const { data } = useViewerQuery();
@@ -62,21 +70,21 @@ export function SidebarNavigation() {
 					trailingAction: null,
 					isExternal: false,
 				},
-				/* 	{
+				{
 					href: "/post",
 					label: "Posts",
 					icon: WritingIcon,
 					trailingAccessory: null,
-					isActive: path.indexOf("/post") >= 0,
+					isActive: path.includes("/post"),
 					trailingAction: null,
 					isExternal: false,
-				}, */
+				},
 				{
 					href: "/blog",
-					label: "Posts",
-					icon: WritingIcon,
+					label: "Blog",
+					icon: Thermometer,
 					trailingAccessory: null,
-					isActive: path.indexOf("/blog") >= 0,
+					isActive: path.includes("/blog"),
 					trailingAction: null,
 					isExternal: false,
 				},
@@ -89,8 +97,8 @@ export function SidebarNavigation() {
 					href: "/bookmarks",
 					label: "Bookmarks",
 					icon: BookmarksIcon,
-					trailingAccessory: null,
-					isActive: path.indexOf("/bookmarks") >= 0,
+					//trailingAccessory: null,
+					isActive: path.includes("/bookmarks"),
 					trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
 					isExternal: false,
 				},
@@ -108,8 +116,8 @@ export function SidebarNavigation() {
 					href: "/ama",
 					label: "AMA",
 					icon: AMAIcon,
-					trailingAccessory: null,
-					isActive: path.indexOf("/ama") >= 0 && !path.startsWith("/ama/pending"),
+					//trailingAccessory: null,
+					isActive: path.includes("/ama") && !path.startsWith("/ama/pending"),
 					trailingAction: null,
 					isExternal: false,
 				},
@@ -118,8 +126,8 @@ export function SidebarNavigation() {
 					href: "/stack",
 					label: "Stack",
 					icon: StackIcon,
-					trailingAccessory: null,
-					isActive: path.indexOf("/stack") >= 0,
+					//trailingAccessory: null,
+					isActive: path.includes("/stack"),
 					trailingAction: null,
 					isExternal: false,
 				},
@@ -192,7 +200,7 @@ export function SidebarNavigation() {
 					label: "Code",
 					icon: CaseIcon,
 					trailingAccessory: null,
-					isActive: path.indexOf("/code") >= 0,
+					isActive: path.includes("/code"),
 					trailingAction: null,
 					isExternal: false,
 				},
@@ -205,9 +213,9 @@ export function SidebarNavigation() {
 					href: "/dash",
 					label: track?.isPlaying ? Player(track) : "On Rotation",
 					icon: CassetteTape,
-					trailingAccessory: null,
+					//trailingAccessory: null,
 					isActive: false,
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: false,
 				},
 				{
@@ -226,7 +234,7 @@ export function SidebarNavigation() {
 					icon: Spotify,
 					trailingAccessory: ExternalLinkIcon,
 					isActive: false,
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: true,
 				},
 
@@ -274,4 +282,4 @@ export function SidebarNavigation() {
 			})}
 		</div>
 	);
-}
+});

@@ -1,12 +1,14 @@
+/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 import NextImage from "next/legacy/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
+// import rehypePresetMinify from 'rehype-preset-minify'
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
-import linkifyRegex from "remark-linkify-regex";
+import linkifyRegex from "remark-linkify-modifier";
+import { highlight } from "sugar-high";
 import { CLIENT_URL } from "~/graphql/constants";
 import { deepmerge } from "~/lib/transformers/merge";
 import { createHeading } from "../MDX/CreateHeading";
-import { highlight } from "../MDX/sugar.js";
 
 export function CustomLink1({ href, ...rest }: any) {
 	if (href.startsWith("#")) {
@@ -30,7 +32,6 @@ export function CustomLink1({ href, ...rest }: any) {
 
 function Code({ children, ...props }) {
 	const codeHTML = highlight(children);
-	// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
 	return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
@@ -71,31 +72,35 @@ function Image(props) {
 
 const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
-const triplet = (e1: number, e2: number, e3: number) =>
-	keyStr.charAt(e1 >> 2) +
-	keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
-	keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
-	keyStr.charAt(e3 & 63);
+function triplet(e1: number, e2: number, e3: number) {
+	return (
+		keyStr.charAt(e1 >> 2) +
+		keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+		keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+		keyStr.charAt(e3 & 63)
+	);
+}
 
-const rgbDataURL = (r: number, g: number, b: number) =>
-	`data:image/gif;base64,R0lGODlhAQABAPAA${
+function rgbDataURL(r: number, g: number, b: number) {
+	return `data:image/gif;base64,R0lGODlhAQABAPAA${
 		triplet(0, r, g) + triplet(b, 255, 255)
 	}/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
+}
 
-const MDXImage = (paragraph: { children?: boolean; node?: any }) => {
+function MDXImage(paragraph: { children?: boolean; node?: any }) {
 	const { node } = paragraph;
 
 	if (node.children[0].tagName === "img") {
 		const image = node.children[0];
 		const metastring = image.properties.alt;
 		const alt = metastring?.replace(/ *\{[^)]*\} */g, "");
-		const metaWidth = metastring.match(/{([^}]+)x/);
-		const metaHeight = metastring.match(/x([^}]+)}/);
+		const metaWidth = metastring.match(/\{([^}]+)x/);
+		const metaHeight = metastring.match(/x([^}]+)\}/);
 		const width = metaWidth ? metaWidth[1] : "768";
 		const height = metaHeight ? metaHeight[1] : "432";
 		const isPriority = metastring?.toLowerCase().match("{priority}");
 		const hasCaption = metastring?.toLowerCase().includes("{caption:");
-		const caption = metastring?.match(/{caption: (.*?)}/)?.pop();
+		const caption = metastring?.match(/\{caption: (.*?)\}/)?.pop();
 
 		return (
 			<div className="postImgWrapper">
@@ -116,7 +121,7 @@ const MDXImage = (paragraph: { children?: boolean; node?: any }) => {
 		);
 	}
 	return <p>{paragraph.children}</p>;
-};
+}
 
 function Callout(props) {
 	return (

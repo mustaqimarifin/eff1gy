@@ -3,17 +3,15 @@
 import type { ReactNode } from "react";
 import { useRef } from "react";
 
+import { EyeIcon } from "lucide-react";
+import dynamic from "next/dynamic";
 import type { Blog } from "~/graphql/typeSlut";
 import { CommentType, useGetBlogQuery } from "~/graphql/typeSlut";
 import { formatDate } from "~/lib/transformers";
-
 import { Detail } from "../ListDetail/Detail";
 import { TitleBar } from "../ListDetail/TitleBar";
 
-import dynamic from "next/dynamic";
-import { EyeIcon } from "lucide-react";
-
-export type Post = {
+export interface Post {
 	id: string;
 	slug: string;
 	name: string;
@@ -26,9 +24,9 @@ export type Post = {
 	readingTime?: string;
 	tweets: any[];
 	tags?: string[];
-};
+}
 
-export type CaseStudy = {
+export interface CaseStudy {
 	id: string;
 	slug: string;
 	name: string;
@@ -39,14 +37,14 @@ export type CaseStudy = {
 	overview: string;
 	coverImage: string;
 	orientation?: "landscape";
-};
+}
 
-type Props = {
+interface Props {
 	children?: ReactNode;
 	post?: Post;
 	blog?: Blog;
 	slug?: string;
-};
+}
 
 function eye() {
 	return <EyeIcon size={20} />;
@@ -59,7 +57,7 @@ export function BlogDetail({ children, post, slug }: Props) {
 		variables: { slug },
 	});
 
-	//if (error) return <div>failed to load</div>;
+	// if (error) return <div>failed to load</div>;
 	// if (!post) return <div>loading...</div>;
 	/*  useEffect(() => {
 		async function fetchPost() {
@@ -85,49 +83,44 @@ export function BlogDetail({ children, post, slug }: Props) {
 		ssr: false,
 	});
 	//  const publishedAt = realTime({ timestamp: post.publishedAt });
-	//const publishedAt = realTime({ timestamp: post.date })
+	// const publishedAt = realTime({ timestamp: post.date })
 
 	return (
-		<>
-			<Detail.Container data-cy="blog-detail" ref={scrollContainerRef}>
-				<TitleBar
-					backButton
-					globalMenu={false}
-					backButtonHref={"/blog"}
-					magicTitle
-					title={post?.title}
-					titleRef={titleRef}
-					scrollContainerRef={scrollContainerRef}
-					trailingAccessory={<PostAction blog={blog} />}
-				/>
+		<Detail.Container data-cy="blog-detail" ref={scrollContainerRef}>
+			<TitleBar
+				backButton
+				globalMenu={false}
+				backButtonHref="/blog"
+				magicTitle
+				title={post?.title}
+				titleRef={titleRef}
+				scrollContainerRef={scrollContainerRef}
+				trailingAccessory={<PostAction blog={blog} />}
+			/>
 
-				<Detail.ContentContainer>
-					<Detail.Header>
-						{/* 	<div className="flex items-center space-x-6">
+			<Detail.ContentContainer>
+				<Detail.Header>
+					{/* 	<div className="flex items-center space-x-6">
 							<div>
 								<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
 							</div>
 						</div> */}
-						<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
-						<div
-							title={post?.date}
-							className=" text-tertiary font-semibold text-xs inline-block leading-snug"
-						>
-							{`${formatDate(post?.date)} • ${blog?.count} views`}
-						</div>
-					</Detail.Header>
-					{/* <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
+					<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
+					<div title={post?.date} className=" text-tertiary font-semibold text-xs inline-block leading-snug">
+						{`${formatDate(post?.date!)} • ${blog?.count} views`}
+					</div>
+				</Detail.Header>
+				{/* <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
 						<div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
 							{formatDate(post?.date)}
 							{` • `}
 							{blog?.count}
 						</div>
 					</div> */}
-					{children}
-					<div className="py-6" />
-					<Comments refId={blog?.id} type={CommentType.Blog} />
-				</Detail.ContentContainer>
-			</Detail.Container>
-		</>
+				{children}
+				<div className="py-6" />
+				<Comments refId={blog?.id} type={CommentType.Blog} />
+			</Detail.ContentContainer>
+		</Detail.Container>
 	);
 }

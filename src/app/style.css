@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply max-h-screen overflow-hidden text-base ;
+    @apply max-h-screen overflow-hidden text-base;
   }
 
   /* handles safari overscroll background color */
@@ -28,26 +28,33 @@
   }
 }
 :root {
-  --sh-class: #6c757d;
-  --sh-identifier: #343a40;
-  --sh-sign: #6c757d;
-  --sh-string: #343a40;
-  --sh-keyword: #212529;
-  --sh-comment: #6c757d;
-  --sh-jsxliterals: #4a4e69;
+  --sh-class: oklch(32.68% 0 0);
+  --sh-sign: #8f8f8f;
+  --sh-entity: oklch(25.2% 0 0);
+  --sh-jsxliterals: oklch(34.06% 0 0);
+  --sh-string: #3a3a3a;
+  --sh-comment: oklch(68% 0 0);
+  --sh-keyword: #7e22ce;
+  --sh-property: oklch(24.78% 0 0);
+  --sh-identifier: oklch(19.06% 0.003 248 / 0.8);
+  
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --sh-class: #d08c60;
-    --sh-identifier: #ff9b54;
-    --sh-sign: #d9ae94;
-    --sh-string: #f1dca7;
-    --sh-keyword: #9b9b7a;
-    --sh-comment: #797d62;
-    --sh-jsxliterals: #997b66;
+   --sh-class: oklch(62.68% 0 0);
+    --sh-sign: #8f8f8f;
+    --sh-entity: oklch(70.2% 0 0);
+    --sh-jsxliterals: oklch(90.06% 0 0);
+    --sh-string: oklch(100% 0 0 / 50%);
+    --sh-comment: oklch(68% 0 0);
+    --sh-keyword: #d0b2eb;
+    --sh-property: oklch(68% 0 0);
+    --sh-identifier: oklch(85.76% 0.002 247.8);
   }
+ 
 }
+
 
 @layer components {
   /* needed to override tailwind forms styles */
@@ -434,7 +441,6 @@
   transform: var(--transform);
 }
 
-
 .prose {
   @apply text-gray-700 dark:text-gray-400;
 }
@@ -467,7 +473,7 @@
 }
 
 .prose pre > code {
-  background: none
+  background: none;
 }
 
 .prose :where(code):not(:where([class~='not-prose'] *))::before {
@@ -478,12 +484,12 @@
   content: none;
 }
 
- .prose pre {
-  @apply overflow-x-auto ;
+.prose pre {
+  @apply overflow-x-auto;
 }
- 
+
 .prose code {
-  @apply px-1 py-0.5 ;
+  @apply px-1 py-0.5;
 }
 
 .prose pre code {
@@ -512,10 +518,10 @@
   @apply text-blue-600 dark:text-blue-500;
 }
  */
- .prose pre > code {
+.prose pre > code {
   display: grid;
-} 
-/* 
+}
+/*
 .prose table {
   @apply my-2 rounded-md border border-gray-200 text-gray-1000 dark:border-gray-800 dark:text-gray-50;
 }
@@ -664,7 +670,6 @@
   @apply whitespace-pre text-sm font-medium;
   word-break: break-word;
 }
- 
 
 .prose sup {
   @apply text-sm text-blue-500 dark:text-gray-400;

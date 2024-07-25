@@ -9,7 +9,7 @@ import { TagPicker } from "~/components/Tag/TagPicker";
 import { GET_STACKS } from "~/graphql/queries/stack";
 import { useDeleteStackMutation, useEditStackMutation } from "~/graphql/typeSlut";
 
-//import { StackImageUploader } from './StackImageUploader'
+// import { StackImageUploader } from './StackImageUploader'
 
 export function EditStackForm({ closeModal, stack }) {
 	const router = useRouter();
@@ -165,7 +165,7 @@ export function EditStackForm({ closeModal, stack }) {
 
 	const tagFilter = (t) => {
 		const allowedTags = ["software", "gear", "plugins"];
-		return allowedTags.indexOf(t.name) >= 0;
+		return allowedTags.includes(t.name);
 	};
 
 	return (
