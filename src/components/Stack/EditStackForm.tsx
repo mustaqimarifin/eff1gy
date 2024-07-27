@@ -7,7 +7,13 @@ import { useReducer } from "react"
 import Button, { DeleteButton } from "~/components/Button"
 import { Input, Textarea } from "~/components/Input"
 import { TagPicker } from "~/components/Tag/TagPicker"
-import { DeleteStackDocument, EditStackDocument, GetStacksDocument } from "~/gql/typeSlut"
+import {
+	DeleteStackDocument,
+	EditStackDocument,
+	GetStacksDocument,
+	useDeleteStackMutation,
+	useEditStackMutation,
+} from "~/gql/typeSlut"
 
 // import { StackImageUploader } from './StackImageUploader'
 
@@ -73,9 +79,9 @@ export function EditStackForm({ closeModal, stack }) {
 
 	const [state, dispatch] = useReducer(reducer, initialState)
 
-	const [editStack] = useMutation(EditStackDocument)
+	const [editStack] = useEditStackMutation()
 
-	const [handleDelete] = useMutation(DeleteStackDocument, {
+	const [handleDelete] = useDeleteStackMutation({
 		variables: { id: stack.id },
 		optimisticResponse: {
 			__typename: "Mutation",
@@ -90,11 +96,9 @@ export function EditStackForm({ closeModal, stack }) {
 
 	function handleSave(e) {
 		e.preventDefault()
-
 		if (!state.name || state.name.length === 0) {
 			return dispatch({ type: "error", value: "Stack must have a name" })
 		}
-
 		if (!state.url || state.url.length === 0) {
 			return dispatch({ type: "error", value: "Stack must have a URL" })
 		}

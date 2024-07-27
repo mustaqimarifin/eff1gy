@@ -10,6 +10,7 @@ import {
 	DeleteQuestionDocument,
 	GetQuestionDocument,
 	GetQuestionsDocument,
+	type GetQuestionsQuery,
 	type Question,
 	ViewerDocument,
 	useDeleteQuestionMutation,
@@ -18,12 +19,13 @@ import {
 } from "~/gql/typeSlut"
 
 import AudioRecorder from "../AudioRecorder"
+import { GET_QUESTION, GET_QUESTIONS } from "~/graphql/queries/questions"
 
 export function EditQuestionForm({
 	closeModal,
 	question,
 }: {
-	closeModal: () => void
+	closeModal: any
 	question: Question
 }) {
 	const initialState = {
@@ -178,13 +180,13 @@ export function EditQuestionForm({
 			deleteQuestion: true,
 		},
 		update(cache) {
-			const cacheData = cache.readQuery({
-				query: GetQuestionsDocument,
+			const cacheData = cache.readQuery<GetQuestionsQuery>({
+				query: GET_QUESTIONS,
 				variables: { filter: { status: question.status } },
 			})
 
 			cache.writeQuery({
-				query: GetQuestionDocument,
+				query: GET_QUESTION,
 				variables: { id: question.id },
 				data: {
 					question: null,
@@ -262,8 +264,8 @@ export function EditQuestionForm({
 			<form className="space-y-3" onSubmit={handleSave}>
 				<Input placeholder="Ask me anything..." value={state.title} onChange={onTitleChange} onKeyDown={onKeyDown} />
 				{state.error && <p className="text-red-500">{state.error}</p>}
-				<div className="flex flex-col space-y-2 ">
-					<p className="text-sm font-semibold text-primary">Record answer</p>
+				<div className="flex flex-col space-y-2">
+					<p className="text-primary text-sm font-semibold">Record answer</p>
 					<AudioRecorder
 						id={question.id}
 						initialAudioUrl={state.src}
@@ -283,7 +285,7 @@ export function EditQuestionForm({
 				/>
 			</form>
 			{state.isRecording && (
-				<div className="flex justify-between space-between">
+				<div className="space-between flex justify-between">
 					<Button onClick={onRecordingStop}>Cancel</Button>
 				</div>
 			)}

@@ -8,14 +8,14 @@ import { TitleBar } from "~/components/ListDetail/TitleBar"
 
 import { useQuery } from "@apollo/client"
 
-import { ViewerDocument } from "~/gql/typeSlut"
+import { useViewerQuery, ViewerDocument } from "~/gql/typeSlut"
 import { SignInDialog } from "../SignInDialog"
 import SegmentedControl from "../UI/SegmentedController"
 import { AddQuestionDialog } from "./AddQuestionDialog"
 import { QuestionsContext } from "./QuestionsList"
 
 export function AMATitlebar({ scrollContainerRef }) {
-	const { data } = useQuery(ViewerDocument)
+	const { data } = useViewerQuery()
 	const { setFilterPending, filterPending } = useContext(QuestionsContext)
 
 	function getAddButton() {

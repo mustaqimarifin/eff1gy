@@ -5,13 +5,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
 
-import { useQuery } from "@apollo/client"
+import { type QueryRef, useQueryRefHandlers, useReadQuery } from "@apollo/client"
 import { PrimaryButton } from "~/components/Button"
 import { Comments } from "~/components/Comments"
 import { Detail } from "~/components/ListDetail/Detail"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 import { Tags } from "~/components/Tag"
-import { CommentType, GetStackDocument } from "~/gql/typeSlut"
+import { CommentType, useGetStackQuery, useGetStackSuspenseQuery } from "~/gql/typeSlut"
 import { MarkdownRenderer } from "../MarkdownRenderer"
 import { SignInDialog } from "../SignInDialog"
 import { StackActions } from "./StackActions"
@@ -20,16 +20,18 @@ import { StackUsedBy } from "./StackUsedBy"
 type DetailProps = {
 	slug: string
 }
-export function StackDetail({ slug }: DetailProps) {
+export function StackDetail({ slug }) {
+	//const { refetch } = useQueryRefHandlers(queryRef);
+	//const { data } = useReadQuery(queryRef);
 	const scrollContainerRef = useRef(null)
 	const titleRef = useRef(null)
 
-	const { data, loading, error } = useQuery(GetStackDocument, {
+	const { data, error } = useGetStackSuspenseQuery({
 		variables: { slug },
 	})
-	if (loading) {
+	/* 	if (loading) {
 		return <Detail.Loading />
-	}
+	} */
 
 	if (!data?.stack || error) {
 		return <Detail.Null />
@@ -55,7 +57,7 @@ export function StackDetail({ slug }: DetailProps) {
 					<Detail.Header>
 						<div className="flex items-center space-x-6">
 							<Link href={stack.url} passHref className="inline-block">
-								<div className="w-12 h-12">
+								<div className="h-12 w-12">
 									<Image
 										priority
 										// src={`/static/img/stack/${stack.image}`}
@@ -82,7 +84,7 @@ export function StackDetail({ slug }: DetailProps) {
 						</PrimaryButton>
 
 						<SignInDialog>
-							{({ openModal }: { openModal: any }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}
+							{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}
 						</SignInDialog>
 					</Detail.Header>
 				</Detail.ContentContainer>

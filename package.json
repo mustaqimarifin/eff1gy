@@ -8,9 +8,9 @@
 		"start": "next start",
 		"lint": "biome check --write --unsafe ./",
 		"cunt": "eslint src --fix --cache --cache-location eslintcache",
-		"fix": "pnpm format && pnpm lint",
+		"fix": "bun format && bun lint",
 		"format": "biome format --write ./",
-		"postinstall": "prisma generate && pnpm generate",
+		"postinstall": "prisma generate && bun generate",
 		"generate": "graphql-codegen-esm --config codegen.ts",
 		"generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'"
 	},

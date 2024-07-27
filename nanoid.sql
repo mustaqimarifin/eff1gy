@@ -1,18 +1,12 @@
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
--- The `nanoid()` function generates a compact, URL-friendly unique identifier.
--- Based on the given size and alphabet, iat creates a randomized string that's ideal for
--- use-cases requiring small, unpredictable IDs (e.g., URL shorteners, generated file names, etc.).
--- While it comes with a default configuration, the function is designed to be flexible,
--- allowing for customization to meet specific needs.
-DROP FUNCTION IF EXISTS nanoid(int, text, float);
-CREATE OR REPLACE FUNCTION nanoid(
-    size int DEFAULT 5, -- The number of symbols in the NanoId String. Must be greater than 0.
-    alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- The symbols used in the NanoId String. Must contain between 1 and 255 symbols.
-    additionalBytesFactor float DEFAULT 1.6 -- The additional bytes factor used for calculating the step size. Must be equal or greater then 1.
+DROP FUNCTION IF EXISTS xid(int, text, float);
+CREATE OR REPLACE FUNCTION xid(
+    size int DEFAULT 5, 
+    alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyz', 
+    additionalBytesFactor float DEFAULT 1.6 
 )
-    RETURNS text -- A randomly generated NanoId String
+    RETURNS text 
     LANGUAGE plpgsql
     VOLATILE
     PARALLEL SAFE
@@ -45,21 +39,21 @@ BEGIN
         step := 1024; -- The step size % can''t be bigger then 1024!
     END IF;
 
-    RETURN nanoid_optimized(size, alphabet, mask, step);
+    RETURN xid_optimized(size, alphabet, mask, step);
 END
 $$;
 
 -- Generates an optimized random string of a specified size using the given alphabet, mask, and step.
 -- This optimized version is designed for higher performance and lower memory overhead.
 -- No checks are performed! Use it only if you really know what you are doing.
-DROP FUNCTION IF EXISTS nanoid_optimized(int, text, int, int);
-CREATE OR REPLACE FUNCTION nanoid_optimized(
+DROP FUNCTION IF EXISTS xid_optimized(int, text, int, int);
+CREATE OR REPLACE FUNCTION xid_optimized(
     size int, -- The desired length of the generated string.
     alphabet text, -- The set of characters to choose from for generating the string.
     mask int, -- The mask used for mapping random bytes to alphabet indices. Should be `(2^n) - 1` where `n` is a power of 2 less than or equal to the alphabet size.
     step int -- The number of random bytes to generate in each iteration. A larger value may speed up the function but increase memory usage.
 )
-    RETURNS text -- A randomly generated NanoId String
+    RETURNS text -- A randomly generated xid String
     LANGUAGE plpgsql
     VOLATILE
     PARALLEL SAFE

@@ -4,7 +4,8 @@ import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { PreloadQuery, query } from "~/components/Provider/ApolloClient"
 import { StackDetail } from "~/components/Stack/StackDetail"
 import StackList from "~/components/Stack/StackList"
-import { GetStackDocument, ViewerDocument } from "~/gql/typeSlut"
+import { GET_STACK } from "~/graphql/queries/stack"
+import { GET_VIEWER } from "~/graphql/queries/viewer"
 
 interface StackProps {
 	params: {
@@ -14,13 +15,18 @@ interface StackProps {
 
 export default async function StackPage(props: StackProps) {
 	const { slug } = props.params
-	await query({ query: ViewerDocument })
+	await query({ query: GET_VIEWER })
 	return (
 		<ListDetailView
 			list={<StackList />}
 			hasDetail
 			detail={
-				<PreloadQuery query={GetStackDocument} variables={{ slug }}>
+				<PreloadQuery
+					query={GET_STACK}
+					variables={{
+						slug,
+					}}
+				>
 					<Suspense fallback={<LoadingSpinner />}>
 						<StackDetail slug={slug} />
 					</Suspense>

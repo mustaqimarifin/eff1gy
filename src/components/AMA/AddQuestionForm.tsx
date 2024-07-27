@@ -1,24 +1,23 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { useMutation, useQuery } from "@apollo/client"
 import { PrimaryButton } from "~/components/Button"
 import { Textarea } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { AddQuestionDocument, ViewerDocument } from "~/gql/typeSlut"
+import {  useAddQuestionMutation, useViewerQuery } from "~/gql/typeSlut"
 
 import { Avatar } from "../Avatar"
 import { Nuts } from "../Provider/Toaster"
 
 export function AddQuestionForm({ closeModal }) {
-	const { data } = useQuery(ViewerDocument)
+	const { data } = useViewerQuery()
 
 	const [title, setTitle] = useState("")
 	const [description, setDescription] = useState("")
 	const [, setError] = useState("")
 	const router = useRouter()
 
-	const [handleAddQuestion, { loading, error }] = useMutation(AddQuestionDocument, {
+	const [handleAddQuestion, { loading, error }] = useAddQuestionMutation( {
 		onCompleted: ({ addQuestion: { id } }) => {
 			closeModal()
 			return router.push(`/ama/${id}`)

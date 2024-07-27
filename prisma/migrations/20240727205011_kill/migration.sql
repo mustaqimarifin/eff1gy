@@ -1,10 +1,11 @@
-
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-DROP FUNCTION IF EXISTS nanoid(int, text, float);
-CREATE OR REPLACE FUNCTION nanoid(
-    size int DEFAULT 6, 
-    alphabet text DEFAULT '+-¥∑µ§†ƒ0123456789abcdefghijklmnopqrstuvwxyz', 
-    additionalBytesFactor float DEFAULT 1.6 
+
+DROP FUNCTION IF EXISTS xid (int, text, float);
+
+CREATE OR REPLACE FUNCTION xid(
+    size int DEFAULT 5, 
+    alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyz', 
+    additionalBytesFactor float DEFAULT 1.75 
 )
     RETURNS text 
     LANGUAGE plpgsql
@@ -36,24 +37,25 @@ BEGIN
     step := cast(ceil(additionalBytesFactor * mask * size / alphabetLength) AS int);
 
     IF step > 1024 THEN
-        step := 1024; -- The step size % can't be bigger then 1024!
+        step := 1024; -- The step size % can''t be bigger then 1024!
     END IF;
 
-    RETURN nanoid_optimized(size, alphabet, mask, step);
+    RETURN xid_optimized(size, alphabet, mask, step);
 END
 $$;
 
 -- Generates an optimized random string of a specified size using the given alphabet, mask, and step.
 -- This optimized version is designed for higher performance and lower memory overhead.
 -- No checks are performed! Use it only if you really know what you are doing.
-DROP FUNCTION IF EXISTS nanoid_optimized(int, text, int, int);
-CREATE OR REPLACE FUNCTION nanoid_optimized(
+DROP FUNCTION IF EXISTS xid_optimized (int, text, int, int);
+
+CREATE OR REPLACE FUNCTION xid_optimized(
     size int, -- The desired length of the generated string.
     alphabet text, -- The set of characters to choose from for generating the string.
     mask int, -- The mask used for mapping random bytes to alphabet indices. Should be `(2^n) - 1` where `n` is a power of 2 less than or equal to the alphabet size.
     step int -- The number of random bytes to generate in each iteration. A larger value may speed up the function but increase memory usage.
 )
-    RETURNS text 
+    RETURNS text -- A randomly generated xid String
     LANGUAGE plpgsql
     VOLATILE
     PARALLEL SAFE
@@ -94,7 +96,7 @@ CREATE TYPE "Role" AS ENUM ('BLOCKED', 'USER', 'ADMIN');
 
 -- CreateTable
 CREATE TABLE "Account" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "userId" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
@@ -121,7 +123,7 @@ CREATE TABLE "Session" (
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
     "image" TEXT,
@@ -146,7 +148,7 @@ CREATE TABLE "VerificationToken" (
 
 -- CreateTable
 CREATE TABLE "Bookmark" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" TEXT,
@@ -163,7 +165,7 @@ CREATE TABLE "Bookmark" (
 
 -- CreateTable
 CREATE TABLE "Question" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "status" "Status" NOT NULL DEFAULT 'PENDING',
     "hearts" INTEGER DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -182,7 +184,7 @@ CREATE TABLE "Question" (
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
@@ -201,7 +203,7 @@ CREATE TABLE "Comment" (
 
 -- CreateTable
 CREATE TABLE "Blog" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "slug" TEXT,
     "title" TEXT,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -213,7 +215,7 @@ CREATE TABLE "Blog" (
 
 -- CreateTable
 CREATE TABLE "Event" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "count" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
@@ -221,7 +223,7 @@ CREATE TABLE "Event" (
 
 -- CreateTable
 CREATE TABLE "Case" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "slug" TEXT,
     "title" TEXT,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -240,7 +242,7 @@ CREATE TABLE "Tag" (
 
 -- CreateTable
 CREATE TABLE "Stack" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "name" TEXT,
@@ -255,7 +257,7 @@ CREATE TABLE "Stack" (
 
 -- CreateTable
 CREATE TABLE "Reaction" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT,
     "bookmarkId" TEXT,
@@ -272,7 +274,7 @@ CREATE TABLE "Reaction" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "count" INTEGER DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -289,7 +291,7 @@ CREATE TABLE "Post" (
 
 -- CreateTable
 CREATE TABLE "PostEdit" (
-    "id" TEXT NOT NULL DEFAULT nanoid(),
+    "id" TEXT NOT NULL DEFAULT xid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "text" TEXT NOT NULL,
     "title" TEXT NOT NULL,

@@ -1,19 +1,24 @@
 import Link from "next/link"
 
-import { useMutation, useQuery } from "@apollo/client"
 import { Avatar } from "~/components/Avatar"
-import { GetStackDocument, GetStacksDocument, ToggleStackUserDocument, ViewerDocument } from "~/gql/typeSlut"
+import {
+	GetStackDocument,
+	type GetStackQuery,
+	useGetStackQuery,
+	useToggleStackUserMutation,
+	useViewerQuery,
+} from "~/gql/typeSlut"
 
 import { useWindowFocus } from "~/hooks"
 import { Tooltip } from "../UI/Tooltip"
 
 export function StackUsedBy(props) {
 	const { triggerSignIn } = props
-	const { data: viewerData } = useQuery(ViewerDocument)
-	const { data, loading, error, refetch } = useQuery(GetStackDocument, {
+	const { data: viewerData } = useViewerQuery()
+	const { data, loading, error, refetch } = useGetStackQuery({
 		variables: { slug: props.stack.slug },
 	})
-	const [toggleStackUser] = useMutation(ToggleStackUserDocument)
+	const [toggleStackUser] = useToggleStackUserMutation()
 
 	useWindowFocus({ onFocus: refetch })
 
@@ -42,7 +47,7 @@ export function StackUsedBy(props) {
 				},
 			},
 			update(cache) {
-				const { stack } = cache.readQuery({
+				const { stack } = cache.readQuery<GetStackQuery>({
 					query: GetStackDocument,
 					variables: { slug: props.stack.slug },
 				})
@@ -58,7 +63,6 @@ export function StackUsedBy(props) {
 								? data?.stack?.usedBy.filter(u => u.id !== viewerData.viewer.id)
 								: [...data.stack.usedBy, viewerData.viewer],
 						},
-						__typename: "Query",
 					},
 				})
 			},

@@ -2,7 +2,13 @@
 import { useMutation, useQuery } from "@apollo/client"
 import Button from "~/components/Button"
 import type { Stack } from "~/gql/typeSlut"
-import { GetStackDocument, ReactionType, ToggleReactionDocument, ViewerDocument } from "~/gql/typeSlut"
+import {
+	GetStackDocument,
+	ReactionType,
+	ToggleReactionDocument,
+	ViewerDocument,
+	useToggleReactionMutation,
+} from "~/gql/typeSlut"
 
 import { ReactionButton } from "../Button/ReactionButton"
 import { EditStackDialog } from "./EditStackDialog"
@@ -16,7 +22,7 @@ function getEditButton(stack) {
 }
 
 function getReactionButton(stack) {
-	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
+	const [toggleReaction, { loading }] = useToggleReactionMutation()
 	function handleClick() {
 		if (loading) return
 

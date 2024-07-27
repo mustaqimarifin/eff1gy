@@ -3,9 +3,8 @@
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
-import { useQuery } from "@apollo/client"
 import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { GetStacksDocument } from "~/gql/typeSlut"
+import {  useGetStacksQuery } from "~/gql/typeSlut"
 import { ListLoadMore } from "../ListDetail/ListLoadMore"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { StackListItem } from "./StackListItem"
@@ -15,8 +14,7 @@ export default function StackList() {
 	const path = usePathname()
 	const [isVisible, setIsVisible] = useState(false)
 	const [scrollContainerRef, setScrollContainerRef] = useState(null)
-
-	const { data, loading, fetchMore } = useQuery(GetStacksDocument)
+	const { data, loading, fetchMore } = useGetStacksQuery()
 
 	function handleFetchMore() {
 		return fetchMore({
@@ -28,7 +26,7 @@ export default function StackList() {
 
 	useEffect(() => {
 		if (isVisible) handleFetchMore()
-	}, [isVisible, handleFetchMore()])
+	}, [isVisible])
 
 	if (loading && !data?.stacks) {
 		return (
@@ -50,7 +48,6 @@ export default function StackList() {
 					const active = path === stack.node.slug
 					return <StackListItem key={stack.node.id} stack={stack.node} active={active} />
 				})}
-
 				{data?.stacks.pageInfo.hasNextPage && <ListLoadMore setIsVisible={setIsVisible} />}
 			</div>
 		</ListContainer>
