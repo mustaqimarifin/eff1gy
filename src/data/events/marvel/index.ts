@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "MARVEL RUN Malaysia",
@@ -20,4 +20,4 @@ export default {
 		"/events/starwars/starwars6.jpeg",
 	],
 	details,
-};
+}

@@ -1,20 +1,20 @@
-"use client";
-import { ArrowLeft, Menu, X } from "lucide-react";
-import Link from "next/link";
-import { type MutableRefObject, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { GlobalNavigationContext } from "../Provider";
+"use client"
+import { ArrowLeft, Menu, X } from "lucide-react"
+import Link from "next/link"
+import { type MutableRefObject, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
+import { GlobalNavigationContext } from "../Provider"
 
 interface Props {
-	title: string;
-	globalMenu?: boolean;
-	backButton?: boolean;
-	backButtonHref?: string;
-	magicTitle?: boolean;
-	titleRef?: MutableRefObject<HTMLParagraphElement>;
-	scrollContainerRef: MutableRefObject<HTMLDivElement>;
-	children?: ReactNode;
-	leadingAccessory?: ReactNode;
-	trailingAccessory?: ReactNode;
+	title: string
+	globalMenu?: boolean
+	backButton?: boolean
+	backButtonHref?: string
+	magicTitle?: boolean
+	titleRef?: MutableRefObject<HTMLParagraphElement>
+	scrollContainerRef?: MutableRefObject<HTMLDivElement>
+	children?: ReactNode
+	leadingAccessory?: ReactNode
+	trailingAccessory?: ReactNode
 }
 
 export function TitleBar({
@@ -23,79 +23,79 @@ export function TitleBar({
 	backButton = false,
 	backButtonHref,
 	magicTitle = false,
-	titleRef = null,
-	scrollContainerRef = null,
-	leadingAccessory = null,
-	trailingAccessory = null,
+	titleRef,
+	scrollContainerRef,
+	leadingAccessory,
+	trailingAccessory,
 	children,
 }: Props) {
-	const { isOpen, setIsOpen } = useContext(GlobalNavigationContext);
-	const [darkMode, setDarkMode] = useState(false);
-	const [offset, setOffset] = useState(200);
-	const [opacity, _setOpacity] = useState(0);
-	const [currentScrollOffset, _setCurrentScrollOffset] = useState(0);
+	const { isOpen, setIsOpen } = useContext(GlobalNavigationContext)
+	const [darkMode, setDarkMode] = useState(false)
+	const [offset, setOffset] = useState(200)
+	const [opacity, _setOpacity] = useState(0)
+	const [currentScrollOffset, _setCurrentScrollOffset] = useState(0)
 
 	const [initialTitleOffsets, _setInitialTitleOffsets] = useState({
 		top: 0,
 		bottom: 0,
-	});
+	})
 
-	const initialTitleOffsetsRef = useRef(initialTitleOffsets);
-	const setInitialTitleOffsets = (data) => {
-		initialTitleOffsetsRef.current = data;
-		_setInitialTitleOffsets(data);
-	};
+	const initialTitleOffsetsRef = useRef(initialTitleOffsets)
+	const setInitialTitleOffsets = data => {
+		initialTitleOffsetsRef.current = data
+		_setInitialTitleOffsets(data)
+	}
 
-	const opacityRef = useRef(opacity);
-	const setOpacity = (data) => {
-		opacityRef.current = data;
-		_setOpacity(data);
-	};
+	const opacityRef = useRef(opacity)
+	const setOpacity = data => {
+		opacityRef.current = data
+		_setOpacity(data)
+	}
 
-	const currentScrollOffsetRef = useRef(currentScrollOffset);
-	const setCurrentScrollOffset = (data) => {
-		currentScrollOffsetRef.current = data;
-		_setCurrentScrollOffset(data);
-	};
+	const currentScrollOffsetRef = useRef(currentScrollOffset)
+	const setCurrentScrollOffset = data => {
+		currentScrollOffsetRef.current = data
+		_setCurrentScrollOffset(data)
+	}
 
 	const handler = useCallback(() => {
-		const shadowOpacity = scrollContainerRef.current.scrollTop / 200;
-		setCurrentScrollOffset(shadowOpacity > 0.12 ? 0.12 : shadowOpacity);
+		const shadowOpacity = scrollContainerRef.current.scrollTop / 200
+		setCurrentScrollOffset(shadowOpacity > 0.12 ? 0.12 : shadowOpacity)
 
-		if (!titleRef?.current || !initialTitleOffsetsRef?.current) return;
+		if (!titleRef?.current || !initialTitleOffsetsRef?.current) return
 
-		const titleTop = titleRef.current.getBoundingClientRect().top - 48;
-		const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56;
-		const initialOffsets = initialTitleOffsetsRef.current;
+		const titleTop = titleRef.current.getBoundingClientRect().top - 48
+		const titleBottom = titleRef.current.getBoundingClientRect().bottom - 56
+		const initialOffsets = initialTitleOffsetsRef.current
 
-		const offsetAmount = Number.parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100;
+		const offsetAmount = Number.parseFloat((titleBottom / initialOffsets.bottom).toFixed(2)) * 100
 
-		const opacityOffset = Number.parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1;
+		const opacityOffset = Number.parseFloat((titleTop / initialOffsets.top).toFixed(2)) * -1
 
-		setOffset(Math.min(Math.max(offsetAmount, 0), 100));
-		setOpacity(opacityOffset);
-	}, [title, titleRef, scrollContainerRef]);
-
-	useEffect(() => {
-		scrollContainerRef?.current?.addEventListener("scroll", handler);
-		return () => scrollContainerRef?.current?.removeEventListener("scroll", handler);
-	}, [title, titleRef, scrollContainerRef]);
+		setOffset(Math.min(Math.max(offsetAmount, 0), 100))
+		setOpacity(opacityOffset)
+	}, [title, titleRef, scrollContainerRef])
 
 	useEffect(() => {
-		if (!titleRef?.current || !scrollContainerRef?.current) return;
-		scrollContainerRef.current.scrollTop = 0;
-		setOpacity(0);
+		scrollContainerRef?.current?.addEventListener("scroll", handler)
+		return () => scrollContainerRef?.current?.removeEventListener("scroll", handler)
+	}, [title, titleRef, scrollContainerRef])
+
+	useEffect(() => {
+		if (!titleRef?.current || !scrollContainerRef?.current) return
+		scrollContainerRef.current.scrollTop = 0
+		setOpacity(0)
 		setInitialTitleOffsets({
 			bottom: titleRef.current.getBoundingClientRect().bottom - 56,
 			top: titleRef.current.getBoundingClientRect().top - 48,
-		});
-	}, [title, titleRef, scrollContainerRef]);
+		})
+	}, [title, titleRef, scrollContainerRef])
 
 	useEffect(() => {
 		const isDarkMode =
 			// biome-ignore lint/complexity/useOptionalChain: <explanation>
-			window?.matchMedia && window?.matchMedia("(prefers-color-scheme: dark)").matches;
-		if (isDarkMode) setDarkMode(true);
+			window?.matchMedia && window?.matchMedia("(prefers-color-scheme: dark)").matches
+		if (isDarkMode) setDarkMode(true)
 		/* 		if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
 			document.documentElement.classList.add('dark')
 		} else {
@@ -104,7 +104,7 @@ export function TitleBar({
 		localStorage.theme = 'light'
 		localStorage.theme = 'dark'
 		localStorage.removeItem('theme') */
-	}, []);
+	}, [])
 
 	return (
 		<>
@@ -141,9 +141,7 @@ export function TitleBar({
 								<ArrowLeft size={16} className="text-primary" />
 							</Link>
 						)}
-
-						{leadingAccessory && leadingAccessory}
-
+						{leadingAccessory}
 						<h2
 							style={
 								magicTitle
@@ -159,11 +157,11 @@ export function TitleBar({
 						</h2>
 					</span>
 
-					{trailingAccessory && trailingAccessory}
+					{trailingAccessory}
 				</div>
 
 				<div>{children}</div>
 			</div>
 		</>
-	);
+	)
 }

@@ -1,15 +1,15 @@
-import "tippy.js/dist/tippy.css";
+import "tippy.js/dist/tippy.css"
 
-import Tippy from "@tippyjs/react";
+import Tippy from "@tippyjs/react"
 
 interface Props {
-	content: string;
-	style?: object;
-	children: any;
+	content: string
+	style?: object
+	children: any
 }
 
 export function Tooltip(props: Props) {
-	const { style, content, ...rest } = props;
+	const { style, content, ...rest } = props
 
 	return (
 		<Tippy
@@ -34,5 +34,5 @@ export function Tooltip(props: Props) {
 			}}
 			{...rest}
 		/>
-	);
+	)
 }

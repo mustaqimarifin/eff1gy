@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useRef } from "react";
+import { useRef } from "react"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
 
 function SectionTitle(props) {
 	return (
@@ -11,18 +11,18 @@ function SectionTitle(props) {
 			className="col-span-2 pt-8 text-lg font-extrabold text-black dark:text-white md:pt-0 md:text-right md:text-base md:font-normal md:text-opacity-40"
 			{...props}
 		/>
-	);
+	)
 }
 
 function SectionContent(props) {
-	return <div className="col-span-10" {...props} />;
+	return <div className="col-span-10" {...props} />
 }
 
 interface TableRowProps {
-	href: string;
-	title: string;
-	date: string;
-	subtitle?: string;
+	href: string
+	title: string
+	date: string
+	subtitle?: string
 }
 
 function TableRow({ href, title, subtitle, date }: TableRowProps) {
@@ -35,11 +35,11 @@ function TableRow({ href, title, subtitle, date }: TableRowProps) {
 			{subtitle && <span className="text-tertiary flex-none">{subtitle}</span>}
 			{date && <span className="text-quaternary flex-none font-mono">{date}</span>}
 		</a>
-	);
+	)
 }
 
 function SectionContainer(props) {
-	return <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-12" {...props} />;
+	return <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-12" {...props} />
 }
 
 /* const workHistory = [
@@ -140,8 +140,8 @@ const speakingData = [
  */
 
 export default function Intro({ children }) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
 
 	return (
 		<Detail.Container data-cy="intro" ref={scrollContainerRef}>
@@ -149,5 +149,5 @@ export default function Intro({ children }) {
 
 			{children}
 		</Detail.Container>
-	);
+	)
 }

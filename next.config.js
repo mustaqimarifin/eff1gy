@@ -1,4 +1,7 @@
 const config = {
+	/* 	experimental: {
+		swcPlugins: [["@graphql-codegen/client-preset-swc-plugin", { artifactDirectory: "./src/gql", gqlTagName: "gql" }]],
+	}, */
 	typescript: {
 		ignoreBuildErrors: true,
 	},
@@ -32,8 +35,8 @@ const config = {
 			new webpack.DefinePlugin({
 				"globalThis.__DEV__": false,
 			}),
-		);
-		return config;
+		)
+		return config
 	},
-};
-export default config;
+}
+module.exports = config

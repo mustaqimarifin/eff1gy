@@ -1,26 +1,30 @@
-"use client";
-import { useReducer } from "react";
-import { toast } from "sonner";
+"use client"
+import { useReducer } from "react"
+import { toast } from "sonner"
 
-import Button, { DeleteButton, PrimaryButton } from "~/components/Button";
-import { Input, Textarea } from "~/components/Input";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import type { Question } from "~/graphql/typeSlut";
+import Button, { DeleteButton, PrimaryButton } from "~/components/Button"
+import { Input, Textarea } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+
 import {
+	DeleteQuestionDocument,
 	GetQuestionDocument,
 	GetQuestionsDocument,
+	type Question,
+	ViewerDocument,
 	useDeleteQuestionMutation,
 	useEditQuestionMutation,
 	useViewerQuery,
-} from "~/graphql/typeSlut";
-import AudioRecorder from "../AudioRecorder";
+} from "~/gql/typeSlut"
+
+import AudioRecorder from "../AudioRecorder"
 
 export function EditQuestionForm({
 	closeModal,
 	question,
 }: {
-	closeModal: () => void;
-	question: Question;
+	closeModal: () => void
+	question: Question
 }) {
 	const initialState = {
 		title: question.title,
@@ -29,7 +33,7 @@ export function EditQuestionForm({
 		src: question.audioUrl,
 		error: "",
 		isRecording: false,
-	};
+	}
 
 	function reducer(state, action) {
 		switch (action.type) {
@@ -38,43 +42,43 @@ export function EditQuestionForm({
 					...state,
 					error: "",
 					title: action.value,
-				};
+				}
 			}
 			case "edit-description": {
 				return {
 					...state,
 					error: "",
 					description: action.value,
-				};
+				}
 			}
 			case "add-waveform": {
 				return {
 					...state,
 					waveform: action.value.waveform,
 					src: action.value.src,
-				};
+				}
 			}
 			case "is-recording": {
 				return {
 					...state,
 					isRecording: action.value,
-				};
+				}
 			}
 			case "remove-audio": {
 				return {
 					...state,
 					waveform: null,
 					src: null,
-				};
+				}
 			}
 			case "error": {
 				return {
 					...state,
 					error: action.value,
-				};
+				}
 			}
 			default:
-				throw new Error(action.value);
+				throw new Error(action.value)
 		}
 	}
 
@@ -90,9 +94,9 @@ export function EditQuestionForm({
 	//     waveform: state.waveform,
 	//   },
 	//   optimisticResponse: {
-	//     __typename: 'Mutation',
+	//__typename: 'Mutation',
 	//     editQuestion: {
-	//       __typename: 'Question',
+	//	__typename: 'Question',
 	//       ...question,
 	//       question: state.question,
 	//       description: state.description,
@@ -133,8 +137,8 @@ export function EditQuestionForm({
 	//   },
 	// })
 
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const { data } = useViewerQuery();
+	const [state, dispatch] = useReducer(reducer, initialState)
+	const { data } = useViewerQuery()
 
 	const [updateQuestion, { loading }] = useEditQuestionMutation({
 		variables: {
@@ -158,14 +162,14 @@ export function EditQuestionForm({
 			},
 		},
 		onCompleted() {
-			toast.success("Saved!");
-			closeModal();
+			toast.success("Saved!")
+			closeModal()
 		},
 		onError({ message }) {
-			const value = message.replace("GraphQL error:", "");
-			dispatch({ type: "error", value });
+			const value = message.replace("GraphQL error:", "")
+			dispatch({ type: "error", value })
 		},
-	});
+	})
 
 	const [handleDelete] = useDeleteQuestionMutation({
 		variables: { id: question.id },
@@ -177,20 +181,19 @@ export function EditQuestionForm({
 			const cacheData = cache.readQuery({
 				query: GetQuestionsDocument,
 				variables: { filter: { status: question.status } },
-			});
+			})
 
 			cache.writeQuery({
 				query: GetQuestionDocument,
 				variables: { id: question.id },
 				data: {
 					question: null,
+					__typename: "Query",
 				},
-			});
+			})
 
 			if (cacheData) {
-				// TODO: No clue how to type this...
-				// @ts-ignore
-				const { questions } = cacheData;
+				const { questions } = cacheData
 				cache.writeQuery({
 					query: GetQuestionsDocument,
 					variables: { filter: { status: question.status } },
@@ -201,56 +204,57 @@ export function EditQuestionForm({
 								...questions.pageInfo,
 								totalCount: questions.pageInfo.totalCount - 1,
 							},
-							edges: questions.edges.filter((o) => o.node.id !== question.id),
+							edges: questions.edges.filter(o => o.node.id !== question.id),
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			}
 		},
-	});
+	})
 
 	function handleSave(e) {
-		e.preventDefault();
+		e.preventDefault()
 
 		if (!state.title || state.title.length === 0) {
-			return dispatch({ type: "error", value: "Gotta have a question" });
+			return dispatch({ type: "error", value: "Gotta have a question" })
 		}
 
-		updateQuestion();
-		return closeModal();
+		updateQuestion()
+		return closeModal()
 	}
 
 	function onTitleChange(e) {
-		return dispatch({ type: "edit-title", value: e.target.value });
+		return dispatch({ type: "edit-title", value: e.target.value })
 	}
 
 	function onKeyDown(e) {
 		if (e.keyCode === 13 && e.metaKey) {
-			return handleSave(e);
+			return handleSave(e)
 		}
 	}
 
 	function onDescriptionChange(e) {
-		return dispatch({ type: "edit-description", value: e.target.value });
+		return dispatch({ type: "edit-description", value: e.target.value })
 	}
 	async function onUploadComplete({ waveform, src }) {
-		dispatch({ type: "add-waveform", value: { waveform, src } });
-		dispatch({ type: "is-recording", value: false });
-		updateQuestion();
+		dispatch({ type: "add-waveform", value: { waveform, src } })
+		dispatch({ type: "is-recording", value: false })
+		updateQuestion()
 	}
 
 	function onRecordingStart() {
 		// signUploadMutation.mutate()
-		dispatch({ type: "is-recording", value: true });
+		dispatch({ type: "is-recording", value: true })
 	}
 
 	function onRecordingStop() {
 		// signUploadMutation.mutate()
-		dispatch({ type: "is-recording", value: false });
+		dispatch({ type: "is-recording", value: false })
 	}
 
 	function onDeleteAudio() {
-		dispatch({ type: "remove-audio" });
+		dispatch({ type: "remove-audio" })
 	}
 
 	return (
@@ -288,8 +292,8 @@ export function EditQuestionForm({
 				<div className="flex justify-between pt-3">
 					<DeleteButton
 						onClick={() => {
-							closeModal();
-							handleDelete();
+							closeModal()
+							handleDelete()
 						}}
 					>
 						Delete
@@ -302,5 +306,5 @@ export function EditQuestionForm({
 				</div>
 			)}
 		</div>
-	);
+	)
 }

@@ -1,5 +1,5 @@
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-nextjs-app-support";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
+import { registerApolloClient } from "@apollo/experimental-nextjs-app-support"
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
 	return new ApolloClient({
@@ -9,7 +9,7 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
 			// uri: HELLSQL,
 			uri: "http://localhost:3000/api/graphql",
 		}),
-	});
-});
+	})
+})
 
-export const client = getClient();
+export const client = getClient()

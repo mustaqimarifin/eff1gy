@@ -1,7 +1,7 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { UserInfoFragment } from "~/graphql/fragments/user";
-import { StackDetailFragment, StacksConnectionFragment } from "../fragments/stack";
+import { UserInfoFrag } from "~/graphql/fragments/user"
+import { StackDetailFrag, StacksConnectionFrag } from "../fragments/stack"
 
 export const GET_STACKS = gql`
   query getStacks($first: Int, $after: String) {
@@ -9,8 +9,8 @@ export const GET_STACKS = gql`
       ...StacksConnection
     }
   }
-  ${StacksConnectionFragment}
-`;
+  ${StacksConnectionFrag}
+`
 
 export const GET_STACK = gql`
   query getStack($slug: String!) {
@@ -18,6 +18,6 @@ export const GET_STACK = gql`
       ...StackDetail
     }
   }
-  ${StackDetailFragment}
-  ${UserInfoFragment}
-`;
+  ${StackDetailFrag}
+  ${UserInfoFrag}
+`

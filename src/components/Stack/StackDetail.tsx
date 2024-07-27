@@ -1,37 +1,41 @@
-"use client";
+"use client"
 
-import { Link2Icon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRef } from "react";
+import { Link2Icon } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useRef } from "react"
 
-import { PrimaryButton } from "~/components/Button";
-import { Comments } from "~/components/Comments";
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { Tags } from "~/components/Tag";
-import { CommentType, useGetStackQuery } from "~/graphql/typeSlut";
-import { MarkdownRenderer } from "../MarkdownRenderer";
-import { SignInDialog } from "../SignInDialog";
-import { StackActions } from "./StackActions";
-import { StackUsedBy } from "./StackUsedBy";
+import { useQuery } from "@apollo/client"
+import { PrimaryButton } from "~/components/Button"
+import { Comments } from "~/components/Comments"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { Tags } from "~/components/Tag"
+import { CommentType, GetStackDocument } from "~/gql/typeSlut"
+import { MarkdownRenderer } from "../MarkdownRenderer"
+import { SignInDialog } from "../SignInDialog"
+import { StackActions } from "./StackActions"
+import { StackUsedBy } from "./StackUsedBy"
 
-export function StackDetail({ slug }) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
+type DetailProps = {
+	slug: string
+}
+export function StackDetail({ slug }: DetailProps) {
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
 
-	const { data, loading, error } = useGetStackQuery({
+	const { data, loading, error } = useQuery(GetStackDocument, {
 		variables: { slug },
-	});
+	})
 	if (loading) {
-		return <Detail.Loading />;
+		return <Detail.Loading />
 	}
 
 	if (!data?.stack || error) {
-		return <Detail.Null />;
+		return <Detail.Null />
 	}
 
-	const { stack } = data;
+	const { stack } = data
 
 	return (
 		<>
@@ -77,12 +81,14 @@ export function StackDetail({ slug }) {
 							<span>Visit</span>
 						</PrimaryButton>
 
-						<SignInDialog>{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}</SignInDialog>
+						<SignInDialog>
+							{({ openModal }: { openModal: any }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}
+						</SignInDialog>
 					</Detail.Header>
 				</Detail.ContentContainer>
 
 				<Comments refId={stack.id} type={CommentType.Stack} />
 			</Detail.Container>
 		</>
-	);
+	)
 }

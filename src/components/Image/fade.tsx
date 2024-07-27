@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import type { ReactNode } from "react";
-import { useInView } from "react-intersection-observer";
+import type { ReactNode } from "react"
+import { useInView } from "react-intersection-observer"
 
 export function Fade({ children }: { children: ReactNode }) {
 	const { ref, inView } = useInView({
 		triggerOnce: true,
 		// rootMargin: '-100px 0px',
 		threshold: 0.4,
-	});
+	})
 
 	return (
 		<div
@@ -20,5 +20,5 @@ export function Fade({ children }: { children: ReactNode }) {
 		>
 			{children}
 		</div>
-	);
+	)
 }

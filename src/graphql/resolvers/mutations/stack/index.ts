@@ -1,34 +1,34 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from "graphql"
 
-import type { Context } from "~/graphql/context";
 import type {
 	MutationAddStackArgs,
 	MutationDeleteStackArgs,
 	MutationEditStackArgs,
 	MutationToggleStackUserArgs,
-} from "~/graphql/typeSlut";
-import { slugify, urlRX } from "~/lib/functions";
+} from "~/gql/typeSlut"
+import type { Context } from "~/graphql/context"
+import { slugify, urlRX } from "~/lib/functions"
 // import { graphcdn } from "~/lib/graphcdn";
 
 export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
-	const { id, data } = args;
-	const { name, url, tag, description, image } = data;
-	const { db } = ctx;
+	const { id, data } = args
+	const { name, url, tag, description, image } = data
+	const { db } = ctx
 
-	if (!name || name.length === 0) throw new GraphQLError("Stack must have a name");
+	if (!name || name.length === 0) throw new GraphQLError("Stack must have a name")
 
-	if (!url || url.length === 0) throw new GraphQLError("Stack must have a URL");
+	if (!url || url.length === 0) throw new GraphQLError("Stack must have a URL")
 
 	/*
     Keep our image storage somewhat clean by deleting unused images
   */
-	const old = await db.stack.findUnique({ where: { id } });
+	const old = await db.stack.findUnique({ where: { id } })
 
 	if (old.image !== data.image) {
 		try {
-			const url = new URL(old.image);
+			const url = new URL(old.image)
 			if (urlRX(url)) {
-				const [, , imageId] = url.pathname.split("/");
+				const [, , imageId] = url.pathname.split("/")
 
 				await fetch(
 					`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1/${imageId}`,
@@ -38,10 +38,10 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 							Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_KEY}`,
 						},
 					},
-				);
+				)
 			}
 		} catch (err) {
-			console.error({ err });
+			console.error({ err })
 		}
 	}
 
@@ -52,7 +52,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 				set: [],
 			},
 		},
-	});
+	})
 
 	const tags = tag
 		? {
@@ -61,7 +61,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 					create: { name: tag },
 				},
 			}
-		: undefined;
+		: undefined
 
 	return await db.stack
 		.update({
@@ -79,18 +79,18 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 graphcdn.purgeList('stacks')
 			return stack;
 		}) */
-		.catch((err) => {
-			console.error({ err });
-			throw new GraphQLError("Unable to edit stack");
-		});
+		.catch(err => {
+			console.error({ err })
+			throw new GraphQLError("Unable to edit stack")
+		})
 }
 
 export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
-	const { data } = args;
-	const { url, name, description, image, tag } = data;
-	const { db } = ctx;
+	const { data } = args
+	const { url, name, description, image, tag } = data
+	const { db } = ctx
 
-	if (!urlRX(url)) throw new GraphQLError("URL was invalid");
+	if (!urlRX(url)) throw new GraphQLError("URL was invalid")
 
 	const tags = tag
 		? {
@@ -99,7 +99,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
 					create: { name: tag },
 				},
 			}
-		: undefined;
+		: undefined
 
 	return await db.stack
 		.create({
@@ -117,21 +117,21 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
 			graphcdn.purgeList('stacks')
 			return stack;
 		}) */
-		.catch((err) => {
-			console.error({ err });
-			throw new GraphQLError("Unable to add stack");
-		});
+		.catch(err => {
+			console.error({ err })
+			throw new GraphQLError("Unable to add stack")
+		})
 }
 
 export async function deleteStack(_, args: MutationDeleteStackArgs, ctx: Context) {
-	const { id } = args;
-	const { db } = ctx;
+	const { id } = args
+	const { db } = ctx
 
-	const old = await db.stack.findUnique({ where: { id } });
+	const old = await db.stack.findUnique({ where: { id } })
 
 	try {
-		const url = new URL(old.image);
-		const [, , imageId] = url.pathname.split("/");
+		const url = new URL(old.image)
+		const [, , imageId] = url.pathname.split("/")
 		if (urlRX(url)) {
 			await fetch(
 				`https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v1/${imageId}`,
@@ -141,10 +141,10 @@ export async function deleteStack(_, args: MutationDeleteStackArgs, ctx: Context
 						Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_KEY}`,
 					},
 				},
-			);
+			)
 		}
 	} catch (err) {
-		console.error({ err });
+		console.error({ err })
 	}
 
 	return await db.stack
@@ -155,22 +155,22 @@ export async function deleteStack(_, args: MutationDeleteStackArgs, ctx: Context
 			graphcdn.purgeList('stacks')
 			return true;
 		}) */
-		.catch((err) => {
-			console.error({ err });
-			throw new GraphQLError("Unable to delete stack");
-		});
+		.catch(err => {
+			console.error({ err })
+			throw new GraphQLError("Unable to delete stack")
+		})
 }
 
 export async function toggleStackUser(_: any, args: MutationToggleStackUserArgs, ctx: Context) {
-	const { id } = args;
-	const { db, viewer } = ctx;
+	const { id } = args
+	const { db, viewer } = ctx
 
 	const stackUsers = await db.stack.findUnique({
 		where: { id },
 		include: { users: true },
-	});
+	})
 
-	if (stackUsers.users.find((s) => s.id === viewer?.id)) {
+	if (stackUsers.users.find(s => s.id === viewer?.id)) {
 		const data = await db.stack.update({
 			where: { id },
 			data: {
@@ -179,16 +179,16 @@ export async function toggleStackUser(_: any, args: MutationToggleStackUserArgs,
 				},
 			},
 			include: { users: true },
-		});
+		})
 
-		const usedBy = data.users;
-		const usedByViewer = viewer?.id && data.users.some((s) => s.id === viewer?.id);
+		const usedBy = data.users
+		const usedByViewer = viewer?.id && data.users.some(s => s.id === viewer?.id)
 
 		return {
 			...data,
 			usedBy,
 			usedByViewer,
-		};
+		}
 	}
 	const data = await db.stack.update({
 		where: { id },
@@ -198,14 +198,14 @@ export async function toggleStackUser(_: any, args: MutationToggleStackUserArgs,
 			},
 		},
 		include: { users: true },
-	});
+	})
 
-	const usedBy = data.users;
-	const usedByViewer = viewer?.id && data.users.some((s) => s.id === viewer?.id);
+	const usedBy = data.users
+	const usedByViewer = viewer?.id && data.users.some(s => s.id === viewer?.id)
 
 	return {
 		...data,
 		usedBy,
 		usedByViewer,
-	};
+	}
 }

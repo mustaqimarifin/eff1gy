@@ -1,9 +1,9 @@
 //
 
-import { signOut } from "next-auth/react";
+import { signOut } from "next-auth/react"
 
-import Button, { DeleteButton } from "~/components/Button";
-import { DeleteUserDialog } from "./DeleteUserDialog";
+import Button, { DeleteButton } from "~/components/Button"
+import { DeleteUserDialog } from "./DeleteUserDialog"
 
 export function UserSettingsFooter() {
 	return (
@@ -14,5 +14,5 @@ export function UserSettingsFooter() {
 
 			<DeleteUserDialog trigger={<DeleteButton>Delete account</DeleteButton>} />
 		</div>
-	);
+	)
 }

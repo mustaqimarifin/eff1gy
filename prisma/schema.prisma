@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider   = "postgresql"
-  url        = env("SQL_MACOS")
+  url        = env("PG_LOCAL")
   extensions = [pgcrypto]
   //url = env("DATABASE_URL")
   //directUrl = env("DIRECT_URL")

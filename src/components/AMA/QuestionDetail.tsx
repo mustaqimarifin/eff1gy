@@ -1,37 +1,37 @@
-"use client";
-import Link from "next/link";
-import { useRef } from "react";
+"use client"
+import Link from "next/link"
+import { useRef } from "react"
 
-import { Avatar } from "~/components/Avatar";
-import { Comments } from "~/components/Comments";
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import AudioPlayer from "../AudioPlayer";
-import { MarkdownRenderer } from "../MarkdownRenderer";
-import { QuestionActions } from "./QuestionActions";
+import { Avatar } from "~/components/Avatar"
+import { Comments } from "~/components/Comments"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import AudioPlayer from "../AudioPlayer"
+import { MarkdownRenderer } from "../MarkdownRenderer"
+import { QuestionActions } from "./QuestionActions"
 
-import { realTime } from "~/lib/transformers";
+import { realTime } from "~/lib/transformers"
 
-import { CommentType, useGetQuestionQuery } from "~/graphql/typeSlut";
+import { useQuery } from "@apollo/client"
+import { CommentType, GetQuestionDocument } from "~/gql/typeSlut"
 
-export function QuestionDetail({ id }: { id: string }) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
-	const { data, loading, error } = useGetQuestionQuery({ variables: { id } });
-
+export function QuestionDetail({ id }) {
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
+	const { data, loading, error } = useQuery(GetQuestionDocument, { variables: { id } })
 	if (loading) {
-		return <Detail.Loading />;
+		return <Detail.Loading />
 	}
 
 	if (!data.question || error) {
-		return <Detail.Null />;
+		return <Detail.Null />
 	}
 
-	const { question } = data;
+	const { question } = data
 	const createdAt = realTime({
 		month: "short",
 		timestamp: question?.createdAt,
-	});
+	})
 
 	return (
 		<Detail.Container data-cy="question-detail" ref={scrollContainerRef}>
@@ -94,5 +94,5 @@ export function QuestionDetail({ id }: { id: string }) {
 
 			{question.viewerCanComment && <Comments refId={question?.id} type={CommentType.Question} />}
 		</Detail.Container>
-	);
+	)
 }

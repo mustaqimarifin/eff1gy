@@ -1,12 +1,12 @@
-"use client";
-import * as React from "react";
+"use client"
+import * as React from "react"
 
-import { Switch } from "~/components/Switch";
-import { PostEditorContext } from "./PostEditor";
+import { Switch } from "~/components/Switch"
+import { PostEditorContext } from "./PostEditor"
 
 export function PreviewSwitch() {
-	const context = React.useContext(PostEditorContext);
-	const { isPreviewing, setIsPreviewing } = context;
+	const context = React.useContext(PostEditorContext)
+	const { isPreviewing, setIsPreviewing } = context
 
-	return <Switch label="Preview" defaultEnabled={isPreviewing} onChange={(val: boolean) => setIsPreviewing(val)} />;
+	return <Switch label="Preview" defaultEnabled={isPreviewing} onChange={(val: boolean) => setIsPreviewing(val)} />
 }

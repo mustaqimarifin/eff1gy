@@ -1,4 +1,4 @@
-import { Upload } from "lucide-react";
+import { Upload } from "lucide-react"
 
 export function ActiveDropzone() {
 	return (
@@ -10,5 +10,5 @@ export function ActiveDropzone() {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

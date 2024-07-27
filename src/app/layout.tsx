@@ -1,22 +1,22 @@
-import "~/app/style.css";
+import "~/app/style.css"
 
-import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next"
 
-import type { ReactNode } from "react";
+import type { ReactNode } from "react"
 
-import { SiteLayout } from "~/components/Layouts";
-import { Providers } from "~/components/Provider";
-import { Toast } from "~/components/Provider/Toaster";
-import { CLIENT_URL } from "~/graphql/constants";
-import { cx } from "~/lib/transformers";
-import { GMono, GSans, Imp, Quad } from "./fonts";
+import { SiteLayout } from "~/components/Layouts"
+import { Providers } from "~/components/Provider"
+import { Toast } from "~/components/Provider/Toaster"
+import { CLIENT_URL } from "~/graphql/constants"
+import { cx } from "~/lib/transformers"
+import { GSans, Imp, Mono, Quad } from "./fonts"
 
 export const viewport: Viewport = {
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "white" },
 		{ media: "(prefers-color-scheme: dark)", color: "black" },
 	],
-};
+}
 
 export const metadata: Metadata = {
 	metadataBase: new URL(CLIENT_URL),
@@ -48,11 +48,11 @@ export const metadata: Metadata = {
 		title: "Mustaqim Arifin",
 		card: "summary_large_image",
 	},
-};
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
-		<html lang="en" className={cx(Quad.variable, GSans.variable, GMono.variable, Imp.variable)}>
+		<html lang="en" className={cx(Quad.variable, GSans.variable, Mono.variable, Imp.variable)}>
 			<body>
 				<span className="text-tertiary absolute flex -translate-y-full transform space-x-1 border-b border-gray-150 bg-white p-2 focus-within:relative focus-within:translate-y-0 dark:border-gray-800 dark:bg-gray-900">
 					<a className="text-primary font-semibold" href="#main">
@@ -84,5 +84,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		localStorage.removeItem('theme')`}
 				</Script>  */}
 		</html>
-	);
+	)
 }

@@ -1,23 +1,24 @@
-import type { ComponentProps, ReactNode } from "react";
+import { useQuery } from "@apollo/client"
+import type { ComponentProps, ReactNode } from "react"
+import { ViewerDocument } from "~/gql/typeSlut"
 
-import { useViewerQuery } from "~/graphql/typeSlut";
-import { cx } from "~/lib/transformers";
+import { cx } from "~/lib/transformers"
 
-type HeroIcon = (props: ComponentProps<"svg">) => JSX.Element;
+type HeroIcon = (props: ComponentProps<"svg">) => JSX.Element
 
 export interface IconButtonProps {
-	Icon: HeroIcon;
-	children?: ReactNode;
-	color: string;
-	hoverbg?: string;
-	isActive?: boolean;
-	onClick: () => void;
+	Icon: HeroIcon
+	children?: ReactNode
+	color: string
+	hoverbg?: string
+	isActive?: boolean
+	onClick: () => void
 }
 
 export function IconButton(props: IconButtonProps) {
-	const { data } = useViewerQuery();
+	const { data } = useQuery(ViewerDocument)
 
-	const { Icon, isActive, color, children, hoverbg } = props;
+	const { Icon, isActive, color, children, hoverbg } = props
 
 	return (
 		<button
@@ -33,5 +34,5 @@ export function IconButton(props: IconButtonProps) {
 			<Icon className={cx("h-4 w-4", !isActive && color, isActive && "text-black", children?.toString() && "mr-1")} />
 			<span className="text-sm">{children}</span>
 		</button>
-	);
+	)
 }

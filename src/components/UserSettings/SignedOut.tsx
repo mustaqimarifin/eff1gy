@@ -1,7 +1,7 @@
-"use client";
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { SignInDialogContent } from "../SignInDialog/SignInDialogContent";
+"use client"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { SignInDialogContent } from "../SignInDialog/SignInDialogContent"
 
 export function SignedOut() {
 	return (
@@ -29,5 +29,5 @@ export function SignedOut() {
         </a>
       </div> */}
 		</Detail.Container>
-	);
+	)
 }

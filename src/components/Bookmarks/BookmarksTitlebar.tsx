@@ -1,14 +1,16 @@
-"use client";
-import { PlusIcon } from "lucide-react";
+"use client"
+import { PlusIcon } from "lucide-react"
 
-import { GhostButton } from "~/components/Button";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { useViewerQuery } from "~/graphql/typeSlut";
-import { AddBookmarkDialog } from "./AddBookmarkDialog";
-import { BookmarksFilterMenu } from "./FilterMenu";
+import { useQuery } from "@apollo/client"
+import { GhostButton } from "~/components/Button"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+
+import { ViewerDocument } from "~/gql/typeSlut"
+import { AddBookmarkDialog } from "./AddBookmarkDialog"
+import { BookmarksFilterMenu } from "./FilterMenu"
 
 export function BookmarksTitlebar({ scrollContainerRef }) {
-	const { data } = useViewerQuery()
+	const { data } = useQuery(ViewerDocument)
 
 	function getAddButton() {
 		if (data?.viewer?.isAdmin) {
@@ -20,9 +22,9 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
 						</GhostButton>
 					}
 				/>
-			);
+			)
 		}
-		return null;
+		return null
 	}
 
 	function trailingAccessory() {
@@ -31,8 +33,8 @@ export function BookmarksTitlebar({ scrollContainerRef }) {
 				<BookmarksFilterMenu />
 				{getAddButton()}
 			</div>
-		);
+		)
 	}
 
-	return <TitleBar scrollContainerRef={scrollContainerRef} title="Bookmarks" trailingAccessory={trailingAccessory()} />;
+	return <TitleBar scrollContainerRef={scrollContainerRef} title="Bookmarks" trailingAccessory={trailingAccessory()} />
 }

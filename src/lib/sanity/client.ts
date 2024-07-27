@@ -1,13 +1,13 @@
-import { type SanityClient, createClient } from "next-sanity";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { type SanityClient, createClient } from "next-sanity"
+import { revalidatePath, revalidateTag } from "next/cache"
 
-import { cache } from "react";
-import { caseQuery, casesQuery, lilQueries, lilQuery, lilSlugs, postQuery, postSlugs, postsQuery } from "./queries";
+import { cache } from "react"
+import { caseQuery, casesQuery, lilQueries, lilQuery, lilSlugs, postQuery, postSlugs, postsQuery } from "./queries"
 
-export const projectId = "do33z8xq";
-export const dataset = "production";
+export const projectId = "do33z8xq"
+export const dataset = "production"
 
-export const apiVersion = "2023-05-03";
+export const apiVersion = "2023-05-03"
 
 /* const query = encodeURI(
   `https://${projectId}.api.sanity.io/v2023-05-03/data/query/production?query=${indexQuery}`
@@ -15,31 +15,31 @@ export const apiVersion = "2023-05-03";
  */
 
 export interface Post {
-	id: string;
-	slug: string;
-	name: string;
-	content: string;
-	title: string;
-	date: string;
-	excerpt: string;
-	coverImage: string;
-	caption?: string;
-	readingTime?: string;
-	tweets: any[];
-	tags?: string[];
+	id: string
+	slug: string
+	name: string
+	content: string
+	title: string
+	date: string
+	excerpt: string
+	coverImage: string
+	caption?: string
+	readingTime?: string
+	tweets: any[]
+	tags?: string[]
 }
 
 export interface LilBits {
-	id: string;
-	slug: string;
-	name: string;
-	content: string;
-	title: string;
-	date: string;
-	caption: string;
-	overview: string;
-	coverImage: string;
-	orientation?: "landscape";
+	id: string
+	slug: string
+	name: string
+	content: string
+	title: string
+	date: string
+	caption: string
+	overview: string
+	coverImage: string
+	orientation?: "landscape"
 }
 
 export function getClient(): SanityClient {
@@ -50,12 +50,12 @@ export function getClient(): SanityClient {
 		perspective: "published",
 		useCdn: false,
 		// studioUrl: '/studio',
-	});
-	return sanity;
+	})
+	return sanity
 }
 
-export const getImg = () => getClient();
-const sanity = getClient();
+export const getImg = () => getClient()
+const sanity = getClient()
 /**
  * Checks if it's safe to create a sanity instance, as `@sanity/sanity` will throw an error if `projectId` is false
  */
@@ -69,16 +69,16 @@ const sanity = getClient();
  */
 export async function getPostSlugs(): Promise<Post[]> {
 	if (sanity) {
-		return (await sanity.fetch(postSlugs)) || [];
+		return (await sanity.fetch(postSlugs)) || []
 	}
-	return [];
+	return []
 }
 
 export async function getLilSlugs(): Promise<LilBits[]> {
 	if (sanity) {
-		return (await sanity.fetch(lilSlugs)) || [];
+		return (await sanity.fetch(lilSlugs)) || []
 	}
-	return [];
+	return []
 }
 /* export async function getPostSlugs(): Promise<Post[]> {
   if (sanity) {
@@ -97,19 +97,19 @@ export async function getLilSlugs(): Promise<LilBits[]> {
 
 export const getAllPosts = cache(async (): Promise<Post[]> => {
 	if (sanity) {
-		return (await sanity.fetch(postsQuery)) || [];
+		return (await sanity.fetch(postsQuery)) || []
 	}
-	revalidateTag("posts");
-	return [];
-});
+	revalidateTag("posts")
+	return []
+})
 
 export const getAllBits = cache(async (): Promise<LilBits[]> => {
 	if (sanity) {
-		return (await sanity.fetch(lilQueries)) || [];
+		return (await sanity.fetch(lilQueries)) || []
 	}
-	revalidateTag("bits");
-	return [];
-});
+	revalidateTag("bits")
+	return []
+})
 /* export async function getPost(slug: string) {
   if (sanity) {
     return (await sanity.fetch(postQuery, { slug })) || {};
@@ -136,46 +136,46 @@ export const getAllBits = cache(async (): Promise<LilBits[]> => {
 
 export const getPost = cache(async (slug: string) => {
 	if (sanity) {
-		return (await sanity.fetch(postQuery, { slug })) || {};
+		return (await sanity.fetch(postQuery, { slug })) || {}
 	}
-	revalidatePath("/(site)/blog/[slug]", "page");
-	return {};
-});
+	revalidatePath("/(site)/blog/[slug]", "page")
+	return {}
+})
 
 export const getLilBit = cache(async (slug: string) => {
 	if (sanity) {
-		return (await sanity.fetch(lilQuery, { slug })) || {};
+		return (await sanity.fetch(lilQuery, { slug })) || {}
 	}
-	revalidatePath("/src/app/(site)/code/[slug]", "page");
+	revalidatePath("/src/app/(site)/code/[slug]", "page")
 	// revalidatePath("/(site)/code/[slug]", "page");
-	return {};
-});
+	return {}
+})
 export async function getAllCases() {
 	if (sanity) {
-		return (await sanity.fetch(casesQuery)) || [];
+		return (await sanity.fetch(casesQuery)) || []
 	}
-	return [];
+	return []
 }
 
 export async function getCase(slug) {
 	if (sanity) {
-		return (await sanity.fetch(caseQuery, { slug })) || {};
+		return (await sanity.fetch(caseQuery, { slug })) || {}
 	}
-	return {};
+	return {}
 }
 
-export const allPosts = await getAllPosts();
+export const allPosts = await getAllPosts()
 // console.log("allPosts:-", allPosts, 2);
 // export const posts = allPosts.map((post) => pick(post, ["slug"]));
 /// console.log("posts:-", posts);
 
-export const allPostSlugs = await getPostSlugs();
+export const allPostSlugs = await getPostSlugs()
 // console.log("allPostSlugs:-", allPostSlugs);
 
-export const allBits = await getAllBits();
+export const allBits = await getAllBits()
 // console.log("allBits:-", allBits, 2);
 // export const lilbits = allBits.map((post) => pick(post, ["slug"]));
 // console.log("lilBits:-", lilbits);
 
-export const allLilSlugs = await getLilSlugs();
+export const allLilSlugs = await getLilSlugs()
 // console.log("allLilSlugs:-", allLilSlugs);

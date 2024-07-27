@@ -1,12 +1,12 @@
-import type { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react"
 
-import { Sidebar } from "~/components/Sidebar";
-import { cx } from "~/lib/transformers";
+import { Sidebar } from "~/components/Sidebar"
+import { cx } from "~/lib/transformers"
 
 interface Props {
-	list?: ReactElement | null;
-	detail?: ReactElement | null;
-	hasDetail?: boolean;
+	list?: ReactElement | null
+	detail?: ReactElement | null
+	hasDetail?: boolean
 }
 
 export function ListDetailView({ list, detail, hasDetail = false }: Props) {
@@ -19,7 +19,7 @@ export function ListDetailView({ list, detail, hasDetail = false }: Props) {
 			)}
 			{detail}
 		</div>
-	);
+	)
 }
 
 export function SiteLayout({ children }: { children: ReactNode }) {
@@ -28,7 +28,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 			<Sidebar />
 			<div className="flex flex-1">{children}</div>
 		</div>
-	);
+	)
 }
 
 export function FunContainer(props) {
@@ -43,5 +43,5 @@ export function FunContainer(props) {
 		>
 			{props.children}
 		</div>
-	);
+	)
 }

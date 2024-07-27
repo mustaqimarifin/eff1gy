@@ -41,4 +41,4 @@ export default [
 		title: "Search",
 		media: ["https://videodelivery.net/cfa53736edf640df772446d741a80f41/downloads/default.mp4"],
 	},
-];
+]

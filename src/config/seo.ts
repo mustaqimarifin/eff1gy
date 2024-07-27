@@ -1,5 +1,5 @@
-export const baseUrl = process.env.NODE_ENV === "production" ? "https://eff1gy.vercel.app" : "";
-export const baseEmail = "mstmarfn@gmail.com";
+export const baseUrl = process.env.NODE_ENV === "production" ? "https://eff1gy.vercel.app" : ""
+export const baseEmail = "mstmarfn@gmail.com"
 
 export const defaultSEO = {
 	title: "Mustaqim Arifin",
@@ -21,17 +21,17 @@ export const defaultSEO = {
 		site: "@vmprmyth",
 		cardType: "summary_large_image",
 	},
-};
+}
 
 interface SEOProps {
-	title?: string;
-	description?: string;
-	image?: string;
-	url?: string;
+	title?: string
+	description?: string
+	image?: string
+	url?: string
 }
 
 export function extendSEO(options: SEOProps) {
-	const images = options.image ? [{ url: `${baseUrl}/static/${options.image}` }] : defaultSEO.openGraph.images;
+	const images = options.image ? [{ url: `${baseUrl}/static/${options.image}` }] : defaultSEO.openGraph.images
 
 	return {
 		...defaultSEO,
@@ -42,5 +42,5 @@ export function extendSEO(options: SEOProps) {
 			images,
 			url: `${baseUrl}/${options.url}`,
 		},
-	};
+	}
 }

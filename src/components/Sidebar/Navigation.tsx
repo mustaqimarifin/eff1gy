@@ -1,10 +1,10 @@
-"use client";
-import { CassetteTape, Plus, Thermometer } from "lucide-react";
-import lazy from "next/dynamic";
-import { usePathname } from "next/navigation";
-import useSWR from "swr";
-import { AddBookmarkDialog } from "~/components/Bookmarks/AddBookmarkDialog";
-import { GhostButton } from "~/components/Button";
+"use client"
+import { CassetteTape, Plus, Thermometer } from "lucide-react"
+//import lazy from "next/dynamic"
+import { usePathname } from "next/navigation"
+import useSWR from "swr"
+import { AddBookmarkDialog } from "~/components/Bookmarks/AddBookmarkDialog"
+import { GhostButton } from "~/components/Button"
 import {
 	AMAIcon,
 	BookmarksIcon,
@@ -17,16 +17,19 @@ import {
 	StackIcon,
 	TwitterIcon,
 	WritingIcon,
-} from "~/components/Icon";
-import { NavigationLink } from "./NavigationLink";
+} from "~/components/Icon"
+import { NavigationLink } from "./NavigationLink"
 
-import { fetcher } from "~/lib/functions";
+import { fetcher } from "~/lib/functions"
 
-import { memo } from "react";
-import { useViewerQuery } from "~/graphql/typeSlut";
-const Marquee = lazy(() => import("../MDX/Marquee"), {
+import { useQuery } from "@apollo/client"
+import { memo } from "react"
+import Marquee from "react-fast-marquee"
+import { ViewerDocument } from "~/gql/typeSlut"
+
+/* const Marquee = lazy(() => import("../MDX/Marquee"), {
 	ssr: false,
-});
+}) */
 function ThisAddBookmarkDialog() {
 	return (
 		<AddBookmarkDialog
@@ -36,27 +39,27 @@ function ThisAddBookmarkDialog() {
 				</GhostButton>
 			}
 		/>
-	);
+	)
 }
 
 type TrackType = {
-	title?: string;
-	artist?: string;
-	isPlaying?: boolean;
-};
+	title?: string
+	artist?: string
+	isPlaying?: boolean
+}
 
 function Player(track: TrackType) {
 	return (
-		<Marquee speed={25} pauseOnHover delay={2} gradient>
-			<div className="pr-2">{` ${track.title} - ${track.artist} `}</div>
+		<Marquee speed={25} pauseOnHover delay={2}>
+			<div className="pr-2 uppercase underline decoration-pink-500">{` ${track.title} - ${track.artist} `}</div>
 		</Marquee>
-	);
+	)
 }
 
 export const SidebarNavigation = memo(() => {
-	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher);
-	const path = usePathname();
-	const { data } = useViewerQuery();
+	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher)
+	const path = usePathname()
+	const { data } = useQuery(ViewerDocument)
 	const sections = [
 		{
 			label: null,
@@ -65,27 +68,27 @@ export const SidebarNavigation = memo(() => {
 					href: "/",
 					label: "Home",
 					icon: HomeIcon,
-					trailingAccessory: null,
+					//trailingAccessory: null,
 					isActive: path === "/",
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: false,
 				},
 				{
 					href: "/post",
 					label: "Posts",
 					icon: WritingIcon,
-					trailingAccessory: null,
+					//trailingAccessory: null,
 					isActive: path.includes("/post"),
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: false,
 				},
 				{
 					href: "/blog",
 					label: "Blog",
 					icon: Thermometer,
-					trailingAccessory: null,
+					//trailingAccessory: null,
 					isActive: path.includes("/blog"),
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: false,
 				},
 			],
@@ -213,9 +216,9 @@ export const SidebarNavigation = memo(() => {
 					href: "/dash",
 					label: track?.isPlaying ? Player(track) : "On Rotation",
 					icon: CassetteTape,
-					//trailingAccessory: null,
+					trailingAccessory: null,
 					isActive: false,
-					//trailingAction: null,
+					trailingAction: null,
 					isExternal: false,
 				},
 				{
@@ -224,7 +227,7 @@ export const SidebarNavigation = memo(() => {
 					icon: TwitterIcon,
 					trailingAccessory: ExternalLinkIcon,
 					isActive: false,
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: true,
 				},
 
@@ -244,7 +247,7 @@ export const SidebarNavigation = memo(() => {
 					icon: GitHubIcon,
 					trailingAccessory: ExternalLinkIcon,
 					isActive: false,
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: true,
 				},
 
@@ -259,7 +262,7 @@ export const SidebarNavigation = memo(() => {
 				},
 			],
 		},
-	];
+	]
 
 	return (
 		<div className="flex-1 space-y-1 px-3 py-3">
@@ -278,8 +281,8 @@ export const SidebarNavigation = memo(() => {
 							<NavigationLink key={j} link={item} />
 						))}
 					</ul>
-				);
+				)
 			})}
 		</div>
-	);
-});
+	)
+})

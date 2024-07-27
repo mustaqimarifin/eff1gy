@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { useContext, useRef } from "react";
+import { useContext, useRef } from "react"
 
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { GlobalNavigationContext } from "~/components/Provider";
-import { SidebarNavigation } from "./Navigation";
-import { SidebarOverlay } from "./Overlay";
-import { UserFooter } from "./UserFooter";
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { GlobalNavigationContext } from "~/components/Provider"
+import { SidebarNavigation } from "./Navigation"
+import { SidebarOverlay } from "./Overlay"
+import { UserFooter } from "./UserFooter"
 
 export function Sidebar() {
-	const { isOpen } = useContext(GlobalNavigationContext);
-	const scrollContainerRef = useRef(null);
+	const { isOpen } = useContext(GlobalNavigationContext)
+	const scrollContainerRef = useRef(null)
 	return (
 		<>
 			<nav
@@ -31,5 +31,5 @@ export function Sidebar() {
 
 			<SidebarOverlay />
 		</>
-	);
+	)
 }

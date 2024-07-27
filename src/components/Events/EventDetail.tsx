@@ -1,18 +1,18 @@
-"use client";
-import { type ReactNode, useRef } from "react";
+"use client"
+import { type ReactNode, useRef } from "react"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import type { EventDetailsPost } from "~/data/events";
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import type { EventDetailsPost } from "~/data/events"
 
 interface Props {
-	post: EventDetailsPost;
-	children?: ReactNode;
+	post: EventDetailsPost
+	children?: ReactNode
 }
 
 export function EventDetail({ post, children }: Props) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
 
 	return (
 		<>
@@ -72,5 +72,5 @@ export function EventDetail({ post, children }: Props) {
         </Detail.ContentContainer>
       </Detail.Container> */}
 		</>
-	);
+	)
 }

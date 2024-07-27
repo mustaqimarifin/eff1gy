@@ -1,9 +1,9 @@
-"use server";
-import { unstable_noStore as noStore } from "next/cache";
-import { Suspense } from "react";
+"use server"
+import { unstable_noStore as noStore } from "next/cache"
+import { Suspense } from "react"
 
-import { ViewType } from "~/graphql/typeSlut";
-import { db } from "../db";
+import { ViewType } from "~/gql/typeSlut"
+import { db } from "../db"
 
 /*
 const googleAuth = new auth.GoogleAuth({
@@ -22,9 +22,9 @@ const yt = youtube({
 
 export async function addView(refId: string, type: ViewType) {
 	if (!refId || !type) {
-		return [];
+		return []
 	}
-	noStore();
+	noStore()
 	switch (type) {
 		case ViewType.Event: {
 			const results = await db.event.upsert({
@@ -37,9 +37,9 @@ export async function addView(refId: string, type: ViewType) {
 						increment: 1,
 					},
 				},
-			});
+			})
 
-			return results || [];
+			return results || []
 		}
 		case ViewType.Case: {
 			const results = await db.case.upsert({
@@ -52,9 +52,9 @@ export async function addView(refId: string, type: ViewType) {
 						increment: 1,
 					},
 				},
-			});
+			})
 
-			return results || [];
+			return results || []
 		}
 		case ViewType.Bookmark: {
 			const results = await db.bookmark.upsert({
@@ -67,9 +67,9 @@ export async function addView(refId: string, type: ViewType) {
 						increment: 1,
 					},
 				},
-			});
+			})
 
-			return results || [];
+			return results || []
 		}
 		case ViewType.Blog: {
 			const results = await db.blog.upsert({
@@ -82,9 +82,9 @@ export async function addView(refId: string, type: ViewType) {
 						increment: 1,
 					},
 				},
-			});
+			})
 
-			return results || [];
+			return results || []
 		}
 		case ViewType.Question: {
 			const results = await db.question.upsert({
@@ -97,9 +97,9 @@ export async function addView(refId: string, type: ViewType) {
 						increment: 1,
 					},
 				},
-			});
+			})
 
-			return results || [];
+			return results || []
 		}
 		case ViewType.Stack: {
 			const results = await db.stack.upsert({
@@ -112,12 +112,12 @@ export async function addView(refId: string, type: ViewType) {
 						increment: 1,
 					},
 				},
-			});
+			})
 
-			return results || [];
+			return results || []
 		}
 		default: {
-			return [];
+			return []
 		}
 	}
 }
@@ -150,25 +150,25 @@ export async function Counter({
 	refId,
 	type,
 }: {
-	refId: string;
-	type: ViewType;
+	refId: string
+	type: ViewType
 }) {
-	const views = await addView(refId, type);
-	const counter = `${views}`;
+	const views = await addView(refId, type)
+	const counter = `${views}`
 	return (
 		<Suspense>
 			<div>{`${counter} - views`}</div>
 		</Suspense>
-	);
+	)
 }
 
 export async function HiddenCounter({ refId, type }: { refId: string; type: ViewType }) {
-	const views = await addView(refId, type);
+	const views = await addView(refId, type)
 	return (
 		<Suspense>
 			<div className="hidden">{`${views} - views`}</div>
 		</Suspense>
-	);
+	)
 }
 
 /* export const getView = async (id) => {

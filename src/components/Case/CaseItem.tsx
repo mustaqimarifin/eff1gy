@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { memo } from "react";
+import Image from "next/image"
+import { memo } from "react"
 
-import { ListItem } from "~/components/ListDetail/ListItem";
+import { ListItem } from "~/components/ListDetail/ListItem"
 
-import type { LilBits } from "~/lib/sanity/client";
+import type { LilBits } from "~/lib/sanity/client"
 
 interface Props {
-	c: LilBits;
-	active: boolean;
+	c: LilBits
+	active: boolean
 }
 
 export const CaseListItem = memo<Props>(({ c, active }) => {
@@ -24,5 +24,5 @@ export const CaseListItem = memo<Props>(({ c, active }) => {
 			// byline={`${c.detailsCount} details`}
 			active={active}
 		/>
-	);
-});
+	)
+})

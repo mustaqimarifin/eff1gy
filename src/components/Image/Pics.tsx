@@ -1,13 +1,13 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import { InView } from "react-intersection-observer";
+"use client"
+import Image from "next/image"
+import React, { useState } from "react"
+import { InView } from "react-intersection-observer"
 
-import { cx } from "~/lib/transformers";
+import { cx } from "~/lib/transformers"
 
 export function DickPics({ src }) {
-	const [isLoading, setLoading] = useState(true);
-	const [isVisible, setIsVisible] = useState(false);
+	const [isLoading, setLoading] = useState(true)
+	const [isVisible, setIsVisible] = useState(false)
 
 	return (
 		<InView as="div" onChange={(visible: boolean) => !isVisible && setIsVisible(visible)}>
@@ -37,7 +37,7 @@ export function DickPics({ src }) {
       </figcaption> */}
 			</div>
 		</InView>
-	);
+	)
 }
 
 export function DickArray({ src }) {
@@ -50,5 +50,5 @@ export function DickArray({ src }) {
 			<DickPics src={src} />
 			<DickPics src={src} />
 		</>
-	);
+	)
 }

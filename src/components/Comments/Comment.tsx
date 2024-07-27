@@ -1,28 +1,28 @@
-import Link from "next/link";
-import { memo, useState } from "react";
+import Link from "next/link"
+import { memo, useState } from "react"
 
-import { Avatar } from "~/components/Avatar";
-import Button, { PrimaryButton } from "~/components/Button";
-import { Textarea } from "~/components/Input";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { GET_COMMENTS } from "~/graphql/queries/comments";
-import type { Comment as CommentProp, CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
-import { GetCommentsDocument, useDeleteCommentMutation, useEditCommentMutation } from "~/graphql/typeSlut";
-import { realTime } from "~/lib/transformers";
-import { MarkdownRenderer } from "../MarkdownRenderer";
+import { useMutation } from "@apollo/client"
+import { Avatar } from "~/components/Avatar"
+import Button, { PrimaryButton } from "~/components/Button"
+import { Textarea } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { DeleteCommentDocument, EditCommentDocument, GetCommentsDocument } from "~/gql/typeSlut"
+import type { Comment as CommentProp, CommentType, GetCommentsQuery } from "~/gql/typeSlut"
+import { realTime } from "~/lib/transformers"
+import { MarkdownRenderer } from "../MarkdownRenderer"
 
 interface Props {
-	comment: CommentProp;
-	refId: string;
-	type: CommentType;
+	comment: CommentProp
+	refId: string
+	type: CommentType
 }
 
 export const Comment = memo(({ comment, refId, type }: Props) => {
-	const [isEditing, setIsEditing] = useState(false);
-	const [editText, setEditText] = useState(comment.text);
-	const [isSavingEdit, setIsSavingEdit] = useState(false);
+	const [isEditing, setIsEditing] = useState(false)
+	const [editText, setEditText] = useState(comment.text)
+	const [isSavingEdit, setIsSavingEdit] = useState(false)
 
-	const [deleteComment] = useDeleteCommentMutation({
+	const [deleteComment] = useMutation(DeleteCommentDocument, {
 		variables: { id: comment.id },
 		optimisticResponse: {
 			__typename: "Mutation",
@@ -32,20 +32,21 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 			const { comments } = cache.readQuery<GetCommentsQuery>({
 				query: GetCommentsDocument,
 				variables: { refId, type },
-			});
+			})
 
 			cache.writeQuery({
 				query: GetCommentsDocument,
 				variables: { refId, type },
 				data: {
-					comments: comments.filter((o) => o.id !== comment.id),
+					comments: comments.filter(o => o.id !== comment.id),
+					__typename: "Query",
 				},
-			});
+			})
 		},
 		onError(error) {},
-	});
+	})
 
-	const [editComment] = useEditCommentMutation({
+	const [editComment] = useMutation(EditCommentDocument, {
 		variables: { id: comment.id, text: editText },
 		optimisticResponse: {
 			__typename: "Mutation",
@@ -61,39 +62,39 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 		},
 		onError(error) {},
 		onCompleted() {
-			setIsSavingEdit(false);
-			setIsEditing(false);
+			setIsSavingEdit(false)
+			setIsEditing(false)
 		},
-	});
+	})
 
 	function handleDelete() {
-		deleteComment();
+		deleteComment()
 	}
 
 	function handleEdit() {
-		setIsEditing(true);
+		setIsEditing(true)
 	}
 
-	function onKeyDown(e) {
+	function onKeyDown(e: { keyCode: number; metaKey: any; key: string }) {
 		if (e.keyCode === 13 && e.metaKey) {
-			if (editText.trim().length === 0 || isSavingEdit) return;
-			return handleSaveEdit();
+			if (editText.trim().length === 0 || isSavingEdit) return
+			return handleSaveEdit()
 		}
 		if (e.keyCode === 27 || e.key === "Escape") {
-			setIsEditing(false);
-			setEditText(comment.text);
+			setIsEditing(false)
+			setEditText(comment.text)
 		}
 	}
 
 	function handleSaveEdit() {
-		setIsSavingEdit(true);
-		editComment();
+		setIsSavingEdit(true)
+		editComment()
 	}
 
 	const createdAt = realTime({
 		month: "short",
 		timestamp: comment.createdAt,
-	});
+	})
 
 	return (
 		<div className="group flex flex-col space-y-0">
@@ -152,7 +153,7 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 
 			{isEditing ? (
 				<div className="flex flex-col space-y-2 pl-14">
-					<Textarea onChange={(e) => setEditText(e.target.value)} value={editText} onKeyDown={onKeyDown} />
+					<Textarea onChange={e => setEditText(e.target.value)} value={editText} onKeyDown={onKeyDown} />
 					<div className="flex justify-between">
 						<Button onClick={() => setIsEditing(false)}>Cancel</Button>
 						<PrimaryButton disabled={editText.trim().length === 0 || isSavingEdit} onClick={handleSaveEdit}>
@@ -168,5 +169,5 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 				/>
 			)}
 		</div>
-	);
-});
+	)
+})

@@ -9,21 +9,25 @@
 	"organizeImports": {
 		"enabled": true
 	},
+	"javascript": {
+		"formatter": { "semicolons": "asNeeded", "arrowParentheses": "asNeeded" }
+	},
 	"formatter": {
 		"enabled": true,
 		"lineWidth": 120,
-		"ignore": [".next/*", "node_modules"]
+		"ignore": [".next/*", "node_modules", "./.pnp.cjs", "./.yarn", "./.pnp.loader.mjs"]
 	},
 	"files": {
-		"ignore": [".next/*", "src/gql/**/*", "node_modules"]
+		"ignore": [".next/*", "src/gql/**/*", "node_modules", "./.pnp.cjs", "./.yarn", "./.pnp.loader.mjs"]
 	},
 	"linter": {
 		"ignore": [
 			".next/*",
-			"src/graphql/typeSlut.js",
-			"src/components/MDX/sugar.js",
 			"src/components/MDX/vidID.js",
-			"src/components/MDX/Lite.mjs"
+			"src/components/MDX/Lite.mjs",
+			"./.pnp.cjs",
+			"./.yarn",
+			"./.pnp.loader.mjs"
 		],
 		"enabled": true,
 		"rules": {
@@ -31,14 +35,16 @@
 			"complexity": {
 				"noBannedTypes": "off"
 			},
+			"security": { "noDangerouslySetInnerHtml": "off" },
 			"a11y": {
 				"useButtonType": "off",
 				"noSvgWithoutTitle": "off",
-				"useKeyWithClickEvents": "off"
+				"useKeyWithClickEvents": "off",
+				"useMediaCaption": "off"
 			},
 			"correctness": {
 				"noChildrenProp": "off",
-				"useExhaustiveDependencies": "warn"
+				"useExhaustiveDependencies": "off"
 			},
 			"suspicious": {
 				"noExplicitAny": "off",

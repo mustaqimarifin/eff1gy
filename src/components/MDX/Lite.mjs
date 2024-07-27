@@ -9,7 +9,7 @@
  *
  *  Author site: https://ibrahimcesar.cloud
  */
-import * as React from "react";
+import * as React from "react"
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -31,66 +31,66 @@ let __assign = function () {
 		Object.assign ||
 		function __assign(t) {
 			for (let s, i = 1, n = arguments.length; i < n; i++) {
-				s = arguments[i];
+				s = arguments[i]
 				for (const p in s) {
-					if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+					if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p]
 				}
 			}
-			return t;
-		};
-	return __assign.apply(this, arguments);
-};
+			return t
+		}
+	return __assign.apply(this, arguments)
+}
 
 function LiteYouTubeEmbed(props) {
-	const _a = React.useState(false);
-	const preconnected = _a[0];
-	const setPreconnected = _a[1];
-	const _b = React.useState(false);
-	const iframe = _b[0];
-	const setIframe = _b[1];
-	const videoId = encodeURIComponent(props.id);
+	const _a = React.useState(false)
+	const preconnected = _a[0]
+	const setPreconnected = _a[1]
+	const _b = React.useState(false)
+	const iframe = _b[0]
+	const setIframe = _b[1]
+	const videoId = encodeURIComponent(props.id)
 	const videoPlaylisCovertId =
-		typeof props.playlistCoverId === "string" ? encodeURIComponent(props.playlistCoverId) : null;
-	const videoTitle = props.title;
-	const posterImp = props.poster || "hqdefault";
-	const paramsImp = `&${props.params}` || "";
-	const mutedImp = props.muted ? "&mute=1" : "";
-	const announceWatch = props.announce || "Watch";
-	const format = props.webp ? "webp" : "jpg";
-	const vi = props.webp ? "vi_webp" : "vi";
+		typeof props.playlistCoverId === "string" ? encodeURIComponent(props.playlistCoverId) : null
+	const videoTitle = props.title
+	const posterImp = props.poster || "hqdefault"
+	const paramsImp = `&${props.params}` || ""
+	const mutedImp = props.muted ? "&mute=1" : ""
+	const announceWatch = props.announce || "Watch"
+	const format = props.webp ? "webp" : "jpg"
+	const vi = props.webp ? "vi_webp" : "vi"
 	const posterUrl =
 		props.thumbnail ||
 		(!props.playlist
 			? `https://i.ytimg.com/${vi}/${videoId}/${posterImp}.${format}`
-			: `https://i.ytimg.com/${vi}/${videoPlaylisCovertId}/${posterImp}.${format}`);
-	let ytUrl = props.noCookie ? "https://www.youtube-nocookie.com" : "https://www.youtube.com";
-	ytUrl = props.cookie ? "https://www.youtube.com" : "https://www.youtube-nocookie.com";
+			: `https://i.ytimg.com/${vi}/${videoPlaylisCovertId}/${posterImp}.${format}`)
+	let ytUrl = props.noCookie ? "https://www.youtube-nocookie.com" : "https://www.youtube.com"
+	ytUrl = props.cookie ? "https://www.youtube.com" : "https://www.youtube-nocookie.com"
 	const iframeSrc = !props.playlist
 		? `${ytUrl}/embed/${videoId}?autoplay=1&state=1${mutedImp}${paramsImp}`
-		: `${ytUrl}/embed/videoseries?autoplay=1${mutedImp}&list=${videoId}${paramsImp}`;
-	const activatedClassImp = props.activatedClass || "lyt-activated";
-	const adNetworkImp = props.adNetwork || false;
-	const aspectHeight = props.aspectHeight || 9;
-	const aspectWidth = props.aspectWidth || 16;
-	const iframeClassImp = props.iframeClass || "";
-	const playerClassImp = props.playerClass || "lty-playbtn";
-	const wrapperClassImp = props.wrapperClass || "yt-lite";
-	const onIframeAdded = props.onIframeAdded || (() => {});
-	const rel = props.rel ? "prefetch" : "preload";
-	const ContainerElement = props.containerElement || "article";
+		: `${ytUrl}/embed/videoseries?autoplay=1${mutedImp}&list=${videoId}${paramsImp}`
+	const activatedClassImp = props.activatedClass || "lyt-activated"
+	const adNetworkImp = props.adNetwork || false
+	const aspectHeight = props.aspectHeight || 9
+	const aspectWidth = props.aspectWidth || 16
+	const iframeClassImp = props.iframeClass || ""
+	const playerClassImp = props.playerClass || "lty-playbtn"
+	const wrapperClassImp = props.wrapperClass || "yt-lite"
+	const onIframeAdded = props.onIframeAdded || (() => {})
+	const rel = props.rel ? "prefetch" : "preload"
+	const ContainerElement = props.containerElement || "article"
 	const warmConnections = () => {
-		if (preconnected) return;
-		setPreconnected(true);
-	};
+		if (preconnected) return
+		setPreconnected(true)
+	}
 	const addIframe = () => {
-		if (iframe) return;
-		setIframe(true);
-	};
+		if (iframe) return
+		setIframe(true)
+	}
 	React.useEffect(() => {
 		if (iframe) {
-			onIframeAdded();
+			onIframeAdded()
 		}
-	}, [iframe]);
+	}, [iframe])
 	return React.createElement(
 		React.Fragment,
 		null,
@@ -153,8 +153,8 @@ function LiteYouTubeEmbed(props) {
 					src: iframeSrc,
 				}),
 		),
-	);
+	)
 }
 
-export { LiteYouTubeEmbed as default };
+export { LiteYouTubeEmbed as default }
 // # sourceMappingURL=index.es.jsx.map

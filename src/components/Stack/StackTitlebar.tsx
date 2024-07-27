@@ -1,13 +1,16 @@
-"use client";
-import { PlusIcon } from "lucide-react";
+"use client"
+import { PlusIcon } from "lucide-react"
 
-import { GhostButton } from "~/components/Button";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { useViewerQuery } from "~/graphql/typeSlut";
-import { AddStackDialog } from "./AddStackDialog";
+import { GhostButton } from "~/components/Button"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+
+import { useQuery } from "@apollo/client"
+
+import { ViewerDocument } from "~/gql/typeSlut"
+import { AddStackDialog } from "./AddStackDialog"
 
 export function StackTitlebar({ scrollContainerRef }) {
-	const { data } = useViewerQuery();
+	const { data } = useQuery(ViewerDocument)
 
 	function trailingAccessory() {
 		if (data?.viewer?.isAdmin) {
@@ -19,10 +22,10 @@ export function StackTitlebar({ scrollContainerRef }) {
 						</GhostButton>
 					}
 				/>
-			);
+			)
 		}
-		return null;
+		return null
 	}
 
-	return <TitleBar scrollContainerRef={scrollContainerRef} title="Stack" trailingAccessory={trailingAccessory()} />;
+	return <TitleBar scrollContainerRef={scrollContainerRef} title="Stack" trailingAccessory={trailingAccessory()} />
 }

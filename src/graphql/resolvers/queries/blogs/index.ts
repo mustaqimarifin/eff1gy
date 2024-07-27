@@ -1,9 +1,8 @@
-import type { Context } from "~/graphql/context";
-import type { GetBlogQueryVariables, GetBlogsQueryVariables } from "~/graphql/typeSlut";
+import type { GetBlogQueryVariables, GetBlogsQueryVariables } from "~/gql/typeSlut"
+import type { Context } from "~/graphql/context"
 
-export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
-	const { db } = ctx;
-
+export async function getBlogs(_: any, args: GetBlogsQueryVariables, ctx: Context) {
+	const { db } = ctx
 	return await db.blog.findMany({
 		orderBy: { date: "desc" },
 		include: {
@@ -13,12 +12,11 @@ export async function getBlogs(_, args: GetBlogsQueryVariables, ctx: Context) {
 				},
 			},
 		},
-	});
+	})
 }
 
-export async function getBlog(_, { slug }: GetBlogQueryVariables, ctx: Context) {
-	const { db } = ctx;
-
+export async function getBlog(_: any, { slug }: GetBlogQueryVariables, ctx: Context) {
+	const { db } = ctx
 	const [blogBySlug, blogById] = await Promise.all([
 		db.blog.findUnique({
 			where: { slug },
@@ -42,13 +40,13 @@ export async function getBlog(_, { slug }: GetBlogQueryVariables, ctx: Context) 
 				},
 			},
 		}),
-	]);
+	])
 
-	const blog = blogBySlug || blogById;
+	const blog = blogBySlug || blogById
 
 	/*   if (!blog.date && !viewer?.isAdmin) {
     return null
   }
  */
-	return blog;
+	return blog
 }

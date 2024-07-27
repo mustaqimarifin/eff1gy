@@ -1,40 +1,43 @@
-"use client";
-import { useEffect, useState } from "react";
+"use client"
 
-import Button from "~/components/Button";
-import { useViewerQuery } from "~/graphql/typeSlut";
-import { HeartFillIcon, HeartIcon } from "../Icon";
-import { SignInDialog } from "../SignInDialog";
+import React from "react"
+import Button from "~/components/Button"
+
+import { useQuery } from "@apollo/client"
+
+import { ViewerDocument } from "~/gql/typeSlut"
+import { HeartFillIcon, HeartIcon } from "../Icon"
+import { SignInDialog } from "../SignInDialog"
 
 interface Props {
-	id: string; // reset state
-	hasReacted: boolean;
-	count: number;
-	onClick: () => void;
-	loading: boolean;
+	refId: string // used to reset the button state as the user switches between pages
+	hasReacted: boolean
+	count: number
+	onClick: () => void
+	loading: boolean
 }
 
 export function ReactionButton(props: Props) {
-	const { id, onClick, hasReacted, count, loading } = props;
+	const { refId, onClick, hasReacted, count, loading } = props
 
-	const { data } = useViewerQuery();
-	const [hasReactedState, setHasReactedState] = useState(hasReacted);
-	let currCount = count;
-	let nextCount = hasReactedState ? count - 1 : count + 1;
-	const [currTranslate, setCurrTranslate] = useState(hasReactedState ? "-translate-y-4" : "translate-y-0");
-	const [nextTranslate, setNextTranslate] = useState(hasReactedState ? "translate-y-0" : "-translate-y-4");
-	const currOpacity = "opacity-100";
-	const nextOpacity = "opacity-0";
-	const [ping, setPing] = useState(false);
+	const { data } = useQuery(ViewerDocument)
+	const [hasReactedState, setHasReactedState] = React.useState(hasReacted)
+	let currCount = count
+	let nextCount = hasReactedState ? count - 1 : count + 1
+	const [currTranslate, setCurrTranslate] = React.useState(hasReactedState ? "-translate-y-4" : "translate-y-0")
+	const [nextTranslate, setNextTranslate] = React.useState(hasReactedState ? "translate-y-0" : "-translate-y-4")
+	let currOpacity = "opacity-100"
+	let nextOpacity = "opacity-0"
+	const [ping, setPing] = React.useState(false)
 
-	// reset states between ppl/pages
-	useEffect(() => {
-		setHasReactedState(hasReacted);
-		currCount = count;
-		nextCount = hasReacted ? count - 1 : count + 1;
-		setCurrTranslate(hasReacted ? "-translate-y-4" : "translate-y-0");
-		setNextTranslate(hasReacted ? "translate-y-0" : "-translate-y-4");
-	}, [id, hasReacted, currCount, nextCount]);
+	// reset all the states as people navigate between different reactable pages
+	React.useEffect(() => {
+		setHasReactedState(hasReacted)
+		currCount = count
+		nextCount = hasReacted ? count - 1 : count + 1
+		setCurrTranslate(hasReacted ? "-translate-y-4" : "translate-y-0")
+		setNextTranslate(hasReacted ? "translate-y-0" : "-translate-y-4")
+	}, [refId, hasReacted])
 
 	if (!data?.viewer) {
 		return (
@@ -48,19 +51,19 @@ export function ReactionButton(props: Props) {
 					</Button>
 				}
 			/>
-		);
+		)
 	}
 
 	function handleClick() {
-		if (loading) return;
-		setCurrTranslate(nextTranslate);
-		setNextTranslate(currTranslate);
-		setHasReactedState(!hasReactedState);
+		if (loading) return
+		setCurrTranslate(nextTranslate)
+		setNextTranslate(currTranslate)
+		setHasReactedState(!hasReactedState)
 		if (!hasReactedState) {
-			setPing(true);
-			setTimeout(() => setPing(false), 700);
+			setPing(true)
+			setTimeout(() => setPing(false), 700)
 		}
-		onClick();
+		onClick()
 	}
 
 	return (
@@ -101,5 +104,5 @@ export function ReactionButton(props: Props) {
 				</div>
 			</div>
 		</Button>
-	);
+	)
 }

@@ -1,55 +1,55 @@
-"use client";
+"use client"
 
-import { X } from "lucide-react";
-import * as React from "react";
+import { X } from "lucide-react"
+import * as React from "react"
 
-import Button, { GhostButton, PrimaryButton } from "~/components/Button";
-import { Input, Textarea } from "~/components/Input";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { GET_POSTS } from "~/graphql/queries/posts";
-import { useEditPostMutation } from "~/graphql/typeSlut";
-import { PostEditorContext } from "./PostEditor";
+import { useMutation } from "@apollo/client"
+import Button, { GhostButton, PrimaryButton } from "~/components/Button"
+import { Input, Textarea } from "~/components/Input"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { EditPostDocument, GetPostsDocument } from "~/gql/typeSlut"
+import { PostEditorContext } from "./PostEditor"
 
 export function PostEditorMetaSidebar() {
-	const context = React.useContext(PostEditorContext);
-	const { draftState, existingPost, setDraftState, sidebarIsOpen, setSidebarIsOpen } = context;
-	const scrollContainerRef = React.useRef(null);
+	const context = React.useContext(PostEditorContext)
+	const { draftState, existingPost, setDraftState, sidebarIsOpen, setSidebarIsOpen } = context
+	const scrollContainerRef = React.useRef(null)
 
-	const [editPost, { loading: editingPost }] = useEditPostMutation();
+	const [editPost, { loading: editingPost }] = useMutation(EditPostDocument)
 
 	function handlePublish() {
 		// if already publish, don't try to publish again
-		if (existingPost.publishedAt) return;
+		if (existingPost.publishedAt) return
 
 		return editPost({
 			variables: {
 				id: existingPost.id,
 				data: { ...draftState, published: true },
 			},
-			refetchQueries: [GET_POSTS],
-		});
+			refetchQueries: [GetPostsDocument],
+		})
 	}
 
 	function handleUnpublish() {
 		// if it's not published already, don't try to unpublish
-		if (!existingPost.publishedAt) return;
+		if (!existingPost.publishedAt) return
 
 		return editPost({
 			variables: {
 				id: existingPost.id,
 				data: { ...draftState, published: false },
 			},
-			refetchQueries: [GET_POSTS],
-		});
+			refetchQueries: [GetPostsDocument],
+		})
 	}
 
 	function handleSlugChange(e) {
-		return setDraftState((draft) => ({ ...draft, slug: e.target.value }));
+		return setDraftState((draft: any) => ({ ...draft, slug: e.target.value }))
 	}
 
 	function handleExcerptChange(e) {
-		return setDraftState((draft) => ({ ...draft, excerpt: e.target.value }));
+		return setDraftState(draft => ({ ...draft, excerpt: e.target.value }))
 	}
 
 	return (
@@ -80,17 +80,11 @@ export function PostEditorMetaSidebar() {
 
 					<div className="flex flex-col space-y-1">
 						<p className="text-primary text-sm font-semibold">Excerpt</p>
-						<Textarea
-							value={draftState.excerpt}
-							placeholder="Excerpt"
-							rows={8}
-							maxRows={8}
-							onChange={handleExcerptChange}
-						/>
+						<Textarea value={draftState.excerpt} placeholder="Excerpt" rows={8} onChange={handleExcerptChange} />
 					</div>
 				</div>
 
-				<div className="filter-blur sticky bottom-0 z-10 flex items-center justify-between space-x-3 border-t border-gray-150 bg-white bg-opacity-80 p-2 dark:border-gray-800 dark:bg-gray-900 dark:bg-opacity-60">
+				<div className="filter:blur sticky bottom-0 z-10 flex items-center justify-between space-x-3 border-t border-gray-150 bg-white bg-opacity-80 p-2 dark:border-gray-800 dark:bg-gray-900 dark:bg-opacity-60">
 					{existingPost?.id && !existingPost?.publishedAt && (
 						<PrimaryButton style={{ width: "100%" }} disabled={editingPost} onClick={handlePublish}>
 							{editingPost ? <LoadingSpinner /> : "Publish"}
@@ -111,5 +105,5 @@ export function PostEditorMetaSidebar() {
 				onClick={() => setSidebarIsOpen(false)}
 			/>
 		</>
-	);
+	)
 }

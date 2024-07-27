@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import LiteYouTubeEmbed from "./Lite.mjs";
+import LiteYouTubeEmbed from "./Lite.mjs"
 
 const youtubeDomains = new Set([
 	"youtu.be",
@@ -8,23 +8,23 @@ const youtubeDomains = new Set([
 	"www.youtube.com",
 	"youtube-nocookie.com",
 	"www.youtube-nocookie.com",
-]);
+])
 function getYoutubeId(url: string): string | null {
 	try {
-		const { hostname } = new URL(url);
+		const { hostname } = new URL(url)
 		if (!youtubeDomains.has(hostname)) {
-			return null;
+			return null
 		}
-		const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/i;
+		const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/i
 
-		const match = url.match(regExp);
+		const match = url.match(regExp)
 		if (match && match[2].length === 11) {
-			return match[2];
+			return match[2]
 		}
 	} catch {
 		// ignore invalid urls
 	}
-	return null;
+	return null
 }
 
 export function Embed({ video }) {
@@ -48,5 +48,5 @@ export function Embed({ video }) {
 				noCookie={true} // Default false, connect to YouTube via the Privacy-Enhanced Mode using https://www.youtube-nocookie.com
 			/>
 		</div>
-	);
+	)
 }

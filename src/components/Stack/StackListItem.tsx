@@ -1,20 +1,20 @@
-import Image from "next/image";
-import { memo } from "react";
+import Image from "next/image"
+import { memo } from "react"
 
-import { ListItem } from "~/components/ListDetail/ListItem";
-import type { StackListItemFragment } from "~/graphql/typeSlut";
+import { ListItem } from "~/components/ListDetail/ListItem"
+import type { StackListItemFragment } from "~/gql/typeSlut"
 // TODO: Figure out how to get this dynamically
 interface Props {
-	stack: StackListItemFragment;
-	active: boolean;
+	stack: StackListItemFragment
+	active: boolean
 }
 
 export const StackListItem = memo<Props>(({ stack, active }) => {
 	function handleClick(e, stack) {
 		if (e.metaKey) {
-			e.preventDefault();
-			e.stopPropagation();
-			window.open(stack.url, "_blank").focus();
+			e.preventDefault()
+			e.stopPropagation()
+			window.open(stack.url, "_blank").focus()
 		}
 	}
 
@@ -40,7 +40,7 @@ export const StackListItem = memo<Props>(({ stack, active }) => {
 				</div>
 			}
 			active={active}
-			onClick={(e) => handleClick(e, stack)}
+			onClick={e => handleClick(e, stack)}
 		/>
-	);
-});
+	)
+})

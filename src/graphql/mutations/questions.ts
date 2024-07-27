@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { QuestionDetailFragment } from "../fragments/question";
+import { QuestionDetailFrag } from "../fragments/question"
 
 export const EDIT_QUESTION = gql`
   mutation editQuestion($id: ID!, $data: EditQuestionInput!) {
@@ -8,14 +8,14 @@ export const EDIT_QUESTION = gql`
       ...QuestionDetail
     }
   }
-  ${QuestionDetailFragment}
-`;
+  ${QuestionDetailFrag}
+`
 
 export const DELETE_QUESTION = gql`
   mutation deleteQuestion($id: ID!) {
     deleteQuestion(id: $id)
   }
-`;
+`
 
 export const ADD_QUESTION = gql`
   mutation addQuestion($data: AddQuestionInput!) {
@@ -23,5 +23,5 @@ export const ADD_QUESTION = gql`
       ...QuestionDetail
     }
   }
-  ${QuestionDetailFragment}
-`;
+  ${QuestionDetailFrag}
+`

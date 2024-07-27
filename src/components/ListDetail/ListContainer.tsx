@@ -1,11 +1,15 @@
-import { useEffect, useRef } from "react";
+import { type ReactNode, type RefCallback, useEffect, useRef } from "react"
 
-export function ListContainer({ children, onRef, ...rest }) {
-	const scrollContainerRef = useRef(null);
+type ListContainerProps = {
+	children: ReactNode
+	onRef: RefCallback<any>
+}
+export function ListContainer({ children, onRef, ...rest }: ListContainerProps) {
+	const scrollContainerRef = useRef(null)
 
 	useEffect(() => {
-		onRef(scrollContainerRef);
-	}, [onRef]);
+		onRef(scrollContainerRef)
+	}, [onRef])
 
 	return (
 		<div
@@ -15,5 +19,5 @@ export function ListContainer({ children, onRef, ...rest }) {
 		>
 			{children}
 		</div>
-	);
+	)
 }

@@ -1,27 +1,28 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState } from "react"
 
-import { CommentButton } from "~/components/Button";
-import { Textarea } from "~/components/Input";
-//import { GET_COMMENTS } from "~/graphql/queries/comments";
-import type { CommentType, GetCommentsQuery } from "~/graphql/typeSlut";
-import { GetCommentsDocument, useAddCommentMutation, useViewerQuery } from "~/graphql/typeSlut";
-import { useDebounce } from "~/hooks";
-import { realTime } from "~/lib/transformers";
-import { Nuts } from "../Provider/Toaster";
+import { useMutation, useQuery } from "@apollo/client"
+import { CommentButton } from "~/components/Button"
+import { Textarea } from "~/components/Input"
+import type { CommentType, GetCommentsQuery } from "~/gql/typeSlut"
+import { AddCommentDocument, GetCommentsDocument, ViewerDocument } from "~/gql/typeSlut"
+
+import { useDebounce } from "~/hooks"
+import { realTime } from "~/lib/transformers"
+import { Nuts } from "../Provider/Toaster"
 
 interface Props {
-	refId: string;
-	type: CommentType;
-	openModal: () => void;
+	refId: string
+	type: CommentType
+	openModal: () => void
 }
 
 export function CommentForm({ refId, type, openModal }: Props) {
-	const genId = () => useId();
-	const { data } = useViewerQuery();
-	const [text, setText] = useState("");
-	const [error, setError] = useState(null);
+	const genId = () => useId()
+	const { data } = useQuery(ViewerDocument)
+	const [text, setText] = useState("")
+	const [error, setError] = useState(null)
 
-	const [handleAddComment] = useAddCommentMutation({
+	const [handleAddComment] = useMutation(AddCommentDocument, {
 		optimisticResponse: {
 			__typename: "Mutation",
 			addComment: {
@@ -47,57 +48,58 @@ export function CommentForm({ refId, type, openModal }: Props) {
 			const { comments } = cache.readQuery<GetCommentsQuery>({
 				query: GetCommentsDocument,
 				variables: { refId, type },
-			});
+			})
 
 			cache.writeQuery({
 				query: GetCommentsDocument,
 				variables: { refId, type },
 				data: {
 					comments: [...comments, addComment],
+					__typename: "Query",
 				},
-			});
+			})
 		},
-	});
+	})
 
 	function onSubmit(e) {
-		e.preventDefault();
+		e.preventDefault()
 
 		// not signed in, save to localstorage
 		if (!data?.viewer) {
 			// persist everything to local storage so we don't lose it
-			localStorage.setItem(refId, text);
+			localStorage.setItem(refId, text)
 			// pop the sign in modal
-			return openModal();
+			return openModal()
 		}
 
-		setText("");
-		localStorage.removeItem(refId);
+		setText("")
+		localStorage.removeItem(refId)
 		return handleAddComment({
 			variables: { refId, type, text },
-		});
+		})
 	}
 
 	function onKeyDown(e) {
 		if (e.keyCode === 13 && e.metaKey) {
-			return onSubmit(e);
+			return onSubmit(e)
 		}
 	}
 
 	useEffect(() => {
-		const localText = localStorage.getItem(refId);
+		const localText = localStorage.getItem(refId)
 		if (localText) {
-			setText(localText);
+			setText(localText)
 		}
-	}, [refId]);
+	}, [refId])
 
-	const debouncedText = useDebounce(text, 500);
+	const debouncedText = useDebounce(text, 500)
 
 	useEffect(() => {
-		localStorage.setItem(refId, debouncedText);
-	}, [debouncedText, refId]);
+		localStorage.setItem(refId, debouncedText)
+	}, [debouncedText, refId])
 
 	function handleChange(e) {
-		return setText(e.target.value);
+		return setText(e.target.value)
 	}
 
 	return (
@@ -130,5 +132,5 @@ export function CommentForm({ refId, type, openModal }: Props) {
 				{error && Nuts.error(error)}
 			</form>
 		</div>
-	);
+	)
 }

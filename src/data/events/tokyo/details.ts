@@ -22,4 +22,4 @@ export default [
 			"¹ [Disney](https://www.disney.sg/article-star-wars-run-experience)\r\n\r\n ² [JustRunLah](https://www.justrunlah.com/race/star-wars-run-singapore-2018/)\r\n\r\n ³ [Pris Chew](https://www.prischew.com/sports/running/star-wars-run-2018/)\r\n\r\n",
 		title: "Sources",
 	},
-];
+]

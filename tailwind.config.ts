@@ -1,8 +1,8 @@
-import forms from "@tailwindcss/forms";
-import typo from "@tailwindcss/typography";
-import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import forms from "@tailwindcss/forms"
+import typo from "@tailwindcss/typography"
+import type { Config } from "tailwindcss"
+import colors from "tailwindcss/colors"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 export default {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -12,7 +12,7 @@ export default {
 			fontFamily: {
 				sans: ["var(--font-geist-sans)", ...fontFamily.sans],
 				imp: ["var(--imp)", ...fontFamily.serif],
-				mono: ["var(--font-geist-mono)", ...fontFamily.mono],
+				mono: ["var(--mono)", ...fontFamily.mono],
 				quad: ["var(--font-quad)", ...fontFamily.serif],
 			},
 			colors: {
@@ -49,4 +49,4 @@ export default {
 		},
 	},
 	plugins: [typo, forms],
-} satisfies Config;
+} satisfies Config

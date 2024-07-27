@@ -1,27 +1,28 @@
-import Link from "next/link";
+import Link from "next/link"
 
-import { Avatar } from "~/components/Avatar";
-import type { GetStackQuery } from "~/graphql/typeSlut";
-import { GetStackDocument, useGetStackQuery, useToggleStackUserMutation, useViewerQuery } from "~/graphql/typeSlut";
-import { useWindowFocus } from "~/hooks";
-import { Tooltip } from "../UI/Tooltip";
+import { useMutation, useQuery } from "@apollo/client"
+import { Avatar } from "~/components/Avatar"
+import { GetStackDocument, GetStacksDocument, ToggleStackUserDocument, ViewerDocument } from "~/gql/typeSlut"
+
+import { useWindowFocus } from "~/hooks"
+import { Tooltip } from "../UI/Tooltip"
 
 export function StackUsedBy(props) {
-	const { triggerSignIn } = props;
-	const { data: viewerData } = useViewerQuery();
-	const { data, loading, error, refetch } = useGetStackQuery({
+	const { triggerSignIn } = props
+	const { data: viewerData } = useQuery(ViewerDocument)
+	const { data, loading, error, refetch } = useQuery(GetStackDocument, {
 		variables: { slug: props.stack.slug },
-	});
-	const [toggleStackUser] = useToggleStackUserMutation();
+	})
+	const [toggleStackUser] = useMutation(ToggleStackUserDocument)
 
-	useWindowFocus({ onFocus: refetch });
+	useWindowFocus({ onFocus: refetch })
 
 	if (loading) {
-		return null;
+		return null
 	}
 
 	if (error) {
-		return null;
+		return null
 	}
 
 	function handleChange() {
@@ -36,15 +37,15 @@ export function StackUsedBy(props) {
 					...props.stack,
 					usedByViewer: !data?.stack?.usedByViewer,
 					usedBy: data?.stack?.usedByViewer
-						? data.stack.usedBy.filter((u) => u.id !== viewerData.viewer.id)
+						? data.stack.usedBy.filter(u => u.id !== viewerData.viewer.id)
 						: [...data.stack.usedBy, viewerData.viewer],
 				},
 			},
 			update(cache) {
-				const { stack } = cache.readQuery<GetStackQuery>({
+				const { stack } = cache.readQuery({
 					query: GetStackDocument,
 					variables: { slug: props.stack.slug },
-				});
+				})
 
 				cache.writeQuery({
 					query: GetStackDocument,
@@ -54,20 +55,21 @@ export function StackUsedBy(props) {
 							...stack,
 							usedByViewer: !data?.stack?.usedByViewer,
 							usedBy: data?.stack?.usedByViewer
-								? data?.stack?.usedBy.filter((u) => u.id !== viewerData.viewer.id)
+								? data?.stack?.usedBy.filter(u => u.id !== viewerData.viewer.id)
 								: [...data.stack.usedBy, viewerData.viewer],
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	function handleToggle() {
 		if (viewerData?.viewer) {
-			return handleChange();
+			return handleChange()
 		}
-		return triggerSignIn();
+		return triggerSignIn()
 	}
 
 	return (
@@ -86,7 +88,7 @@ export function StackUsedBy(props) {
 
 				{data?.stack?.usedBy.length > 0 && (
 					<div className="-m-1 flex flex-wrap">
-						{data.stack.usedBy.map((user) => (
+						{data.stack.usedBy.map(user => (
 							<Tooltip key={user.id} content={user.name}>
 								<span>
 									<Link href={`/u/${user.id}`} passHref className="inline-flex p-1">
@@ -108,5 +110,5 @@ export function StackUsedBy(props) {
 				<p className="text-primary text-sm font-medium">I use this</p>
 			</label>
 		</div>
-	);
+	)
 }

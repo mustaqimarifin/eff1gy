@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/image"
 
 function HeroImage() {
 	return (
@@ -11,7 +11,7 @@ function HeroImage() {
 				alt=""
 			/>
 		</div>
-	);
+	)
 }
 
-export default HeroImage;
+export default HeroImage

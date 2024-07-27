@@ -1,16 +1,14 @@
-"use client";
-import { useMutation } from "@apollo/client";
-import { ReactionButton } from "~/components/Button/ReactionButton";
-import { GET_BLOG } from "~/graphql/queries/blogs";
-import type { Blog } from "~/graphql/typeSlut";
-import { ReactionType, ToggleReactionDocument } from "~/graphql/typeSlut";
+"use client"
+import { useMutation } from "@apollo/client"
+import { ReactionButton } from "~/components/Button/ReactionButton"
+import { type Blog, GetBlogDocument, ReactionType, ToggleReactionDocument } from "~/gql/typeSlut"
 
-function getReactionButton(blog: Blog) {
+function getReactionButton(blog) {
 	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument, {
 		context: { fetchOptions: { cache: "no-store" } },
-	});
+	})
 	function handleClick() {
-		if (loading) return;
+		if (loading) return
 
 		toggleReaction({
 			variables: {
@@ -22,36 +20,37 @@ function getReactionButton(blog: Blog) {
 				toggleReaction: {
 					__typename: "Blog",
 					...blog,
-					reactionCount: blog.viewerHasReacted ? blog.reactionCount! - 1 : blog.reactionCount! + 1,
+					reactionCount: blog.viewerHasReacted ? blog.reactionCount - 1 : blog.reactionCount + 1,
 					viewerHasReacted: !blog.viewerHasReacted,
 				},
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GET_BLOG,
-					variables: { id: blog.id },
+					query: GetBlogDocument,
+					variables: { slug: blog.slug },
 					data: {
 						blog: {
 							...blog,
 							...toggleReaction,
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	return (
 		<ReactionButton
-			id={blog.id}
+			refId={blog.id}
 			loading={loading}
 			count={blog.reactionCount!}
 			hasReacted={blog.viewerHasReacted!}
 			onClick={handleClick}
 		/>
-	);
+	)
 }
 
 export function BlogAction({ blog }: { blog: Blog }) {
-	return <div className="flex items-center space-x-2">{getReactionButton(blog)}</div>;
+	return <div className="flex items-center space-x-2">{getReactionButton(blog)}</div>
 }

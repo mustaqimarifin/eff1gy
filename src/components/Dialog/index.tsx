@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
-import type { ReactElement } from "react";
-import { Fragment, memo, useRef, useState } from "react";
+import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react"
+import type { ReactElement } from "react"
+import { Fragment, memo, useRef, useState } from "react"
 
 export interface DialogProps {
-	trigger: ReactElement | null;
-	children?: any | null;
-	title?: string;
-	modalContent?: any;
+	trigger?: ReactElement | null
+	children?: any | null
+	title?: string
+	modalContent?: (x: any) => ReactElement | null
 }
 
 export const DialogComponent = memo<DialogProps>(({ trigger, children, modalContent }) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const closeButtonRef = useRef(null);
+	const [isOpen, setIsOpen] = useState(false)
+	const closeButtonRef = useRef(null)
 
 	function closeModal() {
-		setIsOpen(false);
+		setIsOpen(false)
 	}
 
 	function openModal() {
-		setIsOpen(true);
+		setIsOpen(true)
 	}
 
 	return (
@@ -83,5 +83,5 @@ export const DialogComponent = memo<DialogProps>(({ trigger, children, modalCont
 				</Dialog>
 			</Transition>
 		</>
-	);
-});
+	)
+})

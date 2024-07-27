@@ -1,31 +1,31 @@
-import "./gfy.css";
+import "./gfy.css"
 
-import { EmbeddedTweet, TweetNotFound, type TweetProps } from "react-tweet";
-import { getTweet } from "react-tweet/api";
+import { EmbeddedTweet, TweetNotFound, type TweetProps } from "react-tweet"
+import { getTweet } from "react-tweet/api"
 
 async function TweetContent({ id, components, onError }: TweetProps) {
-	let error;
+	let error
 	const tweet = id
-		? await getTweet(id).catch((err) => {
+		? await getTweet(id).catch(err => {
 				if (onError) {
-					error = onError(err);
+					error = onError(err)
 				} else {
-					console.error(err);
-					error = err;
+					console.error(err)
+					error = err
 				}
 			})
-		: undefined;
+		: undefined
 
 	if (!tweet) {
-		const NotFound = components?.TweetNotFound || TweetNotFound;
-		return <NotFound error={error} />;
+		const NotFound = components?.TweetNotFound || TweetNotFound
+		return <NotFound error={error} />
 	}
 
-	return <EmbeddedTweet tweet={tweet} components={components} />;
+	return <EmbeddedTweet tweet={tweet} components={components} />
 }
 
 function ReactTweet(props: TweetProps) {
-	return <TweetContent {...props} />;
+	return <TweetContent {...props} />
 }
 
 export async function Tweet({ id }: { id: string }) {
@@ -35,5 +35,5 @@ export async function Tweet({ id }: { id: string }) {
 				<ReactTweet id={id} />
 			</div>
 		</div>
-	);
+	)
 }

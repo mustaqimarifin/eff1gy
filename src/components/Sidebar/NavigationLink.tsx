@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { useContext } from "react";
+import Link from "next/link"
+import { useContext } from "react"
 
-import { GlobalNavigationContext } from "~/components/Provider";
+import { GlobalNavigationContext } from "~/components/Provider"
 
 export function NavigationLink({
 	link: { href, label, icon: Icon, trailingAccessory: Accessory, trailingAction: Action, isActive, isExternal },
 }) {
-	const { setIsOpen } = useContext(GlobalNavigationContext);
+	const { setIsOpen } = useContext(GlobalNavigationContext)
 	return (
 		<li key={href} className="flex items-stretch space-x-1" onClick={() => setIsOpen(false)}>
 			<Link
@@ -31,5 +31,5 @@ export function NavigationLink({
 			</Link>
 			{Action && <Action />}
 		</li>
-	);
+	)
 }

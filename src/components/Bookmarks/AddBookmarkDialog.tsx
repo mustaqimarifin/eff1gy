@@ -1,5 +1,5 @@
-import { DialogComponent } from "~/components/Dialog";
-import { AddBookmarkForm } from "./AddBookmarkForm";
+import { DialogComponent } from "~/components/Dialog"
+import { AddBookmarkForm } from "./AddBookmarkForm"
 
 export function AddBookmarkDialog({ trigger }) {
 	return (
@@ -8,5 +8,5 @@ export function AddBookmarkDialog({ trigger }) {
 			title="Add bookmark"
 			modalContent={({ closeModal }) => <AddBookmarkForm closeModal={closeModal} />}
 		/>
-	);
+	)
 }

@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "L’Étape Malaysia By Tour De France",
@@ -21,4 +21,4 @@ export default {
 	logo: "/events/logos/letape.jpg",
 	slug: "letape",
 	details,
-};
+}

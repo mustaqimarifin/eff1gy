@@ -1,18 +1,30 @@
-"use client";
+"use client"
 
-import { ApolloLink, HttpLink } from "@apollo/client";
-import { relayStylePagination } from "@apollo/client/utilities";
+import { ApolloLink, HttpLink } from "@apollo/client"
+//import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries"
+import { relayStylePagination } from "@apollo/client/utilities"
 import {
 	ApolloClient,
 	ApolloNextAppProvider,
 	InMemoryCache,
 	SSRMultipartLink,
-} from "@apollo/experimental-nextjs-app-support";
-import type { PropsWithChildren } from "react";
-// import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
-// import { sha256 } from "crypto-hash";
+} from "@apollo/experimental-nextjs-app-support"
+//import { generatePersistedQueryIdsFromManifest } from "@apollo/persisted-query-lists"
+import type { PropsWithChildren } from "react"
 
-const ssr = typeof window === "undefined";
+/* const linkQ = createPersistedQueryLink(
+	generatePersistedQueryIdsFromManifest({
+		loadManifest: () => import("persisted-query-manifest.json"),
+	}),
+) */
+// import { sha256 } from "crypto-hash";
+/* import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
+
+const link = createPersistedQueryLink({
+	// biome-ignore lint/complexity/useLiteralKeys: <explanation>
+	generateHash: document => document['__meta__']['hash']
+}) */
+const ssr = typeof window === "undefined"
 
 function makeClient() {
 	const httpLink = new HttpLink({
@@ -26,7 +38,7 @@ function makeClient() {
 		// via the `context` property on the options passed as a second argument
 		// to an Apollo Client data fetching hook, e.g.:
 		// const { data } = useSuspenseQuery(MY_QUERY, { context: { fetchOptions: { cache: "force-cache" }}});
-	});
+	})
 	/* const olink = createPersistedQueryLink({
   sha256,
   useGETForHashedQueries: true,
@@ -58,7 +70,7 @@ function makeClient() {
 				},
 			},
 		},
-	};
+	}
 
 	return new ApolloClient({
 		cache: new InMemoryCache({ typePolicies }),
@@ -70,8 +82,8 @@ function makeClient() {
 					httpLink,
 				])
 			: httpLink,
-	});
+	})
 }
 export function ApolloWrapper({ children }: PropsWithChildren) {
-	return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>;
+	return <ApolloNextAppProvider makeClient={makeClient}>{children}</ApolloNextAppProvider>
 }

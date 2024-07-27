@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "Tokyo Auto Salon Kuala Lumpur",
@@ -20,4 +20,4 @@ export default {
 	logo: "/events/logos/tokyo.jpg",
 	slug: "tokyo-auto-salon",
 	details,
-};
+}

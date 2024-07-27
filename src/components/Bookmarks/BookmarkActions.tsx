@@ -1,12 +1,16 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client"
 
-import { EditBookmarkDialog } from "~/components/Bookmarks/EditBookmarkDialog";
-import Button from "~/components/Button";
-import { TOGGLE_REACTION } from "~/graphql/mutations/reactions";
-import { GET_BOOKMARK } from "~/graphql/queries/bookmarks";
-import type { Bookmark } from "~/graphql/typeSlut";
-import { ReactionType, useViewerQuery } from "~/graphql/typeSlut";
-import { ReactionButton } from "../Button/ReactionButton";
+import { EditBookmarkDialog } from "~/components/Bookmarks/EditBookmarkDialog"
+import Button from "~/components/Button"
+import {
+	type Bookmark,
+	GetBookmarkDocument,
+	ReactionType,
+	ToggleReactionDocument,
+	ViewerDocument,
+} from "~/gql/typeSlut"
+
+import { ReactionButton } from "../Button/ReactionButton"
 
 /* function getBookmarkView(bookmark: Bookmark) {
 	const [addView, { loading }] = useMutation(ADD_VIEW);
@@ -45,11 +49,11 @@ import { ReactionButton } from "../Button/ReactionButton";
 	return <Button id={bookmark.id} loading={loading} count={bookmark.count} onClick={handleClick} />;
 }
  */
-function getReactionButton(bookmark: Bookmark) {
-	const [toggleReaction, { loading }] = useMutation(TOGGLE_REACTION);
+function getReactionButton(bookmark) {
+	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
 
 	function handleClick() {
-		if (loading) return;
+		if (loading) return
 
 		toggleReaction({
 			variables: {
@@ -61,45 +65,45 @@ function getReactionButton(bookmark: Bookmark) {
 				toggleReaction: {
 					__typename: "Bookmark",
 					...bookmark,
-					reactionCount: bookmark.viewerHasReacted ? bookmark.reactionCount! - 1 : bookmark.reactionCount! + 1,
+					reactionCount: bookmark.viewerHasReacted ? bookmark.reactionCount - 1 : bookmark.reactionCount + 1,
 					viewerHasReacted: !bookmark.viewerHasReacted,
 				},
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GET_BOOKMARK,
+					query: GetBookmarkDocument,
 					variables: { id: bookmark.id },
 					data: {
+						__typename: "Query",
 						bookmark: {
 							...bookmark,
 							...toggleReaction,
 						},
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	return (
 		<ReactionButton
-			id={bookmark.id}
+			refId={bookmark.id}
 			loading={loading}
 			count={bookmark.reactionCount!}
 			hasReacted={bookmark.viewerHasReacted!}
 			onClick={handleClick}
 		/>
-	);
+	)
 }
 
 export function BookmarkActions({ bookmark }) {
-	const { data } = useViewerQuery();
+	const { data } = useQuery(ViewerDocument)
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(bookmark)}
-
 			{data?.viewer?.isAdmin && (
 				<EditBookmarkDialog bookmark={bookmark} trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>} />
 			)}
 		</div>
-	);
+	)
 }

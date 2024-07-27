@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useMutation } from "@apollo/client"
+import { useState } from "react"
 
-import Button from "~/components/Button";
-import { Input } from "~/components/Input";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { type GetViewerWithSettingsQuery, useEditUserMutation } from "~/graphql/typeSlut";
-import { nameRX } from "~/lib/functions";
+import Button from "~/components/Button"
+import { Input } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { EditUserDocument, type GetViewerWithSettingsQuery } from "~/gql/typeSlut"
+import { nameRX } from "~/lib/functions"
 
 export function UsernameForm(props: {
-	viewer: GetViewerWithSettingsQuery["viewer"];
+	viewer: GetViewerWithSettingsQuery["viewer"]
 }) {
-	const { viewer } = props;
-	const [username, setUsername] = useState("");
-	const [isEditing, setIsEditing] = useState(false);
-	const [error, setError] = useState(null);
+	const { viewer } = props
+	const [username, setUsername] = useState("")
+	const [isEditing, setIsEditing] = useState(false)
+	const [error, setError] = useState(null)
 
-	const [editUser, editUserResponse] = useEditUserMutation({
+	const [editUser, editUserResponse] = useMutation(EditUserDocument, {
 		variables: {
 			data: {
 				username,
@@ -22,21 +23,21 @@ export function UsernameForm(props: {
 		},
 		onError() {},
 		onCompleted() {
-			setIsEditing(false);
+			setIsEditing(false)
 		},
-	});
+	})
 
 	function onSubmit(e) {
-		e.preventDefault();
-		if (editUserResponse.loading) return;
-		if (username === viewer.username) return setIsEditing(false);
-		if (!nameRX(username)) return setError(true);
-		editUser();
+		e.preventDefault()
+		if (editUserResponse.loading) return
+		if (username === viewer.username) return setIsEditing(false)
+		if (!nameRX(username)) return setError(true)
+		editUser()
 	}
 
 	function handleUsernameChange(e) {
-		setError(false);
-		setUsername(e.target.value);
+		setError(false)
+		setUsername(e.target.value)
 	}
 
 	return (
@@ -80,5 +81,5 @@ export function UsernameForm(props: {
 				</form>
 			)}
 		</div>
-	);
+	)
 }

@@ -1,12 +1,12 @@
-import Image from "next/image";
-import { memo } from "react";
+import Image from "next/image"
+import { memo } from "react"
 
-import { ListItem } from "~/components/ListDetail/ListItem";
-import type { EventDetailsPostSummary } from "~/data/events";
+import { ListItem } from "~/components/ListDetail/ListItem"
+import type { EventDetailsPostSummary } from "~/data/events"
 
 interface Props {
-	summary: EventDetailsPostSummary;
-	active: boolean;
+	summary: EventDetailsPostSummary
+	active: boolean
 }
 
 export const EventListItem = memo<Props>(({ summary, active }) => {
@@ -22,5 +22,5 @@ export const EventListItem = memo<Props>(({ summary, active }) => {
 			byline={`${summary?.detailsCount} details`}
 			active={active}
 		/>
-	);
-});
+	)
+})

@@ -1,23 +1,24 @@
-"use client";
+"use client"
 
-import { useRef } from "react";
+import { useQuery } from "@apollo/client"
+import { useRef } from "react"
 
-import Button from "~/components/Button";
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { useGetUserQuery } from "~/graphql/typeSlut";
+import Button from "~/components/Button"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { GetUserDocument } from "~/gql/typeSlut"
 
 export function UserDetail({ username }) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
 
-	const { data, loading, error } = useGetUserQuery({ variables: { username } });
+	const { data, loading, error } = useQuery(GetUserDocument, { variables: { username } })
 
-	if (error) return null;
-	if (loading) return <Detail.Loading />;
+	if (error) return null
+	if (loading) return <Detail.Loading />
 
 	if (data?.user) {
-		const { user } = data;
+		const { user } = data
 		return (
 			<Detail.Container ref={scrollContainerRef}>
 				<TitleBar
@@ -35,8 +36,8 @@ export function UserDetail({ username }) {
 					</Detail.Header>
 				</Detail.ContentContainer>
 			</Detail.Container>
-		);
+		)
 	}
 
-	return null;
+	return null
 }

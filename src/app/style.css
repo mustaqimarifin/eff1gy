@@ -582,7 +582,7 @@
   left: 0;
 }
 
-/* .prose h1,
+ .prose h1,
 .prose h2,
 .prose h3,
 .prose h4,
@@ -604,7 +604,7 @@
 .prose h5 {
   @apply -mb-3 mt-12 text-xl;
 }
- */
+ 
 /* .prose pre {
   @apply space-y-4 rounded-md border-gray-300 bg-gray-400 bg-opacity-5 px-8 py-6 text-sm text-gray-800 dark:border-gray-800 dark:text-gray-200;
 }

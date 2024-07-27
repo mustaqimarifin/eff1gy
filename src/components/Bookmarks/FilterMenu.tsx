@@ -1,23 +1,24 @@
-"use client";
-import { Menu, Transition } from "@headlessui/react";
-import { CheckIcon } from "lucide-react";
-import { useContext } from "react";
+"use client"
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
+import { CheckIcon } from "lucide-react"
+import { Fragment, useContext } from "react"
 
-import { GhostButton } from "~/components/Button";
-import { useGetTagsQuery } from "~/graphql/typeSlut";
-import { BookmarksContext } from "./BookmarksList";
+import { useQuery } from "@apollo/client"
+import { GhostButton } from "~/components/Button"
+import { GetTagsDocument } from "~/gql/typeSlut"
+import { BookmarksContext } from "./BookmarksList"
 
 export function BookmarksFilterMenu() {
-	const { data, loading } = useGetTagsQuery();
-	const { tag, setTag } = useContext(BookmarksContext);
+	const { data, loading } = useQuery(GetTagsDocument)
+	const { tag, setTag } = useContext(BookmarksContext)
 
-	if (loading) return null;
+	if (loading) return null
 
-	const { tags } = data;
+	const { tags } = data
 
-	const allowedTags = ["web", "lol", "portfolio", "art"];
+	const allowedTags = ["web", "lol", "portfolio", "art"]
 
-	const filtered = tags.filter((t) => allowedTags.includes(t.name));
+	const filtered = tags.filter(t => allowedTags.includes(t.name))
 
 	return (
 		<div className="flex items-center justify-center">
@@ -25,7 +26,7 @@ export function BookmarksFilterMenu() {
 				<Menu>
 					{({ open }) => (
 						<>
-							<Menu.Button as="div" className="relative z-0 inline-flex">
+							<MenuButton as="div" className="relative z-0 inline-flex">
 								{tag && (
 									<div className="absolute right-1 top-1 h-3 w-3 rounded-full border-2 border-white bg-blue-500 dark:border-gray-900" />
 								)}
@@ -39,7 +40,7 @@ export function BookmarksFilterMenu() {
 										/>
 									</svg>
 								</GhostButton>
-							</Menu.Button>
+							</MenuButton>
 
 							<Transition
 								show={open}
@@ -50,17 +51,17 @@ export function BookmarksFilterMenu() {
 								leaveFrom="transform opacity-100 scale-100"
 								leaveTo="transform opacity-0 scale-95"
 							>
-								<Menu.Items
+								<MenuItems
 									static
 									className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md border border-gray-200 bg-white shadow-sm outline-none dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
 								>
 									<div className="flex flex-col space-y-2 py-2">
-										<Menu.Item>
-											{({ active }) => (
+										<MenuItem as={Fragment}>
+											{({ focus }) => (
 												<button
 													onClick={() => setTag(null)}
 													className={`${
-														active
+														focus
 															? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
 															: "text-gray-900 dark:text-gray-200"
 													} text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm`}
@@ -68,16 +69,16 @@ export function BookmarksFilterMenu() {
 													All bookmarks
 												</button>
 											)}
-										</Menu.Item>
+										</MenuItem>
 									</div>
 									<div className="flex flex-col py-2">
-										{filtered.map((t) => (
-											<Menu.Item key={t.name}>
-												{({ active }) => (
+										{filtered.map(t => (
+											<MenuItem key={t.name} as={Fragment}>
+												{({ focus }) => (
 													<button
 														onClick={() => setTag(t.name)}
 														className={`${
-															active
+															focus
 																? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
 																: "text-gray-900 dark:text-gray-200"
 														} text-secondary flex w-full cursor-pointer items-center space-x-2 px-4 py-2 text-sm capitalize`}
@@ -86,15 +87,15 @@ export function BookmarksFilterMenu() {
 														<span>{t.name}</span>
 													</button>
 												)}
-											</Menu.Item>
+											</MenuItem>
 										))}
 									</div>
-								</Menu.Items>
+								</MenuItems>
 							</Transition>
 						</>
 					)}
 				</Menu>
 			</div>
 		</div>
-	);
+	)
 }

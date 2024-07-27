@@ -1,20 +1,18 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from "graphql"
 
-import type { Context } from "~/graphql/context";
-import type { MutationAddQuestionArgs, MutationDeleteQuestionArgs, MutationEditQuestionArgs } from "~/graphql/typeSlut";
+import type { MutationAddQuestionArgs, MutationDeleteQuestionArgs, MutationEditQuestionArgs } from "~/gql/typeSlut"
+import type { Context } from "~/graphql/context"
 // import { graphcdn } from "~/lib/graphcdn";
-
 // import { graphcdn } from '~/lib/redis'
 // import { graphcdn } from '~/lib/graphcdn'
-
 export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Context) {
-	const { data, id } = args;
+	const { data, id } = args
 
-	const { db, viewer } = ctx;
+	const { db, viewer } = ctx
 
-	const ama = await db.question.findUnique({ where: { id } });
+	const ama = await db.question.findUnique({ where: { id } })
 	if (!ama) {
-		throw new GraphQLError("Question doesn’t exist");
+		throw new GraphQLError("Question doesn’t exist")
 	}
 
 	if (viewer?.isAdmin || viewer?.id === ama?.userId) {
@@ -40,19 +38,19 @@ export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Conte
         graphcdn.purgeList('questions')
         return question
       })  */
-			.catch((err) => {
-				console.error({ err });
-				throw new GraphQLError("Unable to edit question");
-			});
+			.catch(err => {
+				console.error({ err })
+				throw new GraphQLError("Unable to edit question")
+			})
 	}
 
-	throw new GraphQLError("No permission to delete this question");
+	throw new GraphQLError("No permission to delete this question")
 }
 
 export async function addQuestion(_, args: MutationAddQuestionArgs, ctx: Context) {
-	const { data } = args;
-	const { title, description } = data;
-	const { viewer, db } = ctx;
+	const { data } = args
+	const { title, description } = data
+	const { viewer, db } = ctx
 
 	const question = await db.question
 		.create({
@@ -73,20 +71,20 @@ export async function addQuestion(_, args: MutationAddQuestionArgs, ctx: Context
       graphcdn.purgeList('questions')
       return question
     })  */
-		.catch((err) => {
-			console.error({ err });
-			throw new GraphQLError("Unable to add question");
-		});
+		.catch(err => {
+			console.error({ err })
+			throw new GraphQLError("Unable to add question")
+		})
 
-	return question;
+	return question
 }
 
 export async function deleteQuestion(_, args: MutationDeleteQuestionArgs, ctx: Context) {
-	const { id } = args;
-	const { db, viewer } = ctx;
+	const { id } = args
+	const { db, viewer } = ctx
 
-	const question = await db.question.findUnique({ where: { id } });
-	if (!question) return true;
+	const question = await db.question.findUnique({ where: { id } })
+	if (!question) return true
 
 	if (viewer?.isAdmin || viewer?.id === question.userId) {
 		return await db.question
@@ -95,11 +93,11 @@ export async function deleteQuestion(_, args: MutationDeleteQuestionArgs, ctx: C
         graphcdn.purgeList('questions')
         return true
       })  */
-			.catch((err) => {
-				console.error({ err });
-				throw new GraphQLError("Unable to delete question");
-			});
+			.catch(err => {
+				console.error({ err })
+				throw new GraphQLError("Unable to delete question")
+			})
 	}
 
-	throw new GraphQLError("No permission to delete this question");
+	throw new GraphQLError("No permission to delete this question")
 }

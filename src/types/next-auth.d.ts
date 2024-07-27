@@ -1,5 +1,5 @@
-import type { User as PrismaUser, UserRole } from "@prisma/client";
-import type { DefaultSession } from "next-auth";
+import type { User as PrismaUser, UserRole } from "@prisma/client"
+import type { DefaultSession } from "next-auth"
 
 declare module "next-auth" {
 	interface Session {
@@ -7,13 +7,13 @@ declare module "next-auth" {
 			/**
 			 * Returned by `useViewerQuery`, `getSession` and received as a prop on the `SessionProvider` React Context
 			 */
-			id: string;
-			username?: string;
-			isAdmin?: boolean;
-			role: UserRole;
-		} & DefaultSession["user"];
-		userId: string;
-		isAdmin: boolean;
+			id: string
+			username?: string
+			isAdmin?: boolean
+			role: UserRole
+		} & DefaultSession["user"]
+		userId: string
+		isAdmin: boolean
 	}
 
 	interface User extends PrismaUser {}

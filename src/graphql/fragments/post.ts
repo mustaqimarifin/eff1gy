@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-export const PostCoreFragment = gql`
+export const PostCoreFrag = gql`
   fragment PostCore on Post {
     __typename
     id
@@ -9,24 +9,23 @@ export const PostCoreFragment = gql`
     slug
     excerpt
   }
-`;
+`
 
-export const PostListItemFragment = gql`
+export const PostListItemFrag = gql`
   fragment PostListItem on Post {
     ...PostCore
   }
-  ${PostCoreFragment}
-`;
+  ${PostCoreFrag}
+`
 
-export const PostDetailFragment = gql`
+export const PostDetailFrag = gql`
   fragment PostDetail on Post {
     ...PostCore
     text
     featureImage
     reactionCount
     hitRate
-
     viewerHasReacted
   }
-  ${PostCoreFragment}
-`;
+  ${PostCoreFrag}
+`

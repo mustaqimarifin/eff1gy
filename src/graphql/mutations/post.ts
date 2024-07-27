@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { PostDetailFragment } from "../fragments/post";
+import { PostDetailFrag } from "../fragments/post"
 
 export const EDIT_POST = gql`
   mutation editPost($id: ID!, $data: EditPostInput!) {
@@ -8,14 +8,14 @@ export const EDIT_POST = gql`
       ...PostDetail
     }
   }
-  ${PostDetailFragment}
-`;
+  ${PostDetailFrag}
+`
 
 export const DELETE_POST = gql`
   mutation deletePost($id: ID!) {
     deletePost(id: $id)
   }
-`;
+`
 
 export const ADD_POST = gql`
   mutation addPost($data: AddPostInput!) {
@@ -23,5 +23,5 @@ export const ADD_POST = gql`
       ...PostDetail
     }
   }
-  ${PostDetailFragment}
-`;
+  ${PostDetailFrag}
+`

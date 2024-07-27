@@ -1,5 +1,5 @@
 export function DesignDetailMedia(props) {
-	const { src, detail } = props;
+	const { src, detail } = props
 	return (
 		<div className="-mx-4 mb-4 mt-8 flex items-center justify-center rounded-none bg-gray-100 p-2 dark:bg-gray-900 md:-mx-8 md:p-4 xl:rounded-md">
 			<video
@@ -17,5 +17,5 @@ export function DesignDetailMedia(props) {
 				<source src={`${src}#t=0.1`} />
 			</video>
 		</div>
-	);
+	)
 }

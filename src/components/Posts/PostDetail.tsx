@@ -1,40 +1,34 @@
 /* eslint-disable react/no-children-prop */
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
-import { Comments } from "~/components/Comments";
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import type { Post } from "~/graphql/typeSlut";
-import { CommentType, useGetPostQuery, useGetPostSuspenseQuery } from "~/graphql/typeSlut";
-import { realTime } from "~/lib/transformers";
-import { MarkdownRenderer } from "../MarkdownRenderer";
-import { PostActions } from "./PostActions";
+import { useQuery } from "@apollo/client"
+import { Comments } from "~/components/Comments"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { GetPostDocument } from "~/gql/typeSlut"
+import type { Post } from "~/gql/typeSlut"
+import { CommentType } from "~/gql/typeSlut"
+import { realTime } from "~/lib/transformers"
+import { MarkdownRenderer } from "../MarkdownRenderer"
+import { PostActions } from "./PostActions"
 
 interface PD {
-	children?: React.ReactNode;
-	slug?: string;
-	post?: Post;
+	children?: React.ReactNode
+	slug?: string
+	post?: Post
 }
 export function PostDetail({ slug }: PD) {
-	const scrollContainerRef = React.useRef(null);
-	const titleRef = React.useRef(null);
-	const { data, error, networkStatus } = useGetPostSuspenseQuery({ variables: { slug } });
+	const scrollContainerRef = React.useRef(null)
+	const titleRef = React.useRef(null)
+	const { data, error, loading } = useQuery(GetPostDocument, { variables: { slug } })
 
-	if (networkStatus === 1) {
-		return <Detail.Loading />;
-	}
+	if (loading) return <Detail.Loading />
+	if (!data?.post || error) return <Detail.Null />
+	const publishedAt = realTime({ timestamp: data?.post.publishedAt })
+	const { post } = data
 
-	if (!data?.post || error) {
-		return <Detail.Null />;
-	}
-
-	const publishedAt = realTime({
-		timestamp: data?.post.publishedAt,
-	});
-
-	const { post } = data;
 	return (
 		<Detail.Container data-cy="post-detail" ref={scrollContainerRef}>
 			<TitleBar
@@ -60,8 +54,7 @@ export function PostDetail({ slug }: PD) {
 				<div className="py-6" />
 				{/* bottom padding to give space between post content and comments */}
 			</Detail.ContentContainer>
-
 			<Comments refId={post.id} type={CommentType.Post} />
 		</Detail.Container>
-	);
+	)
 }

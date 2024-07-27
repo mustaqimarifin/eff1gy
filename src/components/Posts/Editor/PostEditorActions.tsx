@@ -1,32 +1,33 @@
-"use client";
-import { Sidebar } from "lucide-react";
-import { useRouter } from "next/navigation";
-import * as React from "react";
+"use client"
+import { Sidebar } from "lucide-react"
+import { useRouter } from "next/navigation"
+import * as React from "react"
 
-import Button from "~/components/Button";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { PostEditorContext } from "./PostEditor";
-import { PostEditorAutoSave } from "./PostEditorAutoSave";
+import Button from "~/components/Button"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { PostEditorContext } from "./PostEditor"
+import { PostEditorAutoSave } from "./PostEditorAutoSave"
 
-import { Nuts } from "~/components/Provider/Toaster";
-import { useAddPostMutation, useEditPostMutation } from "~/graphql/typeSlut";
-import { slugify } from "~/lib/functions";
+import { useMutation } from "@apollo/client"
+import { Nuts } from "~/components/Provider/Toaster"
+import { AddPostDocument, EditPostDocument } from "~/gql/typeSlut"
+import { slugify } from "~/lib/functions"
 
 export function PostEditorActions() {
-	const router = useRouter();
+	const router = useRouter()
 	// const path = usePathname();
-	const context = React.useContext(PostEditorContext);
-	const { draftState, existingPost, sidebarIsOpen, setSidebarIsOpen, isPreviewing, setIsPreviewing } = context;
+	const context = React.useContext(PostEditorContext)
+	const { draftState, existingPost, sidebarIsOpen, setSidebarIsOpen, isPreviewing, setIsPreviewing } = context
 
-	const [addPost, { loading: creatingPost }] = useAddPostMutation({
+	const [addPost, { loading: creatingPost }] = useMutation(AddPostDocument, {
 		onCompleted({ addPost }) {
-			Nuts.success("Draft created");
-			router.push(`/post/${addPost.slug}/edit`);
+			Nuts.success("Draft created")
+			router.push(`/post/${addPost.slug}/edit`)
 			// router.push(`/post/${path}/edit`);
 		},
-	});
+	})
 
-	const [editPost, { loading: editingPost }] = useEditPostMutation();
+	const [editPost, { loading: editingPost }] = useMutation(EditPostDocument)
 
 	function handleEditOrCreate() {
 		if (existingPost?.id) {
@@ -35,7 +36,7 @@ export function PostEditorActions() {
 					id: existingPost.id,
 					data: draftState,
 				},
-			});
+			})
 		}
 
 		return addPost({
@@ -45,10 +46,10 @@ export function PostEditorActions() {
 					slug: draftState.slug || slugify(draftState.title),
 				},
 			},
-		});
+		})
 	}
 
-	const isSavingDraft = editingPost || creatingPost;
+	const isSavingDraft = editingPost || creatingPost
 
 	return (
 		<div className="flex items-center space-x-2">
@@ -65,5 +66,5 @@ export function PostEditorActions() {
 				<Sidebar size={16} />
 			</Button>
 		</div>
-	);
+	)
 }

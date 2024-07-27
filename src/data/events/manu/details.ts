@@ -95,4 +95,4 @@ export default [
 		title: "Website",
 		media: ["https://videodelivery.net/68f21e8623d2d9a312f8ff0f4ad43178/downloads/default.mp4"],
 	},
-];
+]

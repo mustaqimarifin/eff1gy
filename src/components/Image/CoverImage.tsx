@@ -1,10 +1,10 @@
-import Image from "next/image";
-import { useState } from "react";
+import Image from "next/image"
+import { useState } from "react"
 
-import { cx } from "~/lib/transformers";
+import { cx } from "~/lib/transformers"
 
 export default function CoverImage({ src }) {
-	const [isLoading, setLoading] = useState(true);
+	const [isLoading, setLoading] = useState(true)
 
 	return (
 		<div className="mb-6 max-w-3xl content-center justify-center overflow-hidden md:rounded-lg">
@@ -28,5 +28,5 @@ export default function CoverImage({ src }) {
         )}
       </figcaption> */}
 		</div>
-	);
+	)
 }

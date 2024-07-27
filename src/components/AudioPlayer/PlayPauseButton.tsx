@@ -25,5 +25,5 @@ export default function PlayPauseButton({ isPlaying, onClick }) {
 				</svg>
 			)}
 		</button>
-	);
+	)
 }

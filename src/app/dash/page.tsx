@@ -1,26 +1,21 @@
-import { DashPage, SectionContent } from "~/components/Dash/Index";
-// import { ListDetailView } from "~/components/Layouts";
-import { getTopTracks } from "~/lib/queries";
-import Track from "./Track";
+import { DashPage, SectionContent } from "~/components/Dash/Index"
+import { getTopTracks } from "~/lib/queries"
+import Track from "./Track"
 
-/* interface SpotifyTrack {
-  artists: {
-    name: string
-  }[]
-  external_urls: { spotify: string }
-  album: { images: { url: string }[] }
-  name: string
-} */
-export default async function Dashboard() {
-	const response = await getTopTracks();
-	const { items } = await response.json();
+//export const revalidate = 86400
 
-	const tracks = items?.slice(0, 10).map((track) => ({
-		artist: track.artists.map((_artist: { name: string }) => _artist.name).join(", "),
+//const getCachedTracks = unstable_cache(async () => await getTopTracks(), ["top-tracks"])
+
+export default async function DashboardIndex() {
+	const response = await getTopTracks()
+	const { items } = await response.json()
+
+	const tracks = items?.slice(0, 10).map(track => ({
+		artist: track.artists.map(_artist => _artist.name).join(", "),
 		songUrl: track.external_urls.spotify,
 		imageUrl: track.album.images[1].url,
 		title: track.name,
-	}));
+	}))
 	return (
 		<DashPage>
 			<SectionContent>
@@ -34,11 +29,11 @@ export default async function Dashboard() {
 					<p className="text-gray-600 dark:text-gray-400 mb-4">
 						Top tracks I grab courtesy of Spotify's WEB API -- updated daily!
 					</p>
-					{tracks.map((track, index) => (
+					{tracks?.map((track, index) => (
 						<Track ranking={index + 1} key={track.songUrl} {...track} />
 					))}
 				</div>
 			</SectionContent>
 		</DashPage>
-	);
+	)
 }

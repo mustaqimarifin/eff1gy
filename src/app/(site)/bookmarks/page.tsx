@@ -1,18 +1,17 @@
-import { Suspense } from "react";
-import { BookmarksList } from "~/components/Bookmarks/BookmarksList";
-import { ListDetailView } from "~/components/Layouts";
-import { PreloadQuery, query } from "~/components/Provider/ApolloClient";
-import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks";
-import { GET_TAGS } from "~/graphql/queries/tags";
-import { GET_VIEWER } from "~/graphql/queries/viewer";
+import { Suspense } from "react"
+import { BookmarksList } from "~/components/Bookmarks/BookmarksList"
+import { PreloadQuery, query } from "~/components/Provider/ApolloClient"
+import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks"
+import { GET_TAGS } from "~/graphql/queries/tags"
+import { GET_VIEWER } from "~/graphql/queries/viewer"
 
 export const metadata = {
 	title: "Bookmarks",
-};
+}
 
 /* export default async function BookIndex() {
   await Promise.all([
-    client.query({ query: GET_VIEWER }),
+    client.query({ query: ViewerDocument }),
     client.query({ query: GET_BOOKMARKS }),
     client.query({ query: GET_TAGS }),
   ])
@@ -20,12 +19,12 @@ export const metadata = {
 } */
 
 export default async function BookIndex() {
-	await Promise.all([query({ query: GET_VIEWER }), query({ query: GET_TAGS })]);
+	await Promise.all([query({ query: GET_VIEWER }), query({ query: GET_TAGS })])
 	return (
 		<PreloadQuery query={GET_BOOKMARKS}>
 			<Suspense fallback={""}>
 				<BookmarksList />
 			</Suspense>
 		</PreloadQuery>
-	);
+	)
 }

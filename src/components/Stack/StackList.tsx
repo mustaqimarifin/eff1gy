@@ -1,33 +1,34 @@
-"use client";
+"use client"
 
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
-import { ListContainer } from "~/components/ListDetail/ListContainer";
-import { useGetStacksQuery } from "~/graphql/typeSlut";
-import { ListLoadMore } from "../ListDetail/ListLoadMore";
-import { LoadingSpinner } from "../LoadingSpinner";
-import { StackListItem } from "./StackListItem";
-import { StackTitlebar } from "./StackTitlebar";
+import { useQuery } from "@apollo/client"
+import { ListContainer } from "~/components/ListDetail/ListContainer"
+import { GetStacksDocument } from "~/gql/typeSlut"
+import { ListLoadMore } from "../ListDetail/ListLoadMore"
+import { LoadingSpinner } from "../LoadingSpinner"
+import { StackListItem } from "./StackListItem"
+import { StackTitlebar } from "./StackTitlebar"
 
-export function StackList() {
-	const path = usePathname();
-	const [isVisible, setIsVisible] = useState(false);
-	const [scrollContainerRef, setScrollContainerRef] = useState(null);
+export default function StackList() {
+	const path = usePathname()
+	const [isVisible, setIsVisible] = useState(false)
+	const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
-	const { data, loading, fetchMore } = useGetStacksQuery();
+	const { data, loading, fetchMore } = useQuery(GetStacksDocument)
 
 	function handleFetchMore() {
 		return fetchMore({
 			variables: {
 				after: data.stacks.pageInfo.endCursor,
 			},
-		});
+		})
 	}
 
 	useEffect(() => {
-		if (isVisible) handleFetchMore();
-	}, [isVisible]);
+		if (isVisible) handleFetchMore()
+	}, [isVisible, handleFetchMore()])
 
 	if (loading && !data?.stacks) {
 		return (
@@ -37,7 +38,7 @@ export function StackList() {
 					<LoadingSpinner />
 				</div>
 			</ListContainer>
-		);
+		)
 	}
 
 	return (
@@ -45,13 +46,13 @@ export function StackList() {
 			<StackTitlebar scrollContainerRef={scrollContainerRef} />
 
 			<div className="lg:space-y-1 lg:p-3">
-				{data.stacks.edges.map((stack) => {
-					const active = path === stack.node.slug;
-					return <StackListItem key={stack.node.id} stack={stack.node} active={active} />;
+				{data.stacks.edges.map(stack => {
+					const active = path === stack.node.slug
+					return <StackListItem key={stack.node.id} stack={stack.node} active={active} />
 				})}
 
 				{data?.stacks.pageInfo.hasNextPage && <ListLoadMore setIsVisible={setIsVisible} />}
 			</div>
 		</ListContainer>
-	);
+	)
 }

@@ -1,4 +1,4 @@
-export function LoadingSpinner() {
+function Spinner({ ...props }) {
 	return (
 		<svg
 			className="text-primary h-3.5 w-3.5 animate-spin"
@@ -13,5 +13,25 @@ export function LoadingSpinner() {
 				d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 			/>
 		</svg>
-	);
+	)
+}
+
+import LoadingStyles from "./load.module.css"
+
+interface Props {
+	children?: React.ReactNode
+	active?: boolean
+}
+export function LoadingSpinner({ children, active }: Props) {
+	const classNames = [LoadingStyles["scx-loading"]]
+	if (active) {
+		classNames.push(LoadingStyles["scx-loading--active"])
+	}
+
+	return (
+		<div className={classNames.join(" ")}>
+			<div className={LoadingStyles["scx-loading-content"]}>{children}</div>
+			{active && <Spinner className={LoadingStyles["scx-loading-spinner"]} />}
+		</div>
+	)
 }

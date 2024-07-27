@@ -1,12 +1,12 @@
-import { memo } from "react";
+import { memo } from "react"
 
-import { Avatar } from "~/components/Avatar";
-import { ListItem } from "~/components/ListDetail/ListItem";
-import type { Question } from "~/graphql/typeSlut";
+import { Avatar } from "~/components/Avatar"
+import { ListItem } from "~/components/ListDetail/ListItem"
+import type { Question } from "~/gql/typeSlut"
 
 interface Props {
-	question: Question;
-	active: boolean;
+	question: Question
+	active: boolean
 }
 
 export const QuestionListItem = memo<Props>(({ question, active }) => {
@@ -30,5 +30,5 @@ export const QuestionListItem = memo<Props>(({ question, active }) => {
 			}
 			active={active}
 		/>
-	);
-});
+	)
+})

@@ -1,6 +1,6 @@
-"use client";
-import { DialogComponent } from "~/components/Dialog";
-import { AddStackForm } from "./AddStackForm";
+"use client"
+import { DialogComponent } from "~/components/Dialog"
+import { AddStackForm } from "./AddStackForm"
 
 export function AddStackDialog({ trigger }) {
 	return (
@@ -9,5 +9,5 @@ export function AddStackDialog({ trigger }) {
 			title="New stack"
 			modalContent={({ closeModal }) => <AddStackForm closeModal={closeModal} />}
 		/>
-	);
+	)
 }

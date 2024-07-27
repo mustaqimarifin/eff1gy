@@ -1,15 +1,16 @@
-"use client";
-import * as React from "react";
+"use client"
+import { useMutation, useQuery } from "@apollo/client"
+import * as React from "react"
 
-import Button, { ViewButton } from "~/components/Button";
-import { ReactionButton } from "~/components/Button/ReactionButton";
-import { GET_POST } from "~/graphql/queries/posts";
-import { ReactionType, useToggleReactionMutation, useViewerQuery } from "~/graphql/typeSlut";
+import Button, { ViewButton } from "~/components/Button"
+import { ReactionButton } from "~/components/Button/ReactionButton"
+import { GetPostDocument, ToggleReactionDocument, ViewerDocument } from "~/gql/typeSlut"
+import { type Post, ReactionType } from "~/gql/typeSlut"
 
 function getReactionButton(post) {
-	const [toggleReaction, { loading }] = useToggleReactionMutation();
+	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
 	function handleClick() {
-		if (loading) return;
+		if (loading) return
 
 		toggleReaction({
 			variables: {
@@ -21,53 +22,54 @@ function getReactionButton(post) {
 				toggleReaction: {
 					__typename: "Post",
 					...post,
-					reactionCount: post.viewerHasReacted ? post.reactionCount - 1 : post.reactionCount + 1,
+					reactionCount: post.viewerHasReacted ? post.reactionCount! - 1 : post.reactionCount! + 1,
 					viewerHasReacted: !post.viewerHasReacted,
 				},
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GET_POST,
-					variables: { id: post.id },
+					query: GetPostDocument,
+					variables: { slug: post.slug },
 					data: {
 						post: {
 							...post,
 							...toggleReaction,
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	return (
 		<ReactionButton
-			id={post.id}
+			refId={post.id}
 			loading={loading}
 			count={post.reactionCount}
 			hasReacted={post.viewerHasReacted}
 			onClick={handleClick}
 		/>
-	);
+	)
 }
 
-function getEditButton(post) {
-	const { data } = useViewerQuery();
-
-	if (!data?.viewer?.isAdmin) return null;
-
+function getEditButton(post: Post) {
+	const { data } = useQuery(ViewerDocument)
+	if (!data?.viewer?.isAdmin) return null
 	return (
-		<Button href="/writing/[slug]/edit" as={`/writing/${post.slug}/edit`}>
+		<Button href="/post/[slug]/edit" as={`/post/${post.slug}/edit`}>
 			Edit
 		</Button>
-	);
+	)
 }
-
-export function PostActions({ post }) {
+type Action = {
+	post: Post
+}
+export function PostActions({ post }: Action) {
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(post)}
 			{getEditButton(post)}
 		</div>
-	);
+	)
 }

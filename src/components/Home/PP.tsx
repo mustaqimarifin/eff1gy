@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useRef } from "react";
+import { useRef } from "react"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
 
 export default function PP({ children }) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
 	// const data = JSON.parse(props.data)
 
 	return (
@@ -17,5 +17,5 @@ export default function PP({ children }) {
 
 			{children}
 		</Detail.Container>
-	);
+	)
 }

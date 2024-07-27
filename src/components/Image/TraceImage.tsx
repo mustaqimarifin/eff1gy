@@ -1,8 +1,8 @@
-import Image from "next/image";
-import { useState } from "react";
+import Image from "next/image"
+import { useState } from "react"
 
 export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
-	const [isLoaded, setLoaded] = useState(false);
+	const [isLoaded, setLoaded] = useState(false)
 
 	return (
 		<div
@@ -63,5 +63,5 @@ export default function TraceImage({ imgSrc, imgTrace, ...rest }) {
 				/>
 			</div>
 		</div>
-	);
+	)
 }

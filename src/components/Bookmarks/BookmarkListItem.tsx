@@ -1,23 +1,23 @@
-import { Link2Icon } from "lucide-react";
-import { memo, useState } from "react";
-import { InView } from "react-intersection-observer";
+import { Link2Icon } from "lucide-react"
+import { memo, useState } from "react"
+import { InView } from "react-intersection-observer"
 
-import { ListItem } from "~/components/ListDetail/ListItem";
-import type { BookmarkListItemFragment } from "~/graphql/typeSlut";
+import { ListItem } from "~/components/ListDetail/ListItem"
+import type { BookmarkListItemFragment } from "~/gql/typeSlut"
 
 interface Props {
-	bookmark: BookmarkListItemFragment;
-	active: boolean;
+	bookmark: BookmarkListItemFragment
+	active: boolean
 }
 
 export const BookmarksListItem = memo<Props>(({ bookmark, active }) => {
-	const [isVisible, setIsVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(false)
 
 	function handleClick(e, bookmark) {
 		if (e.metaKey) {
-			e.preventDefault();
-			e.stopPropagation();
-			window.open(bookmark.url, "_blank").focus();
+			e.preventDefault()
+			e.stopPropagation()
+			window.open(bookmark.url, "_blank").focus()
 		}
 	}
 
@@ -47,8 +47,8 @@ export const BookmarksListItem = memo<Props>(({ bookmark, active }) => {
 				active={active}
 				href="/bookmarks/[id]"
 				as={`/bookmarks/${bookmark.id}`}
-				onClick={(e) => handleClick(e, bookmark)}
+				onClick={e => handleClick(e, bookmark)}
 			/>
 		</InView>
-	);
-});
+	)
+})

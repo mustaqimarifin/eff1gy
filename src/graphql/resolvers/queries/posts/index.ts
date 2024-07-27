@@ -1,10 +1,10 @@
-import type { Context } from "~/graphql/context";
-import type { GetPostQueryVariables, GetPostsQueryVariables } from "~/graphql/typeSlut";
+import type { GetPostQueryVariables, GetPostsQueryVariables } from "~/gql/typeSlut"
+import type { Context } from "~/graphql/context"
 
-export async function getPosts(_, args: GetPostsQueryVariables, ctx: Context) {
-	const { filter } = args;
-	const { db, viewer } = ctx;
-	const published = filter?.published;
+export async function getPosts(_: any, args: GetPostsQueryVariables, ctx: Context) {
+	const { filter } = args
+	const { db, viewer } = ctx
+	const published = filter?.published
 
 	return await db.post.findMany({
 		orderBy: published ? { publishedAt: "desc" } : { createdAt: "desc" },
@@ -18,11 +18,11 @@ export async function getPosts(_, args: GetPostsQueryVariables, ctx: Context) {
 				},
 			},
 		},
-	});
+	})
 }
 
-export async function getPost(_, { slug }: GetPostQueryVariables, ctx: Context) {
-	const { db, viewer } = ctx;
+export async function getPost(_: any, { slug }: GetPostQueryVariables, ctx: Context) {
+	const { db, viewer } = ctx
 	const [postBySlug, postById] = await Promise.all([
 		db.post.findUnique({
 			where: { slug },
@@ -44,13 +44,13 @@ export async function getPost(_, { slug }: GetPostQueryVariables, ctx: Context) 
 				},
 			},
 		}),
-	]);
+	])
 
-	const post = postBySlug || postById;
+	const post = postBySlug || postById
 
 	if (!post?.publishedAt && !viewer?.isAdmin) {
-		return null;
+		return null
 	}
 
-	return post;
+	return post
 }

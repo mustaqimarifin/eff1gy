@@ -1,15 +1,14 @@
-import { EditQuestionDialog } from "~/components/AMA/EditQuestionDialog";
-import Button from "~/components/Button";
-import { GET_QUESTION } from "~/graphql/queries/questions";
-import { ReactionButton } from "../Button/ReactionButton";
+import { EditQuestionDialog } from "~/components/AMA/EditQuestionDialog"
+import Button from "~/components/Button"
+import { ReactionButton } from "../Button/ReactionButton"
 
-import { ReactionType, useToggleReactionMutation } from "~/graphql/typeSlut";
+import { useMutation } from "@apollo/client"
+import { GetQuestionDocument, type Question, ReactionType, ToggleReactionDocument } from "~/gql/typeSlut"
 
 function getReactionButton(question) {
-	const [toggleReaction, { loading }] = useToggleReactionMutation();
-
+	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
 	function handleClick() {
-		if (loading) return;
+		if (loading) return
 
 		toggleReaction({
 			variables: {
@@ -27,39 +26,42 @@ function getReactionButton(question) {
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GET_QUESTION,
+					query: GetQuestionDocument,
 					variables: { id: question.id },
 					data: {
 						question: {
 							...question,
 							...toggleReaction,
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	return (
 		<ReactionButton
-			id={question.id}
+			refId={question.id}
 			loading={loading}
 			count={question.reactionCount}
 			hasReacted={question.viewerHasReacted}
 			onClick={handleClick}
 		/>
-	);
+	)
 }
-
-export function QuestionActions({ question }) {
+type Action = {
+	question: Question
+}
+export function QuestionActions({ question }: Action) {
 	if (question.viewerCanEdit) {
 		return (
 			<div className="flex items-center space-x-2">
 				{getReactionButton(question)}
 				{question.viewerCanEdit && <EditQuestionDialog question={question} trigger={<Button>Edit</Button>} />}
 			</div>
-		);
+		)
 	}
 
-	return null;
+	return null
 }

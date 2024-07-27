@@ -1,4 +1,4 @@
-import { defaultSEO, extendSEO } from "./seo";
+import { defaultSEO, extendSEO } from "./seo"
 
 const routes = {
 	home: {
@@ -20,17 +20,17 @@ const routes = {
 		seo: extendSEO({
 			title: "Blog",
 			description: "Thinking out loud",
-			image: "og/writing.png",
+			image: "og/post.png",
 			url: "blog",
 		}),
 	},
 	writing: {
 		label: "Writing",
-		path: "/writing",
+		path: "/post",
 		seo: extendSEO({
 			title: "Writing",
 			description: "Thinking out loud about software design and development.",
-			image: "og/writing.png",
+			image: "og/post.png",
 			url: "writing",
 		}),
 	},
@@ -116,6 +116,6 @@ const routes = {
 			url: "settings",
 		}),
 	},
-};
+}
 
-export default routes;
+export default routes

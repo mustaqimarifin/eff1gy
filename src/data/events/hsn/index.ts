@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "HSN21KM",
@@ -21,4 +21,4 @@ export default {
 	logo: "/events/logos/hsn.jpg",
 	slug: "hsn21km",
 	details,
-};
+}

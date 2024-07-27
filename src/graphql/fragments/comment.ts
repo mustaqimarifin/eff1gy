@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { UserInfoFragment } from "./user";
+import { UserInfoFrag } from "./user"
 
-export const CommentInfoFragment = gql`
+export const CommentInfoFrag = gql`
   fragment CommentInfo on Comment {
     __typename
     id
@@ -16,5 +16,5 @@ export const CommentInfoFragment = gql`
       ...UserInfo
     }
   }
-  ${UserInfoFragment}
-`;
+  ${UserInfoFrag}
+`

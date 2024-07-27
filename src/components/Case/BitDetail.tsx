@@ -1,46 +1,47 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import type { ReactNode } from "react";
-import { useRef } from "react";
+import Image from "next/image"
+import type { ReactNode } from "react"
+import { useRef } from "react"
 
-import dynamic from "next/dynamic";
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { formatDate, realTime } from "~/lib/transformers";
+import dynamic from "next/dynamic"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { formatDate, realTime } from "~/lib/transformers"
 
-import { CommentType, useGetCaseQuery } from "~/graphql/typeSlut";
-import type { LilBits } from "~/lib/sanity/client";
+import { useQuery } from "@apollo/client"
+import { CommentType, GetCaseDocument } from "~/gql/typeSlut"
+import type { LilBits } from "~/lib/sanity/client"
 
 interface Props {
-	children: ReactNode;
-	bit: LilBits;
-	slug: string;
+	children: ReactNode
+	bit: LilBits
+	slug: string
 }
 
 export function BitDetail({ bit, children, slug }: Props) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
-	const { data, loading, error } = useGetCaseQuery({
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
+	const { data, loading, error } = useQuery(GetCaseDocument, {
 		variables: { slug },
-	});
+	})
 	if (loading) {
-		return <Detail.Loading />;
+		return <Detail.Loading />
 	}
 
 	if (!data?.case || error) {
-		return <Detail.Null />;
+		return <Detail.Null />
 	}
-	const kase = data?.case;
+	const kase = data?.case
 
-	const date = realTime({ timestamp: bit?.date });
-	const Comments = dynamic(() => import("src/components/Comments").then((x) => x.Comments), {
+	const date = realTime({ timestamp: bit?.date })
+	const Comments = dynamic(() => import("src/components/Comments").then(x => x.Comments), {
 		ssr: false,
-	});
+	})
 
-	const BitAction = dynamic(() => import("./BitAction").then((x) => x.BitAction), {
+	const BitAction = dynamic(() => import("./BitAction").then(x => x.BitAction), {
 		ssr: false,
-	});
+	})
 
 	return (
 		<Detail.Container data-cy="bit-detail" ref={scrollContainerRef}>
@@ -79,5 +80,5 @@ export function BitDetail({ bit, children, slug }: Props) {
 				<Comments refId={kase?.id} type={CommentType.Case} />
 			</Detail.ContentContainer>
 		</Detail.Container>
-	);
+	)
 }

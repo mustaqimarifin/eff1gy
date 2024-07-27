@@ -1,32 +1,32 @@
-import NextImage from "next/image";
-import Link from "next/link";
-import React from "react";
+import NextImage from "next/image"
+import Link from "next/link"
+import React from "react"
 
-import { Code } from "bright";
-import type { MDXComponents } from "mdx/types";
-import IKImage from "../Image/IKImage";
-import { Embed } from "./Embed";
-import { Tweet } from "./gfy";
+import { Code } from "bright"
+import type { MDXComponents } from "mdx/types"
+import IKImage from "../Image/IKImage"
+import { Embed } from "./Embed"
+import { Tweet } from "./gfy"
 
-import { CLIENT_URL } from "~/graphql/constants";
-import { createHeading } from "./CreateHeading";
+import { CLIENT_URL } from "~/graphql/constants"
+import { createHeading } from "./CreateHeading"
 // import dynamic from "next/dynamic";
 
-Code.theme = "one-dark-pro";
+Code.theme = "one-dark-pro"
 
 export function CustomLink(props) {
-	const { children, href } = props;
+	const { children, href } = props
 
 	if (href.startsWith("/")) {
 		return (
 			<Link href={href} {...props}>
 				{children}
 			</Link>
-		);
+		)
 	}
 
 	if (href.startsWith("#")) {
-		return <Link {...props} />;
+		return <Link {...props} />
 	}
 
 	if (href.startsWith("@")) {
@@ -34,21 +34,21 @@ export function CustomLink(props) {
 			<Link href={`/u/${href.slice(1)}`} {...props}>
 				{children}
 			</Link>
-		);
+		)
 	}
 	try {
-		const url = new URL(href);
+		const url = new URL(href)
 		if (url.origin === CLIENT_URL) {
 			return (
 				<Link href={href} {...props}>
 					{children}
 				</Link>
-			);
+			)
 		}
-		return <a target="_blank" rel="noopener" href={href} {...props} />;
+		return <a target="_blank" rel="noopener" href={href} {...props} />
 	} catch (e) {
-		console.error(e);
-		return <a target="_blank" rel="noopener" href={href} {...props} />;
+		console.error(e)
+		return <a target="_blank" rel="noopener" href={href} {...props} />
 	}
 }
 
@@ -75,7 +75,7 @@ function ProsCard({ title, pros }) {
 		<div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
 			<span>{`You might use ${title} if...`}</span>
 			<div className="mt-4">
-				{pros.map((pro) => (
+				{pros.map(pro => (
 					<div key={pro} className="mb-2 flex items-baseline font-medium">
 						<div className="mr-2 h-4 w-4">
 							<svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ function ProsCard({ title, pros }) {
 				))}
 			</div>
 		</div>
-	);
+	)
 }
 
 function ConsCard({ title, cons }) {
@@ -98,7 +98,7 @@ function ConsCard({ title, cons }) {
 		<div className="my-6 w-full rounded-xl border border-red-200 bg-neutral-50 p-6 dark:border-red-900 dark:bg-neutral-900">
 			<span>{`You might not use ${title} if...`}</span>
 			<div className="mt-4">
-				{cons.map((con) => (
+				{cons.map(con => (
 					<div key={con} className="mb-2 flex items-baseline font-medium">
 						<div className="mr-2 h-4 w-4">
 							<svg
@@ -115,7 +115,7 @@ function ConsCard({ title, cons }) {
 				))}
 			</div>
 		</div>
-	);
+	)
 }
 
 function Image({ src, ...rest }) {
@@ -132,7 +132,7 @@ function Image({ src, ...rest }) {
 				// sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
 			/>
 		</div>
-	);
+	)
 }
 
 function Callout(props) {
@@ -141,7 +141,7 @@ function Callout(props) {
 			<div className="mr-4 flex w-4 items-center">{props.emoji}</div>
 			<div className="callout w-full">{props.children}</div>
 		</div>
-	);
+	)
 }
 
 /* const Paragraph = (props) => {
@@ -153,18 +153,18 @@ function Callout(props) {
 };
  */
 function Bust(props) {
-	return <strong className="font-quad text-orange-500 text-2xl italic ">{props.children}</strong>;
+	return <strong className="font-quad text-orange-500 text-2xl italic ">{props.children}</strong>
 }
 
 function Table({ data }) {
-	const headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
+	const headers = data.headers.map((header, index) => <th key={index}>{header}</th>)
 	const rows = data.rows.map((row, index) => (
 		<tr key={index}>
 			{row.map((cell, cellIndex) => (
 				<td key={cellIndex}>{cell}</td>
 			))}
 		</tr>
-	));
+	))
 
 	return (
 		<table>
@@ -173,7 +173,7 @@ function Table({ data }) {
 			</thead>
 			<tbody>{rows}</tbody>
 		</table>
-	);
+	)
 }
 
 /* const IKImage = dynamic(() => import("src/components/Image/IKImage"), {
@@ -199,4 +199,4 @@ export const MLKComponents = {
 	pre: Code,
 	Tweet,
 	Table,
-} as MDXComponents;
+} as MDXComponents

@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "STAR WARS RUN Singapore",
@@ -20,4 +20,4 @@ export default {
 	logo: "/events/logos/starwars.jpg",
 	slug: "star-wars-run",
 	details,
-};
+}

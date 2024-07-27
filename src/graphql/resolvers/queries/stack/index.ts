@@ -1,24 +1,24 @@
-import { PAGINATION_AMOUNT } from "~/graphql/constants";
-import type { Context } from "~/graphql/context";
-import type { GetStackQueryVariables, GetStacksQueryVariables } from "~/graphql/typeSlut";
+import type { GetStackQueryVariables, GetStacksQueryVariables } from "~/gql/typeSlut"
+import { PAGINATION_AMOUNT } from "~/graphql/constants"
+import type { Context } from "~/graphql/context"
 
 export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) {
-	const { first = PAGINATION_AMOUNT, after = undefined } = args;
-	const { db } = ctx;
+	const { first = PAGINATION_AMOUNT, after = undefined } = args
+	const { db } = ctx
 
 	/*
     When we are paginating after a cursor, we need to skip the cursor object itself.
     Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
   */
-	const skip = after ? 1 : 0;
-	const cursor = after ? { id: after } : undefined;
+	const skip = after ? 1 : 0
+	const cursor = after ? { id: after } : undefined
 
 	/*
     In order to know if there are more results in the database for the `hasNextPage`
     field, we overfetch by one. If we return more than the amount we requested,
     then we know there are more results.
   */
-	const take = first + 1;
+	const take = first + 1
 
 	try {
 		const edges = await db.stack.findMany({
@@ -33,16 +33,16 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 					},
 				},
 			},
-		});
+		})
 
 		// If we overfetched, then we know there are more results
-		const hasNextPage = edges.length > first;
+		const hasNextPage = edges.length > first
 		// Remove the last item so we only return the requested `first` amount
-		const trimmedEdges = hasNextPage ? edges.slice(0, -1) : edges;
-		const edgesWithNodes = trimmedEdges.map((edge) => ({
+		const trimmedEdges = hasNextPage ? edges.slice(0, -1) : edges
+		const edgesWithNodes = trimmedEdges?.map(edge => ({
 			cursor: edge.id,
 			node: edge,
-		}));
+		}))
 
 		return {
 			pageInfo: {
@@ -51,9 +51,9 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 				endCursor: edgesWithNodes[edgesWithNodes.length - 1].cursor,
 			},
 			edges: edgesWithNodes,
-		};
+		}
 	} catch (e) {
-		console.error({ error: e });
+		console.error({ error: e })
 		return {
 			pageInfo: {
 				hasNextPage: false,
@@ -61,12 +61,12 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 				endCursor: null,
 			},
 			edges: [],
-		};
+		}
 	}
 }
 
 export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context) {
-	const { db } = ctx;
+	const { db } = ctx
 
 	const stackBySlug = await db.stack
 		.findUnique({
@@ -81,11 +81,11 @@ export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context
 				},
 			},
 		})
-		.catch((e) => {
-			return null;
-		});
+		.catch(e => {
+			return null
+		})
 
-	if (stackBySlug) return stackBySlug;
+	if (stackBySlug) return stackBySlug
 
 	// Fallback for old links that may exist that used a stack ID
 	return await db.stack.findUnique({
@@ -99,5 +99,5 @@ export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context
 				},
 			},
 		},
-	});
+	})
 }

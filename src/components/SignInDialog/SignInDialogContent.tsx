@@ -1,8 +1,8 @@
-"use client";
-import { signIn } from "next-auth/react";
+"use client"
+import { signIn } from "next-auth/react"
 
-import { GhostButton } from "../Button";
-import { GitHubIcon, GoogleIcon, TwitterIcon } from "../Icon";
+import { GhostButton } from "../Button"
+import { GitHubIcon, GoogleIcon, TwitterIcon } from "../Icon"
 
 export function SignInDialogContent() {
 	return (
@@ -16,9 +16,9 @@ export function SignInDialogContent() {
 					<GhostButton
 						href="/api/auth/signin/github"
 						className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
-						onClick={(e) => {
-							e.preventDefault();
-							signIn("github");
+						onClick={e => {
+							e.preventDefault()
+							signIn("github")
 						}}
 						aria-label="Sign in with GitHub"
 					>
@@ -28,9 +28,9 @@ export function SignInDialogContent() {
 					<GhostButton
 						href="/api/auth/signin/google"
 						className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
-						onClick={(e) => {
-							e.preventDefault();
-							signIn("google");
+						onClick={e => {
+							e.preventDefault()
+							signIn("google")
 						}}
 						aria-label="Sign in with Google"
 					>
@@ -40,9 +40,9 @@ export function SignInDialogContent() {
 					<GhostButton
 						href="/api/auth/signin/twitter"
 						className="px-4 py-2 rounded shadow-sm w-full flex items-center justify-center border border-gray-300 text-gray-800 focus-ring"
-						onClick={(e) => {
-							e.preventDefault();
-							signIn("twitter");
+						onClick={e => {
+							e.preventDefault()
+							signIn("twitter")
 						}}
 						aria-label="Sign in with Twitter"
 					>
@@ -52,5 +52,5 @@ export function SignInDialogContent() {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

@@ -1,29 +1,28 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-export const BlogCoreFragment = gql`
+export const BlogCoreFrag = gql`
   fragment BlogCore on Blog {
     __typename
-    
     id
     title
     date
     slug
     count
   }
-`;
+`
 
-export const BlogListItemFragment = gql`
+export const BlogListItemFrag = gql`
   fragment BlogListItem on Blog {
     ...BlogCore
   }
-  ${BlogCoreFragment}
-`;
+  ${BlogCoreFrag}
+`
 
-export const BlogDetailFragment = gql`
+export const BlogDetailFrag = gql`
   fragment BlogDetail on Blog {
     ...BlogCore
     reactionCount
     viewerHasReacted
   }
-  ${BlogCoreFragment}
-`;
+  ${BlogCoreFrag}
+`

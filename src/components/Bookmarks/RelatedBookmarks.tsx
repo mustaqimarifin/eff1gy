@@ -1,26 +1,28 @@
-import { useBackgroundQuery } from "@apollo/client";
-import Link from "next/link";
+import { useBackgroundQuery, useQuery } from "@apollo/client"
+import Link from "next/link"
+import { type Bookmark, GetBookmarksDocument } from "~/gql/typeSlut"
 
-import { GetBookmarksDocument, useGetBookmarksQuery } from "~/graphql/typeSlut";
-
-export function RelatedBookmarks({ bookmark }) {
-	const { data, loading } = useGetBookmarksQuery({
+type RelProps = {
+	bookmark: Partial<Bookmark>
+}
+export function RelatedBookmarks({ bookmark }: RelProps) {
+	const { data, loading } = useQuery(GetBookmarksDocument, {
 		variables: { filter: { host: bookmark.host } },
-	});
+	})
 
-	if (loading) return null;
+	if (loading) return null
 
-	const { bookmarks } = data!;
-	const { host, url } = bookmark;
-	const related = bookmarks.edges.filter((b) => b?.node?.host === host && b?.node?.url !== url);
+	const { bookmarks } = data
+	const { host, url } = bookmark
+	const related = bookmarks.edges.filter(b => b?.node?.host === host && b?.node?.url !== url)
 
-	if (related.length === 0) return null;
+	if (related.length === 0) return null
 
-	function handleClick(e) {
+	function handleClick(e: { metaKey: any; preventDefault: () => void; stopPropagation: () => void }) {
 		if (e.metaKey) {
-			e.preventDefault();
-			e.stopPropagation();
-			window.open(bookmark.url, "_blank").focus();
+			e.preventDefault()
+			e.stopPropagation()
+			window.open(bookmark.url, "_blank").focus()
 		}
 	}
 
@@ -32,7 +34,7 @@ export function RelatedBookmarks({ bookmark }) {
 					{bookmark.host}
 				</p>
 				<ul>
-					{related.map((r) => (
+					{related.map(r => (
 						<li key={r.node.id}>
 							<Link
 								href="/bookmarks/[id]"
@@ -47,5 +49,5 @@ export function RelatedBookmarks({ bookmark }) {
 				</ul>
 			</div>
 		</div>
-	);
+	)
 }

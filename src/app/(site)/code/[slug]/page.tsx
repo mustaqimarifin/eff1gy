@@ -1,32 +1,32 @@
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
-import Mdx from "~/app/mdxrsc";
-import { BitDetail } from "~/components/Case/BitDetail";
-import { BitList } from "~/components/Case/BitList";
-import { ListDetailView } from "~/components/Layouts";
-import { ViewType } from "~/graphql/typeSlut";
-import { HiddenCounter } from "~/lib/actions";
-import { type LilBits, allBits, allLilSlugs, getLilBit } from "~/lib/sanity/client";
+import Mdx from "~/app/mdxrsc"
+import { BitDetail } from "~/components/Case/BitDetail"
+import { BitList } from "~/components/Case/BitList"
+import { ListDetailView } from "~/components/Layouts"
+import { ViewType } from "~/gql/typeSlut"
+import { HiddenCounter } from "~/lib/actions"
+import { type LilBits, allBits, allLilSlugs, getLilBit } from "~/lib/sanity/client"
 
-export const revalidate = 3600;
+export const revalidate = 3600
 
 export async function generateStaticParams() {
-	return allLilSlugs.map((p) => ({
+	return allLilSlugs.map(p => ({
 		slug: p.slug,
-	}));
+	}))
 }
 interface LilProps {
 	params: {
-		slug: string;
-	};
+		slug: string
+	}
 }
 export default async function LilPage(props: LilProps) {
-	const { slug } = props.params;
+	const { slug } = props.params
 
-	const p: LilBits = await getLilBit(slug);
+	const p: LilBits = await getLilBit(slug)
 	if (!p) {
-		notFound();
+		notFound()
 	}
 
 	return (
@@ -48,5 +48,5 @@ export default async function LilPage(props: LilProps) {
 						<Mdx source={p?.content} />
 					</BitDetail>
 				</Suspense> */
-	);
+	)
 }

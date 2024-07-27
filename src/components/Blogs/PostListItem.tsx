@@ -1,12 +1,12 @@
-import { memo } from "react";
+import { memo } from "react"
 
-import { formatDate } from "~/lib/transformers";
-import { ListItem } from "../ListDetail/ListItem";
-import type { Post } from "./BlogDetail";
+import { formatDate } from "~/lib/transformers"
+import { ListItem } from "../ListDetail/ListItem"
+import type { Post } from "./BlogDetail"
 
 interface Props {
-	post: Post;
-	active: boolean;
+	post: Post
+	active: boolean
 }
 
 export const PostListItem = memo<Props>(({ post, active }) => {
@@ -18,5 +18,5 @@ export const PostListItem = memo<Props>(({ post, active }) => {
 			byline={formatDate(post?.date)}
 			active={active}
 		/>
-	);
-});
+	)
+})

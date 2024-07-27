@@ -1,15 +1,15 @@
-import Link from "next/link";
-import type { ReactElement } from "react";
+import Link from "next/link"
+import type { ReactElement } from "react"
 
 interface Props {
-	title: string;
-	active: boolean;
-	href: string;
-	as?: string;
-	description?: string | ReactElement;
-	byline?: string | ReactElement;
-	leadingAccessory?: ReactElement;
-	onClick?: (e: any) => void;
+	title: string
+	active: boolean
+	href: string
+	as?: string
+	description?: string | ReactElement
+	byline?: string | ReactElement
+	leadingAccessory?: ReactElement
+	onClick?: (e: any) => void
 }
 
 export function ListItem({ title, description, byline, href, as, active, leadingAccessory, onClick }: Props) {
@@ -49,5 +49,5 @@ export function ListItem({ title, description, byline, href, as, active, leading
 				)}
 			</div>
 		</Link>
-	);
+	)
 }

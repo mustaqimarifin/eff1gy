@@ -1,6 +1,6 @@
-import { Toaster, toast } from "sonner";
+import { Toaster, toast } from "sonner"
 
-export const Nuts = toast;
+export const Nuts = toast
 
 export function Toast() {
 	return (
@@ -13,5 +13,5 @@ export function Toast() {
 				duration: 3000,
 			}}
 		/>
-	);
+	)
 }

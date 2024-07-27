@@ -1,8 +1,8 @@
-import type { Context } from "~/graphql/context";
-import type { GetCaseQueryVariables, GetCasesQueryVariables } from "~/graphql/typeSlut";
+import type { GetCaseQueryVariables, GetCasesQueryVariables } from "~/gql/typeSlut"
+import type { Context } from "~/graphql/context"
 
-export async function getCases(_, args: GetCasesQueryVariables, ctx: Context) {
-	const { db, viewer } = ctx;
+export async function getCases(_: any, args: GetCasesQueryVariables, ctx: Context) {
+	const { db } = ctx
 
 	return await db.case.findMany({
 		orderBy: { date: "desc" },
@@ -13,10 +13,10 @@ export async function getCases(_, args: GetCasesQueryVariables, ctx: Context) {
 				},
 			},
 		},
-	});
+	})
 }
-export async function getCase(_, { slug }: GetCaseQueryVariables, ctx: Context) {
-	const { db, viewer } = ctx;
+export async function getCase(_: any, { slug }: GetCaseQueryVariables, ctx: Context) {
+	const { db, viewer } = ctx
 
 	const [caseBySlug, caseById] = await Promise.all([
 		db.case.findUnique({
@@ -41,13 +41,13 @@ export async function getCase(_, { slug }: GetCaseQueryVariables, ctx: Context) 
 				},
 			},
 		}),
-	]);
+	])
 
-	const cibai = caseBySlug || caseById;
+	const cibai = caseBySlug || caseById
 
 	/*   if (!case.date && !viewer?.isAdmin) {
     return null
   }
  */
-	return cibai;
+	return cibai
 }

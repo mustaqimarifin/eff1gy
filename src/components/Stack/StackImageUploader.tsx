@@ -1,52 +1,49 @@
-import { TrashIcon, UploadIcon } from "lucide-react";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { TrashIcon, UploadIcon } from "lucide-react"
+import Image from "next/image"
+import { useCallback, useState } from "react"
+import { useDropzone } from "react-dropzone"
 
-import { LoadingSpinner } from "~/components/LoadingSpinner";
+import { LoadingSpinner } from "~/components/LoadingSpinner"
 
 // import { url } from '~/lib/cloudinary/api'
 
 export function StackImageUploader({ stack, onImageUploaded }) {
-	const [loading, setLoading] = useState(false);
-	const [initialImage, setInitialImage] = useState(stack?.image);
-	const [previewImage, setPreviewImage] = useState(null);
+	const [loading, setLoading] = useState(false)
+	const [initialImage, setInitialImage] = useState(stack?.image)
+	const [previewImage, setPreviewImage] = useState(null)
 
 	async function getSignedUrl() {
-		const data = await fetch("/api/sign").then((res) => res.json());
-		return data?.uploadURL;
+		const data = await fetch("/api/sign").then(res => res.json())
+		return data?.uploadURL
 	}
 
 	async function uploadFile({ file, signedUrl }) {
-		const data = new FormData();
-		data.append("file", file);
+		const data = new FormData()
+		data.append("file", file)
 		const upload = await fetch(signedUrl, {
 			method: "POST",
 			body: data,
-		}).then((r) => r.json());
-		return upload?.result?.id;
+		}).then(r => r.json())
+		return upload?.result?.id
 	}
 
-	const onDrop = useCallback(async (acceptedFiles) => {
-		setLoading(true);
-		const file = acceptedFiles[0];
-		const signedUrl = await getSignedUrl();
-
+	const onDrop = useCallback(async (acceptedFiles: any[]) => {
+		setLoading(true)
+		const file = acceptedFiles[0]
+		const signedUrl = await getSignedUrl()
 		if (!signedUrl) {
-			setLoading(false);
-			return console.error("No signed url");
+			setLoading(false)
+			return console.error("No signed url")
 		}
-
-		const id = await uploadFile({ file, signedUrl });
+		const id = await uploadFile({ file, signedUrl })
 		if (!id) {
-			setLoading(false);
-			return console.error("Upload failed");
+			setLoading(false)
+			return console.error("Upload failed")
 		}
-
-		setLoading(false);
+		setLoading(false)
 		// setPreviewImage(url)
 		// return onImageUploaded(url)
-	}, []);
+	}, [])
 
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop,
@@ -58,7 +55,7 @@ export function StackImageUploader({ stack, onImageUploaded }) {
       'image/*': ['.jpeg', '.png', '.webp', '.svg', '.gif'],
     }, */
 		multiple: false,
-	});
+	})
 
 	if (initialImage || previewImage) {
 		return (
@@ -73,16 +70,16 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 				/>
 				<button
 					onClick={() => {
-						setInitialImage(false);
-						setPreviewImage(null);
-						onImageUploaded(null);
+						setInitialImage(false)
+						setPreviewImage(null)
+						onImageUploaded(null)
 					}}
 					className="absolute -right-3 -top-3 cursor-pointer rounded-full border-2 border-white bg-gray-900 p-2 text-white shadow-md hover:bg-red-500 focus:bg-red-500 dark:border-gray-800 dark:bg-gray-700"
 				>
 					<TrashIcon />
 				</button>
 			</div>
-		);
+		)
 	}
 
 	return (
@@ -93,5 +90,5 @@ export function StackImageUploader({ stack, onImageUploaded }) {
 			<input {...getInputProps()} />
 			{loading ? <LoadingSpinner /> : <UploadIcon />}
 		</div>
-	);
+	)
 }

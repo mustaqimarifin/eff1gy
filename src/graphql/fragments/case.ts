@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-export const CaseCoreFragment = gql`
+export const CaseCoreFrag = gql`
   fragment CaseCore on Case {
     __typename
     id
@@ -8,22 +8,21 @@ export const CaseCoreFragment = gql`
     date
     slug
     count
-
   }
-`;
+`
 
-export const CaseListItemFragment = gql`
+export const CaseListItemFrag = gql`
   fragment CaseListItem on Case {
     ...CaseCore
   }
-  ${CaseCoreFragment}
-`;
+  ${CaseCoreFrag}
+`
 
-export const CaseDetailFragment = gql`
+export const CaseDetailFrag = gql`
   fragment CaseDetail on Case {
     ...CaseCore
     reactionCount
     viewerHasReacted
   }
-  ${CaseCoreFragment}
-`;
+  ${CaseCoreFrag}
+`

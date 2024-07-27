@@ -1,16 +1,16 @@
-import { Field, Label, Switch as SwitchComponent } from "@headlessui/react";
-import { useState } from "react";
+import { Field, Label, Switch as SwitchComponent } from "@headlessui/react"
+import { useState } from "react"
 
 interface SwitchProps {
-	label: string;
-	onChange?: any;
-	defaultEnabled: boolean;
+	label: string
+	onChange?: any
+	defaultEnabled: boolean
 }
 export function Switch({ label = null, onChange = null, defaultEnabled = false }: SwitchProps) {
-	const [enabled, setEnabled] = useState(defaultEnabled);
+	const [enabled, setEnabled] = useState(defaultEnabled)
 	function handleChange() {
-		onChange?.(!enabled);
-		setEnabled(!enabled);
+		onChange?.(!enabled)
+		setEnabled(!enabled)
 	}
 	return (
 		<Field>
@@ -31,5 +31,5 @@ export function Switch({ label = null, onChange = null, defaultEnabled = false }
 				</SwitchComponent>
 			</div>
 		</Field>
-	);
+	)
 }

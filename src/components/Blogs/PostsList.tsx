@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import useSWR from "swr";
+import { usePathname } from "next/navigation"
+import { useState } from "react"
+import useSWR from "swr"
 
-import { CLIENT_URL } from "~/graphql/constants";
-import { fetcher } from "~/lib/functions";
-import { ListContainer } from "../ListDetail/ListContainer";
-import { TitleBar } from "../ListDetail/TitleBar";
-import { LoadingSpinner } from "../LoadingSpinner";
-import type { Post } from "./BlogDetail";
-import { PostListItem } from "./PostListItem";
+import { CLIENT_URL } from "~/graphql/constants"
+import { fetcher } from "~/lib/functions"
+import { ListContainer } from "../ListDetail/ListContainer"
+import { TitleBar } from "../ListDetail/TitleBar"
+import { LoadingSpinner } from "../LoadingSpinner"
+import type { Post } from "./BlogDetail"
+import { PostListItem } from "./PostListItem"
 
 export function PostsList() {
-	const path = usePathname();
-	const [scrollContainerRef, setScrollContainerRef] = useState(null);
-	const { data: posts, isLoading } = useSWR<Post[]>(`${CLIENT_URL}/api/post`, fetcher);
+	const path = usePathname()
+	const [scrollContainerRef, setScrollContainerRef] = useState(null)
+	const { data: posts, isLoading } = useSWR<Post[]>(`${CLIENT_URL}/api/post`, fetcher)
 
 	if (!posts && isLoading) {
 		return (
@@ -25,7 +25,7 @@ export function PostsList() {
 					<LoadingSpinner />
 				</div>
 			</ListContainer>
-		);
+		)
 	}
 
 	return (
@@ -36,16 +36,16 @@ export function PostsList() {
 					{posts
 						?.sort((a, b) => {
 							if (new Date(a?.date) > new Date(b?.date)) {
-								return -1;
+								return -1
 							}
-							return 1;
+							return 1
 						})
-						.map((post) => {
-							const active = path === post.slug;
-							return <PostListItem key={post?.slug} post={post} active={active} />;
+						.map(post => {
+							const active = path === post.slug
+							return <PostListItem key={post?.slug} post={post} active={active} />
 						})}
 				</div>
 			</ListContainer>
 		</>
-	);
+	)
 }

@@ -1,0 +1,228 @@
+{
+	"format": "apollo-persisted-query-manifest",
+	"version": 1,
+	"operations": [
+		{
+			"id": "9f2a606c94f4ad7c89de091df89371d410fc7ffbebfc960e7ad439e4d0bf9579",
+			"name": "addBookmark",
+			"type": "mutation",
+			"body": "mutation addBookmark($data: AddBookmarkInput!) {\n  __typename\n  addBookmark(data: $data) {\n    __typename\n    ...BookmarkDetail\n  }\n}\n\nfragment BookmarkCore on Bookmark {\n  __typename\n  count\n  description\n  faviconUrl\n  host\n  id\n  title\n  url\n}\n\nfragment BookmarkDetail on Bookmark {\n  __typename\n  reactionCount\n  tags {\n    __typename\n    name\n  }\n  viewerHasReacted\n  ...BookmarkCore\n}"
+		},
+		{
+			"id": "47d68576cbb2dcab09390e5eeb60c06303b766c9e4599eea7c63f7a9d4b6196b",
+			"name": "addComment",
+			"type": "mutation",
+			"body": "mutation addComment($parentId: String, $refId: ID!, $text: String!, $type: CommentType!) {\n  __typename\n  addComment(refId: $refId, parentId: $parentId, type: $type, text: $text) {\n    __typename\n    ...CommentInfo\n  }\n}\n\nfragment CommentInfo on Comment {\n  __typename\n  author {\n    __typename\n    ...UserInfo\n  }\n  createdAt\n  id\n  parentId\n  text\n  updatedAt\n  viewerCanDelete\n  viewerCanEdit\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "51b21effd81c43f4d30a92daf3541073c8149d114df9f85187ad95bc1c83d2cf",
+			"name": "addPost",
+			"type": "mutation",
+			"body": "mutation addPost($data: AddPostInput!) {\n  __typename\n  addPost(data: $data) {\n    __typename\n    ...PostDetail\n  }\n}\n\nfragment PostCore on Post {\n  __typename\n  excerpt\n  id\n  publishedAt\n  slug\n  title\n}\n\nfragment PostDetail on Post {\n  __typename\n  featureImage\n  hitRate\n  reactionCount\n  text\n  viewerHasReacted\n  ...PostCore\n}"
+		},
+		{
+			"id": "75e74ad6a55023f4ea7c15e0c648b259a5d64adc38e4d25a82021b1ef4870c3a",
+			"name": "addQuestion",
+			"type": "mutation",
+			"body": "mutation addQuestion($data: AddQuestionInput!) {\n  __typename\n  addQuestion(data: $data) {\n    __typename\n    ...QuestionDetail\n  }\n}\n\nfragment QuestionCore on Question {\n  __typename\n  audioUrl\n  author {\n    __typename\n    ...UserInfo\n  }\n  count\n  createdAt\n  id\n  title\n  waveform\n}\n\nfragment QuestionDetail on Question {\n  __typename\n  description\n  reactionCount\n  status\n  viewerCanComment\n  viewerCanEdit\n  viewerHasReacted\n  ...QuestionCore\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "5698186b701b4b4d0538a7a7595c2a4d0eb4e8f1e1c45bc40a463642a6463482",
+			"name": "addStack",
+			"type": "mutation",
+			"body": "mutation addStack($data: AddStackInput!) {\n  __typename\n  addStack(data: $data) {\n    __typename\n    ...StackDetail\n  }\n}\n\nfragment StackCore on Stack {\n  __typename\n  count\n  id\n  image\n  name\n  slug\n  url\n}\n\nfragment StackDetail on Stack {\n  __typename\n  createdAt\n  description\n  reactionCount\n  tags {\n    __typename\n    name\n  }\n  usedBy {\n    __typename\n    ...UserInfo\n  }\n  usedByViewer\n  viewerHasReacted\n  ...StackCore\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "f8e94d1c4175bb5339c59fbb5cd1050df6d08e3bb0f1a1cf653c4634b29d4c9f",
+			"name": "addView",
+			"type": "mutation",
+			"body": "mutation addView($refId: ID!, $type: ViewType!) {\n  __typename\n  addView(refId: $refId, type: $type) {\n    __typename\n    ... on Blog {\n      __typename\n      count\n      id\n    }\n    ... on Bookmark {\n      __typename\n      count\n      id\n    }\n    ... on Question {\n      __typename\n      count\n      id\n    }\n    ... on Stack {\n      __typename\n      count\n      id\n    }\n  }\n}"
+		},
+		{
+			"id": "1eb93fbbf12bef216c0ebba83fcba7a18e91dc0ed373d04346e86b66a840ff1d",
+			"name": "deleteBookmark",
+			"type": "mutation",
+			"body": "mutation deleteBookmark($id: ID!) {\n  __typename\n  deleteBookmark(id: $id)\n}"
+		},
+		{
+			"id": "900c21a3b24285ef5871e479403b0d7352dc2ffbac942f3da4090e4bd9b3438d",
+			"name": "deleteComment",
+			"type": "mutation",
+			"body": "mutation deleteComment($id: ID!) {\n  __typename\n  deleteComment(id: $id)\n}"
+		},
+		{
+			"id": "adccf4230e9bc3baf992bd9dcc1282b4425510b9d8e83d6bf7d2f0d24b951d8c",
+			"name": "deletePost",
+			"type": "mutation",
+			"body": "mutation deletePost($id: ID!) {\n  __typename\n  deletePost(id: $id)\n}"
+		},
+		{
+			"id": "6207d9a05c0dbca6367350fb5feef1e82cd101e1b8eec265de41b552828b1d7e",
+			"name": "deleteQuestion",
+			"type": "mutation",
+			"body": "mutation deleteQuestion($id: ID!) {\n  __typename\n  deleteQuestion(id: $id)\n}"
+		},
+		{
+			"id": "0064b01f800e6e55464c4b14a6a2a3bd66ef2ce3f61a9faf6fbb3d7d546bdcd4",
+			"name": "deleteStack",
+			"type": "mutation",
+			"body": "mutation deleteStack($id: ID!) {\n  __typename\n  deleteStack(id: $id)\n}"
+		},
+		{
+			"id": "853a42d118c9e9aeae9731d3b377435dddc51600ca8f8632b3f9f26cc0ed5859",
+			"name": "deleteUser",
+			"type": "mutation",
+			"body": "mutation deleteUser {\n  __typename\n  deleteUser\n}"
+		},
+		{
+			"id": "0c671dc90b65c626de094c88d58cf7f7afd745cb5e673df928b99722a7310879",
+			"name": "editBookmark",
+			"type": "mutation",
+			"body": "mutation editBookmark($data: EditBookmarkInput!, $id: ID!) {\n  __typename\n  editBookmark(id: $id, data: $data) {\n    __typename\n    ...BookmarkDetail\n  }\n}\n\nfragment BookmarkCore on Bookmark {\n  __typename\n  count\n  description\n  faviconUrl\n  host\n  id\n  title\n  url\n}\n\nfragment BookmarkDetail on Bookmark {\n  __typename\n  reactionCount\n  tags {\n    __typename\n    name\n  }\n  viewerHasReacted\n  ...BookmarkCore\n}"
+		},
+		{
+			"id": "3966b9ac8dbba7316b9a236020a60730e8b318eb6f9e9e3fa7c849e30ac0f12a",
+			"name": "editComment",
+			"type": "mutation",
+			"body": "mutation editComment($id: ID!, $text: String!) {\n  __typename\n  editComment(id: $id, text: $text) {\n    __typename\n    ...CommentInfo\n  }\n}\n\nfragment CommentInfo on Comment {\n  __typename\n  author {\n    __typename\n    ...UserInfo\n  }\n  createdAt\n  id\n  parentId\n  text\n  updatedAt\n  viewerCanDelete\n  viewerCanEdit\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "c4df69752e0277cf2ca665e7f38b9f067c7351035cb4eb7ca33a24196a26f855",
+			"name": "editPost",
+			"type": "mutation",
+			"body": "mutation editPost($data: EditPostInput!, $id: ID!) {\n  __typename\n  editPost(id: $id, data: $data) {\n    __typename\n    ...PostDetail\n  }\n}\n\nfragment PostCore on Post {\n  __typename\n  excerpt\n  id\n  publishedAt\n  slug\n  title\n}\n\nfragment PostDetail on Post {\n  __typename\n  featureImage\n  hitRate\n  reactionCount\n  text\n  viewerHasReacted\n  ...PostCore\n}"
+		},
+		{
+			"id": "b01274137b32aadd209ef0bd405b25e292c2fb12feaad811a40e8a9baa649ff7",
+			"name": "editQuestion",
+			"type": "mutation",
+			"body": "mutation editQuestion($data: EditQuestionInput!, $id: ID!) {\n  __typename\n  editQuestion(id: $id, data: $data) {\n    __typename\n    ...QuestionDetail\n  }\n}\n\nfragment QuestionCore on Question {\n  __typename\n  audioUrl\n  author {\n    __typename\n    ...UserInfo\n  }\n  count\n  createdAt\n  id\n  title\n  waveform\n}\n\nfragment QuestionDetail on Question {\n  __typename\n  description\n  reactionCount\n  status\n  viewerCanComment\n  viewerCanEdit\n  viewerHasReacted\n  ...QuestionCore\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "bdee375f39402f9aa3a0c7fe7dfe06feb67c9e22f3f55a6f65b1cd65259f5e95",
+			"name": "editStack",
+			"type": "mutation",
+			"body": "mutation editStack($data: EditStackInput!, $id: ID!) {\n  __typename\n  editStack(id: $id, data: $data) {\n    __typename\n    ...StackDetail\n  }\n}\n\nfragment StackCore on Stack {\n  __typename\n  count\n  id\n  image\n  name\n  slug\n  url\n}\n\nfragment StackDetail on Stack {\n  __typename\n  createdAt\n  description\n  reactionCount\n  tags {\n    __typename\n    name\n  }\n  usedBy {\n    __typename\n    ...UserInfo\n  }\n  usedByViewer\n  viewerHasReacted\n  ...StackCore\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "df621eabe382a7600b639cad4d4bd2e838201788e7c930b39a5b03bb6be654fe",
+			"name": "editUser",
+			"type": "mutation",
+			"body": "mutation editUser($data: EditUserInput) {\n  __typename\n  editUser(data: $data) {\n    __typename\n    ...UserInfo\n  }\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "a8d2fa82a9776de6ea11b96995951a8b68920e220467391a5328e1e424949ac1",
+			"name": "getBlog",
+			"type": "query",
+			"body": "query getBlog($slug: String!) {\n  __typename\n  blog(slug: $slug) {\n    __typename\n    ...BlogDetail\n  }\n}\n\nfragment BlogCore on Blog {\n  __typename\n  count\n  date\n  id\n  slug\n  title\n}\n\nfragment BlogDetail on Blog {\n  __typename\n  reactionCount\n  viewerHasReacted\n  ...BlogCore\n}"
+		},
+		{
+			"id": "c0dfb4b5fd255ec2c010a8eb1bb20fdfd5b522f204b8925df6617e37deeae3da",
+			"name": "getBlogs",
+			"type": "query",
+			"body": "query getBlogs {\n  __typename\n  blogs {\n    __typename\n    ...BlogListItem\n  }\n}\n\nfragment BlogCore on Blog {\n  __typename\n  count\n  date\n  id\n  slug\n  title\n}\n\nfragment BlogListItem on Blog {\n  __typename\n  ...BlogCore\n}"
+		},
+		{
+			"id": "944bb2cd333aa040fa077827dac267f0052cf5f97e0d47edf60074219b13a5dc",
+			"name": "getBookmark",
+			"type": "query",
+			"body": "query getBookmark($id: ID!) {\n  __typename\n  bookmark(id: $id) {\n    __typename\n    ...BookmarkDetail\n  }\n}\n\nfragment BookmarkCore on Bookmark {\n  __typename\n  count\n  description\n  faviconUrl\n  host\n  id\n  title\n  url\n}\n\nfragment BookmarkDetail on Bookmark {\n  __typename\n  reactionCount\n  tags {\n    __typename\n    name\n  }\n  viewerHasReacted\n  ...BookmarkCore\n}"
+		},
+		{
+			"id": "d0732ba16e4d9236607a76ccda6f4373e62227349bb58866c561d37b62796bb7",
+			"name": "getBookmarks",
+			"type": "query",
+			"body": "query getBookmarks($after: String, $filter: BookmarkFilter, $first: Int) {\n  __typename\n  bookmarks(first: $first, after: $after, filter: $filter) {\n    __typename\n    ...BookmarksConnection\n  }\n}\n\nfragment BookmarkCore on Bookmark {\n  __typename\n  count\n  description\n  faviconUrl\n  host\n  id\n  title\n  url\n}\n\nfragment BookmarkListItem on Bookmark {\n  __typename\n  ...BookmarkCore\n}\n\nfragment BookmarksConnection on BookmarksConnection {\n  __typename\n  edges {\n    __typename\n    cursor\n    node {\n      __typename\n      ...BookmarkListItem\n    }\n  }\n  pageInfo {\n    __typename\n    endCursor\n    hasNextPage\n    totalCount\n  }\n}"
+		},
+		{
+			"id": "f41edd86f44146eabc5bf185258f0f30828836e17a4eae947e83341a7d8db125",
+			"name": "getCase",
+			"type": "query",
+			"body": "query getCase($slug: String!) {\n  __typename\n  case(slug: $slug) {\n    __typename\n    ...CaseDetail\n  }\n}\n\nfragment CaseCore on Case {\n  __typename\n  count\n  date\n  id\n  slug\n  title\n}\n\nfragment CaseDetail on Case {\n  __typename\n  reactionCount\n  viewerHasReacted\n  ...CaseCore\n}"
+		},
+		{
+			"id": "6d55e6969ed87c90f185722d36d414082caef27b411adacc052685e5d021615a",
+			"name": "getCases",
+			"type": "query",
+			"body": "query getCases {\n  __typename\n  cases {\n    __typename\n    ...CaseListItem\n  }\n}\n\nfragment CaseCore on Case {\n  __typename\n  count\n  date\n  id\n  slug\n  title\n}\n\nfragment CaseListItem on Case {\n  __typename\n  ...CaseCore\n}"
+		},
+		{
+			"id": "12e4dac31dff40f1cdce7517848a2818b6ed81cad9f80fde795752bad16a6ec9",
+			"name": "getComments",
+			"type": "query",
+			"body": "query getComments($refId: ID!, $type: CommentType!) {\n  __typename\n  comments(refId: $refId, type: $type) {\n    __typename\n    ...CommentInfo\n  }\n}\n\nfragment CommentInfo on Comment {\n  __typename\n  author {\n    __typename\n    ...UserInfo\n  }\n  createdAt\n  id\n  parentId\n  text\n  updatedAt\n  viewerCanDelete\n  viewerCanEdit\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "7cd9038bdf80c7c4a266261913d115c0832e6def7dcbfcb9c276e8b2976adafc",
+			"name": "getPost",
+			"type": "query",
+			"body": "query getPost($slug: String!) {\n  __typename\n  post(slug: $slug) {\n    __typename\n    ...PostDetail\n  }\n}\n\nfragment PostCore on Post {\n  __typename\n  excerpt\n  id\n  publishedAt\n  slug\n  title\n}\n\nfragment PostDetail on Post {\n  __typename\n  featureImage\n  hitRate\n  reactionCount\n  text\n  viewerHasReacted\n  ...PostCore\n}"
+		},
+		{
+			"id": "7bd4d2e31b1153ddd2c33ed992c5d340ccb2fd2db065fe165cf63e2418c0e1d2",
+			"name": "getPosts",
+			"type": "query",
+			"body": "query getPosts($filter: PostFilter) {\n  __typename\n  posts(filter: $filter) {\n    __typename\n    ...PostListItem\n  }\n}\n\nfragment PostCore on Post {\n  __typename\n  excerpt\n  id\n  publishedAt\n  slug\n  title\n}\n\nfragment PostListItem on Post {\n  __typename\n  ...PostCore\n}"
+		},
+		{
+			"id": "b477c2de04d061d6bec0b824d6b922305950d45c2861b0c9326999a158123253",
+			"name": "getQuestion",
+			"type": "query",
+			"body": "query getQuestion($id: ID!) {\n  __typename\n  question(id: $id) {\n    __typename\n    ...QuestionDetail\n  }\n}\n\nfragment QuestionCore on Question {\n  __typename\n  audioUrl\n  author {\n    __typename\n    ...UserInfo\n  }\n  count\n  createdAt\n  id\n  title\n  waveform\n}\n\nfragment QuestionDetail on Question {\n  __typename\n  description\n  reactionCount\n  status\n  viewerCanComment\n  viewerCanEdit\n  viewerHasReacted\n  ...QuestionCore\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "db7035fb0a6e0666180744ea110637af027a1ded73afa13dc5003750728d1d10",
+			"name": "getQuestions",
+			"type": "query",
+			"body": "query getQuestions($after: String, $filter: QuestionFilter, $first: Int) {\n  __typename\n  questions(first: $first, after: $after, filter: $filter) {\n    __typename\n    ...QuestionsConnection\n  }\n}\n\nfragment QuestionCore on Question {\n  __typename\n  audioUrl\n  author {\n    __typename\n    ...UserInfo\n  }\n  count\n  createdAt\n  id\n  title\n  waveform\n}\n\nfragment QuestionListItem on Question {\n  __typename\n  ...QuestionCore\n}\n\nfragment QuestionsConnection on QuestionsConnection {\n  __typename\n  edges {\n    __typename\n    cursor\n    node {\n      __typename\n      ...QuestionListItem\n    }\n  }\n  pageInfo {\n    __typename\n    endCursor\n    hasNextPage\n    totalCount\n  }\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "f315d187471c49c7bb2848e3cd63ce59b14be7f49e608d4d63094e08678caeaa",
+			"name": "getStack",
+			"type": "query",
+			"body": "query getStack($slug: String!) {\n  __typename\n  stack(slug: $slug) {\n    __typename\n    ...StackDetail\n  }\n}\n\nfragment StackCore on Stack {\n  __typename\n  count\n  id\n  image\n  name\n  slug\n  url\n}\n\nfragment StackDetail on Stack {\n  __typename\n  createdAt\n  description\n  reactionCount\n  tags {\n    __typename\n    name\n  }\n  usedBy {\n    __typename\n    ...UserInfo\n  }\n  usedByViewer\n  viewerHasReacted\n  ...StackCore\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "bfa643c11e03a94a1ecd6f46f226d8a448292e6215eb51ac13cb5f5bf61019b2",
+			"name": "getStacks",
+			"type": "query",
+			"body": "query getStacks($after: String, $first: Int) {\n  __typename\n  stacks(first: $first, after: $after) {\n    __typename\n    ...StacksConnection\n  }\n}\n\nfragment StackCore on Stack {\n  __typename\n  count\n  id\n  image\n  name\n  slug\n  url\n}\n\nfragment StackListItem on Stack {\n  __typename\n  ...StackCore\n}\n\nfragment StacksConnection on StacksConnection {\n  __typename\n  edges {\n    __typename\n    cursor\n    node {\n      __typename\n      ...StackListItem\n    }\n  }\n  pageInfo {\n    __typename\n    endCursor\n    hasNextPage\n    totalCount\n  }\n}"
+		},
+		{
+			"id": "503df9aebf36cb2aa86dc2b0a103ec93d69e90c056a101f7ea816b1e6b74c179",
+			"name": "getTags",
+			"type": "query",
+			"body": "query getTags {\n  __typename\n  tags {\n    __typename\n    name\n  }\n}"
+		},
+		{
+			"id": "956520438fbf2ff5116ea6ea56dde8e36df12d191b870d5804c732ebb45884c7",
+			"name": "getUser",
+			"type": "query",
+			"body": "query getUser($username: String!) {\n  __typename\n  user(username: $username) {\n    __typename\n    ...UserInfo\n  }\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "99f7caf5d76363ff28348d11b4a08f48cdad57dddf4cac714dae7bdb0eef1662",
+			"name": "getViewerWithSettings",
+			"type": "query",
+			"body": "query getViewerWithSettings {\n  __typename\n  viewer {\n    __typename\n    ...UserInfo\n    ...UserSettings\n  }\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}\n\nfragment UserSettings on User {\n  __typename\n  email\n  pendingEmail\n}"
+		},
+		{
+			"id": "016b58ca00582cd59fe3e07f5f8112e145f35b67d9d3f6f9a95fa10fd379da31",
+			"name": "toggleReaction",
+			"type": "mutation",
+			"body": "mutation toggleReaction($refId: ID!, $type: ReactionType!) {\n  __typename\n  toggleReaction(refId: $refId, type: $type) {\n    __typename\n    ... on Blog {\n      __typename\n      id\n      reactionCount\n      viewerHasReacted\n    }\n    ... on Bookmark {\n      __typename\n      id\n      reactionCount\n      url\n      viewerHasReacted\n    }\n    ... on Case {\n      __typename\n      id\n      reactionCount\n      viewerHasReacted\n    }\n    ... on Event {\n      __typename\n      id\n      reactionCount\n      viewerHasReacted\n    }\n    ... on Question {\n      __typename\n      id\n      reactionCount\n      viewerHasReacted\n    }\n    ... on Stack {\n      __typename\n      id\n      reactionCount\n      viewerHasReacted\n    }\n  }\n}"
+		},
+		{
+			"id": "a8e0d022538f62a07fd8e2605be8cf3c217c344177814ef2a55473540f609381",
+			"name": "toggleStackUser",
+			"type": "mutation",
+			"body": "mutation toggleStackUser($id: ID!) {\n  __typename\n  toggleStackUser(id: $id) {\n    __typename\n    usedBy {\n      __typename\n      ...UserInfo\n    }\n    ...StackCore\n  }\n}\n\nfragment StackCore on Stack {\n  __typename\n  count\n  id\n  image\n  name\n  slug\n  url\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		},
+		{
+			"id": "48969236b07fffe49b3457542a6cf08a857189c1f9180e36d5474af71ae95746",
+			"name": "viewer",
+			"type": "query",
+			"body": "query viewer {\n  __typename\n  viewer {\n    __typename\n    ...UserInfo\n  }\n}\n\nfragment UserInfo on User {\n  __typename\n  id\n  image\n  isAdmin\n  isViewer\n  name\n  role\n  username\n}"
+		}
+	]
+}

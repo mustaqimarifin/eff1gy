@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "Spartan Race",
@@ -20,4 +20,4 @@ export default {
 	logo: "/events/logos/spartan.jpg",
 	slug: "spartan-race",
 	details,
-};
+}

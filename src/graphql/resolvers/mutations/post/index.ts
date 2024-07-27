@@ -1,15 +1,15 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from "graphql"
 
-import type { Context } from "~/graphql/context";
-import type { MutationAddPostArgs, MutationDeletePostArgs, MutationEditPostArgs } from "~/graphql/typeSlut";
+import type { MutationAddPostArgs, MutationDeletePostArgs, MutationEditPostArgs } from "~/gql/typeSlut"
+import type { Context } from "~/graphql/context"
 
 export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
-	const { id, data } = args;
-	const { title = "", text = "", slug = "", excerpt = "", published = false } = data;
-	const { db } = ctx;
+	const { id, data } = args
+	const { title = "", text = "", slug = "", excerpt = "", published = false } = data
+	const { db } = ctx
 
-	const existing = await db.post.findUnique({ where: { slug } });
-	if (existing?.id !== id) throw new GraphQLError("Slug already exists");
+	const existing = await db.post.findUnique({ where: { slug } })
+	if (existing?.id !== id) throw new GraphQLError("Slug already exists")
 
 	return await db.post
 		.update({
@@ -30,16 +30,16 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
       if (post.publishedAt) //graphcdn.purgeList('posts')
       return post
     }) */
-		.catch((err) => {
-			console.error({ err });
-			throw new GraphQLError("Unable to edit post");
-		});
+		.catch(err => {
+			console.error({ err })
+			throw new GraphQLError("Unable to edit post")
+		})
 }
 
 export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
-	const { data } = args;
-	const { title, text, slug, excerpt = "" } = data;
-	const { db, viewer } = ctx;
+	const { data } = args
+	const { title, text, slug, excerpt = "" } = data
+	const { db, viewer } = ctx
 
 	return await db.post
 		.create({
@@ -57,15 +57,12 @@ export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
       //graphcdn.purgeList('posts')
       return post
     }) */
-		.catch((err) => {
-			console.error({ err });
-			throw new GraphQLError("Unable to add post");
-		});
+		.catch(err => {
+			console.error({ err })
+			throw new GraphQLError("Unable to add post")
+		})
 }
 
-export async function deletePost(_, args: MutationDeletePostArgs, ctx: Context) {
-	const { id } = args;
-	const { db } = ctx;
-
-	return true;
+export async function deletePost(_) {
+	return true
 }

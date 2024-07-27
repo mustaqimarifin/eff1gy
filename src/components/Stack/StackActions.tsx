@@ -1,22 +1,24 @@
-"use client";
-import Button from "~/components/Button";
-import { GET_STACK } from "~/graphql/queries/stack";
-import { ReactionType, useToggleReactionMutation, useViewerQuery } from "~/graphql/typeSlut";
-import { ReactionButton } from "../Button/ReactionButton";
-import { EditStackDialog } from "./EditStackDialog";
+"use client"
+import { useMutation, useQuery } from "@apollo/client"
+import Button from "~/components/Button"
+import type { Stack } from "~/gql/typeSlut"
+import { GetStackDocument, ReactionType, ToggleReactionDocument, ViewerDocument } from "~/gql/typeSlut"
+
+import { ReactionButton } from "../Button/ReactionButton"
+import { EditStackDialog } from "./EditStackDialog"
 
 function getEditButton(stack) {
-	const { data } = useViewerQuery();
+	const { data } = useQuery(ViewerDocument)
 	if (data?.viewer?.isAdmin) {
-		return <EditStackDialog stack={stack} trigger={<Button>Edit</Button>} />;
+		return <EditStackDialog stack={stack} trigger={<Button>Edit</Button>} />
 	}
-	return null;
+	return null
 }
 
 function getReactionButton(stack) {
-	const [toggleReaction, { loading }] = useToggleReactionMutation();
+	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
 	function handleClick() {
-		if (loading) return;
+		if (loading) return
 
 		toggleReaction({
 			variables: {
@@ -34,35 +36,38 @@ function getReactionButton(stack) {
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GET_STACK,
+					query: GetStackDocument,
 					variables: { slug: stack.slug },
 					data: {
+						__typename: "Query",
 						stack: {
 							...stack,
 							...toggleReaction,
 						},
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	return (
 		<ReactionButton
-			id={stack.id}
+			refId={stack.id}
 			loading={loading}
 			count={stack.reactionCount}
 			hasReacted={stack.viewerHasReacted}
 			onClick={handleClick}
 		/>
-	);
+	)
 }
-
-export function StackActions({ stack }) {
+type Action = {
+	stack: Stack
+}
+export function StackActions({ stack }: Action) {
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(stack)}
 			{getEditButton(stack)}
 		</div>
-	);
+	)
 }

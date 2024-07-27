@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { UserInfoFragment } from "./user";
+import { UserInfoFrag } from "./user"
 
-export const StackCoreFragment = gql`
+export const StackCoreFrag = gql`
   fragment StackCore on Stack {
     __typename
     id
@@ -12,16 +12,16 @@ export const StackCoreFragment = gql`
     slug
     count
   }
-`;
+`
 
-export const StackListItemFragment = gql`
+export const StackListItemFrag = gql`
   fragment StackListItem on Stack {
     ...StackCore
   }
-  ${StackCoreFragment}
-`;
+  ${StackCoreFrag}
+`
 
-export const StackDetailFragment = gql`
+export const StackDetailFrag = gql`
   fragment StackDetail on Stack {
     ...StackCore
     createdAt
@@ -37,12 +37,12 @@ export const StackDetailFragment = gql`
       name
     }
   }
-  ${StackCoreFragment}
-  ${UserInfoFragment}
-`;
+  ${StackCoreFrag}
+  ${UserInfoFrag}
+`
 
-export const StacksConnectionFragment = gql`
-  fragment StacksConnection on StacksConnection {
+export const StacksConnectionFrag = gql`
+  fragment StacksConnection on SConnection {
     pageInfo {
       hasNextPage
       totalCount
@@ -55,5 +55,5 @@ export const StacksConnectionFragment = gql`
       }
     }
   }
-  ${StackListItemFragment}
-`;
+  ${StackListItemFrag}
+`

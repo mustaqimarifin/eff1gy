@@ -1,12 +1,12 @@
-import { Suspense } from "react";
-import { ListDetailView } from "~/components/Layouts";
-import { PostsList } from "~/components/Posts/PostsList";
-import { PreloadQuery, query } from "~/components/Provider/ApolloClient";
-import { GET_POSTS } from "~/graphql/queries/posts";
-import { GET_VIEWER } from "~/graphql/queries/viewer";
+import { Suspense } from "react"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { PostsList } from "~/components/Posts/PostsList"
+import { PreloadQuery, query } from "~/components/Provider/ApolloClient"
+import { GET_POSTS } from "~/graphql/queries/posts"
+import { GET_VIEWER } from "~/graphql/queries/viewer"
 
 /* export default async function WritingPage () {
-	await query({ query: GET_VIEWER })
+	await query({ query: ViewerDocument })
 	return <ListDetailView list={
 
 		<PreloadQuery
@@ -23,7 +23,7 @@ import { GET_VIEWER } from "~/graphql/queries/viewer";
 } */
 
 /* export default async function WritingPage () {
-	await query({ query: GET_VIEWER })
+	await query({ query: ViewerDocument })
 	return <ListDetailView list={<PostsList />} hasDetail={ false } detail={ null } />
 }
  
@@ -32,7 +32,7 @@ import { GET_VIEWER } from "~/graphql/queries/viewer";
 
 /* export default async function WritingPage() {
 	 await Promise.all([
-		query({ query: GET_VIEWER }),
+		query({ query: ViewerDocument }),
 		query({
 			query: GET_POSTS,
 			variables: { filter: { published: true } },
@@ -44,7 +44,7 @@ import { GET_VIEWER } from "~/graphql/queries/viewer";
  */
 
 export default async function WritingPage() {
-	await query({ query: GET_VIEWER });
+	await query({ query: GET_VIEWER })
 	return (
 		<PreloadQuery
 			query={GET_POSTS}
@@ -52,9 +52,9 @@ export default async function WritingPage() {
 				filter: { published: true },
 			}}
 		>
-			<Suspense fallback={""}>
+			<Suspense fallback={<LoadingSpinner />}>
 				<PostsList />
 			</Suspense>
 		</PreloadQuery>
-	);
+	)
 }

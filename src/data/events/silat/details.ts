@@ -113,4 +113,4 @@ export default [
 		title: "Web view",
 		media: ["https://videodelivery.net/4a887a9b6185718c06404a462f6c92b4/downloads/default.mp4"],
 	},
-];
+]

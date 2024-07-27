@@ -65,4 +65,4 @@ export default [
 		title: "Settings",
 		media: ["https://videodelivery.net/3064976db0976341c3b53fca2e73ec8b/downloads/default.mp4"],
 	},
-];
+]

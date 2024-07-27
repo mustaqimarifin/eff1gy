@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "19th World Pencak Silat",
@@ -21,4 +21,4 @@ export default {
 	logo: "/events/logos/silat.jpg",
 	slug: "pencak-silat",
 	details,
-};
+}

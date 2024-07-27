@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { CaseDetailFragment, CaseListItemFragment } from "~/graphql/fragments/case";
+import { CaseDetailFrag, CaseListItemFrag } from "~/graphql/fragments/case"
 
 export const GET_CASES = gql`
   query getCases {
@@ -8,8 +8,8 @@ export const GET_CASES = gql`
       ...CaseListItem
     }
   }
-  ${CaseListItemFragment}
-`;
+  ${CaseListItemFrag}
+`
 
 export const GET_CASE = gql`
   query getCase($slug: String!) {
@@ -17,5 +17,5 @@ export const GET_CASE = gql`
       ...CaseDetail
     }
   }
-  ${CaseDetailFragment}
-`;
+  ${CaseDetailFrag}
+`

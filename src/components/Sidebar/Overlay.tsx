@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext } from "react"
 
-import { GlobalNavigationContext } from "~/components/Provider";
+import { GlobalNavigationContext } from "~/components/Provider"
 
 export function SidebarOverlay() {
-	const { isOpen, setIsOpen } = useContext(GlobalNavigationContext);
+	const { isOpen, setIsOpen } = useContext(GlobalNavigationContext)
 
 	return (
 		<div
@@ -12,5 +12,5 @@ export function SidebarOverlay() {
 			}`}
 			onClick={() => setIsOpen(false)}
 		/>
-	);
+	)
 }

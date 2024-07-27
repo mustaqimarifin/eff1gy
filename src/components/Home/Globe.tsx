@@ -1,6 +1,6 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import avatar from "~/app/avatar2.webp";
+import avatar from "~/app/avatar2.webp"
 
 export function Globe() {
 	return (
@@ -14,5 +14,5 @@ export function Globe() {
 				height={100}
 			/>
 		</div>
-	);
+	)
 }

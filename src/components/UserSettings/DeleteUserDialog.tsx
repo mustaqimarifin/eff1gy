@@ -1,13 +1,13 @@
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client"
 
-import { DeleteButton } from "~/components/Button";
-import { DialogComponent } from "~/components/Dialog";
-import { useDeleteUserMutation } from "~/graphql/typeSlut";
-import { LoadingSpinner } from "../LoadingSpinner";
+import { DeleteButton } from "~/components/Button"
+import { DialogComponent } from "~/components/Dialog"
+import { DeleteUserDocument } from "~/gql/typeSlut"
+import { LoadingSpinner } from "../LoadingSpinner"
 
 export function DeleteUserDialog({ trigger }) {
-	const apolloClient = useApolloClient();
-	const [handleDelete, { loading }] = useDeleteUserMutation();
+	const apolloClient = useApolloClient()
+	const [handleDelete, { loading }] = useMutation(DeleteUserDocument)
 
 	return (
 		<DialogComponent
@@ -19,8 +19,8 @@ export function DeleteUserDialog({ trigger }) {
 
 					<DeleteButton
 						onClick={async () => {
-							await handleDelete();
-							await apolloClient.resetStore();
+							await handleDelete()
+							await apolloClient.resetStore()
 						}}
 					>
 						{loading ? <LoadingSpinner /> : "Delete my account"}
@@ -28,5 +28,5 @@ export function DeleteUserDialog({ trigger }) {
 				</div>
 			)}
 		/>
-	);
+	)
 }

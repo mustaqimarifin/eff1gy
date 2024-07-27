@@ -1,7 +1,7 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { UserInfoFragment } from "~/graphql/fragments/user";
-import { UserSettingsFragment } from "../fragments/user";
+import { UserInfoFrag } from "~/graphql/fragments/user"
+import { UserSettingsFrag } from "../fragments/user"
 
 export const GET_VIEWER = gql`
   query viewer {
@@ -9,8 +9,8 @@ export const GET_VIEWER = gql`
       ...UserInfo
     }
   }
-  ${UserInfoFragment}
-`;
+  ${UserInfoFrag}
+`
 
 export const GET_VIEWER_SETTINGS = gql`
   query getViewerWithSettings {
@@ -19,6 +19,6 @@ export const GET_VIEWER_SETTINGS = gql`
       ...UserSettings
     }
   }
-  ${UserInfoFragment}
-  ${UserSettingsFragment}
-`;
+  ${UserInfoFrag}
+  ${UserSettingsFrag}
+`

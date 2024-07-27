@@ -1,17 +1,17 @@
-"use client";
-import Link from "next/link";
-import { useRef, useState } from "react";
+"use client"
+import Link from "next/link"
+import { useRef, useState } from "react"
 
-import { Detail } from "../ListDetail/Detail";
-import { TitleBar } from "../ListDetail/TitleBar";
-import type { Post } from "./BlogDetail";
+import { Detail } from "../ListDetail/Detail"
+import { TitleBar } from "../ListDetail/TitleBar"
+import type { Post } from "./BlogDetail"
 
-import { formatDate } from "~/lib/transformers";
+import { formatDate } from "~/lib/transformers"
 
 export default function BlogList({ posts }) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
-	const [searchValue, setSearchValue] = useState("");
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
+	const [searchValue, setSearchValue] = useState("")
 
 	/*   const { data, loading, error } = useQuery<GetBlogsQuery>(GetBlogsDocument, {
       fetchPolicy: "cache-first",
@@ -31,7 +31,7 @@ export default function BlogList({ posts }) {
 
 	const fPosts: Post[] = posts
 		?.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
-		.filter((post) => post.title.toLowerCase().includes(searchValue.toLowerCase()));
+		.filter(post => post.title.toLowerCase().includes(searchValue.toLowerCase()))
 
 	return (
 		<Detail.Container data-cy="post-list-2" ref={scrollContainerRef}>
@@ -65,7 +65,7 @@ export default function BlogList({ posts }) {
 						<input
 							aria-label="Search articles"
 							type="text"
-							onChange={(e) => setSearchValue(e.target.value)}
+							onChange={e => setSearchValue(e.target.value)}
 							placeholder="Search articles"
 							className="block w-full px-4 py-2 text-gray-900 bg-white border border-gray-200 rounded-md dark:border-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-100"
 						/>
@@ -106,7 +106,7 @@ export default function BlogList({ posts }) {
             />
           </>
         )} */}
-					{fPosts?.map((p) => (
+					{fPosts?.map(p => (
 						<Link key={p?.slug} className="w-full" href={`/blog/${p.slug}`}>
 							<div className="mb-8">
 								<div className="flex flex-col justify-between md:flex-row">
@@ -121,7 +121,7 @@ export default function BlogList({ posts }) {
 				<div className="py-6" />
 			</Detail.ContentContainer>
 		</Detail.Container>
-	);
+	)
 }
 /*
 export default async function PostIndex() {
@@ -166,8 +166,8 @@ async function Views({ slug }: { slug: string }) {
   )
 }
  */
-{
-	/*         {!searchValue && (
+
+/*         {!searchValue && (
           <>
             <h3 className="mt-8 mb-4 text-2xl font-bold tracking-tight text-black md:text-4xl dark:text-white">
               Most Popular
@@ -189,4 +189,3 @@ async function Views({ slug }: { slug: string }) {
             />
           </>
         )} */
-}

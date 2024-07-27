@@ -1,9 +1,9 @@
-import { forwardRef } from "react";
+import { forwardRef } from "react"
 
 interface Props {
-	src: string;
+	src: string
 	// 👇 When locally recording we want to to load the audio so the user can scrub
-	preload: boolean;
+	preload: boolean
 }
 
 const HiddenAudioPlayer = forwardRef<HTMLAudioElement, Props>(({ src, preload }: Props, ref) => {
@@ -12,7 +12,7 @@ const HiddenAudioPlayer = forwardRef<HTMLAudioElement, Props>(({ src, preload }:
 			<source src={src} type="audio/mp4" />
 			Your browser does not support the audio element
 		</audio>
-	);
-});
+	)
+})
 
-export default HiddenAudioPlayer;
+export default HiddenAudioPlayer

@@ -84,4 +84,4 @@ export default [
 		orientation: "landscape",
 		media: ["https://videodelivery.net/649e6a2c20ac51d71caa1b584892218b/downloads/default.mp4"],
 	},
-];
+]

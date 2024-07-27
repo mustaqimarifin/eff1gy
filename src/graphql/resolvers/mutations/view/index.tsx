@@ -1,51 +1,51 @@
-import { GraphQLError } from "graphql";
+import { GraphQLError } from "graphql"
+import { ViewType } from "~/gql/typeSlut"
 
-import type { Context } from "~/graphql/context";
-import { ViewType } from "~/graphql/typeSlut";
+import type { Context } from "~/graphql/context"
 
 export async function addView(_: any, args: { refId: any; type: any }, ctx: Context) {
-	const { refId, type } = args;
-	const { db } = ctx;
-	let table;
-	let field;
+	const { refId, type } = args
+	const { db } = ctx
+	let table: string
+	let field: string
 	switch (type) {
 		case ViewType.Bookmark: {
-			field = "bookmarkId";
-			table = "bookmark";
-			break;
+			field = "bookmarkId"
+			table = "bookmark"
+			break
 		}
 		case ViewType.Case: {
-			field = "caseId";
-			table = "case";
-			break;
+			field = "caseId"
+			table = "case"
+			break
 		}
 		case ViewType.Blog: {
-			field = "blogId";
-			table = "blog";
-			break;
+			field = "blogId"
+			table = "blog"
+			break
 		}
 		case ViewType.Post: {
-			field = "postId";
-			table = "post";
-			break;
+			field = "postId"
+			table = "post"
+			break
 		}
 		case ViewType.Event: {
-			field = "eventId";
-			table = "event";
-			break;
+			field = "eventId"
+			table = "event"
+			break
 		}
 		case ViewType.Question: {
-			field = "questionId";
-			table = "question";
-			break;
+			field = "questionId"
+			table = "question"
+			break
 		}
 		case ViewType.Stack: {
-			field = "stackId";
-			table = "stack";
-			break;
+			field = "stackId"
+			table = "stack"
+			break
 		}
 		default: {
-			throw new GraphQLError("Invalid reaction type");
+			throw new GraphQLError("Invalid reaction type")
 		}
 	}
 
@@ -53,33 +53,32 @@ export async function addView(_: any, args: { refId: any; type: any }, ctx: Cont
 		db[table].findUnique({
 			where: { id: refId },
 		}),
-
 		db[table].findMany({
 			where: {
 				[field]: refId,
 			},
 		}),
-	]);
+	])
 
 	if (!parentObject) {
-		throw new GraphQLError("Reacting on something that doesn’t exist");
+		throw new GraphQLError("Reacting on something that doesn’t exist")
 	}
 
-	let fn;
+	let fn
 
 	fn = () =>
 		db[table].create({
 			data: {
 				[field]: String(refId),
 			},
-		});
+		})
 
 	return await fn()
 		.then(() => {
-			return { ...parentObject, reactableType: table };
+			return { ...parentObject, reactableType: table }
 		})
 		.catch((err: any) => {
-			console.error({ err });
-			return { ...parentObject, reactableType: table };
-		});
+			console.error({ err })
+			return { ...parentObject, reactableType: table }
+		})
 }

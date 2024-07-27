@@ -1,16 +1,17 @@
-"use client";
+"use client"
 
-import { Plus } from "lucide-react";
-import { useContext } from "react";
-import { useViewerQuery } from "~/graphql/typeSlut";
-import SegmentedControl from "../UI/SegmentedController";
-import { WritingContext } from "./PostsList";
+import { Plus } from "lucide-react"
+import { useContext } from "react"
+import SegmentedControl from "../UI/SegmentedController"
+import { WritingContext } from "./PostsList"
 
-import { GhostButton } from "~/components/Button";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
+import { useQuery } from "@apollo/client"
+import { GhostButton } from "~/components/Button"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { ViewerDocument } from "~/gql/typeSlut"
 
 export function WritingTitlebar({ scrollContainerRef }) {
-	const { data } = useViewerQuery();
+	const { data } = useQuery(ViewerDocument)
 
 	function getAddButton() {
 		if (data?.viewer?.isAdmin) {
@@ -18,18 +19,18 @@ export function WritingTitlebar({ scrollContainerRef }) {
 				<GhostButton href="/post/new" data-cy="new-post-button" size="small-square" aria-label="Add post">
 					<Plus size={16} />
 				</GhostButton>
-			);
+			)
 		}
-		return null;
+		return null
 	}
 
 	function trailingAccessory() {
-		return <div className="flex space-x-2">{getAddButton()}</div>;
+		return <div className="flex space-x-2">{getAddButton()}</div>
 	}
 
 	function getChildren() {
-		const { data } = useViewerQuery();
-		const { setFilter, filter } = useContext(WritingContext);
+		const { data } = useQuery(ViewerDocument)
+		const { setFilter, filter } = useContext(WritingContext)
 		if (data?.viewer?.isAdmin) {
 			return (
 				<div className="pb-1 pt-2">
@@ -42,14 +43,14 @@ export function WritingTitlebar({ scrollContainerRef }) {
 						]}
 					/>
 				</div>
-			);
+			)
 		}
-		return null;
+		return null
 	}
 
 	return (
 		<TitleBar trailingAccessory={trailingAccessory()} title="Posts" scrollContainerRef={scrollContainerRef}>
 			{getChildren()}
 		</TitleBar>
-	);
+	)
 }

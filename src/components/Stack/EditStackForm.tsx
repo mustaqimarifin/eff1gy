@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { useReducer } from "react";
+import { useMutation } from "@apollo/client"
+import { useRouter } from "next/navigation"
+import { useReducer } from "react"
 
-import Button, { DeleteButton } from "~/components/Button";
-import { Input, Textarea } from "~/components/Input";
-import { TagPicker } from "~/components/Tag/TagPicker";
-import { GET_STACKS } from "~/graphql/queries/stack";
-import { useDeleteStackMutation, useEditStackMutation } from "~/graphql/typeSlut";
+import Button, { DeleteButton } from "~/components/Button"
+import { Input, Textarea } from "~/components/Input"
+import { TagPicker } from "~/components/Tag/TagPicker"
+import { DeleteStackDocument, EditStackDocument, GetStacksDocument } from "~/gql/typeSlut"
 
 // import { StackImageUploader } from './StackImageUploader'
 
 export function EditStackForm({ closeModal, stack }) {
-	const router = useRouter();
+	const router = useRouter()
 
 	const initialState = {
 		error: "",
@@ -21,7 +21,7 @@ export function EditStackForm({ closeModal, stack }) {
 		url: stack.url,
 		image: stack.image,
 		tag: stack.tags?.length > 0 ? stack.tags[0].name : null,
-	};
+	}
 
 	function reducer(state, action) {
 		switch (action.type) {
@@ -30,73 +30,73 @@ export function EditStackForm({ closeModal, stack }) {
 					...state,
 					error: "",
 					name: action.value,
-				};
+				}
 			}
 			case "edit-description": {
 				return {
 					...state,
 					error: "",
 					description: action.value,
-				};
+				}
 			}
 			case "edit-url": {
 				return {
 					...state,
 					error: "",
 					url: action.value,
-				};
+				}
 			}
 			case "edit-image": {
 				return {
 					...state,
 					error: "",
 					image: action.value,
-				};
+				}
 			}
 			case "edit-tag": {
 				return {
 					...state,
 					error: "",
 					tag: action.value,
-				};
+				}
 			}
 			case "error": {
 				return {
 					...state,
 					error: action.value,
-				};
+				}
 			}
 			default:
-				throw new Error();
+				throw new Error()
 		}
 	}
 
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState)
 
-	const [editStack] = useEditStackMutation();
+	const [editStack] = useMutation(EditStackDocument)
 
-	const [handleDelete] = useDeleteStackMutation({
+	const [handleDelete] = useMutation(DeleteStackDocument, {
 		variables: { id: stack.id },
 		optimisticResponse: {
 			__typename: "Mutation",
 			deleteStack: true,
 		},
-		refetchQueries: [GET_STACKS],
+		refetchQueries: [GetStacksDocument],
 		onCompleted() {
-			closeModal();
-			router.push("/stack");
+			closeModal()
+			router.push("/stack")
 		},
-	});
+	})
 
 	function handleSave(e) {
-		e.preventDefault();
+		e.preventDefault()
 
 		if (!state.name || state.name.length === 0) {
-			return dispatch({ type: "error", value: "Stack must have a name" });
+			return dispatch({ type: "error", value: "Stack must have a name" })
 		}
 
 		if (!state.url || state.url.length === 0) {
-			return dispatch({ type: "error", value: "Stack must have a URL" });
+			return dispatch({ type: "error", value: "Stack must have a URL" })
 		}
 
 		editStack({
@@ -125,30 +125,30 @@ export function EditStackForm({ closeModal, stack }) {
 				},
 			},
 			onError({ message }) {
-				const value = message.replace("GraphQL error:", "");
-				dispatch({ type: "error", value });
+				const value = message.replace("GraphQL error:", "")
+				dispatch({ type: "error", value })
 			},
-		});
-		return closeModal();
+		})
+		return closeModal()
 	}
 
 	function onNameChange(e) {
-		return dispatch({ type: "edit-name", value: e.target.value });
+		return dispatch({ type: "edit-name", value: e.target.value })
 	}
 	function onImageChange(e) {
-		return dispatch({ type: "edit-image", value: e.target.value });
+		return dispatch({ type: "edit-image", value: e.target.value })
 	}
 	function onURLChange(e) {
-		return dispatch({ type: "edit-url", value: e.target.value });
+		return dispatch({ type: "edit-url", value: e.target.value })
 	}
 
 	function onDescriptionChange(e) {
-		return dispatch({ type: "edit-description", value: e.target.value });
+		return dispatch({ type: "edit-description", value: e.target.value })
 	}
 
 	function onKeyDown(e) {
 		if (e.keyCode === 13 && e.metaKey) {
-			return handleSave(e);
+			return handleSave(e)
 		}
 	}
 
@@ -160,13 +160,13 @@ export function EditStackForm({ closeModal, stack }) {
   }
  */
 	function handleTagChange(value) {
-		return dispatch({ type: "edit-tag", value });
+		return dispatch({ type: "edit-tag", value })
 	}
 
-	const tagFilter = (t) => {
-		const allowedTags = ["software", "gear", "plugins"];
-		return allowedTags.includes(t.name);
-	};
+	const tagFilter = t => {
+		const allowedTags = ["software", "gear", "plugins"]
+		return allowedTags.includes(t.name)
+	}
 
 	return (
 		<div className="space-y-3 p-4">
@@ -193,8 +193,8 @@ export function EditStackForm({ closeModal, stack }) {
 				<div className="flex justify-between">
 					<DeleteButton
 						onClick={() => {
-							closeModal();
-							handleDelete();
+							closeModal()
+							handleDelete()
 						}}
 					>
 						Delete
@@ -207,5 +207,5 @@ export function EditStackForm({ closeModal, stack }) {
 				</div>
 			</form>
 		</div>
-	);
+	)
 }

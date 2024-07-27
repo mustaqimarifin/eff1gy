@@ -1,47 +1,47 @@
-/* eslint-disable react/no-children-prop */
-"use client";
+"use client"
 
-import { LinkIcon } from "lucide-react";
-import Link from "next/link";
-import type { ReactNode } from "react";
-import { useRef } from "react";
+import { LinkIcon } from "lucide-react"
+import Link from "next/link"
+import type { ReactNode } from "react"
+import { useRef } from "react"
 
-import dynamic from "next/dynamic";
-import { PrimaryButton } from "~/components/Button";
-import { MarkdownRenderer } from "../MarkdownRenderer";
-import { BookmarkActions } from "./BookmarkActions";
-import { RelatedBookmarks } from "./RelatedBookmarks";
+import dynamic from "next/dynamic"
+import { PrimaryButton } from "~/components/Button"
+import { MarkdownRenderer } from "../MarkdownRenderer"
+import { BookmarkActions } from "./BookmarkActions"
+import { RelatedBookmarks } from "./RelatedBookmarks"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { Tags } from "~/components/Tag";
-import { CommentType, useGetBookmarkQuery, useGetBookmarkSuspenseQuery } from "~/graphql/typeSlut";
+import { useQuery } from "@apollo/client"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { Tags } from "~/components/Tag"
+import { CommentType, GetBookmarkDocument } from "~/gql/typeSlut"
 
 export function BookmarkDetail({
 	id,
 }: {
-	children?: ReactNode;
-	id: string;
+	children?: ReactNode
+	id: string
 }) {
-	const scrollContainerRef: React.RefObject<HTMLDivElement> = useRef(null);
-	const titleRef: React.RefObject<HTMLHeadingElement> = useRef(null);
-	const { data, error, networkStatus } = useGetBookmarkSuspenseQuery({
+	const scrollContainerRef: React.RefObject<HTMLDivElement> = useRef(null)
+	const titleRef: React.RefObject<HTMLHeadingElement> = useRef(null)
+	const { data, error, loading } = useQuery(GetBookmarkDocument, {
 		variables: { id },
-	});
+	})
 
-	if (networkStatus === 1) {
-		return <Detail.Loading />;
+	if (loading) {
+		return <Detail.Loading />
 	}
 
 	if (!data?.bookmark || error) {
-		return <Detail.Null />;
+		return <Detail.Null />
 	}
 
-	const { bookmark } = data;
+	const { bookmark } = data
 
-	const Comments = dynamic(() => import("src/components/Comments").then((x) => x.Comments), {
+	const Comments = dynamic(() => import("src/components/Comments").then(x => x.Comments), {
 		ssr: false,
-	});
+	})
 
 	return (
 		<Detail.Container data-cy="bookmark-detail" ref={scrollContainerRef}>
@@ -95,5 +95,5 @@ export function BookmarkDetail({
 			<div className="py-6" />
 			<Comments refId={bookmark.id} type={CommentType.Bookmark} />
 		</Detail.Container>
-	);
+	)
 }

@@ -1,61 +1,61 @@
-"use client";
+"use client"
 
-import type { ReactNode } from "react";
-import { useRef } from "react";
+import type { ReactNode } from "react"
+import { useRef } from "react"
 
-import { EyeIcon } from "lucide-react";
-import dynamic from "next/dynamic";
-import type { Blog } from "~/graphql/typeSlut";
-import { CommentType, useGetBlogQuery } from "~/graphql/typeSlut";
-import { formatDate } from "~/lib/transformers";
-import { Detail } from "../ListDetail/Detail";
-import { TitleBar } from "../ListDetail/TitleBar";
+import { useQuery } from "@apollo/client"
+import { EyeIcon } from "lucide-react"
+import dynamic from "next/dynamic"
+import { type Blog, CommentType, GetBlogDocument } from "~/gql/typeSlut"
+import { formatDate } from "~/lib/transformers"
+import { Detail } from "../ListDetail/Detail"
+import { TitleBar } from "../ListDetail/TitleBar"
 
 export interface Post {
-	id: string;
-	slug: string;
-	name: string;
-	content: string;
-	title: string;
-	date: string;
-	excerpt: string;
-	coverImage: string;
-	caption?: string;
-	readingTime?: string;
-	tweets: any[];
-	tags?: string[];
+	id: string
+	slug: string
+	name: string
+	content: string
+	title: string
+	date: string
+	excerpt: string
+	coverImage: string
+	caption?: string
+	readingTime?: string
+	tweets: any[]
+	tags?: string[]
 }
 
 export interface CaseStudy {
-	id: string;
-	slug: string;
-	name: string;
-	content: string;
-	title: string;
-	date: string;
-	caption: string;
-	overview: string;
-	coverImage: string;
-	orientation?: "landscape";
+	id: string
+	slug: string
+	name: string
+	content: string
+	title: string
+	date: string
+	caption: string
+	overview: string
+	coverImage: string
+	orientation?: "landscape"
 }
 
 interface Props {
-	children?: ReactNode;
-	post?: Post;
-	blog?: Blog;
-	slug?: string;
+	children?: ReactNode
+	post?: Post
+	blog?: Blog
+	slug?: string
 }
 
 function eye() {
-	return <EyeIcon size={20} />;
+	return <EyeIcon size={20} />
 }
 export function BlogDetail({ children, post, slug }: Props) {
-	const scrollContainerRef = useRef(null);
-	const titleRef = useRef(null);
+	const scrollContainerRef = useRef(null)
+	const titleRef = useRef(null)
 
-	const { data, loading, error } = useGetBlogQuery({
+	const { data, loading, error } = useQuery(GetBlogDocument, {
 		variables: { slug },
-	});
+	})
 
 	// if (error) return <div>failed to load</div>;
 	// if (!post) return <div>loading...</div>;
@@ -68,20 +68,20 @@ export function BlogDetail({ children, post, slug }: Props) {
 		fetchPost();
 	}, []); */
 	if (loading) {
-		return <Detail.Loading />;
+		return <Detail.Loading />
 	}
 
 	if (!data?.blog || error) {
-		return <Detail.Null />;
+		return <Detail.Null />
 	}
-	const { blog } = data;
-	const Comments = dynamic(() => import("src/components/Comments").then((x) => x.Comments), {
+	const { blog } = data
+	const Comments = dynamic(() => import("src/components/Comments").then(x => x.Comments), {
 		ssr: false,
-	});
+	})
 
-	const PostAction = dynamic(() => import("./BlogAction").then((x) => x.BlogAction), {
+	const PostAction = dynamic(() => import("./BlogAction").then(x => x.BlogAction), {
 		ssr: false,
-	});
+	})
 	//  const publishedAt = realTime({ timestamp: post.publishedAt });
 	// const publishedAt = realTime({ timestamp: post.date })
 
@@ -122,5 +122,5 @@ export function BlogDetail({ children, post, slug }: Props) {
 				<Comments refId={blog?.id} type={CommentType.Blog} />
 			</Detail.ContentContainer>
 		</Detail.Container>
-	);
+	)
 }

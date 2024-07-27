@@ -1,16 +1,15 @@
-"use client";
-import { useMutation } from "@apollo/client";
-import { ReactionButton } from "~/components/Button/ReactionButton";
-import { GET_CASE } from "~/graphql/queries/cases";
-import type { Case } from "~/graphql/typeSlut";
-import { ReactionType, ToggleReactionDocument } from "~/graphql/typeSlut";
+"use client"
+import { useMutation } from "@apollo/client"
+import { ReactionButton } from "~/components/Button/ReactionButton"
+import type { Case } from "~/gql/typeSlut"
+import { GetCaseDocument, ReactionType, ToggleReactionDocument } from "~/gql/typeSlut"
 
-function getReactionButton(x: Case) {
+function getReactionButton(x) {
 	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument, {
 		context: { fetchOptions: { cache: "no-store" } },
-	});
+	})
 	function handleClick() {
-		if (loading) return;
+		if (loading) return
 
 		toggleReaction({
 			variables: {
@@ -28,30 +27,31 @@ function getReactionButton(x: Case) {
 			},
 			update(cache, { data: { toggleReaction } }) {
 				cache.writeQuery({
-					query: GET_CASE,
-					variables: { id: x.id },
+					query: GetCaseDocument,
+					variables: { slug: x.slug },
 					data: {
-						x: {
+						case: {
 							...x,
 							...toggleReaction,
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			},
-		});
+		})
 	}
 
 	return (
 		<ReactionButton
-			id={x.id}
+			refId={x.id}
 			loading={loading}
 			count={x.reactionCount}
 			hasReacted={x.viewerHasReacted}
 			onClick={handleClick}
 		/>
-	);
+	)
 }
 
 export function BitAction({ x }: { x: Case }) {
-	return <div className="flex items-center space-x-2">{getReactionButton(x)}</div>;
+	return <div className="flex items-center space-x-2">{getReactionButton(x)}</div>
 }

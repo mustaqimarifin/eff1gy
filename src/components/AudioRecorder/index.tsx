@@ -1,32 +1,32 @@
-import { TrashIcon } from "lucide-react";
-import { useEffect, useReducer, useState } from "react";
-import useSWR from "swr";
+import { TrashIcon } from "lucide-react"
+import { useEffect, useReducer, useState } from "react"
+import useSWR from "swr"
 
-import { uploadToCloudinary } from "~/lib/cloudinary/api";
-import AudioPlayer from "../AudioPlayer";
-import Button, { DeleteButton, RecordingButton } from "../Button";
-import { LoadingSpinner } from "../LoadingSpinner";
-import { Nuts } from "../Provider/Toaster";
+import { uploadToCloudinary } from "~/lib/cloudinary/api"
+import AudioPlayer from "../AudioPlayer"
+import Button, { DeleteButton, RecordingButton } from "../Button"
+import { LoadingSpinner } from "../LoadingSpinner"
+import { Nuts } from "../Provider/Toaster"
 
 interface Props {
-	id: string;
-	initialAudioUrl?: string;
-	initialWaveform?: number[];
-	onRecordingStart?: () => void;
-	onRecordingStop?: () => void;
-	onRecordingError?: () => void;
+	id: string
+	initialAudioUrl?: string
+	initialWaveform?: number[]
+	onRecordingStart?: () => void
+	onRecordingStop?: () => void
+	onRecordingError?: () => void
 	// onTranscriptionComplete?: (e: OnComplete) => void
-	onDeleteAudio?: () => void;
-	onUploadComplete: (e: { waveform: number[]; src: string }) => void;
+	onDeleteAudio?: () => void
+	onUploadComplete: (e: { waveform: number[]; src: string }) => void
 }
 
 interface State {
-	status: "idle" | "recording" | "recorded" | "uploading" | "done";
-	audioUrl: string | null;
-	audioBlob: Blob | null;
-	waveform: number[];
+	status: "idle" | "recording" | "recorded" | "uploading" | "done"
+	audioUrl: string | null
+	audioBlob: Blob | null
+	waveform: number[]
 	// transcript: string | null
-	error: string | null;
+	error: string | null
 }
 
 type Action =
@@ -37,7 +37,7 @@ type Action =
 	| { type: "done"; transcript: string }
 	| { type: "set-waveform"; waveform: number[] }
 	| { type: "error"; error: string }
-	| { type: "delete" };
+	| { type: "delete" }
 
 export default function AudioRecorder({
 	id,
@@ -55,18 +55,18 @@ export default function AudioRecorder({
 		audioBlob: null,
 		waveform: initialWaveform,
 		error: null,
-	};
+	}
 
 	function reducer(state: State, action: Action) {
 		switch (action.type) {
 			case "reset": {
-				return initialState;
+				return initialState
 			}
 			case "start-recording": {
 				return {
 					...state,
 					status: "recording",
-				};
+				}
 			}
 			case "stop-recording": {
 				return {
@@ -74,19 +74,19 @@ export default function AudioRecorder({
 					status: "recorded",
 					audioUrl: action.audioUrl,
 					audioBlob: action.audioBlob,
-				};
+				}
 			}
 			case "set-waveform": {
 				return {
 					...state,
 					waveform: action.waveform,
-				};
+				}
 			}
 			case "start-uploading": {
 				return {
 					...state,
 					status: "uploading",
-				};
+				}
 			}
 			// case 'start-transcribing': {
 			//   return {
@@ -99,14 +99,14 @@ export default function AudioRecorder({
 					...state,
 					// transcript: action.transcript,
 					status: "done",
-				};
+				}
 			}
 			case "error": {
-				onRecordingError?.();
+				onRecordingError?.()
 				return {
 					...initialState,
 					error: action.error,
-				};
+				}
 			}
 			case "delete": {
 				return {
@@ -116,26 +116,26 @@ export default function AudioRecorder({
 					waveform: [],
 					// transcript: null,
 					status: "idle",
-				};
+				}
 			}
 			default:
-				throw new Error(action);
+				throw new Error(action)
 		}
 	}
 
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const [audioChunks, setAudioChunks] = useState([]);
-	const [mediaRecorder, setMediaRecorder] = useState(null);
+	const [state, dispatch] = useReducer(reducer, initialState)
+	const [audioChunks, setAudioChunks] = useState([])
+	const [mediaRecorder, setMediaRecorder] = useState(null)
 
 	useEffect(() => {
 		async function handleMediaSetup() {
 			const stream = await navigator.mediaDevices.getUserMedia({
 				audio: true,
-			});
+			})
 			try {
-				const mr = new MediaRecorder(stream);
+				const mr = new MediaRecorder(stream)
 				//	console.log(`Recording with mimeType: ${mr.mimeType}`);
-				setMediaRecorder(mr);
+				setMediaRecorder(mr)
 			} catch (e) {}
 		}
 
@@ -146,72 +146,72 @@ export default function AudioRecorder({
 		//   navigator.msGetUserMedia
 
 		if (navigator.mediaDevices) {
-			handleMediaSetup();
+			handleMediaSetup()
 		} else {
 			dispatch({
 				type: "error",
 				error: "Media Decives will work only with SSL",
-			});
+			})
 		}
-	}, []);
+	}, [])
 
 	useEffect(() => {
 		if (mediaRecorder) {
-			mediaRecorder.ondataavailable = (e) => {
+			mediaRecorder.ondataavailable = e => {
 				if (e.data && e.data.size > 0) {
-					setAudioChunks((state) => [...state, e.data]);
+					setAudioChunks(state => [...state, e.data])
 				}
-			};
+			}
 		}
-	}, [mediaRecorder]);
+	}, [mediaRecorder])
 
 	function startRecording() {
 		if (navigator.mediaDevices) {
-			onRecordingStart?.();
-			dispatch({ type: "start-recording" });
-			mediaRecorder.start(10);
+			onRecordingStart?.()
+			dispatch({ type: "start-recording" })
+			mediaRecorder.start(10)
 		} else {
 			dispatch({
 				type: "error",
 				error: "Audio recording is not supported",
-			});
+			})
 		}
 	}
 
 	function stopRecording() {
-		mediaRecorder.stop();
-		const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
-		const audioUrl = window.URL.createObjectURL(audioBlob);
-		onRecordingStop?.();
-		dispatch({ type: "stop-recording", audioUrl, audioBlob });
+		mediaRecorder.stop()
+		const audioBlob = new Blob(audioChunks, { type: "audio/mp3" })
+		const audioUrl = window.URL.createObjectURL(audioBlob)
+		onRecordingStop?.()
+		dispatch({ type: "stop-recording", audioUrl, audioBlob })
 	}
 
 	function reRecord() {
-		dispatch({ type: "reset" });
-		setAudioChunks([]);
-		startRecording();
+		dispatch({ type: "reset" })
+		setAudioChunks([])
+		startRecording()
 	}
 
 	function handleDelete() {
-		onDeleteAudio?.();
-		dispatch({ type: "delete" });
-		setAudioChunks([]);
+		onDeleteAudio?.()
+		dispatch({ type: "delete" })
+		setAudioChunks([])
 	}
 
 	function handleUpload() {
-		dispatch({ type: "start-uploading" });
-		mutate();
+		dispatch({ type: "start-uploading" })
+		mutate()
 	}
 
 	const { mutate } = useSWR(`/api/sign`, {
-		onSuccess: async (data) => {
-			const upload = await uploadToCloudinary(state.audioBlob, data.folder, `${data.timestamp}`, data.signature);
+		onSuccess: async data => {
+			const upload = await uploadToCloudinary(state.audioBlob, data.folder, `${data.timestamp}`, data.signature)
 			onUploadComplete({
 				waveform: state.waveform,
 				src: upload.secure_url,
-			});
+			})
 		},
-	});
+	})
 
 	return (
 		<div className="flex flex-col space-y-4 rounded-md border border-gray-200 bg-gray-100 p-4 dark:border-gray-800 dark:bg-gray-900">
@@ -227,7 +227,7 @@ export default function AudioRecorder({
 						id={null}
 						isRecorder={true}
 						waveform={state.waveform}
-						setWaveformData={(waveform) => dispatch({ type: "set-waveform", waveform })}
+						setWaveformData={waveform => dispatch({ type: "set-waveform", waveform })}
 						src={state.audioUrl}
 					/>
 				</>
@@ -266,5 +266,5 @@ export default function AudioRecorder({
         </div>
       )} */}
 		</div>
-	);
+	)
 }

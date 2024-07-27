@@ -59,4 +59,4 @@ export default [
 		title: "Starting a new chat",
 		media: ["https://videodelivery.net/839f23a5d32846c6628f5fd8e7100996/downloads/default.mp4"],
 	},
-];
+]

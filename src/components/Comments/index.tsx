@@ -1,33 +1,33 @@
-"use client";
+"use client"
 
-import { useRef } from "react";
+import { useRef } from "react"
 
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { SignInDialog } from "~/components/SignInDialog";
-import type { CommentType } from "~/graphql/typeSlut";
-import { useGetCommentsQuery } from "~/graphql/typeSlut";
-import { useWindowFocus } from "~/hooks";
-import { FireIcon } from "../Icon";
-import { Comment } from "./Comment";
-import { CommentForm } from "./CommentForm";
+import { useQuery } from "@apollo/client"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { SignInDialog } from "~/components/SignInDialog"
+import { type CommentType, GetCommentsDocument } from "~/gql/typeSlut"
+import { useWindowFocus } from "~/hooks"
+import { FireIcon } from "../Icon"
+import { Comment } from "./Comment"
+import { CommentForm } from "./CommentForm"
 
 interface Props {
-	refId: string;
-	type: CommentType;
+	refId: string
+	type: CommentType
 }
 
 export function Comments({ refId, type }: Props) {
-	const messagesEndRef = useRef(null);
+	const messagesEndRef = useRef(null)
 
-	const { data, loading, error, refetch } = useGetCommentsQuery({
+	const { data, loading, error, refetch } = useQuery(GetCommentsDocument, {
 		variables: {
 			refId,
 			type,
 		},
 		//context: { fetchOptions: { cache: "no-store" } },
-	});
+	})
 
-	useWindowFocus({ onFocus: refetch });
+	useWindowFocus({ onFocus: refetch })
 
 	if (loading) {
 		return (
@@ -38,12 +38,12 @@ export function Comments({ refId, type }: Props) {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 
-	if (error) return <div>Error loading comments...</div>;
+	if (error) return <div>Error loading comments...</div>
 
-	const { comments } = data;
+	const { comments } = data
 
 	return (
 		<div className="relative flex flex-1 flex-col border-t border-gray-150 dark:border-gray-800">
@@ -53,7 +53,7 @@ export function Comments({ refId, type }: Props) {
 			<div className="mx-auto flex w-full max-w-3xl flex-1 flex-col space-y-3 px-4 pt-8 pb-4 md:px-8">
 				<div className="flex flex-col space-y-3">
 					{comments?.length > 0 &&
-						comments.map((comment) => <Comment key={comment.id} refId={refId} type={type} comment={comment} />)}
+						comments.map(comment => <Comment key={comment.id} refId={refId} type={type} comment={comment} />)}
 					{comments?.length === 0 && (
 						<div className="text-quaternary block pt-12 pb-16 text-center">No comments yet...</div>
 					)}
@@ -62,5 +62,5 @@ export function Comments({ refId, type }: Props) {
 			<div ref={messagesEndRef} />
 			<SignInDialog>{({ openModal }) => <CommentForm refId={refId} type={type} openModal={openModal} />}</SignInDialog>
 		</div>
-	);
+	)
 }

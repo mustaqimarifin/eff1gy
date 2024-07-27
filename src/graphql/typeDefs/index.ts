@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
 export default gql`
   scalar Date
@@ -209,28 +209,28 @@ export default gql`
     endCursor: String
   }
 
-  type BookmarksConnection {
+  type BConnection {
     pageInfo: PageInfo
     edges: [BookmarkEdge]!
   }
 
-  type QuestionsConnection {
+  type QConnection {
     pageInfo: PageInfo
     edges: [QuestionEdge]!
   }
 
-  type StacksConnection {
+  type SConnection {
     pageInfo: PageInfo
     edges: [StackEdge]!
   }
 
   type Query {
     viewer: User
- user(username: String!): User
+    user(username: String!): User
     bookmark(id: ID!): Bookmark
-    bookmarks(first: Int, after: String, filter: BookmarkFilter): BookmarksConnection!
+    bookmarks(first: Int, after: String, filter: BookmarkFilter): BConnection!
     stack(slug: String!): Stack
-    stacks(first: Int, after: String): StacksConnection!
+    stacks(first: Int, after: String): SConnection!
     comment(id: ID!): Comment
     comments(refId: ID!, type: CommentType!): [Comment]!
     blogs: [Blog]!
@@ -242,16 +242,15 @@ export default gql`
     events: [Event]!
     event(id: ID!): Event
     question(id: ID!): Question
-    questions(first: Int, after: String, filter: QuestionFilter): QuestionsConnection!
+    questions(first: Int, after: String, filter: QuestionFilter): QConnection!
 
     tags: [Tag]!
   }
 
-    input EditUserInput {
+  input EditUserInput {
     username: String
     email: String
   }
-
 
   input AddStackInput {
     name: String!
@@ -334,4 +333,4 @@ export default gql`
     deletePost(id: ID!): Boolean
     addView(refId: ID!, type: ViewType!): Viewable
   }
-`;
+`

@@ -1,37 +1,37 @@
 /* eslint-disable react/no-unstable-context-value */
-"use client";
-import { usePathname } from "next/navigation";
-import { createContext, useEffect, useState } from "react";
+"use client"
+import { usePathname } from "next/navigation"
+import { createContext, useEffect, useState } from "react"
 
-import { ListContainer } from "~/components/ListDetail/ListContainer";
-import { QuestionStatus, useGetQuestionsSuspenseQuery } from "~/graphql/typeSlut";
-import { ListLoadMore } from "../ListDetail/ListLoadMore";
-import { LoadingSpinner } from "../LoadingSpinner";
-import { AMATitlebar } from "./AMATitlebar";
-import { QuestionListItem } from "./QuestionListItem";
+import { useQuery } from "@apollo/client"
+import { ListContainer } from "~/components/ListDetail/ListContainer"
+import { GetQuestionsDocument, QuestionStatus } from "~/gql/typeSlut"
+import { ListLoadMore } from "../ListDetail/ListLoadMore"
+import { LoadingSpinner } from "../LoadingSpinner"
+import { AMATitlebar } from "./AMATitlebar"
+import { QuestionListItem } from "./QuestionListItem"
 
 export const QuestionsContext = createContext({
 	filterPending: false,
 	setFilterPending: (bool: boolean) => {},
-});
+})
 
 export function QuestionsList() {
-	const path = usePathname();
+	const path = usePathname()
+	const [filterPending, setFilterPending] = useState(false)
+	const [isVisible, setIsVisible] = useState(false)
+	const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
-	const [filterPending, setFilterPending] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
-	const [scrollContainerRef, setScrollContainerRef] = useState(null);
-
-	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered;
-
-	const { data, error, fetchMore, refetch } = useGetQuestionsSuspenseQuery({
+	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered
+	//const { refetch, fetchMore } = useQueryRefHandlers(queryRef);
+	//////const { data, error } = useReadQuery<GetQuestionsQuery>(queryRef);
+	const { data, error, fetchMore, refetch } = useQuery(GetQuestionsDocument, {
 		variables: { filter: { status } },
-	});
-
+	})
 	// refetch questions whenever I toggle back and forth between answered/unanswered
 	useEffect(() => {
-		refetch();
-	}, [refetch]);
+		refetch()
+	}, [refetch])
 
 	function handleFetchMore() {
 		return fetchMore({
@@ -39,12 +39,12 @@ export function QuestionsList() {
 				after: data.questions.pageInfo.endCursor,
 				filter: { status },
 			},
-		});
+		})
 	}
 
 	useEffect(() => {
-		if (isVisible) handleFetchMore();
-	}, [isVisible]);
+		if (isVisible) handleFetchMore()
+	}, [isVisible])
 
 	if (!data?.questions) {
 		return (
@@ -54,14 +54,14 @@ export function QuestionsList() {
 					<LoadingSpinner />
 				</div>
 			</ListContainer>
-		);
+		)
 	}
 
-	if (error) return null;
+	if (error) return null
 
-	const { questions } = data;
+	const { questions } = data
 
-	const defaultContextValue = { filterPending, setFilterPending };
+	const defaultContextValue = { filterPending, setFilterPending }
 
 	return (
 		<QuestionsContext.Provider value={defaultContextValue}>
@@ -69,21 +69,21 @@ export function QuestionsList() {
 				<AMATitlebar scrollContainerRef={scrollContainerRef} />
 
 				<div className="lg:space-y-1 lg:p-3">
-					{questions.edges.map((question) => {
-						const active = path === question.node.id.toString(); // post ids are numbers
+					{questions.edges.map(question => {
+						const active = path === question.node.id.toString() // post ids are numbers
 
 						return (
 							<animate key={question.node.id}>
 								<QuestionListItem question={question.node} active={active} />
 							</animate>
-						);
+						)
 					})}
 
 					{data.questions.pageInfo.hasNextPage && <ListLoadMore setIsVisible={setIsVisible} />}
 				</div>
 			</ListContainer>
 		</QuestionsContext.Provider>
-	);
+	)
 }
 
 // const [showLoadMore, setShowLoadMore] =useState(true)

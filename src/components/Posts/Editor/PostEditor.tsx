@@ -1,16 +1,17 @@
-"use client";
+"use client"
 /* eslint-disable react/no-unstable-context-value */
 
-import * as React from "react";
+import * as React from "react"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { useGetPostQuery } from "~/graphql/typeSlut";
-import { PostEditorActions } from "./PostEditorActions";
-import { PostEditorComposer } from "./PostEditorComposer";
-import { PostEditorMetaSidebar } from "./PostEditorMetaSidebar";
-import { PostEditorPreview } from "./PostEditorPreview";
-import { PreviewSwitch } from "./PreviewSwitch";
+import { useQuery } from "@apollo/client"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { GetPostDocument } from "~/gql/typeSlut"
+import { PostEditorActions } from "./PostEditorActions"
+import { PostEditorComposer } from "./PostEditorComposer"
+import { PostEditorMetaSidebar } from "./PostEditorMetaSidebar"
+import { PostEditorPreview } from "./PostEditorPreview"
+import { PreviewSwitch } from "./PreviewSwitch"
 
 export const PostEditorContext = React.createContext({
 	draftState: {
@@ -25,41 +26,29 @@ export const PostEditorContext = React.createContext({
 	setSidebarIsOpen: (isOpen: boolean) => {},
 	isPreviewing: false,
 	setIsPreviewing: (isPreviewing: boolean) => {},
-});
+})
 
 export function PostEditor({ slug: propsSlug = "" }) {
-	const scrollContainerRef = React.useRef(null);
-	const { data } = useGetPostQuery({ variables: { slug: propsSlug } });
+	const scrollContainerRef = React.useRef(null)
+	const { data } = useQuery(GetPostDocument, { variables: { slug: propsSlug } })
 
 	const defaultDraftState = {
 		title: data?.post?.title || "",
 		text: data?.post?.text || "",
 		slug: data?.post?.slug || "",
 		excerpt: data?.post?.excerpt || "",
-	};
+	}
 
-	const [draftState, setDraftState] = React.useState(defaultDraftState);
-	const [isPreviewing, setIsPreviewing] = React.useState(false);
+	const [draftState, setDraftState] = React.useState(defaultDraftState)
+	const [isPreviewing, setIsPreviewing] = React.useState(false)
 
-	const existingPost = data?.post;
-	const [sidebarIsOpen, setSidebarIsOpen] = React.useState(false);
+	const existingPost = data?.post
+	const [sidebarIsOpen, setSidebarIsOpen] = React.useState(false)
 
 	React.useEffect(() => {
-		setDraftState(defaultDraftState);
-	}, []);
+		setDraftState(defaultDraftState)
+	}, [propsSlug])
 
-	/* const value = React.useMemo(
-    () => ({
-      existingPost,
-      draftState,
-      setDraftState,
-      sidebarIsOpen,
-      setSidebarIsOpen,
-      isPreviewing,
-      setIsPreviewing,
-    }),
-    [existingPost, draftState, sidebarIsOpen, isPreviewing],
-  )  */
 	const value = {
 		existingPost,
 		draftState,
@@ -68,7 +57,7 @@ export function PostEditor({ slug: propsSlug = "" }) {
 		setSidebarIsOpen,
 		isPreviewing,
 		setIsPreviewing,
-	};
+	}
 
 	return (
 		<PostEditorContext.Provider value={value}>
@@ -87,5 +76,5 @@ export function PostEditor({ slug: propsSlug = "" }) {
 			</Detail.Container>
 			<PostEditorMetaSidebar />
 		</PostEditorContext.Provider>
-	);
+	)
 }

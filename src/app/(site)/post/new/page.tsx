@@ -1,16 +1,17 @@
-"use client";
-import { Suspense } from "react";
-import { useViewerQuery } from "~/graphql/typeSlut";
+"use client"
+import { useQuery } from "@apollo/client"
+import { Suspense } from "react"
 
-import { ListDetailView } from "~/components/Layouts";
-import { Detail } from "~/components/ListDetail/Detail";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { PostEditor } from "~/components/Posts/Editor/PostEditor";
-import { PostsList } from "~/components/Posts/PostsList";
+import { ListDetailView } from "~/components/Layouts"
+import { Detail } from "~/components/ListDetail/Detail"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { PostEditor } from "~/components/Posts/Editor/PostEditor"
+import { PostsList } from "~/components/Posts/PostsList"
+import { ViewerDocument } from "~/gql/typeSlut"
 
 export default function NewPostPage() {
-	const { data } = useViewerQuery();
-	if (!data?.viewer?.isAdmin) return <Detail.Null />;
+	const { data } = useQuery(ViewerDocument)
+	if (!data?.viewer?.isAdmin) return <Detail.Null />
 	return (
 		<ListDetailView
 			list={<PostsList />}
@@ -21,7 +22,7 @@ export default function NewPostPage() {
 				</Suspense>
 			}
 		/>
-	);
+	)
 }
 
 /* import * as React from 'react'
@@ -35,7 +36,7 @@ import { useViewerQuery } from '~/graphql/types.generated'
 import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 function NewPostPage() {
-  const { data } = useViewerQuery()
+  const { data } = useQuery(ViewerDocument)
   if (!data?.viewer?.isAdmin) return <Detail.Null />
   return <PostEditor />
 }

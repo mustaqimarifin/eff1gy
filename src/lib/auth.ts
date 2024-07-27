@@ -1,12 +1,12 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
-import Twitter from "next-auth/providers/twitter";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import NextAuth from "next-auth"
+import GitHub from "next-auth/providers/github"
+import Google from "next-auth/providers/google"
+import Twitter from "next-auth/providers/twitter"
 
-import type { Provider } from "next-auth/providers";
-import { db } from "./db";
-import { nanoid } from "./functions";
+import type { Provider } from "next-auth/providers"
+import { db } from "./db"
+import { nanoid } from "./functions"
 
 const providers: Provider[] = [
 	GitHub({
@@ -16,7 +16,7 @@ const providers: Provider[] = [
 		allowDangerousEmailAccountLinking: true,
 	}),
 	Twitter,
-];
+]
 
 export const {
 	handlers: { GET, POST },
@@ -54,16 +54,16 @@ export const {
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.role = user.role;
-				token.sub = user.id;
+				token.role = user.role
+				token.sub = user.id
 			}
-			return token;
+			return token
 		},
 		async session({ session, user }) {
-			session.user.role = user.role;
-			session.userId = user.id;
-			session.isAdmin = user.isAdmin;
-			return session;
+			session.user.role = user.role
+			session.userId = user.id
+			session.isAdmin = user.isAdmin
+			return session
 		},
 	},
-});
+})

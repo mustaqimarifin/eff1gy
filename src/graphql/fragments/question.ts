@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
-import { UserInfoFragment } from "./user";
+import { UserInfoFrag } from "./user"
 
-export const QuestionCoreFragment = gql`
+export const QuestionCoreFrag = gql`
   fragment QuestionCore on Question {
     __typename
     id
@@ -15,17 +15,17 @@ export const QuestionCoreFragment = gql`
       ...UserInfo
     }
   }
-  ${UserInfoFragment}
-`;
+  ${UserInfoFrag}
+`
 
-export const QuestionListItemFragment = gql`
+export const QuestionListItemFrag = gql`
   fragment QuestionListItem on Question {
     ...QuestionCore
   }
-  ${QuestionCoreFragment}
-`;
+  ${QuestionCoreFrag}
+`
 
-export const QuestionDetailFragment = gql`
+export const QuestionDetailFrag = gql`
   fragment QuestionDetail on Question {
     ...QuestionCore
     description
@@ -36,12 +36,12 @@ export const QuestionDetailFragment = gql`
 
     viewerHasReacted
   }
-  ${QuestionCoreFragment}
-  ${UserInfoFragment}
-`;
+  ${QuestionCoreFrag}
+  ${UserInfoFrag}
+`
 
-export const QuestionsConnectionFragment = gql`
-  fragment QuestionsConnection on QuestionsConnection {
+export const QuestionsConnectionFrag = gql`
+  fragment QuestionsConnection on QConnection {
     pageInfo {
       hasNextPage
       totalCount
@@ -54,5 +54,5 @@ export const QuestionsConnectionFragment = gql`
       }
     }
   }
-  ${QuestionListItemFragment}
-`;
+  ${QuestionListItemFrag}
+`

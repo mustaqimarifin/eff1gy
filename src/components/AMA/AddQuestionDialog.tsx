@@ -1,5 +1,5 @@
-import { DialogComponent } from "~/components/Dialog";
-import { AddQuestionForm } from "./AddQuestionForm";
+import { DialogComponent } from "~/components/Dialog"
+import { AddQuestionForm } from "./AddQuestionForm"
 
 export function AddQuestionDialog({ trigger }) {
 	return (
@@ -8,5 +8,5 @@ export function AddQuestionDialog({ trigger }) {
 			title="Ask Me Anything"
 			modalContent={({ closeModal }) => <AddQuestionForm closeModal={closeModal} />}
 		/>
-	);
+	)
 }

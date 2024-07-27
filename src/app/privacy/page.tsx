@@ -1,7 +1,7 @@
-import PP from "~/components/Home/PP";
-import { Detail } from "~/components/ListDetail/Detail";
+import PP from "~/components/Home/PP"
+import { Detail } from "~/components/ListDetail/Detail"
 
-export const dynamic = "force-static";
+export const dynamic = "force-static"
 
 export default function Privacy() {
 	return (
@@ -452,5 +452,5 @@ export default function Privacy() {
 				</div>
 			</Detail.ContentContainer>
 		</PP>
-	);
+	)
 }

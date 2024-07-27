@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { MarkdownRenderer } from "~/components/MarkdownRenderer";
-import { PostEditorContext } from "./PostEditor";
+import { Detail } from "~/components/ListDetail/Detail"
+import { MarkdownRenderer } from "~/components/MarkdownRenderer"
+import { PostEditorContext } from "./PostEditor"
 
-export function PostEditorPreview({ children }: { children?: React.ReactNode }) {
-	const context = React.useContext(PostEditorContext);
-	const { draftState } = context;
-	const { title, text } = draftState;
+export function PostEditorPreview() {
+	const context = React.useContext(PostEditorContext)
+	const { draftState } = context
+	const { title, text } = draftState
 
 	return (
 		<Detail.ContentContainer>
@@ -19,5 +19,5 @@ export function PostEditorPreview({ children }: { children?: React.ReactNode }) 
 			<MarkdownRenderer children={text} className="prose mt-8" />
 			<div className="py-6" />
 		</Detail.ContentContainer>
-	);
+	)
 }

@@ -1,28 +1,29 @@
-"use client";
+"use client"
 
-import { useRef } from "react";
+import { useRef } from "react"
 
-import { Detail } from "~/components/ListDetail/Detail";
-import { TitleBar } from "~/components/ListDetail/TitleBar";
-import { useGetViewerWithSettingsQuery } from "~/graphql/typeSlut";
-import { UserSettingsFooter } from "./Footer";
-import { SignedOut } from "./SignedOut";
-import { UsernameForm } from "./Username";
+import { useQuery } from "@apollo/client"
+import { Detail } from "~/components/ListDetail/Detail"
+import { TitleBar } from "~/components/ListDetail/TitleBar"
+import { GetViewerWithSettingsDocument } from "~/gql/typeSlut"
+import { UserSettingsFooter } from "./Footer"
+import { SignedOut } from "./SignedOut"
+import { UsernameForm } from "./Username"
 
 export function UserSettings() {
-	const { data, loading } = useGetViewerWithSettingsQuery({
+	const { data, loading } = useQuery(GetViewerWithSettingsDocument, {
 		fetchPolicy: "network-only",
-	});
+	})
 
-	const titleRef = useRef(null);
-	const scrollContainerRef = useRef(null);
+	const titleRef = useRef(null)
+	const scrollContainerRef = useRef(null)
 
 	if (!data?.viewer && loading) {
-		return <Detail.Loading />;
+		return <Detail.Loading />
 	}
 
 	if (!data?.viewer) {
-		return <SignedOut />;
+		return <SignedOut />
 	}
 
 	return (
@@ -50,5 +51,5 @@ export function UserSettings() {
 				</div>
 			</Detail.ContentContainer>
 		</Detail.Container>
-	);
+	)
 }

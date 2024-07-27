@@ -1,4 +1,4 @@
-import details from "./details";
+import details from "./details"
 
 export default {
 	title: "Man Utd Fan Run By UNIFI",
@@ -20,4 +20,4 @@ export default {
 		"/events/starwars/starwars6.jpeg",
 	],
 	details,
-};
+}

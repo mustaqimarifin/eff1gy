@@ -100,4 +100,4 @@ export default [
 		title: "Reblog",
 		media: ["https://videodelivery.net/54e4651f851824c786596b47f822722a/downloads/default.mp4"],
 	},
-];
+]

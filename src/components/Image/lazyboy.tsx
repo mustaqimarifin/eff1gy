@@ -1,7 +1,7 @@
-import NextImage from "next/image";
-import { Suspense, cache } from "react";
+import NextImage from "next/image"
+import { Suspense, cache } from "react"
 
-import { Fade } from "./fade";
+import { Fade } from "./fade"
 
 function GhostImage(props) {
 	return (
@@ -10,7 +10,7 @@ function GhostImage(props) {
 				<NextImage {...props} className="rounded-lg" />
 			</Fade>
 		</Suspense>
-	);
+	)
 }
 
-export default cache(GhostImage);
+export default cache(GhostImage)

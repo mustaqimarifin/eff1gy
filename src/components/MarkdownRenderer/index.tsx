@@ -1,38 +1,38 @@
 /* eslint-disable react-dom/no-dangerously-set-innerhtml */
-import NextImage from "next/legacy/image";
-import Link from "next/link";
-import Markdown from "react-markdown";
+import NextImage from "next/legacy/image"
+import Link from "next/link"
+import Markdown from "react-markdown"
 // import rehypePresetMinify from 'rehype-preset-minify'
-import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
-import linkifyRegex from "remark-linkify-modifier";
-import { highlight } from "sugar-high";
-import { CLIENT_URL } from "~/graphql/constants";
-import { deepmerge } from "~/lib/transformers/merge";
-import { createHeading } from "../MDX/CreateHeading";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize"
+import linkifyRegex from "remark-linkify-modifier"
+import { highlight } from "sugar-high"
+import { CLIENT_URL } from "~/graphql/constants"
+import { deepmerge } from "~/lib/transformers/merge"
+import { createHeading } from "../MDX/CreateHeading"
 
 export function CustomLink1({ href, ...rest }: any) {
 	if (href.startsWith("#")) {
-		return <Link href={href} {...rest} />;
+		return <Link href={href} {...rest} />
 	}
 
 	if (href.startsWith("@")) {
-		return <Link href={`/u/${href.slice(1)}`} {...rest} />;
+		return <Link href={`/u/${href.slice(1)}`} {...rest} />
 	}
 	try {
-		const url = new URL(href);
+		const url = new URL(href)
 		if (url.origin === CLIENT_URL) {
-			return <Link href={href} {...rest} />;
+			return <Link href={href} {...rest} />
 		}
-		return <a target="_blank" rel="noopener" href={href} {...rest} />;
+		return <a target="_blank" rel="noopener" href={href} {...rest} />
 	} catch (e) {
-		console.error(e);
-		return <a target="_blank" rel="noopener" href={href} {...rest} />;
+		console.error(e)
+		return <a target="_blank" rel="noopener" href={href} {...rest} />
 	}
 }
 
 function Code({ children, ...props }) {
-	const codeHTML = highlight(children);
-	return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
+	const codeHTML = highlight(children)
+	return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
 function getComponentsForVariant(variant) {
@@ -49,7 +49,7 @@ function getComponentsForVariant(variant) {
 				h6: createHeading(6),
 				Callout,
 				code: Code,
-			};
+			}
 		}
 		// Questions, comments, descriptions on bookmarks, etc.
 		case "comment": {
@@ -62,15 +62,15 @@ function getComponentsForVariant(variant) {
 				h5: "p",
 				h6: "p",
 				code: Code,
-			};
+			}
 		}
 	}
 }
 function Image(props) {
-	return <NextImage {...props} quality={75} className="mdx-image rounded-md" />;
+	return <NextImage {...props} quality={75} className="mdx-image rounded-md" />
 }
 
-const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
 function triplet(e1: number, e2: number, e3: number) {
 	return (
@@ -78,29 +78,29 @@ function triplet(e1: number, e2: number, e3: number) {
 		keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
 		keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
 		keyStr.charAt(e3 & 63)
-	);
+	)
 }
 
 function rgbDataURL(r: number, g: number, b: number) {
 	return `data:image/gif;base64,R0lGODlhAQABAPAA${
 		triplet(0, r, g) + triplet(b, 255, 255)
-	}/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
+	}/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
 }
 
 function MDXImage(paragraph: { children?: boolean; node?: any }) {
-	const { node } = paragraph;
+	const { node } = paragraph
 
 	if (node.children[0].tagName === "img") {
-		const image = node.children[0];
-		const metastring = image.properties.alt;
-		const alt = metastring?.replace(/ *\{[^)]*\} */g, "");
-		const metaWidth = metastring.match(/\{([^}]+)x/);
-		const metaHeight = metastring.match(/x([^}]+)\}/);
-		const width = metaWidth ? metaWidth[1] : "768";
-		const height = metaHeight ? metaHeight[1] : "432";
-		const isPriority = metastring?.toLowerCase().match("{priority}");
-		const hasCaption = metastring?.toLowerCase().includes("{caption:");
-		const caption = metastring?.match(/\{caption: (.*?)\}/)?.pop();
+		const image = node.children[0]
+		const metastring = image.properties.alt
+		const alt = metastring?.replace(/ *\{[^)]*\} */g, "")
+		const metaWidth = metastring.match(/\{([^}]+)x/)
+		const metaHeight = metastring.match(/x([^}]+)\}/)
+		const width = metaWidth ? metaWidth[1] : "768"
+		const height = metaHeight ? metaHeight[1] : "432"
+		const isPriority = metastring?.toLowerCase().match("{priority}")
+		const hasCaption = metastring?.toLowerCase().includes("{caption:")
+		const caption = metastring?.match(/\{caption: (.*?)\}/)?.pop()
 
 		return (
 			<div className="postImgWrapper">
@@ -118,9 +118,9 @@ function MDXImage(paragraph: { children?: boolean; node?: any }) {
 					</div>
 				) : null}
 			</div>
-		);
+		)
 	}
-	return <p>{paragraph.children}</p>;
+	return <p>{paragraph.children}</p>
 }
 
 function Callout(props) {
@@ -129,11 +129,11 @@ function Callout(props) {
 			<div className="mr-4 flex w-4 items-center">{props.emoji}</div>
 			<div className="callout w-full">{props.children}</div>
 		</div>
-	);
+	)
 }
 
 export function MarkdownRenderer(props) {
-	const { children, variant = "longform", ...rest } = props;
+	const { children, variant = "longform", ...rest } = props
 
 	const schema = deepmerge(defaultSchema, {
 		tagNames: [...defaultSchema.tagNames, "sup", "sub", "section"],
@@ -142,9 +142,9 @@ export function MarkdownRenderer(props) {
 		},
 		clobberPrefix: "",
 		clobber: ["name", "id"],
-	});
+	})
 
-	const components = getComponentsForVariant(variant);
+	const components = getComponentsForVariant(variant)
 
 	return (
 		<Markdown
@@ -155,5 +155,5 @@ export function MarkdownRenderer(props) {
 		>
 			{children}
 		</Markdown>
-	);
+	)
 }

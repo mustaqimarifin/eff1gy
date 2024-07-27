@@ -1,46 +1,46 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
-import { Dropzone } from "~/components/Dropzone";
-import { Textarea } from "~/components/Input";
-import { Detail } from "~/components/ListDetail/Detail";
-import { PostEditorContext } from "./PostEditor";
+import { Dropzone } from "~/components/Dropzone"
+import { Textarea } from "~/components/Input"
+import { Detail } from "~/components/ListDetail/Detail"
+import { PostEditorContext } from "./PostEditor"
 
 export function PostEditorComposer() {
-	const context = React.useContext(PostEditorContext);
-	const { draftState, setDraftState } = context;
-	const uploadingImagePlaceholder = `![](Uploading...)`;
+	const context = React.useContext(PostEditorContext)
+	const { draftState, setDraftState } = context
+	const uploadingImagePlaceholder = `![](Uploading...)`
 
 	function handleTitleChange(e) {
-		setDraftState((draft) => ({ ...draft, title: e.target.value }));
+		setDraftState(draft => ({ ...draft, title: e.target.value }))
 	}
 
 	function handleTextChange(e) {
-		setDraftState((draft) => ({ ...draft, text: e.target.value }));
+		setDraftState(draft => ({ ...draft, text: e.target.value }))
 	}
 
 	function onUploadComplete(url) {
-		const image = `![](${url})`;
-		setDraftState((draft) => ({
+		const image = `![](${url})`
+		setDraftState(draft => ({
 			...draft,
 			text: draft.text.replace(uploadingImagePlaceholder, image),
-		}));
+		}))
 	}
 
 	function onUploadFailed() {
-		setDraftState((draft) => ({
+		setDraftState(draft => ({
 			...draft,
 			text: draft.text.replace(uploadingImagePlaceholder, ""),
-		}));
+		}))
 	}
 
 	function onUploadStarted() {
-		setDraftState((draft) => ({
+		setDraftState(draft => ({
 			...draft,
 			// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 			text: (draft.text += uploadingImagePlaceholder),
-		}));
+		}))
 	}
 
 	return (
@@ -55,8 +55,8 @@ export function PostEditorComposer() {
 						className="block w-full p-0 text-2xl font-bold border-none composer text-primary focus:border-0 focus:outline-none focus:ring-0 dark:bg-black md:text-3xl"
 					/>
 					<Textarea
-						rows={20}
-						maxRows={2000}
+						rows={80}
+						//maxRows={2000}
 						value={draftState.text}
 						onChange={handleTextChange}
 						placeholder="Write a post..."
@@ -65,5 +65,5 @@ export function PostEditorComposer() {
 				</Detail.Header>
 			</Detail.ContentContainer>
 		</Dropzone>
-	);
+	)
 }

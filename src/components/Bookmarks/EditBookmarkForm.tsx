@@ -1,14 +1,20 @@
-"use client";
-import { Link2Icon } from "lucide-react";
-import Link from "next/link";
-import { useReducer } from "react";
+"use client"
+import { useMutation } from "@apollo/client"
+import { Link2Icon } from "lucide-react"
+import Link from "next/link"
+import { useReducer } from "react"
 
-import Button, { DeleteButton } from "~/components/Button";
-import { Input, Textarea } from "~/components/Input";
-import { TagPicker } from "~/components/Tag/TagPicker";
-import { GET_BOOKMARK, GET_BOOKMARKS } from "~/graphql/queries/bookmarks";
-import type { GetBookmarksQuery } from "~/graphql/typeSlut";
-import { useDeleteBookmarkMutation, useEditBookmarkMutation } from "~/graphql/typeSlut";
+import Button, { DeleteButton } from "~/components/Button"
+import { Input, Textarea } from "~/components/Input"
+import { TagPicker } from "~/components/Tag/TagPicker"
+import {
+	DeleteBookmarkDocument,
+	EditBookmarkDocument,
+	GetBookmarkDocument,
+	GetBookmarksDocument,
+	type GetBookmarksQueryVariables,
+} from "~/gql/typeSlut"
+import type { GetBookmarksQuery } from "~/gql/typeSlut"
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
 	const initialState = {
@@ -17,7 +23,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 		description: bookmark.description || "",
 		tag: bookmark.tags[0]?.name || "reading",
 		faviconUrl: bookmark.faviconUrl,
-	};
+	}
 
 	function reducer(state, action) {
 		switch (action.type) {
@@ -26,43 +32,43 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 					...state,
 					error: "",
 					title: action.value,
-				};
+				}
 			}
 			case "edit-favicon": {
 				return {
 					...state,
 					error: "",
 					faviconUrl: action.value,
-				};
+				}
 			}
 			case "edit-description": {
 				return {
 					...state,
 					error: "",
 					description: action.value,
-				};
+				}
 			}
 			case "edit-tag": {
 				return {
 					...state,
 					error: "",
 					tag: action.value,
-				};
+				}
 			}
 			case "error": {
 				return {
 					...state,
 					error: action.value,
-				};
+				}
 			}
 			default:
-				throw new Error();
+				throw new Error()
 		}
 	}
 
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState)
 
-	const [editBookmark] = useEditBookmarkMutation({
+	const [editBookmark] = useMutation(EditBookmarkDocument, {
 		variables: {
 			id: bookmark.id,
 			data: {
@@ -84,84 +90,86 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 			},
 		},
 		onError({ message }) {
-			const value = message.replace("GraphQL error:", "");
-			dispatch({ type: "error", value });
+			const value = message.replace("GraphQL error:", "")
+			dispatch({ type: "error", value })
 		},
-	});
+	})
 
-	const [handleDelete] = useDeleteBookmarkMutation({
+	const [handleDelete] = useMutation(DeleteBookmarkDocument, {
 		variables: { id: bookmark.id },
 		optimisticResponse: {
 			__typename: "Mutation",
 			deleteBookmark: true,
 		},
 		update(cache) {
-			const { bookmarks } = cache.readQuery<GetBookmarksQuery>({
-				query: GET_BOOKMARKS,
-			});
+			const { bookmarks } = cache.readQuery<GetBookmarksQuery, GetBookmarksQueryVariables>({
+				query: GetBookmarkDocument,
+			})
 
 			cache.writeQuery({
-				query: GET_BOOKMARK,
+				query: GetBookmarkDocument,
 				variables: { id: bookmark.id },
 				data: {
 					bookmark: null,
+					__typename: "Query",
 				},
-			});
+			})
 
 			if (bookmarks) {
 				cache.writeQuery({
-					query: GET_BOOKMARKS,
+					query: GetBookmarksDocument,
 					data: {
+						__typename: "Query",
 						bookmarks: {
 							...bookmarks,
-							edges: bookmarks.edges.filter((o) => o.node.id !== bookmark.id),
+							edges: bookmarks.edges.filter(o => o.node.id !== bookmark.id),
 						},
 					},
-				});
+				})
 			}
 		},
-	});
+	})
 
-	function handleSave(e) {
-		e.preventDefault();
+	function handleSave(e: { preventDefault: () => void }) {
+		e.preventDefault()
 
 		if (!state.title || state.title.length === 0) {
 			return dispatch({
 				type: "error",
 				value: "Bookmark must have a title",
-			});
+			})
 		}
 
-		editBookmark();
-		return closeModal();
+		editBookmark()
+		return closeModal()
 	}
 
-	function onTitleChange(e) {
-		return dispatch({ type: "edit-title", value: e.target.value });
+	function onTitleChange(e: { target: { value: any } }) {
+		return dispatch({ type: "edit-title", value: e.target.value })
 	}
 
-	function onFaviconChange(e) {
-		return dispatch({ type: "edit-favicon", value: e.target.value });
+	function onFaviconChange(e: { target: { value: any } }) {
+		return dispatch({ type: "edit-favicon", value: e.target.value })
 	}
 
 	function onKeyDown(e) {
 		if (e.keyCode === 13 && e.metaKey) {
-			return handleSave(e);
+			return handleSave(e)
 		}
 	}
 
 	function onDescriptionChange(e) {
-		return dispatch({ type: "edit-description", value: e.target.value });
+		return dispatch({ type: "edit-description", value: e.target.value })
 	}
 
 	function onTagChange(val) {
-		dispatch({ type: "edit-tag", value: val });
+		dispatch({ type: "edit-tag", value: val })
 	}
 
-	const tagFilter = (t) => {
-		const allowedBookmarkTags = ["website", "reading", "portfolio"];
-		return allowedBookmarkTags.includes(t.name);
-	};
+	const tagFilter = t => {
+		const allowedBookmarkTags = ["website", "reading", "portfolio"]
+		return allowedBookmarkTags.includes(t.name)
+	}
 
 	return (
 		<div className="p-4">
@@ -199,8 +207,8 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 			<div className="flex justify-between pt-24">
 				<DeleteButton
 					onClick={() => {
-						closeModal();
-						handleDelete();
+						closeModal()
+						handleDelete()
 					}}
 				>
 					Delete
@@ -210,5 +218,5 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

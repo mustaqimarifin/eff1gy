@@ -1,5 +1,5 @@
-import { DialogComponent } from "~/components/Dialog";
-import { EditQuestionForm } from "./EditQuestionForm";
+import { DialogComponent } from "~/components/Dialog"
+import { EditQuestionForm } from "./EditQuestionForm"
 
 export function EditQuestionDialog({ trigger, question }) {
 	return (
@@ -8,5 +8,5 @@ export function EditQuestionDialog({ trigger, question }) {
 			title="Edit question"
 			modalContent={({ closeModal }) => <EditQuestionForm question={question} closeModal={closeModal} />}
 		/>
-	);
+	)
 }

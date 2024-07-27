@@ -1,38 +1,34 @@
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
 
-import Button from "~/components/Button";
-import { Input } from "~/components/Input";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import { TagPicker } from "~/components/Tag/TagPicker";
-import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks";
-import type { GetBookmarksQuery } from "~/graphql/typeSlut";
-import { useAddBookmarkMutation, useGetBookmarksQuery } from "~/graphql/typeSlut";
-import { Nuts } from "../Provider/Toaster";
+import { useMutation, useQuery } from "@apollo/client"
+import Button from "~/components/Button"
+import { Input } from "~/components/Input"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
+import { TagPicker } from "~/components/Tag/TagPicker"
+import { AddBookmarkDocument, GetBookmarkDocument, GetBookmarksDocument, type GetBookmarksQuery } from "~/gql/typeSlut"
+import { Nuts } from "../Provider/Toaster"
 
 export function AddBookmarkForm({ closeModal }) {
-	const [url, setUrl] = useState("");
-	const [tag, setTag] = useState("web");
-	const router = useRouter();
-	const path = usePathname();
+	const [url, setUrl] = useState("")
+	const [tag, setTag] = useState("web")
+	const router = useRouter()
+	const path = usePathname()
 
-	const query = GET_BOOKMARKS;
+	const query = GetBookmarksDocument
 
-	const [addBookmark, { loading }] = useAddBookmarkMutation();
-
-	// fetch all bookmarks in the background so that we can update the cache
-	// immediately when the bookmark is saved
-	const _ = useGetBookmarksQuery();
+	const [addBookmark, { loading }] = useMutation(AddBookmarkDocument)
+	const _ = useQuery(GetBookmarkDocument)
 
 	function onSubmit(e) {
-		e.preventDefault();
+		e.preventDefault()
 
 		addBookmark({
 			variables: { data: { url, tag } },
 			update(cache, { data: { addBookmark } }) {
 				const { bookmarks } = cache.readQuery<GetBookmarksQuery>({
 					query,
-				});
+				})
 				return cache.writeQuery({
 					query,
 					data: {
@@ -47,12 +43,12 @@ export function AddBookmarkForm({ closeModal }) {
 								...bookmarks.edges,
 							],
 						},
+						__typename: "Query",
 					},
-				});
+				})
 			},
 			onError(error) {
-				// eslint-disable-next-line prettier/prettier
-				error;
+				error
 			},
 		}).then(
 			({
@@ -60,34 +56,34 @@ export function AddBookmarkForm({ closeModal }) {
 					addBookmark: { id },
 				},
 			}) => {
-				closeModal();
+				closeModal()
 				// if I'm already viewing bookmarks, push me to the one I just created.
 				// otherwise, this was triggered from the sidebar shortcut and
 				// don't redirect
 				if (path.includes("/bookmarks")) {
-					return router.push(`/bookmarks/${id}`);
+					return router.push(`/bookmarks/${id}`)
 				}
 				Nuts.success("Bookmark created!", {
 					icon: "🙀 ",
-				});
+				})
 			},
-		);
+		)
 	}
 
 	function onUrlChange(e) {
-		return setUrl(e.target.value);
+		return setUrl(e.target.value)
 	}
 
 	function onKeyDown(e) {
 		if (e.keyCode === 13 && e.metaKey) {
-			return onSubmit(e);
+			return onSubmit(e)
 		}
 	}
 
-	const tagFilter = (t) => {
-		const allowedBookmarkTags = ["web", "lol", "portfolio"];
-		return allowedBookmarkTags.includes(t.name);
-	};
+	const tagFilter = t => {
+		const allowedBookmarkTags = ["web", "lol", "portfolio"]
+		return allowedBookmarkTags.includes(t.name)
+	}
 
 	return (
 		<form className="space-y-3 p-4" onSubmit={onSubmit}>
@@ -101,5 +97,5 @@ export function AddBookmarkForm({ closeModal }) {
 				</Button>
 			</div>
 		</form>
-	);
+	)
 }
