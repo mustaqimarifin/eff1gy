@@ -1,12 +1,17 @@
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { useMutation, useQuery } from "@apollo/client"
 import Button from "~/components/Button"
 import { Input } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { TagPicker } from "~/components/Tag/TagPicker"
-import { AddBookmarkDocument, GetBookmarkDocument, GetBookmarksDocument, type GetBookmarksQuery } from "~/gql/typeSlut"
+import {
+	GetBookmarksDocument,
+	type GetBookmarksQuery,
+	useAddBookmarkMutation,
+	useGetBookmarkQuery,
+} from "~/gql/typeSlut"
+import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks"
 import { Nuts } from "../Provider/Toaster"
 
 export function AddBookmarkForm({ closeModal }) {
@@ -17,8 +22,8 @@ export function AddBookmarkForm({ closeModal }) {
 
 	const query = GetBookmarksDocument
 
-	const [addBookmark, { loading }] = useMutation(AddBookmarkDocument)
-	const _ = useQuery(GetBookmarkDocument)
+	const [addBookmark, { loading }] = useAddBookmarkMutation()
+	const _ = GET_BOOKMARKS
 
 	function onSubmit(e) {
 		e.preventDefault()
@@ -88,9 +93,7 @@ export function AddBookmarkForm({ closeModal }) {
 	return (
 		<form className="space-y-3 p-4" onSubmit={onSubmit}>
 			<Input type="text" placeholder="Add a url..." value={url} onChange={onUrlChange} onKeyDown={onKeyDown} />
-
 			<TagPicker filter={tagFilter} defaultValue={tag} onChange={setTag} />
-
 			<div className="flex justify-end pt-24">
 				<Button disabled={!url || loading} onClick={onSubmit}>
 					{loading ? <LoadingSpinner /> : "Save"}

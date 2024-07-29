@@ -1,45 +1,27 @@
 "use client"
 
 import { useParams, usePathname, useRouter } from "next/navigation"
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useMemo, useState } from "react"
 
-import { useQuery } from "@apollo/client"
+import type { QueryRef } from "@apollo/client"
+import React from "react"
 import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { GetBookmarksDocument } from "~/gql/typeSlut"
+import { useGetBookmarksQuery } from "~/gql/typeSlut"
 import { PAGINATION_AMOUNT } from "~/graphql/constants"
 import { ListLoadMore } from "../ListDetail/ListLoadMore"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { BookmarksListItem } from "./BookmarkListItem"
 import { BookmarksTitlebar } from "./BookmarksTitlebar"
 
-/* export function LayoutGroup({ children }) {
-  useEffect(() => {
-    animate('#bl', { x: 0 }, { easing: glide({ velocity: -500 }) })
-  }, [])
-
-  return <div id="bl">{children}</div>
-} */
-/* export function PGroup({ children }) {
-  useEffect(() => {
-    inView('section', ({ target }) => {
-      animate(
-        target.querySelector('span'),
-        { opacity: 1, transform: 'none' },
-        { delay: 0.2, duration: 0.9, easing: [0.17, 0.55, 0.55, 1] }
-      )
-    }),
-      []
-  })
-
-  return <div id="section">{children}</div>
-}
- */
 export const BookmarksContext = createContext({
 	tag: null,
 	setTag: (tag: string) => undefined,
 })
 
-export function BookmarksList() {
+type BKList = {
+	queryRef?: QueryRef
+}
+export function BookmarksList({ queryRef }: BKList) {
 	const router = useRouter()
 	const path = usePathname()
 	const { tagQuery } = useParams()
@@ -54,14 +36,20 @@ export function BookmarksList() {
 				filter: { tag },
 			}
 		: null
-	const { error, data, fetchMore } = useQuery(GetBookmarksDocument, {
+
+	//const { fetchMore } = useQueryRefHandlers(queryRef)
+	//const { data, error } = useReadQuery(queryRef)
+	const { data, loading, fetchMore, error } = useGetBookmarksQuery({
 		variables,
 	})
 
-	const defaultContextValue = {
-		tag,
-		setTag,
-	}
+	const value = React.useMemo(
+		() => ({
+			tag,
+			setTag,
+		}),
+		[tag, setTag],
+	)
 
 	function handleFetchMore() {
 		return fetchMore({
@@ -71,7 +59,6 @@ export function BookmarksList() {
 			},
 		})
 	}
-
 	// scroll to the top of the list whenever the filters are changed
 	useEffect(() => {
 		if (scrollContainerRef) scrollContainerRef.current.scrollTo(0, 0)
@@ -86,7 +73,7 @@ export function BookmarksList() {
 		if (tagQuery) router.push(path)
 	}, [tagQuery, path])
 
-	if (!data?.bookmarks) {
+	if (loading && !data?.bookmarks) {
 		return (
 			<ListContainer onRef={setScrollContainerRef}>
 				<BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
@@ -101,7 +88,7 @@ export function BookmarksList() {
 	const { bookmarks } = data
 
 	return (
-		<BookmarksContext.Provider value={defaultContextValue}>
+		<BookmarksContext.Provider value={value}>
 			<ListContainer data-cy="bookmarks-list" onRef={setScrollContainerRef}>
 				<BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
 				<div>

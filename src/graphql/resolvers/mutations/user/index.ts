@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql"
 
-import type { MutationEditUserArgs } from "~/gql/typeSlut"
+import type { EditUserMutationVariables } from "~/gql/typeSlut"
 import type { Context } from "~/graphql/context"
 import { emailRX, nameRX } from "~/lib/functions"
 
@@ -20,7 +20,7 @@ export async function deleteUser(_, __, ctx: Context) {
 		.then(() => true)
 }
 
-export async function editUser(_, args: MutationEditUserArgs, ctx: Context) {
+export async function editUser(_, args: EditUserMutationVariables, ctx: Context) {
 	const { db, viewer } = ctx
 	const { data } = args
 	const { username, email } = data!

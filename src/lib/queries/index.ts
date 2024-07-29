@@ -1,3 +1,5 @@
+import got from "got"
+import ky, { type KyResponse } from "ky"
 import { unstable_noStore as noStore } from "next/cache"
 const client_id = process.env.SPOTIFY_CLIENT_ID as string
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET as string
@@ -8,8 +10,12 @@ const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-pla
 const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks`
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`
 
+const searchParams = new URLSearchParams({
+	grant_type: "refresh_token",
+	refresh_token,
+})
 async function getAccessToken() {
-	const response = await fetch(TOKEN_ENDPOINT, {
+	const data = await fetch(TOKEN_ENDPOINT, {
 		method: "POST",
 		headers: {
 			Authorization: `Basic ${basic}`,
@@ -21,7 +27,7 @@ async function getAccessToken() {
 		}),
 	})
 
-	return response.json()
+	return data.json()
 }
 
 export async function getNowPlaying() {

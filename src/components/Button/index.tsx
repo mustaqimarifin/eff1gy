@@ -1,12 +1,12 @@
 import Link from "next/link"
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react"
-import { forwardRef } from "react"
+import { forwardRef, memo } from "react"
 
 interface BaseButtonProps {
-	[key: string]: unknown
+	[key: string]: any
 	href?: string | null
 	as?: string | null
-	size: string
+	size: string | null
 	disabled?: boolean
 }
 
@@ -16,7 +16,8 @@ type ButtonAsLink = BaseButtonProps & AnchorHTMLAttributes<HTMLAnchorElement>
 
 type ButtonProps = ButtonAsButton | ButtonAsLink
 
-function BaseButton({ href, as, forwardedRef = null, ...rest }) {
+const BaseButton = memo<BaseButtonProps>(props => {
+	const { href, as, forwardedRef = null, ...rest } = props
 	if (href?.startsWith("/")) {
 		return <Link href={href} as={as} {...rest} />
 	}
@@ -24,7 +25,7 @@ function BaseButton({ href, as, forwardedRef = null, ...rest }) {
 		return <a ref={forwardedRef} href={href} {...rest} />
 	}
 	return <button ref={forwardedRef} {...rest} />
-}
+})
 
 const baseClasses =
 	"flex space-x-2 flex-none items-center justify-center cursor-pointer leading-none transition-all font-semibold"

@@ -1,27 +1,23 @@
 import { GraphQLError } from "graphql"
 
 import type {
-	MutationAddStackArgs,
-	MutationDeleteStackArgs,
-	MutationEditStackArgs,
-	MutationToggleStackUserArgs,
+	AddStackMutationVariables,
+	DeleteStackMutationVariables,
+	EditStackMutationVariables,
+	ToggleStackUserMutationVariables,
 } from "~/gql/typeSlut"
 import type { Context } from "~/graphql/context"
 import { slugify, urlRX } from "~/lib/functions"
 // import { graphcdn } from "~/lib/graphcdn";
 
-export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
+export async function editStack(_, args: EditStackMutationVariables, ctx: Context) {
 	const { id, data } = args
 	const { name, url, tag, description, image } = data
 	const { db } = ctx
 
 	if (!name || name.length === 0) throw new GraphQLError("Stack must have a name")
-
 	if (!url || url.length === 0) throw new GraphQLError("Stack must have a URL")
 
-	/*
-    Keep our image storage somewhat clean by deleting unused images
-  */
 	const old = await db.stack.findUnique({ where: { id } })
 
 	if (old.image !== data.image) {
@@ -46,6 +42,8 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 	}
 
 	await db.stack.update({
+		relationLoadStrategy: "query",
+
 		where: { id },
 		data: {
 			tags: {
@@ -65,6 +63,7 @@ export async function editStack(_, args: MutationEditStackArgs, ctx: Context) {
 
 	return await db.stack
 		.update({
+			relationLoadStrategy: "query",
 			where: { id },
 			data: {
 				name,
@@ -85,7 +84,7 @@ graphcdn.purgeList('stacks')
 		})
 }
 
-export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
+export async function addStack(_, args: AddStackMutationVariables, ctx: Context) {
 	const { data } = args
 	const { url, name, description, image, tag } = data
 	const { db } = ctx
@@ -103,6 +102,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
 
 	return await db.stack
 		.create({
+			relationLoadStrategy: "query",
 			data: {
 				name,
 				url,
@@ -123,7 +123,7 @@ export async function addStack(_, args: MutationAddStackArgs, ctx: Context) {
 		})
 }
 
-export async function deleteStack(_, args: MutationDeleteStackArgs, ctx: Context) {
+export async function deleteStack(_, args: DeleteStackMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db } = ctx
 
@@ -161,7 +161,7 @@ export async function deleteStack(_, args: MutationDeleteStackArgs, ctx: Context
 		})
 }
 
-export async function toggleStackUser(_: any, args: MutationToggleStackUserArgs, ctx: Context) {
+export async function toggleStackUser(_: any, args: ToggleStackUserMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db, viewer } = ctx
 
@@ -172,6 +172,8 @@ export async function toggleStackUser(_: any, args: MutationToggleStackUserArgs,
 
 	if (stackUsers.users.find(s => s.id === viewer?.id)) {
 		const data = await db.stack.update({
+			relationLoadStrategy: "query",
+
 			where: { id },
 			data: {
 				users: {
@@ -191,6 +193,8 @@ export async function toggleStackUser(_: any, args: MutationToggleStackUserArgs,
 		}
 	}
 	const data = await db.stack.update({
+		relationLoadStrategy: "query",
+
 		where: { id },
 		data: {
 			users: {

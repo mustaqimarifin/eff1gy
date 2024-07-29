@@ -1,4 +1,4 @@
-import { type GetQuestionsQueryVariables, type QueryQuestionArgs, type Question, QuestionStatus } from "~/gql/typeSlut"
+import { type GetQuestionsQueryVariables, type QueryQuestionArgs, type Question, type QuestionResolvers, QuestionStatus } from "~/gql/typeSlut"
 import { PAGINATION_AMOUNT } from "~/graphql/constants"
 import type { Context } from "~/graphql/context"
 
@@ -35,7 +35,8 @@ export async function getQuestion(_: any, { id }: QueryQuestionArgs, ctx: Contex
 }
 
 export async function getQuestions(_: any, args: GetQuestionsQueryVariables, ctx: Context) {
-	const { first = PAGINATION_AMOUNT, after = undefined, filter = { status: QuestionStatus.Answered } } = args
+	//const { first = PAGINATION_AMOUNT, after = undefined, filter = { status: QuestionStatus.Answered } } = args
+	const { first = PAGINATION_AMOUNT, after = undefined, filter = { answered: true } } = args
 	const { db, viewer } = ctx
 	const nullResults = {
 		pageInfo: {
@@ -46,7 +47,11 @@ export async function getQuestions(_: any, args: GetQuestionsQueryVariables, ctx
 		edges: [],
 	}
 
-	if (!viewer?.isAdmin && filter?.status === QuestionStatus.Pending) {
+	/* 	if (!viewer?.isAdmin && filter?.status === QuestionStatus.Pending) {
+		return nullResults
+	} */
+
+	if (!viewer?.isAdmin && filter?.answered === false) {
 		return nullResults
 	}
 
@@ -63,14 +68,14 @@ export async function getQuestions(_: any, args: GetQuestionsQueryVariables, ctx
     findMany call.
   */
 	let where
-	if (filter?.status === QuestionStatus.Answered) {
+	if (filter?.answered === true) {
 		where = {
 			comments: {
 				some: {},
 			},
 		}
 	}
-	if (filter?.status === QuestionStatus.Pending) {
+	if (filter?.answered === false) {
 		where = {
 			comments: {
 				none: {},

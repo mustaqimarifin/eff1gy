@@ -3,9 +3,8 @@
 import { usePathname } from "next/navigation"
 import { createContext, useEffect, useState } from "react"
 
-import { useQuery } from "@apollo/client"
 import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { GetQuestionsDocument, QuestionStatus } from "~/gql/typeSlut"
+import { useGetQuestionsQuery } from "~/gql/typeSlut"
 import { ListLoadMore } from "../ListDetail/ListLoadMore"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { AMATitlebar } from "./AMATitlebar"
@@ -22,11 +21,13 @@ export function QuestionsList() {
 	const [isVisible, setIsVisible] = useState(false)
 	const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
-	const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered
+	//const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered
+	const answered = filterPending
+
 	//const { refetch, fetchMore } = useQueryRefHandlers(queryRef);
 	//////const { data, error } = useReadQuery<GetQuestionsQuery>(queryRef);
-	const { data, error, fetchMore, refetch } = useQuery(GetQuestionsDocument, {
-		variables: { filter: { status } },
+	const { data, error, fetchMore, refetch } = useGetQuestionsQuery({
+		variables: { filter: { answered } },
 	})
 	// refetch questions whenever I toggle back and forth between answered/unanswered
 	useEffect(() => {
@@ -37,7 +38,7 @@ export function QuestionsList() {
 		return fetchMore({
 			variables: {
 				after: data.questions.pageInfo.endCursor,
-				filter: { status },
+				filter: { answered },
 			},
 		})
 	}

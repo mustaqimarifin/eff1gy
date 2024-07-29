@@ -98,6 +98,7 @@ function getReactionButton(bookmark) {
 
 export function BookmarkActions({ bookmark }) {
 	const { data } = useQuery(ViewerDocument)
+
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(bookmark)}

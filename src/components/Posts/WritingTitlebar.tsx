@@ -6,6 +6,7 @@ import SegmentedControl from "../UI/SegmentedController"
 import { WritingContext } from "./PostsList"
 
 import { useQuery } from "@apollo/client"
+import { useSession } from "next-auth/react"
 import { GhostButton } from "~/components/Button"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 import { ViewerDocument } from "~/gql/typeSlut"
@@ -30,6 +31,7 @@ export function WritingTitlebar({ scrollContainerRef }) {
 
 	function getChildren() {
 		const { data } = useQuery(ViewerDocument)
+
 		const { setFilter, filter } = useContext(WritingContext)
 		if (data?.viewer?.isAdmin) {
 			return (

@@ -15,7 +15,7 @@ interface StackProps {
 
 export default async function StackPage(props: StackProps) {
 	const { slug } = props.params
-	await query({ query: GET_VIEWER })
+	//await query({ query: GET_VIEWER })
 	return (
 		<ListDetailView
 			list={<StackList />}

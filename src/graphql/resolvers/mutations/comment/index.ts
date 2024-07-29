@@ -2,10 +2,10 @@ import { GraphQLError } from "graphql"
 
 import { Nuts } from "~/components/Provider/Toaster"
 import {
+	type AddCommentMutationVariables,
 	CommentType,
-	type MutationAddCommentArgs,
-	type MutationDeleteCommentArgs,
-	type MutationEditCommentArgs,
+	type DeleteCommentMutationVariables,
+	type EditCommentMutationVariables,
 } from "~/gql/typeSlut"
 import { CLIENT_URL } from "~/graphql/constants"
 import type { Context } from "~/graphql/context"
@@ -15,10 +15,10 @@ import type { Context } from "~/graphql/context"
 // import { graphcdn } from '~/lib/graphcdn'
 // import { emailMe } from '~/lib/postmark'
 
-export async function editComment(_: any, args: MutationEditCommentArgs, ctx: Context) {
+export async function editComment(_: any, args: EditCommentMutationVariables, ctx: Context) {
 	const { id, text } = args
 	const { db, viewer } = ctx
-
+	//const session = await auth()
 	if (!text || text.length === 0) throw new GraphQLError("Comment can’t be blank")
 
 	const comment = await db.comment.findUnique({
@@ -49,7 +49,7 @@ export async function editComment(_: any, args: MutationEditCommentArgs, ctx: Co
 /*     query: INSERT INTO "public"."Comment" ("createdAt","updatedAt","text","userId","postId") VALUES ($1,$2,$3,$4,$5) RETURNING "public"."Comment"."id", "public"."Comment"."createdAt", "public"."Comment"."updatedAt", "public"."Comment"."text", "public"."Comment"."userId", "public"."Comment"."bookmarkId", "public"."Comment"."questionId", "public"."Comment"."stackId", "public"."Comment"."parentId", "public"."Comment"."blogId", "public"."Comment"."postId", "public"."Comment"."eventId", "public"."Comment"."caseId" 
     --params: ["2024-07-25 00:00:21.195 UTC","2024-07-25 00:00:21.195 UTC","lola","trF8g","ptI0J"]
      */
-export async function addComment(_: any, args: MutationAddCommentArgs, ctx: Context) {
+export async function addComment(_: any, args: AddCommentMutationVariables, ctx: Context) {
 	const { refId, type, text, parentId } = args
 	const { viewer, db } = ctx
 
@@ -137,7 +137,7 @@ export async function addComment(_: any, args: MutationAddCommentArgs, ctx: Cont
 	})
 	return comment
 }
-export async function deleteComment(_: any, args: MutationDeleteCommentArgs, ctx: Context) {
+export async function deleteComment(_: any, args: DeleteCommentMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db, viewer } = ctx
 

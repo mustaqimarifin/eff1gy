@@ -1,7 +1,5 @@
 import type { ReactElement, ReactNode } from "react"
-
 import { Sidebar } from "~/components/Sidebar"
-import { cx } from "~/lib/transformers"
 
 interface Props {
 	list?: ReactElement | null
@@ -31,7 +29,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
 	)
 }
 
-export function FunContainer(props) {
+/* export function FunContainer(props) {
 	return (
 		<div
 			className={cx(
@@ -45,3 +43,4 @@ export function FunContainer(props) {
 		</div>
 	)
 }
+ */

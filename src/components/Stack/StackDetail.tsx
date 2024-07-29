@@ -5,7 +5,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
 
-import { type QueryRef, useQueryRefHandlers, useReadQuery } from "@apollo/client"
 import { PrimaryButton } from "~/components/Button"
 import { Comments } from "~/components/Comments"
 import { Detail } from "~/components/ListDetail/Detail"
@@ -20,19 +19,16 @@ import { StackUsedBy } from "./StackUsedBy"
 type DetailProps = {
 	slug: string
 }
-export function StackDetail({ slug }) {
-	//const { refetch } = useQueryRefHandlers(queryRef);
-	//const { data } = useReadQuery(queryRef);
+export function StackDetail({ slug }: DetailProps) {
 	const scrollContainerRef = useRef(null)
 	const titleRef = useRef(null)
 
 	const { data, error } = useGetStackSuspenseQuery({
 		variables: { slug },
 	})
-	/* 	if (loading) {
+	/* 	 	if (loading) {
 		return <Detail.Loading />
-	} */
-
+	}  */
 	if (!data?.stack || error) {
 		return <Detail.Null />
 	}
@@ -83,9 +79,7 @@ export function StackDetail({ slug }) {
 							<span>Visit</span>
 						</PrimaryButton>
 
-						<SignInDialog>
-							{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}
-						</SignInDialog>
+						<SignInDialog>{({ openModal }) => <StackUsedBy triggerSignIn={openModal} stack={stack} />}</SignInDialog>
 					</Detail.Header>
 				</Detail.ContentContainer>
 

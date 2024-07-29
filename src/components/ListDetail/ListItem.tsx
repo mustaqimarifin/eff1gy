@@ -1,5 +1,5 @@
 import Link from "next/link"
-import type { ReactElement } from "react"
+import { type ReactElement, memo } from "react"
 
 interface Props {
 	title: string
@@ -11,8 +11,8 @@ interface Props {
 	leadingAccessory?: ReactElement
 	onClick?: (e: any) => void
 }
-
-export function ListItem({ title, description, byline, href, as, active, leadingAccessory, onClick }: Props) {
+export const ListItem = memo<Props>(props => {
+	const { title, description, byline, href, as, active, leadingAccessory, onClick } = props
 	return (
 		<Link
 			href={href}
@@ -50,4 +50,4 @@ export function ListItem({ title, description, byline, href, as, active, leading
 			</div>
 		</Link>
 	)
-}
+})

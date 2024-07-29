@@ -3,7 +3,7 @@ import { gql } from "@apollo/client"
 import { QuestionDetailFrag, QuestionsConnectionFrag } from "~/graphql/fragments/question"
 
 export const GET_QUESTIONS = gql`
-  query getQuestions($first: Int, $after: String, $filter: QuestionFilter) {
+  query getQuestions($first: Int, $after: String, $filter: QuestionFilter2) {
     questions(first: $first, after: $after, filter: $filter) {
       ...QuestionsConnection
     }

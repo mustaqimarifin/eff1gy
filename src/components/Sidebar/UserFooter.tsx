@@ -2,17 +2,16 @@
 import { Settings } from "lucide-react"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
-import { useContext } from "react"
+import { type ClassAttributes, type HTMLAttributes, type JSX, useContext } from "react"
 
-import { useQuery } from "@apollo/client"
 import { Avatar } from "~/components/Avatar"
 import { GhostButton } from "~/components/Button"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 
-import { ViewerDocument } from "~/gql/typeSlut"
+import { useViewerQuery } from "~/gql/typeSlut"
 import { GlobalNavigationContext } from "../Provider"
 
-function Container(props) {
+function Container(props: JSX.IntrinsicAttributes & ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement>) {
 	return (
 		<div
 			data-cy="sign-in-button"
@@ -23,14 +22,14 @@ function Container(props) {
 }
 
 export function UserFooter() {
-	const { data, loading, error } = useQuery(ViewerDocument)
+	const { data, loading, error } = useViewerQuery()
 	const { setIsOpen } = useContext(GlobalNavigationContext)
 
 	function signInButton() {
 		return (
 			<GhostButton
 				href="/api/auth/signin"
-				onClick={e => {
+				onClick={(e: { preventDefault: () => void }) => {
 					e.preventDefault()
 					signIn()
 				}}

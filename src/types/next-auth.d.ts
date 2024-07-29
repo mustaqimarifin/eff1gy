@@ -10,7 +10,9 @@ declare module "next-auth" {
 			id: string
 			username?: string
 			isAdmin?: boolean
-			role: UserRole
+			//role: UserRole
+		} & {
+			__typename?: "User"
 		} & DefaultSession["user"]
 		userId: string
 		isAdmin: boolean

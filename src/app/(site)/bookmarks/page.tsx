@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { BookmarksList } from "~/components/Bookmarks/BookmarksList"
+import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { PreloadQuery, query } from "~/components/Provider/ApolloClient"
 import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks"
 import { GET_TAGS } from "~/graphql/queries/tags"
@@ -19,12 +20,13 @@ export const metadata = {
 } */
 
 export default async function BookIndex() {
-	await Promise.all([query({ query: GET_VIEWER }), query({ query: GET_TAGS })])
-	return (
+	/* 	await Promise.all([query({ query: GET_VIEWER }), query({ query: GET_TAGS })])
+	 */ return (
 		<PreloadQuery query={GET_BOOKMARKS}>
-			<Suspense fallback={""}>
-				<BookmarksList />
-			</Suspense>
+			<BookmarksList />
+			{/* 			<Suspense fallback={<LoadingSpinner/>}>
+				<BookmarksList  />
+			</Suspense> */}
 		</PreloadQuery>
 	)
 }

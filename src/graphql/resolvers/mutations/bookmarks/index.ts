@@ -1,13 +1,17 @@
 import { GraphQLError } from "graphql"
 
-import type { MutationAddBookmarkArgs, MutationDeleteBookmarkArgs, MutationEditBookmarkArgs } from "~/gql/typeSlut"
+import type {
+	AddBookmarkMutationVariables,
+	DeleteBookmarkMutationVariables,
+	EditBookmarkMutationVariables,
+} from "~/gql/typeSlut"
 import type { Context } from "~/graphql/context"
 import { urlRX } from "~/lib/functions"
 import getBookmarkMetaData from "./getBookmarkMetaData"
 
 // import { graphcdn } from "~/lib/graphcdn";
 
-export async function editBookmark(_, args: MutationEditBookmarkArgs, ctx: Context) {
+export async function editBookmark(_, args: EditBookmarkMutationVariables, ctx: Context) {
 	const { id, data } = args
 	const { title, description, tag, faviconUrl } = data
 	const { db } = ctx
@@ -51,7 +55,7 @@ export async function editBookmark(_, args: MutationEditBookmarkArgs, ctx: Conte
 		})
 }
 
-export async function addBookmark(_, args: MutationAddBookmarkArgs, ctx: Context) {
+export async function addBookmark(_, args: AddBookmarkMutationVariables, ctx: Context) {
 	const { data } = args
 	const { url, tag } = data
 	const { db } = ctx
@@ -94,7 +98,7 @@ export async function addBookmark(_, args: MutationAddBookmarkArgs, ctx: Context
 		})
 }
 
-export async function deleteBookmark(_, args: MutationDeleteBookmarkArgs, ctx: Context) {
+export async function deleteBookmark(_, args: DeleteBookmarkMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db } = ctx
 

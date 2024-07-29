@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-
 import { getNowPlaying } from "~/lib/queries"
 
 // export const runtime = 'edge'

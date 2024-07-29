@@ -179,9 +179,13 @@ export default gql`
     host: String
   }
 
-  enum QuestionStatus {
+   enum QuestionStatus {
     ANSWERED
     PENDING
+  }
+  
+  input QuestionFilter2 {
+    answered: Boolean
   }
 
   input QuestionFilter {
@@ -242,7 +246,7 @@ export default gql`
     events: [Event]!
     event(id: ID!): Event
     question(id: ID!): Question
-    questions(first: Int, after: String, filter: QuestionFilter): QConnection!
+    questions(first: Int, after: String, filter: QuestionFilter2): QConnection!
 
     tags: [Tag]!
   }

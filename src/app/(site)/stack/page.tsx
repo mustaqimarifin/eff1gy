@@ -12,7 +12,7 @@ export const metadata = {
 
 //const StackList = lazy(() => import("~/components/Stack/StackList"))
 export default async function StackIndex() {
-	await query({ query: GET_VIEWER })
+	//await query({ query: GET_VIEWER })
 	return (
 		<PreloadQuery query={GET_STACKS}>
 			<Suspense fallback={<LoadingSpinner />}>

@@ -5,23 +5,13 @@ import type { Context } from "~/graphql/context"
 export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) {
 	const { first = PAGINATION_AMOUNT, after = undefined } = args
 	const { db } = ctx
-
-	/*
-    When we are paginating after a cursor, we need to skip the cursor object itself.
-    Ref https://www.db.io/docs/concepts/components/db-client/pagination#cursor-based-pagination
-  */
 	const skip = after ? 1 : 0
 	const cursor = after ? { id: after } : undefined
-
-	/*
-    In order to know if there are more results in the database for the `hasNextPage`
-    field, we overfetch by one. If we return more than the amount we requested,
-    then we know there are more results.
-  */
 	const take = first + 1
 
 	try {
 		const edges = await db.stack.findMany({
+			relationLoadStrategy: "query",
 			take,
 			skip,
 			cursor,
@@ -34,16 +24,20 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 				},
 			},
 		})
-
-		// If we overfetched, then we know there are more results
 		const hasNextPage = edges.length > first
-		// Remove the last item so we only return the requested `first` amount
 		const trimmedEdges = hasNextPage ? edges.slice(0, -1) : edges
 		const edgesWithNodes = trimmedEdges?.map(edge => ({
 			cursor: edge.id,
 			node: edge,
 		}))
-
+		console.log("STACK_EDGES", {
+			pageInfo: {
+				hasNextPage,
+				totalCount: await db.stack.count(),
+				endCursor: edgesWithNodes[edgesWithNodes.length - 1].cursor,
+			},
+			edges: edgesWithNodes,
+		})
 		return {
 			pageInfo: {
 				hasNextPage,
@@ -70,6 +64,8 @@ export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context
 
 	const stackBySlug = await db.stack
 		.findUnique({
+			relationLoadStrategy: "query",
+
 			where: { slug },
 			include: {
 				users: true,
@@ -89,6 +85,7 @@ export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context
 
 	// Fallback for old links that may exist that used a stack ID
 	return await db.stack.findUnique({
+		relationLoadStrategy: "query",
 		where: { id: slug },
 		include: {
 			users: true,

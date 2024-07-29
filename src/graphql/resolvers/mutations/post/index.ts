@@ -1,9 +1,9 @@
 import { GraphQLError } from "graphql"
 
-import type { MutationAddPostArgs, MutationDeletePostArgs, MutationEditPostArgs } from "~/gql/typeSlut"
+import type { AddPostMutationVariables, DeletePostMutationVariables, EditPostMutationVariables } from "~/gql/typeSlut"
 import type { Context } from "~/graphql/context"
 
-export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
+export async function editPost(_, args: EditPostMutationVariables, ctx: Context) {
 	const { id, data } = args
 	const { title = "", text = "", slug = "", excerpt = "", published = false } = data
 	const { db } = ctx
@@ -36,7 +36,7 @@ export async function editPost(_, args: MutationEditPostArgs, ctx: Context) {
 		})
 }
 
-export async function addPost(_, args: MutationAddPostArgs, ctx: Context) {
+export async function addPost(_, args: AddPostMutationVariables, ctx: Context) {
 	const { data } = args
 	const { title, text, slug, excerpt = "" } = data
 	const { db, viewer } = ctx

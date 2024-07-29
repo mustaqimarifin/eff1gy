@@ -1,19 +1,17 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions", "relationJoins"]
+  previewFeatures = ["driverAdapters", "relationJoins"]
 }
 
 datasource db {
-  provider   = "postgresql"
-  url        = env("SQL_MACOS")
-  extensions = [pgcrypto]
-  //url = env("DATABASE_URL")
-  //directUrl = env("DIRECT_URL")
+  provider = "sqlite"
+  url      = env("TURSO_URL")
 }
 
+
+
 model Account {
-  id                String  @id @default(dbgenerated("xid()"))
-  //id                String  @id @default(cuid())
+  id                String @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -41,14 +39,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(dbgenerated("xid()"))
+  id            String    @id @default(cuid())
   //id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   name          String
   image         String?
   email         String?   @unique
-  pendingEmail String?   
-  role          Role      @default(USER)
+  pendingEmail  String?
+  //role          Role      @relation(fields: [], references: [])
   isAdmin       Boolean   @default(false)
   emailVerified DateTime?
 
@@ -76,7 +74,7 @@ model VerificationToken {
 }
 
 model Bookmark {
-  id            String     @id @default(dbgenerated("xid()"))
+  id            String     @id @default(cuid())
   //id            String     @id @default(cuid())
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -97,22 +95,22 @@ model Bookmark {
   @@index([id, count])
 }
 
-enum Status {
-  ANSWERED
-  PENDING
-}
+//enum Status {
+//  ANSWERED
+//  PENDING
+//}
 
 model Question {
-  id          String     @id @default(dbgenerated("xid()"))
+  id          String     @id @default(cuid())
   //id          String     @id @default(cuid())
-  status      Status     @default(PENDING)
-  answered    Boolean    @default(false)
+  //status      Status     @default(PENDING)
+  status      Boolean    @default(false)
   hearts      Int?       @default(0)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   title       String?
   plays       Int?       @default(0)
-  waveform    Json?      @db.JsonB
+  waveform    String?
   audioUrl    String?
   description String?
   answer      String?
@@ -127,8 +125,7 @@ model Question {
 }
 
 model Comment {
-  id         String    @id @default(dbgenerated("xid()"))
-  //id         String    @id @default(cuid())
+  id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
@@ -163,7 +160,7 @@ model Comment {
 }
 
 model Blog {
-  id        String     @id @default(dbgenerated("xid()"))
+  id        String     @id @default(cuid())
   slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
@@ -177,14 +174,14 @@ model Blog {
 }
 
 model Event {
-  id        String     @id @default(dbgenerated("xid()"))
+  id        String     @id @default(cuid())
   count     Int        @default(1)
   comments  Comment[]
   reactions Reaction[]
 }
 
 model Case {
-  id        String     @id @default(dbgenerated("xid()"))
+  id        String     @id @default(cuid())
   slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
@@ -204,7 +201,7 @@ model Tag {
 }
 
 model Stack {
-  id          String     @id @default(dbgenerated("xid()"))
+  id          String     @id @default(cuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   name        String?
@@ -222,7 +219,7 @@ model Stack {
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("xid()"))
+  id String @id @default(cuid())
 
   createdAt  DateTime  @default(now())
   userId     String?
@@ -254,7 +251,7 @@ model Reaction {
 }
 
 model Post {
-  id    String @id @default(dbgenerated("xid()"))
+  id    String @id @default(cuid())
   count Int?   @default(1)
 
   createdAt    DateTime   @default(now())
@@ -276,7 +273,7 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated("xid()"))
+  id String @id @default(cuid())
 
   createdAt    DateTime @default(now())
   text         String
@@ -287,10 +284,4 @@ model PostEdit {
   post         Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
-}
-
-enum Role {
-  BLOCKED
-  USER
-  ADMIN
 }

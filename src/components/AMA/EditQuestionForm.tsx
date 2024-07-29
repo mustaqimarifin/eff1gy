@@ -13,13 +13,16 @@ import {
 	type GetQuestionsQuery,
 	type Question,
 	ViewerDocument,
+	type ViewerQuery,
+	type ViewerQueryResult,
 	useDeleteQuestionMutation,
 	useEditQuestionMutation,
 	useViewerQuery,
 } from "~/gql/typeSlut"
 
-import AudioRecorder from "../AudioRecorder"
+import { useSession } from "next-auth/react"
 import { GET_QUESTION, GET_QUESTIONS } from "~/graphql/queries/questions"
+import AudioRecorder from "../AudioRecorder"
 
 export function EditQuestionForm({
 	closeModal,
@@ -28,6 +31,8 @@ export function EditQuestionForm({
 	closeModal: any
 	question: Question
 }) {
+	//const { data } = useViewerQuery()
+	const { data: session, status } = useSession()
 	const initialState = {
 		title: question.title,
 		description: question.description || "",
@@ -140,7 +145,7 @@ export function EditQuestionForm({
 	// })
 
 	const [state, dispatch] = useReducer(reducer, initialState)
-	const { data } = useViewerQuery()
+	//const { data } = useViewerQuery()
 
 	const [updateQuestion, { loading }] = useEditQuestionMutation({
 		variables: {
@@ -160,7 +165,7 @@ export function EditQuestionForm({
 				description: state.description,
 				waveform: state.waveform,
 				audioUrl: state.src,
-				author: data.viewer,
+				author: session.user,
 			},
 		},
 		onCompleted() {

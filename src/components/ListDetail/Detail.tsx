@@ -1,6 +1,6 @@
 import { Compass } from "lucide-react"
 import type { ReactNode } from "react"
-import { forwardRef } from "react"
+import { forwardRef, memo, useMemo } from "react"
 
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 import Button from "../Button"
@@ -14,7 +14,7 @@ function ContentContainer(props) {
 
 function ContentContainer({ ...props }) {
 	return (
-		<div className="mx-auto w-full max-w-sm px-4 md:px-8 py-12 pb-10  md:max-w-2xl lg:max-w-3xl lg:px-10" {...props} />
+		<div className="mx-auto w-full max-w-sm px-4 py-12 pb-10 md:max-w-2xl md:px-8 lg:max-w-3xl lg:px-10" {...props} />
 	)
 }
 
@@ -42,7 +42,7 @@ interface TitleProps {
 }
 
 const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-	return <h1 ref={ref} className="mb-4 text-3xl font-quad tracking-tight text-primary md:text-4xl" {...props} />
+	return <h1 ref={ref} className="text-primary mb-4 font-quad text-3xl tracking-tight md:text-4xl" {...props} />
 })
 
 function Loading() {

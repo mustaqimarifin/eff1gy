@@ -3,6 +3,7 @@ import Button from "~/components/Button"
 import { ReactionButton } from "../Button/ReactionButton"
 
 import { useMutation } from "@apollo/client"
+import type { Session } from "next-auth"
 import { GetQuestionDocument, type Question, ReactionType, ToggleReactionDocument } from "~/gql/typeSlut"
 
 function getReactionButton(question) {
@@ -52,6 +53,7 @@ function getReactionButton(question) {
 }
 type Action = {
 	question: Question
+	viewer?: Session
 }
 export function QuestionActions({ question }: Action) {
 	if (question.viewerCanEdit) {

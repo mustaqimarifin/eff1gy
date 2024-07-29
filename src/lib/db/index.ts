@@ -1,20 +1,29 @@
+import { appendFileSync, readFileSync } from "node:fs"
 //import { appendFile, readFile } from 'node:fs/promises'
 import { PrismaClient } from "@prisma/client"
-
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
+//import { appendFile, readFile } from "node:fs/promises"
+//const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 // import { drizzle } from 'drizzle-orm/prisma/pg'
 // export const dba = new PrismaClient()
 // export const db = new PrismaClient().$extends(drizzle())
 
 // export type DBZ = typeof db
-export const db =
-	globalForPrisma.prisma ||
-	new PrismaClient({
-		log: process.env.NODE_ENV === "development" ? ["info", "query", "error", "warn"] : ["error"],
-		errorFormat: "pretty",
-	})
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db
+/* import { PrismaLibSQL } from '@prisma/adapter-libsql'
+import { createClient } from '@libsql/client'
+
+const libsql = createClient({
+  url: `${process.env.TURSO_URL}`,
+  authToken: `${process.env.TURSO_TOKEN}`,
+})
+
+const adapter = new PrismaLibSQL(libsql)
+const prisma = new PrismaClient({ adapter }) */
+export const db = new PrismaClient({
+	//adapter,
+	log: process.env.NODE_ENV === "development" ? ["query"] : ["error"],
+	errorFormat: "pretty",
+})
 
 /* export const db = new PrismaClient({
   log: [
@@ -37,26 +46,25 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db
   ],
   errorFormat: 'pretty',
 })
-
-const file = './queries.sql'
-
-db.$on('query', (e) => {
-  readFile(file, 'utf8')
-  appendFile(
-    file,
+*/
+let x = "./queries-drizzle.sql"
+//@ts-ignore
+db.$on("query", (e: QueryEvent) => {
+	readFileSync(x, "utf8")
+	appendFileSync(
+		x,
 		`
-    query: ${e.query} 
+    --query: ${e.query} 
     --params: ${e.params}
     
     `,
-		'utf8',
-  )
-    .then(() => {})
+		"utf8",
+	)
+	/* .then(() => {})
     .catch((err) => {
       console.log(err)
-    })
+    })   */
 })
- */
 
 export interface QueryEvent {
 	timestamp: Date

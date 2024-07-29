@@ -1,10 +1,11 @@
 "use client"
 import { useMutation, useQuery } from "@apollo/client"
+import { useSession } from "next-auth/react"
 import * as React from "react"
 
 import Button, { ViewButton } from "~/components/Button"
 import { ReactionButton } from "~/components/Button/ReactionButton"
-import { GetPostDocument, ToggleReactionDocument, ViewerDocument } from "~/gql/typeSlut"
+import { GetPostDocument, ToggleReactionDocument, ViewerDocument, useViewerQuery } from "~/gql/typeSlut"
 import { type Post, ReactionType } from "~/gql/typeSlut"
 
 function getReactionButton(post) {
@@ -53,8 +54,8 @@ function getReactionButton(post) {
 	)
 }
 
-function getEditButton(post: Post) {
-	const { data } = useQuery(ViewerDocument)
+function getEditButton(post) {
+	const { data } = useViewerQuery()
 	if (!data?.viewer?.isAdmin) return null
 	return (
 		<Button href="/post/[slug]/edit" as={`/post/${post.slug}/edit`}>

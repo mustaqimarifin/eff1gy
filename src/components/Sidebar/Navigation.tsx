@@ -23,6 +23,7 @@ import { NavigationLink } from "./NavigationLink"
 import { fetcher } from "~/lib/functions"
 
 import { useQuery } from "@apollo/client"
+import type { Session } from "next-auth"
 import { memo } from "react"
 import Marquee from "react-fast-marquee"
 import { ViewerDocument } from "~/gql/typeSlut"
@@ -56,13 +57,16 @@ function Player(track: TrackType) {
 	)
 }
 
-export const SidebarNavigation = memo(() => {
+type SNav = {
+	session?: Session
+}
+export const SidebarNavigation = memo<SNav>(() => {
 	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher)
 	const path = usePathname()
 	const { data } = useQuery(ViewerDocument)
 	const sections = [
 		{
-			label: null,
+			//label: null,
 			items: [
 				{
 					href: "/",
@@ -202,9 +206,9 @@ export const SidebarNavigation = memo(() => {
 					href: "/code",
 					label: "Code",
 					icon: CaseIcon,
-					trailingAccessory: null,
+					//trailingAccessory: null,
 					isActive: path.includes("/code"),
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: false,
 				},
 			],
@@ -216,9 +220,9 @@ export const SidebarNavigation = memo(() => {
 					href: "/dash",
 					label: track?.isPlaying ? Player(track) : "On Rotation",
 					icon: CassetteTape,
-					trailingAccessory: null,
+					//trailingAccessory: null,
 					isActive: false,
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: false,
 				},
 				{
@@ -257,12 +261,13 @@ export const SidebarNavigation = memo(() => {
 					icon: SoundcloudIcon,
 					trailingAccessory: ExternalLinkIcon,
 					isActive: false,
-					trailingAction: null,
+					//trailingAction: null,
 					isExternal: true,
 				},
 			],
 		},
 	]
+	type Section = typeof sections
 
 	return (
 		<div className="flex-1 space-y-1 px-3 py-3">
@@ -278,7 +283,7 @@ export const SidebarNavigation = memo(() => {
 							</div>
 						)}
 						{section.items.map((item, j) => (
-							<NavigationLink key={j} link={item} />
+							<NavigationLink key={j} item={item} />
 						))}
 					</ul>
 				)

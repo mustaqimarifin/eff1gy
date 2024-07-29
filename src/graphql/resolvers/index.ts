@@ -5,15 +5,14 @@ import { getCommentAuthor } from "~/graphql/resolvers/queries/comments"
 import { getQuestionAuthor } from "~/graphql/resolvers/queries/questions"
 import { DateQL, JSOD } from "../scalars"
 
-import { QuestionStatus, UserRole } from "~/gql/typeSlut"
-let Role: UserRole
+import { QuestionStatus, UserRole, type Resolvers } from "~/gql/typeSlut"
 const resolvers = {
 	Date: DateQL,
 	JSON: JSOD,
 	Query,
 	Mutation,
 	Reactable: {
-		__resolveType(obj: { reactableType: any }) {
+		__resolveType (obj: { reactableType: any} ) {
 			switch (obj.reactableType) {
 				case "question":
 					return "Question"
@@ -66,7 +65,7 @@ const resolvers = {
 				})
 				.reactions()
 
-			return reactions.some(({ userId }) => userId === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
 		reactionCount: async ({ id, _count }, _, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
@@ -82,16 +81,16 @@ const resolvers = {
 	},
 	User: {
 		isViewer: ({ id }, _, { viewer }: Context) => {
-			return viewer && viewer.id === id
+			return viewer && viewer?.id === id
 		},
 		isAdmin: ({ role }) => {
 			return role === UserRole.Admin
 		},
 		email: ({ id }, _, { viewer }: Context) => {
-			return viewer && viewer.id === id ? viewer.email : null
+			return viewer && viewer?.id === id ? viewer.email : null
 		},
 		pendingEmail: ({ id }, _, { viewer }: Context) => {
-			return viewer && viewer.id === id ? viewer.pendingEmail : null
+			return viewer && viewer?.id === id ? viewer.pendingEmail : null
 		},
 	},
 	Bookmark: {
@@ -104,7 +103,7 @@ const resolvers = {
 				})
 				.reactions()
 
-			return reactions.some(({ userId }) => userId === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
 		reactionCount: async ({ id, _count }, _, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
@@ -128,7 +127,7 @@ const resolvers = {
 				})
 				.reactions()
 
-			return reactions.some(({ userId }) => userId === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
 		reactionCount: async ({ id, _count }, _, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
@@ -152,7 +151,7 @@ const resolvers = {
 				})
 				.reactions()
 
-			return reactions.some(({ userId }) => userId === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
 		reactionCount: async ({ id, _count }, _, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
@@ -176,7 +175,7 @@ const resolvers = {
 				})
 				.reactions()
 
-			return reactions.some(({ userId }) => userId === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
 		reactionCount: async ({ id, _count }, _, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
@@ -200,7 +199,7 @@ const resolvers = {
 				})
 				.reactions()
 
-			return reactions.some(({ userId }) => userId === viewer.id)
+			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
 		reactionCount: async ({ id, _count }, _, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
@@ -229,7 +228,7 @@ const resolvers = {
 		usedByViewer: async ({ id, users }, _, ctx: Context) => {
 			const { db, viewer } = ctx
 			if (!viewer?.id) return false
-			if (users) return users.some((s: { id: string }) => s.id === viewer.id)
+			if (users) return users.some((s: { id: string} ) => s.id === viewer?.id)
 
 			const data = await db.stack.findUnique({
 				where: { id },
@@ -238,9 +237,9 @@ const resolvers = {
 				},
 			})
 
-			return data.users.some(s => s.id === viewer.id)
+			return data.users.some(s => s.id === viewer?.id)
 		},
 	},
-}
+} as unknown as Resolvers
 
 export default resolvers

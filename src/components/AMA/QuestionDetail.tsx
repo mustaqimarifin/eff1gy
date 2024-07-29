@@ -13,8 +13,12 @@ import { QuestionActions } from "./QuestionActions"
 import { realTime } from "~/lib/transformers"
 
 import { useQuery } from "@apollo/client"
+import type { Session } from "next-auth"
 import { CommentType, GetQuestionDocument } from "~/gql/typeSlut"
 
+type QD = {
+	id: string
+}
 export function QuestionDetail({ id }) {
 	const scrollContainerRef = useRef(null)
 	const titleRef = useRef(null)
@@ -84,7 +88,7 @@ export function QuestionDetail({ id }) {
 					{question?.description && (
 						<MarkdownRenderer
 							children={question?.description}
-							className="prose prose-neutral dark:prose-invert "
+							className="prose prose-neutral dark:prose-invert"
 							variant="comment"
 						/>
 					)}

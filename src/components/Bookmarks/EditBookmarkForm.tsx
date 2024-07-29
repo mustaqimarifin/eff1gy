@@ -1,5 +1,4 @@
 "use client"
-import { useMutation } from "@apollo/client"
 import { Link2Icon } from "lucide-react"
 import Link from "next/link"
 import { useReducer } from "react"
@@ -8,13 +7,13 @@ import Button, { DeleteButton } from "~/components/Button"
 import { Input, Textarea } from "~/components/Input"
 import { TagPicker } from "~/components/Tag/TagPicker"
 import {
-	DeleteBookmarkDocument,
-	EditBookmarkDocument,
 	GetBookmarkDocument,
 	GetBookmarksDocument,
+	type GetBookmarksQuery,
 	type GetBookmarksQueryVariables,
+	useDeleteBookmarkMutation,
+	useEditBookmarkMutation,
 } from "~/gql/typeSlut"
-import type { GetBookmarksQuery } from "~/gql/typeSlut"
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
 	const initialState = {
@@ -68,7 +67,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 
 	const [state, dispatch] = useReducer(reducer, initialState)
 
-	const [editBookmark] = useMutation(EditBookmarkDocument, {
+	const [editBookmark] = useEditBookmarkMutation({
 		variables: {
 			id: bookmark.id,
 			data: {
@@ -95,7 +94,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 		},
 	})
 
-	const [handleDelete] = useMutation(DeleteBookmarkDocument, {
+	const [handleDelete] = useDeleteBookmarkMutation({
 		variables: { id: bookmark.id },
 		optimisticResponse: {
 			__typename: "Mutation",

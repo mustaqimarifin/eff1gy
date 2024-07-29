@@ -8,7 +8,7 @@ import { TitleBar } from "~/components/ListDetail/TitleBar"
 
 import { useQuery } from "@apollo/client"
 
-import { useViewerQuery, ViewerDocument } from "~/gql/typeSlut"
+import { ViewerDocument, useViewerQuery } from "~/gql/typeSlut"
 import { SignInDialog } from "../SignInDialog"
 import SegmentedControl from "../UI/SegmentedController"
 import { AddQuestionDialog } from "./AddQuestionDialog"

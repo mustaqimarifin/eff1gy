@@ -8,6 +8,7 @@ import { SiteLayout } from "~/components/Layouts"
 import { Providers } from "~/components/Provider"
 import { Toast } from "~/components/Provider/Toaster"
 import { CLIENT_URL } from "~/graphql/constants"
+import { auth } from "~/lib/auth"
 import { cx } from "~/lib/transformers"
 import { GSans, Imp, Mono, Quad } from "./fonts"
 
@@ -50,7 +51,9 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+	const session = await auth()
+
 	return (
 		<html lang="en" className={cx(Quad.variable, GSans.variable, Mono.variable, Imp.variable)}>
 			<body>
@@ -67,7 +70,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 				</span>
 				<main>
 					<Toast />
-					<Providers>
+					<Providers session={session}>
 						<SiteLayout>{children}</SiteLayout>
 					</Providers>
 				</main>

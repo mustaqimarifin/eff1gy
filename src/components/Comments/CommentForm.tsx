@@ -19,6 +19,7 @@ interface Props {
 export function CommentForm({ refId, type, openModal }: Props) {
 	const genId = () => useId()
 	const { data } = useQuery(ViewerDocument)
+
 	const [text, setText] = useState("")
 	const [error, setError] = useState(null)
 
@@ -103,7 +104,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
 	}
 
 	return (
-		<div className="filter-blur sticky bottom-0 flex flex-col border-t border-gray-150 bg-white bg-opacity-90 pb-10 dark:border-gray-800 dark:bg-gray-900 sm:pb-0 rounded-lg">
+		<div className="filter-blur sticky bottom-0 flex flex-col rounded-lg border-t border-gray-150 bg-white bg-opacity-90 pb-10 sm:pb-0 dark:border-gray-800 dark:bg-gray-900">
 			<form
 				className="mx-auto flex w-full max-w-3xl flex-none items-center space-x-4 px-4 py-4 md:px-6"
 				onSubmit={onSubmit}

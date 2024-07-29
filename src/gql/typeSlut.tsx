@@ -1,4 +1,5 @@
-import { gql } from '@apollo/client';
+import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import type { DocumentNode } from 'graphql';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -7,6 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -415,7 +417,7 @@ export type QueryQuestionArgs = {
 
 export type QueryQuestionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<QuestionFilter>;
+  filter?: InputMaybe<QuestionFilter2>;
   first?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -462,6 +464,10 @@ export type QuestionEdge = {
 
 export type QuestionFilter = {
   status?: InputMaybe<QuestionStatus>;
+};
+
+export type QuestionFilter2 = {
+  answered?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum QuestionStatus {
@@ -1211,7 +1217,7 @@ export type GetPostQuery = (
 export type GetQuestionsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<QuestionFilter>;
+  filter?: InputMaybe<QuestionFilter2>;
 }>;
 
 
@@ -1339,606 +1345,637 @@ export type GetViewerWithSettingsQuery = (
   & { __typename?: 'Query' }
 );
 
-export const DirtyAssBlogCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment BlogCore on Blog {
-  __typename
-  id
-  title
-  date
-  slug
-  count
+
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
 }
-    `;
-export const DirtyAssBlogListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment BlogListItem on Blog {
-  ...BlogCore
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
-    ${DirtyAssBlogCoreFragmentDoc}`;
-export const DirtyAssBlogDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment BlogDetail on Blog {
-  ...BlogCore
-  reactionCount
-  viewerHasReacted
+
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
+
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping of union types */
+export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
+  Reactable: ( Blog ) | ( Bookmark ) | ( Case ) | ( Event ) | ( Post ) | ( Question ) | ( Stack );
+  Viewable: ( Blog ) | ( Bookmark ) | ( Case ) | ( Event ) | ( Post ) | ( Question ) | ( Stack );
+};
+
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  AddBookmarkInput: AddBookmarkInput;
+  AddPostInput: AddPostInput;
+  AddQuestionInput: AddQuestionInput;
+  AddStackInput: AddStackInput;
+  BConnection: ResolverTypeWrapper<BConnection>;
+  Blog: ResolverTypeWrapper<Blog>;
+  Bookmark: ResolverTypeWrapper<Bookmark>;
+  BookmarkEdge: ResolverTypeWrapper<BookmarkEdge>;
+  BookmarkFilter: BookmarkFilter;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  CacheControlScope: CacheControlScope;
+  Case: ResolverTypeWrapper<Case>;
+  Comment: ResolverTypeWrapper<Comment>;
+  CommentType: CommentType;
+  Date: ResolverTypeWrapper<Scalars['Date']['output']>;
+  EditBookmarkInput: EditBookmarkInput;
+  EditPostInput: EditPostInput;
+  EditQuestionInput: EditQuestionInput;
+  EditStackInput: EditStackInput;
+  EditUserInput: EditUserInput;
+  Event: ResolverTypeWrapper<Event>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
+  Post: ResolverTypeWrapper<Post>;
+  PostFilter: PostFilter;
+  QConnection: ResolverTypeWrapper<QConnection>;
+  Query: ResolverTypeWrapper<{}>;
+  Question: ResolverTypeWrapper<Question>;
+  QuestionEdge: ResolverTypeWrapper<QuestionEdge>;
+  QuestionFilter: QuestionFilter;
+  QuestionFilter2: QuestionFilter2;
+  QuestionStatus: QuestionStatus;
+  Reactable: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['Reactable']>;
+  ReactionType: ReactionType;
+  SConnection: ResolverTypeWrapper<SConnection>;
+  Stack: ResolverTypeWrapper<Stack>;
+  StackEdge: ResolverTypeWrapper<StackEdge>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Tag: ResolverTypeWrapper<Tag>;
+  User: ResolverTypeWrapper<User>;
+  UserRole: UserRole;
+  ViewType: ViewType;
+  Viewable: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['Viewable']>;
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
+  AddBookmarkInput: AddBookmarkInput;
+  AddPostInput: AddPostInput;
+  AddQuestionInput: AddQuestionInput;
+  AddStackInput: AddStackInput;
+  BConnection: BConnection;
+  Blog: Blog;
+  Bookmark: Bookmark;
+  BookmarkEdge: BookmarkEdge;
+  BookmarkFilter: BookmarkFilter;
+  Boolean: Scalars['Boolean']['output'];
+  Case: Case;
+  Comment: Comment;
+  Date: Scalars['Date']['output'];
+  EditBookmarkInput: EditBookmarkInput;
+  EditPostInput: EditPostInput;
+  EditQuestionInput: EditQuestionInput;
+  EditStackInput: EditStackInput;
+  EditUserInput: EditUserInput;
+  Event: Event;
+  ID: Scalars['ID']['output'];
+  Int: Scalars['Int']['output'];
+  JSON: Scalars['JSON']['output'];
+  Mutation: {};
+  PageInfo: PageInfo;
+  Post: Post;
+  PostFilter: PostFilter;
+  QConnection: QConnection;
+  Query: {};
+  Question: Question;
+  QuestionEdge: QuestionEdge;
+  QuestionFilter: QuestionFilter;
+  QuestionFilter2: QuestionFilter2;
+  Reactable: ResolversUnionTypes<ResolversParentTypes>['Reactable'];
+  SConnection: SConnection;
+  Stack: Stack;
+  StackEdge: StackEdge;
+  String: Scalars['String']['output'];
+  Tag: Tag;
+  User: User;
+  Viewable: ResolversUnionTypes<ResolversParentTypes>['Viewable'];
+};
+
+export type CacheControlDirectiveArgs = {
+  inheritMaxAge?: Maybe<Scalars['Boolean']['input']>;
+  maxAge?: Maybe<Scalars['Int']['input']>;
+  scope?: Maybe<CacheControlScope>;
+};
+
+export type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = CacheControlDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type BConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['BConnection'] = ResolversParentTypes['BConnection']> = {
+  edges?: Resolver<Array<Maybe<ResolversTypes['BookmarkEdge']>>, ParentType, ContextType>;
+  pageInfo?: Resolver<Maybe<ResolversTypes['PageInfo']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BlogResolvers<ContextType = any, ParentType extends ResolversParentTypes['Blog'] = ResolversParentTypes['Blog']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  date?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BookmarkResolvers<ContextType = any, ParentType extends ResolversParentTypes['Bookmark'] = ResolversParentTypes['Bookmark']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  faviconUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  host?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BookmarkEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookmarkEdge'] = ResolversParentTypes['BookmarkEdge']> = {
+  cursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CaseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Case'] = ResolversParentTypes['Case']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  date?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
+  author?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  parentId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  replies?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  viewerCanDelete?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  viewerCanEdit?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
 }
-    ${DirtyAssBlogCoreFragmentDoc}`;
-export const DirtyAssBookmarkCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment BookmarkCore on Bookmark {
-  __typename
-  id
-  url
-  host
-  title
-  description
-  faviconUrl
-  count
+
+export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
+  name: 'JSON';
 }
-    `;
-export const DirtyAssBookmarkDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment BookmarkDetail on Bookmark {
-  ...BookmarkCore
-  reactionCount
-  viewerHasReacted
-  tags {
-    name
-  }
-}
-    ${DirtyAssBookmarkCoreFragmentDoc}`;
-export const DirtyAssBookmarkListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment BookmarkListItem on Bookmark {
-  ...BookmarkCore
-}
-    ${DirtyAssBookmarkCoreFragmentDoc}`;
-export const DirtyAssBookmarksConnectionFragmentDoc = /*#__PURE__*/ gql`
-    fragment BookmarksConnection on BConnection {
-  pageInfo {
-    hasNextPage
-    totalCount
-    endCursor
-  }
-  edges {
-    cursor
-    node {
-      ...BookmarkListItem
-    }
-  }
-}
-    ${DirtyAssBookmarkListItemFragmentDoc}`;
-export const DirtyAssCaseCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment CaseCore on Case {
-  __typename
-  id
-  title
-  date
-  slug
-  count
-}
-    `;
-export const DirtyAssCaseListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment CaseListItem on Case {
-  ...CaseCore
-}
-    ${DirtyAssCaseCoreFragmentDoc}`;
-export const DirtyAssCaseDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment CaseDetail on Case {
-  ...CaseCore
-  reactionCount
-  viewerHasReacted
-}
-    ${DirtyAssCaseCoreFragmentDoc}`;
-export const DirtyAssUserInfoFragmentDoc = /*#__PURE__*/ gql`
-    fragment UserInfo on User {
-  __typename
-  id
-  username
-  image
-  name
-  role
-  isViewer
-  isAdmin
-}
-    `;
-export const DirtyAssCommentInfoFragmentDoc = /*#__PURE__*/ gql`
-    fragment CommentInfo on Comment {
-  __typename
-  id
-  parentId
-  createdAt
-  updatedAt
-  text
-  viewerCanEdit
-  viewerCanDelete
-  author {
-    ...UserInfo
-  }
-}
-    ${DirtyAssUserInfoFragmentDoc}`;
-export const DirtyAssEventCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment EventCore on Event {
-  __typename
-  id
-  count
-}
-    `;
-export const DirtyAssEventListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment EventListItem on Event {
-  ...EventCore
-}
-    ${DirtyAssEventCoreFragmentDoc}`;
-export const DirtyAssEventDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment EventDetail on Event {
-  ...EventCore
-  reactionCount
-  viewerHasReacted
-}
-    ${DirtyAssEventCoreFragmentDoc}`;
-export const DirtyAssPostCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment PostCore on Post {
-  __typename
-  id
-  publishedAt
-  title
-  slug
-  excerpt
-}
-    `;
-export const DirtyAssPostListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment PostListItem on Post {
-  ...PostCore
-}
-    ${DirtyAssPostCoreFragmentDoc}`;
-export const DirtyAssPostDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment PostDetail on Post {
-  ...PostCore
-  text
-  featureImage
-  reactionCount
-  hitRate
-  viewerHasReacted
-}
-    ${DirtyAssPostCoreFragmentDoc}`;
-export const DirtyAssQuestionCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment QuestionCore on Question {
-  __typename
-  id
-  title
-  audioUrl
-  waveform
-  count
-  createdAt
-  author {
-    ...UserInfo
-  }
-}
-    ${DirtyAssUserInfoFragmentDoc}`;
-export const DirtyAssQuestionDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment QuestionDetail on Question {
-  ...QuestionCore
-  description
-  status
-  viewerCanEdit
-  viewerCanComment
-  reactionCount
-  viewerHasReacted
-}
-    ${DirtyAssQuestionCoreFragmentDoc}`;
-export const DirtyAssQuestionListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment QuestionListItem on Question {
-  ...QuestionCore
-}
-    ${DirtyAssQuestionCoreFragmentDoc}`;
-export const DirtyAssQuestionsConnectionFragmentDoc = /*#__PURE__*/ gql`
-    fragment QuestionsConnection on QConnection {
-  pageInfo {
-    hasNextPage
-    totalCount
-    endCursor
-  }
-  edges {
-    cursor
-    node {
-      ...QuestionListItem
-    }
-  }
-}
-    ${DirtyAssQuestionListItemFragmentDoc}`;
-export const DirtyAssStackCoreFragmentDoc = /*#__PURE__*/ gql`
-    fragment StackCore on Stack {
-  __typename
-  id
-  name
-  image
-  url
-  slug
-  count
-}
-    `;
-export const DirtyAssStackDetailFragmentDoc = /*#__PURE__*/ gql`
-    fragment StackDetail on Stack {
-  ...StackCore
-  createdAt
-  description
-  reactionCount
-  viewerHasReacted
-  usedByViewer
-  usedBy {
-    ...UserInfo
-  }
-  tags {
-    name
-  }
-}
-    ${DirtyAssStackCoreFragmentDoc}
-${DirtyAssUserInfoFragmentDoc}`;
-export const DirtyAssStackListItemFragmentDoc = /*#__PURE__*/ gql`
-    fragment StackListItem on Stack {
-  ...StackCore
-}
-    ${DirtyAssStackCoreFragmentDoc}`;
-export const DirtyAssStacksConnectionFragmentDoc = /*#__PURE__*/ gql`
-    fragment StacksConnection on SConnection {
-  pageInfo {
-    hasNextPage
-    totalCount
-    endCursor
-  }
-  edges {
-    cursor
-    node {
-      ...StackListItem
-    }
-  }
-}
-    ${DirtyAssStackListItemFragmentDoc}`;
-export const DirtyAssUserSettingsFragmentDoc = /*#__PURE__*/ gql`
-    fragment UserSettings on User {
-  email
-  pendingEmail
-}
-    `;
-export const EditBookmarkDocument = /*#__PURE__*/ gql`
-    mutation editBookmark($id: ID!, $data: EditBookmarkInput!) {
-  editBookmark(id: $id, data: $data) {
-    ...BookmarkDetail
-  }
-}
-    ${DirtyAssBookmarkDetailFragmentDoc}`;
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addBookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<MutationAddBookmarkArgs, 'data'>>;
+  addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationAddCommentArgs, 'refId' | 'text' | 'type'>>;
+  addPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'data'>>;
+  addQuestion?: Resolver<Maybe<ResolversTypes['Question']>, ParentType, ContextType, RequireFields<MutationAddQuestionArgs, 'data'>>;
+  addStack?: Resolver<Maybe<ResolversTypes['Stack']>, ParentType, ContextType, RequireFields<MutationAddStackArgs, 'data'>>;
+  addView?: Resolver<Maybe<ResolversTypes['Viewable']>, ParentType, ContextType, RequireFields<MutationAddViewArgs, 'refId' | 'type'>>;
+  deleteBookmark?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteBookmarkArgs, 'id'>>;
+  deleteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
+  deletePost?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'id'>>;
+  deleteQuestion?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteQuestionArgs, 'id'>>;
+  deleteStack?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteStackArgs, 'id'>>;
+  deleteUser?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  editBookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<MutationEditBookmarkArgs, 'data' | 'id'>>;
+  editComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationEditCommentArgs, 'id'>>;
+  editPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationEditPostArgs, 'data' | 'id'>>;
+  editQuestion?: Resolver<Maybe<ResolversTypes['Question']>, ParentType, ContextType, RequireFields<MutationEditQuestionArgs, 'data' | 'id'>>;
+  editStack?: Resolver<Maybe<ResolversTypes['Stack']>, ParentType, ContextType, RequireFields<MutationEditStackArgs, 'data' | 'id'>>;
+  editUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationEditUserArgs>>;
+  toggleReaction?: Resolver<Maybe<ResolversTypes['Reactable']>, ParentType, ContextType, RequireFields<MutationToggleReactionArgs, 'refId' | 'type'>>;
+  toggleStackUser?: Resolver<Maybe<ResolversTypes['Stack']>, ParentType, ContextType, RequireFields<MutationToggleStackUserArgs, 'id'>>;
+};
+
+export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+  endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hasNextPage?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  totalCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
+  author?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  excerpt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  featureImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hitRate?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['QConnection'] = ResolversParentTypes['QConnection']> = {
+  edges?: Resolver<Array<Maybe<ResolversTypes['QuestionEdge']>>, ParentType, ContextType>;
+  pageInfo?: Resolver<Maybe<ResolversTypes['PageInfo']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  blog?: Resolver<Maybe<ResolversTypes['Blog']>, ParentType, ContextType, RequireFields<QueryBlogArgs, 'slug'>>;
+  blogs?: Resolver<Array<Maybe<ResolversTypes['Blog']>>, ParentType, ContextType>;
+  bookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<QueryBookmarkArgs, 'id'>>;
+  bookmarks?: Resolver<ResolversTypes['BConnection'], ParentType, ContextType, Partial<QueryBookmarksArgs>>;
+  case?: Resolver<Maybe<ResolversTypes['Case']>, ParentType, ContextType, RequireFields<QueryCaseArgs, 'slug'>>;
+  cases?: Resolver<Array<Maybe<ResolversTypes['Case']>>, ParentType, ContextType>;
+  comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryCommentArgs, 'id'>>;
+  comments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType, RequireFields<QueryCommentsArgs, 'refId' | 'type'>>;
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryEventArgs, 'id'>>;
+  events?: Resolver<Array<Maybe<ResolversTypes['Event']>>, ParentType, ContextType>;
+  post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, 'slug'>>;
+  posts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, Partial<QueryPostsArgs>>;
+  question?: Resolver<Maybe<ResolversTypes['Question']>, ParentType, ContextType, RequireFields<QueryQuestionArgs, 'id'>>;
+  questions?: Resolver<ResolversTypes['QConnection'], ParentType, ContextType, Partial<QueryQuestionsArgs>>;
+  stack?: Resolver<Maybe<ResolversTypes['Stack']>, ParentType, ContextType, RequireFields<QueryStackArgs, 'slug'>>;
+  stacks?: Resolver<ResolversTypes['SConnection'], ParentType, ContextType, Partial<QueryStacksArgs>>;
+  tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'username'>>;
+  viewer?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+};
+
+export type QuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Question'] = ResolversParentTypes['Question']> = {
+  audioUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  author?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  playCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['QuestionStatus']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  viewerCanComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  viewerCanEdit?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  waveform?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QuestionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['QuestionEdge'] = ResolversParentTypes['QuestionEdge']> = {
+  cursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes['Question']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ReactableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reactable'] = ResolversParentTypes['Reactable']> = {
+  __resolveType: TypeResolveFn<'Blog' | 'Bookmark' | 'Case' | 'Event' | 'Post' | 'Question' | 'Stack', ParentType, ContextType>;
+};
+
+export type SConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['SConnection'] = ResolversParentTypes['SConnection']> = {
+  edges?: Resolver<Array<Maybe<ResolversTypes['StackEdge']>>, ParentType, ContextType>;
+  pageInfo?: Resolver<Maybe<ResolversTypes['PageInfo']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StackResolvers<ContextType = any, ParentType extends ResolversParentTypes['Stack'] = ResolversParentTypes['Stack']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  reactionCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  usedBy?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+  usedByViewer?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  viewerHasReacted?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StackEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['StackEdge'] = ResolversParentTypes['StackEdge']> = {
+  cursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes['Stack']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TagResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  isAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isViewer?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  pendingEmail?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['UserRole']>, ParentType, ContextType>;
+  username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ViewableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Viewable'] = ResolversParentTypes['Viewable']> = {
+  __resolveType: TypeResolveFn<'Blog' | 'Bookmark' | 'Case' | 'Event' | 'Post' | 'Question' | 'Stack', ParentType, ContextType>;
+};
+
+export type Resolvers<ContextType = any> = {
+  BConnection?: BConnectionResolvers<ContextType>;
+  Blog?: BlogResolvers<ContextType>;
+  Bookmark?: BookmarkResolvers<ContextType>;
+  BookmarkEdge?: BookmarkEdgeResolvers<ContextType>;
+  Case?: CaseResolvers<ContextType>;
+  Comment?: CommentResolvers<ContextType>;
+  Date?: GraphQLScalarType;
+  Event?: EventResolvers<ContextType>;
+  JSON?: GraphQLScalarType;
+  Mutation?: MutationResolvers<ContextType>;
+  PageInfo?: PageInfoResolvers<ContextType>;
+  Post?: PostResolvers<ContextType>;
+  QConnection?: QConnectionResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  Question?: QuestionResolvers<ContextType>;
+  QuestionEdge?: QuestionEdgeResolvers<ContextType>;
+  Reactable?: ReactableResolvers<ContextType>;
+  SConnection?: SConnectionResolvers<ContextType>;
+  Stack?: StackResolvers<ContextType>;
+  StackEdge?: StackEdgeResolvers<ContextType>;
+  Tag?: TagResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  Viewable?: ViewableResolvers<ContextType>;
+};
+
+export type DirectiveResolvers<ContextType = any> = {
+  cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
+};
+
+export const DirtyAssBlogCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlogCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Blog"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssBlogListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlogListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Blog"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BlogCore"}}]}},...DirtyAssBlogCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssBlogDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlogDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Blog"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BlogCore"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},...DirtyAssBlogCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssBookmarkCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BookmarkCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bookmark"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"host"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"faviconUrl"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssBookmarkDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BookmarkDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bookmark"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarkCore"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},...DirtyAssBookmarkCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssBookmarkListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BookmarkListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bookmark"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarkCore"}}]}},...DirtyAssBookmarkCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssBookmarksConnectionFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BookmarksConnection"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BConnection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarkListItem"}}]}}]}}]}},...DirtyAssBookmarkListItemFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssCaseCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CaseCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Case"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssCaseListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CaseListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Case"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CaseCore"}}]}},...DirtyAssCaseCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssCaseDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CaseDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Case"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CaseCore"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},...DirtyAssCaseCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssUserInfoFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserInfo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"isViewer"}},{"kind":"Field","name":{"kind":"Name","value":"isAdmin"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssCommentInfoFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentInfo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"viewerCanEdit"}},{"kind":"Field","name":{"kind":"Name","value":"viewerCanDelete"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}}]}},...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssEventCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EventCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Event"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssEventListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EventListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Event"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EventCore"}}]}},...DirtyAssEventCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssEventDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EventDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Event"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EventCore"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},...DirtyAssEventCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssPostCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssPostListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostCore"}}]}},...DirtyAssPostCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssPostDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostCore"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"featureImage"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"hitRate"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},...DirtyAssPostCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssQuestionCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"QuestionCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Question"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"audioUrl"}},{"kind":"Field","name":{"kind":"Name","value":"waveform"}},{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}}]}},...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssQuestionDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"QuestionDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Question"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionCore"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"viewerCanEdit"}},{"kind":"Field","name":{"kind":"Name","value":"viewerCanComment"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},...DirtyAssQuestionCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssQuestionListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"QuestionListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Question"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionCore"}}]}},...DirtyAssQuestionCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssQuestionsConnectionFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"QuestionsConnection"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"QConnection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionListItem"}}]}}]}}]}},...DirtyAssQuestionListItemFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssStackCoreFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StackCore"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Stack"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]} as unknown as DocumentNode;
+export const DirtyAssStackDetailFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StackDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Stack"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackCore"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}},{"kind":"Field","name":{"kind":"Name","value":"usedByViewer"}},{"kind":"Field","name":{"kind":"Name","value":"usedBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},...DirtyAssStackCoreFragmentDoc.definitions,...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssStackListItemFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StackListItem"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Stack"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackCore"}}]}},...DirtyAssStackCoreFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssStacksConnectionFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StacksConnection"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SConnection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackListItem"}}]}}]}}]}},...DirtyAssStackListItemFragmentDoc.definitions]} as unknown as DocumentNode;
+export const DirtyAssUserSettingsFragmentDoc = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserSettings"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"pendingEmail"}}]}}]} as unknown as DocumentNode;
+export const EditBookmarkDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarkDetail"}}]}}]}},...DirtyAssBookmarkDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type EditBookmarkMutationFn = Apollo.MutationFunction<EditBookmarkMutation, EditBookmarkMutationVariables>;
 export function useEditBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<EditBookmarkMutation, EditBookmarkMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<EditBookmarkMutation, EditBookmarkMutationVariables>(EditBookmarkDocument, options);
       }
 export type EditBookmarkMutationHookResult = ReturnType<typeof useEditBookmarkMutation>;
-export type EditBookmarkMutationResult = Apollo.MutationResult<EditBookmarkMutation>;
 export type EditBookmarkMutationOptions = Apollo.BaseMutationOptions<EditBookmarkMutation, EditBookmarkMutationVariables>;
-export const DeleteBookmarkDocument = /*#__PURE__*/ gql`
-    mutation deleteBookmark($id: ID!) {
-  deleteBookmark(id: $id)
-}
-    `;
+export const DeleteBookmarkDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode;
 export type DeleteBookmarkMutationFn = Apollo.MutationFunction<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
 export function useDeleteBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>(DeleteBookmarkDocument, options);
       }
 export type DeleteBookmarkMutationHookResult = ReturnType<typeof useDeleteBookmarkMutation>;
-export type DeleteBookmarkMutationResult = Apollo.MutationResult<DeleteBookmarkMutation>;
 export type DeleteBookmarkMutationOptions = Apollo.BaseMutationOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
-export const AddBookmarkDocument = /*#__PURE__*/ gql`
-    mutation addBookmark($data: AddBookmarkInput!) {
-  addBookmark(data: $data) {
-    ...BookmarkDetail
-  }
-}
-    ${DirtyAssBookmarkDetailFragmentDoc}`;
+export const AddBookmarkDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddBookmarkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addBookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarkDetail"}}]}}]}},...DirtyAssBookmarkDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type AddBookmarkMutationFn = Apollo.MutationFunction<AddBookmarkMutation, AddBookmarkMutationVariables>;
 export function useAddBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<AddBookmarkMutation, AddBookmarkMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddBookmarkMutation, AddBookmarkMutationVariables>(AddBookmarkDocument, options);
       }
 export type AddBookmarkMutationHookResult = ReturnType<typeof useAddBookmarkMutation>;
-export type AddBookmarkMutationResult = Apollo.MutationResult<AddBookmarkMutation>;
 export type AddBookmarkMutationOptions = Apollo.BaseMutationOptions<AddBookmarkMutation, AddBookmarkMutationVariables>;
-export const AddCommentDocument = /*#__PURE__*/ gql`
-    mutation addComment($refId: ID!, $parentId: String, $type: CommentType!, $text: String!) {
-  addComment(refId: $refId, parentId: $parentId, type: $type, text: $text) {
-    ...CommentInfo
-  }
-}
-    ${DirtyAssCommentInfoFragmentDoc}`;
+export const AddCommentDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CommentType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"text"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refId"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentId"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}},{"kind":"Argument","name":{"kind":"Name","value":"text"},"value":{"kind":"Variable","name":{"kind":"Name","value":"text"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentInfo"}}]}}]}},...DirtyAssCommentInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export type AddCommentMutationFn = Apollo.MutationFunction<AddCommentMutation, AddCommentMutationVariables>;
 export function useAddCommentMutation(baseOptions?: Apollo.MutationHookOptions<AddCommentMutation, AddCommentMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddCommentMutation, AddCommentMutationVariables>(AddCommentDocument, options);
       }
 export type AddCommentMutationHookResult = ReturnType<typeof useAddCommentMutation>;
-export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
 export type AddCommentMutationOptions = Apollo.BaseMutationOptions<AddCommentMutation, AddCommentMutationVariables>;
-export const EditCommentDocument = /*#__PURE__*/ gql`
-    mutation editComment($id: ID!, $text: String!) {
-  editComment(id: $id, text: $text) {
-    ...CommentInfo
-  }
-}
-    ${DirtyAssCommentInfoFragmentDoc}`;
+export const EditCommentDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"text"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"text"},"value":{"kind":"Variable","name":{"kind":"Name","value":"text"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentInfo"}}]}}]}},...DirtyAssCommentInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export type EditCommentMutationFn = Apollo.MutationFunction<EditCommentMutation, EditCommentMutationVariables>;
 export function useEditCommentMutation(baseOptions?: Apollo.MutationHookOptions<EditCommentMutation, EditCommentMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<EditCommentMutation, EditCommentMutationVariables>(EditCommentDocument, options);
       }
 export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
-export type EditCommentMutationResult = Apollo.MutationResult<EditCommentMutation>;
 export type EditCommentMutationOptions = Apollo.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
-export const DeleteCommentDocument = /*#__PURE__*/ gql`
-    mutation deleteComment($id: ID!) {
-  deleteComment(id: $id)
-}
-    `;
+export const DeleteCommentDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode;
 export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutation, DeleteCommentMutationVariables>;
 export function useDeleteCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCommentMutation, DeleteCommentMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, options);
       }
 export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteCommentMutation>;
-export type DeleteCommentMutationResult = Apollo.MutationResult<DeleteCommentMutation>;
 export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<DeleteCommentMutation, DeleteCommentMutationVariables>;
-export const EditPostDocument = /*#__PURE__*/ gql`
-    mutation editPost($id: ID!, $data: EditPostInput!) {
-  editPost(id: $id, data: $data) {
-    ...PostDetail
-  }
-}
-    ${DirtyAssPostDetailFragmentDoc}`;
+export const EditPostDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditPostInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostDetail"}}]}}]}},...DirtyAssPostDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type EditPostMutationFn = Apollo.MutationFunction<EditPostMutation, EditPostMutationVariables>;
 export function useEditPostMutation(baseOptions?: Apollo.MutationHookOptions<EditPostMutation, EditPostMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<EditPostMutation, EditPostMutationVariables>(EditPostDocument, options);
       }
 export type EditPostMutationHookResult = ReturnType<typeof useEditPostMutation>;
-export type EditPostMutationResult = Apollo.MutationResult<EditPostMutation>;
 export type EditPostMutationOptions = Apollo.BaseMutationOptions<EditPostMutation, EditPostMutationVariables>;
-export const DeletePostDocument = /*#__PURE__*/ gql`
-    mutation deletePost($id: ID!) {
-  deletePost(id: $id)
-}
-    `;
+export const DeletePostDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode;
 export type DeletePostMutationFn = Apollo.MutationFunction<DeletePostMutation, DeletePostMutationVariables>;
 export function useDeletePostMutation(baseOptions?: Apollo.MutationHookOptions<DeletePostMutation, DeletePostMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument, options);
       }
 export type DeletePostMutationHookResult = ReturnType<typeof useDeletePostMutation>;
-export type DeletePostMutationResult = Apollo.MutationResult<DeletePostMutation>;
 export type DeletePostMutationOptions = Apollo.BaseMutationOptions<DeletePostMutation, DeletePostMutationVariables>;
-export const AddPostDocument = /*#__PURE__*/ gql`
-    mutation addPost($data: AddPostInput!) {
-  addPost(data: $data) {
-    ...PostDetail
-  }
-}
-    ${DirtyAssPostDetailFragmentDoc}`;
+export const AddPostDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddPostInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostDetail"}}]}}]}},...DirtyAssPostDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type AddPostMutationFn = Apollo.MutationFunction<AddPostMutation, AddPostMutationVariables>;
 export function useAddPostMutation(baseOptions?: Apollo.MutationHookOptions<AddPostMutation, AddPostMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddPostMutation, AddPostMutationVariables>(AddPostDocument, options);
       }
 export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>;
-export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
 export type AddPostMutationOptions = Apollo.BaseMutationOptions<AddPostMutation, AddPostMutationVariables>;
-export const EditQuestionDocument = /*#__PURE__*/ gql`
-    mutation editQuestion($id: ID!, $data: EditQuestionInput!) {
-  editQuestion(id: $id, data: $data) {
-    ...QuestionDetail
-  }
-}
-    ${DirtyAssQuestionDetailFragmentDoc}`;
+export const EditQuestionDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editQuestion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditQuestionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editQuestion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionDetail"}}]}}]}},...DirtyAssQuestionDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type EditQuestionMutationFn = Apollo.MutationFunction<EditQuestionMutation, EditQuestionMutationVariables>;
 export function useEditQuestionMutation(baseOptions?: Apollo.MutationHookOptions<EditQuestionMutation, EditQuestionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<EditQuestionMutation, EditQuestionMutationVariables>(EditQuestionDocument, options);
       }
 export type EditQuestionMutationHookResult = ReturnType<typeof useEditQuestionMutation>;
-export type EditQuestionMutationResult = Apollo.MutationResult<EditQuestionMutation>;
 export type EditQuestionMutationOptions = Apollo.BaseMutationOptions<EditQuestionMutation, EditQuestionMutationVariables>;
-export const DeleteQuestionDocument = /*#__PURE__*/ gql`
-    mutation deleteQuestion($id: ID!) {
-  deleteQuestion(id: $id)
-}
-    `;
+export const DeleteQuestionDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteQuestion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteQuestion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode;
 export type DeleteQuestionMutationFn = Apollo.MutationFunction<DeleteQuestionMutation, DeleteQuestionMutationVariables>;
 export function useDeleteQuestionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteQuestionMutation, DeleteQuestionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<DeleteQuestionMutation, DeleteQuestionMutationVariables>(DeleteQuestionDocument, options);
       }
 export type DeleteQuestionMutationHookResult = ReturnType<typeof useDeleteQuestionMutation>;
-export type DeleteQuestionMutationResult = Apollo.MutationResult<DeleteQuestionMutation>;
 export type DeleteQuestionMutationOptions = Apollo.BaseMutationOptions<DeleteQuestionMutation, DeleteQuestionMutationVariables>;
-export const AddQuestionDocument = /*#__PURE__*/ gql`
-    mutation addQuestion($data: AddQuestionInput!) {
-  addQuestion(data: $data) {
-    ...QuestionDetail
-  }
-}
-    ${DirtyAssQuestionDetailFragmentDoc}`;
+export const AddQuestionDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addQuestion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddQuestionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addQuestion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionDetail"}}]}}]}},...DirtyAssQuestionDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type AddQuestionMutationFn = Apollo.MutationFunction<AddQuestionMutation, AddQuestionMutationVariables>;
 export function useAddQuestionMutation(baseOptions?: Apollo.MutationHookOptions<AddQuestionMutation, AddQuestionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddQuestionMutation, AddQuestionMutationVariables>(AddQuestionDocument, options);
       }
 export type AddQuestionMutationHookResult = ReturnType<typeof useAddQuestionMutation>;
-export type AddQuestionMutationResult = Apollo.MutationResult<AddQuestionMutation>;
 export type AddQuestionMutationOptions = Apollo.BaseMutationOptions<AddQuestionMutation, AddQuestionMutationVariables>;
-export const ToggleReactionDocument = /*#__PURE__*/ gql`
-    mutation toggleReaction($refId: ID!, $type: ReactionType!) {
-  toggleReaction(refId: $refId, type: $type) {
-    ... on Stack {
-      id
-      reactionCount
-      viewerHasReacted
-    }
-    ... on Bookmark {
-      id
-      url
-      reactionCount
-      viewerHasReacted
-    }
-    ... on Question {
-      id
-      reactionCount
-      viewerHasReacted
-    }
-    ... on Blog {
-      id
-      reactionCount
-      viewerHasReacted
-    }
-    ... on Event {
-      id
-      reactionCount
-      viewerHasReacted
-    }
-    ... on Case {
-      id
-      reactionCount
-      viewerHasReacted
-    }
-  }
-}
-    `;
+export const ToggleReactionDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"toggleReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReactionType"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"toggleReaction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refId"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Stack"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bookmark"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Question"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Blog"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Event"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Case"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"reactionCount"}},{"kind":"Field","name":{"kind":"Name","value":"viewerHasReacted"}}]}}]}}]}}]} as unknown as DocumentNode;
 export type ToggleReactionMutationFn = Apollo.MutationFunction<ToggleReactionMutation, ToggleReactionMutationVariables>;
 export function useToggleReactionMutation(baseOptions?: Apollo.MutationHookOptions<ToggleReactionMutation, ToggleReactionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<ToggleReactionMutation, ToggleReactionMutationVariables>(ToggleReactionDocument, options);
       }
 export type ToggleReactionMutationHookResult = ReturnType<typeof useToggleReactionMutation>;
-export type ToggleReactionMutationResult = Apollo.MutationResult<ToggleReactionMutation>;
 export type ToggleReactionMutationOptions = Apollo.BaseMutationOptions<ToggleReactionMutation, ToggleReactionMutationVariables>;
-export const EditStackDocument = /*#__PURE__*/ gql`
-    mutation editStack($id: ID!, $data: EditStackInput!) {
-  editStack(id: $id, data: $data) {
-    ...StackDetail
-  }
-}
-    ${DirtyAssStackDetailFragmentDoc}`;
+export const EditStackDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editStack"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditStackInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editStack"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackDetail"}}]}}]}},...DirtyAssStackDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type EditStackMutationFn = Apollo.MutationFunction<EditStackMutation, EditStackMutationVariables>;
 export function useEditStackMutation(baseOptions?: Apollo.MutationHookOptions<EditStackMutation, EditStackMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<EditStackMutation, EditStackMutationVariables>(EditStackDocument, options);
       }
 export type EditStackMutationHookResult = ReturnType<typeof useEditStackMutation>;
-export type EditStackMutationResult = Apollo.MutationResult<EditStackMutation>;
 export type EditStackMutationOptions = Apollo.BaseMutationOptions<EditStackMutation, EditStackMutationVariables>;
-export const DeleteStackDocument = /*#__PURE__*/ gql`
-    mutation deleteStack($id: ID!) {
-  deleteStack(id: $id)
-}
-    `;
+export const DeleteStackDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteStack"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteStack"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode;
 export type DeleteStackMutationFn = Apollo.MutationFunction<DeleteStackMutation, DeleteStackMutationVariables>;
 export function useDeleteStackMutation(baseOptions?: Apollo.MutationHookOptions<DeleteStackMutation, DeleteStackMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<DeleteStackMutation, DeleteStackMutationVariables>(DeleteStackDocument, options);
       }
 export type DeleteStackMutationHookResult = ReturnType<typeof useDeleteStackMutation>;
-export type DeleteStackMutationResult = Apollo.MutationResult<DeleteStackMutation>;
 export type DeleteStackMutationOptions = Apollo.BaseMutationOptions<DeleteStackMutation, DeleteStackMutationVariables>;
-export const AddStackDocument = /*#__PURE__*/ gql`
-    mutation addStack($data: AddStackInput!) {
-  addStack(data: $data) {
-    ...StackDetail
-  }
-}
-    ${DirtyAssStackDetailFragmentDoc}`;
+export const AddStackDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addStack"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddStackInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addStack"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackDetail"}}]}}]}},...DirtyAssStackDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export type AddStackMutationFn = Apollo.MutationFunction<AddStackMutation, AddStackMutationVariables>;
 export function useAddStackMutation(baseOptions?: Apollo.MutationHookOptions<AddStackMutation, AddStackMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddStackMutation, AddStackMutationVariables>(AddStackDocument, options);
       }
 export type AddStackMutationHookResult = ReturnType<typeof useAddStackMutation>;
-export type AddStackMutationResult = Apollo.MutationResult<AddStackMutation>;
 export type AddStackMutationOptions = Apollo.BaseMutationOptions<AddStackMutation, AddStackMutationVariables>;
-export const ToggleStackUserDocument = /*#__PURE__*/ gql`
-    mutation toggleStackUser($id: ID!) {
-  toggleStackUser(id: $id) {
-    ...StackCore
-    usedBy {
-      ...UserInfo
-    }
-  }
-}
-    ${DirtyAssStackCoreFragmentDoc}
-${DirtyAssUserInfoFragmentDoc}`;
+export const ToggleStackUserDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"toggleStackUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"toggleStackUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackCore"}},{"kind":"Field","name":{"kind":"Name","value":"usedBy"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}}]}}]}},...DirtyAssStackCoreFragmentDoc.definitions,...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export type ToggleStackUserMutationFn = Apollo.MutationFunction<ToggleStackUserMutation, ToggleStackUserMutationVariables>;
 export function useToggleStackUserMutation(baseOptions?: Apollo.MutationHookOptions<ToggleStackUserMutation, ToggleStackUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<ToggleStackUserMutation, ToggleStackUserMutationVariables>(ToggleStackUserDocument, options);
       }
 export type ToggleStackUserMutationHookResult = ReturnType<typeof useToggleStackUserMutation>;
-export type ToggleStackUserMutationResult = Apollo.MutationResult<ToggleStackUserMutation>;
 export type ToggleStackUserMutationOptions = Apollo.BaseMutationOptions<ToggleStackUserMutation, ToggleStackUserMutationVariables>;
-export const DeleteUserDocument = /*#__PURE__*/ gql`
-    mutation deleteUser {
-  deleteUser
-}
-    `;
+export const DeleteUserDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteUser"}}]}}]} as unknown as DocumentNode;
 export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
 export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserMutation, DeleteUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument, options);
       }
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
-export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
-export const EditUserDocument = /*#__PURE__*/ gql`
-    mutation editUser($data: EditUserInput) {
-  editUser(data: $data) {
-    ...UserInfo
-  }
-}
-    ${DirtyAssUserInfoFragmentDoc}`;
+export const EditUserDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"EditUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}}]}},...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export type EditUserMutationFn = Apollo.MutationFunction<EditUserMutation, EditUserMutationVariables>;
 export function useEditUserMutation(baseOptions?: Apollo.MutationHookOptions<EditUserMutation, EditUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<EditUserMutation, EditUserMutationVariables>(EditUserDocument, options);
       }
 export type EditUserMutationHookResult = ReturnType<typeof useEditUserMutation>;
-export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>;
 export type EditUserMutationOptions = Apollo.BaseMutationOptions<EditUserMutation, EditUserMutationVariables>;
-export const AddViewDocument = /*#__PURE__*/ gql`
-    mutation addView($refId: ID!, $type: ViewType!) {
-  addView(refId: $refId, type: $type) {
-    ... on Stack {
-      id
-      count
-    }
-    ... on Bookmark {
-      id
-      count
-    }
-    ... on Question {
-      id
-      count
-    }
-    ... on Blog {
-      id
-      count
-    }
-  }
-}
-    `;
+export const AddViewDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addView"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ViewType"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addView"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refId"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Stack"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Bookmark"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Question"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Blog"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode;
 export type AddViewMutationFn = Apollo.MutationFunction<AddViewMutation, AddViewMutationVariables>;
 export function useAddViewMutation(baseOptions?: Apollo.MutationHookOptions<AddViewMutation, AddViewMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<AddViewMutation, AddViewMutationVariables>(AddViewDocument, options);
       }
 export type AddViewMutationHookResult = ReturnType<typeof useAddViewMutation>;
-export type AddViewMutationResult = Apollo.MutationResult<AddViewMutation>;
 export type AddViewMutationOptions = Apollo.BaseMutationOptions<AddViewMutation, AddViewMutationVariables>;
-export const GetBlogsDocument = /*#__PURE__*/ gql`
-    query getBlogs {
-  blogs {
-    ...BlogListItem
-  }
-}
-    ${DirtyAssBlogListItemFragmentDoc}`;
+export const GetBlogsDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBlogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"blogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BlogListItem"}}]}}]}},...DirtyAssBlogListItemFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetBlogsQuery(baseOptions?: Apollo.QueryHookOptions<GetBlogsQuery, GetBlogsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetBlogsQuery, GetBlogsQueryVariables>(GetBlogsDocument, options);
@@ -1954,17 +1991,7 @@ export function useGetBlogsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookO
 export type GetBlogsQueryHookResult = ReturnType<typeof useGetBlogsQuery>;
 export type GetBlogsLazyQueryHookResult = ReturnType<typeof useGetBlogsLazyQuery>;
 export type GetBlogsSuspenseQueryHookResult = ReturnType<typeof useGetBlogsSuspenseQuery>;
-export type GetBlogsQueryResult = Apollo.QueryResult<GetBlogsQuery, GetBlogsQueryVariables>;
-export function refetchGetBlogsQuery(variables?: GetBlogsQueryVariables) {
-      return { query: GetBlogsDocument, variables: variables }
-    }
-export const GetBlogDocument = /*#__PURE__*/ gql`
-    query getBlog($slug: String!) {
-  blog(slug: $slug) {
-    ...BlogDetail
-  }
-}
-    ${DirtyAssBlogDetailFragmentDoc}`;
+export const GetBlogDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBlog"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"blog"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BlogDetail"}}]}}]}},...DirtyAssBlogDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetBlogQuery(baseOptions: Apollo.QueryHookOptions<GetBlogQuery, GetBlogQueryVariables> & ({ variables: GetBlogQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetBlogQuery, GetBlogQueryVariables>(GetBlogDocument, options);
@@ -1980,17 +2007,7 @@ export function useGetBlogSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOp
 export type GetBlogQueryHookResult = ReturnType<typeof useGetBlogQuery>;
 export type GetBlogLazyQueryHookResult = ReturnType<typeof useGetBlogLazyQuery>;
 export type GetBlogSuspenseQueryHookResult = ReturnType<typeof useGetBlogSuspenseQuery>;
-export type GetBlogQueryResult = Apollo.QueryResult<GetBlogQuery, GetBlogQueryVariables>;
-export function refetchGetBlogQuery(variables: GetBlogQueryVariables) {
-      return { query: GetBlogDocument, variables: variables }
-    }
-export const GetBookmarksDocument = /*#__PURE__*/ gql`
-    query getBookmarks($first: Int, $after: String, $filter: BookmarkFilter) {
-  bookmarks(first: $first, after: $after, filter: $filter) {
-    ...BookmarksConnection
-  }
-}
-    ${DirtyAssBookmarksConnectionFragmentDoc}`;
+export const GetBookmarksDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBookmarks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"BookmarkFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookmarks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarksConnection"}}]}}]}},...DirtyAssBookmarksConnectionFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetBookmarksQuery(baseOptions?: Apollo.QueryHookOptions<GetBookmarksQuery, GetBookmarksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetBookmarksQuery, GetBookmarksQueryVariables>(GetBookmarksDocument, options);
@@ -2006,17 +2023,7 @@ export function useGetBookmarksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryH
 export type GetBookmarksQueryHookResult = ReturnType<typeof useGetBookmarksQuery>;
 export type GetBookmarksLazyQueryHookResult = ReturnType<typeof useGetBookmarksLazyQuery>;
 export type GetBookmarksSuspenseQueryHookResult = ReturnType<typeof useGetBookmarksSuspenseQuery>;
-export type GetBookmarksQueryResult = Apollo.QueryResult<GetBookmarksQuery, GetBookmarksQueryVariables>;
-export function refetchGetBookmarksQuery(variables?: GetBookmarksQueryVariables) {
-      return { query: GetBookmarksDocument, variables: variables }
-    }
-export const GetBookmarkDocument = /*#__PURE__*/ gql`
-    query getBookmark($id: ID!) {
-  bookmark(id: $id) {
-    ...BookmarkDetail
-  }
-}
-    ${DirtyAssBookmarkDetailFragmentDoc}`;
+export const GetBookmarkDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBookmark"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookmark"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BookmarkDetail"}}]}}]}},...DirtyAssBookmarkDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetBookmarkQuery(baseOptions: Apollo.QueryHookOptions<GetBookmarkQuery, GetBookmarkQueryVariables> & ({ variables: GetBookmarkQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetBookmarkQuery, GetBookmarkQueryVariables>(GetBookmarkDocument, options);
@@ -2032,17 +2039,7 @@ export function useGetBookmarkSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHo
 export type GetBookmarkQueryHookResult = ReturnType<typeof useGetBookmarkQuery>;
 export type GetBookmarkLazyQueryHookResult = ReturnType<typeof useGetBookmarkLazyQuery>;
 export type GetBookmarkSuspenseQueryHookResult = ReturnType<typeof useGetBookmarkSuspenseQuery>;
-export type GetBookmarkQueryResult = Apollo.QueryResult<GetBookmarkQuery, GetBookmarkQueryVariables>;
-export function refetchGetBookmarkQuery(variables: GetBookmarkQueryVariables) {
-      return { query: GetBookmarkDocument, variables: variables }
-    }
-export const GetCasesDocument = /*#__PURE__*/ gql`
-    query getCases {
-  cases {
-    ...CaseListItem
-  }
-}
-    ${DirtyAssCaseListItemFragmentDoc}`;
+export const GetCasesDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCases"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cases"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CaseListItem"}}]}}]}},...DirtyAssCaseListItemFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetCasesQuery(baseOptions?: Apollo.QueryHookOptions<GetCasesQuery, GetCasesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCasesQuery, GetCasesQueryVariables>(GetCasesDocument, options);
@@ -2058,17 +2055,7 @@ export function useGetCasesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookO
 export type GetCasesQueryHookResult = ReturnType<typeof useGetCasesQuery>;
 export type GetCasesLazyQueryHookResult = ReturnType<typeof useGetCasesLazyQuery>;
 export type GetCasesSuspenseQueryHookResult = ReturnType<typeof useGetCasesSuspenseQuery>;
-export type GetCasesQueryResult = Apollo.QueryResult<GetCasesQuery, GetCasesQueryVariables>;
-export function refetchGetCasesQuery(variables?: GetCasesQueryVariables) {
-      return { query: GetCasesDocument, variables: variables }
-    }
-export const GetCaseDocument = /*#__PURE__*/ gql`
-    query getCase($slug: String!) {
-  case(slug: $slug) {
-    ...CaseDetail
-  }
-}
-    ${DirtyAssCaseDetailFragmentDoc}`;
+export const GetCaseDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"case"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CaseDetail"}}]}}]}},...DirtyAssCaseDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetCaseQuery(baseOptions: Apollo.QueryHookOptions<GetCaseQuery, GetCaseQueryVariables> & ({ variables: GetCaseQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCaseQuery, GetCaseQueryVariables>(GetCaseDocument, options);
@@ -2084,17 +2071,7 @@ export function useGetCaseSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOp
 export type GetCaseQueryHookResult = ReturnType<typeof useGetCaseQuery>;
 export type GetCaseLazyQueryHookResult = ReturnType<typeof useGetCaseLazyQuery>;
 export type GetCaseSuspenseQueryHookResult = ReturnType<typeof useGetCaseSuspenseQuery>;
-export type GetCaseQueryResult = Apollo.QueryResult<GetCaseQuery, GetCaseQueryVariables>;
-export function refetchGetCaseQuery(variables: GetCaseQueryVariables) {
-      return { query: GetCaseDocument, variables: variables }
-    }
-export const GetCommentsDocument = /*#__PURE__*/ gql`
-    query getComments($refId: ID!, $type: CommentType!) {
-  comments(refId: $refId, type: $type) {
-    ...CommentInfo
-  }
-}
-    ${DirtyAssCommentInfoFragmentDoc}`;
+export const GetCommentsDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getComments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CommentType"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refId"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentInfo"}}]}}]}},...DirtyAssCommentInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables> & ({ variables: GetCommentsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
@@ -2110,17 +2087,7 @@ export function useGetCommentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHo
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
 export type GetCommentsSuspenseQueryHookResult = ReturnType<typeof useGetCommentsSuspenseQuery>;
-export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
-export function refetchGetCommentsQuery(variables: GetCommentsQueryVariables) {
-      return { query: GetCommentsDocument, variables: variables }
-    }
-export const GetPostsDocument = /*#__PURE__*/ gql`
-    query getPosts($filter: PostFilter) {
-  posts(filter: $filter) {
-    ...PostListItem
-  }
-}
-    ${DirtyAssPostListItemFragmentDoc}`;
+export const GetPostsDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PostFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostListItem"}}]}}]}},...DirtyAssPostListItemFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
@@ -2136,17 +2103,7 @@ export function useGetPostsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookO
 export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsSuspenseQueryHookResult = ReturnType<typeof useGetPostsSuspenseQuery>;
-export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
-export function refetchGetPostsQuery(variables?: GetPostsQueryVariables) {
-      return { query: GetPostsDocument, variables: variables }
-    }
-export const GetPostDocument = /*#__PURE__*/ gql`
-    query getPost($slug: String!) {
-  post(slug: $slug) {
-    ...PostDetail
-  }
-}
-    ${DirtyAssPostDetailFragmentDoc}`;
+export const GetPostDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostDetail"}}]}}]}},...DirtyAssPostDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetPostQuery(baseOptions: Apollo.QueryHookOptions<GetPostQuery, GetPostQueryVariables> & ({ variables: GetPostQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetPostQuery, GetPostQueryVariables>(GetPostDocument, options);
@@ -2162,17 +2119,7 @@ export function useGetPostSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOp
 export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
 export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
 export type GetPostSuspenseQueryHookResult = ReturnType<typeof useGetPostSuspenseQuery>;
-export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
-export function refetchGetPostQuery(variables: GetPostQueryVariables) {
-      return { query: GetPostDocument, variables: variables }
-    }
-export const GetQuestionsDocument = /*#__PURE__*/ gql`
-    query getQuestions($first: Int, $after: String, $filter: QuestionFilter) {
-  questions(first: $first, after: $after, filter: $filter) {
-    ...QuestionsConnection
-  }
-}
-    ${DirtyAssQuestionsConnectionFragmentDoc}`;
+export const GetQuestionsDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getQuestions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"QuestionFilter2"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"questions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionsConnection"}}]}}]}},...DirtyAssQuestionsConnectionFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
@@ -2188,17 +2135,7 @@ export function useGetQuestionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryH
 export type GetQuestionsQueryHookResult = ReturnType<typeof useGetQuestionsQuery>;
 export type GetQuestionsLazyQueryHookResult = ReturnType<typeof useGetQuestionsLazyQuery>;
 export type GetQuestionsSuspenseQueryHookResult = ReturnType<typeof useGetQuestionsSuspenseQuery>;
-export type GetQuestionsQueryResult = Apollo.QueryResult<GetQuestionsQuery, GetQuestionsQueryVariables>;
-export function refetchGetQuestionsQuery(variables?: GetQuestionsQueryVariables) {
-      return { query: GetQuestionsDocument, variables: variables }
-    }
-export const GetQuestionDocument = /*#__PURE__*/ gql`
-    query getQuestion($id: ID!) {
-  question(id: $id) {
-    ...QuestionDetail
-  }
-}
-    ${DirtyAssQuestionDetailFragmentDoc}`;
+export const GetQuestionDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getQuestion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"question"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"QuestionDetail"}}]}}]}},...DirtyAssQuestionDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetQuestionQuery(baseOptions: Apollo.QueryHookOptions<GetQuestionQuery, GetQuestionQueryVariables> & ({ variables: GetQuestionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetQuestionQuery, GetQuestionQueryVariables>(GetQuestionDocument, options);
@@ -2214,17 +2151,7 @@ export function useGetQuestionSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHo
 export type GetQuestionQueryHookResult = ReturnType<typeof useGetQuestionQuery>;
 export type GetQuestionLazyQueryHookResult = ReturnType<typeof useGetQuestionLazyQuery>;
 export type GetQuestionSuspenseQueryHookResult = ReturnType<typeof useGetQuestionSuspenseQuery>;
-export type GetQuestionQueryResult = Apollo.QueryResult<GetQuestionQuery, GetQuestionQueryVariables>;
-export function refetchGetQuestionQuery(variables: GetQuestionQueryVariables) {
-      return { query: GetQuestionDocument, variables: variables }
-    }
-export const GetStacksDocument = /*#__PURE__*/ gql`
-    query getStacks($first: Int, $after: String) {
-  stacks(first: $first, after: $after) {
-    ...StacksConnection
-  }
-}
-    ${DirtyAssStacksConnectionFragmentDoc}`;
+export const GetStacksDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getStacks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stacks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StacksConnection"}}]}}]}},...DirtyAssStacksConnectionFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetStacksQuery(baseOptions?: Apollo.QueryHookOptions<GetStacksQuery, GetStacksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetStacksQuery, GetStacksQueryVariables>(GetStacksDocument, options);
@@ -2240,17 +2167,7 @@ export function useGetStacksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHook
 export type GetStacksQueryHookResult = ReturnType<typeof useGetStacksQuery>;
 export type GetStacksLazyQueryHookResult = ReturnType<typeof useGetStacksLazyQuery>;
 export type GetStacksSuspenseQueryHookResult = ReturnType<typeof useGetStacksSuspenseQuery>;
-export type GetStacksQueryResult = Apollo.QueryResult<GetStacksQuery, GetStacksQueryVariables>;
-export function refetchGetStacksQuery(variables?: GetStacksQueryVariables) {
-      return { query: GetStacksDocument, variables: variables }
-    }
-export const GetStackDocument = /*#__PURE__*/ gql`
-    query getStack($slug: String!) {
-  stack(slug: $slug) {
-    ...StackDetail
-  }
-}
-    ${DirtyAssStackDetailFragmentDoc}`;
+export const GetStackDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getStack"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stack"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"StackDetail"}}]}}]}},...DirtyAssStackDetailFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetStackQuery(baseOptions: Apollo.QueryHookOptions<GetStackQuery, GetStackQueryVariables> & ({ variables: GetStackQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetStackQuery, GetStackQueryVariables>(GetStackDocument, options);
@@ -2266,17 +2183,7 @@ export function useGetStackSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookO
 export type GetStackQueryHookResult = ReturnType<typeof useGetStackQuery>;
 export type GetStackLazyQueryHookResult = ReturnType<typeof useGetStackLazyQuery>;
 export type GetStackSuspenseQueryHookResult = ReturnType<typeof useGetStackSuspenseQuery>;
-export type GetStackQueryResult = Apollo.QueryResult<GetStackQuery, GetStackQueryVariables>;
-export function refetchGetStackQuery(variables: GetStackQueryVariables) {
-      return { query: GetStackDocument, variables: variables }
-    }
-export const GetTagsDocument = /*#__PURE__*/ gql`
-    query getTags {
-  tags {
-    name
-  }
-}
-    `;
+export const GetTagsDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode;
 export function useGetTagsQuery(baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
@@ -2292,17 +2199,7 @@ export function useGetTagsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOp
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
 export type GetTagsSuspenseQueryHookResult = ReturnType<typeof useGetTagsSuspenseQuery>;
-export type GetTagsQueryResult = Apollo.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
-export function refetchGetTagsQuery(variables?: GetTagsQueryVariables) {
-      return { query: GetTagsDocument, variables: variables }
-    }
-export const GetUserDocument = /*#__PURE__*/ gql`
-    query getUser($username: String!) {
-  user(username: $username) {
-    ...UserInfo
-  }
-}
-    ${DirtyAssUserInfoFragmentDoc}`;
+export const GetUserDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}}]}},...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
@@ -2318,17 +2215,7 @@ export function useGetUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOp
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
-export function refetchGetUserQuery(variables: GetUserQueryVariables) {
-      return { query: GetUserDocument, variables: variables }
-    }
-export const ViewerDocument = /*#__PURE__*/ gql`
-    query viewer {
-  viewer {
-    ...UserInfo
-  }
-}
-    ${DirtyAssUserInfoFragmentDoc}`;
+export const ViewerDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}}]}}]}},...DirtyAssUserInfoFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useViewerQuery(baseOptions?: Apollo.QueryHookOptions<ViewerQuery, ViewerQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ViewerQuery, ViewerQueryVariables>(ViewerDocument, options);
@@ -2344,19 +2231,7 @@ export function useViewerSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOpt
 export type ViewerQueryHookResult = ReturnType<typeof useViewerQuery>;
 export type ViewerLazyQueryHookResult = ReturnType<typeof useViewerLazyQuery>;
 export type ViewerSuspenseQueryHookResult = ReturnType<typeof useViewerSuspenseQuery>;
-export type ViewerQueryResult = Apollo.QueryResult<ViewerQuery, ViewerQueryVariables>;
-export function refetchViewerQuery(variables?: ViewerQueryVariables) {
-      return { query: ViewerDocument, variables: variables }
-    }
-export const GetViewerWithSettingsDocument = /*#__PURE__*/ gql`
-    query getViewerWithSettings {
-  viewer {
-    ...UserInfo
-    ...UserSettings
-  }
-}
-    ${DirtyAssUserInfoFragmentDoc}
-${DirtyAssUserSettingsFragmentDoc}`;
+export const GetViewerWithSettingsDocument = /*#__PURE__*/ {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getViewerWithSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"viewer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserInfo"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserSettings"}}]}}]}},...DirtyAssUserInfoFragmentDoc.definitions,...DirtyAssUserSettingsFragmentDoc.definitions]} as unknown as DocumentNode;
 export function useGetViewerWithSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>(GetViewerWithSettingsDocument, options);
@@ -2372,7 +2247,3 @@ export function useGetViewerWithSettingsSuspenseQuery(baseOptions?: Apollo.Suspe
 export type GetViewerWithSettingsQueryHookResult = ReturnType<typeof useGetViewerWithSettingsQuery>;
 export type GetViewerWithSettingsLazyQueryHookResult = ReturnType<typeof useGetViewerWithSettingsLazyQuery>;
 export type GetViewerWithSettingsSuspenseQueryHookResult = ReturnType<typeof useGetViewerWithSettingsSuspenseQuery>;
-export type GetViewerWithSettingsQueryResult = Apollo.QueryResult<GetViewerWithSettingsQuery, GetViewerWithSettingsQueryVariables>;
-export function refetchGetViewerWithSettingsQuery(variables?: GetViewerWithSettingsQueryVariables) {
-      return { query: GetViewerWithSettingsDocument, variables: variables }
-    }

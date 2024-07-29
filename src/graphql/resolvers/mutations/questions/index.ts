@@ -1,11 +1,15 @@
 import { GraphQLError } from "graphql"
 
-import type { MutationAddQuestionArgs, MutationDeleteQuestionArgs, MutationEditQuestionArgs } from "~/gql/typeSlut"
+import type {
+	AddQuestionMutationVariables,
+	DeleteQuestionMutationVariables,
+	EditQuestionMutationVariables,
+} from "~/gql/typeSlut"
 import type { Context } from "~/graphql/context"
 // import { graphcdn } from "~/lib/graphcdn";
 // import { graphcdn } from '~/lib/redis'
 // import { graphcdn } from '~/lib/graphcdn'
-export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Context) {
+export async function editQuestion(_, args: EditQuestionMutationVariables, ctx: Context) {
 	const { data, id } = args
 
 	const { db, viewer } = ctx
@@ -22,7 +26,7 @@ export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Conte
 				data: {
 					description: data.description,
 					title: data.title,
-					//  status: ama.status,
+					//author: viewer,
 					audioUrl: data.audioUrl ?? null,
 					waveform: Array.isArray(data.waveform) ? data.waveform : null,
 				},
@@ -47,7 +51,7 @@ export async function editQuestion(_, args: MutationEditQuestionArgs, ctx: Conte
 	throw new GraphQLError("No permission to delete this question")
 }
 
-export async function addQuestion(_, args: MutationAddQuestionArgs, ctx: Context) {
+export async function addQuestion(_, args: AddQuestionMutationVariables, ctx: Context) {
 	const { data } = args
 	const { title, description } = data
 	const { viewer, db } = ctx
@@ -79,7 +83,7 @@ export async function addQuestion(_, args: MutationAddQuestionArgs, ctx: Context
 	return question
 }
 
-export async function deleteQuestion(_, args: MutationDeleteQuestionArgs, ctx: Context) {
+export async function deleteQuestion(_, args: DeleteQuestionMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db, viewer } = ctx
 

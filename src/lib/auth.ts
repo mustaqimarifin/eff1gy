@@ -60,7 +60,7 @@ export const {
 			return token
 		},
 		async session({ session, user }) {
-			session.user.role = user.role
+			//session.user.role = user.role
 			session.userId = user.id
 			session.isAdmin = user.isAdmin
 			return session

@@ -28,9 +28,11 @@ const config: CodegenConfig = {
 			},
 		}, */
 		"./src/gql/typeSlut.tsx": {
-			plugins: ["typescript", "typescript-operations", "typescript-react-apollo"],
+			plugins: ["typescript", "typescript-operations", "typescript-resolvers", "typescript-react-apollo"],
 			config: {
 				//gqlImport: 'graphql.macro#gql',
+				emitLegacyCommonJSImports: false,
+				withResultType: false,
 				preResolveTypes: true,
 				flattenGeneratedTypes: true,
 				flattenGeneratedTypesIncludeFragments: true,
@@ -38,9 +40,10 @@ const config: CodegenConfig = {
 				useTypeImports: true,
 				addDocBlocks: false,
 				dedupeOperationSuffix: true,
+				//onlyOperationTypes: true,
 				pureMagicComment: true,
-				//documentMode: "documentNode",
-				withRefetchFn: true,
+				documentMode: "documentNodeImportFragments", //"documentNode"
+				//withRefetchFn: true,
 				//enumsAsTypes: true,
 				experimentalFragmentVariables: true,
 				//constEnums: true,

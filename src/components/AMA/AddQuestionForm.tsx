@@ -4,20 +4,22 @@ import { useState } from "react"
 import { PrimaryButton } from "~/components/Button"
 import { Textarea } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import {  useAddQuestionMutation, useViewerQuery } from "~/gql/typeSlut"
+import { type ViewerQuery, useAddQuestionMutation, useViewerQuery } from "~/gql/typeSlut"
 
 import { Avatar } from "../Avatar"
 import { Nuts } from "../Provider/Toaster"
 
-export function AddQuestionForm({ closeModal }) {
+type QForm = {
+	closeModal: any
+}
+export function AddQuestionForm({ closeModal }: QForm) {
 	const { data } = useViewerQuery()
-
 	const [title, setTitle] = useState("")
 	const [description, setDescription] = useState("")
 	const [, setError] = useState("")
 	const router = useRouter()
 
-	const [handleAddQuestion, { loading, error }] = useAddQuestionMutation( {
+	const [handleAddQuestion, { loading, error }] = useAddQuestionMutation({
 		onCompleted: ({ addQuestion: { id } }) => {
 			closeModal()
 			return router.push(`/ama/${id}`)
@@ -61,13 +63,13 @@ export function AddQuestionForm({ closeModal }) {
 		}
 	}
 
-	const { viewer } = data
+	//const { viewer } = data
 
 	return (
 		<form className="items-stretch space-y-4 p-4" onSubmit={onSubmit}>
 			<div className="flex items-start space-x-3">
 				<div className="pt-0.5">
-					<Avatar user={viewer} src={viewer?.image} width={40} height={40} className="rounded-full" />
+					<Avatar user={data.viewer} src={data.viewer?.image} width={40} height={40} className="rounded-full" />
 				</div>
 				<Textarea
 					rows={1}

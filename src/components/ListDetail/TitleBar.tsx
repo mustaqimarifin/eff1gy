@@ -1,10 +1,19 @@
 "use client"
 import { ArrowLeft, Menu, X } from "lucide-react"
 import Link from "next/link"
-import { type MutableRefObject, type ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
+import {
+	type MutableRefObject,
+	type ReactNode,
+	memo,
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react"
 import { GlobalNavigationContext } from "../Provider"
 
-interface Props {
+type TitleBarProps = {
 	title: string
 	globalMenu?: boolean
 	backButton?: boolean
@@ -17,24 +26,24 @@ interface Props {
 	trailingAccessory?: ReactNode
 }
 
-export function TitleBar({
-	title,
-	globalMenu = true,
-	backButton = false,
-	backButtonHref,
-	magicTitle = false,
-	titleRef,
-	scrollContainerRef,
-	leadingAccessory,
-	trailingAccessory,
-	children,
-}: Props) {
+export const TitleBar = memo<TitleBarProps>(props => {
+	const {
+		title,
+		globalMenu = true,
+		backButton = false,
+		backButtonHref,
+		magicTitle = false,
+		titleRef,
+		scrollContainerRef,
+		leadingAccessory,
+		trailingAccessory,
+		children,
+	} = props
 	const { isOpen, setIsOpen } = useContext(GlobalNavigationContext)
 	const [darkMode, setDarkMode] = useState(false)
 	const [offset, setOffset] = useState(200)
 	const [opacity, _setOpacity] = useState(0)
 	const [currentScrollOffset, _setCurrentScrollOffset] = useState(0)
-
 	const [initialTitleOffsets, _setInitialTitleOffsets] = useState({
 		top: 0,
 		bottom: 0,
@@ -122,12 +131,12 @@ export function TitleBar({
 				}}
 				className="filter-blur sticky top-0 z-10 flex flex-col justify-center px-3 py-2 dark:border-b dark:border-gray-900"
 			>
-				<div className="flex items-center justify-between flex-none">
+				<div className="flex flex-none items-center justify-between">
 					<span className="flex items-center space-x-3">
 						{globalMenu && (
 							<span
 								onClick={() => setIsOpen(!isOpen)}
-								className="flex items-center justify-center p-2 rounded-md cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
+								className="flex cursor-pointer items-center justify-center rounded-md p-2 hover:bg-gray-200 lg:hidden dark:hover:bg-gray-800"
 							>
 								{isOpen ? <X size={16} className="text-primary" /> : <Menu size={16} className="text-primary" />}
 							</span>
@@ -136,7 +145,7 @@ export function TitleBar({
 						{backButton && (
 							<Link
 								href={backButtonHref}
-								className="flex items-center justify-center p-2 rounded-md text-primary hover:bg-gray-200 dark:hover:bg-gray-800 lg:hidden"
+								className="text-primary flex items-center justify-center rounded-md p-2 hover:bg-gray-200 lg:hidden dark:hover:bg-gray-800"
 							>
 								<ArrowLeft size={16} className="text-primary" />
 							</Link>
@@ -151,17 +160,15 @@ export function TitleBar({
 										}
 									: {}
 							}
-							className="text-sm font-bold text-primary transform line-clamp-1"
+							className="text-primary line-clamp-1 transform text-sm font-bold"
 						>
 							{title}
 						</h2>
 					</span>
-
 					{trailingAccessory}
 				</div>
-
 				<div>{children}</div>
 			</div>
 		</>
 	)
-}
+})

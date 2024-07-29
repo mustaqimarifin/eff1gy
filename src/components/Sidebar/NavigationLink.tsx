@@ -1,12 +1,31 @@
+import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { useContext } from "react"
+import { type ReactElement, memo, useContext, useMemo } from "react"
 
 import { GlobalNavigationContext } from "~/components/Provider"
 
-export function NavigationLink({
-	link: { href, label, icon: Icon, trailingAccessory: Accessory, trailingAction: Action, isActive, isExternal },
-}) {
+type Item = {
+	href: string
+	label: string
+	icon: any
+	trailingAccessory?: any
+	trailingAction?: any
+	isActive: boolean
+	isExternal: boolean
+}
+type NavLinkProps = {
+	item: Item
+}
+export const NavigationLink = memo<NavLinkProps>(({ item }) => {
+	/* const value = useMemo(() => {
+		return item
+	}, [item]) */
+	const { href, label, icon, trailingAccessory, trailingAction, isActive, isExternal } = item
+	let Icon = icon
+	let Accessory = trailingAccessory
+	let Action = trailingAction
 	const { setIsOpen } = useContext(GlobalNavigationContext)
+
 	return (
 		<li key={href} className="flex items-stretch space-x-1" onClick={() => setIsOpen(false)}>
 			<Link
@@ -32,4 +51,4 @@ export function NavigationLink({
 			{Action && <Action />}
 		</li>
 	)
-}
+})

@@ -2,6 +2,7 @@
 	"name": "eff1gy",
 	"version": "3.0.0",
 	"license": "MIT",
+	"type": "module",
 	"scripts": {
 		"dev": "next dev",
 		"build": " next build",
@@ -10,7 +11,7 @@
 		"cunt": "eslint src --fix --cache --cache-location eslintcache",
 		"fix": "bun format && bun lint",
 		"format": "biome format --write ./",
-		"postinstall": "prisma generate && bun generate",
+		"gen": "prisma generate && bun generate",
 		"generate": "graphql-codegen-esm --config codegen.ts",
 		"generate:watch": "graphql-codegen --watch 'src/graphql/**/*.ts'"
 	},
@@ -26,6 +27,8 @@
 		"@graphql-tools/schema": "^10.0.4",
 		"@graphql-yoga/plugin-apq": "^3.6.1",
 		"@headlessui/react": "2.1.2",
+		"@libsql/client": "^0.7.0",
+		"@prisma/adapter-libsql": "^5.17.0",
 		"@prisma/client": "5.17.0",
 		"@tanstack/react-query": "^5.51.15",
 		"@tippyjs/react": "^4.2.6",
@@ -37,7 +40,6 @@
 		"graphql": "^16.9.0",
 		"graphql-yoga": "^5.6.1",
 		"image-dimensions": "^2.3.0",
-		"ky": "^1.4.0",
 		"lucide-react": "^0.414.0",
 		"nanoid": "^5.0.7",
 		"next": "^14.2.3",
@@ -62,7 +64,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
 		"@graphql-codegen/cli": "^5.0.2",
-		"@graphql-codegen/client-preset": "^4.3.2",
 		"@graphql-codegen/typescript": "^4.0.9",
 		"@graphql-codegen/typescript-operations": "^4.2.3",
 		"@graphql-codegen/typescript-react-apollo": "^4.3.0",

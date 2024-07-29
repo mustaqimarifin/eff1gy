@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { memo, useCallback, useEffect, useMemo } from "react"
 import Button from "~/components/Button"
 
 import { useQuery } from "@apollo/client"
@@ -17,10 +17,11 @@ interface Props {
 	loading: boolean
 }
 
-export function ReactionButton(props: Props) {
+export const ReactionButton = memo<Props>(props => {
 	const { refId, onClick, hasReacted, count, loading } = props
 
 	const { data } = useQuery(ViewerDocument)
+
 	const [hasReactedState, setHasReactedState] = React.useState(hasReacted)
 	let currCount = count
 	let nextCount = hasReactedState ? count - 1 : count + 1
@@ -54,7 +55,7 @@ export function ReactionButton(props: Props) {
 		)
 	}
 
-	function handleClick() {
+	const handleClick = () => {
 		if (loading) return
 		setCurrTranslate(nextTranslate)
 		setNextTranslate(currTranslate)
@@ -65,7 +66,6 @@ export function ReactionButton(props: Props) {
 		}
 		onClick()
 	}
-
 	return (
 		<Button
 			aria-label={hasReactedState ? "Unlike" : "Like"}
@@ -75,7 +75,7 @@ export function ReactionButton(props: Props) {
 			{hasReactedState ? (
 				<span className="relative text-red-500">
 					{ping && (
-						<span className="absolute top-0 left-0 animate-ping">
+						<span className="absolute left-0 top-0 animate-ping">
 							<HeartFillIcon />
 						</span>
 					)}
@@ -105,4 +105,4 @@ export function ReactionButton(props: Props) {
 			</div>
 		</Button>
 	)
-}
+})
