@@ -1,4 +1,4 @@
-import { type GetQuestionsQueryVariables, type QueryQuestionArgs, type Question, type QuestionResolvers, QuestionStatus } from "~/gql/typeSlut"
+import type { GetQuestionsQueryVariables, QueryQuestionArgs, Question } from "~/gql/gql"
 import { PAGINATION_AMOUNT } from "~/graphql/constants"
 import type { Context } from "~/graphql/context"
 

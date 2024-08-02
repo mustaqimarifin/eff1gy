@@ -4,9 +4,8 @@
 import { usePathname } from "next/navigation"
 import * as React from "react"
 
-import { useQuery } from "@apollo/client"
 import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { GetPostsDocument } from "~/gql/typeSlut"
+import { useGetPostsQuery } from "~/gql/gql"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { PostListItem } from "./PostListItem"
 import { WritingTitlebar } from "./WritingTitlebar"
@@ -21,7 +20,7 @@ export function PostsList() {
 	const [filter, setFilter] = React.useState("published")
 	const [scrollContainerRef, setScrollContainerRef] = React.useState(null)
 	const variables = filter === "published" ? { filter: { published: true } } : { filter: { published: false } }
-	const { data, error, refetch, loading } = useQuery(GetPostsDocument, { variables })
+	const { data, error, refetch, loading } = useGetPostsQuery({ variables })
 
 	React.useEffect(() => {
 		refetch()

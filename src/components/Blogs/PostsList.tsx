@@ -1,8 +1,8 @@
+//@ts-nocheck
 "use client"
 
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import useSWR from "swr"
 
 import { CLIENT_URL } from "~/graphql/constants"
 import { fetcher } from "~/lib/functions"

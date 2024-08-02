@@ -3,10 +3,9 @@
 
 import * as React from "react"
 
-import { useQuery } from "@apollo/client"
 import { Detail } from "~/components/ListDetail/Detail"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
-import { GetPostDocument } from "~/gql/typeSlut"
+import { GetPostDocument, useGetPostQuery } from "~/gql/gql"
 import { PostEditorActions } from "./PostEditorActions"
 import { PostEditorComposer } from "./PostEditorComposer"
 import { PostEditorMetaSidebar } from "./PostEditorMetaSidebar"
@@ -20,7 +19,7 @@ export const PostEditorContext = React.createContext({
 		slug: "",
 		excerpt: "",
 	},
-	setDraftState: (draftObj: unknown) => {},
+	setDraftState: (draftObj: any) => {},
 	existingPost: null,
 	sidebarIsOpen: false,
 	setSidebarIsOpen: (isOpen: boolean) => {},
@@ -30,7 +29,7 @@ export const PostEditorContext = React.createContext({
 
 export function PostEditor({ slug: propsSlug = "" }) {
 	const scrollContainerRef = React.useRef(null)
-	const { data } = useQuery(GetPostDocument, { variables: { slug: propsSlug } })
+	const { data } = useGetPostQuery({ variables: { slug: propsSlug } })
 
 	const defaultDraftState = {
 		title: data?.post?.title || "",

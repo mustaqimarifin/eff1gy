@@ -1,5 +1,4 @@
 "use client"
-
 import * as React from "react"
 
 import { Dropzone } from "~/components/Dropzone"
@@ -12,31 +11,29 @@ export function PostEditorComposer() {
 	const { draftState, setDraftState } = context
 	const uploadingImagePlaceholder = `![](Uploading...)`
 
-	function handleTitleChange(e) {
-		setDraftState(draft => ({ ...draft, title: e.target.value }))
+	function handleTitleChange(e: { target: { value: any } }) {
+		setDraftState((draft: any) => ({ ...draft, title: e.target.value }))
 	}
-
-	function handleTextChange(e) {
-		setDraftState(draft => ({ ...draft, text: e.target.value }))
+	function handleTextChange(e: { target: { value: any } }) {
+		setDraftState((draft: any) => ({ ...draft, text: e.target.value }))
 	}
-
-	function onUploadComplete(url) {
+	function onUploadComplete(url: string) {
 		const image = `![](${url})`
-		setDraftState(draft => ({
+		setDraftState((draft: { text: string }) => ({
 			...draft,
 			text: draft.text.replace(uploadingImagePlaceholder, image),
 		}))
 	}
 
 	function onUploadFailed() {
-		setDraftState(draft => ({
+		setDraftState((draft: { text: string }) => ({
 			...draft,
 			text: draft.text.replace(uploadingImagePlaceholder, ""),
 		}))
 	}
 
 	function onUploadStarted() {
-		setDraftState(draft => ({
+		setDraftState((draft: { text: string }) => ({
 			...draft,
 			// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 			text: (draft.text += uploadingImagePlaceholder),
@@ -52,15 +49,15 @@ export function PostEditorComposer() {
 						value={draftState.title}
 						onChange={handleTitleChange}
 						placeholder="Post title"
-						className="block w-full p-0 text-2xl font-bold border-none composer text-primary focus:border-0 focus:outline-none focus:ring-0 dark:bg-black md:text-3xl"
+						className="composer block w-full border bg-neutral-100 p-0 text-2xl font-bold text-slate-700 focus:border-0 focus:outline-none focus:ring-0 md:text-3xl dark:bg-zinc-700 dark:text-slate-50"
 					/>
 					<Textarea
 						rows={80}
-						//maxRows={2000}
 						value={draftState.text}
 						onChange={handleTextChange}
 						placeholder="Write a post..."
-						className="block w-full p-0 pt-5 text-lg font-normal prose border-none composer text-primary focus:border-0 focus:outline-none focus:ring-0 dark:bg-black"
+						style={{ height: "100%" }}
+						className="composer block w-full border bg-neutral-100 p-0 pt-5 text-lg font-normal text-slate-700 focus:border-0 focus:outline-none focus:ring-0 dark:bg-zinc-700 dark:text-slate-50"
 					/>
 				</Detail.Header>
 			</Detail.ContentContainer>

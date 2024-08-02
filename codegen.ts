@@ -1,21 +1,21 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
-import { addTypenameSelectionDocumentTransform } from "@graphql-codegen/client-preset"
+//import { addTypenameSelectionDocumentTransform } from "@graphql-codegen/client-preset"
 
 const config: CodegenConfig = {
 	schema: "src/graphql/typeDefs/index.ts",
 	overwrite: true,
-	documents: ["./src/**/*.ts"],
+	documents: ["./src/**/*.ts", "!src/gql/**/*"],
 	ignoreNoDocuments: true,
 	hooks: {
 		afterOneFileWrite: ["biome format --write ."],
 	},
 	generates: {
-		/* 	"./src/gql/": {
+		/* "./src/gql/": {
 			preset: "client",
 			plugins: [],
 			presetConfig: {
 				persistedDocuments: true,
-				fragmentMasking: false,
+				//fragmentMasking: false,
 			},
 			documentTransforms: [addTypenameSelectionDocumentTransform],
 			config: {
@@ -27,11 +27,11 @@ const config: CodegenConfig = {
 				skipTypename: true,
 			},
 		}, */
-		"./src/gql/typeSlut.tsx": {
-			plugins: ["typescript", "typescript-operations", "typescript-resolvers", "typescript-react-apollo"],
+		"./src/gql/types.ts": {
+			plugins: ["typescript", "typescript-operations", "typescript-react-apollo"],
 			config: {
 				//gqlImport: 'graphql.macro#gql',
-				emitLegacyCommonJSImports: false,
+				emitLegacyCommonJSImports: true,
 				withResultType: false,
 				preResolveTypes: true,
 				flattenGeneratedTypes: true,
@@ -42,7 +42,7 @@ const config: CodegenConfig = {
 				dedupeOperationSuffix: true,
 				//onlyOperationTypes: true,
 				pureMagicComment: true,
-				documentMode: "documentNodeImportFragments", //"documentNode"
+				//documentMode: "documentNode", //"documentNodeImportFragments",
 				//withRefetchFn: true,
 				//enumsAsTypes: true,
 				experimentalFragmentVariables: true,

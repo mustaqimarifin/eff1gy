@@ -5,7 +5,7 @@ import Mdx from "~/app/mdxrsc"
 import { BitDetail } from "~/components/Case/BitDetail"
 import { BitList } from "~/components/Case/BitList"
 import { ListDetailView } from "~/components/Layouts"
-import { ViewType } from "~/gql/typeSlut"
+import { ViewType } from "~/gql/gql"
 import { HiddenCounter } from "~/lib/actions"
 import { type LilBits, allBits, allLilSlugs, getLilBit } from "~/lib/sanity/client"
 

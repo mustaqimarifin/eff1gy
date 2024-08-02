@@ -6,7 +6,6 @@ import { caseQuery, casesQuery, lilQueries, lilQuery, lilSlugs, postQuery, postS
 
 export const projectId = "do33z8xq"
 export const dataset = "production"
-
 export const apiVersion = "2023-05-03"
 
 /* const query = encodeURI(
@@ -157,7 +156,7 @@ export async function getAllCases() {
 	return []
 }
 
-export async function getCase(slug) {
+export async function getCase(slug: string) {
 	if (sanity) {
 		return (await sanity.fetch(caseQuery, { slug })) || {}
 	}

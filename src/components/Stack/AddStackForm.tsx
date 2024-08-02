@@ -1,12 +1,11 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { useMutation } from "@apollo/client"
 import Button from "~/components/Button"
 import { Input, Textarea } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { TagPicker } from "~/components/Tag/TagPicker"
-import { AddStackDocument, GetStacksDocument, useAddStackMutation } from "~/gql/typeSlut"
+import { GetStacksDocument, useAddStackMutation } from "~/gql/gql"
 import { Nuts } from "../Provider/Toaster"
 
 // import { StackImageUploader } from './StackImageUploader'
@@ -78,11 +77,11 @@ export function AddStackForm({ closeModal }) {
 	return (
 		<div className="space-y-3 p-4">
 			{/*       <StackImageUploader stack={null} onImageUploaded={onImageUploaded} />
-			 */} <form className="space-y-3" onSubmit={onSubmit}>
+			 */}
+			<form className="space-y-3" onSubmit={onSubmit}>
 				<TagPicker filter={tagFilter} defaultValue={tag} onChange={setTag} />
 				<Input type="text" placeholder="/static/img/..." value={image} onChange={onImageChange} onKeyDown={onKeyDown} />
 				<Input type="text" placeholder="Add a url..." value={url} onChange={onUrlChange} onKeyDown={onKeyDown} />
-
 				<Input type="text" placeholder="Name" value={name} onChange={onNameChange} onKeyDown={onKeyDown} />
 				<Textarea
 					rows={4}

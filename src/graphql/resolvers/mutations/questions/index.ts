@@ -4,22 +4,24 @@ import type {
 	AddQuestionMutationVariables,
 	DeleteQuestionMutationVariables,
 	EditQuestionMutationVariables,
-} from "~/gql/typeSlut"
+} from "~/gql/gql"
 import type { Context } from "~/graphql/context"
+import { auth } from "~/lib/auth"
 // import { graphcdn } from "~/lib/graphcdn";
 // import { graphcdn } from '~/lib/redis'
 // import { graphcdn } from '~/lib/graphcdn'
-export async function editQuestion(_, args: EditQuestionMutationVariables, ctx: Context) {
+export async function editQuestion(_: any, args: EditQuestionMutationVariables, ctx: Context) {
 	const { data, id } = args
+	const session = await auth()
 
-	const { db, viewer } = ctx
+	const { db } = ctx
 
 	const ama = await db.question.findUnique({ where: { id } })
 	if (!ama) {
 		throw new GraphQLError("Question doesn’t exist")
 	}
 
-	if (viewer?.isAdmin || viewer?.id === ama?.userId) {
+	if (session?.isAdmin || session?.userId === ama?.userId) {
 		return await db.question
 			.update({
 				where: { id },
@@ -51,7 +53,8 @@ export async function editQuestion(_, args: EditQuestionMutationVariables, ctx: 
 	throw new GraphQLError("No permission to delete this question")
 }
 
-export async function addQuestion(_, args: AddQuestionMutationVariables, ctx: Context) {
+export async function addQuestion(_: any, args: AddQuestionMutationVariables, ctx: Context) {
+	const session = await auth()
 	const { data } = args
 	const { title, description } = data
 	const { viewer, db } = ctx
@@ -61,7 +64,7 @@ export async function addQuestion(_, args: AddQuestionMutationVariables, ctx: Co
 			data: {
 				title,
 				description,
-				userId: viewer?.id,
+				userId: session?.userId,
 			},
 			include: {
 				_count: {
@@ -83,14 +86,16 @@ export async function addQuestion(_, args: AddQuestionMutationVariables, ctx: Co
 	return question
 }
 
-export async function deleteQuestion(_, args: DeleteQuestionMutationVariables, ctx: Context) {
+export async function deleteQuestion(_: any, args: DeleteQuestionMutationVariables, ctx: Context) {
+	const session = await auth()
+
 	const { id } = args
-	const { db, viewer } = ctx
+	const { db } = ctx
 
 	const question = await db.question.findUnique({ where: { id } })
 	if (!question) return true
 
-	if (viewer?.isAdmin || viewer?.id === question.userId) {
+	if (session?.isAdmin || session?.userId === question.userId) {
 		return await db.question
 			.delete({ where: { id } })
 			/* 			       .then(() => {

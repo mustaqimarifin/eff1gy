@@ -1,8 +1,8 @@
-import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import Twitter from "next-auth/providers/twitter"
+import { PrismaAdapter } from "./db/prismaAdapter"
 
 import type { Provider } from "next-auth/providers"
 import { db } from "./db"
@@ -60,7 +60,7 @@ export const {
 			return token
 		},
 		async session({ session, user }) {
-			//session.user.role = user.role
+			session.user.role = user.role
 			session.userId = user.id
 			session.isAdmin = user.isAdmin
 			return session

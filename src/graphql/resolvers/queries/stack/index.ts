@@ -1,8 +1,8 @@
-import type { GetStackQueryVariables, GetStacksQueryVariables } from "~/gql/typeSlut"
+import type { GetStackQueryVariables, GetStacksQueryVariables } from "~/gql/gql"
 import { PAGINATION_AMOUNT } from "~/graphql/constants"
 import type { Context } from "~/graphql/context"
 
-export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) {
+export async function getStacks(_: any, args: GetStacksQueryVariables, ctx: Context) {
 	const { first = PAGINATION_AMOUNT, after = undefined } = args
 	const { db } = ctx
 	const skip = after ? 1 : 0
@@ -11,7 +11,6 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 
 	try {
 		const edges = await db.stack.findMany({
-			relationLoadStrategy: "query",
 			take,
 			skip,
 			cursor,
@@ -59,13 +58,11 @@ export async function getStacks(_, args: GetStacksQueryVariables, ctx: Context) 
 	}
 }
 
-export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context) {
+export async function getStack(_: any, { slug }: GetStackQueryVariables, ctx: Context) {
 	const { db } = ctx
 
 	const stackBySlug = await db.stack
 		.findUnique({
-			relationLoadStrategy: "query",
-
 			where: { slug },
 			include: {
 				users: true,
@@ -85,7 +82,6 @@ export async function getStack(_, { slug }: GetStackQueryVariables, ctx: Context
 
 	// Fallback for old links that may exist that used a stack ID
 	return await db.stack.findUnique({
-		relationLoadStrategy: "query",
 		where: { id: slug },
 		include: {
 			users: true,

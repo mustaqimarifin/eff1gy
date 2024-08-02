@@ -7,7 +7,7 @@ import { GET_QUESTIONS } from "~/graphql/queries/questions"
 import { GET_VIEWER } from "~/graphql/queries/viewer"
 
 export default async function QuestionIndex() {
-	//await query({ query: GET_VIEWER })
+	await query({ query: GET_VIEWER })
 	return (
 		<PreloadQuery query={GET_QUESTIONS}>
 			<Suspense fallback={<LoadingSpinner />}>

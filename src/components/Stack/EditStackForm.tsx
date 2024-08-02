@@ -1,19 +1,12 @@
 "use client"
 
-import { useMutation } from "@apollo/client"
 import { useRouter } from "next/navigation"
 import { useReducer } from "react"
 
 import Button, { DeleteButton } from "~/components/Button"
 import { Input, Textarea } from "~/components/Input"
 import { TagPicker } from "~/components/Tag/TagPicker"
-import {
-	DeleteStackDocument,
-	EditStackDocument,
-	GetStacksDocument,
-	useDeleteStackMutation,
-	useEditStackMutation,
-} from "~/gql/typeSlut"
+import { GetStacksDocument, useDeleteStackMutation, useEditStackMutation } from "~/gql/gql"
 
 // import { StackImageUploader } from './StackImageUploader'
 
@@ -169,7 +162,7 @@ export function EditStackForm({ closeModal, stack }) {
 
 	const tagFilter = t => {
 		const allowedTags = ["software", "gear", "plugins"]
-		return allowedTags.includes(t.name)
+		return allowedTags.indexOf(t.name) >= 0
 	}
 
 	return (

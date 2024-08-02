@@ -2,9 +2,8 @@
 
 import * as React from "react"
 
-import { useMutation } from "@apollo/client"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { EditPostDocument } from "~/gql/typeSlut"
+import { useEditPostMutation } from "~/gql/gql"
 import { useInterval } from "~/hooks"
 import { PostEditorContext } from "./PostEditor"
 
@@ -12,7 +11,7 @@ export function PostEditorAutoSave() {
 	const context = React.useContext(PostEditorContext)
 	const { draftState, existingPost } = context
 	const { title, text, slug, excerpt } = draftState
-	const [editPost, { loading }] = useMutation(EditPostDocument)
+	const [editPost, { loading }] = useEditPostMutation()
 
 	// auto save every 30 seconds
 	useInterval(() => {

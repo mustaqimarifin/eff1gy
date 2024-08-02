@@ -1,16 +1,15 @@
 import { useContext } from "react"
 
-import { useQuery } from "@apollo/client"
 import { GhostButton } from "~/components/Button"
-import { GetQuestionsDocument, QuestionStatus } from "~/gql/typeSlut"
+import { useGetQuestionsQuery } from "~/gql/gql"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { QuestionsContext } from "./QuestionsList"
 
 export function QuestionsFilterButton() {
 	const { setFilterPending, filterPending } = useContext(QuestionsContext)
-	const { data, loading } = useQuery(GetQuestionsDocument, {
+	const { data, loading } = useGetQuestionsQuery({
 		variables: {
-			filter: { status: QuestionStatus.Pending },
+			filter: { answered: false },
 		},
 	})
 

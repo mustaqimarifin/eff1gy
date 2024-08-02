@@ -3,12 +3,11 @@
 import { X } from "lucide-react"
 import * as React from "react"
 
-import { useMutation } from "@apollo/client"
 import Button, { GhostButton, PrimaryButton } from "~/components/Button"
 import { Input, Textarea } from "~/components/Input"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { EditPostDocument, GetPostsDocument } from "~/gql/typeSlut"
+import { GetPostsDocument, useEditPostMutation } from "~/gql/gql"
 import { PostEditorContext } from "./PostEditor"
 
 export function PostEditorMetaSidebar() {
@@ -16,7 +15,7 @@ export function PostEditorMetaSidebar() {
 	const { draftState, existingPost, setDraftState, sidebarIsOpen, setSidebarIsOpen } = context
 	const scrollContainerRef = React.useRef(null)
 
-	const [editPost, { loading: editingPost }] = useMutation(EditPostDocument)
+	const [editPost, { loading: editingPost }] = useEditPostMutation()
 
 	function handlePublish() {
 		// if already publish, don't try to publish again
@@ -44,12 +43,12 @@ export function PostEditorMetaSidebar() {
 		})
 	}
 
-	function handleSlugChange(e) {
+	function handleSlugChange(e: { target: { value: any } }) {
 		return setDraftState((draft: any) => ({ ...draft, slug: e.target.value }))
 	}
 
-	function handleExcerptChange(e) {
-		return setDraftState(draft => ({ ...draft, excerpt: e.target.value }))
+	function handleExcerptChange(e: { target: { value: any } }) {
+		return setDraftState((draft: any) => ({ ...draft, excerpt: e.target.value }))
 	}
 
 	return (

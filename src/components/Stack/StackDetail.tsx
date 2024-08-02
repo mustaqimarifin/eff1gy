@@ -10,7 +10,7 @@ import { Comments } from "~/components/Comments"
 import { Detail } from "~/components/ListDetail/Detail"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 import { Tags } from "~/components/Tag"
-import { CommentType, useGetStackQuery, useGetStackSuspenseQuery } from "~/gql/typeSlut"
+import { CommentType, useGetStackSuspenseQuery } from "~/gql/gql"
 import { MarkdownRenderer } from "../MarkdownRenderer"
 import { SignInDialog } from "../SignInDialog"
 import { StackActions } from "./StackActions"
@@ -72,7 +72,7 @@ export function StackDetail({ slug }: DetailProps) {
 								{stack.tags && stack.tags.length > 0 && <Tags tags={stack.tags} />}
 							</div>
 						</div>
-						<MarkdownRenderer className="text-primary" children={stack.description} variant="comment" />
+						<MarkdownRenderer className="text-primary" md={stack.description} variant="comment" />
 
 						<PrimaryButton size="large" href={stack.url} target="_blank" rel="noopener noreferrer">
 							<Link2Icon />

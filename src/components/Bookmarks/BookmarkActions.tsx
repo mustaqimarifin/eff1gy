@@ -1,15 +1,8 @@
-import { useMutation, useQuery } from "@apollo/client"
-
 import { EditBookmarkDialog } from "~/components/Bookmarks/EditBookmarkDialog"
 import Button from "~/components/Button"
-import {
-	type Bookmark,
-	GetBookmarkDocument,
-	ReactionType,
-	ToggleReactionDocument,
-	ViewerDocument,
-} from "~/gql/typeSlut"
 
+import { useSession } from "next-auth/react"
+import { GetBookmarkDocument, ReactionType, useToggleReactionMutation } from "~/gql/gql"
 import { ReactionButton } from "../Button/ReactionButton"
 
 /* function getBookmarkView(bookmark: Bookmark) {
@@ -50,7 +43,7 @@ import { ReactionButton } from "../Button/ReactionButton"
 }
  */
 function getReactionButton(bookmark) {
-	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
+	const [toggleReaction, { loading }] = useToggleReactionMutation()
 
 	function handleClick() {
 		if (loading) return
@@ -97,12 +90,12 @@ function getReactionButton(bookmark) {
 }
 
 export function BookmarkActions({ bookmark }) {
-	const { data } = useQuery(ViewerDocument)
+	const { data: session } = useSession()
 
 	return (
 		<div className="flex items-center space-x-2">
 			{getReactionButton(bookmark)}
-			{data?.viewer?.isAdmin && (
+			{session?.isAdmin && (
 				<EditBookmarkDialog bookmark={bookmark} trigger={<Button data-cy="open-edit-bookmark-dialog">Edit</Button>} />
 			)}
 		</div>

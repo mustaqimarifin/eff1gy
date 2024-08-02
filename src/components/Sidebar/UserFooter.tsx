@@ -1,6 +1,6 @@
 "use client"
 import { Settings } from "lucide-react"
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import Link from "next/link"
 import { type ClassAttributes, type HTMLAttributes, type JSX, useContext } from "react"
 
@@ -8,7 +8,6 @@ import { Avatar } from "~/components/Avatar"
 import { GhostButton } from "~/components/Button"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 
-import { useViewerQuery } from "~/gql/typeSlut"
 import { GlobalNavigationContext } from "../Provider"
 
 function Container(props: JSX.IntrinsicAttributes & ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement>) {
@@ -22,7 +21,10 @@ function Container(props: JSX.IntrinsicAttributes & ClassAttributes<HTMLDivEleme
 }
 
 export function UserFooter() {
-	const { data, loading, error } = useViewerQuery()
+	//const { data, loading, error } = useViewerQuery()
+	const { data: session, status } = useSession()
+	let loading = status === "loading"
+	let error = status === "unauthenticated"
 	const { setIsOpen } = useContext(GlobalNavigationContext)
 
 	function signInButton() {
@@ -54,15 +56,15 @@ export function UserFooter() {
 		return <Container>{signInButton()}</Container>
 	}
 
-	if (data?.viewer) {
+	if (session?.user) {
 		return (
 			<Container>
 				<Link
-					href={`/u/${data.viewer.name}`}
+					href={`/u/${session?.user.name}`}
 					onClick={() => setIsOpen(false)}
 					className="flex flex-none items-center rounded-full"
 				>
-					<Avatar user={data.viewer} src={data.viewer.image} width={24} height={24} className="rounded-full" />
+					<Avatar user={session?.user} src={session?.user.image} width={24} height={24} className="rounded-full" />
 				</Link>
 				<GhostButton aria-label="Manage settings" onClick={() => setIsOpen(false)} size="small-square" href="/settings">
 					<Settings size={16} />

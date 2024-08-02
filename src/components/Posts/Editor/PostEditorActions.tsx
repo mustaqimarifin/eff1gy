@@ -8,9 +8,8 @@ import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { PostEditorContext } from "./PostEditor"
 import { PostEditorAutoSave } from "./PostEditorAutoSave"
 
-import { useMutation } from "@apollo/client"
 import { Nuts } from "~/components/Provider/Toaster"
-import { AddPostDocument, EditPostDocument } from "~/gql/typeSlut"
+import { EditPostDocument, useAddPostMutation } from "~/gql/gql"
 import { slugify } from "~/lib/functions"
 
 export function PostEditorActions() {
@@ -19,7 +18,7 @@ export function PostEditorActions() {
 	const context = React.useContext(PostEditorContext)
 	const { draftState, existingPost, sidebarIsOpen, setSidebarIsOpen, isPreviewing, setIsPreviewing } = context
 
-	const [addPost, { loading: creatingPost }] = useMutation(AddPostDocument, {
+	const [addPost, { loading: creatingPost }] = useAddPostMutation({
 		onCompleted({ addPost }) {
 			Nuts.success("Draft created")
 			router.push(`/post/${addPost.slug}/edit`)

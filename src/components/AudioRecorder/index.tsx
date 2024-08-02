@@ -1,6 +1,5 @@
 import { TrashIcon } from "lucide-react"
 import { useEffect, useReducer, useState } from "react"
-import useSWR from "swr"
 
 import { uploadToCloudinary } from "~/lib/cloudinary/api"
 import AudioPlayer from "../AudioPlayer"

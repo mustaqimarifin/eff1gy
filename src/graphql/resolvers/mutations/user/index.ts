@@ -1,27 +1,32 @@
 import { GraphQLError } from "graphql"
 
-import type { EditUserMutationVariables } from "~/gql/typeSlut"
+import type { EditUserMutationVariables } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
+import { auth } from "~/lib/auth"
 import { emailRX, nameRX } from "~/lib/functions"
 
-export async function deleteUser(_, __, ctx: Context) {
-	const { db, viewer } = ctx
+export async function deleteUser(_: any, ctx: Context) {
+	const session = await auth()
 
-	if (viewer?.isAdmin) {
+	const { db } = ctx
+
+	if (session?.isAdmin) {
 		throw new GraphQLError("Admins can’t be deleted")
 	}
 
-	await db.user.findUnique({ where: { id: viewer?.id } })
+	await db.user.findUnique({ where: { id: session?.userId } })
 
 	return await db.user
 		.delete({
-			where: { id: viewer?.id },
+			where: { id: session?.userId },
 		})
 		.then(() => true)
 }
 
-export async function editUser(_, args: EditUserMutationVariables, ctx: Context) {
-	const { db, viewer } = ctx
+export async function editUser(args: EditUserMutationVariables, ctx: Context) {
+	const session = await auth()
+
+	const { db } = ctx
 	const { data } = args
 	const { username, email } = data!
 
@@ -34,12 +39,12 @@ export async function editUser(_, args: EditUserMutationVariables, ctx: Context)
 			where: { username },
 		})
 
-		if (user && user.id !== viewer?.id) {
+		if (user && user.id !== session?.userId) {
 			throw new GraphQLError("That name is taken")
 		}
 
 		return await db.user.update({
-			where: { id: viewer?.id },
+			where: { id: session?.userId },
 			data: { username },
 		})
 	}
@@ -53,26 +58,26 @@ export async function editUser(_, args: EditUserMutationVariables, ctx: Context)
 			where: { email },
 		})
 
-		if (userByEmail && userByEmail.id !== viewer?.id) {
+		if (userByEmail && userByEmail.id !== session?.userId) {
 			throw new GraphQLError("That email is taken")
 		}
 
 		// the user is updating their email to be the same thing
-		if (userByEmail && userByEmail.id === viewer?.id) {
+		if (userByEmail && userByEmail.id === session?.userId) {
 			if (userByEmail.email === email) {
 				return userByEmail
 			}
 		}
 
 		return await db.user.update({
-			where: { id: viewer?.id },
+			where: { id: session?.userId },
 			data: { pendingEmail: email },
 		})
 	}
 
 	// if no email or username were passed, the user is trying to cancel the pending email request
 	return await db.user.update({
-		where: { id: viewer?.id },
+		where: { id: session?.userId },
 		data: { pendingEmail: null },
 	})
 }

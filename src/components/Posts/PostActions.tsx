@@ -1,15 +1,14 @@
 "use client"
-import { useMutation, useQuery } from "@apollo/client"
 import { useSession } from "next-auth/react"
 import * as React from "react"
 
-import Button, { ViewButton } from "~/components/Button"
+import Button from "~/components/Button"
 import { ReactionButton } from "~/components/Button/ReactionButton"
-import { GetPostDocument, ToggleReactionDocument, ViewerDocument, useViewerQuery } from "~/gql/typeSlut"
-import { type Post, ReactionType } from "~/gql/typeSlut"
+import { GetPostDocument, ReactionType, useToggleReactionMutation } from "~/gql/gql"
+import type { Post } from "~/gql/gql"
 
-function getReactionButton(post) {
-	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
+function getReactionButton(post: Post) {
+	const [toggleReaction, { loading }] = useToggleReactionMutation()
 	function handleClick() {
 		if (loading) return
 
@@ -23,6 +22,7 @@ function getReactionButton(post) {
 				toggleReaction: {
 					__typename: "Post",
 					...post,
+					//@ts-ignore
 					reactionCount: post.viewerHasReacted ? post.reactionCount! - 1 : post.reactionCount! + 1,
 					viewerHasReacted: !post.viewerHasReacted,
 				},
@@ -54,9 +54,11 @@ function getReactionButton(post) {
 	)
 }
 
-function getEditButton(post) {
-	const { data } = useViewerQuery()
-	if (!data?.viewer?.isAdmin) return null
+function getEditButton(post: Post) {
+	//const { data } = useViewerQuery()
+	const { data: session } = useSession()
+
+	if (!session?.isAdmin) return null
 	return (
 		<Button href="/post/[slug]/edit" as={`/post/${post.slug}/edit`}>
 			Edit

@@ -1,10 +1,9 @@
-/* eslint-disable react/no-unstable-context-value */
 "use client"
 import { usePathname } from "next/navigation"
 import { createContext, useEffect, useState } from "react"
 
 import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { useGetQuestionsQuery } from "~/gql/typeSlut"
+import { useGetQuestionsQuery } from "~/gql/gql"
 import { ListLoadMore } from "../ListDetail/ListLoadMore"
 import { LoadingSpinner } from "../LoadingSpinner"
 import { AMATitlebar } from "./AMATitlebar"
@@ -22,10 +21,7 @@ export function QuestionsList() {
 	const [scrollContainerRef, setScrollContainerRef] = useState(null)
 
 	//const status = filterPending ? QuestionStatus.Pending : QuestionStatus.Answered
-	const answered = filterPending
-
-	//const { refetch, fetchMore } = useQueryRefHandlers(queryRef);
-	//////const { data, error } = useReadQuery<GetQuestionsQuery>(queryRef);
+	const answered = !filterPending
 	const { data, error, fetchMore, refetch } = useGetQuestionsQuery({
 		variables: { filter: { answered } },
 	})

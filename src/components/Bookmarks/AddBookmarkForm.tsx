@@ -5,12 +5,8 @@ import Button from "~/components/Button"
 import { Input } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { TagPicker } from "~/components/Tag/TagPicker"
-import {
-	GetBookmarksDocument,
-	type GetBookmarksQuery,
-	useAddBookmarkMutation,
-	useGetBookmarkQuery,
-} from "~/gql/typeSlut"
+import { useAddBookmarkMutation } from "~/gql/gql"
+import type { GetBookmarksQuery } from "~/gql/gql"
 import { GET_BOOKMARKS } from "~/graphql/queries/bookmarks"
 import { Nuts } from "../Provider/Toaster"
 
@@ -20,10 +16,9 @@ export function AddBookmarkForm({ closeModal }) {
 	const router = useRouter()
 	const path = usePathname()
 
-	const query = GetBookmarksDocument
+	const query = GET_BOOKMARKS
 
 	const [addBookmark, { loading }] = useAddBookmarkMutation()
-	const _ = GET_BOOKMARKS
 
 	function onSubmit(e) {
 		e.preventDefault()
@@ -65,7 +60,7 @@ export function AddBookmarkForm({ closeModal }) {
 				// if I'm already viewing bookmarks, push me to the one I just created.
 				// otherwise, this was triggered from the sidebar shortcut and
 				// don't redirect
-				if (path.includes("/bookmarks")) {
+				if (path.indexOf("/bookmarks") >= 0) {
 					return router.push(`/bookmarks/${id}`)
 				}
 				Nuts.success("Bookmark created!", {
@@ -87,7 +82,7 @@ export function AddBookmarkForm({ closeModal }) {
 
 	const tagFilter = t => {
 		const allowedBookmarkTags = ["web", "lol", "portfolio"]
-		return allowedBookmarkTags.includes(t.name)
+		return allowedBookmarkTags.indexOf(t.name) >= 0
 	}
 
 	return (

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { IS_PROD, stellateKEY, stellateURL } from "~/graphql/constants"
 
 async function handleFetch(query) {

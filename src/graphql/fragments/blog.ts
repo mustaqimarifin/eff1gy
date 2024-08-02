@@ -1,6 +1,8 @@
 import { gql } from "@apollo/client"
 
-export const BlogCoreFrag = gql`
+//import { graphql as gql } from "gql.tada"
+
+export const BlogCoreFrag = gql(`
   fragment BlogCore on Blog {
     __typename
     id
@@ -9,7 +11,7 @@ export const BlogCoreFrag = gql`
     slug
     count
   }
-`
+`)
 
 export const BlogListItemFrag = gql`
   fragment BlogListItem on Blog {

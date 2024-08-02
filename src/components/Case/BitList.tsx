@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-// import useSWR from "swr";
 
 import { ListContainer } from "~/components/ListDetail/ListContainer"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
@@ -13,7 +12,6 @@ import type { LilBits } from "~/lib/sanity/client"
 export function BitList({ bits }: { bits: LilBits[] }) {
 	const path = usePathname()
 	const [scrollContainerRef, setScrollContainerRef] = useState(null)
-	/* 	const { data, isLoading } = useSWR<b[]>(`${CLIENT_URL}/api/case`, fetcher); */
 
 	/* 	if (!bits && isLoading) {
 		return (

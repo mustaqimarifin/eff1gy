@@ -4,14 +4,14 @@ import type {
 	AddBookmarkMutationVariables,
 	DeleteBookmarkMutationVariables,
 	EditBookmarkMutationVariables,
-} from "~/gql/typeSlut"
+} from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 import { urlRX } from "~/lib/functions"
 import getBookmarkMetaData from "./getBookmarkMetaData"
 
 // import { graphcdn } from "~/lib/graphcdn";
 
-export async function editBookmark(_, args: EditBookmarkMutationVariables, ctx: Context) {
+export async function editBookmark(_: any, args: EditBookmarkMutationVariables, ctx: Context) {
 	const { id, data } = args
 	const { title, description, tag, faviconUrl } = data
 	const { db } = ctx
@@ -55,7 +55,7 @@ export async function editBookmark(_, args: EditBookmarkMutationVariables, ctx: 
 		})
 }
 
-export async function addBookmark(_, args: AddBookmarkMutationVariables, ctx: Context) {
+export async function addBookmark(_: any, args: AddBookmarkMutationVariables, ctx: Context) {
 	const { data } = args
 	const { url, tag } = data
 	const { db } = ctx
@@ -98,7 +98,7 @@ export async function addBookmark(_, args: AddBookmarkMutationVariables, ctx: Co
 		})
 }
 
-export async function deleteBookmark(_, args: DeleteBookmarkMutationVariables, ctx: Context) {
+export async function deleteBookmark(_: any, args: DeleteBookmarkMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db } = ctx
 

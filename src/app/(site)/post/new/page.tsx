@@ -1,5 +1,5 @@
 "use client"
-import { useQuery } from "@apollo/client"
+import { useSession } from "next-auth/react"
 import { Suspense } from "react"
 
 import { ListDetailView } from "~/components/Layouts"
@@ -7,11 +7,11 @@ import { Detail } from "~/components/ListDetail/Detail"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { PostEditor } from "~/components/Posts/Editor/PostEditor"
 import { PostsList } from "~/components/Posts/PostsList"
-import { ViewerDocument } from "~/gql/typeSlut"
 
 export default function NewPostPage() {
-	const { data } = useQuery(ViewerDocument)
-	if (!data?.viewer?.isAdmin) return <Detail.Null />
+	const { data: session } = useSession()
+
+	if (!session?.isAdmin) return <Detail.Null />
 	return (
 		<ListDetailView
 			list={<PostsList />}
@@ -37,7 +37,7 @@ import { addApolloState, initApolloClient } from '~/lib/apollo'
 
 function NewPostPage() {
   const { data } = useQuery(ViewerDocument)
-  if (!data?.viewer?.isAdmin) return <Detail.Null />
+  if (!session?.isAdmin) return <Detail.Null />
   return <PostEditor />
 }
 

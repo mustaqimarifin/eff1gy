@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { getNowPlaying } from "~/lib/queries"
+import { type NowPlaying, getNowPlaying } from "~/lib/queries"
 
 // export const runtime = 'edge'
 // export const dynamic = "force-dynamic";
@@ -15,7 +15,7 @@ export async function GET() {
 		})
 	}
 
-	const song = await response.json()
+	const song: NowPlaying = await response.json()
 	// console.log(song)
 
 	if (song.item === null) {

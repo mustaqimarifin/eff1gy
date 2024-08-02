@@ -1,11 +1,14 @@
 import { GraphQLError } from "graphql"
 
-import { ReactionType, type ToggleReactionMutationVariables } from "~/gql/typeSlut"
+import { ReactionType } from "~/gql/gql"
+import type { ToggleReactionMutationVariables } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
+import { auth } from "~/lib/auth"
 
 export async function toggleReaction(_: any, args: ToggleReactionMutationVariables, ctx: Context) {
+	const session = await auth()
 	const { refId, type } = args
-	const { viewer, db } = ctx
+	const { db } = ctx
 
 	let field: string
 	let table: string
@@ -58,7 +61,7 @@ export async function toggleReaction(_: any, args: ToggleReactionMutationVariabl
 		db.reaction.findMany({
 			where: {
 				[field]: refId,
-				userId: viewer?.id,
+				userId: session?.userId,
 			},
 		}),
 	])
@@ -79,7 +82,7 @@ export async function toggleReaction(_: any, args: ToggleReactionMutationVariabl
 		fn = () =>
 			db.reaction.create({
 				data: {
-					userId: viewer?.id,
+					userId: session?.userId,
 					[field]: String(refId),
 				},
 			})

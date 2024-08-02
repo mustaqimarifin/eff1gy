@@ -14,7 +14,7 @@ export default async function getBookmarkMetaData(url) {
 	const IMAGE_LIMIT = 512
 	const DESCRIPTION_LIMIT = 2048
 
-	const getMetavalue = name =>
+	const getMetavalue = (name: string) =>
 		$(`meta[name=${name}]`).attr("content") ||
 		$(`meta[name="twitter:${name}"]`).attr("content") ||
 		$(`meta[property=${name}]`).attr("content") ||

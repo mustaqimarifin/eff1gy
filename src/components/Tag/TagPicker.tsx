@@ -1,13 +1,13 @@
-import { useQuery } from "@apollo/client"
+"use client"
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react"
 import { ChevronDown } from "lucide-react"
-import { useState } from "react"
-import { GetTagsDocument } from "~/gql/typeSlut"
+import React from "react"
+import { useGetTagsQuery } from "~/gql/gql"
 import { Tag } from "."
 
 export function TagPicker({ filter, onChange, defaultValue = undefined }) {
-	const { data, loading } = useQuery(GetTagsDocument)
-	const [selected, setSelected] = useState(defaultValue)
+	const { data, loading } = useGetTagsQuery()
+	const [selected, setSelected] = React.useState(defaultValue)
 
 	if (loading) return null
 
@@ -15,12 +15,13 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
 		setSelected(val)
 		onChange(val)
 	}
-
+	/* 	"block w-full rounded-md border text-slate-800 dark:bg-white/5 py-1.5 px-3 text-sm/6 dark:text-white",
+		"focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25", */
 	return (
 		<Listbox value={selected} onChange={handleChange}>
-			<div className="relative z-10 mt-1">
+			<div className="relative z-10 mt-1 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25">
 				<ListboxButton
-					className={`relative w-full cursor-pointer rounded-md border border-gray-200 bg-white bg-opacity-5 py-2.5 pl-4 pr-10 text-left shadow-sm dark:border-gray-700  ${
+					className={`relative w-full cursor-pointer opacity-70 rounded-md border  dark:text-white border-gray-200 dark:bg-white/5 py-1.5 px-3  pl-4 pr-10 text-left shadow-sm dark:border-gray-700  ${
 						selected ? "text-primary" : "text-quaternary"
 					}`}
 				>
@@ -36,7 +37,7 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
 							.map(tag => (
 								<ListboxOption
 									key={tag.name}
-									className="text-primary relative flex flex-none cursor-pointer select-none p-1"
+									className={`text-primary relative flex flex-none cursor-pointer select-none p-1`}
 									value={tag.name}
 								>
 									<Tag name={tag.name} />
@@ -44,8 +45,11 @@ export function TagPicker({ filter, onChange, defaultValue = undefined }) {
 							))}
 					</div>
 					<div className="w-full border-t border-gray-150 p-2 dark:border-gray-600">
-						<ListboxOption className="text-primary relative flex flex-none cursor-pointer select-none p-1" value={null}>
-							<Tag name="__clear_tag_picker" />
+						<ListboxOption
+							className={`text-primary relative flex flex-none cursor-pointer select-none p-1`}
+							value={null}
+						>
+							<Tag name={"__clear_tag_picker"} />
 						</ListboxOption>
 					</div>
 				</ListboxOptions>

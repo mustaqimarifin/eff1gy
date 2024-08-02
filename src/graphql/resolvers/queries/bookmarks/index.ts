@@ -1,4 +1,4 @@
-import type { GetBookmarksQueryVariables } from "~/gql/typeSlut"
+import type { GetBookmarksQueryVariables } from "~/gql/gql"
 import { PAGINATION_AMOUNT } from "~/graphql/constants"
 import type { Context } from "~/graphql/context"
 
@@ -82,7 +82,7 @@ export async function getBookmarks(_: any, args: GetBookmarksQueryVariables, ctx
 		}
 	}
 }
-export async function getBookmark(_, { id }, ctx: Context) {
+export async function getBookmark(_: any, { id }: any, ctx: Context) {
 	const { db } = ctx
 	try {
 		return await db.bookmark.findUnique({

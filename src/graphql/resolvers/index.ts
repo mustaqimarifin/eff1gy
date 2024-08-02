@@ -5,14 +5,14 @@ import { getCommentAuthor } from "~/graphql/resolvers/queries/comments"
 import { getQuestionAuthor } from "~/graphql/resolvers/queries/questions"
 import { DateQL, JSOD } from "../scalars"
 
-import { QuestionStatus, UserRole, type Resolvers } from "~/gql/typeSlut"
+import { UserRole } from "~/gql/gql"
 const resolvers = {
 	Date: DateQL,
 	JSON: JSOD,
 	Query,
 	Mutation,
 	Reactable: {
-		__resolveType (obj: { reactableType: any} ) {
+		__resolveType(obj: { reactableType: any }) {
 			switch (obj.reactableType) {
 				case "question":
 					return "Question"
@@ -31,18 +31,18 @@ const resolvers = {
 	},
 	Comment: {
 		author: getCommentAuthor,
-		viewerCanEdit: ({ userId }, _, { viewer }: Context) => {
+		viewerCanEdit: ({ userId }: any, _: any, { viewer }: Context) => {
 			return userId === viewer?.id
 		},
-		viewerCanDelete: ({ userId }, _, { viewer }: Context) => {
+		viewerCanDelete: ({ userId }: any, _: any, { viewer }: Context) => {
 			return userId === viewer?.id || viewer?.isAdmin
 		},
 	},
 	Question: {
-		viewerCanEdit: ({ userId }, _, { viewer }: Context) => {
+		viewerCanEdit: ({ userId }: any, _: any, { viewer }: Context) => {
 			return userId === viewer?.id || viewer?.isAdmin
 		},
-		viewerCanComment: async ({ id }, _, ctx: Context) => {
+		viewerCanComment: async ({ id }: any, _: any, ctx: Context) => {
 			const { viewer, db } = ctx
 			// I can always comment to answer a question
 			if (viewer?.isAdmin) return true
@@ -55,8 +55,8 @@ const resolvers = {
 			return comments.length > 0
 		},
 		author: getQuestionAuthor,
-		status: ({ _count: { comments } }) => (comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending),
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+		//status: ({ _count: { comments } }) => (comments > 0 ? QuestionStatus.Answered : QuestionStatus.Pending),
+		viewerHasReacted: async ({ id }: any, _: any, { viewer, db }: Context) => {
 			if (!viewer) return false
 
 			const reactions = await db.question
@@ -67,7 +67,7 @@ const resolvers = {
 
 			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+		reactionCount: async ({ id, _count }: any, _: any, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
 
 			const reactions = await db.question
@@ -80,21 +80,21 @@ const resolvers = {
 		},
 	},
 	User: {
-		isViewer: ({ id }, _, { viewer }: Context) => {
+		isViewer: ({ id }: any, _: any, { viewer }: Context) => {
 			return viewer && viewer?.id === id
 		},
 		isAdmin: ({ role }) => {
 			return role === UserRole.Admin
 		},
-		email: ({ id }, _, { viewer }: Context) => {
+		email: ({ id }: any, _: any, { viewer }: Context) => {
 			return viewer && viewer?.id === id ? viewer.email : null
 		},
-		pendingEmail: ({ id }, _, { viewer }: Context) => {
+		pendingEmail: ({ id }: any, _: any, { viewer }: Context) => {
 			return viewer && viewer?.id === id ? viewer.pendingEmail : null
 		},
 	},
 	Bookmark: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+		viewerHasReacted: async ({ id }: any, _: any, { viewer, db }: Context) => {
 			if (!viewer) return false
 
 			const reactions = await db.bookmark
@@ -105,7 +105,7 @@ const resolvers = {
 
 			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+		reactionCount: async ({ id, _count }: any, _: any, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
 
 			const reactions = await db.bookmark
@@ -118,7 +118,7 @@ const resolvers = {
 		},
 	},
 	Post: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+		viewerHasReacted: async ({ id }: any, _: any, { viewer, db }: Context) => {
 			if (!viewer) return false
 
 			const reactions = await db.post
@@ -129,7 +129,7 @@ const resolvers = {
 
 			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+		reactionCount: async ({ id, _count }: any, _: any, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
 
 			const reactions = await db.post
@@ -142,7 +142,7 @@ const resolvers = {
 		},
 	},
 	Blog: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+		viewerHasReacted: async ({ id }: any, _: any, { viewer, db }: Context) => {
 			if (!viewer) return false
 
 			const reactions = await db.blog
@@ -153,7 +153,7 @@ const resolvers = {
 
 			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+		reactionCount: async ({ id, _count }: any, _: any, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
 
 			const reactions = await db.blog
@@ -166,7 +166,7 @@ const resolvers = {
 		},
 	},
 	Case: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+		viewerHasReacted: async ({ id }: any, _: any, { viewer, db }: Context) => {
 			if (!viewer) return false
 
 			const reactions = await db.case
@@ -177,7 +177,7 @@ const resolvers = {
 
 			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+		reactionCount: async ({ id, _count }: any, _: any, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
 
 			const reactions = await db.case
@@ -190,7 +190,7 @@ const resolvers = {
 		},
 	},
 	Stack: {
-		viewerHasReacted: async ({ id }, _, { viewer, db }: Context) => {
+		viewerHasReacted: async ({ id }: any, _: any, { viewer, db }: Context) => {
 			if (!viewer) return false
 
 			const reactions = await db.stack
@@ -201,7 +201,7 @@ const resolvers = {
 
 			return reactions.some(({ userId }) => userId === viewer?.id)
 		},
-		reactionCount: async ({ id, _count }, _, { db }: Context) => {
+		reactionCount: async ({ id, _count }: any, _: any, { db }: Context) => {
 			if (_count?.reactions) return _count.reactions
 
 			const reactions = await db.stack
@@ -212,7 +212,7 @@ const resolvers = {
 
 			return reactions.length
 		},
-		usedBy: async ({ id, users }, _, ctx: Context) => {
+		usedBy: async ({ id, users }: any, _: any, ctx: Context) => {
 			const { db } = ctx
 			if (users) return users
 
@@ -225,10 +225,10 @@ const resolvers = {
 
 			return data.users || []
 		},
-		usedByViewer: async ({ id, users }, _, ctx: Context) => {
+		usedByViewer: async ({ id, users }: any, _: any, ctx: Context) => {
 			const { db, viewer } = ctx
 			if (!viewer?.id) return false
-			if (users) return users.some((s: { id: string} ) => s.id === viewer?.id)
+			if (users) return users.some((s: { id: string }) => s.id === viewer?.id)
 
 			const data = await db.stack.findUnique({
 				where: { id },
@@ -240,6 +240,6 @@ const resolvers = {
 			return data.users.some(s => s.id === viewer?.id)
 		},
 	},
-} as unknown as Resolvers
+}
 
 export default resolvers

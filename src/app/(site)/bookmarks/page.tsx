@@ -11,22 +11,21 @@ export const metadata = {
 }
 
 /* export default async function BookIndex() {
-  await Promise.all([
-    client.query({ query: ViewerDocument }),
-    client.query({ query: GET_BOOKMARKS }),
-    client.query({ query: GET_TAGS }),
-  ])
-  return <ListDetailView list={<BookmarksList />} hasDetail={false} detail={null} />
+	await Promise.all([
+		client.query({ query: ViewerDocument }),
+		client.query({ query: GET_BOOKMARKS }),
+		client.query({ query: GET_TAGS }),
+	])
+	return <ListDetailView list={<BookmarksList />} hasDetail={false} detail={null} />
 } */
 
 export default async function BookIndex() {
-	/* 	await Promise.all([query({ query: GET_VIEWER }), query({ query: GET_TAGS })])
-	 */ return (
+	await Promise.all([query({ query: GET_VIEWER }), query({ query: GET_TAGS })])
+	return (
 		<PreloadQuery query={GET_BOOKMARKS}>
-			<BookmarksList />
-			{/* 			<Suspense fallback={<LoadingSpinner/>}>
-				<BookmarksList  />
-			</Suspense> */}
+			<Suspense fallback={<LoadingSpinner />}>
+				<BookmarksList />
+			</Suspense>
 		</PreloadQuery>
 	)
 }

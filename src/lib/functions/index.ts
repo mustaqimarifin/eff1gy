@@ -1,12 +1,11 @@
 /* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable no-new */
 
-import ky, { type Input } from "ky"
 import { customAlphabet } from "nanoid/non-secure"
 /**
  * if you wanna get fancy... url safety is your responsibility
  */
-const range = "+-¥∑µ§†ƒ0123456789abcdefghijklmnopqrstuvwxyz"
+const range = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 export const nanoid = customAlphabet(range, 5)
 
 export function slugify(str: string) {

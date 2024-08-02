@@ -3,13 +3,12 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/r
 import { CheckIcon } from "lucide-react"
 import { Fragment, useContext } from "react"
 
-import { useQuery } from "@apollo/client"
 import { GhostButton } from "~/components/Button"
-import { GetTagsDocument } from "~/gql/typeSlut"
+import { useGetTagsQuery } from "~/gql/gql"
 import { BookmarksContext } from "./BookmarksList"
 
 export function BookmarksFilterMenu() {
-	const { data, loading } = useQuery(GetTagsDocument)
+	const { data, loading } = useGetTagsQuery()
 	const { tag, setTag } = useContext(BookmarksContext)
 
 	if (loading) return null

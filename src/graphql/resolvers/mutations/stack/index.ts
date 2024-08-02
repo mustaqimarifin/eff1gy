@@ -5,12 +5,12 @@ import type {
 	DeleteStackMutationVariables,
 	EditStackMutationVariables,
 	ToggleStackUserMutationVariables,
-} from "~/gql/typeSlut"
+} from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 import { slugify, urlRX } from "~/lib/functions"
 // import { graphcdn } from "~/lib/graphcdn";
 
-export async function editStack(_, args: EditStackMutationVariables, ctx: Context) {
+export async function editStack(_: any, args: EditStackMutationVariables, ctx: Context) {
 	const { id, data } = args
 	const { name, url, tag, description, image } = data
 	const { db } = ctx
@@ -42,8 +42,6 @@ export async function editStack(_, args: EditStackMutationVariables, ctx: Contex
 	}
 
 	await db.stack.update({
-		relationLoadStrategy: "query",
-
 		where: { id },
 		data: {
 			tags: {
@@ -63,7 +61,6 @@ export async function editStack(_, args: EditStackMutationVariables, ctx: Contex
 
 	return await db.stack
 		.update({
-			relationLoadStrategy: "query",
 			where: { id },
 			data: {
 				name,
@@ -84,7 +81,7 @@ graphcdn.purgeList('stacks')
 		})
 }
 
-export async function addStack(_, args: AddStackMutationVariables, ctx: Context) {
+export async function addStack(_: any, args: AddStackMutationVariables, ctx: Context) {
 	const { data } = args
 	const { url, name, description, image, tag } = data
 	const { db } = ctx
@@ -102,7 +99,6 @@ export async function addStack(_, args: AddStackMutationVariables, ctx: Context)
 
 	return await db.stack
 		.create({
-			relationLoadStrategy: "query",
 			data: {
 				name,
 				url,
@@ -123,7 +119,7 @@ export async function addStack(_, args: AddStackMutationVariables, ctx: Context)
 		})
 }
 
-export async function deleteStack(_, args: DeleteStackMutationVariables, ctx: Context) {
+export async function deleteStack(_: any, args: DeleteStackMutationVariables, ctx: Context) {
 	const { id } = args
 	const { db } = ctx
 
@@ -172,8 +168,6 @@ export async function toggleStackUser(_: any, args: ToggleStackUserMutationVaria
 
 	if (stackUsers.users.find(s => s.id === viewer?.id)) {
 		const data = await db.stack.update({
-			relationLoadStrategy: "query",
-
 			where: { id },
 			data: {
 				users: {
@@ -193,8 +187,6 @@ export async function toggleStackUser(_: any, args: ToggleStackUserMutationVaria
 		}
 	}
 	const data = await db.stack.update({
-		relationLoadStrategy: "query",
-
 		where: { id },
 		data: {
 			users: {

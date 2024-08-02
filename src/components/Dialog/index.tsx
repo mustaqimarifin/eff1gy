@@ -8,10 +8,10 @@ export interface DialogProps {
 	trigger?: ReactElement | null
 	children?: any | null
 	title?: string
-	modalContent?: (x: any) => ReactElement | null
+	modalContent?: any
 }
 
-export const DialogComponent = memo<DialogProps>(({ trigger, children, modalContent }) => {
+export function DialogComponent({ trigger = null, children = null, modalContent }: DialogProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const closeButtonRef = useRef(null)
 
@@ -62,7 +62,7 @@ export const DialogComponent = memo<DialogProps>(({ trigger, children, modalCont
 								leaveFrom="opacity-100 translate-y-0 sm:scale-100"
 								leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
 							>
-								<DialogPanel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-700 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+								<DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all dark:bg-gray-700 sm:my-8 sm:w-full sm:max-w-lg">
 									<div className="flex flex-col">
 										<div className="overflow-y-auto">
 											{/*
@@ -84,4 +84,4 @@ export const DialogComponent = memo<DialogProps>(({ trigger, children, modalCont
 			</Transition>
 		</>
 	)
-})
+}

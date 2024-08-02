@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client"
+//import { BlogDetailFrag, BlogListItemFrag } from "../fragments/blog"
 import { BlogDetailFrag, BlogListItemFrag } from "../fragments/blog"
 
 export const GET_BLOGS = gql`

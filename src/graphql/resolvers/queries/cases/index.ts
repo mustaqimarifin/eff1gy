@@ -1,4 +1,4 @@
-import type { GetCaseQueryVariables, GetCasesQueryVariables } from "~/gql/typeSlut"
+import type { GetCaseQueryVariables, GetCasesQueryVariables } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 
 export async function getCases(_: any, args: GetCasesQueryVariables, ctx: Context) {

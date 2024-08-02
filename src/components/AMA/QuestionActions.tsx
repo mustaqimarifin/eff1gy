@@ -2,12 +2,12 @@ import { EditQuestionDialog } from "~/components/AMA/EditQuestionDialog"
 import Button from "~/components/Button"
 import { ReactionButton } from "../Button/ReactionButton"
 
-import { useMutation } from "@apollo/client"
 import type { Session } from "next-auth"
-import { GetQuestionDocument, type Question, ReactionType, ToggleReactionDocument } from "~/gql/typeSlut"
+import { GetQuestionDocument, ReactionType, useToggleReactionMutation } from "~/gql/gql"
+import type { Question } from "~/gql/gql"
 
 function getReactionButton(question) {
-	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument)
+	const [toggleReaction, { loading }] = useToggleReactionMutation()
 	function handleClick() {
 		if (loading) return
 

@@ -8,6 +8,7 @@ import { ApolloWrapper } from "./ApolloWrapper"
 
 interface Props {
 	children?: ReactNode
+	//session?: Session
 }
 
 const globalNavigationContext = {
@@ -32,8 +33,8 @@ export function Providers({ children }: Props) {
 
 	const value = React.useMemo(
 		() => ({
-			initialState,
-			setIsOpen,
+			...initialState,
+			...setIsOpen,
 		}),
 		[initialState, setIsOpen],
 	)

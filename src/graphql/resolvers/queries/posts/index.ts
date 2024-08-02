@@ -1,4 +1,4 @@
-import type { GetPostQueryVariables, GetPostsQueryVariables } from "~/gql/typeSlut"
+import type { GetPostQueryVariables, GetPostsQueryVariables } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 
 export async function getPosts(_: any, args: GetPostsQueryVariables, ctx: Context) {

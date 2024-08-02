@@ -1,12 +1,11 @@
-import { useBackgroundQuery, useQuery } from "@apollo/client"
 import Link from "next/link"
-import { type Bookmark, GetBookmarksDocument } from "~/gql/typeSlut"
+import { useGetBookmarksQuery } from "~/gql/gql"
 
-type RelProps = {
+/* type RelProps = {
 	bookmark: Partial<Bookmark>
-}
-export function RelatedBookmarks({ bookmark }: RelProps) {
-	const { data, loading } = useQuery(GetBookmarksDocument, {
+} */
+export function RelatedBookmarks({ bookmark }) {
+	const { data, loading } = useGetBookmarksQuery({
 		variables: { filter: { host: bookmark.host } },
 	})
 
@@ -40,7 +39,7 @@ export function RelatedBookmarks({ bookmark }: RelProps) {
 								href="/bookmarks/[id]"
 								as={`/bookmarks/${r.node.id}`}
 								onClick={handleClick}
-								className="text-primary -mx-2 line-clamp-1 flex justify-between rounded-md px-2 py-2 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 md:-mx-3 md:px-3"
+								className="text-primary -mx-2 line-clamp-1 flex justify-between rounded-md px-2 py-2 font-medium hover:bg-gray-200 md:-mx-3 md:px-3 dark:hover:bg-gray-700"
 							>
 								<span>{r.node.title}</span>
 							</Link>

@@ -10,11 +10,8 @@ import AudioPlayer from "../AudioPlayer"
 import { MarkdownRenderer } from "../MarkdownRenderer"
 import { QuestionActions } from "./QuestionActions"
 
+import { CommentType, useGetQuestionQuery } from "~/gql/gql"
 import { realTime } from "~/lib/transformers"
-
-import { useQuery } from "@apollo/client"
-import type { Session } from "next-auth"
-import { CommentType, GetQuestionDocument } from "~/gql/typeSlut"
 
 type QD = {
 	id: string
@@ -22,12 +19,12 @@ type QD = {
 export function QuestionDetail({ id }) {
 	const scrollContainerRef = useRef(null)
 	const titleRef = useRef(null)
-	const { data, loading, error } = useQuery(GetQuestionDocument, { variables: { id } })
+	const { data, loading, error } = useGetQuestionQuery({ variables: { id } })
 	if (loading) {
 		return <Detail.Loading />
 	}
 
-	if (!data.question || error) {
+	if (!data?.question || error) {
 		return <Detail.Null />
 	}
 
@@ -87,7 +84,7 @@ export function QuestionDetail({ id }) {
 					)}
 					{question?.description && (
 						<MarkdownRenderer
-							children={question?.description}
+							md={question?.description}
 							className="prose prose-neutral dark:prose-invert"
 							variant="comment"
 						/>

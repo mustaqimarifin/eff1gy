@@ -1,6 +1,5 @@
-import { useQuery } from "@apollo/client"
+import { useSession } from "next-auth/react"
 import type { ComponentProps, ReactNode } from "react"
-import { ViewerDocument } from "~/gql/typeSlut"
 
 import { cx } from "~/lib/transformers"
 
@@ -16,7 +15,8 @@ export interface IconButtonProps {
 }
 
 export function IconButton(props: IconButtonProps) {
-	const { data } = useQuery(ViewerDocument)
+	//const { data } = useQuery(ViewerDocument)
+	const { data: session } = useSession()
 
 	const { Icon, isActive, color, children, hoverbg } = props
 
@@ -27,7 +27,7 @@ export function IconButton(props: IconButtonProps) {
 				color,
 				hoverbg,
 				isActive && "bg-slate-200",
-				data.viewer ? "cursor-pointer hover:bg-purple-50" : "cursor-default",
+				session.user ? "cursor-pointer hover:bg-purple-50" : "cursor-default",
 			)}
 			{...props}
 		>

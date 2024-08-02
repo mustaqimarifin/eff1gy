@@ -3,7 +3,7 @@ import { useState } from "react"
 
 import { cx } from "~/lib/transformers"
 
-export default function CoverImage({ src }) {
+export default function CoverImage({ src }: { src: string }) {
 	const [isLoading, setLoading] = useState(true)
 
 	return (
@@ -20,7 +20,7 @@ export default function CoverImage({ src }) {
 				onLoadingComplete={() => setLoading(false)}
 				// blurDataURL={blurDataUrl}
 			/>
-			{/*       <figcaption className="text-center ">
+			{/*       <figcaption className="text-center">
         {caption && (
           <span className="text-sm italic text-gray-600 dark:text-gray-400">
             {caption}

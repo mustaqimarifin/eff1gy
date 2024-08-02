@@ -1,15 +1,17 @@
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
-import { type ReactElement, memo, useContext, useMemo } from "react"
+import { type ComponentProps, type ReactElement, memo, useContext } from "react"
 
 import { GlobalNavigationContext } from "~/components/Provider"
 
-type Item = {
+type IconType = (props: ComponentProps<"svg">) => JSX.Element | LucideIcon
+
+export type Item = {
 	href: string
-	label: string
-	icon: any
-	trailingAccessory?: any
-	trailingAction?: any
+	label?: string | ReactElement
+	icon?: any
+	accessory?: any
+	action?: any
 	isActive: boolean
 	isExternal: boolean
 }
@@ -17,13 +19,10 @@ type NavLinkProps = {
 	item: Item
 }
 export const NavigationLink = memo<NavLinkProps>(({ item }) => {
-	/* const value = useMemo(() => {
-		return item
-	}, [item]) */
-	const { href, label, icon, trailingAccessory, trailingAction, isActive, isExternal } = item
+	const { href, label, icon, accessory, action, isActive, isExternal } = item
 	let Icon = icon
-	let Accessory = trailingAccessory
-	let Action = trailingAction
+	let Accessory = accessory
+	let Action = action
 	const { setIsOpen } = useContext(GlobalNavigationContext)
 
 	return (

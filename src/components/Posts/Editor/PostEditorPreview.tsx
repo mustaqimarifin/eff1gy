@@ -16,7 +16,7 @@ export function PostEditorPreview() {
 			<Detail.Header>
 				<Detail.Title>{title}</Detail.Title>
 			</Detail.Header>
-			<MarkdownRenderer children={text} className="prose mt-8" />
+			<MarkdownRenderer md={text} className="prose mt-8" />
 			<div className="py-6" />
 		</Detail.ContentContainer>
 	)

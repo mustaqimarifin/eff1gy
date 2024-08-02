@@ -1,13 +1,12 @@
 import Link from "next/link"
 import { memo, useState } from "react"
 
-import { useMutation } from "@apollo/client"
 import { Avatar } from "~/components/Avatar"
 import Button, { PrimaryButton } from "~/components/Button"
 import { Textarea } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { DeleteCommentDocument, EditCommentDocument, GetCommentsDocument } from "~/gql/typeSlut"
-import type { Comment as CommentProp, CommentType, GetCommentsQuery } from "~/gql/typeSlut"
+import { type CommentType, GetCommentsDocument, useDeleteCommentMutation, useEditCommentMutation } from "~/gql/gql"
+import type { Comment as CommentProp, GetCommentsQuery } from "~/gql/gql"
 import { realTime } from "~/lib/transformers"
 import { MarkdownRenderer } from "../MarkdownRenderer"
 
@@ -22,7 +21,7 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 	const [editText, setEditText] = useState(comment.text)
 	const [isSavingEdit, setIsSavingEdit] = useState(false)
 
-	const [deleteComment] = useMutation(DeleteCommentDocument, {
+	const [deleteComment] = useDeleteCommentMutation({
 		variables: { id: comment.id },
 		optimisticResponse: {
 			__typename: "Mutation",
@@ -46,7 +45,7 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 		onError(error) {},
 	})
 
-	const [editComment] = useMutation(EditCommentDocument, {
+	const [editComment] = useEditCommentMutation({
 		variables: { id: comment.id, text: editText },
 		optimisticResponse: {
 			__typename: "Mutation",
@@ -112,17 +111,17 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 					</Link>
 
 					<div className="flex space-x-1 text-sm">
-						<Link href={`/u/${comment.author.username}`} className="text-primary  font-semibold leading-snug">
-							<div className="flex break-all line-clamp-1">{comment.author.name}</div>
+						<Link href={`/u/${comment.author.username}`} className="text-primary font-semibold leading-snug">
+							<div className="line-clamp-1 flex break-all">{comment.author.name}</div>
 						</Link>
 						<div className="text-quaternary leading-snug">·</div>
-						<div className="text-quaternary leading-snug line-clamp-1" title={createdAt.raw}>
+						<div className="text-quaternary line-clamp-1 leading-snug" title={createdAt.raw}>
 							{createdAt.formatted}
 						</div>
-						<div className="text-quaternary leading-snug flex flex-row items-center text-gray-500 dark:text-gray-200">
+						<div className="text-quaternary flex flex-row items-center leading-snug text-gray-500 dark:text-gray-200">
 							{comment.viewerCanEdit && (
 								<button
-									className=" hover:text-lime-400 hover:dark:text-lime-300 border-none"
+									className="border-none hover:text-lime-400 hover:dark:text-lime-300"
 									onClick={handleEdit}
 									aria-label="Edit"
 								>
@@ -131,7 +130,7 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 							)}
 							{comment.viewerCanDelete && (
 								<button
-									className=" hover:text-pink-400 hover:dark:text-pink-300 border-none"
+									className="border-none hover:text-pink-400 hover:dark:text-pink-300"
 									onClick={handleDelete}
 									aria-label={`Delete comment by ${comment.author.name}`}
 								>
@@ -163,8 +162,8 @@ export const Comment = memo(({ comment, refId, type }: Props) => {
 				</div>
 			) : (
 				<MarkdownRenderer
-					children={comment.text}
-					className="comment flex-grow pl-12 text-sm prose prose-neutral dark:prose-invert"
+					md={comment.text}
+					className="comment prose prose-neutral flex-grow pl-12 text-sm dark:prose-invert"
 					variant="comment"
 				/>
 			)}

@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql"
-import { ViewType } from "~/gql/typeSlut"
 
+import { ViewType } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 
 export async function addView(_: any, args: { refId: any; type: any }, ctx: Context) {

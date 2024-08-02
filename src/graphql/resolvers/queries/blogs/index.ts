@@ -1,4 +1,4 @@
-import type { GetBlogQueryVariables, GetBlogsQueryVariables } from "~/gql/typeSlut"
+import type { GetBlogQueryVariables, GetBlogsQueryVariables } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 
 export async function getBlogs(_: any, args: GetBlogsQueryVariables, ctx: Context) {

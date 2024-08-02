@@ -6,7 +6,7 @@ import { PostEditor } from "~/components/Posts/Editor/PostEditor"
 import { PostDetail } from "~/components/Posts/PostDetail"
 import { PostsList } from "~/components/Posts/PostsList"
 import { query } from "~/components/Provider/ApolloClient"
-import { GetPostDocument } from "~/gql/typeSlut"
+import { GetPostDocument } from "~/gql/gql"
 
 // import { HiddenCounter } from "~/lib/actions";
 

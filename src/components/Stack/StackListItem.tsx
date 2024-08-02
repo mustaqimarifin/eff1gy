@@ -2,7 +2,7 @@ import Image from "next/image"
 import { memo } from "react"
 
 import { ListItem } from "~/components/ListDetail/ListItem"
-import type { StackListItemFragment } from "~/gql/typeSlut"
+import type { StackListItemFragment } from "~/gql/gql"
 // TODO: Figure out how to get this dynamically
 interface Props {
 	stack: StackListItemFragment

@@ -14,7 +14,8 @@ export default gql`
     scope: CacheControlScope
     inheritMaxAge: Boolean
   ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
-
+  
+  
   type Blog {
     id: ID!
     title: String
@@ -337,4 +338,4 @@ export default gql`
     deletePost(id: ID!): Boolean
     addView(refId: ID!, type: ViewType!): Viewable
   }
-`
+  `

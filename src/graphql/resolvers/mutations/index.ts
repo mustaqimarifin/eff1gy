@@ -1,5 +1,5 @@
-import { requiresAdmin } from "~/graphql/helpers/requiresAdmin"
-import { requiresUser } from "~/graphql/helpers/requiresUser"
+//import { requiresAdmin } from "~/graphql/helpers/requiresAdmin"
+//import { requiresUser } from "~/graphql/helpers/requiresUser"
 import { addBookmark, deleteBookmark, editBookmark } from "~/graphql/resolvers/mutations/bookmarks"
 import { addComment, deleteComment, editComment } from "~/graphql/resolvers/mutations/comment"
 import { addPost, deletePost, editPost } from "~/graphql/resolvers/mutations/post"
@@ -8,10 +8,8 @@ import { toggleReaction } from "~/graphql/resolvers/mutations/reactions"
 import { addStack, deleteStack, editStack, toggleStackUser } from "~/graphql/resolvers/mutations/stack"
 import { deleteUser, editUser } from "~/graphql/resolvers/mutations/user"
 import { addView } from "./view"
-import type { Resolvers } from "@apollo/client"
-import type { MutationResolvers } from "~/gql/typeSlut"
 
-/* export default {
+export default {
 	addBookmark,
 	editBookmark,
 	deleteBookmark,
@@ -33,8 +31,8 @@ import type { MutationResolvers } from "~/gql/typeSlut"
 	toggleReaction,
 	addView,
 }
- */
-export default {
+
+/* export default {
 	addBookmark: requiresAdmin(addBookmark),
 	editBookmark: requiresAdmin(editBookmark),
 	deleteBookmark: requiresAdmin(deleteBookmark),
@@ -55,4 +53,5 @@ export default {
 	deletePost: requiresAdmin(deletePost),
 	toggleReaction: requiresUser(toggleReaction),
 	addView,
-} as MutationResolvers
+}
+ */

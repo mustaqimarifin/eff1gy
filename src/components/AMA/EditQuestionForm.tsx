@@ -6,22 +6,10 @@ import Button, { DeleteButton, PrimaryButton } from "~/components/Button"
 import { Input, Textarea } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 
-import {
-	DeleteQuestionDocument,
-	GetQuestionDocument,
-	GetQuestionsDocument,
-	type GetQuestionsQuery,
-	type Question,
-	ViewerDocument,
-	type ViewerQuery,
-	type ViewerQueryResult,
-	useDeleteQuestionMutation,
-	useEditQuestionMutation,
-	useViewerQuery,
-} from "~/gql/typeSlut"
+import { DeleteQuestionDocument, GetQuestionDocument, GetQuestionsDocument, useEditQuestionMutation } from "~/gql/gql"
+import type { GetQuestionsQuery, Question } from "~/gql/gql"
 
 import { useSession } from "next-auth/react"
-import { GET_QUESTION, GET_QUESTIONS } from "~/graphql/queries/questions"
 import AudioRecorder from "../AudioRecorder"
 
 export function EditQuestionForm({
@@ -32,7 +20,8 @@ export function EditQuestionForm({
 	question: Question
 }) {
 	//const { data } = useViewerQuery()
-	const { data: session, status } = useSession()
+	const { data } = useSession()
+
 	const initialState = {
 		title: question.title,
 		description: question.description || "",
@@ -165,7 +154,7 @@ export function EditQuestionForm({
 				description: state.description,
 				waveform: state.waveform,
 				audioUrl: state.src,
-				author: session.user,
+				author: data.user,
 			},
 		},
 		onCompleted() {
@@ -178,7 +167,7 @@ export function EditQuestionForm({
 		},
 	})
 
-	const [handleDelete] = useDeleteQuestionMutation({
+	const [handleDelete] = useMutation(DeleteQuestionDocument, {
 		variables: { id: question.id },
 		optimisticResponse: {
 			__typename: "Mutation",
@@ -186,12 +175,12 @@ export function EditQuestionForm({
 		},
 		update(cache) {
 			const cacheData = cache.readQuery<GetQuestionsQuery>({
-				query: GET_QUESTIONS,
+				query: GetQuestionsDocument,
 				variables: { filter: { status: question.status } },
 			})
 
 			cache.writeQuery({
-				query: GET_QUESTION,
+				query: GetQuestionDocument,
 				variables: { id: question.id },
 				data: {
 					question: null,
@@ -203,7 +192,7 @@ export function EditQuestionForm({
 				const { questions } = cacheData
 				cache.writeQuery({
 					query: GetQuestionsDocument,
-					variables: { filter: { status: question.status } },
+					variables: { filter: { answered: true } },
 					data: {
 						questions: {
 							...questions,
@@ -213,7 +202,6 @@ export function EditQuestionForm({
 							},
 							edges: questions.edges.filter(o => o.node.id !== question.id),
 						},
-						__typename: "Query",
 					},
 				})
 			}

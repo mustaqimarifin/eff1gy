@@ -4,8 +4,9 @@ import { useState } from "react"
 import { PrimaryButton } from "~/components/Button"
 import { Textarea } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { type ViewerQuery, useAddQuestionMutation, useViewerQuery } from "~/gql/typeSlut"
 
+import { useSession } from "next-auth/react"
+import { useAddQuestionMutation } from "~/gql/gql"
 import { Avatar } from "../Avatar"
 import { Nuts } from "../Provider/Toaster"
 
@@ -13,7 +14,8 @@ type QForm = {
 	closeModal: any
 }
 export function AddQuestionForm({ closeModal }: QForm) {
-	const { data } = useViewerQuery()
+	//const { data } = useViewerQuery()
+	const { data } = useSession()
 	const [title, setTitle] = useState("")
 	const [description, setDescription] = useState("")
 	const [, setError] = useState("")
@@ -63,13 +65,13 @@ export function AddQuestionForm({ closeModal }: QForm) {
 		}
 	}
 
-	//const { viewer } = data
+	//const { session } = data
 
 	return (
 		<form className="items-stretch space-y-4 p-4" onSubmit={onSubmit}>
 			<div className="flex items-start space-x-3">
 				<div className="pt-0.5">
-					<Avatar user={data.viewer} src={data.viewer?.image} width={40} height={40} className="rounded-full" />
+					<Avatar user={data.user} src={data.user.image} width={40} height={40} className="rounded-full" />
 				</div>
 				<Textarea
 					rows={1}

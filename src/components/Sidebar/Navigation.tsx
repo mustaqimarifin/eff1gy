@@ -1,8 +1,6 @@
 "use client"
 import { CassetteTape, Plus, Thermometer } from "lucide-react"
-//import lazy from "next/dynamic"
 import { usePathname } from "next/navigation"
-import useSWR from "swr"
 import { AddBookmarkDialog } from "~/components/Bookmarks/AddBookmarkDialog"
 import { GhostButton } from "~/components/Button"
 import {
@@ -18,19 +16,13 @@ import {
 	TwitterIcon,
 	WritingIcon,
 } from "~/components/Icon"
-import { NavigationLink } from "./NavigationLink"
+import { type Item, NavigationLink } from "./NavigationLink"
 
-import { fetcher } from "~/lib/functions"
-
-import { useQuery } from "@apollo/client"
 import type { Session } from "next-auth"
-import { memo } from "react"
+import { useSession } from "next-auth/react"
+import { memo, useEffect, useState } from "react"
 import Marquee from "react-fast-marquee"
-import { ViewerDocument } from "~/gql/typeSlut"
 
-/* const Marquee = lazy(() => import("../MDX/Marquee"), {
-	ssr: false,
-}) */
 function ThisAddBookmarkDialog() {
 	return (
 		<AddBookmarkDialog
@@ -61,10 +53,24 @@ type SNav = {
 	session?: Session
 }
 export const SidebarNavigation = memo<SNav>(() => {
-	const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher)
+	const [track, setTrack] = useState(null)
+	useEffect(() => {
+		let ignore = false
+		setTrack(null)
+		fetch(`/api/spotify`).then(track => {
+			if (!ignore) {
+				setTrack(track)
+			}
+		})
+		return () => {
+			ignore = true
+		}
+	}, [track])
+	//const { data: track } = useSWR<TrackType>(`/api/spotify`, fetcher)
 	const path = usePathname()
-	const { data } = useQuery(ViewerDocument)
-	const sections = [
+	//const { data } = useQuery(ViewerDocument)
+	const { data: session } = useSession()
+	const sections: Section = [
 		{
 			//label: null,
 			items: [
@@ -106,7 +112,7 @@ export const SidebarNavigation = memo<SNav>(() => {
 					icon: BookmarksIcon,
 					//trailingAccessory: null,
 					isActive: path.includes("/bookmarks"),
-					trailingAction: data?.viewer?.isAdmin ? ThisAddBookmarkDialog : null,
+					action: session?.isAdmin ? ThisAddBookmarkDialog : null,
 					isExternal: false,
 				},
 				/* {
@@ -125,7 +131,7 @@ export const SidebarNavigation = memo<SNav>(() => {
 					icon: AMAIcon,
 					//trailingAccessory: null,
 					isActive: path.includes("/ama") && !path.startsWith("/ama/pending"),
-					trailingAction: null,
+					action: null,
 					isExternal: false,
 				},
 
@@ -133,9 +139,9 @@ export const SidebarNavigation = memo<SNav>(() => {
 					href: "/stack",
 					label: "Stack",
 					icon: StackIcon,
-					//trailingAccessory: null,
+					//Accessory: null,
 					isActive: path.includes("/stack"),
-					trailingAction: null,
+					action: null,
 					isExternal: false,
 				},
 			],
@@ -147,9 +153,9 @@ export const SidebarNavigation = memo<SNav>(() => {
           href: 'https://designdetails.fm',
           label: 'Design Details',
           icon: PodcastIcon,
-          trailingAccessory: ExternalLinkIcon,
+          Accessory: ExternalLinkIcon,
           isActive: false,
-          trailingAction: null,
+          Action: null,
           isExternal: true,
         },
 
@@ -157,9 +163,9 @@ export const SidebarNavigation = memo<SNav>(() => {
           href: 'https://staff.design',
           label: 'Staff Design',
           icon: StaffDesignIcon,
-          trailingAccessory: ExternalLinkIcon,
+          Accessory: ExternalLinkIcon,
           isActive: false,
-          trailingAction: null,
+          Action: null,
           isExternal: true,
         },
 
@@ -167,9 +173,9 @@ export const SidebarNavigation = memo<SNav>(() => {
           href: 'https://figma.com/@brian',
           label: 'Figma Plugins',
           icon: FigmaIcon,
-          trailingAccessory: ExternalLinkIcon,
+          Accessory: ExternalLinkIcon,
           isActive: false,
-          trailingAction: null,
+          Action: null,
           isExternal: true,
         }, */
 
@@ -177,9 +183,9 @@ export const SidebarNavigation = memo<SNav>(() => {
           href: '/security',
           label: 'Security Checklist',
           icon: SecurityChecklistIcon,
-          trailingAccessory: null,
+          Accessory: null,
           isActive: path.indexOf('/security') >= 0,
-          trailingAction: null,
+          Action: null,
           isExternal: false,
         },
 
@@ -187,9 +193,9 @@ export const SidebarNavigation = memo<SNav>(() => {
           href: '/hn',
           label: 'Hacker News',
           icon: HackerNewsIcon,
-          trailingAccessory: null,
+          Accessory: null,
           isActive: path.indexOf('/hn') >= 0,
-          trailingAction: null,
+          Action: null,
           isExternal: false,
         },
 
@@ -197,18 +203,18 @@ export const SidebarNavigation = memo<SNav>(() => {
 					href: "/events",
 					label: "Events",
 					icon: CaseIcon,
-					trailingAccessory: null,
+					Accessory: null,
 					isActive: path.indexOf("/events") >= 0,
-					trailingAction: null,
+					Action: null,
 					isExternal: false,
 				}, */
 				{
 					href: "/code",
 					label: "Code",
 					icon: CaseIcon,
-					//trailingAccessory: null,
+					//Accessory: null,
 					isActive: path.includes("/code"),
-					//trailingAction: null,
+					//Action: null,
 					isExternal: false,
 				},
 			],
@@ -229,7 +235,7 @@ export const SidebarNavigation = memo<SNav>(() => {
 					href: "https://twitter.com/vmprmyth",
 					label: "Twitter",
 					icon: TwitterIcon,
-					trailingAccessory: ExternalLinkIcon,
+					accessory: ExternalLinkIcon,
 					isActive: false,
 					//trailingAction: null,
 					isExternal: true,
@@ -239,7 +245,7 @@ export const SidebarNavigation = memo<SNav>(() => {
 					href: "https://open.spotify.com/artist/6bBbUUix7BfttiaHCDkcEI",
 					label: "Spotify",
 					icon: Spotify,
-					trailingAccessory: ExternalLinkIcon,
+					accessory: ExternalLinkIcon,
 					isActive: false,
 					//trailingAction: null,
 					isExternal: true,
@@ -249,7 +255,7 @@ export const SidebarNavigation = memo<SNav>(() => {
 					href: "https://github.com/mustaqimarifin",
 					label: "GitHub",
 					icon: GitHubIcon,
-					trailingAccessory: ExternalLinkIcon,
+					accessory: ExternalLinkIcon,
 					isActive: false,
 					//trailingAction: null,
 					isExternal: true,
@@ -259,7 +265,7 @@ export const SidebarNavigation = memo<SNav>(() => {
 					href: "https://soundcloud.com/vmprmyth",
 					label: "SoundCloud",
 					icon: SoundcloudIcon,
-					trailingAccessory: ExternalLinkIcon,
+					accessory: ExternalLinkIcon,
 					isActive: false,
 					//trailingAction: null,
 					isExternal: true,
@@ -267,7 +273,10 @@ export const SidebarNavigation = memo<SNav>(() => {
 			],
 		},
 	]
-	type Section = typeof sections
+	type Section = {
+		label?: string
+		items: Item[]
+	}[]
 
 	return (
 		<div className="flex-1 space-y-1 px-3 py-3">

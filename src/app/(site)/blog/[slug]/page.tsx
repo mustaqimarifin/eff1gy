@@ -5,7 +5,7 @@ import Mdx from "~/app/mdxrsc"
 import type { Post } from "~/components/Blogs/BlogDetail"
 import { BlogDetail } from "~/components/Blogs/BlogDetail"
 
-import { ViewType } from "~/gql/typeSlut"
+import { ViewType } from "~/gql/gql"
 import { HiddenCounter } from "~/lib/actions"
 import { allPosts, getPost } from "~/lib/sanity/client"
 

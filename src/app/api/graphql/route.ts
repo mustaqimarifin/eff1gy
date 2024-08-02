@@ -1,10 +1,9 @@
 import { makeExecutableSchema } from "@graphql-tools/schema"
-import { useAPQ } from "@graphql-yoga/plugin-apq"
+//import { useAPQ } from "@graphql-yoga/plugin-apq"
 import { createYoga } from "graphql-yoga"
-import type { User } from "next-auth"
+import type { User } from "~/gql/gql"
 import { getViewer } from "~/graphql/context"
 
-//import { getViewer } from "~/graphql/context"
 import resolvers from "~/graphql/resolvers"
 import typeDefs from "~/graphql/typeDefs"
 import { db } from "~/lib/db"
@@ -14,7 +13,7 @@ import { db } from "~/lib/db"
 //import operations from '../../../../persisted-query-manifest.json'
 //const operations = JSON.parse(readFileSync('../../../../persisted-query-manifest.json', 'utf-8'))
 
-const schemaDes = makeExecutableSchema({
+const schema = makeExecutableSchema({
 	typeDefs,
 	resolvers,
 })
@@ -28,7 +27,7 @@ const { handleRequest } = createYoga<
 		viewer: User | null
 	}
 >({
-	schema: schemaDes,
+	schema,
 	graphiql: true,
 	//logging: 'debug',
 	context: async ({ req, res }) => {
@@ -38,11 +37,10 @@ const { handleRequest } = createYoga<
 			db,
 		}
 	},
-
 	graphqlEndpoint: "/api/graphql",
 	fetchAPI: { Response },
 	plugins: [
-		useAPQ(),
+		//useAPQ(),
 		/*  usePersistedOperations({
       skipDocumentValidation: true,
       getPersistedOperation() {

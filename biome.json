@@ -15,13 +15,14 @@
 	"formatter": {
 		"enabled": true,
 		"lineWidth": 120,
-		"ignore": [".next/*", "node_modules", "./.pnp.cjs", "./.yarn", "./.pnp.loader.mjs"]
+		"ignore": [".next/*", "node_modules", "./.pnp.cjs", "./.yarn", "./.pnp.loader.mjs", "dist"]
 	},
 	"files": {
-		"ignore": [".next/*", "src/gql/**/*", "node_modules", "./.pnp.cjs", "./.yarn", "./.pnp.loader.mjs"]
+		"ignore": [".next/*", "src/gql/**/*", "node_modules", "./.pnp.cjs", "./.yarn", "./.pnp.loader.mjs", "dist/*"]
 	},
 	"linter": {
 		"ignore": [
+			"dist",
 			".next/*",
 			"src/components/MDX/vidID.js",
 			"src/components/MDX/Lite.mjs",

@@ -2,7 +2,7 @@ import { useApolloClient, useMutation } from "@apollo/client"
 
 import { DeleteButton } from "~/components/Button"
 import { DialogComponent } from "~/components/Dialog"
-import { DeleteUserDocument } from "~/gql/typeSlut"
+import { DeleteUserDocument } from "~/gql/gql"
 import { LoadingSpinner } from "../LoadingSpinner"
 
 export function DeleteUserDialog({ trigger }) {

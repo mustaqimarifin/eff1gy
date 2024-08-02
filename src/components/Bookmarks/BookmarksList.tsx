@@ -6,7 +6,7 @@ import { createContext, useEffect, useMemo, useState } from "react"
 import type { QueryRef } from "@apollo/client"
 import React from "react"
 import { ListContainer } from "~/components/ListDetail/ListContainer"
-import { useGetBookmarksQuery } from "~/gql/typeSlut"
+import { useGetBookmarksSuspenseQuery } from "~/gql/gql"
 import { PAGINATION_AMOUNT } from "~/graphql/constants"
 import { ListLoadMore } from "../ListDetail/ListLoadMore"
 import { LoadingSpinner } from "../LoadingSpinner"
@@ -21,7 +21,7 @@ export const BookmarksContext = createContext({
 type BKList = {
 	queryRef?: QueryRef
 }
-export function BookmarksList({ queryRef }: BKList) {
+export function BookmarksList() {
 	const router = useRouter()
 	const path = usePathname()
 	const { tagQuery } = useParams()
@@ -39,10 +39,13 @@ export function BookmarksList({ queryRef }: BKList) {
 
 	//const { fetchMore } = useQueryRefHandlers(queryRef)
 	//const { data, error } = useReadQuery(queryRef)
-	const { data, loading, fetchMore, error } = useGetBookmarksQuery({
+	const { data, fetchMore, error } = useGetBookmarksSuspenseQuery({
 		variables,
 	})
-
+	const v = {
+		tag,
+		setTag,
+	}
 	const value = React.useMemo(
 		() => ({
 			tag,
@@ -73,7 +76,7 @@ export function BookmarksList({ queryRef }: BKList) {
 		if (tagQuery) router.push(path)
 	}, [tagQuery, path])
 
-	if (loading && !data?.bookmarks) {
+	if (!data?.bookmarks) {
 		return (
 			<ListContainer onRef={setScrollContainerRef}>
 				<BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
@@ -88,7 +91,7 @@ export function BookmarksList({ queryRef }: BKList) {
 	const { bookmarks } = data
 
 	return (
-		<BookmarksContext.Provider value={value}>
+		<BookmarksContext.Provider value={v}>
 			<ListContainer data-cy="bookmarks-list" onRef={setScrollContainerRef}>
 				<BookmarksTitlebar scrollContainerRef={scrollContainerRef} />
 				<div>

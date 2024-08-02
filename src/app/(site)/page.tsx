@@ -141,24 +141,24 @@ const speakingData = [
 export default function Home() {
 	return (
 		<Intro>
-			<div className="my-8 mx-8 flex flex-col md:justify-items-center md:flex-row md:items-center">
+			<div className="mx-8 my-8 flex flex-col md:flex-row md:items-center md:justify-items-center">
 				<Globe />
 				<SectionTitle />
 				<SectionContainer>
 					<SectionContent>
 						<div className="space-y-8 pb-24 md:space-y-16">
-							<div className=" mx-auto w-full p-2 lg:max-w-3xl">
-								<h2 className="text-left mb-6 pt-4 font-imp text-gray-900 dark:text-gray-100 text-2xl font-medium drop-shadow-sm md:text-3xl">
+							<div className="mx-auto w-full p-2 lg:max-w-3xl">
+								<h2 className="mb-6 pt-4 text-left font-imp text-2xl font-medium text-gray-900 drop-shadow-sm dark:text-gray-100 md:text-3xl">
 									Greetings! I'm a{" "}
 									<span className="dark:text-active text-blue-400">regional marketing manager&nbsp;</span>
 									at
 									{` `}
-									<Muse2 className="lg:-ml-2 inline h-12 items-center dark:invert" />
+									<Muse2 className="inline h-12 items-center dark:invert lg:-ml-2" />
 									<span>where we focus on&nbsp;</span>
 									<span className="text-coyRed">large-scale sport & lifestyle events</span>
 								</h2>
 								<div className="drop-shadow-sm">
-									<p className="dark:prose-invert prose max-w-none  py-4 md:prose-lg text-wrap">
+									<p className="prose max-w-none text-wrap py-4 dark:prose-invert md:prose-lg">
 										In 2014, I founded <Akhyla className="mb-1 inline h-7 w-7 items-center text-red-400" /> Akhyla -
 										which was merely my own indie label for my own music but ended up becoming a platform to electronic
 										musicians to learn, collaborate and make records. And in between that time I served as
@@ -170,8 +170,8 @@ export default function Home() {
 										"forever-noob" web developer too.
 									</p>
 
-									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Thanks for stopping by! </p>
-									<p className="dark:prose-invert prose py-4 leading-loose md:prose-lg">Mustaqim Arifin </p>
+									<p className="prose py-4 leading-loose dark:prose-invert md:prose-lg">Thanks for stopping by! </p>
+									<p className="prose py-4 leading-loose dark:prose-invert md:prose-lg">Mustaqim Arifin </p>
 								</div>
 
 								{/* <Image
@@ -185,7 +185,7 @@ width: '100%',
 height: 'auto',
 }}
 priority
-className="transition-colors duration-200 border-4 border-orange-400 rounded-full dark:invert"
+className="rounded-full border-4 border-orange-400 transition-colors duration-200 dark:invert"
 /> */}
 							</div>
 

@@ -1,15 +1,12 @@
-/* eslint-disable react/no-children-prop */
 "use client"
 
 import * as React from "react"
 
-import { useQuery } from "@apollo/client"
 import { Comments } from "~/components/Comments"
 import { Detail } from "~/components/ListDetail/Detail"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
-import { GetPostDocument } from "~/gql/typeSlut"
-import type { Post } from "~/gql/typeSlut"
-import { CommentType } from "~/gql/typeSlut"
+import { CommentType, useGetPostQuery } from "~/gql/gql"
+import type { Post } from "~/gql/gql"
 import { realTime } from "~/lib/transformers"
 import { MarkdownRenderer } from "../MarkdownRenderer"
 import { PostActions } from "./PostActions"
@@ -22,7 +19,7 @@ interface PD {
 export function PostDetail({ slug }: PD) {
 	const scrollContainerRef = React.useRef(null)
 	const titleRef = React.useRef(null)
-	const { data, error, loading } = useQuery(GetPostDocument, { variables: { slug } })
+	const { data, error, loading } = useGetPostQuery({ variables: { slug } })
 
 	if (loading) return <Detail.Loading />
 	if (!data?.post || error) return <Detail.Null />
@@ -50,7 +47,7 @@ export function PostDetail({ slug }: PD) {
 					</span>
 				</Detail.Header>
 				{/*     <div className="mt-8 xl:prose-lg lg:max-w-3xl">{children}</div> */}
-				<MarkdownRenderer children={post.text} className="prose prose-neutral dark:prose-invert mt-8" />
+				<MarkdownRenderer md={post.text} className="prose prose-neutral mt-8 dark:prose-invert" />
 				<div className="py-6" />
 				{/* bottom padding to give space between post content and comments */}
 			</Detail.ContentContainer>

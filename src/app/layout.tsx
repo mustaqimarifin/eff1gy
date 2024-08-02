@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next"
 
 import type { ReactNode } from "react"
 
+import { SessionProvider } from "next-auth/react"
 import { SiteLayout } from "~/components/Layouts"
 import { Providers } from "~/components/Provider"
 import { Toast } from "~/components/Provider/Toaster"
@@ -51,9 +52,7 @@ export const metadata: Metadata = {
 	},
 }
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
-	const session = await auth()
-
+export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang="en" className={cx(Quad.variable, GSans.variable, Mono.variable, Imp.variable)}>
 			<body>
@@ -69,23 +68,14 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 					<span>(if available)</span>
 				</span>
 				<main>
-					<Toast />
-					<Providers session={session}>
-						<SiteLayout>{children}</SiteLayout>
-					</Providers>
+					<SessionProvider>
+						<Toast />
+						<Providers>
+							<SiteLayout>{children}</SiteLayout>
+						</Providers>
+					</SessionProvider>
 				</main>
 			</body>
-			{/* 							<Script id="theme" strategy="lazyOnload">
-					{ `					window?.matchMedia && window?.matchMedia("(prefers-color-scheme: dark)").matches;
-		if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
-			document.documentElement.classList.add('dark')
-		} else {
-			document.documentElement.classList.remove('dark')
-		}
-		localStorage.theme = 'light'
-		localStorage.theme = 'dark'
-		localStorage.removeItem('theme')`}
-				</Script>  */}
 		</html>
 	)
 }

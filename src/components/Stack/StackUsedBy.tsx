@@ -1,20 +1,17 @@
 import Link from "next/link"
 
 import { Avatar } from "~/components/Avatar"
-import {
-	GetStackDocument,
-	type GetStackQuery,
-	useGetStackQuery,
-	useToggleStackUserMutation,
-	useViewerQuery,
-} from "~/gql/typeSlut"
+import type { GetStackQuery } from "~/gql/gql"
 
+import { useSession } from "next-auth/react"
+import { GetStackDocument, useGetStackQuery, useToggleStackUserMutation } from "~/gql/gql"
 import { useWindowFocus } from "~/hooks"
 import { Tooltip } from "../UI/Tooltip"
 
 export function StackUsedBy(props) {
 	const { triggerSignIn } = props
-	const { data: viewerData } = useViewerQuery()
+	//const { data: viewerData } = useViewerQuery()
+	const { data: viewerData } = useSession()
 	const { data, loading, error, refetch } = useGetStackQuery({
 		variables: { slug: props.stack.slug },
 	})
@@ -42,8 +39,8 @@ export function StackUsedBy(props) {
 					...props.stack,
 					usedByViewer: !data?.stack?.usedByViewer,
 					usedBy: data?.stack?.usedByViewer
-						? data.stack.usedBy.filter(u => u.id !== viewerData.viewer.id)
-						: [...data.stack.usedBy, viewerData.viewer],
+						? data.stack.usedBy.filter(u => u.id !== viewerData.user.id)
+						: [...data.stack.usedBy, viewerData.user],
 				},
 			},
 			update(cache) {
@@ -60,8 +57,8 @@ export function StackUsedBy(props) {
 							...stack,
 							usedByViewer: !data?.stack?.usedByViewer,
 							usedBy: data?.stack?.usedByViewer
-								? data?.stack?.usedBy.filter(u => u.id !== viewerData.viewer.id)
-								: [...data.stack.usedBy, viewerData.viewer],
+								? data?.stack?.usedBy.filter(u => u.id !== viewerData.user.id)
+								: [...data.stack.usedBy, viewerData.user],
 						},
 					},
 				})
@@ -70,7 +67,7 @@ export function StackUsedBy(props) {
 	}
 
 	function handleToggle() {
-		if (viewerData?.viewer) {
+		if (viewerData?.user) {
 			return handleChange()
 		}
 		return triggerSignIn()

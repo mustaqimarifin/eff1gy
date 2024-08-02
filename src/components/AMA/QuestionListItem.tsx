@@ -2,7 +2,7 @@ import { memo } from "react"
 
 import { Avatar } from "~/components/Avatar"
 import { ListItem } from "~/components/ListDetail/ListItem"
-import type { Question } from "~/gql/typeSlut"
+import type { Question } from "~/gql/gql"
 
 interface Props {
 	question: Question

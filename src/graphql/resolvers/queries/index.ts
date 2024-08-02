@@ -1,4 +1,3 @@
-import type { QueryResolvers } from "~/gql/typeSlut"
 import { getBlog, getBlogs } from "./blogs"
 import { getBookmark, getBookmarks } from "./bookmarks"
 import { getCase, getCases } from "./cases"
@@ -28,4 +27,4 @@ export default {
 	stacks: getStacks,
 	stack: getStack,
 	tags: getTags,
-} as unknown as QueryResolvers
+}

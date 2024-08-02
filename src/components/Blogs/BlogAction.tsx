@@ -1,10 +1,10 @@
 "use client"
-import { useMutation } from "@apollo/client"
 import { ReactionButton } from "~/components/Button/ReactionButton"
-import { type Blog, GetBlogDocument, ReactionType, ToggleReactionDocument } from "~/gql/typeSlut"
+import { GetBlogDocument, ReactionType, useToggleReactionMutation } from "~/gql/gql"
+import type { Blog } from "~/gql/gql"
 
 function getReactionButton(blog) {
-	const [toggleReaction, { loading }] = useMutation(ToggleReactionDocument, {
+	const [toggleReaction, { loading }] = useToggleReactionMutation({
 		context: { fetchOptions: { cache: "no-store" } },
 	})
 	function handleClick() {
@@ -12,7 +12,7 @@ function getReactionButton(blog) {
 
 		toggleReaction({
 			variables: {
-				refId: blog.id,
+				refId: blog.slug,
 				type: ReactionType.Blog,
 			},
 			optimisticResponse: {
@@ -42,7 +42,7 @@ function getReactionButton(blog) {
 
 	return (
 		<ReactionButton
-			refId={blog.id}
+			refId={blog.slug}
 			loading={loading}
 			count={blog.reactionCount!}
 			hasReacted={blog.viewerHasReacted!}

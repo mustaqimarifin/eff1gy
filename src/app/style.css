@@ -64,7 +64,7 @@
 
   button:focus,
   a:focus {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white dark:ring-blue-500 dark:ring-offset-black;
+    @apply outline-none ring-2 ring-zinc-500 ring-offset-2 ring-offset-white dark:ring-zinc-300 dark:ring-offset-black;
   }
 
   button:active:not(:focus-visible),
@@ -76,7 +76,7 @@
 
   input[type='text'],
   textarea {
-    @apply border border-gray-200 bg-white outline-none dark:border-gray-700 dark:bg-gray-800;
+    @apply border border-gray-200 bg-neutral-50 outline-none dark:border-gray-700 dark:bg-gray-800;
   }
 
   input[type='checkbox'] {
@@ -85,7 +85,7 @@
 
   input:focus,
   textarea:focus {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white dark:ring-offset-black;
+    @apply bg-neutral-50 outline-none ring-2 ring-zinc-500 ring-offset-2 ring-offset-white dark:ring-zinc-300 dark:ring-offset-black;
   }
 
   .font-list-heading {
@@ -155,11 +155,11 @@
   }
 
   .highlight-link-hover {
-    @apply -mx-0.5 rounded-sm bg-opacity-20 px-0.5 text-gray-1000 no-underline dark:bg-opacity-100 dark:text-gray-300 md:hover:bg-yellow-400 md:hover:bg-opacity-30 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-1000;
+    @apply -mx-0.5 rounded-sm bg-opacity-20 px-0.5 text-gray-1000 no-underline md:hover:bg-yellow-400 md:hover:bg-opacity-30 dark:bg-opacity-100 dark:text-gray-300 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-1000;
   }
 
   .highlight-link {
-    @apply -mx-0.5 bg-opacity-20 px-0.5 text-gray-1000 dark:bg-gray-100 dark:bg-opacity-20 dark:text-gray-300 md:hover:bg-opacity-30 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-1000;
+    @apply -mx-0.5 bg-opacity-20 px-0.5 text-gray-1000 md:hover:bg-opacity-30 dark:bg-gray-100 dark:bg-opacity-20 dark:text-gray-300 md:dark:hover:bg-yellow-500 md:dark:hover:bg-opacity-100 md:dark:hover:text-gray-1000;
   }
 
   .blink {
@@ -446,7 +446,7 @@
 }
 
 .prose .anchor {
-  @apply absolute invisible no-underline;
+  @apply invisible absolute no-underline;
 
   margin-left: -1em;
   padding-right: 0.5em;
@@ -472,10 +472,10 @@
   @apply visible;
 }
 
-.prose pre > code {
-  background: none;
+ .prose pre > code {
+  @apply bg-none;
 }
-
+ 
 .prose :where(code):not(:where([class~='not-prose'] *))::before {
   content: none;
 }

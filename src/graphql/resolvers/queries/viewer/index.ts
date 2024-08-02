@@ -1,3 +1,3 @@
-export function viewer(_: any, __: any, { viewer }: any) {
+export function viewer(_x: any, _y: any, { viewer }: any) {
 	return viewer
 }

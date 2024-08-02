@@ -1,29 +1,29 @@
-import { appendFileSync, readFileSync } from "node:fs"
-//import { appendFile, readFile } from 'node:fs/promises'
+//import { appendFileSync, readFileSync } from "node:fs"
+//import { appendFile, readFile } from "node:fs/promises"
 import { PrismaClient } from "@prisma/client"
 //import { appendFile, readFile } from "node:fs/promises"
-//const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 // import { drizzle } from 'drizzle-orm/prisma/pg'
 // export const dba = new PrismaClient()
 // export const db = new PrismaClient().$extends(drizzle())
 
 // export type DBZ = typeof db
 
-/* import { PrismaLibSQL } from '@prisma/adapter-libsql'
-import { createClient } from '@libsql/client'
+export const db =
+	globalForPrisma.prisma ||
+	new PrismaClient({
+		log: process.env.NODE_ENV === "development" ? ["query"] : ["error"],
+		errorFormat: "pretty",
+	})
+//export type DBZ = typeof db
+/* export const db =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['info', 'query', 'error', 'warn'] : ['error'],
+    errorFormat: 'pretty',
+  })
 
-const libsql = createClient({
-  url: `${process.env.TURSO_URL}`,
-  authToken: `${process.env.TURSO_TOKEN}`,
-})
-
-const adapter = new PrismaLibSQL(libsql)
-const prisma = new PrismaClient({ adapter }) */
-export const db = new PrismaClient({
-	//adapter,
-	log: process.env.NODE_ENV === "development" ? ["query"] : ["error"],
-	errorFormat: "pretty",
-})
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db */
 
 /* export const db = new PrismaClient({
   log: [
@@ -47,11 +47,12 @@ export const db = new PrismaClient({
   errorFormat: 'pretty',
 })
 */
-let x = "./queries-drizzle.sql"
+//let x = "./queries-sqlite.sql"
 //@ts-ignore
-db.$on("query", (e: QueryEvent) => {
-	readFileSync(x, "utf8")
-	appendFileSync(
+
+/* db.$on("query", (e: QueryEvent) => {
+	readFile(x, "utf8")
+	appendFile(
 		x,
 		`
     --query: ${e.query} 
@@ -60,12 +61,12 @@ db.$on("query", (e: QueryEvent) => {
     `,
 		"utf8",
 	)
-	/* .then(() => {})
-    .catch((err) => {
-      console.log(err)
-    })   */
+		.then(() => {})
+		.catch(err => {
+			console.log(err)
+		})
 })
-
+ */
 export interface QueryEvent {
 	timestamp: Date
 	query: string // Query sent to the database

@@ -1,19 +1,16 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions", "relationJoins"]
+  previewFeatures = ["postgresqlExtensions", "views", "relationJoins"]
 }
 
 datasource db {
   provider   = "postgresql"
   url        = env("SQL_MACOS")
   extensions = [pgcrypto]
-  //url = env("DATABASE_URL")
-  //directUrl = env("DIRECT_URL")
 }
 
 model Account {
   id                String  @id @default(dbgenerated("xid()"))
-  //id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -41,30 +38,28 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(dbgenerated("xid()"))
-  //id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
+  id            String     @id @default(dbgenerated("xid()"))
+  createdAt     DateTime   @default(now())
   name          String
   image         String?
-  email         String?   @unique
-  pendingEmail String?   
-  role          Role      @default(USER)
-  isAdmin       Boolean   @default(false)
+  email         String?    @unique
+  pendingEmail  String?
+  role          String     @default("USER")
+  isAdmin       Boolean    @default(false)
   emailVerified DateTime?
-
-  description String?
-  location    String?
-  username    String?    @unique
-  accounts    Account[]
-  posts       Post[]
-  cases       Case[]
-  comments    Comment[]
-  blogs       Blog[]
-  questions   Question[]
-  reactions   Reaction[]
-  sessions    Session[]
-  stacks      Stack[]    @relation("StackToUser")
-  bookmark    Bookmark[]
+  description   String?
+  location      String?
+  username      String?    @unique
+  accounts      Account[]
+  blogs         Blog[]
+  bookmark      Bookmark[]
+  cases         Case[]
+  comments      Comment[]
+  posts         Post[]
+  questions     Question[]
+  reactions     Reaction[]
+  sessions      Session[]
+  stacks        Stack[]    @relation("StackToUser")
 }
 
 model VerificationToken {
@@ -77,7 +72,6 @@ model VerificationToken {
 
 model Bookmark {
   id            String     @id @default(dbgenerated("xid()"))
-  //id            String     @id @default(cuid())
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   url           String?    @unique
@@ -86,26 +80,20 @@ model Bookmark {
   image         String?
   description   String?
   twitterHandle String?
-  author        User?      @relation(fields: [twitterHandle], references: [username])
   faviconUrl    String?
+  count         Int        @default(1)
+  author        User?      @relation(fields: [twitterHandle], references: [username])
   comments      Comment[]
   reactions     Reaction[]
   tags          Tag[]      @relation("BookmarkToTag")
-  count         Int        @default(1)
 
   @@index([host])
   @@index([id, count])
 }
 
-enum Status {
-  ANSWERED
-  PENDING
-}
-
 model Question {
   id          String     @id @default(dbgenerated("xid()"))
-  //id          String     @id @default(cuid())
-  status      Status     @default(PENDING)
+  status      Boolean    @default(false)
   answered    Boolean    @default(false)
   hearts      Int?       @default(0)
   createdAt   DateTime   @default(now())
@@ -117,10 +105,10 @@ model Question {
   description String?
   answer      String?
   userId      String?
+  count       Int        @default(1)
   comments    Comment[]
   author      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   reactions   Reaction[]
-  count       Int        @default(1)
 
   @@index([userId, status])
   @@index([id, count])
@@ -128,7 +116,6 @@ model Question {
 
 model Comment {
   id         String    @id @default(dbgenerated("xid()"))
-  //id         String    @id @default(cuid())
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   text       String
@@ -137,21 +124,20 @@ model Comment {
   questionId String?
   stackId    String?
   parentId   String?
+  blogId     String?
+  postId     String?
+  eventId    String?
+  caseId     String?
+  blog       Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  case       Case?     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  event      Event?    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   replies    Comment[] @relation("ParentChild")
-  bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
-
-  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  stack    Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
-  author   User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog     Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId   String?
-  post     Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId   String?
-  event    Event?    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  eventId  String?
-  case     Case?     @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId   String?
+  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
+  author     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([bookmarkId, userId])
   @@index([questionId, userId])
@@ -167,11 +153,11 @@ model Blog {
   slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
-  comments  Comment[]
-  reactions Reaction[]
-  author    User?      @relation(fields: [userId], references: [id])
   userId    String?
   count     Int        @default(1)
+  author    User?      @relation(fields: [userId], references: [id])
+  comments  Comment[]
+  reactions Reaction[]
 
   @@index([slug, count])
 }
@@ -188,11 +174,11 @@ model Case {
   slug      String?    @unique
   title     String?
   date      DateTime   @default(now())
-  comments  Comment[]
-  reactions Reaction[]
-  author    User?      @relation(fields: [userId], references: [id])
   userId    String?
   count     Int        @default(1)
+  author    User?      @relation(fields: [userId], references: [id])
+  comments  Comment[]
+  reactions Reaction[]
 
   @@index([slug, count])
 }
@@ -212,18 +198,17 @@ model Stack {
   description String?
   image       String?
   url         String?
+  count       Int        @default(1)
   comments    Comment[]
   reactions   Reaction[]
   tags        Tag[]      @relation("StackToTag")
   users       User[]     @relation("StackToUser")
-  count       Int        @default(1)
 
   @@index([slug, count])
 }
 
 model Reaction {
-  id String @id @default(dbgenerated("xid()"))
-
+  id         String    @id @default(dbgenerated("xid()"))
   createdAt  DateTime  @default(now())
   userId     String?
   bookmarkId String?
@@ -231,18 +216,17 @@ model Reaction {
   stackId    String?
   postId     String?
   blogId     String?
+  slug       String?
+  eventId    String?
+  caseId     String?
+  blog       Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
   bookmark   Bookmark? @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  case       Case?     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  event      Event?    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
   stack      Stack?    @relation(fields: [stackId], references: [id], onDelete: Cascade)
   user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  blog       Blog?     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  slug       String?
-
-  event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  eventId String?
-  case    Case?   @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId  String?
 
   @@index([bookmarkId, userId])
   @@index([questionId, userId])
@@ -254,9 +238,8 @@ model Reaction {
 }
 
 model Post {
-  id    String @id @default(dbgenerated("xid()"))
-  count Int?   @default(1)
-
+  id           String     @id @default(dbgenerated("xid()"))
+  count        Int?       @default(1)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   publishedAt  DateTime?
@@ -276,8 +259,7 @@ model Post {
 }
 
 model PostEdit {
-  id String @id @default(dbgenerated("xid()"))
-
+  id           String   @id @default(dbgenerated("xid()"))
   createdAt    DateTime @default(now())
   text         String
   title        String
@@ -289,8 +271,72 @@ model PostEdit {
   @@index([postId])
 }
 
-enum Role {
-  BLOCKED
-  USER
-  ADMIN
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view PostView {
+  id            String @unique
+  viewCount     Int?
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  publishedAt   DateTime?
+  slug          String?
+  title         String?
+  text          String?
+  excerpt       String?
+  featureImage  String?
+  userId        String?
+  reactionCount Json?   @db.JsonB
+
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view QuestionView {
+  id            String @unique
+  status        String?
+  hearts        Int?
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  title         String?
+  plays         Int?
+  waveform      Json?   @db.JsonB
+  audioUrl      String?
+  description   String?
+  answer        String?
+  userId        String?
+  viewCount     Int?
+  reactionCount Json?   @db.JsonB
+
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view BookmarkView {
+  id            String @unique
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  url           String?
+  host          String?
+  title         String?
+  image         String?
+  description   String?
+  twitterHandle String?
+  faviconUrl    String?
+  viewCount     Int?
+  tags          Json   @db.JsonB
+  reactionCount Json?  @db.JsonB
+
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view StackView {
+  id            String @unique
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  name          String?
+  slug          String?
+  description   String?
+  image         String?
+  url           String?
+  viewCount     Int?
+  reactionCount BigInt?
+
+
 }

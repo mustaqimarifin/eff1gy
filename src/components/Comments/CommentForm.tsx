@@ -1,12 +1,13 @@
-import { useEffect, useId, useState } from "react"
+import { type SetStateAction, useEffect, useState } from "react"
 
-import { useMutation, useQuery } from "@apollo/client"
 import { CommentButton } from "~/components/Button"
 import { Textarea } from "~/components/Input"
-import type { CommentType, GetCommentsQuery } from "~/gql/typeSlut"
-import { AddCommentDocument, GetCommentsDocument, ViewerDocument } from "~/gql/typeSlut"
+import type { GetCommentsQuery } from "~/gql/gql"
 
+import { useSession } from "next-auth/react"
+import { type CommentType, GetCommentsDocument, useAddCommentMutation } from "~/gql/gql"
 import { useDebounce } from "~/hooks"
+import { nanoid } from "~/lib/functions"
 import { realTime } from "~/lib/transformers"
 import { Nuts } from "../Provider/Toaster"
 
@@ -17,18 +18,18 @@ interface Props {
 }
 
 export function CommentForm({ refId, type, openModal }: Props) {
-	const genId = () => useId()
-	const { data } = useQuery(ViewerDocument)
-
+	//const genId = () => useId()
+	//const { data } = useQuery(ViewerDocument)
+	const { data: session } = useSession()
 	const [text, setText] = useState("")
 	const [error, setError] = useState(null)
 
-	const [handleAddComment] = useMutation(AddCommentDocument, {
+	const [handleAddComment] = useAddCommentMutation({
 		optimisticResponse: {
 			__typename: "Mutation",
 			addComment: {
 				__typename: "Comment",
-				id: genId(),
+				id: nanoid(),
 				text,
 				createdAt: realTime({ month: "short" }).formatted,
 				updatedAt: realTime({ month: "short" }).formatted,
@@ -36,11 +37,11 @@ export function CommentForm({ refId, type, openModal }: Props) {
 				viewerCanEdit: false,
 				author: {
 					__typename: "User",
-					id: genId(),
-					username: data?.viewer?.username,
-					image: data?.viewer?.image,
-					name: data?.viewer?.name,
-					role: data?.viewer?.role,
+					id: nanoid(),
+					username: session?.user?.username,
+					image: session?.user?.image,
+					name: session?.user?.name,
+					role: session?.user?.role,
 					isViewer: true,
 				},
 			},
@@ -62,11 +63,11 @@ export function CommentForm({ refId, type, openModal }: Props) {
 		},
 	})
 
-	function onSubmit(e) {
+	function onSubmit(e: { preventDefault: () => void }) {
 		e.preventDefault()
 
 		// not signed in, save to localstorage
-		if (!data?.viewer) {
+		if (!session?.user) {
 			// persist everything to local storage so we don't lose it
 			localStorage.setItem(refId, text)
 			// pop the sign in modal
@@ -80,7 +81,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
 		})
 	}
 
-	function onKeyDown(e) {
+	function onKeyDown(e: any) {
 		if (e.keyCode === 13 && e.metaKey) {
 			return onSubmit(e)
 		}
@@ -99,7 +100,7 @@ export function CommentForm({ refId, type, openModal }: Props) {
 		localStorage.setItem(refId, debouncedText)
 	}, [debouncedText, refId])
 
-	function handleChange(e) {
+	function handleChange(e: { target: { value: SetStateAction<string> } }) {
 		return setText(e.target.value)
 	}
 

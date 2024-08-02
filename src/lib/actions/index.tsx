@@ -2,7 +2,7 @@
 import { unstable_noStore as noStore } from "next/cache"
 import { Suspense } from "react"
 
-import { ViewType } from "~/gql/typeSlut"
+import { ViewType } from "~/gql/gql"
 import { db } from "../db"
 
 /*
@@ -20,9 +20,9 @@ const yt = youtube({
 })
  */
 
-export async function addView(refId: string, type: ViewType) {
+export async function addView(refId: string, type: ViewType): Promise<{ refId: string; count: number }> {
 	if (!refId || !type) {
-		return []
+		return
 	}
 	noStore()
 	switch (type) {
@@ -38,8 +38,7 @@ export async function addView(refId: string, type: ViewType) {
 					},
 				},
 			})
-
-			return results || []
+			return { refId, count: results.count }
 		}
 		case ViewType.Case: {
 			const results = await db.case.upsert({
@@ -54,7 +53,7 @@ export async function addView(refId: string, type: ViewType) {
 				},
 			})
 
-			return results || []
+			return { refId, count: results.count }
 		}
 		case ViewType.Bookmark: {
 			const results = await db.bookmark.upsert({
@@ -69,7 +68,7 @@ export async function addView(refId: string, type: ViewType) {
 				},
 			})
 
-			return results || []
+			return { refId, count: results.count }
 		}
 		case ViewType.Blog: {
 			const results = await db.blog.upsert({
@@ -84,7 +83,7 @@ export async function addView(refId: string, type: ViewType) {
 				},
 			})
 
-			return results || []
+			return { refId, count: results.count }
 		}
 		case ViewType.Question: {
 			const results = await db.question.upsert({
@@ -98,8 +97,7 @@ export async function addView(refId: string, type: ViewType) {
 					},
 				},
 			})
-
-			return results || []
+			return { refId, count: results.count }
 		}
 		case ViewType.Stack: {
 			const results = await db.stack.upsert({
@@ -114,10 +112,10 @@ export async function addView(refId: string, type: ViewType) {
 				},
 			})
 
-			return results || []
+			return { refId, count: results.count }
 		}
 		default: {
-			return []
+			return
 		}
 	}
 }

@@ -1,21 +1,16 @@
 "use client"
-import { useMutation, useQuery } from "@apollo/client"
 import Button from "~/components/Button"
-import type { Stack } from "~/gql/typeSlut"
-import {
-	GetStackDocument,
-	ReactionType,
-	ToggleReactionDocument,
-	ViewerDocument,
-	useToggleReactionMutation,
-} from "~/gql/typeSlut"
+import type { Stack } from "~/gql/gql"
 
+import { useSession } from "next-auth/react"
+import { GetStackDocument, ReactionType, useToggleReactionMutation } from "~/gql/gql"
 import { ReactionButton } from "../Button/ReactionButton"
 import { EditStackDialog } from "./EditStackDialog"
 
 function getEditButton(stack) {
-	const { data } = useQuery(ViewerDocument)
-	if (data?.viewer?.isAdmin) {
+	const { data: session } = useSession()
+
+	if (session?.isAdmin) {
 		return <EditStackDialog stack={stack} trigger={<Button>Edit</Button>} />
 	}
 	return null

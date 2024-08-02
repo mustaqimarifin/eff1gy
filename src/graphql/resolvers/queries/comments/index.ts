@@ -1,4 +1,5 @@
-import { type Bookmark, CommentType, type QueryCommentArgs, type QueryCommentsArgs } from "~/gql/typeSlut"
+import { CommentType } from "~/gql/gql"
+import type { Bookmark, QueryCommentArgs, QueryCommentsArgs } from "~/gql/gql"
 import type { Context } from "~/graphql/context"
 
 export async function getComment(_: any, args: QueryCommentArgs, ctx: Context) {

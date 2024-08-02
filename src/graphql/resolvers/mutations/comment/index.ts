@@ -1,14 +1,15 @@
 import { GraphQLError } from "graphql"
 
 import { Nuts } from "~/components/Provider/Toaster"
-import {
-	type AddCommentMutationVariables,
-	CommentType,
-	type DeleteCommentMutationVariables,
-	type EditCommentMutationVariables,
-} from "~/gql/typeSlut"
+import { CommentType } from "~/gql/gql"
+import type {
+	AddCommentMutationVariables,
+	DeleteCommentMutationVariables,
+	EditCommentMutationVariables,
+} from "~/gql/gql"
 import { CLIENT_URL } from "~/graphql/constants"
 import type { Context } from "~/graphql/context"
+import { auth } from "~/lib/auth"
 // import { graphcdn } from "~/lib/graphcdn";
 
 // import { graphcdn } from '~/lib/redis'
@@ -17,8 +18,8 @@ import type { Context } from "~/graphql/context"
 
 export async function editComment(_: any, args: EditCommentMutationVariables, ctx: Context) {
 	const { id, text } = args
-	const { db, viewer } = ctx
-	//const session = await auth()
+	const { db } = ctx
+	const session = await auth()
 	if (!text || text.length === 0) throw new GraphQLError("Comment can’t be blank")
 
 	const comment = await db.comment.findUnique({
@@ -27,7 +28,7 @@ export async function editComment(_: any, args: EditCommentMutationVariables, ct
 
 	if (!comment) throw new GraphQLError("Comment doesn’t exist")
 
-	if (comment.userId !== viewer?.id) {
+	if (comment.userId !== session?.userId) {
 		throw new GraphQLError("You can’t edit this comment")
 	}
 
@@ -50,8 +51,9 @@ export async function editComment(_: any, args: EditCommentMutationVariables, ct
     --params: ["2024-07-25 00:00:21.195 UTC","2024-07-25 00:00:21.195 UTC","lola","trF8g","ptI0J"]
      */
 export async function addComment(_: any, args: AddCommentMutationVariables, ctx: Context) {
+	const session = await auth()
 	const { refId, type, text, parentId } = args
-	const { viewer, db } = ctx
+	const { db } = ctx
 
 	const trimmedText = text.trim()
 
@@ -95,7 +97,6 @@ export async function addComment(_: any, args: AddCommentMutationVariables, ctx:
 			throw new GraphQLError("Invalid comment type")
 		}
 	}
-
 	const parentObject = await db[table].findUnique({
 		where: { id: refId },
 	})
@@ -109,7 +110,7 @@ export async function addComment(_: any, args: AddCommentMutationVariables, ctx:
       data: {
         text,
         parentId,
-        userId: viewer?.id,
+        userId: session?.userId,
         [field]: refId,
       },
     }),
@@ -131,24 +132,25 @@ export async function addComment(_: any, args: AddCommentMutationVariables, ctx:
 		data: {
 			text,
 			parentId,
-			userId: viewer?.id,
+			userId: session?.userId,
 			[field]: refId,
 		},
 	})
 	return comment
 }
 export async function deleteComment(_: any, args: DeleteCommentMutationVariables, ctx: Context) {
+	const session = await auth()
+
 	const { id } = args
-	const { db, viewer } = ctx
+	const { db } = ctx
 
 	const comment = await db.comment.findUnique({
 		where: { id },
 	})
-
 	// comment doesn't exist, already deleted
 	if (!comment) return true
 	// no permission
-	if (comment.userId !== viewer?.id && !viewer?.isAdmin) {
+	if (comment.userId !== session?.userId && !session?.isAdmin) {
 		throw new GraphQLError("You can’t delete this comment")
 	}
 	;(_err: any) => {

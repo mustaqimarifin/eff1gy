@@ -6,20 +6,19 @@ import { useContext } from "react"
 import { GhostButton } from "~/components/Button"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 
-import { useQuery } from "@apollo/client"
-
-import { ViewerDocument, useViewerQuery } from "~/gql/typeSlut"
+import { useSession } from "next-auth/react"
 import { SignInDialog } from "../SignInDialog"
 import SegmentedControl from "../UI/SegmentedController"
 import { AddQuestionDialog } from "./AddQuestionDialog"
 import { QuestionsContext } from "./QuestionsList"
 
 export function AMATitlebar({ scrollContainerRef }) {
-	const { data } = useViewerQuery()
+	//const { data } = useViewerQuery()
+	const { data: session } = useSession()
 	const { setFilterPending, filterPending } = useContext(QuestionsContext)
 
 	function getAddButton() {
-		if (!data?.viewer) {
+		if (!session?.user) {
 			return (
 				<SignInDialog
 					trigger={
@@ -47,7 +46,7 @@ export function AMATitlebar({ scrollContainerRef }) {
 	}
 
 	function getChildren() {
-		if (data?.viewer?.isAdmin) {
+		if (session?.isAdmin) {
 			return (
 				<div className="pb-1 pt-2">
 					<SegmentedControl

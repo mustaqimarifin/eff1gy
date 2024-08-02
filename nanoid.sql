@@ -3,8 +3,8 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 DROP FUNCTION IF EXISTS xid(int, text, float);
 CREATE OR REPLACE FUNCTION xid(
     size int DEFAULT 5, 
-    alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyz', 
-    additionalBytesFactor float DEFAULT 1.6 
+    alphabet text DEFAULT '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 
+    additionalBytesFactor float DEFAULT 1.75 
 )
     RETURNS text 
     LANGUAGE plpgsql

@@ -1,10 +1,10 @@
-import { useMutation } from "@apollo/client"
 import { useState } from "react"
 
 import Button from "~/components/Button"
 import { Input } from "~/components/Input"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
-import { EditUserDocument, type GetViewerWithSettingsQuery } from "~/gql/typeSlut"
+import { useEditUserMutation } from "~/gql/gql"
+import type { GetViewerWithSettingsQuery } from "~/gql/gql"
 import { nameRX } from "~/lib/functions"
 
 export function UsernameForm(props: {
@@ -15,7 +15,7 @@ export function UsernameForm(props: {
 	const [isEditing, setIsEditing] = useState(false)
 	const [error, setError] = useState(null)
 
-	const [editUser, editUserResponse] = useMutation(EditUserDocument, {
+	const [editUser, editUserResponse] = useEditUserMutation({
 		variables: {
 			data: {
 				username,

@@ -1,24 +1,30 @@
 {
 	"compilerOptions": {
-		"incremental": true,
 		"target": "esnext",
 		"jsx": "preserve",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"baseUrl": ".",
 		"module": "esnext",
 		"moduleResolution": "Bundler",
-		"paths": { "~/*": ["./src/*"] },
+		"paths": {
+			"~/*": ["./src/*"]
+		},
 		"resolveJsonModule": true,
 		"allowJs": true,
+		"noEmit": true,
 		"strict": true,
 		"strictNullChecks": false,
-		"noEmit": true,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
 		"skipLibCheck": true,
-		"plugins": [{ "name": "next" }]
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"incremental": true
 	},
 	"include": [
 		"next-env.d.ts",
@@ -28,7 +34,6 @@
 		"next.config.js",
 		"src/lib/transformers/merge.js",
 		"src/components/MDX/Lite.mjs",
-		"src/components/Marquee/index.mjs",
 		"src/components/MDX/bla.ts",
 		"src/components/MDX/vidID.js"
 	],

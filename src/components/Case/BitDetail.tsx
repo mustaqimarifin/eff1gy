@@ -9,8 +9,7 @@ import { Detail } from "~/components/ListDetail/Detail"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 import { formatDate, realTime } from "~/lib/transformers"
 
-import { useQuery } from "@apollo/client"
-import { CommentType, GetCaseDocument } from "~/gql/typeSlut"
+import { CommentType, useGetCaseQuery } from "~/gql/gql"
 import type { LilBits } from "~/lib/sanity/client"
 
 interface Props {
@@ -22,7 +21,7 @@ interface Props {
 export function BitDetail({ bit, children, slug }: Props) {
 	const scrollContainerRef = useRef(null)
 	const titleRef = useRef(null)
-	const { data, loading, error } = useQuery(GetCaseDocument, {
+	const { data, loading, error } = useGetCaseQuery({
 		variables: { slug },
 	})
 	if (loading) {
@@ -62,7 +61,7 @@ export function BitDetail({ bit, children, slug }: Props) {
 						<Image src={bit?.caption} width={80} height={80} alt={`${bit?.title} icon`} className="rounded-2xl" />
 						<div>
 							<Detail.Title ref={titleRef}>{bit?.title}</Detail.Title>
-							<div title={bit?.date} className="text-tertiary font-semibold text-xs inline-block leading-snug">
+							<div title={bit?.date} className="text-tertiary inline-block text-xs font-semibold leading-snug">
 								{`${formatDate(bit?.date)} • ${kase?.count} views`}
 							</div>
 						</div>

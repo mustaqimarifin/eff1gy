@@ -1,18 +1,10 @@
 "use client"
 
-import Image from "next/image"
+import Image, { type ImageLoaderProps, type ImageProps } from "next/image"
 import { Suspense } from "react"
 import { Fade } from "./fade"
 
-function imageKitLoader({
-	src,
-	width,
-	quality,
-}: {
-	src: string
-	width: number
-	quality?: number
-}) {
+function imageKitLoader({ src, width, quality }: ImageLoaderProps) {
 	if (src[0] === "/") src = src.slice(1)
 	const params = [`w-${width}`]
 	if (quality) {
@@ -24,6 +16,7 @@ function imageKitLoader({
 	return `${urlEndpoint}/${src}?tr=${paramsString}`
 }
 
+//@ts-ignore
 function IKImage(props) {
 	return (
 		<Suspense>

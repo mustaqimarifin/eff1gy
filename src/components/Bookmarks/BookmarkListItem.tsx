@@ -3,7 +3,7 @@ import { memo, useState } from "react"
 import { InView } from "react-intersection-observer"
 
 import { ListItem } from "~/components/ListDetail/ListItem"
-import type { BookmarkListItemFragment } from "~/gql/typeSlut"
+import type { BookmarkListItemFragment } from "~/gql/gql"
 
 interface Props {
 	bookmark: BookmarkListItemFragment

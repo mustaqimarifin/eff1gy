@@ -1,9 +1,8 @@
 import { Suspense } from "react"
 import { LoadingSpinner } from "~/components/LoadingSpinner"
 import { PostsList } from "~/components/Posts/PostsList"
-import { PreloadQuery, query } from "~/components/Provider/ApolloClient"
+import { PreloadQuery } from "~/components/Provider/ApolloClient"
 import { GET_POSTS } from "~/graphql/queries/posts"
-import { GET_VIEWER } from "~/graphql/queries/viewer"
 
 /* export default async function WritingPage () {
 	//await query({ query: ViewerDocument })

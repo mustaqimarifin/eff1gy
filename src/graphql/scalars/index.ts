@@ -3,7 +3,6 @@ import { GraphQLScalarType, Kind } from "graphql"
 function identity(value: any) {
 	return value
 }
-
 export const DateQL = new GraphQLScalarType({
 	name: "Date",
 	description: "Date custom scalar type",

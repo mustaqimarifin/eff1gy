@@ -1,5 +1,5 @@
 import { DialogComponent, type DialogProps } from "~/components/Dialog"
-import type { Stack } from "~/gql/typeSlut"
+import type { Stack } from "~/gql/gql"
 import { EditStackForm } from "./EditStackForm"
 
 interface EditProps extends DialogProps {

@@ -1,6 +1,5 @@
 import NextImage from "next/image"
 import Link from "next/link"
-import React from "react"
 
 import { Code } from "bright"
 import type { MDXComponents } from "mdx/types"
@@ -8,13 +7,13 @@ import IKImage from "../Image/IKImage"
 import { Embed } from "./Embed"
 import { Tweet } from "./gfy"
 
+import type { Key } from "react"
 import { CLIENT_URL } from "~/graphql/constants"
-import { createHeading } from "./CreateHeading"
-// import dynamic from "next/dynamic";
+import { heading } from "./CreateHeading"
 
 Code.theme = "one-dark-pro"
 
-export function CustomLink(props) {
+export function CustomLink({ ...props }) {
 	const { children, href } = props
 
 	if (href.startsWith("/")) {
@@ -26,7 +25,7 @@ export function CustomLink(props) {
 	}
 
 	if (href.startsWith("#")) {
-		return <Link {...props} />
+		return <Link href={href} {...props} />
 	}
 
 	if (href.startsWith("@")) {
@@ -70,7 +69,17 @@ export function CustomLink(props) {
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
  */
-function ProsCard({ title, pros }) {
+
+type CardProps = {
+	title: string
+	emoji?: string
+	pros?: string[]
+	cons?: string[]
+	children?: React.ReactNode
+	className?: string
+}
+
+function ProsCard({ title, pros }: CardProps) {
 	return (
 		<div className="my-4 w-full rounded-xl border border-emerald-200 bg-neutral-50 p-6 dark:border-emerald-900 dark:bg-neutral-900">
 			<span>{`You might use ${title} if...`}</span>
@@ -93,7 +102,7 @@ function ProsCard({ title, pros }) {
 	)
 }
 
-function ConsCard({ title, cons }) {
+function ConsCard({ title, cons }: CardProps) {
 	return (
 		<div className="my-6 w-full rounded-xl border border-red-200 bg-neutral-50 p-6 dark:border-red-900 dark:bg-neutral-900">
 			<span>{`You might not use ${title} if...`}</span>
@@ -118,12 +127,12 @@ function ConsCard({ title, cons }) {
 	)
 }
 
-function Image({ src, ...rest }) {
+function Image({ ...props }) {
 	return (
-		<div className="flex my-4 max-w-3xl content-center justify-center overflow-hidden">
+		<div className="my-4 flex max-w-3xl content-center justify-center overflow-hidden">
 			<NextImage
-				{...rest}
-				src={`https://ik.imagekit.io/mstqmarfn/${src}`}
+				{...props}
+				src={`https://ik.imagekit.io/mstqmarfn/${props.src}`}
 				width={980}
 				height={980}
 				quality={75}
@@ -135,7 +144,7 @@ function Image({ src, ...rest }) {
 	)
 }
 
-function Callout(props) {
+export function Callout(props: CardProps) {
 	return (
 		<div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
 			<div className="mr-4 flex w-4 items-center">{props.emoji}</div>
@@ -152,13 +161,13 @@ function Callout(props) {
 	return <p {...props} />;
 };
  */
-function Bust(props) {
-	return <strong className="font-quad text-orange-500 text-2xl italic ">{props.children}</strong>
+function Bust({ ...props }) {
+	return <strong className="font-quad text-2xl italic text-orange-500">{props.children}</strong>
 }
 
-function Table({ data }) {
-	const headers = data.headers.map((header, index) => <th key={index}>{header}</th>)
-	const rows = data.rows.map((row, index) => (
+function Table({ ...data }) {
+	const headers = data.headers.map((header: any, index: Key) => <th key={index}>{header}</th>)
+	const rows = data.rows.map((row: any[], index: Key) => (
 		<tr key={index}>
 			{row.map((cell, cellIndex) => (
 				<td key={cellIndex}>{cell}</td>
@@ -183,12 +192,12 @@ function Table({ data }) {
  */
 export const MLKComponents = {
 	a: CustomLink,
-	h1: createHeading(1),
-	h2: createHeading(2),
-	h3: createHeading(3),
-	h4: createHeading(4),
-	h5: createHeading(5),
-	h6: createHeading(6),
+	h1: heading("h1"),
+	h2: heading("h2"),
+	h3: heading("h3"),
+	h4: heading("h4"),
+	h5: heading("h5"),
+	h6: heading("h6"),
 	Bust,
 	IKImage,
 	img: Image,
@@ -199,4 +208,4 @@ export const MLKComponents = {
 	pre: Code,
 	Tweet,
 	Table,
-} as MDXComponents
+} as unknown as MDXComponents

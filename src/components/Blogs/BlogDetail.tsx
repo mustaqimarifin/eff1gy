@@ -3,10 +3,10 @@
 import type { ReactNode } from "react"
 import { useRef } from "react"
 
-import { useQuery } from "@apollo/client"
 import { EyeIcon } from "lucide-react"
 import dynamic from "next/dynamic"
-import { type Blog, CommentType, GetBlogDocument } from "~/gql/typeSlut"
+import { CommentType, GetBlogDocument, useGetBlogQuery } from "~/gql/gql"
+import type { Blog } from "~/gql/gql"
 import { formatDate } from "~/lib/transformers"
 import { Detail } from "../ListDetail/Detail"
 import { TitleBar } from "../ListDetail/TitleBar"
@@ -53,7 +53,7 @@ export function BlogDetail({ children, post, slug }: Props) {
 	const scrollContainerRef = useRef(null)
 	const titleRef = useRef(null)
 
-	const { data, loading, error } = useQuery(GetBlogDocument, {
+	const { data, loading, error } = useGetBlogQuery({
 		variables: { slug },
 	})
 
@@ -106,12 +106,12 @@ export function BlogDetail({ children, post, slug }: Props) {
 							</div>
 						</div> */}
 					<Detail.Title ref={titleRef}>{post?.title}</Detail.Title>
-					<div title={post?.date} className=" text-tertiary font-semibold text-xs inline-block leading-snug">
+					<div title={post?.date} className="text-tertiary inline-block text-xs font-semibold leading-snug">
 						{`${formatDate(post?.date!)} • ${blog?.count} views`}
 					</div>
 				</Detail.Header>
-				{/* <div className="mb-16 flex flex-col uppercase text-center font-semibold justify-between w-full mt-2 md:flex-row md:items-center">
-						<div className="flex gap-x-1 content-center items-center mt-2 text-xs text-gray-600 dark:text-gray-400  md:mt-0">
+				{/* <div className="mb-16 mt-2 flex w-full flex-col justify-between text-center font-semibold uppercase md:flex-row md:items-center">
+						<div className="mt-2 flex content-center items-center gap-x-1 text-xs text-gray-600 md:mt-0 dark:text-gray-400">
 							{formatDate(post?.date)}
 							{` • `}
 							{blog?.count}

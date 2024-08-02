@@ -1,11 +1,9 @@
 "use client"
 
-import React, { memo, useCallback, useEffect, useMemo } from "react"
+import React, { memo } from "react"
 import Button from "~/components/Button"
 
-import { useQuery } from "@apollo/client"
-
-import { ViewerDocument } from "~/gql/typeSlut"
+import { useSession } from "next-auth/react"
 import { HeartFillIcon, HeartIcon } from "../Icon"
 import { SignInDialog } from "../SignInDialog"
 
@@ -19,8 +17,7 @@ interface Props {
 
 export const ReactionButton = memo<Props>(props => {
 	const { refId, onClick, hasReacted, count, loading } = props
-
-	const { data } = useQuery(ViewerDocument)
+	const { data: session } = useSession()
 
 	const [hasReactedState, setHasReactedState] = React.useState(hasReacted)
 	let currCount = count
@@ -40,7 +37,7 @@ export const ReactionButton = memo<Props>(props => {
 		setNextTranslate(hasReacted ? "translate-y-0" : "-translate-y-4")
 	}, [refId, hasReacted])
 
-	if (!data?.viewer) {
+	if (!session.user) {
 		return (
 			<SignInDialog
 				trigger={

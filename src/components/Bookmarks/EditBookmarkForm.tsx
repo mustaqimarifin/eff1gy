@@ -9,11 +9,10 @@ import { TagPicker } from "~/components/Tag/TagPicker"
 import {
 	GetBookmarkDocument,
 	GetBookmarksDocument,
-	type GetBookmarksQuery,
-	type GetBookmarksQueryVariables,
 	useDeleteBookmarkMutation,
 	useEditBookmarkMutation,
-} from "~/gql/typeSlut"
+} from "~/gql/gql"
+import type { GetBookmarksQuery, GetBookmarksQueryVariables } from "~/gql/gql"
 
 export function EditBookmarkForm({ closeModal, bookmark }) {
 	const initialState = {
@@ -167,7 +166,7 @@ export function EditBookmarkForm({ closeModal, bookmark }) {
 
 	const tagFilter = t => {
 		const allowedBookmarkTags = ["website", "reading", "portfolio"]
-		return allowedBookmarkTags.includes(t.name)
+		return allowedBookmarkTags.indexOf(t.name) >= 0
 	}
 
 	return (

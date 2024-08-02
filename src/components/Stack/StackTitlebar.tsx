@@ -4,16 +4,14 @@ import { PlusIcon } from "lucide-react"
 import { GhostButton } from "~/components/Button"
 import { TitleBar } from "~/components/ListDetail/TitleBar"
 
-import { useQuery } from "@apollo/client"
-
-import { ViewerDocument } from "~/gql/typeSlut"
+import { useSession } from "next-auth/react"
 import { AddStackDialog } from "./AddStackDialog"
 
 export function StackTitlebar({ scrollContainerRef }) {
-	const { data } = useQuery(ViewerDocument)
-
+	//const { data } = useQuery(ViewerDocument)
+	const { data: session } = useSession()
 	function trailingAccessory() {
-		if (data?.viewer?.isAdmin) {
+		if (session?.isAdmin) {
 			return (
 				<AddStackDialog
 					trigger={

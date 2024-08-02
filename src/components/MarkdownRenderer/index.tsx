@@ -1,73 +1,15 @@
-/* eslint-disable react-dom/no-dangerously-set-innerhtml */
 import NextImage from "next/legacy/image"
 import Link from "next/link"
-import Markdown from "react-markdown"
-// import rehypePresetMinify from 'rehype-preset-minify'
+import Markdown, { type Components } from "react-markdown"
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize"
+import gfm from "remark-gfm"
 import linkifyRegex from "remark-linkify-modifier"
 import { highlight } from "sugar-high"
 import { CLIENT_URL } from "~/graphql/constants"
 import { deepmerge } from "~/lib/transformers/merge"
-import { createHeading } from "../MDX/CreateHeading"
-
-export function CustomLink1({ href, ...rest }: any) {
-	if (href.startsWith("#")) {
-		return <Link href={href} {...rest} />
-	}
-
-	if (href.startsWith("@")) {
-		return <Link href={`/u/${href.slice(1)}`} {...rest} />
-	}
-	try {
-		const url = new URL(href)
-		if (url.origin === CLIENT_URL) {
-			return <Link href={href} {...rest} />
-		}
-		return <a target="_blank" rel="noopener" href={href} {...rest} />
-	} catch (e) {
-		console.error(e)
-		return <a target="_blank" rel="noopener" href={href} {...rest} />
-	}
-}
-
-function Code({ children, ...props }) {
-	const codeHTML = highlight(children)
-	return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-}
-
-function getComponentsForVariant(variant) {
-	// Blog posts
-	switch (variant) {
-		case "longform": {
-			return {
-				a: CustomLink1,
-				h1: createHeading(1),
-				h2: createHeading(2),
-				h3: createHeading(3),
-				h4: createHeading(4),
-				h5: createHeading(5),
-				h6: createHeading(6),
-				Callout,
-				code: Code,
-			}
-		}
-		// Questions, comments, descriptions on bookmarks, etc.
-		case "comment": {
-			return {
-				a: CustomLink1,
-				h1: "p",
-				h2: "p",
-				h3: "p",
-				h4: "p",
-				h5: "p",
-				h6: "p",
-				code: Code,
-			}
-		}
-	}
-}
-function Image(props) {
-	return <NextImage {...props} quality={75} className="mdx-image rounded-md" />
+import { heading } from "../MDX/CreateHeading"
+function Image({ ...props }) {
+	return <NextImage src={props.src} {...props} quality={75} className="mdx-image rounded-md" />
 }
 
 const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
@@ -123,17 +65,64 @@ function MDXImage(paragraph: { children?: boolean; node?: any }) {
 	return <p>{paragraph.children}</p>
 }
 
-function Callout(props) {
-	return (
-		<div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
-			<div className="mr-4 flex w-4 items-center">{props.emoji}</div>
-			<div className="callout w-full">{props.children}</div>
-		</div>
-	)
+export function CustomLink1({ href, ...rest }: any) {
+	if (href.startsWith("#")) {
+		return <Link href={href} {...rest} />
+	}
+
+	if (href.startsWith("@")) {
+		return <Link href={`/u/${href.slice(1)}`} {...rest} />
+	}
+	try {
+		const url = new URL(href)
+		if (url.origin === CLIENT_URL) {
+			return <Link href={href} {...rest} />
+		}
+		return <a target="_blank" rel="noopener" href={href} {...rest} />
+	} catch (e) {
+		console.error(e)
+		return <a target="_blank" rel="noopener" href={href} {...rest} />
+	}
 }
 
-export function MarkdownRenderer(props) {
-	const { children, variant = "longform", ...rest } = props
+function Code({ ...props }) {
+	const codeHTML = highlight(props.children)
+	//document.querySelector('pre > code').innerHTML = codeHTML
+	return <code {...props} dangerouslySetInnerHTML={{ __html: codeHTML }} />
+}
+
+function getComponentsForVariant(variant: "longform" | "comment"): Components {
+	// Blog posts
+	switch (variant) {
+		case "longform": {
+			return {
+				a: CustomLink1,
+				h1: heading("h1"),
+				h2: heading("h2"),
+				h3: heading("h3"),
+				h4: heading("h4"),
+				h5: heading("h5"),
+				h6: heading("h6"),
+				code: Code,
+			}
+		}
+		// Questions, comments, descriptions on bookmarks, etc.
+		case "comment": {
+			return {
+				a: CustomLink1,
+				h1: "p",
+				h2: "p",
+				h3: "p",
+				h4: "p",
+				h5: "p",
+				h6: "p",
+				code: Code,
+			}
+		}
+	}
+}
+export function MarkdownRenderer(props: { [x: string]: any; md: string; variant?: "longform" | "comment" }) {
+	const { md, variant = "longform", ...rest } = props
 
 	const schema = deepmerge(defaultSchema, {
 		tagNames: [...defaultSchema.tagNames, "sup", "sub", "section"],
@@ -149,11 +138,11 @@ export function MarkdownRenderer(props) {
 	return (
 		<Markdown
 			{...rest}
-			remarkPlugins={[linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]}
+			remarkPlugins={[gfm, [linkifyRegex(/^(?!.*\bRT\b)(?:.+\s)?@\w+/i)]]}
 			rehypePlugins={[[rehypeSanitize, schema]]}
 			components={components}
 		>
-			{children}
+			{md}
 		</Markdown>
 	)
 }
