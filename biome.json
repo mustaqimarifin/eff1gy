@@ -1,0 +1,80 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true,
+		"defaultBranch": "main"
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"javascript": {
+		"formatter": { "semicolons": "asNeeded", "arrowParentheses": "asNeeded" }
+	},
+	"formatter": {
+		"enabled": true,
+		"lineWidth": 90,
+		"ignore": [
+			".next/*",
+			"node_modules",
+			"./.pnp.cjs",
+			"./.yarn",
+			"./.pnp.loader.mjs",
+			"dist"
+		]
+	},
+	"files": {
+		"ignore": [
+			"src/components/Posts/Zustand.tsx",
+			"resolvers/**/*",
+			".next/*",
+			"src/gql/**/*",
+			"node_modules",
+			"./.pnp.cjs",
+			"./.yarn",
+			"./.pnp.loader.mjs",
+			"dist/*"
+		]
+	},
+	"linter": {
+		"ignore": [
+			"resolvers/**/*",
+			"dist",
+			".next/*",
+			"src/components/MDX/vidID.js",
+			"src/components/MDX/Lite.mjs",
+			"./.pnp.cjs",
+			"./.yarn",
+			"./.pnp.loader.mjs"
+		],
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"complexity": {
+				"noBannedTypes": "off"
+			},
+			"security": { "noDangerouslySetInnerHtml": "off" },
+			"a11y": {
+				"useButtonType": "off",
+				"noSvgWithoutTitle": "off",
+				"useKeyWithClickEvents": "off",
+				"useMediaCaption": "off"
+			},
+			"correctness": {
+				"noChildrenProp": "off",
+				"useExhaustiveDependencies": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noImplicitAnyLet": "off",
+				"noArrayIndexKey": "off"
+			},
+			"style": {
+				"useConst": "off",
+				"noUnusedTemplateLiteral": "off",
+				"noNonNullAssertion": "off"
+			}
+		}
+	}
+}

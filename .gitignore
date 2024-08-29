@@ -1,0 +1,26 @@
+node_modules
+# Keep environment variables out of version control
+.content-collections
+
+queries.sql
+queries-drizzle.sql
+stack-and-case.sql
+.env
+.env.build
+.env.local
+.next
+.DS_Store
+.vscode
+yarn-error.log
+.vercel
+cors.json
+src/data/local/*
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
+schema.txt
+nanoid.sql
+tsconfig.tsbuildinfo
+# Million Lint
+.million
